@@ -111,16 +111,36 @@ ok(nearBox(fills[0], Lref.boxes.icf), 'canvas: caixa ICF pintada == dyLayout(eng
 ok(nearBox(fills[1], Lref.boxes.ecf), 'canvas: caixa ECF pintada == dyLayout(engine)');
 ok((rec.__texts || []).join(' ').indexOf('ICF') >= 0, 'canvas: rótulos ICF/ECF presentes');
 
-// ----- tutor: banco ≥16, bem-formado, com explicação -----
-var T = win.TUTOR;
-ok(Array.isArray(T) && T.length >= 16, 'tutor: banco ≥16 (tem ' + (T ? T.length : 0) + ')');
-var mal = 0;
-(T || []).forEach(function (it) {
-  if (!it || !Array.isArray(it.o) || it.o.length < 2) mal++;
-  else if (typeof it.c !== 'number' || it.c < 0 || it.c >= it.o.length) mal++;
-  else if (!it.e || String(it.e).length < 3) mal++;
+// ----- tutor: DOIS blocos (ilustrado ≥10 + textual ≥10), bem-formados -----
+function malformados(bank) {
+  var n = 0;
+  (bank || []).forEach(function (it) {
+    if (!it || !Array.isArray(it.o) || it.o.length < 2) n++;
+    else if (typeof it.c !== 'number' || it.c < 0 || it.c >= it.o.length) n++;
+    else if (!it.e || String(it.e).length < 3) n++;
+  });
+  return n;
+}
+var TI = win.TUTOR_ILUSTRADO, TT = win.TUTOR_TEXTUAL;
+ok(Array.isArray(TI) && TI.length >= 10, 'tutor: bloco ILUSTRADO ≥10 (tem ' + (TI ? TI.length : 0) + ')');
+ok(Array.isArray(TT) && TT.length >= 10, 'tutor: bloco TEXTUAL ≥10 (tem ' + (TT ? TT.length : 0) + ')');
+ok(malformados(TI) === 0, 'tutor ilustrado: itens bem-formados');
+ok(malformados(TT) === 0, 'tutor textual: itens bem-formados');
+// cada item ilustrado precisa de uma ilustração SVG não-vazia, computada
+var semFig = 0;
+(TI || []).forEach(function (it) {
+  if (typeof it.fig !== 'function') { semFig++; return; }
+  var svg = '';
+  try { svg = it.fig(); } catch (e) { svg = ''; }
+  if (!/<svg[\s>]/.test(String(svg)) || !/<(rect|circle|line|path|text)/.test(String(svg))) semFig++;
 });
-ok(mal === 0, 'tutor: itens bem-formados (opções/correta/explicação) — ' + mal + ' inválidos');
+ok(semFig === 0, 'tutor ilustrado: toda questão traz ilustração SVG não-vazia (' + semFig + ' sem)');
+
+// ----- ilustração viva: a aba Avaliação renderiza a figura no DOM + conceito no Caso -----
+ok(doc.getElementById('tutor-fig') !== null && doc.querySelector('#tutor-fig svg') !== null,
+  'Avaliação: ilustração renderizada no DOM (#tutor-fig svg)');
+ok(doc.querySelector('#fig-conceito svg') !== null, 'Caso: ilustração de conceito presente');
+ok(doc.querySelectorAll('#banktabs button').length === 2, 'Avaliação: dois blocos (ilustrada/textual)');
 
 // ----- lab/veredito existe e reage -----
 ok(doc.getElementById('veredito').textContent.length > 1, 'lab: veredito computado (não vazio)');

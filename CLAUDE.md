@@ -84,7 +84,8 @@ Padrões herdados do Choca que ESTE braço repete:
 - Engines puros e resilientes (`clampv` contra `NaN`/`null`), com função-mãe + alavancas de mecanismo.
 - Pérolas computadas pelo motor (ex.: no Choca, "a mesma PEEP descarrega o VE e esmaga o VD";
   "a CVP engana sob PEEP"; "a PAM mente no choque críptico"). FILTRA terá as suas (ver §4).
-- Camada interativa: caso com decisões, "prever-depois-revelar", tutor com banco ≥16 e dificuldade crescente.
+- Camada interativa: caso com decisões, "prever-depois-revelar"; e (padrão deste braço) dois blocos de
+  questões — ilustrado e textual, 10 cada, dificuldade crescente.
 - Validador jsdom que confere engine ≡ UI (e, neste braço, exige dose↔unidade↔mecanismo — ver §8).
 - Rodapé de série obrigatório: `CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira`.
 
@@ -162,7 +163,8 @@ dose renal de fármaco ← Vd · ligação proteica · fração renal · clearan
 > Numeração canônica: a metade **FILTRA** ocupa **M0–M18** (19 módulos: anatomia funcional → meio interno →
 > falência → farmacologia integrada); a metade **DIALISA** ocupa **M19–M38** (20 módulos); o **M39** é o
 > exame global de domínio. Cada `filtraN.html` é single-file, com engine puro, teste, validador, caso de 5
-> atos, trilha socrática, instrumento vivo, lab com veredito, tutor gráfico e disclaimer educacional. O
+> atos, trilha socrática, instrumento vivo, lab com veredito, dois blocos de questões (ilustrado + textual,
+> 10 cada), ilustrações de conceito em SVG e disclaimer educacional. O
 > "erro cognitivo" entre parênteses é a confusão que o módulo corrige; `[fármaco: …]` marca a farmacologia
 > **encadeada no segmento** (estrutura híbrida, §8): a droga é a alavanca daquele segmento, e dois capstones
 > (M17–M18) integram tudo.
@@ -320,15 +322,22 @@ Critério: o teste é **determinístico entre execuções** (rode 3×, saída id
 ### HTML (`filtraN.html`)
 - Single-file, **offline**, zero CDN/rede, links relativos; engine **inline** (espelho fiel do `modelN.js`).
 - Abas: **Caso** (5 atos) · **Trilha** (socrática, ≥9 passos, pistas) · **Instrumento** (canvas computado ao
-  vivo) · **Lab** (sliders + veredito + banners) · **Avaliação** (tutor gráfico, banco ≥16, dificuldade crescente).
+  vivo) · **Lab** (sliders + veredito + banners) · **Avaliação** (DOIS blocos por módulo — **ilustrado** ≥10,
+  cada questão com sua ilustração, e **textual** ≥10; ambos com dificuldade crescente).
+- **Ilustração viva (padrão deste braço):** os conceitos ganham ilustrações **inline em SVG** (offline, sem
+  rede), **computadas a partir do engine** quando o dado é numérico (mini Darrow–Yannet, barras
+  osm×tonicidade, setas de fluxo de água, esquema do néfron/segmento) — nunca imagens importadas. Aumentar
+  os elementos ilustrativos é objetivo explícito do FILTRA.
 - Camada interativa: caso com decisões + "prever-depois-revelar".
 - Disclaimer educacional + nota de honestidade do modelo + rodapé de série + backlink relativo ao índice.
 
 ### Validador (`validateN.js`)
 - jsdom `runScripts:'dangerously'`; confere IDs estruturais, `engine ≡ UI`, lab/veredito, camada interativa,
-  banco do tutor, cromo (kicker/rodapé/pontes). **Guarda farmacológica (invertida — ver §8):** nos módulos com
-  fármacos, EXIGE que toda dose traga unidade explícita (`mg/mcg/µg/mL·h⁻¹`) ancorada a um mecanismo, que o
-  motor de dose-resposta case com a UI, e que o disclaimer educacional esteja presente.
+  os **dois bancos** (`TUTOR_ILUSTRADO` ≥10 — cada item com ilustração SVG não-vazia — e `TUTOR_TEXTUAL` ≥10),
+  que a aba Avaliação **renderize a ilustração** no DOM, e o cromo (kicker/rodapé/pontes). **Guarda
+  farmacológica (invertida — ver §8):** nos módulos com fármacos, EXIGE que toda dose traga unidade explícita
+  (`mg/mcg/µg/mL·h⁻¹`) ancorada a um mecanismo, que o motor de dose-resposta case com a UI, e que o disclaimer
+  educacional esteja presente.
 
 ### CI
 - `.github/workflows/check.yml` roda `npm run check` em push/PR. Verde é mandatório para mesclar.
@@ -428,6 +437,7 @@ Zero dependência runtime.jsdom é só ferramenta de validação.
 Sem armazenamento.       Nada de localStorage/telemetria.
 Engine antes de UI.      Fórmula validada antes de gráfico.
 Física viva.             Gráficos e questões são COMPUTADOS, não imagens.
+Ilustração viva.         Conceitos ganham SVG inline; numérico → computado do engine. 2 blocos (ilustrado+textual).
 Robustez inigualável.    clamp resiliente + determinismo + fuzzing ≥ 5000 (§6).
 Português do Brasil.     Prosa causal, seca, com setas.
 Farmacologia viva.       Mecanismo → fármaco → dose/conduta, computados pelo motor (§8).

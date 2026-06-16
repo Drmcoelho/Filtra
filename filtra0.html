@@ -38,6 +38,8 @@
   td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
   th{color:var(--dim);font-weight:500}
   canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
   .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
   .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
   .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
@@ -91,6 +93,7 @@
     <div class="panel" id="caso">
       <h3>Caso — cinco atos, decida antes de revelar</h3>
       <p class="sub">Homem, 70 kg. Cada ato apresenta uma manobra. Preveja o destino da célula antes de abrir.</p>
+      <div class="concept" id="fig-conceito"></div>
 
       <div class="step">
         <b>Ato 1.</b> Bebe 3 L de água pura em pouco tempo (potomania). O que acontece com a célula?
@@ -214,9 +217,14 @@
   <!-- ============================== AVALIAÇÃO (tutor) ============================== -->
   <section class="tab" id="tab-avaliacao">
     <div class="panel">
-      <h3>Avaliação — tutor com dificuldade crescente</h3>
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (10)</button>
+        <button data-bank="textual">Textual (10)</button>
+      </div>
       <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
-      <div id="tutor-q" style="margin-top:10px;font-weight:600"></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
       <div id="tutor-opts"></div>
       <div class="banner" id="tutor-fb" style="display:none"></div>
       <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
@@ -401,32 +409,101 @@ function drawDY(r){
 });
 
 /* =========================================================================
- * TUTOR — banco ≥16, dificuldade crescente; respostas COMPUTADAS pelo motor
+ * ILUSTRAÇÕES — SVG inline, computadas a partir do engine (física viva)
+ * ========================================================================= */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+// mini Darrow–Yannet a partir de dyLayout (mesma geometria do instrumento)
+function dyMini(r,titulo){
+  var L=dyLayout(r,300,180), b=L.boxes;
+  function R(q,extra){ return '<rect x="'+f1(q.x)+'" y="'+f1(q.y)+'" width="'+f1(Math.max(0,q.w))+'" height="'+f1(Math.max(0,q.h))+'" '+extra+'/>'; }
+  var s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+=R(b.icf,'fill="#3a7bd5" fill-opacity="0.55" stroke="#3a7bd5"');
+  s+=R(b.ecf,'fill="#39c0c8" fill-opacity="0.55" stroke="#39c0c8"');
+  s+=R(b.icf0,'fill="none" stroke="#cdd9e3" stroke-dasharray="5 4"');
+  s+=R(b.ecf0,'fill="none" stroke="#cdd9e3" stroke-dasharray="5 4"');
+  s+='<text x="'+f1(b.icf.x+5)+'" y="'+f1(L.baseY-6)+'" fill="#e7eef4" font-size="11">ICF</text>';
+  s+='<text x="'+f1(b.ecf.x+5)+'" y="'+f1(L.baseY-6)+'" fill="#e7eef4" font-size="11">ECF</text>';
+  if(titulo) s+='<text x="150" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+titulo+'</text>';
+  return svgEl(300,180,s);
+}
+function arrow(x1,x2,y,color){ return '<line x1="'+x1+'" y1="'+y+'" x2="'+x2+'" y2="'+y+'" stroke="'+color+'" stroke-width="3"/><circle cx="'+x2+'" cy="'+y+'" r="4" fill="'+color+'"/>'; }
+// célula com setas de fluxo de água ('in' incha, 'out' murcha)
+function cellFig(dir,titulo){
+  var s='<rect x="6" y="24" width="288" height="118" rx="10" fill="#0f2233" stroke="#1b3a52"/>'; // "oceano" ECF
+  s+='<circle cx="150" cy="83" r="42" fill="#3a7bd5" fill-opacity="0.5" stroke="#3a7bd5" stroke-width="2"/>';
+  s+='<text x="150" y="87" fill="#e7eef4" font-size="12" text-anchor="middle">célula</text>';
+  if(dir==='in'){ s+=arrow(40,96,83,'#39c0c8')+arrow(260,204,83,'#39c0c8'); }
+  else if(dir==='out'){ s+=arrow(96,40,83,'#e8a13a')+arrow(204,260,83,'#e8a13a'); }
+  if(titulo) s+='<text x="150" y="16" fill="#9fb1c0" font-size="11" text-anchor="middle">'+titulo+'</text>';
+  return svgEl(300,150,s);
+}
+// barra empilhada da água corporal (ICF 2/3 · ECF 1/3)
+function barSplit(){
+  var x=20,w=260,y=46,h=34,wi=w*2/3, s='';
+  s+='<text x="20" y="28" fill="#9fb1c0" font-size="11">Água corporal total — ICF 2/3 · ECF 1/3</text>';
+  s+='<rect x="'+x+'" y="'+y+'" width="'+f1(wi)+'" height="'+h+'" fill="#3a7bd5" fill-opacity="0.6" stroke="#3a7bd5"/>';
+  s+='<rect x="'+f1(x+wi)+'" y="'+y+'" width="'+f1(w-wi)+'" height="'+h+'" fill="#39c0c8" fill-opacity="0.6" stroke="#39c0c8"/>';
+  s+='<text x="'+f1(x+wi/2)+'" y="'+(y+22)+'" fill="#e7eef4" font-size="12" text-anchor="middle">ICF</text>';
+  s+='<text x="'+f1(x+wi+(w-wi)/2)+'" y="'+(y+22)+'" fill="#e7eef4" font-size="11" text-anchor="middle">ECF</text>';
+  return svgEl(300,110,s);
+}
+// barras tonicidade × osm medida (o gap inefetivo, computado)
+function barOsm(r){
+  var max=Math.max(r.osmMedida,r.tonicidade,300)*1.15, base=120, sc=92/max, s='';
+  function bar(x,val,color,lab){ var h=val*sc; return '<rect x="'+x+'" y="'+f1(base-h)+'" width="64" height="'+f1(h)+'" fill="'+color+'" fill-opacity="0.6" stroke="'+color+'"/>'+
+    '<text x="'+(x+32)+'" y="'+(base+14)+'" fill="#9fb1c0" font-size="10" text-anchor="middle">'+lab+'</text>'+
+    '<text x="'+(x+32)+'" y="'+f1(base-h-4)+'" fill="#e7eef4" font-size="10" text-anchor="middle">'+Math.round(val)+'</text>'; }
+  s+=bar(60,r.tonicidade,'#3a7bd5','tonicidade');
+  s+=bar(176,r.osmMedida,'#39c0c8','osm medida');
+  s+='<text x="150" y="150" fill="#9fb1c0" font-size="10" text-anchor="middle">gap inefetivo = '+Math.round(r.gapInefetivo)+' mosm/L</text>';
+  return svgEl(300,160,s);
+}
+
+/* =========================================================================
+ * TUTOR — DOIS blocos (ilustrado + textual), 10 cada; respostas computadas
  * ========================================================================= */
 function cellWord(t,extra){ var r=compartimentos(Object.assign({pesoKg:70,na0:140},extra,{tipo:t})); return r.celula>0?'incha':r.celula<0?'murcha':'não muda'; }
-var TUTOR=[
-  {q:'TBW de um homem de 80 kg (fração 0,6)?',o:['40 L','48 L','56 L','32 L'],c:1,e:'80·0,6 = 48 L.'},
-  {q:'Qual fração do TBW é intracelular?',o:['1/3','1/2','2/3','3/4'],c:2,e:'ICF ≈ 2/3; ECF ≈ 1/3.'},
-  {q:'Quem governa o tamanho da célula?',o:['Osmolalidade medida','Tonicidade (osmoles efetivos)','Sódio total','Ureia'],c:1,e:'A tonicidade — osmoles efetivos por água.'},
-  {q:'Ganho de água pura: a célula…',o:['murcha','incha','não muda','desidrata'],c:1,e:'Tonicidade↓ → água entra → '+cellWord('agua_livre',{volumeL:3})+'.'},
-  {q:'Salina isotônica move água para dentro da célula?',o:['Sim','Não'],c:1,e:'Não — fica no ECF; ICF imóvel ('+cellWord('isotonico_ganho',{volumeL:3})+').'},
-  {q:'Perda de água pura: a célula…',o:['incha','murcha','não muda','lisa'],c:1,e:'Tonicidade↑ → água sai → '+cellWord('perda_agua_pura',{volumeL:3})+'.'},
-  {q:'Carga de ureia isolada: o tamanho da célula…',o:['incha muito','murcha muito','não muda','oscila'],c:2,e:'Ureia é inefetiva: '+cellWord('ureia',{solutoMmol:800})+'. Sobe só a osm medida.'},
-  {q:'Na carga de ureia, o que sobe?',o:['Tonicidade','Osmolalidade medida','Volume do ICF','Sódio'],c:1,e:'Só a osmolalidade medida; a tonicidade fica igual.'},
-  {q:'Glicose alta (sem insulina): a célula…',o:['incha','murcha','não muda','não dá para saber'],c:1,e:'Glicose é efetiva: '+cellWord('glicose',{solutoMmol:600})+' — puxa água para fora.'},
-  {q:'Na hiperglicemia o Na medido tende a…',o:['subir','cair','não mudar','dobrar'],c:1,e:'Cai por diluição (translocacional), mesmo com tonicidade alta.'},
-  {q:'Na⁺ ≈ ? em relação à tonicidade',o:['tonicidade','tonicidade/2','2·tonicidade','tonicidade/4'],c:1,e:'Na ≈ tonicidade/2 (o Na domina o ECF).'},
-  {q:'Hiponatremia hipotônica geralmente significa…',o:['falta de sal','excesso de água','desidratação','uremia'],c:1,e:'O Na é proxy de água: sobra água livre.'},
-  {q:'Suor é uma perda…',o:['isotônica','hipertônica','hipotônica','de água pura'],c:2,e:'Suor perde mais água que sal → tonicidade↑.'},
-  {q:'NaCl 3% (hipertônico): efeito na célula?',o:['incha','murcha','estável','não muda o Na'],c:1,e:'Tonicidade↑ e Na↑ → '+cellWord('hipertonico_ganho',{volumeL:2})+'.'},
-  {q:'No diagrama de Darrow–Yannet, a altura representa…',o:['volume','tonicidade','sódio','peso'],c:1,e:'Altura = tonicidade; largura = volume.'},
-  {q:'Osmolalidade medida menos tonicidade reflete…',o:['osmoles efetivos','osmoles inefetivos (ureia)','o sódio','o volume'],c:1,e:'A diferença é o osmol inefetivo (gap), como a ureia.'},
-  {q:'Por que a osm medida pode enganar à beira do leito?',o:['Inclui inefetivos que não movem água','Ignora o sódio','Mede só o ICF','É sempre igual à tonicidade'],c:0,e:'Porque soma ureia/álcoois; a tonicidade é que governa a célula.'}
+function R0(extra){ return compartimentos(Object.assign({pesoKg:70,na0:140},extra)); }
+
+// Bloco ILUSTRADO — cada item traz fig() que devolve uma ilustração SVG
+var TUTOR_ILUSTRADO=[
+  {q:'Que fração da água corporal é intracelular?',o:['1/3','1/2','2/3','3/4'],c:2,e:'ICF ≈ 2/3; ECF ≈ 1/3.',fig:function(){return barSplit();}},
+  {q:'Após +3 L de água livre, a célula…',o:['murcha','incha','não muda'],c:1,e:'Tonicidade↓ → água entra → '+cellWord('agua_livre',{volumeL:3})+'.',fig:function(){return dyMini(R0({tipo:'agua_livre',volumeL:3}),'+3 L água livre');}},
+  {q:'Após perda de 3 L de água pura, a célula…',o:['incha','murcha','não muda'],c:1,e:'Tonicidade↑ → água sai → '+cellWord('perda_agua_pura',{volumeL:3})+'.',fig:function(){return dyMini(R0({tipo:'perda_agua_pura',volumeL:3}),'perda de água pura');}},
+  {q:'NaCl 3% (hipertônico): o que acontece com o ICF?',o:['incha','murcha','não muda'],c:1,e:'Puxa água da célula → '+cellWord('hipertonico_ganho',{volumeL:2})+'.',fig:function(){return dyMini(R0({tipo:'hipertonico_ganho',volumeL:2}),'NaCl 3%');}},
+  {q:'Salina isotônica move água para dentro da célula?',o:['Sim','Não'],c:1,e:'Não — fica no ECF; o ICF não se move.',fig:function(){return dyMini(R0({tipo:'isotonico_ganho',volumeL:3}),'salina isotônica');}},
+  {q:'Carga de ureia isolada: o tamanho da célula…',o:['incha','murcha','não muda'],c:2,e:'Ureia é inefetiva: '+cellWord('ureia',{solutoMmol:800})+'. Sobe só a osm medida (veja o gap).',fig:function(){return barOsm(R0({tipo:'ureia',solutoMmol:800}));}},
+  {q:'Glicose alta (sem insulina): a célula…',o:['incha','murcha','não muda'],c:1,e:'Glicose é efetiva: '+cellWord('glicose',{solutoMmol:600})+' — tonicidade↑.',fig:function(){return dyMini(R0({tipo:'glicose',solutoMmol:600}),'glicose ↑');}},
+  {q:'Num meio HIPOTÔNICO, a água…',o:['sai da célula','entra na célula','não se move'],c:1,e:'Gradiente para dentro → a célula incha.',fig:function(){return cellFig('in','meio hipotônico');}},
+  {q:'Num meio HIPERTÔNICO, a água…',o:['entra na célula','sai da célula','não se move'],c:1,e:'Gradiente para fora → a célula murcha.',fig:function(){return cellFig('out','meio hipertônico');}},
+  {q:'A diferença entre osm medida e tonicidade (o "gap") é…',o:['o sódio','os osmoles inefetivos','o volume'],c:1,e:'O gap são osmoles inefetivos (ex.: ureia) — não movem água.',fig:function(){return barOsm(R0({tipo:'ureia',solutoMmol:500}));}}
 ];
-var tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+
+// Bloco TEXTUAL — sem ilustração, dificuldade crescente
+var TUTOR_TEXTUAL=[
+  {q:'TBW de um homem de 80 kg (fração 0,6)?',o:['40 L','48 L','56 L','32 L'],c:1,e:'80·0,6 = 48 L.'},
+  {q:'Quem governa o tamanho da célula?',o:['Osmolalidade medida','Tonicidade (osmoles efetivos)','Sódio total','Ureia'],c:1,e:'A tonicidade — osmoles efetivos por água.'},
+  {q:'Na⁺ ≈ ? em relação à tonicidade',o:['tonicidade','tonicidade/2','2·tonicidade','tonicidade/4'],c:1,e:'Na ≈ tonicidade/2 (o Na domina o ECF).'},
+  {q:'Por que a ureia não move água?',o:['Atravessa a membrana e equilibra dos dois lados','Porque é carregada','Porque fica só no ECF','Porque vira sódio'],c:0,e:'É osmol inefetivo: equilibra dos dois lados, sem gradiente efetivo.'},
+  {q:'Na hiperglicemia, o Na medido tende a…',o:['subir','cair','não mudar','dobrar'],c:1,e:'Cai por diluição (translocacional), apesar da tonicidade alta.'},
+  {q:'Hiponatremia hipotônica geralmente significa…',o:['falta de sal','excesso de água','desidratação','uremia'],c:1,e:'O Na é proxy de água: sobra água livre.'},
+  {q:'Suor é uma perda…',o:['isotônica','hipertônica','hipotônica','de água pura'],c:2,e:'Perde mais água que sal → tonicidade↑.'},
+  {q:'Corrigir disnatremia rápido demais arrisca…',o:['nada','mielinólise/edema cerebral','hipertensão','hipoglicemia'],c:1,e:'A velocidade importa: rápido demais lesa o SNC.'},
+  {q:'Plasma corresponde a cerca de quanto do ECF?',o:['1/2','1/4','1/10','todo'],c:1,e:'Plasma ≈ 1/4 do ECF.'},
+  {q:'Por que a osm medida pode enganar à beira do leito?',o:['Inclui inefetivos que não movem água','Ignora o sódio','Mede só o ICF','É sempre igual à tonicidade'],c:0,e:'Soma ureia/álcoois; a tonicidade é que governa a célula.'}
+];
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL;
+window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+
+var BANKS={ ilustrada:TUTOR_ILUSTRADO, textual:TUTOR_TEXTUAL };
+var curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
 function renderTutor(){
-  var item=TUTOR[tIdx];
-  $('tutor-q').textContent=(tIdx+1)+'. '+item.q;
+  var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML = item.fig ? item.fig() : '';
+  $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
   var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false;
   $('tutor-fb').style.display='none';
   item.o.forEach(function(opt,i){
@@ -444,8 +521,15 @@ function renderTutor(){
     box.appendChild(b);
   });
 }
-$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%TUTOR.length; renderTutor(); });
-window.TUTOR=TUTOR;
+$('banktabs').addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor();
+});
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+// ilustrações de conceito (estáticas) no topo do Caso
+$('fig-conceito').innerHTML = barSplit() + cellFig('none','a célula no oceano (ECF)');
 
 // init
 refresh(); renderTutor();

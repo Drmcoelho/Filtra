@@ -4,8 +4,18 @@
   "hexapode": ["RESPIRA","CHOCA","FILTRA","ALIMENTA","METABOLIZA","CONSCIENCIA"],
   "escopo": "educacao fisiologica + farmacologia clinica aplicada (decisao do autor, ver CLAUDE.md §8)",
   "rodape": "CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira",
+  "formatoModulo": {
+    "singleFile": true,
+    "offline": true,
+    "abas": ["Caso (5 atos)", "Trilha (>=9 passos)", "Instrumento (canvas computado)", "Lab (sliders + veredito)", "Avaliacao (2 blocos)"],
+    "ilustracaoViva": "SVG inline, computado do engine quando numerico (nao imagens importadas)",
+    "avaliacao": { "blocos": ["ilustrado", "textual"], "questoesPorBloco": 10 },
+    "robustez": "engine puro + clampv + identidades + leis + perolas + determinismo + fuzzing semeado >=5000",
+    "portao": "npm run check (engine + validador) — 0 falhas"
+  },
   "modulos": [
-    { "id": "M0",  "metade": "FILTRA",  "arquivo": "filtra0.html",  "titulo": "Compartimentos do líquido corporal — a célula no oceano", "status": "disponivel" },
+    { "id": "M0",  "metade": "FILTRA",  "arquivo": "filtra0.html",  "titulo": "Compartimentos do líquido corporal — a célula no oceano", "status": "disponivel",
+      "instrumento": "diagrama de Darrow–Yannet vivo", "questoes": { "ilustrado": 10, "textual": 10 } },
     { "id": "M1",  "metade": "FILTRA",  "arquivo": "filtra1.html",  "titulo": "O néfron / forças de Starling glomerulares (aferente×eferente)", "status": "planejado" },
     { "id": "M2",  "metade": "FILTRA",  "titulo": "Hemodinâmica renal — 20% do DC, autorregulação, córtex×medula [fármaco: AINEs, IECA/BRA]", "status": "planejado" },
     { "id": "M3",  "metade": "FILTRA",  "titulo": "O glomérulo — barreira de filtração, Kf, podócito, proteinúria", "status": "planejado" },

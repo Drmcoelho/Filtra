@@ -268,7 +268,7 @@ M18 (anti-hipertensivos & RAAS) ↔ Choca M28 (vasopressores & inotrópicos) —
 FEITO  · M0  engine model0.js + test0.node.js (108 OK · fuzz 5000) + filtra0.html (Darrow–Yannet vivo)
              + validate0.js (40 OK) — módulo completo, no rito do §5
 HARNESS· package.json (test:0/validate:0/check) · .github/workflows/check.yml · curriculum.json ·
-             filtra.html (índice) · FILTRA.md (constituição) · .gitignore
+             filtra.html (índice) · FILTRA.md (constituição) · README.md (porta de entrada) · .gitignore
 A FAZER· M1 (néfron/Starling): build/m1/model1.js + test1.node.js → filtra1.html + validate1.js → seguir a escada §4.4
 ```
 
@@ -282,8 +282,10 @@ Nota: `jsdom` é dependência só de validação; o produto publicado é offline
 ```text
 1. build/mN/modelN.js        engine PURO (a fórmula primeiro; nada de UI)
 2. build/mN/testN.node.js    bateria de robustez (ver §6) — 0 falhas
-3. filtraN.html              single-file: caso(5 atos) · trilha · instrumento vivo · lab · tutor
-4. build/mN/validateN.js     portão jsdom: estrutura · engine≡UI · interativo · cromo · guarda farmacológica (dose↔unidade↔mecanismo)
+3. filtraN.html              single-file: caso(5 atos) · trilha · instrumento vivo · lab · ilustrações de
+                             conceito (SVG) · Avaliação com 2 blocos (ilustrado 10 + textual 10)
+4. build/mN/validateN.js     portão jsdom: estrutura · engine≡UI · interativo · 2 bancos+ilustração · cromo ·
+                             guarda farmacológica (dose↔unidade↔mecanismo)
 5. package.json              adicionar test:N e validate:N (e ao agregado test/validate/check)
 6. filtra.html               índice: cartão do módulo de "em breve" → "disponível"
 7. curriculum.json           manifesto curricular (status do módulo)
@@ -353,9 +355,10 @@ build/mN/modelN.js         engine puro
 build/mN/testN.node.js     teste Node
 build/mN/validateN.js      validador jsdom
 package.json               scripts test:N / validate:N / test / validate / check
-curriculum.json            manifesto curricular legível por máquina
-FILTRA.md                  constituição do braço
-CLAUDE.md                  este guia
+curriculum.json            manifesto curricular legível por máquina (escada + formato do módulo)
+FILTRA.md                  constituição do braço (o porquê)
+README.md                  porta de entrada do repo (o quê + como rodar)
+CLAUDE.md                  este guia (o como)
 ```
 
 - **Idioma:** português do Brasil, prosa causal e seca, setas quando úteis (↑↓→).
@@ -419,7 +422,9 @@ case com a UI. A ausência de dose onde o módulo a promete passa a ser falha.
 2. O próximo módulo é o **M1 — néfron / forças de Starling** (a escada renumerou; ver §4.4): construa a pilha
    inteira no rito do §5 — `build/m1/model1.js` + `test1.node.js` → `filtra1.html` + `build/m1/validate1.js`.
    Instrumento sugerido: curva TFG×PAM com o platô da autorregulação e o precipício pré-renal; o paradoxo do
-   eferente (a creatinina sobe porque o IECA *funciona*).
+   eferente (a creatinina sobe porque o IECA *funciona*). **Siga o novo formato** (M0 é o molde): ilustrações
+   de conceito em SVG (esquema do néfron/segmento, computado quando numérico) e Avaliação com os **dois
+   blocos de 10** (ilustrado + textual).
 3. Depois o M2 (hemodinâmica renal — 20% do DC, córtex×medula) e a partir do M5 a farmacologia **encadeada no
    segmento** (§8): a droga é a alavanca daquele túbulo, com dose↔unidade↔mecanismo computados pelo motor.
 4. Então siga a escada §4.4, um módulo por vez, sempre fechando com `npm run check` verde.

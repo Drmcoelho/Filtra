@@ -75,6 +75,9 @@ var amostras = [
   { pesoKg: 60, sexo: 'F', na0: 130, tipo: 'ureia', solutoMmol: 700 },
   { pesoKg: 90, na0: 145, glu0: 0, tipo: 'glicose', solutoMmol: 500 },
   { pesoKg: 55, na0: 138, tipo: 'isotonico_ganho', volumeL: 2.5 },
+  { pesoKg: 70, na0: 140, tipo: 'sf09', volumeL: 2 },
+  { pesoKg: 70, na0: 140, tipo: 'sg5', volumeL: 3 },
+  { pesoKg: 70, na0: 140, tipo: 'nacl3', volumeL: 1 },
   { tipo: 'manobra_que_nao_existe', volumeL: 'x' }
 ];
 var divergiu = 0;
@@ -110,6 +113,25 @@ function nearBox(a, e) {
 ok(nearBox(fills[0], Lref.boxes.icf), 'canvas: caixa ICF pintada == dyLayout(engine)');
 ok(nearBox(fills[1], Lref.boxes.ecf), 'canvas: caixa ECF pintada == dyLayout(engine)');
 ok((rec.__texts || []).join(' ').indexOf('ICF') >= 0, 'canvas: rótulos ICF/ECF presentes');
+
+// ----- fluidos IV + balanço hídrico (introdução à fluidoterapia) -----
+var FL = win.MODEL && win.MODEL.FLUIDOS;
+['sf09', 'ringer', 'sg5', 'nacl3', 'coloide'].forEach(function (k) {
+  ok(FL && FL[k] && typeof FL[k].cNa === 'number', 'fluido IV "' + k + '" definido no engine');
+});
+ok(typeof win.balanco === 'function', 'UI expõe balanco()');
+var balSamples = [{}, { oralMl: 3000 }, { urinaMl: 4000, ivMl: 0 }, { oralMl: 'x', urinaMl: NaN, suorMl: -5 }];
+var balDiv = 0;
+balSamples.forEach(function (a) { if (JSON.stringify(win.balanco(a)) !== JSON.stringify(ref.balanco(a))) balDiv++; });
+ok(balDiv === 0, 'balanco ≡ UI: idêntico ao model0.js (' + balDiv + ' divergências)');
+ok(doc.getElementById('in-oral') && doc.getElementById('in-urina') && doc.getElementById('bal-net'), 'lab: painel de balanço presente');
+ok(doc.getElementById('bal-net').textContent.length > 0, 'lab: balanço computado (bal-net preenchido)');
+ok(doc.querySelector('#bal-fig svg') !== null, 'lab: ilustração do balanço renderizada');
+ok(doc.querySelector('#in-tipo optgroup') !== null, 'lab: fluidos IV no seletor (optgroup)');
+
+// ----- a banana no mar + o cérebro (a célula que importa) ilustrados -----
+ok(/cérebro/.test(doc.getElementById('fig-conceito').innerHTML), 'Caso: ilustração do cérebro presente');
+ok(doc.querySelectorAll('#fig-conceito svg').length >= 3, 'Caso: tira de conceitos (banana no mar + cérebro)');
 
 // ----- tutor: DOIS blocos (ilustrado ≥10 + textual ≥10), bem-formados -----
 function malformados(bank) {

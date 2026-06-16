@@ -173,8 +173,10 @@ dose renal de fármaco ← Vd · ligação proteica · fração renal · clearan
 
 ```text
 Bloco 0 · Fundamentos — a água e a filtração
-  M0  Compartimentos do líquido corporal — a célula no oceano        [CONSTRUÍDO ✓]
+  M0  Compartimentos do líquido corporal — a célula no oceano + introdução à fluidoterapia  [CONSTRUÍDO ✓]
         (erro: "a célula é isolada"; verdade: tonicidade ≠ osmolalidade medida; a ureia é osmol inefetivo)
+        (inclui: fluidos IV SF/Ringer/SG5%/NaCl3%/coloide e onde vão · balanço hídrico ingesta×perdas ·
+         a banana no mar · o cérebro e a sensibilidade ao Na — correção fina no M10)
   M1  O néfron / forças de Starling glomerulares (aferente×eferente) [CONSTRUÍDO ✓]
         (erro: "oligúria = pouca água"; verdade: P_GC mora entre duas resistências; autorregulação + precipício)
 Bloco I · O glomérulo, a hemodinâmica e a medida

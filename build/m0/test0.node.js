@@ -7,7 +7,7 @@
  */
 
 var M = require('./model0.js');
-var compartimentos = M.compartimentos, clampv = M.clampv;
+var compartimentos = M.compartimentos, clampv = M.clampv, dyLayout = M.dyLayout;
 
 var oks = 0, fail = 0;
 function ok(cond, msg) { if (cond) { oks++; } else { fail++; console.error('FALHA: ' + msg); } }
@@ -24,6 +24,7 @@ function finN(o) { for (var k in o) { if (typeof o[k] === 'number' && !isFinite(
   ok(near(r.ICF, 28, 1e-9) && near(r.ECF, 14, 1e-9), 'sem manobra: compartimentos imóveis');
   ok(near(r.tonicidade, 280, 1e-9), 'tonicidade basal = 2·140 = 280');
   ok(r.osmMedida >= 284 && r.osmMedida <= 286, 'osm medida ≈ 285 (com ureia 5)');
+  ok(near(r.osmMedida0, 285, 1e-9), 'osm medida basal = 280 + 5 = 285');
   ok(near(r.na, 140, 1e-9), 'Na resultante = 140');
   var f = compartimentos({ pesoKg: 60, sexo: 'F' });
   ok(near(f.TBW0, 30, 1e-9), 'mulher 60kg·0,5 = 30 L');
@@ -49,6 +50,13 @@ function finN(o) { for (var k in o) { if (typeof o[k] === 'number' && !isFinite(
     // medida ≥ tonicidade (ureia inefetiva só soma)
     ok(r.osmMedida >= r.tonicidade - 1e-6, 'osm medida ≥ tonicidade [' + casos[i].tipo + ']');
     ok(near(r.gapInefetivo, r.osmMedida - r.tonicidade, 1e-9), 'gap inefetivo coerente [' + casos[i].tipo + ']');
+    // GEOMETRIA do instrumento: o desenho é COMPUTADO (o motor manda no pixel)
+    var L = dyLayout(r, 900, 380);
+    var b = L.boxes;
+    ok(near(b.icf.w + b.ecf.w, r.TBW * L.pxV, 1e-6), 'dyLayout: largura(ICF)+largura(ECF)=largura(TBW) [' + casos[i].tipo + ']');
+    ok(near(b.icf.h, b.ecf.h, 1e-9), 'dyLayout: ICF e ECF têm a mesma altura (mesma tonicidade) [' + casos[i].tipo + ']');
+    ok(b.icf.x >= L.padL - 1e-9 && b.ecf.x >= b.icf.x - 1e-9, 'dyLayout: ECF à direita do ICF [' + casos[i].tipo + ']');
+    ok(near(b.ecf.x, b.icf.x + b.icf.w, 1e-6), 'dyLayout: caixas contíguas (ECF começa onde ICF termina) [' + casos[i].tipo + ']');
   }
   // Na ≈ tonicidade/2 quando não há glicose
   var s = compartimentos({ pesoKg: 70, na0: 140, glu0: 0, tipo: 'agua_livre', volumeL: 4 });
@@ -70,6 +78,12 @@ function finN(o) { for (var k in o) { if (typeof o[k] === 'number' && !isFinite(
   var p1 = withM('perda_agua_pura', 1), p2 = withM('perda_agua_pura', 4);
   ok(p2.tonicidade > p1.tonicidade, 'perda água↑ → tonicidade↑');
   ok(p2.ICF < p1.ICF && p2.ECF < p1.ECF, 'perda água↑ → ambos↓');
+  // GEOMETRIA: tonicidade↑ → caixa mais ALTA que a basal (altura ∝ tonicidade)
+  var Lp = dyLayout(p2, 900, 380);
+  ok(Lp.boxes.icf.h > Lp.boxes.icf0.h, 'dyLayout: pós (tonicidade↑) mais alto que o basal');
+  // água livre: tonicidade↓ → caixa mais BAIXA que a basal
+  var La = dyLayout(a2, 900, 380);
+  ok(La.boxes.icf.h < La.boxes.icf0.h, 'dyLayout: pós (tonicidade↓) mais baixo que o basal');
 
   // isotônico: ECF↑ enquanto ICF e tonicidade ~ constantes
   var i0 = compartimentos(base), i2 = withM('isotonico_ganho', 3);
@@ -169,8 +183,15 @@ function finN(o) { for (var k in o) { if (typeof o[k] === 'number' && !isFinite(
     if (r.tonicidade <= 0) { bad++; continue; }
     if (!near(r.ICF + r.ECF, r.TBW, 1e-5)) { bad++; continue; }   // conservação
     if (r.osmMedida < r.tonicidade - 1e-5) { bad++; continue; }   // medida ≥ tonicidade
+    // geometria do instrumento nunca produz NaN nem caixas negativas
+    var L = dyLayout(r, 900, 380), bx = L.boxes;
+    var todas = [bx.icf, bx.ecf, bx.icf0, bx.ecf0];
+    for (var k = 0; k < todas.length; k++) {
+      var q = todas[k];
+      if (!finN(q) || q.w < 0 || q.h < 0) { bad++; break; }
+    }
   }
-  ok(bad === 0, 'fuzzing ' + N + ': ' + bad + ' violações (NaN/∞/clamp/conservação)');
+  ok(bad === 0, 'fuzzing ' + N + ': ' + bad + ' violações (NaN/∞/clamp/conservação/geometria)');
 })();
 
 // ----------------------------------------------------------------- 8. SAÍDA

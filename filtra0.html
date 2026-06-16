@@ -287,11 +287,26 @@ function compartimentos(input){
   var dICFpct=ICF0>0?(icfVol-ICF0)/ICF0*100:0, dECFpct=ECF0>0?(ecfVol-ECF0)/ECF0*100:0;
   var celula=(icfVol-ICF0)>1e-6?1:(icfVol-ICF0)<-1e-6?-1:0;
   return {tipo:tipo,manobra:MANOBRAS[tipo],TBW0:TBW0,ICF0:ICF0,ECF0:ECF0,tonic0:Tinit,na0:na0,
-    TBW:TBW2,ICF:icfVol,ECF:ecfVol,tonicidade:tonic,osmMedida:osmMed,na:na,glu:glu,ureia:ureiaC,
+    TBW:TBW2,ICF:icfVol,ECF:ecfVol,tonicidade:tonic,osmMedida:osmMed,osmMedida0:Tinit+ureia0,na:na,glu:glu,ureia:ureiaC,
     dICFpct:dICFpct,dECFpct:dECFpct,celula:celula,gapInefetivo:osmMed-tonic};
 }
-window.compartimentos=compartimentos;
-window.MODEL={compartimentos:compartimentos,clampv:clampv,fracSexo:fracSexo,MANOBRAS:MANOBRAS};
+// dyLayout — geometria PURA do diagrama (espelho fiel de model0.js); a UI só pinta.
+function dyLayout(r,W,H){
+  r=r||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=50,padB=40,padT=20,baseY=H-padB;
+  var TBW0=clampv(r.TBW0,0.1,1e6),TBW=clampv(r.TBW,0.1,1e6);
+  var ICF=clampv(r.ICF,0,1e6),ECF=clampv(r.ECF,0,1e6);
+  var ICF0=clampv(r.ICF0,0,1e6),ECF0=clampv(r.ECF0,0,1e6);
+  var tonic=clampv(r.tonicidade,1e-6,1e6),tonic0=clampv(r.tonic0,1e-6,1e6);
+  var maxVol=Math.max(TBW0,TBW,42)*1.25, maxTon=Math.max(360,tonic,tonic0);
+  var pxV=(W-padL-30)/maxVol, pxT=(baseY-padT)/maxTon;
+  function box(x0,w,ton){ var h=ton*pxT; return {x:padL+x0*pxV,y:baseY-h,w:w*pxV,h:h}; }
+  return {W:W,H:H,padL:padL,padB:padB,padT:padT,baseY:baseY,maxVol:maxVol,maxTon:maxTon,pxV:pxV,pxT:pxT,
+    axis:{x0:padL,y0:padT,xEnd:W-10,yEnd:baseY},
+    boxes:{icf:box(0,ICF,tonic),ecf:box(ICF,ECF,tonic),icf0:box(0,ICF0,tonic0),ecf0:box(ICF0,ECF0,tonic0)}};
+}
+window.compartimentos=compartimentos; window.dyLayout=dyLayout;
+window.MODEL={compartimentos:compartimentos,dyLayout:dyLayout,clampv:clampv,fracSexo:fracSexo,MANOBRAS:MANOBRAS};
 
 /* =========================================================================
  * UI
@@ -336,7 +351,7 @@ function refresh(){
   $('out-icf0').textContent=fmt(r.ICF0); $('out-icf').textContent=fmt(r.ICF);
   $('out-ecf0').textContent=fmt(r.ECF0); $('out-ecf').textContent=fmt(r.ECF);
   $('out-tonic0').textContent=fmt(r.tonic0); $('out-tonic').textContent=fmt(r.tonicidade);
-  $('out-osm0').textContent=fmt(r.tonic0+(r.ureia*0+ (r.osmMedida-r.tonicidade)),1); // basal medida
+  $('out-osm0').textContent=fmt(r.osmMedida0);
   $('out-osm').textContent=fmt(r.osmMedida);
   $('out-na0').textContent=fmt(r.na0); $('out-na').textContent=fmt(r.na);
   verdict(r); drawDY(r); pearl(r);
@@ -357,38 +372,28 @@ function pearl(r){
   p.textContent=t; ip.textContent=t;
 }
 
-// --- canvas Darrow–Yannet ---
+// --- canvas Darrow–Yannet: a geometria vem de dyLayout(); aqui só pintamos ---
 function drawDY(r){
   var c=$('dy-canvas'); if(!c) return;
   var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } // jsdom: getContext lança
   if(!ctx||!ctx.clearRect) return;
-  var W=c.width, H=c.height; ctx.clearRect(0,0,W,H);
-  var padL=50, padB=40, padT=20, baseY=H-padB;
-  var maxTon=360, maxVol=Math.max(r.TBW0,r.TBW,42)*1.25;
-  var pxV=(W-padL-30)/maxVol, pxT=(baseY-padT)/maxTon;
+  var L=dyLayout(r,c.width,c.height), b=L.boxes;
+  ctx.clearRect(0,0,L.W,L.H);
   // eixos
   ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
-  ctx.beginPath(); ctx.moveTo(padL,padT); ctx.lineTo(padL,baseY); ctx.lineTo(W-10,baseY); ctx.stroke();
-  ctx.fillText('tonicidade (mosm/L)',8,padT+4); ctx.fillText('volume (L) →',W-110,baseY+24);
-  // basal (tracejado): ICF | ECF
-  function box(x0,w,ton,fill,alpha){
-    var h=ton*pxT, x=padL+x0*pxV, y=baseY-h;
-    ctx.fillStyle=fill; ctx.globalAlpha=alpha; ctx.fillRect(x,y,w*pxV,h); ctx.globalAlpha=1;
-    ctx.strokeStyle=fill; ctx.strokeRect(x,y,w*pxV,h);
-  }
-  // após (sólido)
-  box(0,r.ICF,r.tonicidade,'#3a7bd5',0.55);
-  box(r.ICF,r.ECF,r.tonicidade,'#39c0c8',0.55);
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('tonicidade (mosm/L)',8,L.padT+4); ctx.fillText('volume (L) →',L.W-110,L.baseY+24);
+  // pós-manobra (sólido)
+  function fill(q,color){ ctx.fillStyle=color; ctx.globalAlpha=0.55; ctx.fillRect(q.x,q.y,q.w,q.h); ctx.globalAlpha=1; ctx.strokeStyle=color; ctx.strokeRect(q.x,q.y,q.w,q.h); }
+  fill(b.icf,'#3a7bd5'); fill(b.ecf,'#39c0c8');
   // basal (contorno tracejado)
   ctx.setLineDash([5,4]); ctx.strokeStyle='#cdd9e3';
-  var hb=r.tonic0*pxT;
-  ctx.strokeRect(padL,baseY-hb,r.ICF0*pxV,hb);
-  ctx.strokeRect(padL+r.ICF0*pxV,baseY-hb,r.ECF0*pxV,hb);
+  ctx.strokeRect(b.icf0.x,b.icf0.y,b.icf0.w,b.icf0.h);
+  ctx.strokeRect(b.ecf0.x,b.ecf0.y,b.ecf0.w,b.ecf0.h);
   ctx.setLineDash([]);
   // rótulos
-  ctx.fillStyle='#e7eef4'; ctx.fillText('ICF',padL+6,baseY-8);
-  ctx.fillText('ECF',padL+r.ICF*pxV+6,baseY-8);
-  ctx.fillStyle='#9fb1c0'; ctx.fillText('— — basal',W-110,padT+10);
+  ctx.fillStyle='#e7eef4'; ctx.fillText('ICF',b.icf.x+6,L.baseY-8); ctx.fillText('ECF',b.ecf.x+6,L.baseY-8);
+  ctx.fillStyle='#9fb1c0'; ctx.fillText('— — basal',L.W-110,L.padT+10);
 }
 
 ['in-peso','in-sexo','in-na','in-ureia','in-tipo','in-vol','in-soluto'].forEach(function(id){

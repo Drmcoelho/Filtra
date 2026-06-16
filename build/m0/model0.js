@@ -119,7 +119,7 @@ function compartimentos(input) {
     TBW0: TBW0, ICF0: ICF0, ECF0: ECF0, tonic0: Tinit, na0: na0,
     // final
     TBW: TBW2, ICF: icfVol, ECF: ecfVol,
-    tonicidade: tonic, osmMedida: osmMed,
+    tonicidade: tonic, osmMedida: osmMed, osmMedida0: Tinit + ureia0,
     na: na, glu: glu, ureia: ureiaC,
     // leitura
     dICFpct: dICFpct, dECFpct: dECFpct, celula: celula,
@@ -127,6 +127,44 @@ function compartimentos(input) {
   };
 }
 
+/*
+ * dyLayout(r, W, H) — GEOMETRIA PURA do diagrama de Darrow–Yannet.
+ * O motor manda no pixel: a UI só pinta as caixas que esta função computa.
+ * Largura ∝ volume; altura ∝ tonicidade. Devolve as 4 caixas (ICF/ECF, basal
+ * e pós-manobra) já em coordenadas de canvas, além das escalas e eixos.
+ * Determinística e resiliente (nada de NaN); a pintura no HTML é trivial.
+ */
+function dyLayout(r, W, H) {
+  r = r || {};
+  W = clampv(W, 200, 100000);
+  H = clampv(H, 120, 100000);
+  var padL = 50, padB = 40, padT = 20, baseY = H - padB;
+
+  var TBW0 = clampv(r.TBW0, 0.1, 1e6), TBW = clampv(r.TBW, 0.1, 1e6);
+  var ICF  = clampv(r.ICF, 0, 1e6),   ECF = clampv(r.ECF, 0, 1e6);
+  var ICF0 = clampv(r.ICF0, 0, 1e6),  ECF0 = clampv(r.ECF0, 0, 1e6);
+  var tonic = clampv(r.tonicidade, 1e-6, 1e6), tonic0 = clampv(r.tonic0, 1e-6, 1e6);
+
+  var maxVol = Math.max(TBW0, TBW, 42) * 1.25;      // auto-fit do eixo de volume
+  var maxTon = Math.max(360, tonic, tonic0);        // 360 normal; cresce só se preciso (sem clipping)
+  var pxV = (W - padL - 30) / maxVol;
+  var pxT = (baseY - padT) / maxTon;
+
+  function box(x0, w, ton) {
+    var h = ton * pxT;
+    return { x: padL + x0 * pxV, y: baseY - h, w: w * pxV, h: h };
+  }
+  return {
+    W: W, H: H, padL: padL, padB: padB, padT: padT, baseY: baseY,
+    maxVol: maxVol, maxTon: maxTon, pxV: pxV, pxT: pxT,
+    axis: { x0: padL, y0: padT, xEnd: W - 10, yEnd: baseY },
+    boxes: {
+      icf:  box(0, ICF, tonic),    ecf:  box(ICF, ECF, tonic),     // pós-manobra (sólido)
+      icf0: box(0, ICF0, tonic0),  ecf0: box(ICF0, ECF0, tonic0)   // basal (tracejado)
+    }
+  };
+}
+
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { compartimentos: compartimentos, clampv: clampv, fracSexo: fracSexo, MANOBRAS: MANOBRAS };
+  module.exports = { compartimentos: compartimentos, dyLayout: dyLayout, clampv: clampv, fracSexo: fracSexo, MANOBRAS: MANOBRAS };
 }

@@ -20,12 +20,34 @@ function ok(c, m) { if (c) { oks++; } else { fail++; console.error('FALHA: ' + m
 var htmlPath = path.join(__dirname, '..', '..', 'filtra0.html');
 var html = fs.readFileSync(htmlPath, 'utf8');
 
-// canvas não tem backend no jsdom; o desenho é puramente visual (a física vive no engine).
-// Omitimos os avisos "Not implemented" de jsdom — o try/catch do drawDY já os neutraliza.
-var vc = new jsdom.VirtualConsole();
-vc.sendTo(console, { omitJSDOMErrors: true });
+// jsdom não tem backend de canvas; injetamos um CONTEXTO-GRAVADOR que registra
+// cada retângulo/texto. Assim o canvas "desenha" de verdade na validação e podemos
+// conferir que o que foi pintado é exatamente a geometria que dyLayout() computou.
+function recorderCtx() {
+  var rects = [], texts = [];
+  return {
+    fillStyle: '', strokeStyle: '', lineWidth: 1, globalAlpha: 1, font: '', canvas: null,
+    clearRect: function () {},
+    fillRect: function (x, y, w, h) { rects.push({ op: 'fill', x: x, y: y, w: w, h: h }); },
+    strokeRect: function (x, y, w, h) { rects.push({ op: 'stroke', x: x, y: y, w: w, h: h }); },
+    beginPath: function () {}, moveTo: function () {}, lineTo: function () {}, stroke: function () {},
+    setLineDash: function () {}, fillText: function (t) { texts.push(String(t)); },
+    __rects: rects, __texts: texts
+  };
+}
 
-var dom = new JSDOM(html, { runScripts: 'dangerously', resources: 'usable', pretendToBeVisual: true, virtualConsole: vc });
+var vc = new jsdom.VirtualConsole();
+vc.sendTo(console);
+
+var dom = new JSDOM(html, {
+  runScripts: 'dangerously', resources: 'usable', pretendToBeVisual: true, virtualConsole: vc,
+  beforeParse: function (window) {
+    window.HTMLCanvasElement.prototype.getContext = function () {
+      if (!this.__rec) { this.__rec = recorderCtx(); this.__rec.canvas = this; }
+      return this.__rec;
+    };
+  }
+});
 var win = dom.window, doc = win.document;
 
 // ----- estrutura: abas e IDs essenciais -----
@@ -61,6 +83,33 @@ amostras.forEach(function (a) {
   if (JSON.stringify(u) !== JSON.stringify(n)) { divergiu++; }
 });
 ok(divergiu === 0, 'engine ≡ UI: inline idêntico ao model0.js (' + divergiu + ' divergências)');
+
+// ----- instrumento: geometria UI ≡ engine -----
+ok(typeof win.dyLayout === 'function', 'UI expõe dyLayout()');
+var divG = 0;
+amostras.forEach(function (a) {
+  var r = ref.compartimentos(a);
+  if (JSON.stringify(win.dyLayout(r, 900, 380)) !== JSON.stringify(ref.dyLayout(r, 900, 380))) divG++;
+});
+ok(divG === 0, 'dyLayout ≡ UI: inline idêntico ao model0.js (' + divG + ' divergências)');
+
+// ----- o canvas DESENHOU de verdade, e o desenho == dyLayout (o motor manda no pixel) -----
+var canvasEl = doc.getElementById('dy-canvas');
+var rec = canvasEl.getContext('2d');
+ok(rec && Array.isArray(rec.__rects), 'canvas: contexto exercido (gravador ativo)');
+var fills = (rec.__rects || []).filter(function (q) { return q.op === 'fill'; });
+ok(rec.__rects.length >= 4, 'canvas: desenhou ≥4 retângulos (ICF/ECF pós + basal) — tem ' + rec.__rects.length);
+ok(fills.length >= 2, 'canvas: pintou ICF e ECF (≥2 preenchimentos)');
+// no init os controles valem peso 70 · M · Na 140 · ureia 5 · manobra "nenhuma"
+var initInp = { pesoKg: 70, sexo: 'M', na0: 140, ureia0: 5, tipo: 'nenhuma', volumeL: 2, solutoMmol: 600 };
+var Lref = ref.dyLayout(ref.compartimentos(initInp), 900, 380);
+function nearBox(a, e) {
+  return a && e && Math.abs(a.x - e.x) < 1e-6 && Math.abs(a.y - e.y) < 1e-6 &&
+         Math.abs(a.w - e.w) < 1e-6 && Math.abs(a.h - e.h) < 1e-6;
+}
+ok(nearBox(fills[0], Lref.boxes.icf), 'canvas: caixa ICF pintada == dyLayout(engine)');
+ok(nearBox(fills[1], Lref.boxes.ecf), 'canvas: caixa ECF pintada == dyLayout(engine)');
+ok((rec.__texts || []).join(' ').indexOf('ICF') >= 0, 'canvas: rótulos ICF/ECF presentes');
 
 // ----- tutor: banco ≥16, bem-formado, com explicação -----
 var T = win.TUTOR;

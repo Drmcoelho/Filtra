@@ -1,0 +1,18 @@
+{
+  "name": "filtra",
+  "version": "0.1.0",
+  "private": true,
+  "description": "FILTRA · DIALISA — braço 3 do hexápode de medicina crítica (educação fisiológica renal, offline, single-file)",
+  "license": "UNLICENSED",
+  "author": "Dr. Matheus M. Coelho · CRM-SP 151.318 · Limeira",
+  "scripts": {
+    "test:0": "node build/m0/test0.node.js",
+    "test": "npm run test:0",
+    "validate:0": "node build/m0/validate0.js",
+    "validate": "npm run validate:0",
+    "check": "npm test && npm run validate"
+  },
+  "devDependencies": {
+    "jsdom": "^24.0.0"
+  }
+}

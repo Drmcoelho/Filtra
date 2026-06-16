@@ -15,7 +15,7 @@
 - **Antes de construir qualquer módulo**, leia §4 (a escada) e §5–§6 (o rito e o padrão de robustez).
 - **Ao construir**, espelhe o padrão dos braços já prontos (`Respira`, `Choca`): mesma estrutura de pastas,
   mesmo estilo de engine/teste/validador, mesmo cromo single-file.
-- **Nunca** introduza dose, alvo terapêutico acionável ou prescrição (ver §8 · SaMD).
+- **Toda dose/conduta** vem com unidade e mecanismo, computada pelo motor (ver §8 · escopo farmacológico).
 - **Sempre** rode `npm run check` antes de considerar um módulo pronto.
 
 ---
@@ -85,7 +85,7 @@ Padrões herdados do Choca que ESTE braço repete:
 - Pérolas computadas pelo motor (ex.: no Choca, "a mesma PEEP descarrega o VE e esmaga o VD";
   "a CVP engana sob PEEP"; "a PAM mente no choque críptico"). FILTRA terá as suas (ver §4).
 - Camada interativa: caso com decisões, "prever-depois-revelar", tutor com banco ≥16 e dificuldade crescente.
-- Validador jsdom que recusa dose/alvo (guarda SaMD) e confere engine ≡ UI.
+- Validador jsdom que confere engine ≡ UI (e, neste braço, exige dose↔unidade↔mecanismo — ver §8).
 - Rodapé de série obrigatório: `CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira`.
 
 ---
@@ -109,11 +109,15 @@ Estes ainda não têm repositório. Quando nascerem, herdam este mesmo CLAUDE.md
 
 O rim é o **defensor do meio interno**: filtra o plasma, reabsorve/secreta seletivamente e regula —
 minuto a minuto — volume, eletrólitos, equilíbrio ácido-base e a depuração de escórias. O braço cobre a
-fisiologia (FILTRA), a falência (lesão renal aguda) e a substituição por máquina (DIALISA).
+fisiologia (FILTRA), a falência (lesão renal aguda), a **farmacologia** que age sobre o néfron e o eixo
+endócrino, e a substituição por máquina (DIALISA).
 
 ```text
 Tese FILTRA   : LRA não é creatinina alta. É a falência da regulação do meio interno
                 (volume, eletrólitos, ácido-base, escórias).
+Tese FÁRMACO  : cada diurético é uma chave numa fechadura de UM segmento do néfron; a curva
+                dose-resposta é fisiologia, não tabela. Anti-hipertensivos e bloqueadores do
+                RAAS movem a hemodinâmica glomerular (aferente × eferente).
 Tese DIALISA  : a diálise não substitui o rim. Substitui — parcialmente — algumas funções,
                 por mecanismos físicos: difusão, convecção, ultrafiltração e adsorção.
 ```
@@ -148,16 +152,22 @@ C_x = (U_x · V̇) / P_x             FE_Na = (U_Na·P_Cr)/(P_Na·U_Cr)·100
 AG = Na⁺ − (Cl⁻ + HCO₃⁻)          pH = 6,1 + log₁₀(HCO₃⁻ / (0,03·PaCO₂))
 Kt/V, URR                          dose/adequação de diálise
 TMP → ultrafiltração               KoA, sieving → clearance da membrana
+efeito = Emax·D / (EC50 + D)       dose-resposta sigmoide; teto; o braking desloca a curva à direita
+RAAS: renina → AngII (constrição eferente) → aldosterona (Na⁺↑ / K⁺↓)
+dose renal de fármaco ← Vd · ligação proteica · fração renal · clearance (e o que a diálise remove)
 ```
 
-### 4.4 A escada de módulos — FILTRA (10) + DIALISA (20) + exame
+### 4.4 A escada de módulos — FILTRA (19) + DIALISA (20) + exame
 
-> Numeração canônica: a metade **FILTRA** ocupa **M0–M9** (10 módulos); a metade **DIALISA** ocupa
-> **M10–M29** (20 módulos); o **M30** é o exame global de domínio. Cada `filtraN.html` é single-file, com
-> engine puro, teste, validador, caso de 5 atos, trilha socrática, instrumento vivo, lab com veredito,
-> tutor gráfico e fronteira SaMD. O "erro cognitivo" entre parênteses é a confusão que o módulo corrige.
+> Numeração canônica: a metade **FILTRA** ocupa **M0–M18** (19 módulos: anatomia funcional → meio interno →
+> falência → farmacologia integrada); a metade **DIALISA** ocupa **M19–M38** (20 módulos); o **M39** é o
+> exame global de domínio. Cada `filtraN.html` é single-file, com engine puro, teste, validador, caso de 5
+> atos, trilha socrática, instrumento vivo, lab com veredito, tutor gráfico e disclaimer educacional. O
+> "erro cognitivo" entre parênteses é a confusão que o módulo corrige; `[fármaco: …]` marca a farmacologia
+> **encadeada no segmento** (estrutura híbrida, §8): a droga é a alavanca daquele segmento, e dois capstones
+> (M17–M18) integram tudo.
 
-#### Metade A · FILTRA — filtração e meio interno (M0–M9, 10 módulos)
+#### Metade A · FILTRA — anatomia funcional, meio interno e farmacologia (M0–M18, 19 módulos)
 
 ```text
 Bloco 0 · Fundamentos — a água e a filtração
@@ -165,60 +175,90 @@ Bloco 0 · Fundamentos — a água e a filtração
         (erro: "a célula é isolada"; verdade: tonicidade ≠ osmolalidade medida; a ureia é osmol inefetivo)
   M1  O néfron / forças de Starling glomerulares (aferente×eferente) [CONSTRUÍDO ✓]
         (erro: "oligúria = pouca água"; verdade: P_GC mora entre duas resistências; autorregulação + precipício)
-  M2  Clearance — medir a função, e por que a creatinina mente
+Bloco I · O glomérulo, a hemodinâmica e a medida
+  M2  Hemodinâmica renal — 20% do DC, autorregulação miogênica + feedback tubuloglomerular; córtex × medula
+        (erro: "o rim recebe pouco fluxo"; verdade: 20% do DC; a medula vive à beira da hipóxia — o parênquima
+         e suas lesões isquêmicas)                                   [fármaco: AINEs (aferente), IECA/BRA (eferente)]
+  M3  O glomérulo — barreira de filtração, Kf, podócito, proteinúria por mecanismo
+        (erro: "proteinúria = rim falhando"; verdade: glomerular × tubular; a barreira de carga e tamanho)
+  M4  Clearance — medir a função, e por que a creatinina mente
         (erro: "creatinina = função"; verdade: cinética lenta, massa muscular, secreção tubular)
-Bloco I · O meio interno (o que o rim defende)
-  M3  Sódio e volume — o rim defende o VOLUME circulante efetivo, não a concentração
+Bloco II · O túbulo, segmento a segmento (transportador = alavanca, droga = chave)
+  M5  TCP — reabsorção isosmótica, Na/glicose (SGLT2), HCO₃/anidrase carbônica, Fanconi
+        (erro: "o proximal só reabsorve"; verdade: 65% do Na sai aqui; a alça é prisioneira do proximal)
+                                                          [fármaco: acetazolamida, SGLT2i, manitol]
+  M6  Alça de Henle — fina descendente × ramo espesso (NKCC2), contracorrente, gradiente corticomedular
+        (erro: "a alça concentra urina"; verdade: ela cria o gradiente; o ramo espesso é o motor diluidor)
+                                                          [fármaco: diuréticos de alça — furosemida/bumetanida/torasemida, dose-resposta]
+  M7  TCD — NCC, manejo de Ca²⁺, o segmento diluidor distal
+        (erro: "tudo é igual no túbulo"; verdade: o TCD ajusta fino; NCC e o paradoxo do Ca dos tiazídicos)
+                                                          [fármaco: tiazídicos]
+  M8  Ducto coletor — célula principal (ENaC/aldosterona) × intercalar (H⁺/HCO₃), ADH/aquaporinas
+        (erro: "aldosterona = sódio"; verdade: troca Na por K/H; o ADH abre aquaporinas — duas alavancas)
+                                                          [fármaco: poupadores de K (espironolactona/eplerenona, amilorida), vaptanos]
+Bloco III · O meio interno (o que o rim defende)
+  M9  Sódio e volume — o rim defende o VOLUME circulante efetivo, não a concentração
         (erro: "Na baixo = falta de sal"; verdade: Na é proxy de água; volume e tonicidade são eixos distintos)
-  M4  Água livre e o sódio — disnatremias são distúrbios de ÁGUA (ADH, sede, clearance de água livre)
+  M10 Água livre e o sódio — disnatremias são distúrbios de ÁGUA (ADH/vasopressina, sede, clearance de água livre)
         (erro: "tratar o número Na"; verdade: corrigir a água; a velocidade importa — mielinólise/edema)
-  M5  Potássio — secreção distal, aldosterona, shift transcelular; o eletrólito que mata
+  M11 Potássio — secreção distal, aldosterona, shift transcelular; o eletrólito que mata
         (erro: "K total"; verdade: gradiente transcelular × estoque; pH, insulina, β; ECG como mecanismo)
-  M6  Cálcio · fósforo · magnésio — o eixo ósseo-mineral (PTH, vitamina D, FGF23)
+  M12 Cálcio · fósforo · magnésio — o eixo ósseo-mineral (PTH, vitamina D, FGF23)
         (erro: "cálcio sérico = cálcio"; verdade: ionizado, albumina, pH; o triângulo Ca-PO₄-PTH)
-  M7  Ácido-base renal — HCO₃⁻ reabsorvido, NH₄⁺, acidez titulável; ânion gap e delta-delta
+  M13 Ácido-base renal — HCO₃⁻ reabsorvido, NH₄⁺, acidez titulável; ânion gap e delta-delta
         (erro: "pH é respiratório"; verdade: o rim regula o HCO₃⁻; AG, delta-delta, ATRs por mecanismo)
-Bloco II · A leitura e a falência
-  M8  Ureia, creatinina, eGFR e a urina — FE_Na, FE_ureia, sedimento, índices urinários
+Bloco IV · O rim como glândula e a leitura da urina
+  M14 RAAS e o eixo endócrino renal — renina→AngII→aldosterona, ADH/vasopressina, eritropoetina, vitamina D
+        (erro: "o rim só filtra"; verdade: é glândula — sente pressão/Na/O₂ e responde com hormônios)
+  M15 Ureia, creatinina, eGFR e a urina — FE_Na, FE_ureia, sedimento, índices urinários
         (erro: "número isolado"; verdade: a urina conta a história; índices separam pré-renal de NTA)
-  M9  A LRA por mecanismo — KDIGO; pré-renal / intrínseca (NTA·NIA·glomerular) / pós-renal  [capstone FILTRA]
+Bloco V · A falência e a farmacologia integrada (capstones)
+  M16 A LRA por mecanismo — KDIGO; pré-renal / intrínseca (NTA·NIA·glomerular) / pós-renal  [capstone fisiológico]
         (erro: "LRA é um diagnóstico"; verdade: é uma sombra com 3 mecanismos; cardiorrenal e hepatorrenal)
+  M17 Farmacologia diurética integrada — o néfron inteiro como alvo: dose-resposta, teto, braking,
+        resistência, bloqueio sequencial e sinergia (do TCP ao ducto coletor)            [capstone farmacológico 1]
+        (erro: "dobrar a dose sempre faz mais xixi"; verdade: há teto e há braking; a sinergia mora na sequência)
+  M18 Farmacologia anti-hipertensiva, do RAAS e do eixo endócrino-renal — IECA/BRA/IDR/ARM/sacubitril;
+        EPO/ESA, quelantes de P, calcimiméticos, análogos de vit D; ajuste renal de fármacos (Vd, ligação,
+        clearance)                                                                       [capstone farmacológico 2]
+        (erro: "creatinina subiu, suspenda o IECA"; verdade: a queda da TFG pelo eferente pode ser o efeito esperado)
 ```
 
-#### Metade B · DIALISA — substituição renal e terapia crítica (M10–M29, 20 módulos)
+#### Metade B · DIALISA — substituição renal e terapia crítica (M19–M38, 20 módulos)
 
 ```text
-Bloco III · Princípios e o circuito
-  M10 Princípios físicos do transporte — difusão · convecção · ultrafiltração · adsorção (a base de tudo)
-  M11 O circuito extracorpóreo — acesso, bomba, dialisador, fluxos (Qb, Qd), pressões (TMP)
-  M12 A membrana e o clearance — KoA, permeabilidade, sieving, backfiltration (high-flux × low-flux)
-Bloco IV · Hemodiálise intermitente (HDI)
-  M13 A sessão de HDI — gradientes, eficiência × tempo; por que "intermitente" tem custo
-  M14 Ultrafiltração e o balanço de volume — peso seco, taxa de UF, refilling plasmático
-  M15 Hipotensão intradialítica — o mecanismo (UF > refilling), o stunning miocárdico, a tolerância
-  M16 Dose e adequação — Kt/V, URR, clearance; o que "suficiente" significa (mecanismo, não alvo prescritivo)
-  M17 Cinética da ureia — compartimento único × duplo, rebote pós-diálise; o tempo importa
-Bloco V · Terapias contínuas e alternativas
-  M18 Terapias contínuas (TRRC/CRRT) — CVVH (convecção) × CVVHD (difusão) × CVVHDF; por que "contínuo"
-  M19 Dose e fluidos na TRRC — efluente mL/kg/h, pré × pós-diluição; o mecanismo da dose contínua
-  M20 Anticoagulação do circuito — citrato regional (quelação de Ca²⁺) × heparina; mecanismo, não receita
-  M21 Diálise peritoneal — o peritônio como membrana; UF osmótica pela glicose; tipos de transportador
-  M22 SLED / híbridas — o meio-termo entre HDI e TRRC; o racional hemodinâmico
-Bloco VI · O que a diálise remove — e os perigos
-  M23 Depuração de solutos e drogas — peso molecular, ligação proteica, Vd; o que sai (e o que não)
-  M24 Remoção de toxinas — intoxicações dialisáveis por mecanismo (lítio, salicilato, metanol, etilenoglicol)
-  M25 Síndrome de desequilíbrio dialítico — edema cerebral por osmose reversa; o gradiente que machuca
-Bloco VII · Indicação, momento e integração
-  M26 Indicações de TRS — o AEIOU como MAPA DE MECANISMOS (acidose, eletrólitos, intoxicação, sobrecarga, uremia)
-  M27 O momento da substituição — o mecanismo que pede suporte (sem gatilho de ação para caso real)
-  M28 Síndrome cardiorrenal e a ultrafiltração — coração, rim e volume na falência mútua (ponte com Choca)
-  M29 Capstone integrado — LRA grave → escolha de modalidade POR MECANISMO → meio interno restaurado
-Bloco VIII · Avaliação
-  M30 Revisão global · exame de domínio · 100 questões (psicométrico, como nos outros braços)
+Bloco VI · Princípios e o circuito
+  M19 Princípios físicos do transporte — difusão · convecção · ultrafiltração · adsorção (a base de tudo)
+  M20 O circuito extracorpóreo — acesso, bomba, dialisador, fluxos (Qb, Qd), pressões (TMP)
+  M21 A membrana e o clearance — KoA, permeabilidade, sieving, backfiltration (high-flux × low-flux)
+Bloco VII · Hemodiálise intermitente (HDI)
+  M22 A sessão de HDI — gradientes, eficiência × tempo; por que "intermitente" tem custo
+  M23 Ultrafiltração e o balanço de volume — peso seco, taxa de UF, refilling plasmático
+  M24 Hipotensão intradialítica — o mecanismo (UF > refilling), o stunning miocárdico, a tolerância
+  M25 Dose e adequação — Kt/V, URR, clearance; a prescrição de dose (alvo, tempo, fluxos por mecanismo)
+  M26 Cinética da ureia — compartimento único × duplo, rebote pós-diálise; o tempo importa
+Bloco VIII · Terapias contínuas e alternativas
+  M27 Terapias contínuas (TRRC/CRRT) — CVVH (convecção) × CVVHD (difusão) × CVVHDF; por que "contínuo"
+  M28 Dose e fluidos na TRRC — efluente mL/kg/h, pré × pós-diluição; a prescrição da dose contínua
+  M29 Anticoagulação do circuito — citrato regional (quelação de Ca²⁺) × heparina; protocolos e doses
+  M30 Diálise peritoneal — o peritônio como membrana; UF osmótica pela glicose; PET/tipos de transportador
+  M31 SLED / híbridas — o meio-termo entre HDI e TRRC; o racional hemodinâmico
+Bloco IX · O que a diálise remove — e os perigos
+  M32 Depuração de solutos e drogas — peso molecular, ligação proteica, Vd; dosagem de fármacos na diálise
+  M33 Remoção de toxinas — intoxicações dialisáveis (lítio, salicilato, metanol, etilenoglicol); indicação e dose
+  M34 Síndrome de desequilíbrio dialítico — edema cerebral por osmose reversa; o gradiente que machuca
+Bloco X · Indicação, momento e integração
+  M35 Indicações de TRS — o AEIOU (acidose, eletrólitos, intoxicação, sobrecarga, uremia) como mapa de conduta
+  M36 O momento da substituição — quando iniciar: os gatilhos, precoce × tardio, e o mecanismo que pede suporte
+  M37 Síndrome cardiorrenal e a ultrafiltração — coração, rim e volume na falência mútua; diuréticos × UF (ponte com Choca)
+  M38 Capstone integrado — LRA grave → escolha de modalidade e prescrição POR MECANISMO → meio interno restaurado
+Bloco XI · Avaliação
+  M39 Revisão global · exame de domínio · 100 questões (psicométrico, como nos outros braços)
 ```
 
-Pontes obrigatórias com o Choca: M9/M28 ↔ Choca M16/M23 (cardiogênico, misto); M9 (hepatorrenal) ↔ Choca
-M20 (distributivo); M3–M4 (volume) ↔ Choca M4/M5 (Guyton, responsivo≠tolerante) e M25 (ressuscitação volêmica).
+Pontes obrigatórias com o Choca: M16/M37 ↔ Choca M16/M23 (cardiogênico, misto); M16 (hepatorrenal) ↔ Choca
+M20 (distributivo); M9–M10 (volume) ↔ Choca M4/M5 (Guyton, responsivo≠tolerante) e M25 (ressuscitação volêmica);
+M18 (anti-hipertensivos & RAAS) ↔ Choca M28 (vasopressores & inotrópicos) — as duas faces da hemodinâmica.
 
 ### 4.5 Estado atual da construção
 
@@ -240,7 +280,7 @@ A FAZER· filtra0.html + validate0.js (instrumento: diagrama de Darrow–Yannet 
 1. build/mN/modelN.js        engine PURO (a fórmula primeiro; nada de UI)
 2. build/mN/testN.node.js    bateria de robustez (ver §6) — 0 falhas
 3. filtraN.html              single-file: caso(5 atos) · trilha · instrumento vivo · lab · tutor
-4. build/mN/validateN.js     portão jsdom: estrutura · engine≡UI · interativo · cromo · guarda SaMD
+4. build/mN/validateN.js     portão jsdom: estrutura · engine≡UI · interativo · cromo · guarda farmacológica (dose↔unidade↔mecanismo)
 5. package.json              adicionar test:N e validate:N (e ao agregado test/validate/check)
 6. filtra.html               índice: cartão do módulo de "em breve" → "disponível"
 7. curriculum.json           manifesto curricular (status do módulo)
@@ -281,12 +321,13 @@ Critério: o teste é **determinístico entre execuções** (rode 3×, saída id
 - Abas: **Caso** (5 atos) · **Trilha** (socrática, ≥9 passos, pistas) · **Instrumento** (canvas computado ao
   vivo) · **Lab** (sliders + veredito + banners) · **Avaliação** (tutor gráfico, banco ≥16, dificuldade crescente).
 - Camada interativa: caso com decisões + "prever-depois-revelar".
-- Disclaimer SaMD + nota de honestidade do modelo + rodapé de série + backlink relativo ao índice.
+- Disclaimer educacional + nota de honestidade do modelo + rodapé de série + backlink relativo ao índice.
 
 ### Validador (`validateN.js`)
 - jsdom `runScripts:'dangerously'`; confere IDs estruturais, `engine ≡ UI`, lab/veredito, camada interativa,
-  banco do tutor, cromo (kicker/rodapé/pontes) e **guarda SaMD** (regex que recusa `mg/mcg/µg/mL·h⁻¹` e
-  comandos prescritivos).
+  banco do tutor, cromo (kicker/rodapé/pontes). **Guarda farmacológica (invertida — ver §8):** nos módulos com
+  fármacos, EXIGE que toda dose traga unidade explícita (`mg/mcg/µg/mL·h⁻¹`) ancorada a um mecanismo, que o
+  motor de dose-resposta case com a UI, e que o disclaimer educacional esteja presente.
 
 ### CI
 - `.github/workflows/check.yml` roda `npm run check` em push/PR. Verde é mandatório para mesclar.
@@ -315,22 +356,49 @@ CLAUDE.md                  este guia
 
 ---
 
-## 8. Fronteira clínica · SaMD (precede utilidade, estética e completude)
+## 8. Fronteira clínica · escopo farmacológico e de conduta (decisão do autor)
 
-FILTRA · DIALISA é **educação fisiológica**. Não é protocolo, calculadora de dose, prescritor de diálise,
-ajustador de fármaco para paciente real, nem suporte automatizado à decisão clínica.
+> **Mudança constitucional (2026-06).** Diferente dos braços-irmãos `Respira` e `Choca`, que mantêm o
+> hard-stop de SaMD (mecanismo sim; dose/alvo/prescrição, não), o **FILTRA · DIALISA abre deliberadamente o
+> escopo** para a farmacologia clínica aplicada e a conduta. A decisão é do autor (Dr. Matheus M. Coelho) e
+> vale **apenas para este braço** — não retroage aos demais nem ao padrão geral do hexápode.
+
+FILTRA · DIALISA é uma máquina de **raciocínio clínico-fisiológico aplicado**. Continua ensinando o
+mecanismo primeiro — mas agora leva o mecanismo até a conduta: o fármaco, a dose, a curva dose-resposta, a
+sugestão terapêutica e a prescrição de diálise entram como conteúdo de primeira classe, sempre **computados
+pelo motor** e amarrados ao mecanismo que os justifica. O princípio "engine antes da UI" não muda: uma dose
+exibida que o motor não computou é bug crítico.
 
 ```text
-PERMITIDO                                   PROIBIDO
-mecanismo                                   prescrição de diálise (Kt/V-alvo, tempo, fluxo p/ um paciente)
-termo quebrado (P_GC, túbulo, P_BC, água)   dose de fármaco ou ajuste renal de droga p/ caso real
-receptor/alavanca → variável                gatilho automatizado de início de TRS p/ paciente real
-por que dois quadros têm causas diferentes  alvo individualizado de volume/eletrólito acionável
-por que tal modalidade remove X por tal via conduta terapêutica para paciente real
+EM ESCOPO (agora permitido e encorajado)        ÂNCORA OBRIGATÓRIA (a forma de fazer)
+farmacologia completa dos diuréticos            toda dose traz unidade explícita + faixa + mecanismo
+  (alça, tiazídico, poupador de K, anidrase      (nunca um número solto; sempre o "por quê")
+   carbônica, osmótico, SGLT2, vaptano):        dose/efeito vêm do engine (dose-resposta), não de tabela fixa
+   alvo molecular, PK, PD, dose-resposta,       a UI computada ≡ engine (validador confere)
+   teto, resistência, sinergia                  disclaimer educacional + nota de honestidade do modelo
+anti-hipertensivos de ação renal + RAAS
+  (IECA, BRA, IDR, ARM, sacubitril): doses
+  e efeito hemodinâmico glomerular
+eixo endócrino-renal farmacológico
+  (EPO/ESA, quelantes de P, calcimiméticos,
+   análogos de vit D)
+ajuste renal de fármacos (Vd, ligação,
+  clearance; o que a diálise remove)
+prescrição de diálise por mecanismo
+  (Kt/V-alvo, tempo, fluxos, dose de TRRC
+   mL/kg/h, anticoagulação, gatilho de início)
+sugestões de conduta terapêutica
 ```
 
-Mnemônicos clínicos (ex.: **AEIOU** para indicação de TRS) entram como **mapa de mecanismos**, jamais como
-gatilho de ação. Os validadores devem recusar padrões de dose e comandos prescritivos.
+Responsabilidade (o que permanece, mesmo com o escopo aberto):
+- a ferramenta é **educacional**; não está conectada ao prontuário nem aos monitores de um paciente real e
+  não é dispositivo médico certificado. A decisão e a responsabilidade finais são sempre do prescritor.
+- mnemônicos clínicos (ex.: **AEIOU** para indicação de TRS) agora podem desaguar em conduta — mas seguem
+  ancorados ao mapa de mecanismos que os gera.
+
+Os validadores **invertem a guarda**: em vez de recusar `mg/mcg/µg/mL·h⁻¹` e comandos prescritivos, passam a
+**exigir** que toda dose venha com unidade explícita ancorada a um mecanismo e que o motor de dose-resposta
+case com a UI. A ausência de dose onde o módulo a promete passa a ser falha.
 
 ---
 
@@ -360,7 +428,7 @@ Engine antes de UI.      Fórmula validada antes de gráfico.
 Física viva.             Gráficos e questões são COMPUTADOS, não imagens.
 Robustez inigualável.    clamp resiliente + determinismo + fuzzing ≥ 5000 (§6).
 Português do Brasil.     Prosa causal, seca, com setas.
-SaMD hard-stop.          Mecanismo sim; dose/alvo/prescrição, não.
+Farmacologia viva.       Mecanismo → fármaco → dose/conduta, computados pelo motor (§8).
 0 falhas ou não entra.   npm run check é o portão.
 ```
 

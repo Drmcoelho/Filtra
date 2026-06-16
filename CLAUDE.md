@@ -263,14 +263,15 @@ M18 (anti-hipertensivos & RAAS) ↔ Choca M28 (vasopressores & inotrópicos) —
 ### 4.5 Estado atual da construção
 
 ```text
-FEITO  · M0  build/m0/model0.js + test0.node.js   compartimentos (Darrow–Yannet)   33 OK · fuzz 5000
-FEITO  · M1  build/m1/model1.js + test1.node.js   néfron / Starling                39 OK · fuzz 5000
-HARNESS· package.json (test:0, test:1, check) · .github/workflows/check.yml · README.md · .gitignore
-A FAZER· filtra0.html + validate0.js (instrumento: diagrama de Darrow–Yannet vivo) → depois M1.html → escada
+FEITO  · M0  engine model0.js + test0.node.js (108 OK · fuzz 5000) + filtra0.html (Darrow–Yannet vivo)
+             + validate0.js (40 OK) — módulo completo, no rito do §5
+HARNESS· package.json (test:0/validate:0/check) · .github/workflows/check.yml · curriculum.json ·
+             filtra.html (índice) · FILTRA.md (constituição) · .gitignore
+A FAZER· M1 (néfron/Starling): build/m1/model1.js + test1.node.js → filtra1.html + validate1.js → seguir a escada §4.4
 ```
 
-`npm run check` atual = `npm test` (engines) → **verde**. Quando os `filtraN.html` + `validateN.js` existirem,
-`check` passa a `npm test && npm run validate`, no padrão do Choca.
+`npm run check` = `npm test && npm run validate` → **verde** (M0: 108 OK no engine + 40 OK no validador).
+Nota: `jsdom` é dependência só de validação; o produto publicado é offline e sem dependências de runtime.
 
 ---
 
@@ -404,13 +405,14 @@ case com a UI. A ausência de dose onde o módulo a promete passa a ser falha.
 
 ## 9. Para o próximo agente — como pegar e construir o próximo módulo
 
-1. Leia `FILTRA.md` (constituição) e este §4–§6.
-2. O próximo artefato é **`filtra0.html` + `build/m0/validate0.js`** (o engine M0 já existe e está verde).
-   Instrumento sugerido: **diagrama de Darrow–Yannet vivo** — o aluno arrasta a manobra (água livre /
-   isotônico / hipertônico / suor / ureia) e vê a "banana" (célula) inchar/murchar e o Na⁺ mudar, com a
-   pérola da ureia (osm medida sobe, célula não muda) destacada.
-3. Depois `filtra1.html + validate1.js` (néfron/Starling: curva TFG×PAM com o platô da autorregulação e o
-   precipício pré-renal; o paradoxo do eferente).
+1. Leia `FILTRA.md` (constituição) e este §4–§6. O **M0 já está completo** (engine + teste + `filtra0.html`
+   com o Darrow–Yannet vivo + validador), e serve de molde para os próximos.
+2. O próximo módulo é o **M1 — néfron / forças de Starling** (a escada renumerou; ver §4.4): construa a pilha
+   inteira no rito do §5 — `build/m1/model1.js` + `test1.node.js` → `filtra1.html` + `build/m1/validate1.js`.
+   Instrumento sugerido: curva TFG×PAM com o platô da autorregulação e o precipício pré-renal; o paradoxo do
+   eferente (a creatinina sobe porque o IECA *funciona*).
+3. Depois o M2 (hemodinâmica renal — 20% do DC, córtex×medula) e a partir do M5 a farmacologia **encadeada no
+   segmento** (§8): a droga é a alavanca daquele túbulo, com dose↔unidade↔mecanismo computados pelo motor.
 4. Então siga a escada §4.4, um módulo por vez, sempre fechando com `npm run check` verde.
 5. Mantenha o padrão de robustez (§6) em cada novo engine: faixas fisiológicas, identidades, leis,
    determinismo, robustez e **fuzzing semeado ≥ 5000**.

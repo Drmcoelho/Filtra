@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · DIALISA — índice do braço</title>
+<style>
+  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent);text-decoration:none}
+  header{padding:22px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0;font-size:24px}
+  .sub{color:var(--dim);max-width:80ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim)}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:1040px;margin:0 auto;padding:18px 20px 60px}
+  h2{font-size:15px;color:var(--dim);text-transform:uppercase;letter-spacing:.08em;margin:26px 0 8px;border-bottom:1px solid var(--line);padding-bottom:6px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;display:block;color:var(--ink)}
+  .card.soon{opacity:.5}
+  .card .id{font-size:12px;color:var(--accent);font-weight:700}
+  .card.soon .id{color:var(--dim)}
+  .card .t{margin-top:4px;font-size:14px}
+  .tag{float:right;font-size:10px;text-transform:uppercase;letter-spacing:.08em;border:1px solid var(--line);border-radius:999px;padding:1px 7px;color:var(--dim)}
+  .tag.ok{color:#05181a;background:var(--accent);border-color:var(--accent)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .note{font-size:13px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">hexápode de medicina crítica · braço 3</div>
+  <h1>FILTRA · DIALISA</h1>
+  <div class="sub">Filtração, meio interno e substituição renal — máquina educacional offline de fisiologia
+  causal e farmacologia clínica aplicada. <i>O motor manda no pixel.</i></div>
+  <nav class="hex">
+    <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
+    <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <h2>Metade A · FILTRA — anatomia funcional, meio interno e farmacologia</h2>
+  <div class="cards" id="grid-filtra"></div>
+
+  <h2>Metade B · DIALISA — substituição renal e terapia crítica</h2>
+  <div class="cards" id="grid-dialisa"></div>
+
+  <h2>Avaliação</h2>
+  <div class="cards" id="grid-exame"></div>
+
+  <div class="note">
+    Escopo deste braço: além da fisiologia, inclui <b>farmacologia clínica aplicada</b> (diuréticos,
+    anti-hipertensivos, eixo endócrino-renal, prescrição de diálise) — decisão do autor, válida só para o
+    FILTRA. Ferramenta educacional; não substitui julgamento clínico.
+  </div>
+
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+</div>
+
+<script>
+/* Índice gerado a partir do mesmo manifesto da escada (curriculum.json espelhado inline p/ funcionar offline) */
+var MODULOS=[
+  ["M0","FILTRA","Compartimentos do líquido corporal — a célula no oceano","filtra0.html"],
+  ["M1","FILTRA","O néfron / forças de Starling glomerulares","filtra1.html"],
+  ["M2","FILTRA","Hemodinâmica renal — 20% do DC, autorregulação [AINEs, IECA/BRA]"],
+  ["M3","FILTRA","O glomérulo — barreira, Kf, podócito, proteinúria"],
+  ["M4","FILTRA","Clearance — por que a creatinina mente"],
+  ["M5","FILTRA","TCP — SGLT2, anidrase carbônica [acetazolamida, SGLT2i, manitol]"],
+  ["M6","FILTRA","Alça de Henle — NKCC2, contracorrente [diuréticos de alça]"],
+  ["M7","FILTRA","TCD — NCC, segmento diluidor [tiazídicos]"],
+  ["M8","FILTRA","Ducto coletor — ENaC/aldo, ADH [poupadores de K, vaptanos]"],
+  ["M9","FILTRA","Sódio e volume — o volume circulante efetivo"],
+  ["M10","FILTRA","Água livre e disnatremias — ADH, clearance de água livre"],
+  ["M11","FILTRA","Potássio — secreção distal, shift transcelular"],
+  ["M12","FILTRA","Cálcio · fósforo · magnésio — PTH, vit D, FGF23"],
+  ["M13","FILTRA","Ácido-base renal — AG, delta-delta, ATRs"],
+  ["M14","FILTRA","RAAS e o eixo endócrino renal — AngII, ADH, EPO, vit D"],
+  ["M15","FILTRA","Ureia, creatinina, eGFR e a urina — FE_Na, índices"],
+  ["M16","FILTRA","A LRA por mecanismo — KDIGO [capstone fisiológico]"],
+  ["M17","FILTRA","Farmacologia diurética integrada [capstone farmacológico 1]"],
+  ["M18","FILTRA","Anti-hipertensivos, RAAS e eixo endócrino-renal [capstone farmacológico 2]"],
+  ["M19","DIALISA","Princípios físicos — difusão, convecção, UF, adsorção"],
+  ["M20","DIALISA","O circuito extracorpóreo — fluxos, TMP"],
+  ["M21","DIALISA","A membrana e o clearance — KoA, sieving"],
+  ["M22","DIALISA","A sessão de HDI — eficiência × tempo"],
+  ["M23","DIALISA","Ultrafiltração e o balanço de volume — peso seco"],
+  ["M24","DIALISA","Hipotensão intradialítica — stunning miocárdico"],
+  ["M25","DIALISA","Dose e adequação — Kt/V, URR; a prescrição"],
+  ["M26","DIALISA","Cinética da ureia — rebote pós-diálise"],
+  ["M27","DIALISA","TRRC/CRRT — CVVH × CVVHD × CVVHDF"],
+  ["M28","DIALISA","Dose e fluidos na TRRC — efluente mL/kg/h"],
+  ["M29","DIALISA","Anticoagulação — citrato × heparina"],
+  ["M30","DIALISA","Diálise peritoneal — UF osmótica, PET"],
+  ["M31","DIALISA","SLED / híbridas — o meio-termo"],
+  ["M32","DIALISA","Depuração de drogas — dosagem na diálise"],
+  ["M33","DIALISA","Remoção de toxinas — lítio, metanol; indicação e dose"],
+  ["M34","DIALISA","Síndrome de desequilíbrio dialítico"],
+  ["M35","DIALISA","Indicações de TRS — o AEIOU"],
+  ["M36","DIALISA","O momento da substituição — precoce × tardio"],
+  ["M37","DIALISA","Síndrome cardiorrenal e a UF (ponte com Choca)"],
+  ["M38","DIALISA","Capstone integrado — modalidade e prescrição por mecanismo"],
+  ["M39","EXAME","Revisão global · exame de domínio · 100 questões"]
+];
+function gridFor(metade,el){
+  MODULOS.filter(function(m){return m[1]===metade;}).forEach(function(m){
+    var href=m[3];
+    var a=document.createElement(href?'a':'div');
+    a.className='card'+(href?'':' soon'); if(href) a.href=href;
+    a.innerHTML='<span class="tag '+(href?'ok':'')+'">'+(href?'disponível':'em breve')+'</span>'+
+      '<div class="id">'+m[0]+'</div><div class="t">'+m[2]+'</div>';
+    el.appendChild(a);
+  });
+}
+gridFor('FILTRA',document.getElementById('grid-filtra'));
+gridFor('DIALISA',document.getElementById('grid-dialisa'));
+gridFor('EXAME',document.getElementById('grid-exame'));
+</script>
+</body>
+</html>

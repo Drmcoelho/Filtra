@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M0 — Compartimentos do líquido corporal</title>
+<style>
+  :root{
+    --bg:#0c1014; --panel:#141b22; --panel2:#1b242d; --line:#283642;
+    --ink:#e7eef4; --dim:#9fb1c0; --accent:#39c0c8; --warn:#e8a13a; --bad:#e0556b; --good:#52c08a;
+    --icf:#3a7bd5; --ecf:#39c0c8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:70ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none}
+  section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px}
+  .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)}
+  .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)}
+  .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)}
+  .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M0</div>
+  <h1>Compartimentos do líquido corporal — a célula no oceano</h1>
+  <div class="sub">A água cruza a membrana livremente; quem governa o tamanho da célula é a <b>tonicidade</b>
+  (osmoles efetivos), não a osmolalidade medida. A ureia entra na conta medida, mas não move água.</div>
+  <nav class="hex">
+    <a class="soon" title="em breve">RESPIRA</a>
+    <a class="soon" title="em breve">CHOCA</a>
+    <span class="ativo">FILTRA</span>
+    <a class="soon" title="em breve">ALIMENTA</a>
+    <a class="soon" title="em breve">METABOLIZA</a>
+    <a class="soon" title="em breve">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="filtra.html">&larr; índice do braço FILTRA</a>
+
+  <div class="tabs" id="tabs">
+    <button data-tab="caso" class="on">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- ============================== CASO (5 atos) ============================== -->
+  <section class="tab on" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — cinco atos, decida antes de revelar</h3>
+      <p class="sub">Homem, 70 kg. Cada ato apresenta uma manobra. Preveja o destino da célula antes de abrir.</p>
+
+      <div class="step">
+        <b>Ato 1.</b> Bebe 3 L de água pura em pouco tempo (potomania). O que acontece com a célula?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1">Tonicidade ↓ → água entra na célula → <b>ICF incha</b>, ECF também sobe, Na cai.
+          Hiponatremia <i>hipotônica</i>: o eixo é a ÁGUA.</div>
+      </div>
+      <div class="step">
+        <b>Ato 2.</b> Recebe 3 L de salina isotônica. E agora?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2">A salina fica no ECF: <b>ECF expande, ICF imóvel</b>, tonicidade e Na inalterados.
+          Volume sem distúrbio de tonicidade.</div>
+      </div>
+      <div class="step">
+        <b>Ato 3.</b> Perde 3 L de água livre (febre, diabetes insipidus). Célula?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3">Tonicidade ↑ → água sai da célula → <b>ICF murcha</b>, ECF também cai, Na sobe.
+          Hipernatremia é, quase sempre, déficit de água.</div>
+      </div>
+      <div class="step">
+        <b>Ato 4.</b> A ureia sobe muito (uremia), sem outra mudança. A célula incha?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>Não.</b> A osmolalidade MEDIDA sobe, mas a ureia atravessa a membrana:
+          é osmol <b>inefetivo</b>. Tonicidade e tamanho da célula <b>não mudam</b>. <i>(pérola do módulo)</i></div>
+      </div>
+      <div class="step">
+        <b>Ato 5.</b> Glicemia dispara (cetoacidose, sem insulina). Na medido cai. A célula incha?
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>Murcha.</b> A glicose é osmol <b>efetivo</b>: puxa água para fora da célula.
+          O Na medido cai por diluição, mas a tonicidade SOBE — hiponatremia <i>hipertônica</i>.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== TRILHA (socrática) ============================== -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — nove perguntas que constroem o conceito</h3>
+      <details><summary>1. Quanta água tem um homem de 70 kg?</summary>
+        <p>TBW = peso · fração. Homem ≈ 0,6 → 42 L. Mulher ≈ 0,5. Idoso menos água.</p></details>
+      <details><summary>2. Como se divide essa água?</summary>
+        <p>ICF ≈ 2/3 (28 L) · ECF ≈ 1/3 (14 L). O plasma é ~1/4 do ECF.</p></details>
+      <details><summary>3. O que mantém a célula com tamanho estável?</summary>
+        <p>A água cruza a membrana até a <b>tonicidade</b> se igualar dos dois lados. A célula é o lado que se ajusta.</p></details>
+      <details><summary>4. Tonicidade é o mesmo que osmolalidade medida?</summary>
+        <p>Não. Tonicidade = osmoles <b>efetivos</b> / água. A medida soma os <b>inefetivos</b> (ureia, álcoois).</p></details>
+      <details><summary>5. Por que a ureia não move água?</summary>
+        <p>Porque atravessa a membrana e equilibra dos dois lados — não cria gradiente efetivo. Sobe a medida, não a tonicidade.</p></details>
+      <details><summary>6. E a glicose (sem insulina)?</summary>
+        <p>Fica fora da célula → osmol <b>efetivo</b> → puxa água da célula. Cada +5,5 mmol/L de glicose ≈ −2,4 mmol/L de Na medido.</p></details>
+      <details><summary>7. Por que o sódio é "proxy de água"?</summary>
+        <p>Porque o Na domina a tonicidade do ECF (Na ≈ tonicidade/2). Na baixo geralmente = água em excesso, não falta de sal.</p></details>
+      <details><summary>8. Salina isotônica mexe na célula?</summary>
+        <p>Não. Fica no ECF (mesma tonicidade) → expande volume sem mover água para dentro da célula.</p></details>
+      <details><summary>9. Como ler o diagrama de Darrow–Yannet?</summary>
+        <p>Largura = volume; altura = tonicidade. Compare o contorno tracejado (basal) com o preenchido (após a manobra).</p></details>
+    </div>
+  </section>
+
+  <!-- ============================== INSTRUMENTO (canvas vivo) ============================== -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — diagrama de Darrow–Yannet vivo</h3>
+      <p class="sub">Os controles do <b>Lab</b> alimentam este diagrama. Tracejado = basal; sólido = após a manobra.
+      Azul = ICF, ciano = ECF. Altura = tonicidade.</p>
+      <canvas id="dy-canvas" width="900" height="380" aria-label="Diagrama de Darrow-Yannet"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- ============================== LAB ============================== -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — mova a manobra, leia o veredito</h3>
+      <div class="grid">
+        <div>
+          <label>Peso (kg): <span class="val" id="lbl-peso">70</span></label>
+          <input type="range" id="in-peso" min="30" max="150" step="1" value="70">
+          <label>Sexo</label>
+          <select id="in-sexo"><option value="M">Masculino (0,6)</option><option value="F">Feminino (0,5)</option></select>
+          <label>Na⁺ basal (mmol/L): <span class="val" id="lbl-na">140</span></label>
+          <input type="range" id="in-na" min="110" max="170" step="1" value="140">
+          <label>Ureia basal (mmol/L): <span class="val" id="lbl-ureia">5</span></label>
+          <input type="range" id="in-ureia" min="0" max="60" step="1" value="5">
+        </div>
+        <div>
+          <label>Manobra</label>
+          <select id="in-tipo">
+            <option value="nenhuma">— nenhuma —</option>
+            <option value="agua_livre">Ganho de água pura</option>
+            <option value="isotonico_ganho">Ganho isotônico (salina)</option>
+            <option value="isotonico_perda">Perda isotônica</option>
+            <option value="hipertonico_ganho">Ganho hipertônico (NaCl 3%)</option>
+            <option value="perda_agua_pura">Perda de água pura</option>
+            <option value="suor">Suor (hipotônico)</option>
+            <option value="ureia">Carga de ureia (inefetivo)</option>
+            <option value="glicose">Carga de glicose (efetivo)</option>
+          </select>
+          <label>Volume da manobra (L): <span class="val" id="lbl-vol">2</span></label>
+          <input type="range" id="in-vol" min="0" max="10" step="0.5" value="2">
+          <label>Soluto (mmol, ureia/glicose): <span class="val" id="lbl-soluto">600</span></label>
+          <input type="range" id="in-soluto" min="0" max="2000" step="50" value="600">
+        </div>
+      </div>
+
+      <table>
+        <tr><th>Variável</th><th>Basal</th><th>Após manobra</th></tr>
+        <tr><td>TBW (L)</td><td class="num" id="out-tbw0">—</td><td class="num" id="out-tbw">—</td></tr>
+        <tr><td>ICF (L)</td><td class="num" id="out-icf0">—</td><td class="num" id="out-icf">—</td></tr>
+        <tr><td>ECF (L)</td><td class="num" id="out-ecf0">—</td><td class="num" id="out-ecf">—</td></tr>
+        <tr><td>Tonicidade (mosm/L)</td><td class="num" id="out-tonic0">—</td><td class="num" id="out-tonic">—</td></tr>
+        <tr><td>Osm medida (mosm/L)</td><td class="num" id="out-osm0">—</td><td class="num" id="out-osm">—</td></tr>
+        <tr><td>Na⁺ (mmol/L)</td><td class="num" id="out-na0">—</td><td class="num" id="out-na">—</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- ============================== AVALIAÇÃO (tutor) ============================== -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — tutor com dificuldade crescente</h3>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-q" style="margin-top:10px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica</b>. Este módulo
+    M0 não contém doses (a farmacologia entra a partir do túbulo). O modelo é uma simplificação didática
+    (Darrow–Yannet): assume equilíbrio osmótico instantâneo e ignora efeitos de menor ordem. Não substitui
+    julgamento clínico; a decisão e a responsabilidade finais são sempre do profissional.
+  </div>
+
+  <footer>
+    CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira
+  </footer>
+</div>
+
+<script>
+/* =========================================================================
+ * ENGINE INLINE — espelho fiel de build/m0/model0.js (o motor manda no pixel)
+ * ========================================================================= */
+function clampv(v, a, b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a) n=a; if(n>b) n=b; return n; }
+function fracSexo(sexo){
+  if(typeof sexo==='number'&&isFinite(sexo)) return clampv(sexo,0.30,0.75);
+  var s=String(sexo==null?'':sexo).trim().toUpperCase();
+  if(s==='F'||s==='FEMININO'||s==='MULHER'||s==='IDOSO') return 0.50;
+  return 0.60;
+}
+var MANOBRAS={nenhuma:'sem intervenção',agua_livre:'ganho de água pura (hipotônico)',
+  isotonico_ganho:'ganho isotônico (salina fisiológica)',isotonico_perda:'perda isotônica (hemorragia/vômito isotônico)',
+  hipertonico_ganho:'ganho hipertônico (NaCl 3%)',perda_agua_pura:'perda de água pura (insensível/DI)',
+  suor:'suor (perda hipotônica)',ureia:'carga de ureia (osmol inefetivo)',glicose:'carga de glicose (osmol efetivo)'};
+function compartimentos(input){
+  var inp=input||{};
+  var pesoKg=clampv(inp.pesoKg!==undefined?inp.pesoKg:70,1,400);
+  var frac=fracSexo(inp.sexo!==undefined?inp.sexo:inp.fracao);
+  var na0=clampv(inp.na0!==undefined?inp.na0:140,100,200);
+  var glu0=clampv(inp.glu0!==undefined?inp.glu0:0,0,200);
+  var ureia0=clampv(inp.ureia0!==undefined?inp.ureia0:5,0,100);
+  var tipo=String(inp.tipo==null?'nenhuma':inp.tipo).trim().toLowerCase();
+  if(!MANOBRAS.hasOwnProperty(tipo)) tipo='nenhuma';
+  var V=clampv(inp.volumeL!==undefined?inp.volumeL:0,0,15);
+  var soluto=clampv(inp.solutoMmol!==undefined?inp.solutoMmol:0,0,5000);
+  var TBW0=pesoKg*frac, ICF0=TBW0*2/3, ECF0=TBW0*1/3;
+  var Tinit=2*na0+glu0;
+  var ecfNa=2*na0*ECF0, ecfGlu=glu0*ECF0, icfOsm=Tinit*ICF0, ureiaTot=ureia0*TBW0;
+  var dVol=0,dEcfNa=0,dEcfGlu=0,dUreia=0;
+  switch(tipo){
+    case 'agua_livre': dVol=+V; break;
+    case 'isotonico_ganho': dVol=+V; dEcfNa+=V*(2*na0); break;
+    case 'isotonico_perda': dVol=-V; dEcfNa-=V*(2*na0); break;
+    case 'hipertonico_ganho': dVol=+V; dEcfNa+=V*(2*513); break;
+    case 'perda_agua_pura': dVol=-V; break;
+    case 'suor': dVol=-V; dEcfNa-=V*(2*30); break;
+    case 'ureia': dUreia+=soluto; break;
+    case 'glicose': dEcfGlu+=soluto; break;
+    default: break;
+  }
+  var ecfNa2=Math.max(ecfNa+dEcfNa,0), ecfGlu2=Math.max(ecfGlu+dEcfGlu,0);
+  var icfOsm2=Math.max(icfOsm,1e-6), ureiaTot2=Math.max(ureiaTot+dUreia,0);
+  var TBW2=Math.max(TBW0+dVol,0.1);
+  var ecfEff=ecfNa2+ecfGlu2, totEff=ecfEff+icfOsm2, tonic=totEff/TBW2;
+  if(!isFinite(tonic)||tonic<=0) tonic=1e-6;
+  var icfVol=icfOsm2/tonic, ecfVol=ecfEff/tonic;
+  var osmMed=(totEff+ureiaTot2)/TBW2;
+  var na=ecfVol>0?ecfNa2/(2*ecfVol):0, glu=ecfVol>0?ecfGlu2/ecfVol:0, ureiaC=TBW2>0?ureiaTot2/TBW2:0;
+  var dICFpct=ICF0>0?(icfVol-ICF0)/ICF0*100:0, dECFpct=ECF0>0?(ecfVol-ECF0)/ECF0*100:0;
+  var celula=(icfVol-ICF0)>1e-6?1:(icfVol-ICF0)<-1e-6?-1:0;
+  return {tipo:tipo,manobra:MANOBRAS[tipo],TBW0:TBW0,ICF0:ICF0,ECF0:ECF0,tonic0:Tinit,na0:na0,
+    TBW:TBW2,ICF:icfVol,ECF:ecfVol,tonicidade:tonic,osmMedida:osmMed,na:na,glu:glu,ureia:ureiaC,
+    dICFpct:dICFpct,dECFpct:dECFpct,celula:celula,gapInefetivo:osmMed-tonic};
+}
+window.compartimentos=compartimentos;
+window.MODEL={compartimentos:compartimentos,clampv:clampv,fracSexo:fracSexo,MANOBRAS:MANOBRAS};
+
+/* =========================================================================
+ * UI
+ * ========================================================================= */
+function $(id){ return document.getElementById(id); }
+
+// --- abas ---
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b) return;
+  var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on');
+  $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh();
+});
+
+// --- caso: prever-depois-revelar ---
+document.addEventListener('click',function(e){
+  var b=e.target.closest('button.act[data-rev]'); if(!b) return;
+  var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on');
+});
+
+// --- lab + instrumento ---
+function readInputs(){
+  return {
+    pesoKg:+$('in-peso').value, sexo:$('in-sexo').value, na0:+$('in-na').value,
+    ureia0:+$('in-ureia').value, tipo:$('in-tipo').value, volumeL:+$('in-vol').value,
+    solutoMmol:+$('in-soluto').value
+  };
+}
+function fmt(x,d){ return (Math.round(x*Math.pow(10,d||1))/Math.pow(10,d||1)).toFixed(d||1); }
+
+function refresh(){
+  var inp=readInputs();
+  $('lbl-peso').textContent=inp.pesoKg; $('lbl-na').textContent=inp.na0;
+  $('lbl-ureia').textContent=inp.ureia0; $('lbl-vol').textContent=inp.volumeL;
+  $('lbl-soluto').textContent=inp.solutoMmol;
+  var r=compartimentos(inp);
+  $('out-tbw0').textContent=fmt(r.TBW0); $('out-tbw').textContent=fmt(r.TBW);
+  $('out-icf0').textContent=fmt(r.ICF0); $('out-icf').textContent=fmt(r.ICF);
+  $('out-ecf0').textContent=fmt(r.ECF0); $('out-ecf').textContent=fmt(r.ECF);
+  $('out-tonic0').textContent=fmt(r.tonic0); $('out-tonic').textContent=fmt(r.tonicidade);
+  $('out-osm0').textContent=fmt(r.tonic0+(r.ureia*0+ (r.osmMedida-r.tonicidade)),1); // basal medida
+  $('out-osm').textContent=fmt(r.osmMedida);
+  $('out-na0').textContent=fmt(r.na0); $('out-na').textContent=fmt(r.na);
+  verdict(r); drawDY(r); pearl(r);
+}
+function verdict(r){
+  var v=$('veredito'); var cls='b-good', msg;
+  if(r.celula>0){ msg='A célula INCHOU ('+fmt(r.dICFpct)+'%): a tonicidade caiu, água entrou.'; cls='b-warn'; }
+  else if(r.celula<0){ msg='A célula MURCHOU ('+fmt(r.dICFpct)+'%): a tonicidade subiu, água saiu.'; cls='b-warn'; }
+  else { msg='A célula está estável: a tonicidade não mudou (volume sem distúrbio de água).'; cls='b-good'; }
+  v.className='banner '+cls; v.textContent=msg;
+}
+function pearl(r){
+  var p=$('lab-pearl'), ip=$('instr-pearl'); var t;
+  if(r.tipo==='ureia') t='PÉROLA: a osm MEDIDA subiu para '+fmt(r.osmMedida)+', mas a tonicidade ficou em '+fmt(r.tonicidade)+' — a ureia é inefetiva e a célula não mudou.';
+  else if(r.tipo==='glicose') t='PÉROLA: o Na MEDIDO caiu para '+fmt(r.na)+', mas a tonicidade SUBIU para '+fmt(r.tonicidade)+' — hiponatremia hipertônica.';
+  else if(r.tipo==='isotonico_ganho') t='A salina isotônica expandiu só o ECF; o ICF não se moveu — Na e tonicidade constantes.';
+  else t='Gap inefetivo (medida − tonicidade) = '+fmt(r.gapInefetivo)+' mosm/L. Quem move a célula é a tonicidade.';
+  p.textContent=t; ip.textContent=t;
+}
+
+// --- canvas Darrow–Yannet ---
+function drawDY(r){
+  var c=$('dy-canvas'); if(!c) return;
+  var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } // jsdom: getContext lança
+  if(!ctx||!ctx.clearRect) return;
+  var W=c.width, H=c.height; ctx.clearRect(0,0,W,H);
+  var padL=50, padB=40, padT=20, baseY=H-padB;
+  var maxTon=360, maxVol=Math.max(r.TBW0,r.TBW,42)*1.25;
+  var pxV=(W-padL-30)/maxVol, pxT=(baseY-padT)/maxTon;
+  // eixos
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(padL,padT); ctx.lineTo(padL,baseY); ctx.lineTo(W-10,baseY); ctx.stroke();
+  ctx.fillText('tonicidade (mosm/L)',8,padT+4); ctx.fillText('volume (L) →',W-110,baseY+24);
+  // basal (tracejado): ICF | ECF
+  function box(x0,w,ton,fill,alpha){
+    var h=ton*pxT, x=padL+x0*pxV, y=baseY-h;
+    ctx.fillStyle=fill; ctx.globalAlpha=alpha; ctx.fillRect(x,y,w*pxV,h); ctx.globalAlpha=1;
+    ctx.strokeStyle=fill; ctx.strokeRect(x,y,w*pxV,h);
+  }
+  // após (sólido)
+  box(0,r.ICF,r.tonicidade,'#3a7bd5',0.55);
+  box(r.ICF,r.ECF,r.tonicidade,'#39c0c8',0.55);
+  // basal (contorno tracejado)
+  ctx.setLineDash([5,4]); ctx.strokeStyle='#cdd9e3';
+  var hb=r.tonic0*pxT;
+  ctx.strokeRect(padL,baseY-hb,r.ICF0*pxV,hb);
+  ctx.strokeRect(padL+r.ICF0*pxV,baseY-hb,r.ECF0*pxV,hb);
+  ctx.setLineDash([]);
+  // rótulos
+  ctx.fillStyle='#e7eef4'; ctx.fillText('ICF',padL+6,baseY-8);
+  ctx.fillText('ECF',padL+r.ICF*pxV+6,baseY-8);
+  ctx.fillStyle='#9fb1c0'; ctx.fillText('— — basal',W-110,padT+10);
+}
+
+['in-peso','in-sexo','in-na','in-ureia','in-tipo','in-vol','in-soluto'].forEach(function(id){
+  $(id).addEventListener('input',refresh);
+});
+
+/* =========================================================================
+ * TUTOR — banco ≥16, dificuldade crescente; respostas COMPUTADAS pelo motor
+ * ========================================================================= */
+function cellWord(t,extra){ var r=compartimentos(Object.assign({pesoKg:70,na0:140},extra,{tipo:t})); return r.celula>0?'incha':r.celula<0?'murcha':'não muda'; }
+var TUTOR=[
+  {q:'TBW de um homem de 80 kg (fração 0,6)?',o:['40 L','48 L','56 L','32 L'],c:1,e:'80·0,6 = 48 L.'},
+  {q:'Qual fração do TBW é intracelular?',o:['1/3','1/2','2/3','3/4'],c:2,e:'ICF ≈ 2/3; ECF ≈ 1/3.'},
+  {q:'Quem governa o tamanho da célula?',o:['Osmolalidade medida','Tonicidade (osmoles efetivos)','Sódio total','Ureia'],c:1,e:'A tonicidade — osmoles efetivos por água.'},
+  {q:'Ganho de água pura: a célula…',o:['murcha','incha','não muda','desidrata'],c:1,e:'Tonicidade↓ → água entra → '+cellWord('agua_livre',{volumeL:3})+'.'},
+  {q:'Salina isotônica move água para dentro da célula?',o:['Sim','Não'],c:1,e:'Não — fica no ECF; ICF imóvel ('+cellWord('isotonico_ganho',{volumeL:3})+').'},
+  {q:'Perda de água pura: a célula…',o:['incha','murcha','não muda','lisa'],c:1,e:'Tonicidade↑ → água sai → '+cellWord('perda_agua_pura',{volumeL:3})+'.'},
+  {q:'Carga de ureia isolada: o tamanho da célula…',o:['incha muito','murcha muito','não muda','oscila'],c:2,e:'Ureia é inefetiva: '+cellWord('ureia',{solutoMmol:800})+'. Sobe só a osm medida.'},
+  {q:'Na carga de ureia, o que sobe?',o:['Tonicidade','Osmolalidade medida','Volume do ICF','Sódio'],c:1,e:'Só a osmolalidade medida; a tonicidade fica igual.'},
+  {q:'Glicose alta (sem insulina): a célula…',o:['incha','murcha','não muda','não dá para saber'],c:1,e:'Glicose é efetiva: '+cellWord('glicose',{solutoMmol:600})+' — puxa água para fora.'},
+  {q:'Na hiperglicemia o Na medido tende a…',o:['subir','cair','não mudar','dobrar'],c:1,e:'Cai por diluição (translocacional), mesmo com tonicidade alta.'},
+  {q:'Na⁺ ≈ ? em relação à tonicidade',o:['tonicidade','tonicidade/2','2·tonicidade','tonicidade/4'],c:1,e:'Na ≈ tonicidade/2 (o Na domina o ECF).'},
+  {q:'Hiponatremia hipotônica geralmente significa…',o:['falta de sal','excesso de água','desidratação','uremia'],c:1,e:'O Na é proxy de água: sobra água livre.'},
+  {q:'Suor é uma perda…',o:['isotônica','hipertônica','hipotônica','de água pura'],c:2,e:'Suor perde mais água que sal → tonicidade↑.'},
+  {q:'NaCl 3% (hipertônico): efeito na célula?',o:['incha','murcha','estável','não muda o Na'],c:1,e:'Tonicidade↑ e Na↑ → '+cellWord('hipertonico_ganho',{volumeL:2})+'.'},
+  {q:'No diagrama de Darrow–Yannet, a altura representa…',o:['volume','tonicidade','sódio','peso'],c:1,e:'Altura = tonicidade; largura = volume.'},
+  {q:'Osmolalidade medida menos tonicidade reflete…',o:['osmoles efetivos','osmoles inefetivos (ureia)','o sódio','o volume'],c:1,e:'A diferença é o osmol inefetivo (gap), como a ureia.'},
+  {q:'Por que a osm medida pode enganar à beira do leito?',o:['Inclui inefetivos que não movem água','Ignora o sódio','Mede só o ICF','É sempre igual à tonicidade'],c:0,e:'Porque soma ureia/álcoois; a tonicidade é que governa a célula.'}
+];
+var tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+function renderTutor(){
+  var item=TUTOR[tIdx];
+  $('tutor-q').textContent=(tIdx+1)+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false;
+  $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){
+    var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){
+      if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button');
+      btns[item.c].classList.add('ok');
+      if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block';
+      fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e;
+      $('tutor-score').textContent=tScore; $('tutor-total').textContent=tTotal;
+    });
+    box.appendChild(b);
+  });
+}
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%TUTOR.length; renderTutor(); });
+window.TUTOR=TUTOR;
+
+// init
+refresh(); renderTutor();
+</script>
+</body>
+</html>

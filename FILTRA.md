@@ -88,9 +88,13 @@ de decompor.
 Por isso cada módulo avalia em dois blocos: um **ilustrado** (a questão nasce de uma imagem) e um **textual**
 (a questão nasce da prosa). Os dois cobrem o mesmo mapa causal por caminhos diferentes.
 
-Invariantes inegociáveis: offline, single-file por módulo, zero dependência de runtime, sem armazenamento,
-engine antes da UI, física viva, ilustração viva, português do Brasil, e o portão `npm run check` — **0
-falhas ou não entra**.
+O **capricho visual é maximizado**, mas sem trair o offline: os desenhos e as figuras computadas são SVG
+**inline**; as fotos/figuras **raster open source** (CC0/PD preferido) vivem em `assets/`, locais e creditadas
+em `CREDITS.md` — nunca uma imagem remota.
+
+Invariantes inegociáveis: offline, single-file híbrido (lógica/SVG inline; só raster em `assets/`), zero
+dependência de runtime, sem armazenamento, engine antes da UI, física viva, ilustração viva, português do
+Brasil, e o portão `npm run check` — **0 falhas ou não entra**.
 
 ---
 

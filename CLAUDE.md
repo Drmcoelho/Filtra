@@ -325,13 +325,16 @@ Critério: o teste é **determinístico entre execuções** (rode 3×, saída id
 
 ### HTML (`filtraN.html`)
 - Single-file, **offline**, zero CDN/rede, links relativos; engine **inline** (espelho fiel do `modelN.js`).
-- Abas: **Caso** (5 atos) · **Trilha** (socrática, ≥9 passos, pistas) · **Instrumento** (canvas computado ao
-  vivo) · **Lab** (sliders + veredito + banners) · **Avaliação** (DOIS blocos por módulo — **ilustrado** ≥10,
-  cada questão com sua ilustração, e **textual** ≥10; ambos com dificuldade crescente).
+- Abas: **Conceito** (explicação didática ilustrada — DESENHOS esquemáticos, não só gráficos) · **Caso**
+  (5 atos) · **Trilha** (socrática, ≥9 passos, pistas) · **Instrumento** (canvas computado ao vivo) ·
+  **Lab** (sliders + veredito + banners) · **Avaliação** (DOIS blocos por módulo — **ilustrado** ≥10, cada
+  questão com sua ilustração, e **textual** ≥10; ambos com dificuldade crescente).
 - **Ilustração viva (padrão deste braço):** os conceitos ganham ilustrações **inline em SVG** (offline, sem
-  rede), **computadas a partir do engine** quando o dado é numérico (mini Darrow–Yannet, barras
-  osm×tonicidade, setas de fluxo de água, esquema do néfron/segmento) — nunca imagens importadas. Aumentar
-  os elementos ilustrativos é objetivo explícito do FILTRA.
+  rede). Duas naturezas, ambas obrigatórias: (a) **desenhos esquemáticos** que explicam o conceito (a célula
+  com a Na⁺/K⁺-ATPase, a árvore da ÁGT, o néfron/segmento, o cérebro no crânio) — desenho, não rendição de
+  gráfico; e (b) **figuras computadas a partir do engine** quando o dado é numérico (mini Darrow–Yannet,
+  barras osm×tonicidade, setas de fluxo). Nunca imagens importadas. Aumentar os elementos ilustrativos é
+  objetivo explícito do FILTRA.
 - Camada interativa: caso com decisões + "prever-depois-revelar".
 - Disclaimer educacional + nota de honestidade do modelo + rodapé de série + backlink relativo ao índice.
 
@@ -358,10 +361,17 @@ build/mN/testN.node.js     teste Node
 build/mN/validateN.js      validador jsdom
 package.json               scripts test:N / validate:N / test / validate / check
 curriculum.json            manifesto curricular legível por máquina (escada + formato do módulo)
+assets/                    fotos/figuras raster open source (offline; ver assets/README.md)
+CREDITS.md                 atribuição de cada asset (fonte · autor · licença)
 FILTRA.md                  constituição do braço (o porquê)
 README.md                  porta de entrada do repo (o quê + como rodar)
 CLAUDE.md                  este guia (o como)
 ```
+
+- **Assets visuais (híbrido, decisão do autor):** o **capricho visual é maximizado**. Desenhos esquemáticos
+  e figuras computadas são **SVG inline** (single-file de fato). **Fotos/figuras raster open source** (CC0/PD
+  preferido; CC-BY com crédito) vivem em `assets/`, sempre **offline** (caminho relativo, nunca URL remota),
+  e **toda imagem precisa de uma linha em `CREDITS.md`**. O validador recusa `<img>` remoto.
 
 - **Idioma:** português do Brasil, prosa causal e seca, setas quando úteis (↑↓→).
 - **Rodapé obrigatório** em todo módulo: `CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira`.
@@ -438,8 +448,8 @@ case com a UI. A ausência de dose onde o módulo a promete passa a ser falha.
 ## 10. Invariantes do produto (resumo executável)
 
 ```text
-Offline.                 Nenhum módulo depende de rede.
-Single-file por módulo.  O HTML publicado sobrevive sozinho.
+Offline.                 Nenhum módulo depende de rede (nem <img> remoto; raster só de assets/ local).
+Single-file (híbrido).   Lógica/engine/SVG inline no HTML; só FOTOS raster vão p/ assets/ com CREDITS.md.
 Zero dependência runtime.jsdom é só ferramenta de validação.
 Sem armazenamento.       Nada de localStorage/telemetria.
 Engine antes de UI.      Fórmula validada antes de gráfico.

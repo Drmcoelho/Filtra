@@ -1,0 +1,1887 @@
+{
+  "sobre": "Lista de imagens raster open source desejadas por modulo (>=8 por modulo). O LLM com internet baixa cada item para assets/<dir>/<slug>.webp, credita em /CREDITS.md e segue assets/INSTRUCOES.md. tipo: foto | figura | diagrama | histologia | micrografia | imagem-medica.",
+  "convencao_arquivo": "assets/<dir>/<slug>.<ext> — FORMATO (decisão do projeto): SVG se a fonte for vetorial (diagrama/esquema); WebP para raster (foto/histologia/micrografia/RM); PNG só como fallback (transparência lossless); evite JPG salvo se a fonte só existir assim.",
+  "minimo_por_modulo": 8,
+  "modulos": [
+    {
+      "id": "M0",
+      "dir": "m0",
+      "titulo": "Compartimentos + introdução à fluidoterapia",
+      "imagens": [
+        {
+          "slug": "compartimentos-hidricos",
+          "descricao": "Compartimentos (ICF/ECF/plasma/interstício) e a regra 60-40-20",
+          "tipo": "diagrama"
+        },
+        {
+          "slug": "membrana-na-k-atpase",
+          "descricao": "Membrana celular com a bomba Na+/K+-ATPase (3 Na out / 2 K in)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "bicamada-lipidica",
+          "descricao": "Bicamada de fosfolipídios (cabeças + caudas)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "osmose-tonicidade",
+          "descricao": "Osmose e tonicidade: meio hipo/iso/hipertônico",
+          "tipo": "figura"
+        },
+        {
+          "slug": "hemacia-tonicidade",
+          "descricao": "Hemácia em meio hipo/iso/hipertônico (crenação/hemólise)",
+          "tipo": "micrografia"
+        },
+        {
+          "slug": "rim-anatomia",
+          "descricao": "Rim — anatomia macroscópica (córtex, medula, pirâmides)",
+          "tipo": "diagrama"
+        },
+        {
+          "slug": "cerebro-edema",
+          "descricao": "Edema cerebral em RM (sensibilidade ao Na)",
+          "tipo": "imagem-medica"
+        },
+        {
+          "slug": "fluidos-iv",
+          "descricao": "Bolsas de fluido IV (SF 0,9%, Ringer)",
+          "tipo": "foto"
+        }
+      ]
+    },
+    {
+      "id": "M1",
+      "dir": "m1",
+      "titulo": "Néfron / forças de Starling",
+      "imagens": [
+        {
+          "slug": "nefron-rotulado",
+          "descricao": "Néfron completo rotulado (glomérulo, TCP, alça, TCD, ducto)",
+          "tipo": "diagrama"
+        },
+        {
+          "slug": "glomerulo-aferente-eferente",
+          "descricao": "Glomérulo com arteríolas aferente e eferente",
+          "tipo": "diagrama"
+        },
+        {
+          "slug": "corpusculo-renal-histologia",
+          "descricao": "Corpúsculo renal em histologia (HE)",
+          "tipo": "histologia"
+        },
+        {
+          "slug": "forcas-starling-glomerulo",
+          "descricao": "Forças de Starling no glomérulo (P_GC, P_BC, pi_GC)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "autorregulacao-tfg-curva",
+          "descricao": "Curva TFG × PAM com platô de autorregulação",
+          "tipo": "figura"
+        },
+        {
+          "slug": "aparelho-justaglomerular",
+          "descricao": "Aparelho justaglomerular",
+          "tipo": "figura"
+        },
+        {
+          "slug": "arteriolas-resistencia",
+          "descricao": "Resistência aferente × eferente e P_GC",
+          "tipo": "figura"
+        },
+        {
+          "slug": "rim-corte-sagital",
+          "descricao": "Corte sagital do rim",
+          "tipo": "diagrama"
+        }
+      ]
+    },
+    {
+      "id": "M2",
+      "dir": "m2",
+      "titulo": "Hemodinâmica renal — 20% do DC, córtex×medula",
+      "imagens": [
+        {
+          "slug": "vascularizacao-renal",
+          "descricao": "Vascularização renal (artéria → arqueadas → interlobulares)",
+          "tipo": "diagrama"
+        },
+        {
+          "slug": "cortex-medula",
+          "descricao": "Córtex × medula renal",
+          "tipo": "figura"
+        },
+        {
+          "slug": "vasa-recta",
+          "descricao": "Vasa recta e troca por contracorrente",
+          "tipo": "figura"
+        },
+        {
+          "slug": "macula-densa-feedback",
+          "descricao": "Mácula densa e feedback tubuloglomerular",
+          "tipo": "figura"
+        },
+        {
+          "slug": "autorregulacao-miogenica",
+          "descricao": "Autorregulação miogênica",
+          "tipo": "figura"
+        },
+        {
+          "slug": "fluxo-sanguineo-renal",
+          "descricao": "Fluxo sanguíneo renal (~20% do DC)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "medula-hipoxia",
+          "descricao": "Medula renal à beira da hipóxia",
+          "tipo": "figura"
+        },
+        {
+          "slug": "aines-ieca-hemodinamica",
+          "descricao": "AINEs (aferente) × IECA/BRA (eferente)",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M3",
+      "dir": "m3",
+      "titulo": "O glomérulo — barreira de filtração",
+      "imagens": [
+        {
+          "slug": "podocito-pedicelos",
+          "descricao": "Podócito e pedicelos (micrografia eletrônica)",
+          "tipo": "micrografia"
+        },
+        {
+          "slug": "barreira-filtracao",
+          "descricao": "Barreira (endotélio fenestrado, MBG, podócito)",
+          "tipo": "diagrama"
+        },
+        {
+          "slug": "membrana-basal-glomerular",
+          "descricao": "Membrana basal glomerular",
+          "tipo": "figura"
+        },
+        {
+          "slug": "endotelio-fenestrado",
+          "descricao": "Endotélio fenestrado glomerular",
+          "tipo": "micrografia"
+        },
+        {
+          "slug": "diafragma-fenda-nefrina",
+          "descricao": "Diafragma de fenda e nefrina",
+          "tipo": "figura"
+        },
+        {
+          "slug": "proteinuria-mecanismo",
+          "descricao": "Proteinúria glomerular × tubular",
+          "tipo": "figura"
+        },
+        {
+          "slug": "glomerulo-mev",
+          "descricao": "Glomérulo em microscopia eletrônica de varredura",
+          "tipo": "micrografia"
+        },
+        {
+          "slug": "barreira-carga-tamanho",
+          "descricao": "Seletividade por carga e tamanho",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M4",
+      "dir": "m4",
+      "titulo": "Clearance — por que a creatinina mente",
+      "imagens": [
+        {
+          "slug": "clearance-conceito",
+          "descricao": "Conceito de clearance renal",
+          "tipo": "figura"
+        },
+        {
+          "slug": "creatinina-tfg-curva",
+          "descricao": "Relação hiperbólica creatinina × TFG",
+          "tipo": "figura"
+        },
+        {
+          "slug": "secrecao-tubular-creatinina",
+          "descricao": "Secreção tubular de creatinina",
+          "tipo": "figura"
+        },
+        {
+          "slug": "massa-muscular-creatinina",
+          "descricao": "Massa muscular e creatinina",
+          "tipo": "figura"
+        },
+        {
+          "slug": "formulas-egfr",
+          "descricao": "Cockcroft-Gault / CKD-EPI (fórmulas)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "inulina-padrao-ouro",
+          "descricao": "Inulina como padrão-ouro de TFG",
+          "tipo": "figura"
+        },
+        {
+          "slug": "cistatina-c",
+          "descricao": "Cistatina C como marcador",
+          "tipo": "figura"
+        },
+        {
+          "slug": "cinetica-creatinina-tempo",
+          "descricao": "Cinética lenta da creatinina no tempo",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M5",
+      "dir": "m5",
+      "titulo": "TCP — SGLT2, anidrase carbônica",
+      "imagens": [
+        {
+          "slug": "tubulo-proximal-histologia",
+          "descricao": "Túbulo proximal (borda em escova) em histologia",
+          "tipo": "histologia"
+        },
+        {
+          "slug": "borda-escova-microvilosidades",
+          "descricao": "Microvilosidades (borda em escova)",
+          "tipo": "micrografia"
+        },
+        {
+          "slug": "sglt2-transportador",
+          "descricao": "Cotransporte Na+/glicose (SGLT2)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "anidrase-carbonica-hco3",
+          "descricao": "Reabsorção de HCO3 via anidrase carbônica",
+          "tipo": "figura"
+        },
+        {
+          "slug": "reabsorcao-isosmotica",
+          "descricao": "Reabsorção isosmótica no proximal",
+          "tipo": "figura"
+        },
+        {
+          "slug": "sindrome-fanconi",
+          "descricao": "Síndrome de Fanconi",
+          "tipo": "figura"
+        },
+        {
+          "slug": "nhe3-troca-na-h",
+          "descricao": "Trocador Na+/H+ (NHE3)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "proximal-65pct-na",
+          "descricao": "65% do Na reabsorvido no proximal",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M6",
+      "dir": "m6",
+      "titulo": "Alça de Henle — NKCC2, contracorrente",
+      "imagens": [
+        {
+          "slug": "alca-henle-contracorrente",
+          "descricao": "Alça de Henle e multiplicação por contracorrente",
+          "tipo": "diagrama"
+        },
+        {
+          "slug": "nkcc2-ramo-espesso",
+          "descricao": "Cotransportador NKCC2 no ramo espesso",
+          "tipo": "figura"
+        },
+        {
+          "slug": "gradiente-corticomedular",
+          "descricao": "Gradiente corticomedular de osmolalidade",
+          "tipo": "figura"
+        },
+        {
+          "slug": "ramo-fino-descendente",
+          "descricao": "Ramo fino descendente (permeável à água)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "multiplicacao-contracorrente",
+          "descricao": "Mecanismo de multiplicação por contracorrente",
+          "tipo": "figura"
+        },
+        {
+          "slug": "vasa-recta-troca",
+          "descricao": "Vasa recta preservando o gradiente",
+          "tipo": "figura"
+        },
+        {
+          "slug": "diureticos-alca-sitio",
+          "descricao": "Sítio dos diuréticos de alça (NKCC2)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "segmento-diluidor",
+          "descricao": "Ramo espesso como segmento diluidor",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M7",
+      "dir": "m7",
+      "titulo": "TCD — NCC, manejo de Ca",
+      "imagens": [
+        {
+          "slug": "tcd-ncc",
+          "descricao": "Túbulo distal e cotransportador NCC",
+          "tipo": "figura"
+        },
+        {
+          "slug": "manejo-calcio-distal",
+          "descricao": "Manejo de cálcio no distal",
+          "tipo": "figura"
+        },
+        {
+          "slug": "tiazidico-sitio",
+          "descricao": "Sítio dos tiazídicos (NCC)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "paradoxo-calcio-tiazidico",
+          "descricao": "Paradoxo do cálcio com tiazídico",
+          "tipo": "figura"
+        },
+        {
+          "slug": "tubulo-distal-histologia",
+          "descricao": "Túbulo distal em histologia",
+          "tipo": "histologia"
+        },
+        {
+          "slug": "trpv5-calcio",
+          "descricao": "Canal TRPV5 e reabsorção de cálcio",
+          "tipo": "figura"
+        },
+        {
+          "slug": "segmento-diluidor-distal",
+          "descricao": "Segmento diluidor distal",
+          "tipo": "figura"
+        },
+        {
+          "slug": "conexao-tubular",
+          "descricao": "Túbulo conector",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M8",
+      "dir": "m8",
+      "titulo": "Ducto coletor — ENaC/aldo, ADH/aquaporina",
+      "imagens": [
+        {
+          "slug": "ducto-coletor-celulas",
+          "descricao": "Célula principal × intercalar",
+          "tipo": "figura"
+        },
+        {
+          "slug": "celula-principal-enac",
+          "descricao": "Célula principal e canal ENaC",
+          "tipo": "figura"
+        },
+        {
+          "slug": "celula-intercalar-h",
+          "descricao": "Célula intercalar (H+/HCO3)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "aquaporina-adh",
+          "descricao": "ADH abrindo aquaporinas (AQP2)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "aldosterona-acao",
+          "descricao": "Ação da aldosterona (Na/K)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "adh-vasopressina-eixo",
+          "descricao": "Eixo ADH/vasopressina",
+          "tipo": "figura"
+        },
+        {
+          "slug": "poupadores-k-sitio",
+          "descricao": "Sítio dos poupadores de K",
+          "tipo": "figura"
+        },
+        {
+          "slug": "vaptano-v2",
+          "descricao": "Antagonista V2 (vaptano)",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M9",
+      "dir": "m9",
+      "titulo": "Sódio e volume",
+      "imagens": [
+        {
+          "slug": "volume-circulante-efetivo",
+          "descricao": "Volume circulante efetivo",
+          "tipo": "diagrama"
+        },
+        {
+          "slug": "barorreceptores",
+          "descricao": "Barorreceptores e sensores de volume",
+          "tipo": "figura"
+        },
+        {
+          "slug": "balanco-sodio-rim",
+          "descricao": "Balanço de sódio pelo rim",
+          "tipo": "figura"
+        },
+        {
+          "slug": "edema-fisiopatologia",
+          "descricao": "Fisiopatologia do edema",
+          "tipo": "figura"
+        },
+        {
+          "slug": "sns-raas-volume",
+          "descricao": "SNS e RAAS na regulação de volume",
+          "tipo": "figura"
+        },
+        {
+          "slug": "peptideo-natriuretico",
+          "descricao": "Peptídeos natriuréticos (ANP/BNP)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "terceiro-espaco",
+          "descricao": "Terceiro espaço",
+          "tipo": "figura"
+        },
+        {
+          "slug": "volume-vs-tonicidade",
+          "descricao": "Volume × tonicidade (eixos distintos)",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M10",
+      "dir": "m10",
+      "titulo": "Água livre e disnatremias",
+      "imagens": [
+        {
+          "slug": "osmorregulacao-adh-sede",
+          "descricao": "Osmorregulação: osmorreceptores, ADH, sede",
+          "tipo": "diagrama"
+        },
+        {
+          "slug": "mielinolise-pontina",
+          "descricao": "Mielinólise pontina em RM",
+          "tipo": "imagem-medica"
+        },
+        {
+          "slug": "edema-cerebral-hiponatremia",
+          "descricao": "Edema cerebral na hiponatremia aguda",
+          "tipo": "imagem-medica"
+        },
+        {
+          "slug": "clearance-agua-livre",
+          "descricao": "Clearance de água livre",
+          "tipo": "figura"
+        },
+        {
+          "slug": "diabetes-insipidus",
+          "descricao": "Diabetes insipidus (central × nefrogênico)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "siadh",
+          "descricao": "SIADH",
+          "tipo": "figura"
+        },
+        {
+          "slug": "correcao-velocidade-na",
+          "descricao": "Velocidade segura de correção do Na",
+          "tipo": "figura"
+        },
+        {
+          "slug": "adaptacao-cerebral-osmolitos",
+          "descricao": "Adaptação cerebral (osmólitos idiogênicos)",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M11",
+      "dir": "m11",
+      "titulo": "Potássio — o eletrólito que mata",
+      "imagens": [
+        {
+          "slug": "ecg-hipercalemia",
+          "descricao": "ECG da hipercalemia (T apiculada → sinusoidal)",
+          "tipo": "imagem-medica"
+        },
+        {
+          "slug": "ecg-hipocalemia",
+          "descricao": "ECG da hipocalemia (onda U)",
+          "tipo": "imagem-medica"
+        },
+        {
+          "slug": "shift-transcelular-k",
+          "descricao": "Shift transcelular de K+",
+          "tipo": "figura"
+        },
+        {
+          "slug": "secrecao-distal-k",
+          "descricao": "Secreção distal de potássio",
+          "tipo": "figura"
+        },
+        {
+          "slug": "aldosterona-k",
+          "descricao": "Aldosterona e excreção de K",
+          "tipo": "figura"
+        },
+        {
+          "slug": "insulina-beta-k",
+          "descricao": "Insulina e beta-agonistas no K",
+          "tipo": "figura"
+        },
+        {
+          "slug": "potencial-membrana-k",
+          "descricao": "K+ e potencial de membrana",
+          "tipo": "figura"
+        },
+        {
+          "slug": "estoque-vs-gradiente-k",
+          "descricao": "Estoque total × gradiente transcelular",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M12",
+      "dir": "m12",
+      "titulo": "Cálcio · fósforo · magnésio",
+      "imagens": [
+        {
+          "slug": "eixo-osseo-mineral",
+          "descricao": "Eixo PTH–vitamina D–FGF23",
+          "tipo": "diagrama"
+        },
+        {
+          "slug": "pth-acao",
+          "descricao": "Ações do PTH (osso, rim)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "vitamina-d-metabolismo",
+          "descricao": "Metabolismo da vitamina D",
+          "tipo": "figura"
+        },
+        {
+          "slug": "fgf23",
+          "descricao": "FGF23 e fósforo",
+          "tipo": "figura"
+        },
+        {
+          "slug": "calcio-ionizado-albumina",
+          "descricao": "Cálcio ionizado × albumina × pH",
+          "tipo": "figura"
+        },
+        {
+          "slug": "paratireoide-histologia",
+          "descricao": "Paratireoide em histologia",
+          "tipo": "histologia"
+        },
+        {
+          "slug": "triangulo-ca-po4-pth",
+          "descricao": "Triângulo Ca–PO4–PTH",
+          "tipo": "figura"
+        },
+        {
+          "slug": "magnesio-renal",
+          "descricao": "Manejo renal do magnésio",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M13",
+      "dir": "m13",
+      "titulo": "Ácido-base renal",
+      "imagens": [
+        {
+          "slug": "reabsorcao-hco3-nh4",
+          "descricao": "Reabsorção de HCO3 e excreção de NH4+",
+          "tipo": "figura"
+        },
+        {
+          "slug": "anion-gap",
+          "descricao": "Ânion gap",
+          "tipo": "figura"
+        },
+        {
+          "slug": "delta-delta",
+          "descricao": "Delta-delta",
+          "tipo": "figura"
+        },
+        {
+          "slug": "acidez-titulavel",
+          "descricao": "Acidez titulável",
+          "tipo": "figura"
+        },
+        {
+          "slug": "atr-tipos",
+          "descricao": "Acidoses tubulares renais (tipos)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "amoniogenese",
+          "descricao": "Amoniogênese e excreção de NH4+",
+          "tipo": "figura"
+        },
+        {
+          "slug": "davenport-diagrama",
+          "descricao": "Diagrama de Davenport",
+          "tipo": "figura"
+        },
+        {
+          "slug": "henderson-hasselbalch",
+          "descricao": "Equação de Henderson-Hasselbalch",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M14",
+      "dir": "m14",
+      "titulo": "RAAS e eixo endócrino renal",
+      "imagens": [
+        {
+          "slug": "raas-esquema",
+          "descricao": "Sistema renina–angiotensina–aldosterona",
+          "tipo": "diagrama"
+        },
+        {
+          "slug": "aparelho-justaglomerular",
+          "descricao": "Aparelho justaglomerular",
+          "tipo": "figura"
+        },
+        {
+          "slug": "angiotensina-ii-acoes",
+          "descricao": "Ações da angiotensina II",
+          "tipo": "figura"
+        },
+        {
+          "slug": "aldosterona-sintese",
+          "descricao": "Síntese e ação da aldosterona",
+          "tipo": "figura"
+        },
+        {
+          "slug": "eritropoetina-rim",
+          "descricao": "Eritropoetina produzida pelo rim",
+          "tipo": "figura"
+        },
+        {
+          "slug": "vitamina-d-ativacao-renal",
+          "descricao": "Ativação renal da vitamina D (1-alfa-hidroxilase)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "adh-vasopressina",
+          "descricao": "ADH/vasopressina",
+          "tipo": "figura"
+        },
+        {
+          "slug": "renina-liberacao",
+          "descricao": "Liberação de renina (estímulos)",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M15",
+      "dir": "m15",
+      "titulo": "Ureia, creatinina, eGFR e a urina",
+      "imagens": [
+        {
+          "slug": "sedimento-urinario",
+          "descricao": "Sedimento urinário (microscopia)",
+          "tipo": "micrografia"
+        },
+        {
+          "slug": "cilindros-urinarios",
+          "descricao": "Cilindros urinários",
+          "tipo": "micrografia"
+        },
+        {
+          "slug": "cristais-urinarios",
+          "descricao": "Cristais urinários",
+          "tipo": "micrografia"
+        },
+        {
+          "slug": "fena-feureia",
+          "descricao": "FE_Na e FE_ureia",
+          "tipo": "figura"
+        },
+        {
+          "slug": "tira-reagente-urina",
+          "descricao": "Tira reagente de urina",
+          "tipo": "foto"
+        },
+        {
+          "slug": "urina-aspecto",
+          "descricao": "Aspecto macroscópico da urina",
+          "tipo": "foto"
+        },
+        {
+          "slug": "indices-prerrenal-nta",
+          "descricao": "Índices: pré-renal × NTA",
+          "tipo": "figura"
+        },
+        {
+          "slug": "microscopia-urina-campos",
+          "descricao": "Microscopia da urina (campos)",
+          "tipo": "micrografia"
+        }
+      ]
+    },
+    {
+      "id": "M16",
+      "dir": "m16",
+      "titulo": "A LRA por mecanismo — KDIGO",
+      "imagens": [
+        {
+          "slug": "nta-histologia",
+          "descricao": "Necrose tubular aguda em histologia",
+          "tipo": "histologia"
+        },
+        {
+          "slug": "kdigo-estadios",
+          "descricao": "Estágios KDIGO de LRA",
+          "tipo": "figura"
+        },
+        {
+          "slug": "pre-intrinseca-pos",
+          "descricao": "Pré-renal × intrínseca × pós-renal",
+          "tipo": "diagrama"
+        },
+        {
+          "slug": "nta-cilindros-granulosos",
+          "descricao": "Cilindros granulosos pigmentados",
+          "tipo": "micrografia"
+        },
+        {
+          "slug": "nefrite-intersticial",
+          "descricao": "Nefrite intersticial aguda",
+          "tipo": "histologia"
+        },
+        {
+          "slug": "cardiorrenal",
+          "descricao": "Síndrome cardiorrenal",
+          "tipo": "figura"
+        },
+        {
+          "slug": "hepatorrenal",
+          "descricao": "Síndrome hepatorrenal",
+          "tipo": "figura"
+        },
+        {
+          "slug": "hidronefrose-us",
+          "descricao": "Hidronefrose (ultrassom) — pós-renal",
+          "tipo": "imagem-medica"
+        }
+      ]
+    },
+    {
+      "id": "M17",
+      "dir": "m17",
+      "titulo": "Farmacologia diurética integrada",
+      "imagens": [
+        {
+          "slug": "sitios-diureticos-nefron",
+          "descricao": "Sítios de ação dos diuréticos no néfron",
+          "tipo": "diagrama"
+        },
+        {
+          "slug": "curva-dose-resposta-diuretico",
+          "descricao": "Curva dose-resposta sigmoide",
+          "tipo": "figura"
+        },
+        {
+          "slug": "teto-diuretico",
+          "descricao": "Efeito-teto",
+          "tipo": "figura"
+        },
+        {
+          "slug": "braking-fenomeno",
+          "descricao": "Fenômeno de braking",
+          "tipo": "figura"
+        },
+        {
+          "slug": "bloqueio-sequencial",
+          "descricao": "Bloqueio sequencial do néfron",
+          "tipo": "figura"
+        },
+        {
+          "slug": "furosemida-estrutura",
+          "descricao": "Estrutura da furosemida",
+          "tipo": "figura"
+        },
+        {
+          "slug": "resistencia-diuretico",
+          "descricao": "Resistência a diurético",
+          "tipo": "figura"
+        },
+        {
+          "slug": "sinergia-diureticos",
+          "descricao": "Sinergia entre diuréticos",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M18",
+      "dir": "m18",
+      "titulo": "Anti-hipertensivos, RAAS e eixo endócrino-renal",
+      "imagens": [
+        {
+          "slug": "hemodinamica-glomerular-ieca",
+          "descricao": "IECA/BRA na arteríola eferente",
+          "tipo": "figura"
+        },
+        {
+          "slug": "ieca-bra-mecanismo",
+          "descricao": "Mecanismo de IECA × BRA",
+          "tipo": "figura"
+        },
+        {
+          "slug": "arm-espironolactona",
+          "descricao": "Antagonistas do receptor mineralocorticoide",
+          "tipo": "figura"
+        },
+        {
+          "slug": "inibidor-renina",
+          "descricao": "Inibidor direto de renina",
+          "tipo": "figura"
+        },
+        {
+          "slug": "sacubitril-valsartana",
+          "descricao": "Sacubitril/valsartana",
+          "tipo": "figura"
+        },
+        {
+          "slug": "eritropoetina-esa",
+          "descricao": "EPO/ESA",
+          "tipo": "figura"
+        },
+        {
+          "slug": "quelantes-fosforo",
+          "descricao": "Quelantes de fósforo",
+          "tipo": "figura"
+        },
+        {
+          "slug": "calcimimeticos",
+          "descricao": "Calcimiméticos e análogos de vit D",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M19",
+      "dir": "m19",
+      "titulo": "Princípios físicos do transporte",
+      "imagens": [
+        {
+          "slug": "difusao-conveccao-uf",
+          "descricao": "Difusão × convecção × UF × adsorção",
+          "tipo": "diagrama"
+        },
+        {
+          "slug": "difusao-gradiente",
+          "descricao": "Difusão por gradiente de concentração",
+          "tipo": "figura"
+        },
+        {
+          "slug": "conveccao-arraste",
+          "descricao": "Convecção (arraste por solvente)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "ultrafiltracao-tmp",
+          "descricao": "Ultrafiltração e TMP",
+          "tipo": "figura"
+        },
+        {
+          "slug": "adsorcao-membrana",
+          "descricao": "Adsorção na membrana",
+          "tipo": "figura"
+        },
+        {
+          "slug": "osmose-vs-dialise",
+          "descricao": "Osmose × diálise",
+          "tipo": "figura"
+        },
+        {
+          "slug": "transporte-membrana-solutos",
+          "descricao": "Transporte de solutos pela membrana",
+          "tipo": "figura"
+        },
+        {
+          "slug": "clearance-principios",
+          "descricao": "Princípios do clearance",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M20",
+      "dir": "m20",
+      "titulo": "O circuito extracorpóreo",
+      "imagens": [
+        {
+          "slug": "circuito-hemodialise",
+          "descricao": "Circuito de hemodiálise",
+          "tipo": "diagrama"
+        },
+        {
+          "slug": "dialisador-capilar",
+          "descricao": "Dialisador de fibras capilares (corte)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "acessos-vasculares",
+          "descricao": "Acessos vasculares (visão geral)",
+          "tipo": "diagrama"
+        },
+        {
+          "slug": "fistula-arteriovenosa",
+          "descricao": "Fístula arteriovenosa",
+          "tipo": "foto"
+        },
+        {
+          "slug": "cateter-duplo-lumen",
+          "descricao": "Cateter de duplo lúmen",
+          "tipo": "foto"
+        },
+        {
+          "slug": "bomba-roletes",
+          "descricao": "Bomba de roletes",
+          "tipo": "foto"
+        },
+        {
+          "slug": "pressoes-circuito-tmp",
+          "descricao": "Pressões do circuito e TMP",
+          "tipo": "figura"
+        },
+        {
+          "slug": "fluxos-qb-qd",
+          "descricao": "Fluxos de sangue (Qb) e dialisato (Qd)",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M21",
+      "dir": "m21",
+      "titulo": "A membrana e o clearance",
+      "imagens": [
+        {
+          "slug": "membrana-dialise-poros",
+          "descricao": "Membrana de diálise: poros",
+          "tipo": "figura"
+        },
+        {
+          "slug": "high-flux-low-flux",
+          "descricao": "High-flux × low-flux",
+          "tipo": "figura"
+        },
+        {
+          "slug": "koa-clearance",
+          "descricao": "KoA e clearance",
+          "tipo": "figura"
+        },
+        {
+          "slug": "sieving-coefficient",
+          "descricao": "Coeficiente de sieving",
+          "tipo": "figura"
+        },
+        {
+          "slug": "backfiltration",
+          "descricao": "Backfiltration",
+          "tipo": "figura"
+        },
+        {
+          "slug": "biocompatibilidade",
+          "descricao": "Biocompatibilidade da membrana",
+          "tipo": "figura"
+        },
+        {
+          "slug": "fibra-capilar-corte",
+          "descricao": "Corte de fibra capilar",
+          "tipo": "micrografia"
+        },
+        {
+          "slug": "permeabilidade-membrana",
+          "descricao": "Permeabilidade da membrana",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M22",
+      "dir": "m22",
+      "titulo": "A sessão de HDI",
+      "imagens": [
+        {
+          "slug": "maquina-hemodialise",
+          "descricao": "Máquina de hemodiálise",
+          "tipo": "foto"
+        },
+        {
+          "slug": "sessao-hdi-paciente",
+          "descricao": "Sessão de HDI (paciente)",
+          "tipo": "foto"
+        },
+        {
+          "slug": "eficiencia-tempo",
+          "descricao": "Eficiência × tempo",
+          "tipo": "figura"
+        },
+        {
+          "slug": "gradiente-concentracao-sessao",
+          "descricao": "Gradiente de concentração na sessão",
+          "tipo": "figura"
+        },
+        {
+          "slug": "monitor-dialise",
+          "descricao": "Monitor da máquina de diálise",
+          "tipo": "foto"
+        },
+        {
+          "slug": "linhas-sanguineas",
+          "descricao": "Linhas sanguíneas",
+          "tipo": "foto"
+        },
+        {
+          "slug": "intermitente-custo",
+          "descricao": "Por que intermitente tem custo",
+          "tipo": "figura"
+        },
+        {
+          "slug": "prescricao-hdi",
+          "descricao": "Prescrição de HDI",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M23",
+      "dir": "m23",
+      "titulo": "Ultrafiltração e balanço de volume",
+      "imagens": [
+        {
+          "slug": "ultrafiltracao-refilling",
+          "descricao": "Ultrafiltração e refilling",
+          "tipo": "figura"
+        },
+        {
+          "slug": "peso-seco",
+          "descricao": "Peso seco",
+          "tipo": "figura"
+        },
+        {
+          "slug": "taxa-uf",
+          "descricao": "Taxa de ultrafiltração",
+          "tipo": "figura"
+        },
+        {
+          "slug": "refilling-plasmatico",
+          "descricao": "Refilling plasmático",
+          "tipo": "figura"
+        },
+        {
+          "slug": "sobrecarga-volume",
+          "descricao": "Sobrecarga de volume",
+          "tipo": "figura"
+        },
+        {
+          "slug": "bioimpedancia",
+          "descricao": "Bioimpedância",
+          "tipo": "figura"
+        },
+        {
+          "slug": "curva-volume-relativo",
+          "descricao": "Curva de volume sanguíneo relativo",
+          "tipo": "figura"
+        },
+        {
+          "slug": "edema-pulmonar-rx",
+          "descricao": "Edema pulmonar (radiografia)",
+          "tipo": "imagem-medica"
+        }
+      ]
+    },
+    {
+      "id": "M24",
+      "dir": "m24",
+      "titulo": "Hipotensão intradialítica",
+      "imagens": [
+        {
+          "slug": "stunning-miocardico",
+          "descricao": "Stunning miocárdico",
+          "tipo": "figura"
+        },
+        {
+          "slug": "uf-maior-refilling",
+          "descricao": "UF > refilling",
+          "tipo": "figura"
+        },
+        {
+          "slug": "hipotensao-mecanismo",
+          "descricao": "Mecanismo da hipotensão intradialítica",
+          "tipo": "figura"
+        },
+        {
+          "slug": "tolerancia-hemodinamica",
+          "descricao": "Tolerância hemodinâmica",
+          "tipo": "figura"
+        },
+        {
+          "slug": "temperatura-dialisato",
+          "descricao": "Temperatura do dialisato",
+          "tipo": "figura"
+        },
+        {
+          "slug": "sodio-dialisato",
+          "descricao": "Sódio do dialisato",
+          "tipo": "figura"
+        },
+        {
+          "slug": "isquemia-orgaos",
+          "descricao": "Isquemia de órgãos na diálise",
+          "tipo": "figura"
+        },
+        {
+          "slug": "manejo-hipotensao",
+          "descricao": "Manejo da hipotensão intradialítica",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M25",
+      "dir": "m25",
+      "titulo": "Dose e adequação — Kt/V",
+      "imagens": [
+        {
+          "slug": "ktv-adequacao",
+          "descricao": "Kt/V e adequação",
+          "tipo": "figura"
+        },
+        {
+          "slug": "urr-formula",
+          "descricao": "URR (taxa de redução de ureia)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "clearance-dialise",
+          "descricao": "Clearance de diálise (K)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "spktv-ektv",
+          "descricao": "spKt/V × eKt/V",
+          "tipo": "figura"
+        },
+        {
+          "slug": "prescricao-dose-hd",
+          "descricao": "Prescrição de dose de HD",
+          "tipo": "figura"
+        },
+        {
+          "slug": "tempo-vs-fluxo",
+          "descricao": "Tempo × fluxo",
+          "tipo": "figura"
+        },
+        {
+          "slug": "alvo-ktv-diretriz",
+          "descricao": "Alvo de Kt/V (diretriz)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "ureia-clearance-curva",
+          "descricao": "Curva de clearance de ureia",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M26",
+      "dir": "m26",
+      "titulo": "Cinética da ureia",
+      "imagens": [
+        {
+          "slug": "rebote-ureia",
+          "descricao": "Rebote pós-diálise da ureia",
+          "tipo": "figura"
+        },
+        {
+          "slug": "compartimento-unico-duplo",
+          "descricao": "Compartimento único × duplo",
+          "tipo": "figura"
+        },
+        {
+          "slug": "modelo-cinetico-ureia",
+          "descricao": "Modelo cinético da ureia",
+          "tipo": "figura"
+        },
+        {
+          "slug": "geracao-ureia",
+          "descricao": "Geração de ureia",
+          "tipo": "figura"
+        },
+        {
+          "slug": "distribuicao-ureia-tbw",
+          "descricao": "Distribuição da ureia (TBW)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "amostragem-ureia-tempo",
+          "descricao": "Amostragem de ureia no tempo",
+          "tipo": "figura"
+        },
+        {
+          "slug": "equilibrio-pos-dialise",
+          "descricao": "Equilíbrio pós-diálise",
+          "tipo": "figura"
+        },
+        {
+          "slug": "pos-diluicao-rebote",
+          "descricao": "Rebote e pós-diluição",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M27",
+      "dir": "m27",
+      "titulo": "Terapias contínuas (TRRC/CRRT)",
+      "imagens": [
+        {
+          "slug": "maquina-crrt",
+          "descricao": "Máquina de TRRC/CRRT",
+          "tipo": "foto"
+        },
+        {
+          "slug": "cvvh-conveccao",
+          "descricao": "CVVH (convecção)",
+          "tipo": "diagrama"
+        },
+        {
+          "slug": "cvvhd-difusao",
+          "descricao": "CVVHD (difusão)",
+          "tipo": "diagrama"
+        },
+        {
+          "slug": "cvvhdf",
+          "descricao": "CVVHDF",
+          "tipo": "diagrama"
+        },
+        {
+          "slug": "crrt-circuito",
+          "descricao": "Circuito de CRRT",
+          "tipo": "diagrama"
+        },
+        {
+          "slug": "continuo-vs-intermitente",
+          "descricao": "Contínuo × intermitente",
+          "tipo": "figura"
+        },
+        {
+          "slug": "prescricao-crrt",
+          "descricao": "Prescrição de CRRT",
+          "tipo": "figura"
+        },
+        {
+          "slug": "crrt-uti-paciente",
+          "descricao": "CRRT na UTI (paciente)",
+          "tipo": "foto"
+        }
+      ]
+    },
+    {
+      "id": "M28",
+      "dir": "m28",
+      "titulo": "Dose e fluidos na TRRC",
+      "imagens": [
+        {
+          "slug": "pre-pos-diluicao",
+          "descricao": "Pré × pós-diluição",
+          "tipo": "figura"
+        },
+        {
+          "slug": "efluente-ml-kg-h",
+          "descricao": "Efluente (mL/kg/h)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "dose-crrt-alvo",
+          "descricao": "Dose-alvo de CRRT",
+          "tipo": "figura"
+        },
+        {
+          "slug": "fluido-reposicao",
+          "descricao": "Fluido de reposição",
+          "tipo": "figura"
+        },
+        {
+          "slug": "dialisato-crrt",
+          "descricao": "Dialisato na CRRT",
+          "tipo": "figura"
+        },
+        {
+          "slug": "fracao-filtracao",
+          "descricao": "Fração de filtração",
+          "tipo": "figura"
+        },
+        {
+          "slug": "balanco-crrt",
+          "descricao": "Balanço na CRRT",
+          "tipo": "figura"
+        },
+        {
+          "slug": "prescricao-efluente",
+          "descricao": "Prescrição do efluente",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M29",
+      "dir": "m29",
+      "titulo": "Anticoagulação do circuito",
+      "imagens": [
+        {
+          "slug": "citrato-regional",
+          "descricao": "Anticoagulação regional com citrato",
+          "tipo": "figura"
+        },
+        {
+          "slug": "quelacao-calcio-citrato",
+          "descricao": "Quelação de cálcio pelo citrato",
+          "tipo": "figura"
+        },
+        {
+          "slug": "heparina-circuito",
+          "descricao": "Heparina no circuito",
+          "tipo": "figura"
+        },
+        {
+          "slug": "protocolo-citrato",
+          "descricao": "Protocolo de citrato",
+          "tipo": "figura"
+        },
+        {
+          "slug": "calcio-reposicao",
+          "descricao": "Reposição de cálcio",
+          "tipo": "figura"
+        },
+        {
+          "slug": "coagulacao-filtro",
+          "descricao": "Coagulação do filtro",
+          "tipo": "figura"
+        },
+        {
+          "slug": "monitorizacao-citrato",
+          "descricao": "Monitorização do citrato",
+          "tipo": "figura"
+        },
+        {
+          "slug": "disturbio-citrato",
+          "descricao": "Acidose/alcalose por citrato",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M30",
+      "dir": "m30",
+      "titulo": "Diálise peritoneal",
+      "imagens": [
+        {
+          "slug": "dialise-peritoneal",
+          "descricao": "Diálise peritoneal (cavidade)",
+          "tipo": "diagrama"
+        },
+        {
+          "slug": "cateter-tenckhoff",
+          "descricao": "Cateter de Tenckhoff",
+          "tipo": "figura"
+        },
+        {
+          "slug": "peritonio-membrana",
+          "descricao": "Peritônio como membrana",
+          "tipo": "figura"
+        },
+        {
+          "slug": "uf-osmotica-glicose",
+          "descricao": "UF osmótica pela glicose",
+          "tipo": "figura"
+        },
+        {
+          "slug": "pet-teste",
+          "descricao": "Teste de equilíbrio peritoneal (PET)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "capd-apd",
+          "descricao": "CAPD × APD",
+          "tipo": "figura"
+        },
+        {
+          "slug": "peritonite-dp",
+          "descricao": "Peritonite na DP (efluente turvo)",
+          "tipo": "imagem-medica"
+        },
+        {
+          "slug": "transporte-peritoneal-tipos",
+          "descricao": "Tipos de transportador peritoneal",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M31",
+      "dir": "m31",
+      "titulo": "SLED / híbridas",
+      "imagens": [
+        {
+          "slug": "sled-hibridas",
+          "descricao": "SLED / híbridas (esquema)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "sled-vs-hdi-crrt",
+          "descricao": "SLED × HDI × CRRT",
+          "tipo": "figura"
+        },
+        {
+          "slug": "racional-hemodinamico-sled",
+          "descricao": "Racional hemodinâmico da SLED",
+          "tipo": "figura"
+        },
+        {
+          "slug": "prescricao-sled",
+          "descricao": "Prescrição de SLED",
+          "tipo": "figura"
+        },
+        {
+          "slug": "fluxos-sled",
+          "descricao": "Fluxos na SLED",
+          "tipo": "figura"
+        },
+        {
+          "slug": "duracao-sled",
+          "descricao": "Duração prolongada",
+          "tipo": "figura"
+        },
+        {
+          "slug": "hibridas-modalidades",
+          "descricao": "Modalidades híbridas",
+          "tipo": "figura"
+        },
+        {
+          "slug": "sled-uti",
+          "descricao": "SLED na UTI",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M32",
+      "dir": "m32",
+      "titulo": "Depuração de solutos e drogas",
+      "imagens": [
+        {
+          "slug": "peso-molecular-ligacao",
+          "descricao": "Peso molecular × ligação proteica",
+          "tipo": "figura"
+        },
+        {
+          "slug": "volume-distribuicao-droga",
+          "descricao": "Volume de distribuição da droga",
+          "tipo": "figura"
+        },
+        {
+          "slug": "ligacao-proteica-remocao",
+          "descricao": "Ligação proteica e remoção",
+          "tipo": "figura"
+        },
+        {
+          "slug": "ajuste-antimicrobiano",
+          "descricao": "Ajuste de antimicrobiano na diálise",
+          "tipo": "figura"
+        },
+        {
+          "slug": "droga-dialisavel-criterios",
+          "descricao": "Critérios de droga dialisável",
+          "tipo": "figura"
+        },
+        {
+          "slug": "clearance-droga-dialise",
+          "descricao": "Clearance de droga pela diálise",
+          "tipo": "figura"
+        },
+        {
+          "slug": "dose-suplementar-pos-hd",
+          "descricao": "Dose suplementar pós-HD",
+          "tipo": "figura"
+        },
+        {
+          "slug": "meia-vida-dialise",
+          "descricao": "Meia-vida na diálise",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M33",
+      "dir": "m33",
+      "titulo": "Remoção de toxinas",
+      "imagens": [
+        {
+          "slug": "toxinas-dialisaveis",
+          "descricao": "Toxinas dialisáveis (visão geral)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "intoxicacao-litio",
+          "descricao": "Intoxicação por lítio",
+          "tipo": "figura"
+        },
+        {
+          "slug": "intoxicacao-salicilato",
+          "descricao": "Intoxicação por salicilato",
+          "tipo": "figura"
+        },
+        {
+          "slug": "intoxicacao-metanol",
+          "descricao": "Intoxicação por metanol",
+          "tipo": "figura"
+        },
+        {
+          "slug": "intoxicacao-etilenoglicol",
+          "descricao": "Intoxicação por etilenoglicol",
+          "tipo": "figura"
+        },
+        {
+          "slug": "gap-osmolar",
+          "descricao": "Gap osmolar",
+          "tipo": "figura"
+        },
+        {
+          "slug": "indicacao-dialise-toxina",
+          "descricao": "Indicação de diálise por toxina",
+          "tipo": "figura"
+        },
+        {
+          "slug": "hemoperfusao-carvao",
+          "descricao": "Hemoperfusão com carvão",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M34",
+      "dir": "m34",
+      "titulo": "Síndrome de desequilíbrio dialítico",
+      "imagens": [
+        {
+          "slug": "desequilibrio-dialitico",
+          "descricao": "Síndrome de desequilíbrio dialítico",
+          "tipo": "figura"
+        },
+        {
+          "slug": "edema-cerebral-osmose-reversa",
+          "descricao": "Edema cerebral por osmose reversa",
+          "tipo": "figura"
+        },
+        {
+          "slug": "gradiente-ureia-cerebro",
+          "descricao": "Gradiente de ureia sangue-cérebro",
+          "tipo": "figura"
+        },
+        {
+          "slug": "prevencao-desequilibrio",
+          "descricao": "Prevenção do desequilíbrio",
+          "tipo": "figura"
+        },
+        {
+          "slug": "sintomas-desequilibrio",
+          "descricao": "Sintomas do desequilíbrio",
+          "tipo": "figura"
+        },
+        {
+          "slug": "primeira-dialise-lenta",
+          "descricao": "Primeira diálise lenta/curta",
+          "tipo": "figura"
+        },
+        {
+          "slug": "osmoles-idiogenicos",
+          "descricao": "Osmoles idiogênicos cerebrais",
+          "tipo": "figura"
+        },
+        {
+          "slug": "rm-edema-desequilibrio",
+          "descricao": "Edema cerebral em RM",
+          "tipo": "imagem-medica"
+        }
+      ]
+    },
+    {
+      "id": "M35",
+      "dir": "m35",
+      "titulo": "Indicações de TRS — AEIOU",
+      "imagens": [
+        {
+          "slug": "aeiou-indicacoes",
+          "descricao": "AEIOU (mapa de indicações)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "acidose-refrataria",
+          "descricao": "Acidose refratária",
+          "tipo": "figura"
+        },
+        {
+          "slug": "hipercalemia-refrataria",
+          "descricao": "Hipercalemia refratária",
+          "tipo": "figura"
+        },
+        {
+          "slug": "intoxicacao-indicacao",
+          "descricao": "Intoxicação (indicação)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "sobrecarga-volume-indicacao",
+          "descricao": "Sobrecarga de volume refratária",
+          "tipo": "figura"
+        },
+        {
+          "slug": "uremia-sintomas",
+          "descricao": "Sintomas de uremia",
+          "tipo": "figura"
+        },
+        {
+          "slug": "pericardite-uremica",
+          "descricao": "Pericardite urêmica",
+          "tipo": "imagem-medica"
+        },
+        {
+          "slug": "encefalopatia-uremica",
+          "descricao": "Encefalopatia urêmica",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M36",
+      "dir": "m36",
+      "titulo": "O momento da substituição",
+      "imagens": [
+        {
+          "slug": "precoce-tardio",
+          "descricao": "Início precoce × tardio",
+          "tipo": "figura"
+        },
+        {
+          "slug": "gatilhos-inicio-trs",
+          "descricao": "Gatilhos de início de TRS",
+          "tipo": "figura"
+        },
+        {
+          "slug": "criterios-urgencia",
+          "descricao": "Critérios de urgência de diálise",
+          "tipo": "figura"
+        },
+        {
+          "slug": "ensaios-timing",
+          "descricao": "Ensaios de timing (precoce × tardio)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "biomarcadores-lra",
+          "descricao": "Biomarcadores de LRA",
+          "tipo": "figura"
+        },
+        {
+          "slug": "furosemide-stress-test",
+          "descricao": "Furosemide stress test",
+          "tipo": "figura"
+        },
+        {
+          "slug": "timing-fluxograma",
+          "descricao": "Fluxograma de timing",
+          "tipo": "figura"
+        },
+        {
+          "slug": "mecanismo-pede-suporte",
+          "descricao": "O mecanismo que pede suporte",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M37",
+      "dir": "m37",
+      "titulo": "Síndrome cardiorrenal e a ultrafiltração",
+      "imagens": [
+        {
+          "slug": "sindrome-cardiorrenal",
+          "descricao": "Síndrome cardiorrenal",
+          "tipo": "diagrama"
+        },
+        {
+          "slug": "tipos-cardiorrenal",
+          "descricao": "Tipos (1-5) de cardiorrenal",
+          "tipo": "figura"
+        },
+        {
+          "slug": "diuretico-vs-uf",
+          "descricao": "Diurético × ultrafiltração",
+          "tipo": "figura"
+        },
+        {
+          "slug": "congestao-venosa-renal",
+          "descricao": "Congestão venosa renal",
+          "tipo": "figura"
+        },
+        {
+          "slug": "ultrafiltracao-icc",
+          "descricao": "UF na insuficiência cardíaca",
+          "tipo": "figura"
+        },
+        {
+          "slug": "coracao-rim-volume",
+          "descricao": "Coração–rim–volume",
+          "tipo": "figura"
+        },
+        {
+          "slug": "resistencia-diuretica-icc",
+          "descricao": "Resistência diurética na ICC",
+          "tipo": "figura"
+        },
+        {
+          "slug": "pvc-rim",
+          "descricao": "Pressão venosa central e rim",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M38",
+      "dir": "m38",
+      "titulo": "Capstone integrado",
+      "imagens": [
+        {
+          "slug": "fluxograma-modalidade",
+          "descricao": "LRA grave → escolha de modalidade",
+          "tipo": "figura"
+        },
+        {
+          "slug": "lra-grave-conduta",
+          "descricao": "Conduta na LRA grave",
+          "tipo": "figura"
+        },
+        {
+          "slug": "escolha-modalidade-mecanismo",
+          "descricao": "Escolha por mecanismo",
+          "tipo": "figura"
+        },
+        {
+          "slug": "hdi-vs-crrt-decisao",
+          "descricao": "HDI × CRRT (decisão)",
+          "tipo": "figura"
+        },
+        {
+          "slug": "prescricao-integrada",
+          "descricao": "Prescrição integrada",
+          "tipo": "figura"
+        },
+        {
+          "slug": "meio-interno-restaurado",
+          "descricao": "Meio interno restaurado",
+          "tipo": "figura"
+        },
+        {
+          "slug": "caso-integrado",
+          "descricao": "Caso integrado renal",
+          "tipo": "figura"
+        },
+        {
+          "slug": "algoritmo-trs",
+          "descricao": "Algoritmo de TRS",
+          "tipo": "figura"
+        }
+      ]
+    },
+    {
+      "id": "M39",
+      "dir": "m39",
+      "titulo": "Exame global de domínio",
+      "imagens": [
+        {
+          "slug": "mapa-conceitual-renal",
+          "descricao": "Mapa conceitual integrador",
+          "tipo": "figura"
+        },
+        {
+          "slug": "nefron-resumo",
+          "descricao": "Néfron — resumo",
+          "tipo": "diagrama"
+        },
+        {
+          "slug": "meio-interno-resumo",
+          "descricao": "Meio interno — resumo",
+          "tipo": "figura"
+        },
+        {
+          "slug": "acidobase-resumo",
+          "descricao": "Ácido-base — resumo",
+          "tipo": "figura"
+        },
+        {
+          "slug": "eletrolitos-resumo",
+          "descricao": "Eletrólitos — resumo",
+          "tipo": "figura"
+        },
+        {
+          "slug": "dialise-resumo",
+          "descricao": "Diálise — resumo",
+          "tipo": "figura"
+        },
+        {
+          "slug": "farmacologia-renal-resumo",
+          "descricao": "Farmacologia renal — resumo",
+          "tipo": "figura"
+        },
+        {
+          "slug": "hexapode-mapa",
+          "descricao": "Mapa do hexápode",
+          "tipo": "figura"
+        }
+      ]
+    }
+  ]
+}

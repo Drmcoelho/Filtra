@@ -51,13 +51,14 @@ var dom = new JSDOM(html, {
 var win = dom.window, doc = win.document;
 
 // ----- estrutura: abas e IDs essenciais -----
-var ids = ['tabs','tab-caso','tab-trilha','tab-instrumento','tab-lab','tab-avaliacao',
+var ids = ['tabs','tab-conceito','tab-caso','tab-trilha','tab-instrumento','tab-lab','tab-avaliacao',
   'dy-canvas','in-peso','in-na','in-ureia','in-tipo','in-vol','in-soluto',
   'out-tbw','out-icf','out-ecf','out-tonic','out-osm','out-na','veredito',
-  'tutor-q','tutor-opts','tutor-fb','tutor-score'];
+  'tutor-q','tutor-opts','tutor-fb','tutor-score',
+  'draw-tbw','draw-cell','draw-comp','draw-brain'];
 ids.forEach(function (id) { ok(doc.getElementById(id) !== null, 'estrutura: #' + id + ' presente'); });
 
-ok(doc.querySelectorAll('#tabs button').length === 5, 'estrutura: 5 abas');
+ok(doc.querySelectorAll('#tabs button').length === 6, 'estrutura: 6 abas');
 ok(doc.getElementById('dy-canvas').tagName.toLowerCase() === 'canvas', 'instrumento: canvas vivo');
 
 // ----- caso (5 atos, prever-depois-revelar) -----
@@ -133,6 +134,20 @@ ok(doc.querySelector('#in-tipo optgroup') !== null, 'lab: fluidos IV no seletor 
 ok(/cérebro/.test(doc.getElementById('fig-conceito').innerHTML), 'Caso: ilustração do cérebro presente');
 ok(doc.querySelectorAll('#fig-conceito svg').length >= 3, 'Caso: tira de conceitos (banana no mar + cérebro)');
 
+// ----- aba CONCEITO: explicação didática ilustrada (desenhos) -----
+ok(doc.querySelectorAll('#tab-conceito svg').length >= 4, 'Conceito: ≥4 desenhos (ÁGT, célula, composição, cérebro)');
+var conc = doc.getElementById('tab-conceito').textContent;
+ok(/ÁGT\s*=\s*peso\s*×\s*fração/.test(conc), 'Conceito: fórmula da ÁGT exposta');
+ok(/60-40-20/.test(conc), 'Conceito: regra 60-40-20 explicada');
+var cellSvg = doc.getElementById('draw-cell').innerHTML;
+ok(/ATPase/.test(cellSvg) && /Na.{0,2}\/K/.test(cellSvg), 'Conceito: bomba Na⁺/K⁺-ATPase desenhada');
+ok(/K⁺/.test(cellSvg) && /Na⁺/.test(cellSvg), 'Conceito: banana no mar (K⁺ dentro, Na⁺ no mar)');
+ok(/plasma/.test(conc) && /interstício/.test(conc), 'Conceito: ECF = plasma + interstício');
+ok(/mielinólise/.test(conc), 'Conceito: cérebro — adaptação crônica e mielinólise (teaser do M10)');
+
+// ----- correção: SF 0,9% NÃO é rotulado como isotônico puro -----
+ok(/308|hipertôn|suprafisiol/i.test(win.MODEL.MANOBRAS.sf09), 'SF 0,9% rotulado corretamente (308 mOsm / Cl⁻ alto), não "isotônico"');
+
 // ----- tutor: DOIS blocos (ilustrado ≥10 + textual ≥10), bem-formados -----
 function malformados(bank) {
   var n = 0;
@@ -178,6 +193,11 @@ ok(/educacional/i.test(body) && doc.querySelector('.disc') !== null, 'disclaimer
 
 // ----- guarda SaMD invertida (§8): M0 não promete fármaco; não pode haver dose solta -----
 ok(!/\b\d+\s?(mg|mcg|µg)\b/.test(body), 'M0 sem doses (a farmacologia entra no túbulo)');
+
+// ----- guarda OFFLINE: nenhuma imagem remota; raster só de assets/ local (§7 híbrido) -----
+var imgs = Array.prototype.slice.call(doc.querySelectorAll('img'));
+var remotas = imgs.filter(function (im) { return /^https?:|^\/\//i.test(im.getAttribute('src') || ''); });
+ok(remotas.length === 0, 'offline: nenhum <img> remoto (fotos só de assets/ local)');
 
 console.log(oks + ' OK · ' + fail + ' falhas');
 process.exit(fail > 0 ? 1 : 0);

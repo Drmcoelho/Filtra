@@ -40,6 +40,7 @@
   canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
   #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
   .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
   .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
   .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
   .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
@@ -82,15 +83,50 @@
   <a href="filtra.html">&larr; índice do braço FILTRA</a>
 
   <div class="tabs" id="tabs">
-    <button data-tab="caso" class="on">Caso</button>
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
     <button data-tab="trilha">Trilha</button>
     <button data-tab="instrumento">Instrumento</button>
     <button data-tab="lab">Lab</button>
     <button data-tab="avaliacao">Avaliação</button>
   </div>
 
+  <!-- ============================== CONCEITO (explicação didática ilustrada) ============================== -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — a água, a célula e o mar (explicação ilustrada)</h3>
+
+      <h4>1. Quanta água tem o corpo? A fórmula da Água Corporal Total (ÁGT)</h4>
+      <p class="sub"><b>ÁGT = peso × fração.</b> Homem ≈ 0,6 · mulher ≈ 0,5 · idoso ≈ 0,45–0,5 · lactente ≈ 0,7
+      (músculo carrega mais água que gordura, por isso a fração cai com idade e adiposidade). Regra
+      <b>60-40-20</b>: ~60% do peso é água; <b>40%</b> dela no ICF e <b>20%</b> no ECF — e o ECF se reparte em
+      ~5% plasma e ~15% interstício.</p>
+      <div class="concept" id="draw-tbw"></div>
+
+      <h4>2. A banana no mar — por que a célula não estoura</h4>
+      <p class="sub">O ICF é um saco cheio de <b>K⁺</b> (o cátion de dentro); o ECF é um <b>mar de Na⁺</b>. A
+      <b>Na⁺/K⁺-ATPase</b> bombeia 3 Na⁺ para fora e 2 K⁺ para dentro, gastando ATP — é ela que mantém o
+      gradiente e, com ele, o tamanho da célula. A água não decide nada: ela apenas segue os osmoles
+      efetivos até a tonicidade se igualar dos dois lados.</p>
+      <div class="concept" id="draw-cell"></div>
+
+      <h4>3. Os componentes de cada meio</h4>
+      <p class="sub"><b>ICF:</b> K⁺ (~140), Mg²⁺, fosfatos e proteínas (ânions); quase nada de Na⁺. <b>ECF:</b>
+      Na⁺ (~140), Cl⁻ (~100), HCO₃⁻ (~24), K⁺ (~4), Ca²⁺. E o ECF se divide em <b>plasma</b> (com proteínas →
+      pressão oncótica, retém o coloide) e <b>interstício</b> (ultrafiltrado, quase sem proteína).</p>
+      <div class="concept" id="draw-comp"></div>
+
+      <h4>4. O cérebro — a célula que importa</h4>
+      <p class="sub">O cérebro vive numa <b>caixa rígida</b> (o crânio). Hiponatremia <b>aguda</b> → água entra
+      → edema → herniação (mata rápido). Na <b>cronicidade</b>, o neurônio expulsa osmólitos para se adaptar;
+      por isso <b>corrigir o Na rápido demais o desidrata e desmieliniza</b> (mielinólise pontina — mata
+      devagar). O cálculo da velocidade segura está no M10.</p>
+      <div class="concept" id="draw-brain"></div>
+    </div>
+  </section>
+
   <!-- ============================== CASO (5 atos) ============================== -->
-  <section class="tab on" id="tab-caso">
+  <section class="tab" id="tab-caso">
     <div class="panel" id="caso">
       <h3>Caso — cinco atos, decida antes de revelar</h3>
       <p class="sub">Homem, 70 kg. Cada ato apresenta uma manobra. Preveja o destino da célula antes de abrir.</p>
@@ -193,7 +229,7 @@
           <select id="in-tipo">
             <option value="nenhuma">— nenhuma —</option>
             <option value="agua_livre">Ganho de água pura</option>
-            <option value="isotonico_ganho">Ganho isotônico (salina)</option>
+            <option value="isotonico_ganho">Ganho isotônico teórico (= plasma)</option>
             <option value="isotonico_perda">Perda isotônica</option>
             <option value="hipertonico_ganho">Ganho hipertônico (NaCl 3%)</option>
             <option value="perda_agua_pura">Perda de água pura</option>
@@ -201,8 +237,8 @@
             <option value="ureia">Carga de ureia (inefetivo)</option>
             <option value="glicose">Carga de glicose (efetivo)</option>
             <optgroup label="Fluidos IV">
-              <option value="sf09">SF 0,9% (Na 154)</option>
-              <option value="ringer">Ringer lactato (Na 130)</option>
+              <option value="sf09">SF 0,9% (154 → 308 mOsm)</option>
+              <option value="ringer">Ringer lactato (130 → 273 mOsm)</option>
               <option value="sg5">SG 5% (água livre)</option>
               <option value="nacl3">NaCl 3% (Na 513)</option>
               <option value="coloide">Coloide (expande o ECF)</option>
@@ -303,11 +339,11 @@ function fracSexo(sexo){
   return 0.60;
 }
 var MANOBRAS={nenhuma:'sem intervenção',agua_livre:'ganho de água pura (hipotônico)',
-  isotonico_ganho:'ganho isotônico (salina fisiológica)',isotonico_perda:'perda isotônica (hemorragia/vômito isotônico)',
+  isotonico_ganho:'ganho isotônico teórico (= plasma, 280)',isotonico_perda:'perda isotônica (hemorragia/vômito isotônico)',
   hipertonico_ganho:'ganho hipertônico (NaCl 3%)',perda_agua_pura:'perda de água pura (insensível/DI)',
   suor:'suor (perda hipotônica)',ureia:'carga de ureia (osmol inefetivo)',glicose:'carga de glicose (osmol efetivo)',
-  sf09:'SF 0,9% (Na 154) — fica no ECF',ringer:'Ringer lactato (Na 130) — quase isotônico',
-  sg5:'SG 5% (glicose metabolizada → água livre)',nacl3:'NaCl 3% (Na 513) — hipertônico',coloide:'Coloide (isotônico, expande o ECF)'};
+  sf09:'SF 0,9% (Na 154 · ~308 mOsm) — quase isotônico, Cl⁻ suprafisiológico',ringer:'Ringer lactato (Na 130 · ~273 mOsm) — quase isotônico, mais fisiológico',
+  sg5:'SG 5% (glicose metabolizada → água livre)',nacl3:'NaCl 3% (Na 513) — hipertônico',coloide:'Coloide (isotônico, expande o ECF; oncótico)'};
 var FLUIDOS={sf09:{nome:'SF 0,9%',cNa:154,cGlu:0},ringer:{nome:'Ringer lactato',cNa:130,cGlu:0},
   sg5:{nome:'SG 5%',cNa:0,cGlu:0},nacl3:{nome:'NaCl 3%',cNa:513,cGlu:0},coloide:{nome:'Coloide',cNa:154,cGlu:0}};
 function compartimentos(input){
@@ -541,6 +577,112 @@ function barOsm(r){
   s+='<text x="150" y="150" fill="#9fb1c0" font-size="10" text-anchor="middle">gap inefetivo = '+Math.round(r.gapInefetivo)+' mosm/L</text>';
   return svgEl(300,160,s);
 }
+// ===== desenhos didáticos da aba Conceito (ilustrações, não gráficos) =====
+function ion(x,y,label,color){ return '<circle cx="'+x+'" cy="'+y+'" r="12" fill="'+color+'" fill-opacity="0.9"/>'+
+  '<text x="'+x+'" y="'+(y+3)+'" fill="#06121a" font-size="9" text-anchor="middle" font-weight="bold">'+label+'</text>'; }
+function arrow2(x1,y1,x2,y2,color){
+  var a=Math.atan2(y2-y1,x2-x1),h=7;
+  return '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="'+color+'" stroke-width="2.5"/>'+
+    '<polygon points="'+x2+','+y2+' '+(x2-h*Math.cos(a-0.5)).toFixed(1)+','+(y2-h*Math.sin(a-0.5)).toFixed(1)+' '+
+    (x2-h*Math.cos(a+0.5)).toFixed(1)+','+(y2-h*Math.sin(a+0.5)).toFixed(1)+'" fill="'+color+'"/>'; }
+// íon com brilho (usa o filtro #cl-glow definido em cellIons)
+function ionG(x,y,label,color){ return '<g filter="url(#cl-glow)"><circle cx="'+x+'" cy="'+y+'" r="13" fill="'+color+'"/></g>'+
+  '<text x="'+x+'" y="'+(y+3.5)+'" fill="#04121a" font-size="9" text-anchor="middle" font-weight="bold">'+label+'</text>'; }
+// detalhe da bicamada lipídica (cabeças + caudas), p/ a lupa
+function bilayer(cx,cy){ var s='',n=5,sp=12,x0=cx-(n-1)*sp/2;
+  for(var i=0;i<n;i++){ var x=x0+i*sp;
+    s+='<circle cx="'+x+'" cy="'+(cy-12)+'" r="3" fill="#ffd27a"/><line x1="'+x+'" y1="'+(cy-9)+'" x2="'+x+'" y2="'+(cy-1)+'" stroke="#ffd27a" stroke-width="1.3"/>';
+    s+='<circle cx="'+x+'" cy="'+(cy+12)+'" r="3" fill="#ffd27a"/><line x1="'+x+'" y1="'+(cy+9)+'" x2="'+x+'" y2="'+(cy+1)+'" stroke="#ffd27a" stroke-width="1.3"/>'; }
+  return s; }
+// a banana no mar: K⁺ dentro, Na⁺ no mar, bomba Na/K-ATPase mantém o gradiente
+function cellIons(){
+  var s='<defs>'+
+    '<radialGradient id="cl-sea" cx="28%" cy="18%" r="110%"><stop offset="0%" stop-color="#0b3a4d"/><stop offset="100%" stop-color="#04141d"/></radialGradient>'+
+    '<radialGradient id="cl-cell" cx="40%" cy="32%" r="80%"><stop offset="0%" stop-color="#21557c"/><stop offset="100%" stop-color="#0e2740"/></radialGradient>'+
+    '<filter id="cl-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>'+
+    '</defs>';
+  s+='<rect x="0" y="0" width="360" height="270" fill="url(#cl-sea)"/>';
+  s+='<path d="M0,32 q40,-14 80,0 t80,0 t80,0 t80,0 t80,0" fill="none" stroke="#2a6b80" stroke-opacity="0.55" stroke-width="2"/>';
+  s+='<text x="14" y="22" fill="#9fe3ec" font-size="12" font-weight="bold">MAR (ECF) · Na⁺</text>';
+  s+=ionG(66,60,'Na⁺','#43d4dc')+ionG(150,46,'Na⁺','#43d4dc')+ionG(312,56,'Na⁺','#43d4dc')+ionG(40,112,'Cl⁻','#86b0c4')+ionG(330,128,'Cl⁻','#86b0c4');
+  // a célula (blob orgânico) com membrana
+  var blob='M70,170 C40,122 72,86 122,82 C178,77 250,82 282,112 C314,142 300,198 248,216 C188,238 108,232 82,206 C66,192 64,186 70,170 Z';
+  s+='<path d="'+blob+'" fill="url(#cl-cell)" stroke="#5aa0e0" stroke-width="3.5"/>';
+  s+='<text x="150" y="118" fill="#dcebff" font-size="12" font-weight="bold" text-anchor="middle">CÉLULA (ICF) · K⁺</text>';
+  s+=ionG(112,152,'K⁺','#5aa0e0')+ionG(158,168,'K⁺','#5aa0e0')+ionG(118,194,'K⁺','#5aa0e0')+ionG(206,152,'Mg²⁺','#8aa0e0')+ionG(184,192,'PO₄','#8aa0e0');
+  // Na/K-ATPase transmembrana (ampulheta)
+  s+='<g transform="translate(272,150)"><path d="M-17,-27 L17,-27 L7,0 L17,27 L-17,27 L-7,0 Z" fill="#16202a" stroke="#ffb24d" stroke-width="2"/></g>';
+  s+='<text x="272" y="116" fill="#ffb24d" font-size="9" text-anchor="middle" font-weight="bold">Na⁺/K⁺-ATPase</text>';
+  s+=arrow2(278,128,314,108,'#43d4dc')+'<text x="300" y="103" fill="#43d4dc" font-size="9">3 Na⁺→</text>';
+  s+=arrow2(302,176,268,192,'#5aa0e0')+'<text x="288" y="208" fill="#5aa0e0" font-size="9">←2 K⁺</text>';
+  // lupa: bicamada lipídica
+  s+='<line x1="272" y1="177" x2="306" y2="226" stroke="#ffb24d" stroke-opacity="0.5"/>';
+  s+='<circle cx="312" cy="232" r="33" fill="#0a1820" stroke="#ffb24d" stroke-width="1.5"/>'+bilayer(312,232);
+  s+='<text x="312" y="266" fill="#ffd27a" font-size="8" text-anchor="middle">bicamada lipídica</text>';
+  return svgEl(360,270,s);
+}
+// árvore da Água Corporal Total (60-40-20-5-15)
+function tbwTree(){
+  var s='<defs>'+
+    '<linearGradient id="tb-icf" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1d4e74"/><stop offset="100%" stop-color="#0f2a40"/></linearGradient>'+
+    '<linearGradient id="tb-ecf" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0f3a40"/><stop offset="100%" stop-color="#0a2226"/></linearGradient>'+
+    '</defs>';
+  s+='<rect x="0" y="0" width="340" height="200" fill="#10171e"/>';
+  // gotícula
+  s+='<path d="M312,18 q9,12 0,20 q-9,-8 0,-20 z" fill="#43d4dc" fill-opacity="0.8"/>';
+  s+='<text x="12" y="18" fill="#cfe6ff" font-size="11" font-weight="bold">ÁGT = peso × fração  (♂0,6 · ♀0,5 · idoso~0,45)</text>';
+  s+='<rect x="14" y="28" width="312" height="156" rx="6" fill="none" stroke="#3a4a58"/><text x="20" y="42" fill="#9fb1c0" font-size="10">Peso corporal (100%)</text>';
+  var agtw=312*0.6;
+  s+='<rect x="22" y="48" width="'+agtw.toFixed(0)+'" height="128" rx="5" fill="#0c2330" stroke="#39c0c8"/><text x="28" y="62" fill="#8fd0d6" font-size="10">ÁGT 60% do peso</text>';
+  var icfw=agtw*(40/60);
+  s+='<rect x="22" y="74" width="'+icfw.toFixed(0)+'" height="96" rx="5" fill="url(#tb-icf)" stroke="#3a7bd5"/><text x="'+(22+icfw/2).toFixed(0)+'" y="120" fill="#cfe0ff" font-size="13" font-weight="bold" text-anchor="middle">ICF 40%</text>';
+  var ecfx=22+icfw, ecfw=agtw-icfw;
+  s+='<rect x="'+ecfx.toFixed(0)+'" y="74" width="'+ecfw.toFixed(0)+'" height="96" rx="5" fill="url(#tb-ecf)" stroke="#39c0c8"/><text x="'+(ecfx+ecfw/2).toFixed(0)+'" y="98" fill="#bfeef0" font-size="10" font-weight="bold" text-anchor="middle">ECF 20%</text>';
+  var px=ecfx+ecfw*(5/20);
+  s+='<line x1="'+px.toFixed(0)+'" y1="104" x2="'+px.toFixed(0)+'" y2="168" stroke="#9fe3ec" stroke-dasharray="3 3"/>';
+  s+='<text x="'+(ecfx+ecfw*0.12).toFixed(0)+'" y="150" fill="#bfeef0" font-size="8" text-anchor="middle">plasma 5%</text>';
+  s+='<text x="'+(ecfx+ecfw*0.62).toFixed(0)+'" y="150" fill="#bfeef0" font-size="8" text-anchor="middle">interstício 15%</text>';
+  return svgEl(340,200,s);
+}
+// composição iônica de cada meio
+function compositionDiagram(){
+  var s='<defs>'+
+    '<linearGradient id="cp-icf" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1d4e74"/><stop offset="100%" stop-color="#0f2a40"/></linearGradient>'+
+    '<linearGradient id="cp-ecf" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0f3a40"/><stop offset="100%" stop-color="#0a2226"/></linearGradient></defs>';
+  s+='<rect x="0" y="0" width="340" height="212" fill="#10171e"/>';
+  s+='<text x="85" y="20" fill="#cfe0ff" font-size="12" font-weight="bold" text-anchor="middle">ICF (a célula)</text><text x="255" y="20" fill="#bfeef0" font-size="12" font-weight="bold" text-anchor="middle">ECF (o mar)</text>';
+  function col(x,grad,stroke,rows){
+    var t='<rect x="'+x+'" y="28" width="130" height="166" rx="7" fill="url(#'+grad+')" stroke="'+stroke+'"/>';
+    rows.forEach(function(it,i){ var y=52+i*30;
+      t+='<circle cx="'+(x+16)+'" cy="'+(y-4)+'" r="5" fill="'+it[2]+'"/>';
+      t+='<text x="'+(x+30)+'" y="'+y+'" fill="#e7eef4" font-size="11">'+it[0]+'</text>';
+      t+='<text x="'+(x+118)+'" y="'+y+'" fill="#9fb1c0" font-size="10" text-anchor="end">'+it[1]+'</text>'; });
+    return t;
+  }
+  s+=col(20,'cp-icf','#3a7bd5',[['K⁺','~140','#5aa0e0'],['Mg²⁺','alto','#8aa0e0'],['PO₄³⁻','alto','#8aa0e0'],['proteínas⁻','altas','#a98ad0'],['Na⁺','~12','#43d4dc']]);
+  s+=col(190,'cp-ecf','#39c0c8',[['Na⁺','~140','#43d4dc'],['Cl⁻','~100','#86b0c4'],['HCO₃⁻','~24','#86b0c4'],['K⁺','~4','#5aa0e0'],['Ca²⁺','~2,4','#d0c08a']]);
+  s+='<text x="255" y="208" fill="#bfeef0" font-size="8" text-anchor="middle">ECF = plasma (proteínas → oncótica) + interstício</text>';
+  return svgEl(340,212,s);
+}
+// encéfalo orgânico com giros (sulcos) dentro do crânio
+function brainBlob(cx,cy,rx,ry,color){
+  var s='<ellipse cx="'+cx+'" cy="'+cy+'" rx="'+rx+'" ry="'+ry+'" fill="'+color+'" fill-opacity="0.55" stroke="'+color+'" stroke-width="2"/>';
+  for(var i=-2;i<=2;i++){ var y=cy+i*(ry/3);
+    s+='<path d="M'+(cx-rx*0.78)+','+y.toFixed(1)+' q'+(rx*0.26)+',-7 '+(rx*0.52)+',0 t'+(rx*0.52)+',0 t'+(rx*0.52)+',0" fill="none" stroke="'+color+'" stroke-opacity="0.65" stroke-width="1.2"/>'; }
+  s+='<line x1="'+cx+'" y1="'+(cy-ry+2)+'" x2="'+cx+'" y2="'+(cy+ry-2)+'" stroke="'+color+'" stroke-opacity="0.5"/>'; // fissura inter-hemisférica
+  return s;
+}
+function brainStates(){
+  function panel(ox,rx,ry,color,lab){
+    return '<path d="M'+(ox+6)+',64 a44,40 0 0 1 88,0 q0,30 -44,40 q-44,-10 -44,-40 z" fill="none" stroke="#9fb1c0" stroke-width="3"/>'+ // crânio
+      brainBlob(ox+50,60,rx,ry,color)+
+      '<text x="'+(ox+50)+'" y="118" fill="#9fb1c0" font-size="9" text-anchor="middle">'+lab+'</text>';
+  }
+  var s='<rect x="0" y="0" width="340" height="152" fill="#10171e"/>';
+  s+=panel(8,30,24,'#3a7bd5','normal')+panel(118,38,31,'#e0556b','edema agudo → hérnia')+panel(228,30,24,'#52c08a','crônico adaptado');
+  s+='<text x="170" y="142" fill="#e8a13a" font-size="9" text-anchor="middle">corrigir o Na rápido no crônico → mielinólise (M10)</text>';
+  return svgEl(340,152,s);
+}
 // o cérebro na caixa rígida (crânio): incha → hernia; murcha → rompe veias-ponte
 function brainFig(state,titulo){
   var r = state==='edema'?52 : state==='shrink'?34 : 44;
@@ -636,6 +778,12 @@ $('banktabs').addEventListener('click',function(e){
   b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor();
 });
 $('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+// desenhos da aba Conceito (explicação didática ilustrada)
+$('draw-tbw').innerHTML  = tbwTree();
+$('draw-cell').innerHTML = cellIons();
+$('draw-comp').innerHTML = compositionDiagram();
+$('draw-brain').innerHTML= brainStates();
 
 // ilustrações de conceito (estáticas) no topo do Caso
 $('fig-conceito').innerHTML = barSplit() + cellFig('none','a banana no mar (a célula)') + brainFig('normal','o cérebro: a célula que importa');

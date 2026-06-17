@@ -55,14 +55,24 @@ var dom = new JSDOM(html, {
 var win = dom.window, doc = win.document;
 
 // ----- estrutura: abas e IDs essenciais -----
-var ids = ['tabs','tab-caso','tab-trilha','tab-instrumento','tab-lab','tab-avaliacao',
+var ids = ['tabs','tab-conceito','tab-caso','tab-trilha','tab-instrumento','tab-lab','tab-avaliacao',
   'tfg-canvas','in-pam','in-ra','in-re','in-kf','in-pi','in-pbc','in-autoreg',
   'out-pgc','out-nfp','out-tfg','out-fpr','out-ff','out-ra','out-re','out-regime',
   'veredito','glom-svg','instr-pearl','lab-pearl','fig-conceito',
-  'tutor-q','tutor-opts','tutor-fb','tutor-score','tutor-total','tutor-fig'];
+  'tutor-q','tutor-opts','tutor-fb','tutor-score','tutor-total','tutor-fig',
+  'draw-nefron','draw-glom','draw-starling','draw-autorreg','draw-eferente'];
 ids.forEach(function (id) { ok(doc.getElementById(id) !== null, 'estrutura: #' + id + ' presente'); });
 
-ok(doc.querySelectorAll('#tabs button').length === 5, 'estrutura: 5 abas');
+ok(doc.querySelectorAll('#tabs button').length === 6, 'estrutura: 6 abas');
+
+// ----- aba CONCEITO: desenho anatômico do néfron + explicação ilustrada -----
+ok(doc.querySelectorAll('#tab-conceito svg').length >= 5, 'Conceito: ≥5 desenhos (néfron, glomérulo, Starling, autorregulação, eferente)');
+var conc1 = doc.getElementById('tab-conceito').textContent;
+ok(/TFG\s*=\s*Kf\s*·?\s*\(P_GC/.test(conc1), 'Conceito: fórmula TFG = Kf·(P_GC − P_BC − π_GC) exposta');
+var nefSvg = doc.getElementById('draw-nefron').innerHTML;
+ok(/TCP/.test(nefSvg) && /TCD/.test(nefSvg) && /ducto/.test(nefSvg) && /glom/.test(nefSvg), 'Conceito: néfron com segmentos rotulados (TCP/alça/TCD/ducto)');
+ok(/CÓRTEX/.test(nefSvg) && /MEDULA/.test(nefSvg), 'Conceito: córtex × medula no desenho do néfron');
+ok(/eferente/.test(conc1) && /precipício/.test(conc1), 'Conceito: paradoxo do eferente e precipício explicados');
 ok(doc.getElementById('tfg-canvas').tagName.toLowerCase() === 'canvas', 'instrumento: canvas vivo');
 
 // ----- caso (5 atos, prever-depois-revelar) -----

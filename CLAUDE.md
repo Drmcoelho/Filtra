@@ -325,13 +325,16 @@ Critério: o teste é **determinístico entre execuções** (rode 3×, saída id
 
 ### HTML (`filtraN.html`)
 - Single-file, **offline**, zero CDN/rede, links relativos; engine **inline** (espelho fiel do `modelN.js`).
-- Abas: **Caso** (5 atos) · **Trilha** (socrática, ≥9 passos, pistas) · **Instrumento** (canvas computado ao
-  vivo) · **Lab** (sliders + veredito + banners) · **Avaliação** (DOIS blocos por módulo — **ilustrado** ≥10,
-  cada questão com sua ilustração, e **textual** ≥10; ambos com dificuldade crescente).
+- Abas: **Conceito** (explicação didática ilustrada — DESENHOS esquemáticos, não só gráficos) · **Caso**
+  (5 atos) · **Trilha** (socrática, ≥9 passos, pistas) · **Instrumento** (canvas computado ao vivo) ·
+  **Lab** (sliders + veredito + banners) · **Avaliação** (DOIS blocos por módulo — **ilustrado** ≥10, cada
+  questão com sua ilustração, e **textual** ≥10; ambos com dificuldade crescente).
 - **Ilustração viva (padrão deste braço):** os conceitos ganham ilustrações **inline em SVG** (offline, sem
-  rede), **computadas a partir do engine** quando o dado é numérico (mini Darrow–Yannet, barras
-  osm×tonicidade, setas de fluxo de água, esquema do néfron/segmento) — nunca imagens importadas. Aumentar
-  os elementos ilustrativos é objetivo explícito do FILTRA.
+  rede). Duas naturezas, ambas obrigatórias: (a) **desenhos esquemáticos** que explicam o conceito (a célula
+  com a Na⁺/K⁺-ATPase, a árvore da ÁGT, o néfron/segmento, o cérebro no crânio) — desenho, não rendição de
+  gráfico; e (b) **figuras computadas a partir do engine** quando o dado é numérico (mini Darrow–Yannet,
+  barras osm×tonicidade, setas de fluxo). Nunca imagens importadas. Aumentar os elementos ilustrativos é
+  objetivo explícito do FILTRA.
 - Camada interativa: caso com decisões + "prever-depois-revelar".
 - Disclaimer educacional + nota de honestidade do modelo + rodapé de série + backlink relativo ao índice.
 

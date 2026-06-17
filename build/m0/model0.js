@@ -33,7 +33,7 @@ function fracSexo(sexo) {
 var MANOBRAS = {
   nenhuma:          'sem intervenção',
   agua_livre:       'ganho de água pura (hipotônico)',
-  isotonico_ganho:  'ganho isotônico (salina fisiológica)',
+  isotonico_ganho:  'ganho isotônico teórico (= plasma, 280)',
   isotonico_perda:  'perda isotônica (hemorragia/vômito isotônico)',
   hipertonico_ganho:'ganho hipertônico (NaCl 3%)',
   perda_agua_pura:  'perda de água pura (insensível/DI)',
@@ -41,11 +41,11 @@ var MANOBRAS = {
   ureia:            'carga de ureia (osmol inefetivo)',
   glicose:          'carga de glicose (osmol efetivo)',
   // fluidos IV nomeados (introdução à fluidoterapia) — ver FLUIDOS
-  sf09:             'SF 0,9% (Na 154) — fica no ECF',
-  ringer:           'Ringer lactato (Na 130) — quase isotônico',
+  sf09:             'SF 0,9% (Na 154 · ~308 mOsm) — quase isotônico, Cl⁻ suprafisiológico',
+  ringer:           'Ringer lactato (Na 130 · ~273 mOsm) — quase isotônico, mais fisiológico',
   sg5:              'SG 5% (glicose metabolizada → água livre)',
   nacl3:            'NaCl 3% (Na 513) — hipertônico',
-  coloide:          'Coloide (isotônico, expande o ECF)'
+  coloide:          'Coloide (isotônico, expande o ECF; oncótico)'
 };
 
 // composição efetiva dos fluidos IV: cNa = sódio (mmol/L), cGlu = glicose efetiva.

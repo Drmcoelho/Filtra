@@ -7,8 +7,8 @@
   "formatoModulo": {
     "singleFile": true,
     "offline": true,
-    "abas": ["Caso (5 atos)", "Trilha (>=9 passos)", "Instrumento (canvas computado)", "Lab (sliders + veredito)", "Avaliacao (2 blocos)"],
-    "ilustracaoViva": "SVG inline, computado do engine quando numerico (nao imagens importadas)",
+    "abas": ["Conceito (explicacao didatica ilustrada, desenhos)", "Caso (5 atos)", "Trilha (>=9 passos)", "Instrumento (canvas computado)", "Lab (sliders + veredito)", "Avaliacao (2 blocos)"],
+    "ilustracaoViva": "SVG inline: desenhos esquematicos (celula/bomba/nefron/cerebro) + figuras computadas do engine (nao imagens importadas)",
     "avaliacao": { "blocos": ["ilustrado", "textual"], "questoesPorBloco": 10 },
     "robustez": "engine puro + clampv + identidades + leis + perolas + determinismo + fuzzing semeado >=5000",
     "portao": "npm run check (engine + validador) — 0 falhas"

@@ -35,8 +35,9 @@ você só entrega os arquivos na pasta e o crédito.
 
 ## A lista por módulo
 Está em `assets/manifest.json` (campo `modulos[].imagens[]`: `slug`, `descricao`, `tipo`). São M0–M39
-(metade FILTRA M0–M18, metade DIALISA M19–M38, exame M39). Cubra o máximo possível; o M0 é prioridade
-(módulo já publicado).
+(metade FILTRA M0–M18, metade DIALISA M19–M38, exame M39), **≥8 imagens por módulo — 320 no total**. Cubra
+o máximo possível; o **M0 é prioridade** (módulo já publicado). Se achar imagens boas além das listadas,
+pode acrescentá-las (nomeie no mesmo padrão e credite).
 
 ## Fluxo git
 1. Crie um branch a partir de `claude/review-claude-md-tcte19` (ex.: `assets/open-source-fotos`).

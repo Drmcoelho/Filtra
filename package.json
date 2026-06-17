@@ -7,9 +7,12 @@
   "author": "Dr. Matheus M. Coelho · CRM-SP 151.318 · Limeira",
   "scripts": {
     "test:0": "node build/m0/test0.node.js",
-    "test": "npm run test:0",
+    "test:1": "node build/m1/test1.node.js",
+    "test": "npm run test:0 && npm run test:1",
+    "prevalidate": "node build/ensure-deps.js",
     "validate:0": "node build/m0/validate0.js",
-    "validate": "npm run validate:0",
+    "validate:1": "node build/m1/validate1.js",
+    "validate": "npm run validate:0 && npm run validate:1",
     "check": "npm test && npm run validate"
   },
   "devDependencies": {

@@ -6,9 +6,10 @@ open source nas pastas certas, para TODOS os módulos. Quem integra ao HTML e pu
 você só entrega os arquivos na pasta e o crédito.
 
 ## O que entregar
-1. Para **cada item** de `assets/manifest.json`, baixe 1 imagem boa e salve em
-   `assets/<dir>/<slug>.webp` (ex.: `assets/m0/membrana-na-k-atpase.webp`). Prefira `.webp`; `.svg` quando
-   a fonte for vetorial; `.png/.jpg` só se necessário.
+1. Para **cada item** de `assets/manifest.json`, baixe 1 imagem boa e salve em `assets/<dir>/<slug>.<ext>`.
+   **Formato (decisão do projeto):** **SVG** se a fonte for vetorial (diagrama/esquema); **WebP** para raster
+   (foto/histologia/micrografia/RM); **PNG** só como fallback (transparência lossless); evite JPG salvo se a
+   fonte só existir assim. Ex.: `assets/m1/nefron-rotulado.svg`, `assets/m0/hemacia-tonicidade.webp`.
 2. Para **cada arquivo**, acrescente UMA linha em `/CREDITS.md` (tabela): arquivo, descrição, URL da fonte,
    autor, licença (com versão).
 3. Não precisa tocar nos `filtraN.html` — a integração e a renderização no Pages são feitas depois, "conforme

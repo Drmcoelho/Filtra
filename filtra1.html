@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M1 — O néfron / forças de Starling glomerulares</title>
+<style>
+  :root{
+    --bg:#0c1014; --panel:#141b22; --panel2:#1b242d; --line:#283642;
+    --ink:#e7eef4; --dim:#9fb1c0; --accent:#39c0c8; --warn:#e8a13a; --bad:#e0556b; --good:#52c08a;
+    --aff:#e0556b; --eff:#3a7bd5; --tuft:#39c0c8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none}
+  section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg,#glom-svg svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px}
+  .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)}
+  .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)}
+  .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)}
+  .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+  .chk{display:flex;align-items:center;gap:8px;margin-top:12px}
+  .chk input{width:auto}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M1</div>
+  <h1>O néfron / forças de Starling glomerulares</h1>
+  <div class="sub">A oligúria não é "pouca água": é a queda da <b>pressão de filtração</b>. A TFG = Kf·(P_GC − P_BC − π_GC),
+  e a P_GC mora <b>entre duas resistências</b> — a arteríola aferente e a eferente. A mesma TFG↓ nasce de mecânicas opostas.</div>
+  <nav class="hex">
+    <a class="soon" title="em breve">RESPIRA</a>
+    <a class="soon" title="em breve">CHOCA</a>
+    <span class="ativo">FILTRA</span>
+    <a class="soon" title="em breve">ALIMENTA</a>
+    <a class="soon" title="em breve">METABOLIZA</a>
+    <a class="soon" title="em breve">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="filtra.html">&larr; índice do braço FILTRA</a>
+
+  <div class="tabs" id="tabs">
+    <button data-tab="caso" class="on">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- ============================== CASO (5 atos) ============================== -->
+  <section class="tab on" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — cinco atos, decida antes de revelar</h3>
+      <p class="sub">Homem, 78 anos, insuficiência cardíaca. Cada ato adiciona um dado. Preveja o destino da
+      filtração antes de abrir.</p>
+      <div class="concept" id="fig-conceito"></div>
+
+      <div class="step">
+        <b>Ato 1.</b> Em uso crônico de <b>enalapril</b> (IECA). Por lombalgia, começou <b>naproxeno</b> (AINE) há 5 dias.
+        Chega oligúrico; creatinina 1,1 → 2,3 mg/dL. O que aconteceu com o glomérulo?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1">Duas drogas, dois lados do glomérulo: o <b>AINE fecha a aferente</b> (bloqueia as
+          prostaglandinas que a mantêm aberta) e o <b>IECA abre a eferente</b> (menos AngII). A P_GC, espremida entre as
+          duas, <b>despencou</b> — e com ela a TFG.</div>
+      </div>
+      <div class="step">
+        <b>Ato 2.</b> <i>Prever:</i> a creatinina dobrou — é hipovolemia pré-renal? A conduta é correr soro?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2">É a armadilha. O reflexo "creatinina subiu = falta volume = dê soro" ignora que aqui a
+          P_GC caiu por <b>tônus arteriolar</b>, não por depleção. Soro num cardiopata pode congestionar — e não devolve a
+          aferente que o AINE fechou.</div>
+      </div>
+      <div class="step">
+        <b>Ato 3.</b> <i>Revelar o mecanismo.</i> Exame: euvolêmico/congesto, sem sinais de desidratação. FE_Na intermediária.
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3">Não é volume. É <b>hemodinâmica glomerular</b>: aferente fechada (AINE) + eferente
+          aberta (IECA) = P_GC mínima. A azotemia é a <b>sombra</b> de uma pressão de filtração derrubada por dois fármacos.</div>
+      </div>
+      <div class="step">
+        <b>Ato 4.</b> <i>Conduta.</i> O que move o ponteiro de volta?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>Suspender o AINE</b> (devolve a prostaglandina → reabre a aferente → P_GC sobe).
+          Reavaliar o IECA pelo contexto: a queda da TFG pelo eferente pode ser <b>esperada e nefroprotetora</b> a longo
+          prazo. Soro só se houver depleção real. O motor do <b>Lab</b> reproduz: suba o tônus aferente e baixe o eferente,
+          e veja a TFG colapsar.</div>
+      </div>
+      <div class="step">
+        <b>Ato 5.</b> <i>Síntese.</i> Qual a lição de uma linha?
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5">A creatinina contou a <b>P_GC</b>, não a volemia. Decompor a pressão de filtração entre
+          as duas resistências vem <b>antes</b> de interpretar o número.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== TRILHA (socrática) ============================== -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — dez perguntas que constroem o conceito</h3>
+      <details><summary>1. De onde nasce a TFG?</summary>
+        <p>De um saldo de forças de Starling no capilar glomerular: <b>TFG = Kf·(P_GC − P_BC − π_GC)</b>. A P_GC empurra;
+        a pressão de Bowman e a oncótica resistem.</p></details>
+      <details><summary>2. Onde mora a P_GC?</summary>
+        <p>Entre <b>duas resistências</b> em série — a arteríola aferente (entrada) e a eferente (saída). Como um divisor
+        de pressão: P_GC = (PAM·R_E + P_v·R_A)/(R_A+R_E).</p></details>
+      <details><summary>3. Se eu fecho só a aferente, o que acontece?</summary>
+        <p>Fluxo↓, P_GC↓, TFG↓. A aferente é a torneira de entrada: estrangula tudo a jusante. (É o que o AINE faz.)</p></details>
+      <details><summary>4. E se eu fecho só a eferente?</summary>
+        <p>Fluxo↓, mas P_GC <b>sobe</b> (represa a montante) → TFG mantida ou ↑, e a <b>FF sobe</b>. É como a AngII
+        protege a TFG na hipoperfusão.</p></details>
+      <details><summary>5. Então por que o IECA faz a creatinina subir?</summary>
+        <p>Ele <b>dilata a eferente</b> (menos AngII) → tira a represa → P_GC↓ → TFG↓. A queda é o efeito hemodinâmico
+        <b>esperado</b>, não lesão — salvo estenose bilateral/rim único.</p></details>
+      <details><summary>6. O que é a autorregulação?</summary>
+        <p>O tônus aferente se ajusta (miogênico + feedback tubuloglomerular) para manter a P_GC ~constante apesar da PAM.
+        Por isso a curva TFG×PAM tem um <b>platô</b>.</p></details>
+      <details><summary>7. Em que faixa de PAM ela funciona?</summary>
+        <p>Aproximadamente <b>80–180 mmHg</b>. Dentro dela, a TFG quase não muda com a PAM.</p></details>
+      <details><summary>8. Por que falha abaixo de ~80 mmHg?</summary>
+        <p>Porque a aferente já está <b>maximamente dilatada</b> — não há mais como cair a resistência. A P_GC passa a
+        seguir a PAM e a TFG <b>despenca</b>: o precipício pré-renal.</p></details>
+      <details><summary>9. O que é a fração de filtração (FF) e o que a aumenta?</summary>
+        <p><b>FF = TFG/FPR</b>. Sobe quando a eferente fecha (TFG preservada com o fluxo plasmático caindo) — e com ela
+        sobe a oncótica peritubular.</p></details>
+      <details><summary>10. O que é a "tríplice ameaça hemodinâmica"?</summary>
+        <p><b>AINE</b> (fecha aferente) + <b>IECA</b> (abre eferente) + <b>depleção</b> (↓PAM). Cada um sozinho é
+        tolerável; somados, colapsam a P_GC. É o caso do Ato 1.</p></details>
+    </div>
+  </section>
+
+  <!-- ============================== INSTRUMENTO (canvas vivo) ============================== -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — a curva TFG × PAM (platô e precipício)</h3>
+      <p class="sub">Os controles do <b>Lab</b> alimentam esta curva. O trecho plano é a <b>autorregulação</b>; à esquerda,
+      o <b>precipício</b> pré-renal. O marcador laranja é o ponto de operação atual.</p>
+      <canvas id="tfg-canvas" width="900" height="360" aria-label="Curva TFG por PAM"></canvas>
+      <div class="concept" id="glom-svg" style="margin-top:12px"></div>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- ============================== LAB ============================== -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — mova as resistências, leia a filtração</h3>
+      <div class="grid">
+        <div>
+          <label>PAM — pressão de perfusão (mmHg): <span class="val" id="lbl-pam">100</span></label>
+          <input type="range" id="in-pam" min="20" max="240" step="1" value="100">
+          <label>Tônus AFERENTE — R_A (AINE/adrenérgico ↑, dilatador ↓): <span class="val" id="lbl-ra">1.0</span></label>
+          <input type="range" id="in-ra" min="0.2" max="5" step="0.1" value="1">
+          <label>Tônus EFERENTE — R_E (AngII ↑, IECA/BRA ↓): <span class="val" id="lbl-re">1.0</span></label>
+          <input type="range" id="in-re" min="0.2" max="5" step="0.1" value="1">
+          <div class="chk"><input type="checkbox" id="in-autoreg" checked><label style="margin:0">Autorregulação ligada (miogênico + feedback tubuloglomerular)</label></div>
+        </div>
+        <div>
+          <label>Kf — coeficiente de ultrafiltração (mL·min⁻¹·mmHg⁻¹): <span class="val" id="lbl-kf">7.5</span></label>
+          <input type="range" id="in-kf" min="0.5" max="20" step="0.5" value="7.5">
+          <label>π_GC — pressão oncótica (mmHg): <span class="val" id="lbl-pi">28</span></label>
+          <input type="range" id="in-pi" min="0" max="40" step="1" value="28">
+          <label>P_BC — pressão de Bowman (obstrução ↑) (mmHg): <span class="val" id="lbl-pbc">15</span></label>
+          <input type="range" id="in-pbc" min="0" max="50" step="1" value="15">
+        </div>
+      </div>
+
+      <table>
+        <tr><th>Variável</th><th>Atual</th><th>Normal ≈</th></tr>
+        <tr><td>P_GC — pressão capilar glomerular (mmHg)</td><td class="num" id="out-pgc">—</td><td class="num">60</td></tr>
+        <tr><td>NFP — pressão de filtração líquida (mmHg)</td><td class="num" id="out-nfp">—</td><td class="num">17</td></tr>
+        <tr><td>TFG (mL/min)</td><td class="num" id="out-tfg">—</td><td class="num">125</td></tr>
+        <tr><td>FPR — fluxo plasmático renal (mL/min)</td><td class="num" id="out-fpr">—</td><td class="num">600</td></tr>
+        <tr><td>FF — fração de filtração</td><td class="num" id="out-ff">—</td><td class="num">0.20</td></tr>
+        <tr><td>R_A efetiva (aferente, c/ autorregulação)</td><td class="num" id="out-ra">—</td><td class="num">1.0</td></tr>
+        <tr><td>R_E efetiva (eferente)</td><td class="num" id="out-re">—</td><td class="num">1.3</td></tr>
+        <tr><td>Regime</td><td class="num" id="out-regime">—</td><td class="num">platô</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- ============================== AVALIAÇÃO (tutor) ============================== -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (10)</button>
+        <button data-bank="textual">Textual (10)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica</b>. Este módulo M1 é
+    hemodinâmica glomerular pura: cita os fármacos (AINE, IECA/BRA) apenas como <b>alavancas de mecanismo</b> — a
+    dose e a prescrição entram a partir do M2/túbulo. O modelo é uma simplificação didática (divisor de pressão +
+    autorregulação amortecida) e ignora efeitos de menor ordem. Não substitui julgamento clínico; a decisão e a
+    responsabilidade finais são sempre do profissional.
+  </div>
+
+  <footer>
+    CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira
+  </footer>
+</div>
+
+<script>
+/* =========================================================================
+ * ENGINE INLINE — espelho fiel de build/m1/model1.js (o motor manda no pixel)
+ * ========================================================================= */
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a) n=a; if(n>b) n=b; return n; }
+function merge(a,b){ var o={},k; if(a) for(k in a) if(Object.prototype.hasOwnProperty.call(a,k)) o[k]=a[k]; if(b) for(k in b) if(Object.prototype.hasOwnProperty.call(b,k)) o[k]=b[k]; return o; }
+var PV=8, RA0=1.0, RE0=1.3, KFLOW=15, PSTAR=60, GMIN=0.5, GMAX=3.0, FFMAX=0.65, PRE_THR=52, HTN_THR=70, PBC_THR=24;
+function nefron(input){
+  var inp=input||{};
+  var PAM=clampv(inp.PAM!==undefined?inp.PAM:100,20,260);
+  var rA=clampv(inp.rA!==undefined?inp.rA:1,0.2,5);
+  var rE=clampv(inp.rE!==undefined?inp.rE:1,0.2,5);
+  var Kf=clampv(inp.Kf!==undefined?inp.Kf:7.5,0.5,20);
+  var piGC=clampv(inp.piGC!==undefined?inp.piGC:28,0,40);
+  var P_BC=clampv(inp.P_BC!==undefined?inp.P_BC:15,0,50);
+  var autoreg=inp.autoreg!==false;
+  var RE=RE0*rE;
+  var g=1;
+  if(autoreg){
+    var relax=0.4;
+    for(var it=0;it<60;it++){
+      var RAi=RA0*rA*g;
+      var pgcI=(PAM*RE+PV*RAi)/(RAi+RE);
+      var err=(pgcI-PSTAR)/PSTAR;
+      g=clampv(g*(1+relax*err),GMIN,GMAX);
+    }
+  }
+  var RA=RA0*rA*g;
+  var P_GC=(PAM*RE+PV*RA)/(RA+RE); if(!isFinite(P_GC)) P_GC=PV;
+  var FPR=KFLOW*Math.max(PAM-PV,0)/(RA+RE); if(!isFinite(FPR)||FPR<0) FPR=0;
+  var NFP=P_GC-P_BC-piGC;
+  var TFGraw=Kf*Math.max(NFP,0);
+  var TFG=Math.min(TFGraw,FFMAX*FPR); if(!isFinite(TFG)||TFG<0) TFG=0;
+  var FF=FPR>0?TFG/FPR:0;
+  var regime;
+  if(P_BC>PBC_THR) regime='pos_renal';
+  else if(P_GC<PRE_THR) regime='pre_renal';
+  else if(P_GC>HTN_THR) regime='htn_glomerular';
+  else regime='plato';
+  return {PAM:PAM,rA:rA,rE:rE,Kf:Kf,piGC:piGC,P_BC:P_BC,autoreg:autoreg,
+    R_A:RA,R_E:RE,g:g,P_GC:P_GC,NFP:NFP,TFG:TFG,FPR:FPR,FF:FF,regime:regime};
+}
+function tfgCurveLayout(state,W,H){
+  state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=52,padR=16,padT=18,padB=38,baseY=H-padB;
+  var pamMin=20,pamMax=240,N=56;
+  var raw=[],maxT=160,i,pam,r;
+  for(i=0;i<=N;i++){ pam=pamMin+(pamMax-pamMin)*i/N; r=nefron(merge(state,{PAM:pam})); raw.push({PAM:pam,TFG:r.TFG}); if(r.TFG>maxT) maxT=r.TFG; }
+  var yMax=maxT*1.12;
+  var pxX=(W-padL-padR)/(pamMax-pamMin), pxY=(baseY-padT)/yMax;
+  var pts=[];
+  for(i=0;i<raw.length;i++){ pts.push({PAM:raw[i].PAM,TFG:raw[i].TFG,x:padL+(raw[i].PAM-pamMin)*pxX,y:baseY-clampv(raw[i].TFG,0,yMax)*pxY}); }
+  var cur=nefron(state);
+  var curPAM=clampv(state.PAM!==undefined?state.PAM:100,pamMin,pamMax);
+  var cx=padL+(curPAM-pamMin)*pxX, cy=baseY-clampv(cur.TFG,0,yMax)*pxY;
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,
+    pamMin:pamMin,pamMax:pamMax,yMax:yMax,pxX:pxX,pxY:pxY,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},pts:pts,current:{x:cx,y:cy,PAM:curPAM,TFG:cur.TFG}};
+}
+function glomLayout(r,W,H){
+  r=r||{}; W=clampv(W,160,100000); H=clampv(H,120,100000);
+  var RA=clampv(r.R_A,0.01,1e4), RE=clampv(r.R_E,0.01,1e4), PGC=clampv(r.P_GC,0,300);
+  var cx=W*0.5, cy=H*0.5, tuftR=Math.min(W,H)*0.16;
+  var wA=clampv(16/RA,3,46), wE=clampv(16/RE,3,46);
+  var barMax=80, barH=clampv(PGC/barMax,0,1)*(H*0.42);
+  return {W:W,H:H,cx:cx,cy:cy,tuftR:tuftR,
+    afferent:{x:6,y:cy-wA/2,w:Math.max(cx-tuftR-6,1),h:wA,width:wA},
+    efferent:{x:cx+tuftR,y:cy-wE/2,w:Math.max(W-6-(cx+tuftR),1),h:wE,width:wE},
+    pgcBar:{x:cx-7,y:cy-barH,w:14,h:barH,PGC:PGC}};
+}
+window.nefron=nefron; window.tfgCurveLayout=tfgCurveLayout; window.glomLayout=glomLayout;
+window.MODEL={nefron:nefron,tfgCurveLayout:tfgCurveLayout,glomLayout:glomLayout,clampv:clampv,merge:merge,
+  CONST:{PV:PV,RA0:RA0,RE0:RE0,KFLOW:KFLOW,PSTAR:PSTAR,GMIN:GMIN,GMAX:GMAX,FFMAX:FFMAX}};
+
+/* =========================================================================
+ * UI
+ * ========================================================================= */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=d||1; return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+var REGIME_TXT={plato:'platô autorregulado',pre_renal:'precipício pré-renal',htn_glomerular:'hipertensão glomerular',pos_renal:'congestão pós-renal'};
+
+// --- abas ---
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b) return;
+  var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on');
+  $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh();
+});
+
+// --- caso: prever-depois-revelar ---
+document.addEventListener('click',function(e){
+  var b=e.target.closest('button.act[data-rev]'); if(!b) return;
+  var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on');
+});
+
+// --- lab + instrumento ---
+function readInputs(){
+  return {
+    PAM:+$('in-pam').value, rA:+$('in-ra').value, rE:+$('in-re').value,
+    Kf:+$('in-kf').value, piGC:+$('in-pi').value, P_BC:+$('in-pbc').value,
+    autoreg:$('in-autoreg').checked
+  };
+}
+function refresh(){
+  var inp=readInputs();
+  $('lbl-pam').textContent=inp.PAM; $('lbl-ra').textContent=fmt(inp.rA); $('lbl-re').textContent=fmt(inp.rE);
+  $('lbl-kf').textContent=fmt(inp.Kf); $('lbl-pi').textContent=inp.piGC; $('lbl-pbc').textContent=inp.P_BC;
+  var r=nefron(inp);
+  $('out-pgc').textContent=fmt(r.P_GC); $('out-nfp').textContent=fmt(r.NFP);
+  $('out-tfg').textContent=fmt(r.TFG,0); $('out-fpr').textContent=fmt(r.FPR,0);
+  $('out-ff').textContent=fmt(r.FF,3); $('out-ra').textContent=fmt(r.R_A,2); $('out-re').textContent=fmt(r.R_E,2);
+  $('out-regime').textContent=REGIME_TXT[r.regime]||r.regime;
+  verdict(r); drawCurve(inp); $('glom-svg').innerHTML=glomFig(r,'glomérulo — calibre ∝ 1/R'); pearl(r,inp);
+}
+function verdict(r){
+  var v=$('veredito'); var cls='b-good', msg;
+  var n=nefron({});
+  if(r.regime==='pre_renal'){ cls='b-bad'; msg='Precipício pré-renal: P_GC '+fmt(r.P_GC)+' mmHg — a pressão de filtração não basta. TFG '+fmt(r.TFG,0)+' (normal ≈125).'; }
+  else if(r.regime==='pos_renal'){ cls='b-bad'; msg='Congestão pós-renal: P_BC '+fmt(r.P_BC)+' mmHg contrapressa a filtração. TFG '+fmt(r.TFG,0)+'.'; }
+  else if(r.regime==='htn_glomerular'){ cls='b-warn'; msg='Hipertensão glomerular: P_GC '+fmt(r.P_GC)+' mmHg — alta pressão por eferente fechada / PAM alta. FF '+fmt(r.FF,2)+'.'; }
+  else { cls='b-good'; msg='Platô autorregulado: P_GC defendida em '+fmt(r.P_GC)+' mmHg, TFG '+fmt(r.TFG,0)+'. A aferente compensa (R_A efetiva '+fmt(r.R_A,2)+').'; }
+  v.className='banner '+cls; v.textContent=msg;
+}
+function pearl(r,inp){
+  var p=$('lab-pearl'), ip=$('instr-pearl'); var t;
+  var off=nefron(merge(inp,{autoreg:false}));
+  if(inp.rE<0.9 && r.regime!=='plato'){
+    t='PÉROLA: a eferente dilatada (IECA) baixou a P_GC para '+fmt(r.P_GC)+' → TFG '+fmt(r.TFG,0)+' (a creatinina sobe), mas o FLUXO subiu (FPR '+fmt(r.FPR,0)+', FF '+fmt(r.FF,2)+'). A queda é hemodinâmica, não lesão.';
+  } else if(inp.rE>1.3){
+    t='PÉROLA: a eferente fechada represa a P_GC ('+fmt(r.P_GC)+' mmHg) e a FF sobe para '+fmt(r.FF,2)+' — é assim que a AngII protege a TFG na hipoperfusão.';
+  } else if(inp.autoreg && Math.abs(r.g-1)>0.05){
+    t='Autorregulação ativa: a aferente ajustou o tônus (R_A efetiva '+fmt(r.R_A,2)+', ganho g='+fmt(r.g,2)+') para defender a P_GC. Sem ela, a TFG seria '+fmt(off.TFG,0)+' em vez de '+fmt(r.TFG,0)+'.';
+  } else {
+    t='Saldo de Starling: P_GC '+fmt(r.P_GC)+' − P_BC '+fmt(r.P_BC)+' − π_GC '+fmt(r.piGC)+' = NFP '+fmt(r.NFP)+' mmHg. Quem filtra é o saldo, não a P_GC sozinha.';
+  }
+  p.textContent=t; ip.textContent=t;
+}
+
+// --- canvas TFG×PAM: geometria de tfgCurveLayout(); aqui só ligamos os pontos ---
+function drawCurve(state){
+  var c=$('tfg-canvas'); if(!c) return;
+  var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; }
+  if(!ctx||!ctx.clearRect) return;
+  var L=tfgCurveLayout(state,c.width,c.height);
+  ctx.clearRect(0,0,L.W,L.H);
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('TFG (mL/min)',8,L.padT+2); ctx.fillText('PAM (mmHg) →',L.W-128,L.baseY+24);
+  // curva (polilinha computada)
+  ctx.strokeStyle='#39c0c8'; ctx.lineWidth=2; ctx.beginPath();
+  for(var i=0;i<L.pts.length;i++){ var p=L.pts[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); }
+  ctx.stroke();
+  // marcador do ponto de operação
+  var cu=L.current;
+  ctx.strokeStyle='#e8a13a'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(cu.x,L.padT); ctx.lineTo(cu.x,L.baseY); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#e8a13a'; ctx.fillRect(cu.x-3,cu.y-3,6,6);
+  ctx.fillStyle='#e7eef4'; ctx.fillText('TFG '+Math.round(cu.TFG),cu.x+6,Math.max(cu.y-6,L.padT+10));
+}
+
+['in-pam','in-ra','in-re','in-kf','in-pi','in-pbc'].forEach(function(id){ $(id).addEventListener('input',refresh); });
+$('in-autoreg').addEventListener('change',refresh);
+
+/* =========================================================================
+ * ILUSTRAÇÕES — SVG inline, computadas a partir do engine (física viva)
+ * ========================================================================= */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+
+// esquema do glomérulo: calibres ∝ 1/R, P_GC como barra (geometria de glomLayout)
+function glomFig(r,titulo){
+  var W=300,H=180,G=glomLayout(r,W,H);
+  var s='';
+  s+='<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="#0f2233" fill-opacity="0.25"/>';
+  // arteríola aferente (largura ∝ 1/R_A)
+  s+='<rect x="'+f1(G.afferent.x)+'" y="'+f1(G.afferent.y)+'" width="'+f1(G.afferent.w)+'" height="'+f1(G.afferent.h)+'" fill="#e0556b" fill-opacity="0.7"/>';
+  s+='<text x="10" y="'+f1(G.cy-G.afferent.h/2-4)+'" fill="#e0556b" font-size="10">aferente</text>';
+  // arteríola eferente (largura ∝ 1/R_E)
+  s+='<rect x="'+f1(G.efferent.x)+'" y="'+f1(G.efferent.y)+'" width="'+f1(G.efferent.w)+'" height="'+f1(G.efferent.h)+'" fill="#3a7bd5" fill-opacity="0.7"/>';
+  s+='<text x="'+f1(G.efferent.x)+'" y="'+f1(G.cy-G.efferent.h/2-4)+'" fill="#3a7bd5" font-size="10">eferente</text>';
+  // tufo glomerular
+  s+='<circle cx="'+f1(G.cx)+'" cy="'+f1(G.cy)+'" r="'+f1(G.tuftR)+'" fill="#39c0c8" fill-opacity="0.30" stroke="#39c0c8"/>';
+  // barra de P_GC
+  s+='<rect x="'+f1(G.pgcBar.x)+'" y="'+f1(G.pgcBar.y)+'" width="'+f1(G.pgcBar.w)+'" height="'+f1(G.pgcBar.h)+'" fill="#39c0c8"/>';
+  s+='<text x="'+f1(G.cx)+'" y="'+f1(G.cy+G.tuftR+16)+'" fill="#e7eef4" font-size="11" text-anchor="middle">P_GC '+Math.round(clampv(r.P_GC,0,300))+' mmHg</text>';
+  s+='<text x="'+f1(G.cx)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'')+'</text>';
+  return svgEl(W,H,s);
+}
+// mini curva TFG×PAM (sparkline computada) com platô e precipício
+function curveMini(state,titulo){
+  var W=300,H=170,L=tfgCurveLayout(state,W,H);
+  var s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  var d='';
+  for(var i=0;i<L.pts.length;i++){ d+=(i===0?'M':'L')+f1(L.pts[i].x)+' '+f1(L.pts[i].y)+' '; }
+  s+='<path d="'+d+'" fill="none" stroke="#39c0c8" stroke-width="2"/>';
+  s+='<rect x="'+f1(L.current.x-3)+'" y="'+f1(L.current.y-3)+'" width="6" height="6" fill="#e8a13a"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'TFG × PAM')+'</text>';
+  s+='<text x="'+(W-8)+'" y="'+(L.baseY+14)+'" fill="#9fb1c0" font-size="9" text-anchor="end">PAM →</text>';
+  return svgEl(W,H,s);
+}
+// barras do saldo de Starling: P_GC empurra; P_BC + π_GC resistem; NFP é o saldo
+function starlingBars(r){
+  var W=300,H=170,base=130,sc=2.0,s='';
+  function bar(x,val,color,lab){ var h=clampv(val,0,300)*sc; return '<rect x="'+x+'" y="'+f1(base-h)+'" width="50" height="'+f1(h)+'" fill="'+color+'" fill-opacity="0.65" stroke="'+color+'"/>'+
+    '<text x="'+(x+25)+'" y="'+(base+13)+'" fill="#9fb1c0" font-size="9" text-anchor="middle">'+lab+'</text>'+
+    '<text x="'+(x+25)+'" y="'+f1(base-h-4)+'" fill="#e7eef4" font-size="10" text-anchor="middle">'+Math.round(val)+'</text>'; }
+  s+=bar(36,r.P_GC,'#39c0c8','P_GC ⟶');
+  s+=bar(104,r.P_BC,'#e8a13a','P_BC ⟵');
+  s+=bar(172,r.piGC,'#e0556b','π_GC ⟵');
+  s+=bar(240,Math.max(r.NFP,0),'#52c08a','NFP');
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">saldo de Starling (mmHg)</text>';
+  return svgEl(W,H,s);
+}
+
+/* =========================================================================
+ * TUTOR — DOIS blocos (ilustrado + textual), 10 cada; respostas computadas
+ * ========================================================================= */
+function R0(extra){ return nefron(merge({PAM:100},extra)); }
+function dirTFG(extra){ var t=R0(extra).TFG, b=nefron({PAM:100,autoreg:(extra&&extra.autoreg)===false?false:true}).TFG; return t>b+1?'sobe':t<b-1?'cai':'estável'; }
+
+var TUTOR_ILUSTRADO=[
+  {q:'No esquema, onde mora a pressão que empurra a filtração (P_GC)?',o:['Na arteríola aferente','No tufo glomerular, entre as duas arteríolas','Na arteríola eferente','No túbulo'],c:1,e:'A P_GC é a pressão no capilar glomerular — entre a aferente (entrada) e a eferente (saída).',fig:function(){return glomFig(R0({}),'glomérulo normal');}},
+  {q:'AINE fecha a aferente. A TFG…',o:['sobe','cai','não muda'],c:1,e:'Aferente↑ → fluxo↓, P_GC↓ → TFG cai. (A torneira de entrada estrangula tudo a jusante.)',fig:function(){return glomFig(R0({rA:1.9,autoreg:false}),'aferente constrita (AINE)');}},
+  {q:'AngII fecha a eferente. A P_GC…',o:['cai','sobe','não muda'],c:1,e:'Eferente↑ represa o sangue a montante → P_GC sobe. É como a AngII protege a TFG.',fig:function(){return glomFig(R0({rE:2.2,autoreg:false}),'eferente constrita (AngII)');}},
+  {q:'IECA dilata a eferente. A TFG…',o:['sobe','cai','não muda'],c:1,e:'Tira a represa → P_GC↓ → TFG cai e a creatinina sobe. A queda é hemodinâmica, esperada.',fig:function(){return glomFig(R0({rE:0.45,autoreg:false}),'eferente dilatada (IECA)');}},
+  {q:'Na curva TFG×PAM, o trecho plano é…',o:['o precipício pré-renal','o platô da autorregulação','um erro de medida'],c:1,e:'O platô: a aferente ajusta o tônus e mantém a TFG ~constante entre ~80 e ~180 mmHg.',fig:function(){return curveMini({PAM:100,rA:1,rE:1},'TFG × PAM (autorregulação)');}},
+  {q:'Abaixo de ~80 mmHg de PAM, a TFG…',o:['mantém-se','despenca','sobe'],c:1,e:'A aferente já está maximamente dilatada: a P_GC passa a seguir a PAM e a TFG despenca — o precipício.',fig:function(){return curveMini({PAM:55,rA:1,rE:1},'precipício à esquerda');}},
+  {q:'No saldo de Starling, quem EMPURRA a filtração?',o:['π_GC (oncótica)','P_GC (hidrostática glomerular)','P_BC (Bowman)'],c:1,e:'Só a P_GC empurra; a P_BC e a oncótica resistem. NFP = P_GC − P_BC − π_GC.',fig:function(){return starlingBars(R0({}));}},
+  {q:'Obstrução urinária eleva a P_BC. A TFG…',o:['sobe','cai','não muda'],c:1,e:'A contrapressão de Bowman reduz o NFP → TFG cai. É a via pós-renal.',fig:function(){return starlingBars(R0({P_BC:32}));}},
+  {q:'Eferente constrita: a TFG é preservada, mas a FF…',o:['cai','sobe','não muda'],c:1,e:'FF = TFG/FPR: com o fluxo plasmático caindo e a TFG mantida, a fração de filtração sobe.',fig:function(){return glomFig(R0({rE:2.0,autoreg:false}),'FF↑ na eferente fechada');}},
+  {q:'Tríplice ameaça (AINE + IECA + PAM baixa): a filtração…',o:['melhora','colapsa','fica igual'],c:1,e:'Os três golpes somam-se na P_GC e a TFG colapsa — cada fator isolado seria tolerável.',fig:function(){return curveMini({PAM:75,rA:1.8,rE:0.5},'AINE+IECA+depleção');}}
+];
+
+var TUTOR_TEXTUAL=[
+  {q:'A equação da TFG é…',o:['TFG = PAM × resistência','TFG = Kf · (P_GC − P_BC − π_GC)','TFG = P_GC / Kf','TFG = FPR × Hct'],c:1,e:'Forças de Starling: a TFG é o coeficiente Kf vezes a pressão de filtração líquida.'},
+  {q:'A P_GC é determinada por…',o:['só pela aferente','duas resistências em série (aferente e eferente)','só pela PAM','só pela oncótica'],c:1,e:'É um divisor de pressão entre a aferente e a eferente; sobe com R_E e cai com R_A.'},
+  {q:'Fechar SÓ a aferente faz, com a P_GC e o fluxo…',o:['ambos sobem','ambos caem','P_GC sobe, fluxo cai','sem efeito'],c:1,e:'A aferente é a entrada: estrangula o fluxo e despressuriza o glomérulo — P_GC e TFG caem.'},
+  {q:'Fechar SÓ a eferente faz com a P_GC e o fluxo…',o:['ambos caem','P_GC sobe, fluxo cai','ambos sobem','sem efeito'],c:1,e:'Represa a montante: P_GC↑ (TFG preservada/↑), mas o fluxo plasmático cai (FF↑).'},
+  {q:'Por que o IECA pode subir a creatinina?',o:['Lesa o túbulo','Dilata a eferente → P_GC↓ → TFG↓','Causa obstrução','Reduz o Kf'],c:1,e:'É efeito hemodinâmico esperado (não lesão), salvo estenose bilateral/rim único.'},
+  {q:'A autorregulação mantém a TFG na faixa de PAM de…',o:['40–60 mmHg','~80–180 mmHg','120–220 mmHg','não há faixa'],c:1,e:'Miogênico + feedback tubuloglomerular defendem a TFG entre ~80 e ~180 mmHg.'},
+  {q:'Abaixo do joelho inferior a autorregulação falha porque…',o:['a eferente fecha sozinha','a aferente já está maximamente dilatada','o Kf zera','a oncótica some'],c:1,e:'Sem reserva de dilatação aferente, a P_GC passa a seguir a PAM — precipício pré-renal.'},
+  {q:'A fração de filtração (FF) sobe quando…',o:['a aferente fecha','a eferente fecha','a PAM cai no platô','o Kf sobe'],c:1,e:'FF = TFG/FPR; a eferente fechada preserva a TFG enquanto o FPR cai → FF↑.'},
+  {q:'Em estenose BILATERAL de artéria renal, iniciar IECA tende a…',o:['não mudar a TFG','derrubar muito a TFG (a eferente sustentava a P_GC)','aumentar a TFG','curar a estenose'],c:1,e:'Ali a TFG dependia da constrição eferente pela AngII; tirá-la despressuriza o glomérulo — o precipício é real.'},
+  {q:'A mesma oligúria pré-renal e pós-renal diferem porque…',o:['a creatinina é diferente','o mecanismo: P_GC↓ (pré) vs P_BC↑ (pós)','a diurese é igual','não diferem'],c:1,e:'Decompor antes de interpretar: pré-renal cai a pressão de entrada; pós-renal sobe a contrapressão de Bowman.'}
+];
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL;
+window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+
+var BANKS={ ilustrada:TUTOR_ILUSTRADO, textual:TUTOR_TEXTUAL };
+var curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+function renderTutor(){
+  var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML = item.fig ? item.fig() : '';
+  $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false;
+  $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){
+    var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){
+      if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button');
+      btns[item.c].classList.add('ok');
+      if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block';
+      fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e;
+      $('tutor-score').textContent=tScore; $('tutor-total').textContent=tTotal;
+    });
+    box.appendChild(b);
+  });
+}
+$('banktabs').addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor();
+});
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+// ilustração de conceito no topo do Caso (glomérulo normal + curva)
+$('fig-conceito').innerHTML = glomFig(nefron({}),'o glomérulo entre duas resistências') + curveMini({PAM:100,rA:1,rE:1},'TFG × PAM');
+
+// init
+refresh(); renderTutor();
+</script>
+</body>
+</html>

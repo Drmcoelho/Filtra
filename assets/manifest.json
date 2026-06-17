@@ -1,6 +1,6 @@
 {
   "sobre": "Lista de imagens raster open source desejadas por modulo (>=8 por modulo). O LLM com internet baixa cada item para assets/<dir>/<slug>.webp, credita em /CREDITS.md e segue assets/INSTRUCOES.md. tipo: foto | figura | diagrama | histologia | micrografia | imagem-medica.",
-  "convencao_arquivo": "assets/<dir>/<slug>.webp",
+  "convencao_arquivo": "assets/<dir>/<slug>.<ext> — FORMATO (decisão do projeto): SVG se a fonte for vetorial (diagrama/esquema); WebP para raster (foto/histologia/micrografia/RM); PNG só como fallback (transparência lossless); evite JPG salvo se a fonte só existir assim.",
   "minimo_por_modulo": 8,
   "modulos": [
     {

@@ -40,6 +40,7 @@
   canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
   #tutor-fig svg,.concept svg,#glom-svg svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
   .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
   .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
   .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
   .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
@@ -83,15 +84,52 @@
   <a href="filtra.html">&larr; índice do braço FILTRA</a>
 
   <div class="tabs" id="tabs">
-    <button data-tab="caso" class="on">Caso</button>
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
     <button data-tab="trilha">Trilha</button>
     <button data-tab="instrumento">Instrumento</button>
     <button data-tab="lab">Lab</button>
     <button data-tab="avaliacao">Avaliação</button>
   </div>
 
+  <!-- ============================== CONCEITO (didática ilustrada) ============================== -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — o néfron e a pressão que filtra (explicação ilustrada)</h3>
+
+      <h4>1. O néfron, segmento a segmento</h4>
+      <p class="sub">O sangue chega pela <b>aferente</b>, é filtrado no <b>glomérulo</b> e o filtrado percorre
+      o túbulo: <b>TCP</b> → <b>alça de Henle</b> (fina ↓ / espessa ↑, na medula) → <b>TCD</b> → <b>ducto
+      coletor</b>. Cada segmento é uma alavanca diferente (e o alvo de uma classe de diurético).</p>
+      <div class="concept" id="draw-nefron"></div>
+
+      <h4>2. O glomérulo entre duas resistências</h4>
+      <p class="sub">A <b>P_GC</b> (pressão que empurra a filtração) mora entre a <b>aferente</b> (entrada) e a
+      <b>eferente</b> (saída). Fechar a aferente despressuriza tudo; fechar a eferente represa e <b>sobe</b> a
+      P_GC. O calibre dos vasos no desenho é ∝ 1/resistência.</p>
+      <div class="concept" id="draw-glom"></div>
+
+      <h4>3. As forças de Starling — quem empurra, quem resiste</h4>
+      <p class="sub"><b>TFG = Kf · (P_GC − P_BC − π_GC).</b> Só a P_GC empurra; a pressão de Bowman (P_BC) e a
+      oncótica (π_GC) resistem. Obstrução urinária sobe a P_BC e derruba a TFG (via pós-renal).</p>
+      <div class="concept" id="draw-starling"></div>
+
+      <h4>4. A autorregulação — o platô e o precipício</h4>
+      <p class="sub">Entre ~80 e ~180 mmHg de PAM a aferente ajusta o tônus (miogênico + feedback
+      tubuloglomerular) e mantém a TFG quase constante — o <b>platô</b>. Abaixo do joelho, a aferente já está
+      no talo: a TFG segue a PAM e <b>despenca</b> — o precipício pré-renal.</p>
+      <div class="concept" id="draw-autorreg"></div>
+
+      <h4>5. O paradoxo do eferente (IECA/BRA)</h4>
+      <p class="sub">O IECA <b>dilata a eferente</b> → tira a represa → P_GC↓ → TFG↓ e a <b>creatinina sobe</b>.
+      Isso costuma ser o efeito <b>esperado</b> (hemodinâmico), não lesão — exceto na estenose bilateral de
+      artéria renal / rim único, onde a TFG dependia da eferente fechada.</p>
+      <div class="concept" id="draw-eferente"></div>
+    </div>
+  </section>
+
   <!-- ============================== CASO (5 atos) ============================== -->
-  <section class="tab on" id="tab-caso">
+  <section class="tab" id="tab-caso">
     <div class="panel" id="caso">
       <h3>Caso — cinco atos, decida antes de revelar</h3>
       <p class="sub">Homem, 78 anos, insuficiência cardíaca. Cada ato adiciona um dado. Preveja o destino da
@@ -537,8 +575,42 @@ $('banktabs').addEventListener('click',function(e){
 });
 $('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
 
+// desenho ANATÔMICO do néfron (aba Conceito) — segmentos rotulados, córtex×medula
+function nephronDiagram(){
+  var s='<rect x="0" y="0" width="380" height="150" fill="#0f2230"/><rect x="0" y="150" width="380" height="162" fill="#0a151d"/>';
+  s+='<line x1="0" y1="150" x2="380" y2="150" stroke="#26404f" stroke-dasharray="4 4"/>';
+  s+='<text x="10" y="20" fill="#7f9aac" font-size="11" font-weight="bold">CÓRTEX</text><text x="10" y="172" fill="#5f7a8c" font-size="11" font-weight="bold">MEDULA</text>';
+  // arteríolas: aferente grossa, eferente fina
+  s+='<line x1="12" y1="76" x2="63" y2="76" stroke="#e0556b" stroke-width="6" stroke-linecap="round"/><text x="12" y="66" fill="#e08a96" font-size="9">aferente</text>';
+  s+='<line x1="114" y1="62" x2="150" y2="50" stroke="#e0556b" stroke-width="3" stroke-linecap="round"/><text x="120" y="46" fill="#e08a96" font-size="9">eferente</text>';
+  // glomérulo: cápsula + tufo
+  s+='<circle cx="90" cy="76" r="27" fill="#13314a" stroke="#5aa0e0" stroke-width="2"/>';
+  s+='<path d="M76,86 q6,-20 15,-7 q7,-15 15,1 q9,0 4,12 q-17,9 -34,3 z" fill="#5aa0e0" fill-opacity="0.7" stroke="#cfe6ff" stroke-width="0.8"/>';
+  s+='<text x="90" y="118" fill="#cfe6ff" font-size="9" text-anchor="middle">glomérulo</text>';
+  // TCP contorcido
+  s+='<path d="M113,82 q22,-15 30,5 q14,17 34,4 q16,-9 24,7" fill="none" stroke="#8ad0a0" stroke-width="6" stroke-linecap="round"/><text x="150" y="104" fill="#8ad0a0" font-size="9" text-anchor="middle">TCP</text>';
+  // alça de Henle: descendente fina + ascendente espessa
+  s+='<path d="M210,96 q8,44 9,92 q1,28 14,40" fill="none" stroke="#43d4dc" stroke-width="3" stroke-linecap="round"/>';
+  s+='<path d="M233,268 q16,8 19,-28 q7,-62 5,-132" fill="none" stroke="#5aa0e0" stroke-width="7" stroke-linecap="round"/>';
+  s+='<text x="196" y="244" fill="#43d4dc" font-size="9">alça fina ↓</text><text x="252" y="244" fill="#5aa0e0" font-size="9">espessa ↑</text>';
+  // TCD
+  s+='<path d="M260,108 q18,-13 34,1 q14,10 24,-3" fill="none" stroke="#c9a0e0" stroke-width="6" stroke-linecap="round"/><text x="290" y="100" fill="#c9a0e0" font-size="9" text-anchor="middle">TCD</text>';
+  // ducto coletor
+  s+='<path d="M318,108 q7,92 3,188" fill="none" stroke="#e8a13a" stroke-width="9" stroke-linecap="round"/><text x="330" y="170" fill="#e8a13a" font-size="9">ducto</text>';
+  s+='<path d="M318,300 q5,9 0,12 q-5,-3 0,-12 z" fill="#43d4dc"/>';
+  return svgEl(380,312,s);
+}
+window.nephronDiagram=nephronDiagram;
+
 // ilustração de conceito no topo do Caso (glomérulo normal + curva)
 $('fig-conceito').innerHTML = glomFig(nefron({}),'o glomérulo entre duas resistências') + curveMini({PAM:100,rA:1,rE:1},'TFG × PAM');
+
+// desenhos da aba Conceito (explicação didática ilustrada)
+$('draw-nefron').innerHTML   = nephronDiagram();
+$('draw-glom').innerHTML     = glomFig(nefron({}),'glomérulo: P_GC entre aferente e eferente');
+$('draw-starling').innerHTML = starlingBars(nefron({}));
+$('draw-autorreg').innerHTML = curveMini({PAM:100,rA:1,rE:1},'platô + precipício');
+$('draw-eferente').innerHTML = glomFig(nefron({rE:0.45,autoreg:false}),'IECA dilata a eferente → P_GC↓');
 
 // init
 refresh(); renderTutor();

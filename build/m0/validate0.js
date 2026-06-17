@@ -140,7 +140,7 @@ var conc = doc.getElementById('tab-conceito').textContent;
 ok(/ÁGT\s*=\s*peso\s*×\s*fração/.test(conc), 'Conceito: fórmula da ÁGT exposta');
 ok(/60-40-20/.test(conc), 'Conceito: regra 60-40-20 explicada');
 var cellSvg = doc.getElementById('draw-cell').innerHTML;
-ok(/Na\/K/.test(cellSvg) && /ATPase/.test(cellSvg), 'Conceito: bomba Na⁺/K⁺-ATPase desenhada');
+ok(/ATPase/.test(cellSvg) && /Na.{0,2}\/K/.test(cellSvg), 'Conceito: bomba Na⁺/K⁺-ATPase desenhada');
 ok(/K⁺/.test(cellSvg) && /Na⁺/.test(cellSvg), 'Conceito: banana no mar (K⁺ dentro, Na⁺ no mar)');
 ok(/plasma/.test(conc) && /interstício/.test(conc), 'Conceito: ECF = plasma + interstício');
 ok(/mielinólise/.test(conc), 'Conceito: cérebro — adaptação crônica e mielinólise (teaser do M10)');
@@ -193,6 +193,11 @@ ok(/educacional/i.test(body) && doc.querySelector('.disc') !== null, 'disclaimer
 
 // ----- guarda SaMD invertida (§8): M0 não promete fármaco; não pode haver dose solta -----
 ok(!/\b\d+\s?(mg|mcg|µg)\b/.test(body), 'M0 sem doses (a farmacologia entra no túbulo)');
+
+// ----- guarda OFFLINE: nenhuma imagem remota; raster só de assets/ local (§7 híbrido) -----
+var imgs = Array.prototype.slice.call(doc.querySelectorAll('img'));
+var remotas = imgs.filter(function (im) { return /^https?:|^\/\//i.test(im.getAttribute('src') || ''); });
+ok(remotas.length === 0, 'offline: nenhum <img> remoto (fotos só de assets/ local)');
 
 console.log(oks + ' OK · ' + fail + ' falhas');
 process.exit(fail > 0 ? 1 : 0);

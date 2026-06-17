@@ -66,7 +66,8 @@
   <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M0</div>
   <h1>Compartimentos do líquido corporal — a célula no oceano</h1>
   <div class="sub">A água cruza a membrana livremente; quem governa o tamanho da célula é a <b>tonicidade</b>
-  (osmoles efetivos), não a osmolalidade medida. A ureia entra na conta medida, mas não move água.</div>
+  (osmoles efetivos), não a osmolalidade medida. Aqui também: onde vai cada <b>fluido IV</b>, o <b>balanço
+  hídrico</b> (ingesta × perdas) e por que o <b>cérebro</b> é a célula que importa.</div>
   <nav class="hex">
     <a class="soon" title="em breve">RESPIRA</a>
     <a class="soon" title="em breve">CHOCA</a>
@@ -150,6 +151,14 @@
         <p>Não. Fica no ECF (mesma tonicidade) → expande volume sem mover água para dentro da célula.</p></details>
       <details><summary>9. Como ler o diagrama de Darrow–Yannet?</summary>
         <p>Largura = volume; altura = tonicidade. Compare o contorno tracejado (basal) com o preenchido (após a manobra).</p></details>
+      <details><summary>10. Onde vai cada fluido IV?</summary>
+        <p>Isotônico (SF 0,9%, Ringer, coloide) fica no <b>ECF</b>. SG 5% = água livre (glicose metabolizada) →
+        vai 2/3 para o <b>ICF</b>. NaCl 3% é hipertônico → expande o ECF e <b>encolhe</b> a célula. O destino
+        é a tonicidade do fluido, não o nome.</p></details>
+      <details><summary>11. Por que o cérebro manda na pressa?</summary>
+        <p>O cérebro é a célula que importa: vive numa caixa rígida. Hipotônico agudo → edema → herniação;
+        hipertônico → encolhe e rompe veias-ponte. E corrigir o sódio rápido demais lesa a mielina
+        (detalhado no M10). A velocidade é tão importante quanto o alvo.</p></details>
     </div>
   </section>
 
@@ -191,6 +200,13 @@
             <option value="suor">Suor (hipotônico)</option>
             <option value="ureia">Carga de ureia (inefetivo)</option>
             <option value="glicose">Carga de glicose (efetivo)</option>
+            <optgroup label="Fluidos IV">
+              <option value="sf09">SF 0,9% (Na 154)</option>
+              <option value="ringer">Ringer lactato (Na 130)</option>
+              <option value="sg5">SG 5% (água livre)</option>
+              <option value="nacl3">NaCl 3% (Na 513)</option>
+              <option value="coloide">Coloide (expande o ECF)</option>
+            </optgroup>
           </select>
           <label>Volume da manobra (L): <span class="val" id="lbl-vol">2</span></label>
           <input type="range" id="in-vol" min="0" max="10" step="0.5" value="2">
@@ -211,6 +227,36 @@
 
       <div class="banner" id="veredito">—</div>
       <div class="pearl" id="lab-pearl">—</div>
+    </div>
+
+    <div class="panel">
+      <h3>Balanço hídrico — o livro-caixa da água (mL/dia)</h3>
+      <p class="sub">Entradas (oral + IV + metabólica) − saídas (urina + insensível + suor). O que sobra é
+      o balanço; positivo retém água (tende a diluir), negativo perde (tende a concentrar).</p>
+      <div class="grid">
+        <div>
+          <label>Oral (mL): <span class="val" id="lbl-oral">2000</span></label>
+          <input type="range" id="in-oral" min="0" max="5000" step="100" value="2000">
+          <label>IV (mL): <span class="val" id="lbl-iv">0</span></label>
+          <input type="range" id="in-iv" min="0" max="5000" step="100" value="0">
+          <label>Água metabólica (mL): <span class="val" id="lbl-metab">300</span></label>
+          <input type="range" id="in-metab" min="0" max="800" step="50" value="300">
+        </div>
+        <div>
+          <label>Urina (mL): <span class="val" id="lbl-urina">1500</span></label>
+          <input type="range" id="in-urina" min="0" max="6000" step="100" value="1500">
+          <label>Insensível (mL): <span class="val" id="lbl-insen">700</span></label>
+          <input type="range" id="in-insen" min="0" max="2000" step="50" value="700">
+          <label>Suor (mL): <span class="val" id="lbl-suorml">0</span></label>
+          <input type="range" id="in-suorml" min="0" max="3000" step="100" value="0">
+        </div>
+      </div>
+      <table>
+        <tr><th>Entradas (mL)</th><th>Saídas (mL)</th><th>Balanço líquido (mL)</th></tr>
+        <tr><td class="num" id="bal-in">—</td><td class="num" id="bal-out">—</td><td class="num" id="bal-net">—</td></tr>
+      </table>
+      <div class="banner" id="bal-banner">—</div>
+      <div class="concept" id="bal-fig"></div>
     </div>
   </section>
 
@@ -233,9 +279,11 @@
 
   <div class="disc">
     <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica</b>. Este módulo
-    M0 não contém doses (a farmacologia entra a partir do túbulo). O modelo é uma simplificação didática
-    (Darrow–Yannet): assume equilíbrio osmótico instantâneo e ignora efeitos de menor ordem. Não substitui
-    julgamento clínico; a decisão e a responsabilidade finais são sempre do profissional.
+    M0 cobre compartimentos e introdução à fluidoterapia (volumes em mL e composição dos fluidos); doses de
+    <b>fármacos</b> entram a partir do túbulo. O modelo é uma simplificação didática (Darrow–Yannet): assume
+    equilíbrio osmótico instantâneo, trata o ECF como um espaço único (sem separar plasma/interstício) e
+    ignora efeitos de menor ordem. Não substitui julgamento clínico; a decisão e a responsabilidade finais
+    são sempre do profissional.
   </div>
 
   <footer>
@@ -257,7 +305,11 @@ function fracSexo(sexo){
 var MANOBRAS={nenhuma:'sem intervenção',agua_livre:'ganho de água pura (hipotônico)',
   isotonico_ganho:'ganho isotônico (salina fisiológica)',isotonico_perda:'perda isotônica (hemorragia/vômito isotônico)',
   hipertonico_ganho:'ganho hipertônico (NaCl 3%)',perda_agua_pura:'perda de água pura (insensível/DI)',
-  suor:'suor (perda hipotônica)',ureia:'carga de ureia (osmol inefetivo)',glicose:'carga de glicose (osmol efetivo)'};
+  suor:'suor (perda hipotônica)',ureia:'carga de ureia (osmol inefetivo)',glicose:'carga de glicose (osmol efetivo)',
+  sf09:'SF 0,9% (Na 154) — fica no ECF',ringer:'Ringer lactato (Na 130) — quase isotônico',
+  sg5:'SG 5% (glicose metabolizada → água livre)',nacl3:'NaCl 3% (Na 513) — hipertônico',coloide:'Coloide (isotônico, expande o ECF)'};
+var FLUIDOS={sf09:{nome:'SF 0,9%',cNa:154,cGlu:0},ringer:{nome:'Ringer lactato',cNa:130,cGlu:0},
+  sg5:{nome:'SG 5%',cNa:0,cGlu:0},nacl3:{nome:'NaCl 3%',cNa:513,cGlu:0},coloide:{nome:'Coloide',cNa:154,cGlu:0}};
 function compartimentos(input){
   var inp=input||{};
   var pesoKg=clampv(inp.pesoKg!==undefined?inp.pesoKg:70,1,400);
@@ -282,7 +334,7 @@ function compartimentos(input){
     case 'suor': dVol=-V; dEcfNa-=V*(2*30); break;
     case 'ureia': dUreia+=soluto; break;
     case 'glicose': dEcfGlu+=soluto; break;
-    default: break;
+    default: if(FLUIDOS.hasOwnProperty(tipo)){ var fl=FLUIDOS[tipo]; dVol+=V; dEcfNa+=V*(2*fl.cNa); dEcfGlu+=V*fl.cGlu; } break;
   }
   var ecfNa2=Math.max(ecfNa+dEcfNa,0), ecfGlu2=Math.max(ecfGlu+dEcfGlu,0);
   var icfOsm2=Math.max(icfOsm,1e-6), ureiaTot2=Math.max(ureiaTot+dUreia,0);
@@ -313,8 +365,17 @@ function dyLayout(r,W,H){
     axis:{x0:padL,y0:padT,xEnd:W-10,yEnd:baseY},
     boxes:{icf:box(0,ICF,tonic),ecf:box(ICF,ECF,tonic),icf0:box(0,ICF0,tonic0),ecf0:box(ICF0,ECF0,tonic0)}};
 }
-window.compartimentos=compartimentos; window.dyLayout=dyLayout;
-window.MODEL={compartimentos:compartimentos,dyLayout:dyLayout,clampv:clampv,fracSexo:fracSexo,MANOBRAS:MANOBRAS};
+// balanço hídrico (espelho fiel de model0.js)
+function balanco(input){
+  var i=input||{}; function mL(v,d){ return clampv(v!==undefined?v:d,0,20000); }
+  var oral=mL(i.oralMl,2000),iv=mL(i.ivMl,0),metab=mL(i.metabMl,300);
+  var urina=mL(i.urinaMl,1500),insen=mL(i.insensivelMl,700),suor=mL(i.suorMl,0),fezes=mL(i.fezesMl,100);
+  var entradas=oral+iv+metab, saidas=urina+insen+suor+fezes, liquido=entradas-saidas;
+  return {oral:oral,iv:iv,metab:metab,urina:urina,insensivel:insen,suor:suor,fezes:fezes,
+    entradas:entradas,saidas:saidas,liquido:liquido,ganho:liquido>=0};
+}
+window.compartimentos=compartimentos; window.dyLayout=dyLayout; window.balanco=balanco;
+window.MODEL={compartimentos:compartimentos,dyLayout:dyLayout,balanco:balanco,clampv:clampv,fracSexo:fracSexo,MANOBRAS:MANOBRAS,FLUIDOS:FLUIDOS};
 
 /* =========================================================================
  * UI
@@ -331,6 +392,7 @@ tabsBox.addEventListener('click',function(e){
   var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on');
   $('tab-'+t).classList.add('on');
   if(t==='instrumento'||t==='lab') refresh();
+  if(t==='lab') refreshBal();
 });
 
 // --- caso: prever-depois-revelar ---
@@ -408,6 +470,24 @@ function drawDY(r){
   $(id).addEventListener('input',refresh);
 });
 
+// --- balanço hídrico ---
+function readBal(){ return {oralMl:+$('in-oral').value,ivMl:+$('in-iv').value,metabMl:+$('in-metab').value,
+  urinaMl:+$('in-urina').value,insensivelMl:+$('in-insen').value,suorMl:+$('in-suorml').value}; }
+function refreshBal(){
+  var i=readBal();
+  $('lbl-oral').textContent=i.oralMl; $('lbl-iv').textContent=i.ivMl; $('lbl-metab').textContent=i.metabMl;
+  $('lbl-urina').textContent=i.urinaMl; $('lbl-insen').textContent=i.insensivelMl; $('lbl-suorml').textContent=i.suorMl;
+  var b=balanco(i);
+  $('bal-in').textContent=b.entradas; $('bal-out').textContent=b.saidas;
+  $('bal-net').textContent=(b.liquido>=0?'+':'')+b.liquido;
+  var bb=$('bal-banner');
+  if(b.liquido>200){ bb.className='banner b-warn'; bb.textContent='Balanço positivo (+'+b.liquido+' mL): retém água → tende a DILUIR (Na↓).'; }
+  else if(b.liquido<-200){ bb.className='banner b-warn'; bb.textContent='Balanço negativo ('+b.liquido+' mL): perde água → tende a CONCENTRAR (Na↑).'; }
+  else { bb.className='banner b-good'; bb.textContent='Balanço ≈ neutro: água em equilíbrio.'; }
+  $('bal-fig').innerHTML=balanceBar(b);
+}
+['in-oral','in-iv','in-metab','in-urina','in-insen','in-suorml'].forEach(function(id){ $(id).addEventListener('input',refreshBal); });
+
 /* =========================================================================
  * ILUSTRAÇÕES — SVG inline, computadas a partir do engine (física viva)
  * ========================================================================= */
@@ -461,6 +541,29 @@ function barOsm(r){
   s+='<text x="150" y="150" fill="#9fb1c0" font-size="10" text-anchor="middle">gap inefetivo = '+Math.round(r.gapInefetivo)+' mosm/L</text>';
   return svgEl(300,160,s);
 }
+// o cérebro na caixa rígida (crânio): incha → hernia; murcha → rompe veias-ponte
+function brainFig(state,titulo){
+  var r = state==='edema'?52 : state==='shrink'?34 : 44;
+  var color = state==='edema'?'#e0556b' : state==='shrink'?'#e8a13a' : '#3a7bd5';
+  var msg = state==='edema'?'hipotônico agudo → edema → herniação' : state==='shrink'?'hipertônico → encolhe → veias-ponte' : 'tonicidade normal';
+  var s='<rect x="44" y="28" width="212" height="104" rx="46" fill="none" stroke="#9fb1c0" stroke-width="3"/>';
+  s+='<ellipse cx="150" cy="80" rx="'+(r+28)+'" ry="'+r+'" fill="'+color+'" fill-opacity="0.5" stroke="'+color+'"/>';
+  s+='<text x="150" y="84" fill="#e7eef4" font-size="12" text-anchor="middle">cérebro</text>';
+  s+='<text x="150" y="152" fill="#9fb1c0" font-size="10" text-anchor="middle">'+msg+'</text>';
+  if(titulo) s+='<text x="150" y="16" fill="#9fb1c0" font-size="11" text-anchor="middle">'+titulo+'</text>';
+  return svgEl(300,165,s);
+}
+// livro-caixa da água: entradas × saídas + balanço
+function balanceBar(b){
+  var max=Math.max(b.entradas,b.saidas,1)*1.15, base=110, sc=78/max, s='';
+  function bar(x,val,color,lab){ var h=val*sc; return '<rect x="'+x+'" y="'+f1(base-h)+'" width="60" height="'+f1(h)+'" fill="'+color+'" fill-opacity="0.6" stroke="'+color+'"/>'+
+    '<text x="'+(x+30)+'" y="'+(base+14)+'" fill="#9fb1c0" font-size="10" text-anchor="middle">'+lab+'</text>'+
+    '<text x="'+(x+30)+'" y="'+f1(base-h-4)+'" fill="#e7eef4" font-size="10" text-anchor="middle">'+Math.round(val)+'</text>'; }
+  s+=bar(60,b.entradas,'#52c08a','entradas');
+  s+=bar(176,b.saidas,'#e8a13a','saídas');
+  s+='<text x="150" y="150" fill="#e7eef4" font-size="11" text-anchor="middle">balanço '+(b.liquido>=0?'+':'')+Math.round(b.liquido)+' mL</text>';
+  return svgEl(300,160,s);
+}
 
 /* =========================================================================
  * TUTOR — DOIS blocos (ilustrado + textual), 10 cada; respostas computadas
@@ -479,7 +582,10 @@ var TUTOR_ILUSTRADO=[
   {q:'Glicose alta (sem insulina): a célula…',o:['incha','murcha','não muda'],c:1,e:'Glicose é efetiva: '+cellWord('glicose',{solutoMmol:600})+' — tonicidade↑.',fig:function(){return dyMini(R0({tipo:'glicose',solutoMmol:600}),'glicose ↑');}},
   {q:'Num meio HIPOTÔNICO, a água…',o:['sai da célula','entra na célula','não se move'],c:1,e:'Gradiente para dentro → a célula incha.',fig:function(){return cellFig('in','meio hipotônico');}},
   {q:'Num meio HIPERTÔNICO, a água…',o:['entra na célula','sai da célula','não se move'],c:1,e:'Gradiente para fora → a célula murcha.',fig:function(){return cellFig('out','meio hipertônico');}},
-  {q:'A diferença entre osm medida e tonicidade (o "gap") é…',o:['o sódio','os osmoles inefetivos','o volume'],c:1,e:'O gap são osmoles inefetivos (ex.: ureia) — não movem água.',fig:function(){return barOsm(R0({tipo:'ureia',solutoMmol:500}));}}
+  {q:'A diferença entre osm medida e tonicidade (o "gap") é…',o:['o sódio','os osmoles inefetivos','o volume'],c:1,e:'O gap são osmoles inefetivos (ex.: ureia) — não movem água.',fig:function(){return barOsm(R0({tipo:'ureia',solutoMmol:500}));}},
+  {q:'Onde vai majoritariamente o SF 0,9%?',o:['Para o ICF','Para o ECF','Distribui igual'],c:1,e:'Isotônico → fica no ECF; o ICF quase não se move.',fig:function(){return dyMini(R0({tipo:'sf09',volumeL:2}),'SF 0,9% (2 L)');}},
+  {q:'O SG 5% se comporta como…',o:['salina','água livre','hipertônico'],c:1,e:'A glicose é metabolizada → sobra água livre, que vai 2/3 para o ICF.',fig:function(){return dyMini(R0({tipo:'sg5',volumeL:3}),'SG 5% (3 L)');}},
+  {q:'Hiponatremia AGUDA ameaça o cérebro por…',o:['encolhimento','edema e herniação','nada'],c:1,e:'Tonicidade↓ → água entra no cérebro → edema numa caixa rígida → herniação.',fig:function(){return brainFig('edema','cérebro em meio hipotônico');}}
 ];
 
 // Bloco TEXTUAL — sem ilustração, dificuldade crescente
@@ -493,7 +599,10 @@ var TUTOR_TEXTUAL=[
   {q:'Suor é uma perda…',o:['isotônica','hipertônica','hipotônica','de água pura'],c:2,e:'Perde mais água que sal → tonicidade↑.'},
   {q:'Corrigir disnatremia rápido demais arrisca…',o:['nada','mielinólise/edema cerebral','hipertensão','hipoglicemia'],c:1,e:'A velocidade importa: rápido demais lesa o SNC.'},
   {q:'Plasma corresponde a cerca de quanto do ECF?',o:['1/2','1/4','1/10','todo'],c:1,e:'Plasma ≈ 1/4 do ECF.'},
-  {q:'Por que a osm medida pode enganar à beira do leito?',o:['Inclui inefetivos que não movem água','Ignora o sódio','Mede só o ICF','É sempre igual à tonicidade'],c:0,e:'Soma ureia/álcoois; a tonicidade é que governa a célula.'}
+  {q:'Por que a osm medida pode enganar à beira do leito?',o:['Inclui inefetivos que não movem água','Ignora o sódio','Mede só o ICF','É sempre igual à tonicidade'],c:0,e:'Soma ureia/álcoois; a tonicidade é que governa a célula.'},
+  {q:'Para repor SÓ o volume do ECF (ex.: choque), o fluido ideal…',o:['vai para o ICF','fica no ECF','é água livre'],c:1,e:'Cristaloide isotônico/coloide ficam no ECF — onde está o déficit de volume.'},
+  {q:'Um balanço hídrico positivo tende a…',o:['concentrar (Na↑)','diluir (Na↓)','não mudar o Na'],c:1,e:'Reter água livre dilui o sódio.'},
+  {q:'Por que o cérebro é tão sensível ao sódio?',o:['Vive numa caixa rígida (crânio)','Não tem células','Porque produz urina'],c:0,e:'Inchar = herniar; murchar = romper veias-ponte; corrigir rápido demais → mielinólise (detalhe no M10).'}
 ];
 window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL;
 window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
@@ -529,10 +638,10 @@ $('banktabs').addEventListener('click',function(e){
 $('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
 
 // ilustrações de conceito (estáticas) no topo do Caso
-$('fig-conceito').innerHTML = barSplit() + cellFig('none','a célula no oceano (ECF)');
+$('fig-conceito').innerHTML = barSplit() + cellFig('none','a banana no mar (a célula)') + brainFig('normal','o cérebro: a célula que importa');
 
 // init
-refresh(); renderTutor();
+refresh(); refreshBal(); renderTutor();
 </script>
 </body>
 </html>

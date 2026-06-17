@@ -7,7 +7,7 @@
  */
 
 var M = require('./model0.js');
-var compartimentos = M.compartimentos, clampv = M.clampv, dyLayout = M.dyLayout;
+var compartimentos = M.compartimentos, clampv = M.clampv, dyLayout = M.dyLayout, balanco = M.balanco;
 
 var oks = 0, fail = 0;
 function ok(cond, msg) { if (cond) { oks++; } else { fail++; console.error('FALHA: ' + msg); } }
@@ -101,6 +101,38 @@ function finN(o) { for (var k in o) { if (typeof o[k] === 'number' && !isFinite(
   // suor (hipotônico): perde mais água que sal → tonicidade↑
   var su = withM('suor', 3);
   ok(su.tonicidade > h0.tonicidade, 'suor → tonicidade↑ (perda hipotônica)');
+
+  // FLUIDOS IV — onde cada fluido vai (introdução à fluidoterapia)
+  var sf = withM('sf09', 2);
+  ok(sf.ECF > i0.ECF + 1.5, 'SF 0,9% → ECF↑ (fica no ECF)');
+  ok(Math.abs(sf.ICF - i0.ICF) < 0.3, 'SF 0,9% → ICF quase imóvel');
+  var rl = withM('ringer', 2);
+  ok(rl.ECF > i0.ECF, 'Ringer → ECF↑');
+  ok(rl.ICF >= i0.ICF - 1e-9, 'Ringer (levemente hipotônico) → ICF não cai');
+  var sg = withM('sg5', 3);
+  ok(sg.ICF > i0.ICF && sg.ECF > i0.ECF, 'SG5% (glicose metabolizada → água livre) → ambos↑');
+  ok(sg.na < i0.na, 'SG5% → Na↓');
+  ok(near(sg.tonicidade, withM('agua_livre', 3).tonicidade, 1e-9), 'SG5% ≡ água livre na tonicidade');
+  var n3 = withM('nacl3', 2);
+  ok(n3.ICF < i0.ICF, 'NaCl 3% → ICF↓ (murcha)');
+  ok(n3.na > i0.na, 'NaCl 3% → Na↑');
+  var col = withM('coloide', 2);
+  ok(col.ECF > i0.ECF + 1.5, 'coloide → ECF↑ (expansor do ECF)');
+})();
+
+// ----------------------------------------------------------------- 3b. BALANÇO HÍDRICO
+(function () {
+  var b = balanco({});
+  ok(b.entradas === 2300 && b.saidas === 2300 && b.liquido === 0, 'balanço default em estado estável (≈0)');
+  ok(near(b.entradas, b.oral + b.iv + b.metab, 1e-9), 'entradas = oral + IV + metabólica');
+  ok(near(b.saidas, b.urina + b.insensivel + b.suor + b.fezes, 1e-9), 'saídas = urina + insensível + suor + fezes');
+  ok(near(b.liquido, b.entradas - b.saidas, 1e-9), 'líquido = entradas − saídas');
+  ok(balanco({ oralMl: 3000 }).liquido > b.liquido, 'mais ingesta → líquido↑');
+  ok(balanco({ urinaMl: 3000 }).liquido < b.liquido, 'mais diurese → líquido↓');
+  ok(balanco({ ivMl: 2000 }).ganho === true, 'IV 2 L → balanço positivo (retém água)');
+  var sujo = balanco({ oralMl: 'x', urinaMl: NaN, suorMl: -50, ivMl: Infinity });
+  ok(fin(sujo.entradas) && fin(sujo.saidas) && fin(sujo.liquido), 'balanço robusto: nada de NaN');
+  ok(sujo.suor >= 0 && sujo.iv <= 20000, 'balanço: clamps respeitados');
 })();
 
 // ----------------------------------------------------------------- 4. PÉROLAS

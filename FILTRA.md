@@ -79,8 +79,18 @@ de monotonicidade, as **pérolas** contra-intuitivas, determinismo e **fuzzing s
 entradas malignas. Só então a fisiologia ganha pixel: o gráfico é **computado**, não desenhado; a questão é
 **gerada**, não decorada. *O motor manda no pixel.*
 
+**Ilustração viva.** Neste braço a imagem é cidadã de primeira classe: cada conceito ganha uma ilustração
+**inline em SVG** (a célula no oceano, as setas do fluxo de água, o esquema do néfron e de cada segmento) —
+e, quando o dado é numérico, a ilustração é **computada a partir do engine**, não importada. Ver é uma forma
+de decompor.
+
+**Avaliação em dois registros.** Entender de verdade é reconhecer o mesmo mecanismo na figura e na palavra.
+Por isso cada módulo avalia em dois blocos: um **ilustrado** (a questão nasce de uma imagem) e um **textual**
+(a questão nasce da prosa). Os dois cobrem o mesmo mapa causal por caminhos diferentes.
+
 Invariantes inegociáveis: offline, single-file por módulo, zero dependência de runtime, sem armazenamento,
-engine antes da UI, física viva, português do Brasil, e o portão `npm run check` — **0 falhas ou não entra**.
+engine antes da UI, física viva, ilustração viva, português do Brasil, e o portão `npm run check` — **0
+falhas ou não entra**.
 
 ---
 

@@ -39,7 +39,23 @@ var MANOBRAS = {
   perda_agua_pura:  'perda de água pura (insensível/DI)',
   suor:             'suor (perda hipotônica)',
   ureia:            'carga de ureia (osmol inefetivo)',
-  glicose:          'carga de glicose (osmol efetivo)'
+  glicose:          'carga de glicose (osmol efetivo)',
+  // fluidos IV nomeados (introdução à fluidoterapia) — ver FLUIDOS
+  sf09:             'SF 0,9% (Na 154) — fica no ECF',
+  ringer:           'Ringer lactato (Na 130) — quase isotônico',
+  sg5:              'SG 5% (glicose metabolizada → água livre)',
+  nacl3:            'NaCl 3% (Na 513) — hipertônico',
+  coloide:          'Coloide (isotônico, expande o ECF)'
+};
+
+// composição efetiva dos fluidos IV: cNa = sódio (mmol/L), cGlu = glicose efetiva.
+// SG5%: a glicose é metabolizada → sobra água livre (cNa=0, cGlu=0).
+var FLUIDOS = {
+  sf09:    { nome: 'SF 0,9%',         cNa: 154, cGlu: 0 },
+  ringer:  { nome: 'Ringer lactato',  cNa: 130, cGlu: 0 },
+  sg5:     { nome: 'SG 5%',           cNa: 0,   cGlu: 0 },
+  nacl3:   { nome: 'NaCl 3%',         cNa: 513, cGlu: 0 },
+  coloide: { nome: 'Coloide',         cNa: 154, cGlu: 0 }
 };
 
 /*
@@ -85,7 +101,12 @@ function compartimentos(input) {
     case 'suor':               dVol = -V; dEcfNa -= V * (2 * 30); break;  // suor Na ~ 30 (hipotônico)
     case 'ureia':              dUreia += soluto; break;                   // PÉROLA: inefetivo
     case 'glicose':            dEcfGlu += soluto; break;                  // hipertônico efetivo
-    default: break;
+    default:
+      if (FLUIDOS.hasOwnProperty(tipo)) {                                // fluido IV nomeado
+        var fl = FLUIDOS[tipo];
+        dVol += V; dEcfNa += V * (2 * fl.cNa); dEcfGlu += V * fl.cGlu;   // distribui pela tonicidade
+      }
+      break;
   }
 
   // --- re-equilíbrio (pisos contra absurdos) ---
@@ -128,6 +149,25 @@ function compartimentos(input) {
 }
 
 /*
+ * balanco(input) — o livro-caixa da água (mL/dia). PURO e resiliente.
+ * entradas = oral + IV + água metabólica; saídas = urina + insensível + suor + fezes.
+ * liquido = entradas − saídas (+ retém água / − perde). Defaults em estado estável (≈0).
+ */
+function balanco(input) {
+  var i = input || {};
+  function mL(v, d) { return clampv(v !== undefined ? v : d, 0, 20000); }
+  var oral  = mL(i.oralMl, 2000), iv = mL(i.ivMl, 0), metab = mL(i.metabMl, 300);
+  var urina = mL(i.urinaMl, 1500), insen = mL(i.insensivelMl, 700), suor = mL(i.suorMl, 0), fezes = mL(i.fezesMl, 100);
+  var entradas = oral + iv + metab;
+  var saidas   = urina + insen + suor + fezes;
+  var liquido  = entradas - saidas;
+  return {
+    oral: oral, iv: iv, metab: metab, urina: urina, insensivel: insen, suor: suor, fezes: fezes,
+    entradas: entradas, saidas: saidas, liquido: liquido, ganho: liquido >= 0
+  };
+}
+
+/*
  * dyLayout(r, W, H) — GEOMETRIA PURA do diagrama de Darrow–Yannet.
  * O motor manda no pixel: a UI só pinta as caixas que esta função computa.
  * Largura ∝ volume; altura ∝ tonicidade. Devolve as 4 caixas (ICF/ECF, basal
@@ -166,5 +206,8 @@ function dyLayout(r, W, H) {
 }
 
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { compartimentos: compartimentos, dyLayout: dyLayout, clampv: clampv, fracSexo: fracSexo, MANOBRAS: MANOBRAS };
+  module.exports = {
+    compartimentos: compartimentos, dyLayout: dyLayout, balanco: balanco,
+    clampv: clampv, fracSexo: fracSexo, MANOBRAS: MANOBRAS, FLUIDOS: FLUIDOS
+  };
 }

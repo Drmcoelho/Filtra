@@ -1,0 +1,147 @@
+{
+  "sobre": "Lista de imagens raster open source desejadas por módulo. O LLM com internet baixa cada item para assets/<dir>/<slug>.<ext> (prefira .webp), credita em /CREDITS.md e respeita as regras de assets/INSTRUCOES.md. tipo: foto | figura | diagrama | histologia | micrografia | imagem-medica.",
+  "convencao_arquivo": "assets/<dir>/<slug>.webp",
+  "modulos": [
+    { "id": "M0", "dir": "m0", "titulo": "Compartimentos + introdução à fluidoterapia", "imagens": [
+      { "slug": "compartimentos-hidricos", "descricao": "Diagrama dos compartimentos (ICF/ECF/plasma/interstício) e a regra 60-40-20", "tipo": "diagrama" },
+      { "slug": "membrana-na-k-atpase", "descricao": "Membrana celular com a bomba Na+/K+-ATPase (3 Na out / 2 K in)", "tipo": "figura" },
+      { "slug": "bicamada-lipidica", "descricao": "Bicamada de fosfolipídios (cabeças + caudas)", "tipo": "figura" },
+      { "slug": "rim-anatomia", "descricao": "Rim — anatomia macroscópica (córtex, medula, pirâmides)", "tipo": "diagrama" },
+      { "slug": "cerebro-edema", "descricao": "Edema cerebral / mielinólise pontina em RM (sensibilidade ao Na)", "tipo": "imagem-medica" },
+      { "slug": "fluidos-iv", "descricao": "Bolsas de fluido IV (SF 0,9%, Ringer)", "tipo": "foto" }
+    ]},
+    { "id": "M1", "dir": "m1", "titulo": "Néfron / forças de Starling", "imagens": [
+      { "slug": "nefron-rotulado", "descricao": "Néfron completo rotulado (glomérulo, TCP, alça, TCD, ducto)", "tipo": "diagrama" },
+      { "slug": "glomerulo-aferente-eferente", "descricao": "Glomérulo com arteríolas aferente e eferente", "tipo": "diagrama" },
+      { "slug": "corpusculo-renal-histologia", "descricao": "Corpúsculo renal em histologia (HE)", "tipo": "histologia" }
+    ]},
+    { "id": "M2", "dir": "m2", "titulo": "Hemodinâmica renal — 20% do DC, córtex×medula", "imagens": [
+      { "slug": "vascularizacao-renal", "descricao": "Vascularização renal (córtex × medula, vasa recta)", "tipo": "diagrama" },
+      { "slug": "macula-densa-feedback", "descricao": "Mácula densa / feedback tubuloglomerular", "tipo": "figura" }
+    ]},
+    { "id": "M3", "dir": "m3", "titulo": "O glomérulo — barreira de filtração", "imagens": [
+      { "slug": "podocito-pedicelos", "descricao": "Podócito e pedicelos (micrografia eletrônica)", "tipo": "micrografia" },
+      { "slug": "barreira-filtracao", "descricao": "Barreira de filtração (endotélio fenestrado, MBG, podócito)", "tipo": "diagrama" }
+    ]},
+    { "id": "M4", "dir": "m4", "titulo": "Clearance — por que a creatinina mente", "imagens": [
+      { "slug": "clearance-conceito", "descricao": "Conceito de clearance / cinética da creatinina (figura)", "tipo": "figura" }
+    ]},
+    { "id": "M5", "dir": "m5", "titulo": "TCP — SGLT2, anidrase carbônica", "imagens": [
+      { "slug": "tubulo-proximal-histologia", "descricao": "Túbulo contorcido proximal em histologia (borda em escova)", "tipo": "histologia" },
+      { "slug": "sglt2-transportador", "descricao": "Cotransporte Na+/glicose (SGLT2) no proximal", "tipo": "figura" }
+    ]},
+    { "id": "M6", "dir": "m6", "titulo": "Alça de Henle — NKCC2, contracorrente", "imagens": [
+      { "slug": "alca-henle-contracorrente", "descricao": "Alça de Henle e multiplicação por contracorrente (gradiente corticomedular)", "tipo": "diagrama" },
+      { "slug": "nkcc2-ramo-espesso", "descricao": "Cotransportador NKCC2 no ramo ascendente espesso", "tipo": "figura" }
+    ]},
+    { "id": "M7", "dir": "m7", "titulo": "TCD — NCC, manejo de Ca", "imagens": [
+      { "slug": "tcd-ncc", "descricao": "Túbulo distal e cotransportador NCC; manejo de cálcio", "tipo": "figura" }
+    ]},
+    { "id": "M8", "dir": "m8", "titulo": "Ducto coletor — ENaC/aldo, ADH/aquaporina", "imagens": [
+      { "slug": "ducto-coletor-celulas", "descricao": "Célula principal (ENaC/aldosterona) × intercalar (H+/HCO3)", "tipo": "figura" },
+      { "slug": "aquaporina-adh", "descricao": "ADH abrindo aquaporinas (AQP2) na célula principal", "tipo": "figura" }
+    ]},
+    { "id": "M9", "dir": "m9", "titulo": "Sódio e volume", "imagens": [
+      { "slug": "volume-circulante-efetivo", "descricao": "Volume circulante efetivo e barorreceptores", "tipo": "diagrama" }
+    ]},
+    { "id": "M10", "dir": "m10", "titulo": "Água livre e disnatremias", "imagens": [
+      { "slug": "osmorregulacao-adh-sede", "descricao": "Eixo osmorregulação: osmorreceptores, ADH, sede", "tipo": "diagrama" },
+      { "slug": "mielinolise-pontina", "descricao": "Mielinólise pontina em RM (correção rápida do Na)", "tipo": "imagem-medica" }
+    ]},
+    { "id": "M11", "dir": "m11", "titulo": "Potássio — o eletrólito que mata", "imagens": [
+      { "slug": "ecg-hipercalemia", "descricao": "ECG da hipercalemia (T apiculada → onda sinusoidal)", "tipo": "imagem-medica" },
+      { "slug": "shift-transcelular-k", "descricao": "Shift transcelular de K+ (insulina, beta, pH)", "tipo": "figura" }
+    ]},
+    { "id": "M12", "dir": "m12", "titulo": "Cálcio · fósforo · magnésio", "imagens": [
+      { "slug": "eixo-osseo-mineral", "descricao": "Eixo PTH–vitamina D–FGF23 (osso, rim, intestino)", "tipo": "diagrama" }
+    ]},
+    { "id": "M13", "dir": "m13", "titulo": "Ácido-base renal", "imagens": [
+      { "slug": "reabsorcao-hco3-nh4", "descricao": "Reabsorção de HCO3 e excreção de NH4+ no néfron", "tipo": "figura" },
+      { "slug": "anion-gap", "descricao": "Ânion gap e delta-delta (figura conceitual)", "tipo": "figura" }
+    ]},
+    { "id": "M14", "dir": "m14", "titulo": "RAAS e eixo endócrino renal", "imagens": [
+      { "slug": "raas-esquema", "descricao": "Sistema renina–angiotensina–aldosterona (esquema completo)", "tipo": "diagrama" },
+      { "slug": "aparelho-justaglomerular", "descricao": "Aparelho justaglomerular", "tipo": "figura" }
+    ]},
+    { "id": "M15", "dir": "m15", "titulo": "Ureia, creatinina, eGFR e a urina", "imagens": [
+      { "slug": "sedimento-urinario", "descricao": "Sedimento urinário: cilindros e células (microscopia)", "tipo": "micrografia" }
+    ]},
+    { "id": "M16", "dir": "m16", "titulo": "A LRA por mecanismo — KDIGO", "imagens": [
+      { "slug": "nta-histologia", "descricao": "Necrose tubular aguda em histologia", "tipo": "histologia" },
+      { "slug": "kdigo-estadios", "descricao": "Estágios KDIGO de LRA (tabela/figura)", "tipo": "figura" }
+    ]},
+    { "id": "M17", "dir": "m17", "titulo": "Farmacologia diurética integrada", "imagens": [
+      { "slug": "sitios-diureticos-nefron", "descricao": "Sítios de ação dos diuréticos ao longo do néfron", "tipo": "diagrama" }
+    ]},
+    { "id": "M18", "dir": "m18", "titulo": "Anti-hipertensivos, RAAS e eixo endócrino-renal", "imagens": [
+      { "slug": "hemodinamica-glomerular-ieca", "descricao": "Efeito de IECA/BRA na arteríola eferente (hemodinâmica glomerular)", "tipo": "figura" }
+    ]},
+    { "id": "M19", "dir": "m19", "titulo": "Princípios físicos do transporte", "imagens": [
+      { "slug": "difusao-conveccao-uf", "descricao": "Difusão × convecção × ultrafiltração × adsorção", "tipo": "diagrama" }
+    ]},
+    { "id": "M20", "dir": "m20", "titulo": "O circuito extracorpóreo", "imagens": [
+      { "slug": "circuito-hemodialise", "descricao": "Circuito de hemodiálise (bomba, dialisador, pressões)", "tipo": "diagrama" },
+      { "slug": "dialisador-capilar", "descricao": "Dialisador de fibras capilares (corte)", "tipo": "figura" },
+      { "slug": "acessos-vasculares", "descricao": "Acessos: cateter, fístula arteriovenosa", "tipo": "diagrama" }
+    ]},
+    { "id": "M21", "dir": "m21", "titulo": "A membrana e o clearance", "imagens": [
+      { "slug": "membrana-dialise-poros", "descricao": "Membrana de diálise: poros, sieving, high-flux × low-flux", "tipo": "figura" }
+    ]},
+    { "id": "M22", "dir": "m22", "titulo": "A sessão de HDI", "imagens": [
+      { "slug": "maquina-hemodialise", "descricao": "Máquina de hemodiálise (foto)", "tipo": "foto" }
+    ]},
+    { "id": "M23", "dir": "m23", "titulo": "Ultrafiltração e balanço de volume", "imagens": [
+      { "slug": "ultrafiltracao-refilling", "descricao": "Ultrafiltração, peso seco e refilling plasmático", "tipo": "figura" }
+    ]},
+    { "id": "M24", "dir": "m24", "titulo": "Hipotensão intradialítica", "imagens": [
+      { "slug": "stunning-miocardico", "descricao": "Stunning miocárdico / UF > refilling", "tipo": "figura" }
+    ]},
+    { "id": "M25", "dir": "m25", "titulo": "Dose e adequação — Kt/V", "imagens": [
+      { "slug": "ktv-adequacao", "descricao": "Kt/V e adequação de diálise (figura)", "tipo": "figura" }
+    ]},
+    { "id": "M26", "dir": "m26", "titulo": "Cinética da ureia", "imagens": [
+      { "slug": "rebote-ureia", "descricao": "Cinética da ureia: compartimento único × duplo, rebote", "tipo": "figura" }
+    ]},
+    { "id": "M27", "dir": "m27", "titulo": "Terapias contínuas (TRRC/CRRT)", "imagens": [
+      { "slug": "maquina-crrt", "descricao": "Máquina de TRRC/CRRT (foto)", "tipo": "foto" },
+      { "slug": "cvvh-cvvhd-cvvhdf", "descricao": "Modalidades CVVH × CVVHD × CVVHDF", "tipo": "diagrama" }
+    ]},
+    { "id": "M28", "dir": "m28", "titulo": "Dose e fluidos na TRRC", "imagens": [
+      { "slug": "pre-pos-diluicao", "descricao": "Pré × pós-diluição; efluente mL/kg/h", "tipo": "figura" }
+    ]},
+    { "id": "M29", "dir": "m29", "titulo": "Anticoagulação do circuito", "imagens": [
+      { "slug": "citrato-regional", "descricao": "Anticoagulação regional com citrato (quelação de Ca)", "tipo": "figura" }
+    ]},
+    { "id": "M30", "dir": "m30", "titulo": "Diálise peritoneal", "imagens": [
+      { "slug": "dialise-peritoneal", "descricao": "Diálise peritoneal: peritônio como membrana, cavidade", "tipo": "diagrama" },
+      { "slug": "cateter-tenckhoff", "descricao": "Cateter de Tenckhoff (foto/figura)", "tipo": "figura" }
+    ]},
+    { "id": "M31", "dir": "m31", "titulo": "SLED / híbridas", "imagens": [
+      { "slug": "sled-hibridas", "descricao": "SLED / terapias híbridas (esquema comparativo)", "tipo": "figura" }
+    ]},
+    { "id": "M32", "dir": "m32", "titulo": "Depuração de solutos e drogas", "imagens": [
+      { "slug": "peso-molecular-ligacao", "descricao": "Peso molecular × ligação proteica × Vd na remoção", "tipo": "figura" }
+    ]},
+    { "id": "M33", "dir": "m33", "titulo": "Remoção de toxinas", "imagens": [
+      { "slug": "toxinas-dialisaveis", "descricao": "Intoxicações dialisáveis (lítio, salicilato, metanol, etilenoglicol)", "tipo": "figura" }
+    ]},
+    { "id": "M34", "dir": "m34", "titulo": "Síndrome de desequilíbrio dialítico", "imagens": [
+      { "slug": "desequilibrio-dialitico", "descricao": "Edema cerebral por osmose reversa (desequilíbrio)", "tipo": "figura" }
+    ]},
+    { "id": "M35", "dir": "m35", "titulo": "Indicações de TRS — AEIOU", "imagens": [
+      { "slug": "aeiou-indicacoes", "descricao": "AEIOU (acidose, eletrólitos, intoxicação, sobrecarga, uremia)", "tipo": "figura" }
+    ]},
+    { "id": "M36", "dir": "m36", "titulo": "O momento da substituição", "imagens": [
+      { "slug": "precoce-tardio", "descricao": "Início precoce × tardio de TRS (figura)", "tipo": "figura" }
+    ]},
+    { "id": "M37", "dir": "m37", "titulo": "Síndrome cardiorrenal e a ultrafiltração", "imagens": [
+      { "slug": "sindrome-cardiorrenal", "descricao": "Síndrome cardiorrenal (coração–rim–volume)", "tipo": "diagrama" }
+    ]},
+    { "id": "M38", "dir": "m38", "titulo": "Capstone integrado", "imagens": [
+      { "slug": "fluxograma-modalidade", "descricao": "Fluxograma: LRA grave → escolha de modalidade por mecanismo", "tipo": "figura" }
+    ]},
+    { "id": "M39", "dir": "m39", "titulo": "Exame global de domínio", "imagens": [
+      { "slug": "mapa-conceitual-renal", "descricao": "Mapa conceitual integrador (opcional)", "tipo": "figura" }
+    ]}
+  ]
+}

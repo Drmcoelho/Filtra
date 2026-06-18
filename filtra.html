@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FILTRA · DIALISA — índice do braço</title>
 <style>
-  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8}
+  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--accent2:#cda24a;--mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace}
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
   a{color:var(--accent);text-decoration:none}
@@ -14,13 +14,23 @@
   h1{margin:.2em 0;font-size:24px}
   .sub{color:var(--dim);max-width:80ch}
   nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
-  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim)}
-  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
-  nav.hex .soon{opacity:.45}
+  nav.hex span,nav.hex a{font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:999px;color:var(--dim);background:var(--panel);transition:.12s;white-space:nowrap}
+  nav.hex a:hover{border-color:var(--accent);color:var(--ink);transform:translateY(-1px)}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:700}
+  nav.hex .soon{opacity:.45;cursor:not-allowed}
+  .subnav{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .subnav .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+  .subnav button{font-family:var(--mono);font-size:11px;letter-spacing:.04em;padding:4px 10px;border:1px solid var(--line);border-radius:999px;color:var(--dim);background:var(--panel);cursor:pointer;transition:.12s}
+  .subnav button:hover{border-color:var(--accent);color:var(--ink)}
+  .subnav button.ativo{background:var(--accent2);color:#181305;border-color:var(--accent2);font-weight:700}
+  .direct-toggle{display:inline-flex;align-items:center;gap:7px;margin-top:10px;font-family:var(--mono);font-size:11px;color:var(--dim);user-select:none}
+  .direct-toggle input{accent-color:var(--accent2)}
   .wrap{max-width:1040px;margin:0 auto;padding:18px 20px 60px}
+  .bloco{margin:0 0 6px}
   h2{font-size:15px;color:var(--dim);text-transform:uppercase;letter-spacing:.08em;margin:26px 0 8px;border-bottom:1px solid var(--line);padding-bottom:6px}
   .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
   .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;display:block;color:var(--ink)}
+  a.card:hover{border-color:var(--accent);transform:translateY(-1px)}
   .card.soon{opacity:.5}
   .card .id{font-size:12px;color:var(--accent);font-weight:700}
   .card.soon .id{color:var(--dim)}
@@ -29,6 +39,7 @@
   .tag.ok{color:#05181a;background:var(--accent);border-color:var(--accent)}
   footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
   .note{font-size:13px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  @media(max-width:640px){header{padding:18px 14px}.wrap{padding:16px 14px 48px}nav.hex span,nav.hex a,.subnav button{font-size:10px;padding:4px 8px}}
 </style>
 </head>
 <body>
@@ -37,21 +48,41 @@
   <h1>FILTRA · DIALISA</h1>
   <div class="sub">Filtração, meio interno e substituição renal — máquina educacional offline de fisiologia
   causal e farmacologia clínica aplicada. <i>O motor manda no pixel.</i></div>
-  <nav class="hex">
-    <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
-    <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
+
+  <nav class="hex" aria-label="Hexápode de medicina crítica">
+    <a href="https://drmcoelho.github.io/Respira/">RESPIRA</a>
+    <a href="https://drmcoelho.github.io/Choca/choca.html">CHOCA</a>
+    <span class="ativo" aria-current="page">FILTRA</span>
+    <span class="soon" aria-disabled="true" title="Em construção">ALIMENTA</span>
+    <span class="soon" aria-disabled="true" title="Em construção">METABOLIZA</span>
+    <span class="soon" aria-disabled="true" title="Em construção">CONSCIÊNCIA</span>
+  </nav>
+
+  <label class="direct-toggle"><input type="checkbox" id="directArm"> entrar direto neste braço na próxima visita</label>
+
+  <nav class="subnav" aria-label="Metades do braço · Filtra e Dialisa">
+    <span class="lbl">Metades</span>
+    <button type="button" data-half="tudo" class="ativo" aria-pressed="true">Tudo</button>
+    <button type="button" data-half="filtra" aria-pressed="false">Filtra</button>
+    <button type="button" data-half="dialisa" aria-pressed="false">Dialisa</button>
   </nav>
 </header>
 
 <div class="wrap">
-  <h2>Metade A · FILTRA — anatomia funcional, meio interno e farmacologia</h2>
-  <div class="cards" id="grid-filtra"></div>
+  <section class="bloco" data-half="filtra">
+    <h2>Metade A · FILTRA — anatomia funcional, meio interno e farmacologia</h2>
+    <div class="cards" id="grid-filtra"></div>
+  </section>
 
-  <h2>Metade B · DIALISA — substituição renal e terapia crítica</h2>
-  <div class="cards" id="grid-dialisa"></div>
+  <section class="bloco" data-half="dialisa">
+    <h2>Metade B · DIALISA — substituição renal e terapia crítica</h2>
+    <div class="cards" id="grid-dialisa"></div>
+  </section>
 
-  <h2>Avaliação</h2>
-  <div class="cards" id="grid-exame"></div>
+  <section class="bloco" data-half="exame">
+    <h2>Avaliação</h2>
+    <div class="cards" id="grid-exame"></div>
+  </section>
 
   <div class="note">
     Escopo deste braço: além da fisiologia, inclui <b>farmacologia clínica aplicada</b> (diuréticos,
@@ -119,6 +150,34 @@ function gridFor(metade,el){
 gridFor('FILTRA',document.getElementById('grid-filtra'));
 gridFor('DIALISA',document.getElementById('grid-dialisa'));
 gridFor('EXAME',document.getElementById('grid-exame'));
+
+(function(){
+  var blocos=[].slice.call(document.querySelectorAll('.bloco'));
+  var btns=[].slice.call(document.querySelectorAll('.subnav button'));
+  var direct=document.getElementById('directArm');
+  var directKey='hexapode.direct.filtra';
+  function halfFromHash(){
+    var h=(location.hash||'').replace('#','').toLowerCase();
+    return /^(filtra|dialisa|tudo)$/.test(h)?h:'tudo';
+  }
+  function apply(half,writeHash){
+    blocos.forEach(function(b){
+      var h=b.getAttribute('data-half');
+      var show=(half==='tudo')||(h===half)||(half==='tudo'&&h==='exame');
+      b.style.display=show?'':'none';
+    });
+    btns.forEach(function(x){ var on=x.getAttribute('data-half')===half;
+      x.classList.toggle('ativo',on); x.setAttribute('aria-pressed',on?'true':'false'); });
+    if(writeHash){ history.replaceState(null,'', half==='tudo' ? location.pathname : '#'+half); }
+  }
+  btns.forEach(function(x){ x.addEventListener('click',function(){ apply(x.getAttribute('data-half'),true); }); });
+  window.addEventListener('hashchange',function(){ apply(halfFromHash(),false); });
+  if(direct){
+    direct.checked=localStorage.getItem(directKey)==='1';
+    direct.addEventListener('change',function(){ localStorage.setItem(directKey,direct.checked?'1':'0'); });
+  }
+  apply(halfFromHash(),false);
+})();
 </script>
 </body>
 </html>

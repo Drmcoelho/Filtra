@@ -66,6 +66,7 @@ Status: `PEDIDO` → `OBTIDO` → `INTEGRADO` (ou `RECUSADO` com motivo, ex.: li
 | gradiente-po2-cortico-medular.svg | svg | perfil de pO₂ do córtex à papila · quantifica a Fig. 4 ("medula no fio da navalha") a partir do engine | autoral/computado | PEDIDO |
 | nefropatia-por-contraste-esquema.svg | svg | mecanismo da NCI (vasoconstrição medular + toxicidade tubular) · aprofunda o gancho do contraste | autoral | PEDIDO |
 | vasa-recta-shunt-o2.svg | svg | shunt contracorrente de O₂ na vasa recta com setas de difusão · detalha a Fig. 5 (por que concentrar custa hipóxia) | autoral/computado | PEDIDO |
+| cortex-medula-histologia.webp | raster | corte real córtex (glomérulos) × medula (alças/ductos), ou esquema dedicado · a `cortex-medula.png` atual é o Gray's de INERVAÇÃO (mal rotulado), não a histologia | Commons CC-BY | PEDIDO |
 
 ---
 

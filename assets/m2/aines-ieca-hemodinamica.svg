@@ -1,22 +1,35 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M2</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">Hemodinâmica renal — 20% do DC, córtex×medula</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">aines-ieca-hemodinamica</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">AINEs (aferente) × IECA/BRA (eferente)</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 320" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="320" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="316" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">As duas chaves da P_GC: AINE (aferente) × IECA/BRA (eferente)</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">cada fármaco mexe num lado; juntos espremem a pressão de filtração</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <!-- glomérulo central -->
+  <circle cx="340" cy="180" r="48" fill="#0f3540" stroke="#39c0c8" stroke-width="2"/>
+  <path d="M316,190 q7,-22 18,-8 q9,-15 18,1 q9,0 4,13 q-19,10 -40,4 z" fill="#39c0c8" fill-opacity="0.5"/>
+  <text x="340" y="200" text-anchor="middle" font-size="11" fill="#06121a" font-weight="bold">P_GC</text>
+  <text x="340" y="244" text-anchor="middle" font-size="10" fill="#9fe3ec">glomérulo</text>
+
+  <!-- aferente (esq) -->
+  <line x1="110" y1="170" x2="292" y2="178" stroke="#e0556b" stroke-width="14" stroke-linecap="round"/>
+  <text x="150" y="150" font-size="12" fill="#e08a96" font-weight="bold">arteríola aferente</text>
+  <!-- eferente (dir) -->
+  <line x1="388" y1="178" x2="570" y2="170" stroke="#3a7bd5" stroke-width="9" stroke-linecap="round"/>
+  <text x="470" y="150" font-size="12" fill="#9bbef0" font-weight="bold">arteríola eferente</text>
+
+  <!-- AINE box -->
+  <rect x="40" y="214" width="250" height="86" rx="8" fill="#10202c" stroke="#e0556b"/>
+  <text x="56" y="236" font-size="12" fill="#e08a96" font-weight="bold">AINE → fecha a aferente</text>
+  <text x="56" y="256" font-size="11" fill="#cdd9e3">bloqueia COX → sem PGE₂/PGI₂</text>
+  <text x="56" y="274" font-size="11" fill="#cdd9e3">(a PGE₂ mantinha a aferente aberta)</text>
+  <text x="56" y="292" font-size="11" fill="#e8a13a">⇒ fluxo↓, P_GC↓, TFG↓</text>
+
+  <!-- IECA box -->
+  <rect x="390" y="214" width="250" height="86" rx="8" fill="#10202c" stroke="#3a7bd5"/>
+  <text x="406" y="236" font-size="12" fill="#9bbef0" font-weight="bold">IECA/BRA → abre a eferente</text>
+  <text x="406" y="256" font-size="11" fill="#cdd9e3">bloqueia Ang II (que a fechava)</text>
+  <text x="406" y="274" font-size="11" fill="#cdd9e3">tira a "represa" a jusante</text>
+  <text x="406" y="292" font-size="11" fill="#e8a13a">⇒ P_GC↓, TFG↓, creatinina↑ (esperado)</text>
+
+  <text x="340" y="300" text-anchor="middle" font-size="10" fill="#9fb1c0">somados (+ depleção) = tríplice ameaça: a P_GC colapsa</text>
 </svg>

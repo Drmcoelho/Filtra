@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M2 — Hemodinâmica renal — o rim e os 20% do DC</title>
+<style>
+  :root{
+    --bg:#0c1014; --panel:#141b22; --panel2:#1b242d; --line:#283642;
+    --ink:#e7eef4; --dim:#9fb1c0; --accent:#39c0c8; --warn:#e8a13a; --bad:#e0556b; --good:#52c08a;
+    --aff:#e0556b; --eff:#3a7bd5; --tuft:#39c0c8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none}
+  section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg,#glom-svg svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px}
+  .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)}
+  .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)}
+  .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)}
+  .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+  .chk{display:flex;align-items:center;gap:8px;margin-top:12px}
+  .chk input{width:auto}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M2</div>
+  <h1>Hemodinâmica renal — o rim e os 20% do DC</h1>
+  <div class="sub">FSR ≈ 1000–1100 mL/min (~20% do débito cardíaco), mas a <b>medula</b> recebe só ~12% do FSR
+  e já extrai 50–75% do O₂ → pO₂ medular ≈ 15–20 mmHg mesmo em repouso. Qualquer queda precipita hipóxia
+  medular → <b>NTA do ramo espesso</b>.</div>
+  <nav class="hex">
+    <a class="soon" title="em breve">RESPIRA</a>
+    <a class="soon" title="em breve">CHOCA</a>
+    <span class="ativo">FILTRA</span>
+    <a class="soon" title="em breve">ALIMENTA</a>
+    <a class="soon" title="em breve">METABOLIZA</a>
+    <a class="soon" title="em breve">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="filtra.html">&larr; índice do braço FILTRA</a>
+
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- ============================== CONCEITO ============================== -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — hemodinâmica renal ilustrada</h3>
+
+      <h4>1. O rim no débito cardíaco</h4>
+      <p class="sub">O coração bombeia ~5 L/min. O rim (dois) recebe ~1 L/min — 20% do DC, apesar de
+      representar &lt;0,5% do peso corporal. É o <b>4º órgão em DO₂</b> (após cérebro, coração, fígado).
+      Um DC baixo (ex.: ICC) reduz o FSR proporcionalmente.</p>
+      <div class="concept" id="draw-cardiac"></div>
+
+      <h4>2. Córtex × medula: dois mundos de O₂</h4>
+      <p class="sub">O córtex (88% do FSR) tem pO₂ &gt; 50 mmHg — abundância relativa. A medula (12% do FSR)
+      recebe pouco fluxo e o <b>ramo espesso da alça de Henle</b> (NKCC2 + Na/K-ATPase) consome O₂ de forma
+      intensa → ERO₂_med ≈ 50–75% → pO₂_med ≈ 15–20 mmHg <em>mesmo no normal</em>. Qualquer queda precipita
+      <b>hipóxia medular → NTA</b>.</p>
+      <div class="concept" id="draw-cortex-medula"></div>
+
+      <h4>3. Autorregulação do FSR</h4>
+      <p class="sub">Entre ~80 e ~180 mmHg de PAM, a arteríola <b>aferente</b> ajusta o tônus
+      (miogênico + feedback tubuloglomerular da mácula densa) e mantém o FSR quase constante — o <b>platô</b>.
+      Abaixo do joelho inferior a aferente já está no talo → FSR segue a PAM → <b>precipício</b>.</p>
+      <div class="concept" id="draw-autorreg"></div>
+
+      <h4>4. AINEs — chave da arteríola aferente</h4>
+      <p class="sub">As prostaglandinas (PGE₂/PGI₂) sintetizadas localmente <b>dilatam a aferente</b> e são o
+      <em>safety net</em> do rim sob RAAS ativado. Os AINEs (ibuprofeno 400–800 mg q8h; naproxeno 250–500 mg q12h)
+      bloqueiam a COX → sem PGs → <b>constrição aferente → FSR↓ → pO₂_med↓</b>. O efeito é amplificado por
+      depleção volêmica (RAAS ativado depende ainda mais das PGs).</p>
+      <div class="concept" id="draw-aine"></div>
+
+      <h4>5. IECA/BRA — chave da arteríola eferente + pérola da creatinina</h4>
+      <p class="sub">A angiotensina II (AngII) <b>constrange a eferente</b> — represa o sangue e mantém a P_GC.
+      O IECA (enalapril 5–40 mg/dia; ramipril 2,5–10 mg/dia) / BRA (losartan 25–100 mg/dia) bloqueia a AngII →
+      <b>eferente dilata → P_GC↓ → TFG↓ → creatinina sobe</b>. Isso é o mecanismo hemodinâmico <em>pretendido</em>
+      — não é sinal de parar o IECA. Só vira problema se o rim dependia da eferente fechada (estenose bilateral,
+      cardiorrenal grave).</p>
+      <div class="concept" id="draw-ieca"></div>
+    </div>
+  </section>
+
+  <!-- ============================== CASO (5 atos) ============================== -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — cinco atos, decida antes de revelar</h3>
+      <p class="sub">Homem, 74 anos, ICC (DC ≈ 3 L/min), enalapril 10 mg/dia crônico. Automedicou-se com
+      diclofenaco 75 mg 2×/dia por 8 dias. Chega ao PS: oligúria, Cr 1,2 → 3,4 mg/dL. Sem desidratação
+      evidente, sem obstrução urinária.</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step">
+        <b>Ato 1.</b> O que aconteceu com o FSR? Qual mecanismo liga o diclofenaco à oligúria?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1">DC baixo (ICC) → FSR já partia de ~600 mL/min (20% de 3000). O RAAS estava
+        ativado → rim dependia das PGs para manter a aferente aberta. O diclofenaco bloqueou a COX →
+        <b>aferente constrita → FSR↓↓</b>. O efeito é multiplicado quando o RAAS está ativado: sem o
+        "safety net" das PGs, a aferente fecha muito mais do que no normovol.</div>
+      </div>
+      <div class="step">
+        <b>Ato 2.</b> O AINE sozinho causaria isso num rim saudável com DC normal?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2"><b>Muito menos.</b> Com RAAS pouco ativado, as PGs têm papel modesto;
+        o AINE causa constrição leve (rA × 1,25). Com RAAS ativado (como nesse ICC), o bloqueio das PGs
+        remove o safety net → constrição grave (rA × 2,75). <em>O mesmo diclofenaco é 3× mais prejudicial
+        ao rim desse paciente do que ao de um jovem sadio.</em></div>
+      </div>
+      <div class="step">
+        <b>Ato 3.</b> O enalapril está piorando ou protegendo? Deve ser suspenso?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3">O enalapril <b>dilata a eferente</b> → P_GC↓ → TFG↓ → contribuiu para a
+        creatinina alta. Mas <em>suspender o IECA em ICC pode piorar o DC</em> (pós-carga reduzida é benéfica
+        para o VE). A decisão não é óbvia: o AINE pode ser suspenso imediatamente; o IECA precisa de avaliação
+        individualizada, pesando o benefício cardíaco contra o impacto renal atual.</div>
+      </div>
+      <div class="step">
+        <b>Ato 4.</b> Qual segmento sofreu isquemia? Por quê?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4">O <b>ramo espesso ascendente da alça de Henle (TAL)</b>, na medula.
+        Motivo: (a) a medula recebe só ~12% do FSR — qualquer queda adicional ameaça; (b) o NKCC2 + Na/K-ATPase
+        do ramo espesso consomem O₂ intensamente (ERO₂_med ≈ 50–75% já em repouso). Com FSR caindo e pO₂_med
+        já em ~15 mmHg, a combinação ICC + AINE → pO₂_med &lt; 8 mmHg → <b>NTA medular</b>.</div>
+      </div>
+      <div class="step">
+        <b>Ato 5.</b> Conduta e síntese.
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>Suspender o AINE imediatamente</b> (devolve as PGs → reabre a aferente
+        → FSR sobe). Reavaliar o enalapril individualmente (pode ser mantido em dose menor se o DC precisar).
+        Hidratação cuidadosa — melhora a perfusão, mas não excessiva em ICC (risco de congestão).
+        Monitorar K⁺, HCO₃⁻, balanço hídrico. Indicar diálise se K⁺ &gt; 6 mEq/L, acidose grave (pH &lt; 7,2)
+        ou sobrecarga de volume intratável. <br><b>Lição:</b> a oligúria e a creatinina são a <em>sombra</em>
+        da hemodinâmica medular: decompor FSR → córtex × medula → pO₂_med → NTA, antes de interpretar o número.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== TRILHA ============================== -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — dez passos que constroem o conceito</h3>
+      <details><summary>1. O rim normalmente recebe qual fração do débito cardíaco?</summary>
+        <p><em>Pista: calcule 1000 mL/min ÷ 5000 mL/min.</em><br>
+        ~20% — apesar de representar menos de 0,5% da massa corporal. O FSR total (2 rins) é ~1000–1100 mL/min.</p></details>
+      <details><summary>2. Com DC = 3 L/min (ICC moderada), qual o FSR estimado?</summary>
+        <p><em>Pista: 20% de 3000 mL/min.</em><br>
+        ~600 mL/min — já metade do normal antes do AINE entrar. Qualquer vasoconstrição adicional parte de uma base baixa.</p></details>
+      <details><summary>3. O AINE bloqueia qual mediador e onde ele age?</summary>
+        <p><em>Pista: COX → PGE₂/PGI₂.</em><br>
+        Bloqueia a COX → impede a síntese de prostaglandinas vasodilatadoras (PGE₂/PGI₂) que são produzidas
+        localmente no rim e dilatam a arteríola <b>aferente</b>.</p></details>
+      <details><summary>4. Por que a depleção volêmica amplifica o efeito do AINE?</summary>
+        <p><em>Pista: quando o RAAS está ativado, de quê depende a aferente?</em><br>
+        Com RAAS ativado (depleção, ICC), a AngII constringe a eferente E tende a comprimir a aferente —
+        as PGs são o "safety net" que seguram a aferente aberta. Sem PGs (AINE), a aferente fecha muito mais.</p></details>
+      <details><summary>5. Com aferente constrita + RAAS ativado, o FSR muda como?</summary>
+        <p><em>Pista: resistência aferente↑ → fluxo↓.</em><br>
+        Cai ainda mais do que sem RAAS ativado — a multiplicação das resistências é não-linear; o risco de isquemia
+        medular é desproporcional ao grau de constrição.</p></details>
+      <details><summary>6. A medula recebe qual porcentagem do FSR?</summary>
+        <p><em>Pista: ~12%, enquanto o córtex recebe ~88%.</em><br>
+        ~12%. Isso significa que com FSR = 600 mL/min, a medula recebe apenas ~72 mL/min — e precisa
+        sustentar o ramo espesso com toda a sua demanda de O₂.</p></details>
+      <details><summary>7. Mesmo com FSR normal, o pO₂ medular é aproximadamente quanto?</summary>
+        <p><em>Pista: não 95 mmHg — a medula é hipóxica de base.</em><br>
+        ~15–20 mmHg — contra ~50+ mmHg no córtex. O ramo espesso extrai 50–75% do O₂ que chega
+        (ERO₂_med em repouso), o que mantém a pO₂ medular cronicamente baixa.</p></details>
+      <details><summary>8. Por que a medula é tão vulnerável à hipóxia?</summary>
+        <p><em>Pista: quem consome o O₂?</em><br>
+        O <b>NKCC2</b> (ramo espesso da alça de Henle) + Na/K-ATPase são os maiores consumidores de O₂ do
+        néfron — bombeiam Na⁺/K⁺/Cl⁻ de volta para o interstício e criam o gradiente corticomedular. Esse
+        trabalho metabólico intenso mais o fluxo reduzido criam a "paradox of renal oxygenation".</p></details>
+      <details><summary>9. Como o IECA entra nessa equação de isquemia medular?</summary>
+        <p><em>Pista: eferente dilata → P_GC↓ → TFG↓.</em><br>
+        O IECA dilata a eferente → retira a "represa" → P_GC↓ → TFG↓. No contexto de FSR já reduzido (ICC)
+        + AINE (aferente constrita), o triplo mecanismo colapsa a pressão de filtração e amplifica a isquemia
+        medular.</p></details>
+      <details><summary>10. O córtex pouparia a mesma isquemia? Por quê?</summary>
+        <p><em>Pista: compare as pO₂ e as ERO₂.</em><br>
+        O córtex tem pO₂ &gt; 50 mmHg e ERO₂_cort ≈ 8% — há grande reserva. Mesmo com FSR caindo, o córtex
+        tolera bem. A NTA afeta seletivamente o <b>ramo espesso medular</b>, por sua combinação única de
+        alto consumo + baixo fluxo.</p></details>
+    </div>
+  </section>
+
+  <!-- ============================== INSTRUMENTO ============================== -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — curva FSR × PAM e pO₂ medular</h3>
+      <p class="sub">Mova os controles para ver como DC, AINEs e IECA mudam o ponto de operação.
+      A linha <span style="color:#39c0c8">ciano</span> é o FSR; a linha <span style="color:#e8a13a">laranja tracejada</span>
+      é o pO₂ medular. O quadrado laranja é o ponto atual.</p>
+      <div class="grid" style="margin-bottom:10px">
+        <div>
+          <label>DC — débito cardíaco (L/min): <span class="val" id="instr-lbl-dc">5.0</span></label>
+          <input type="range" id="instr-dc" min="0.5" max="10" step="0.1" value="5">
+          <label>AINE (0=sem, 1=dose máx): <span class="val" id="instr-lbl-aine">0.00</span></label>
+          <input type="range" id="instr-aine" min="0" max="1" step="0.05" value="0">
+          <label>IECA/BRA (0=sem, 1=dose máx): <span class="val" id="instr-lbl-ieca">0.00</span></label>
+          <input type="range" id="instr-ieca" min="0" max="1" step="0.05" value="0">
+        </div>
+        <div>
+          <label>PAM (mmHg): <span class="val" id="instr-lbl-pam">100</span></label>
+          <input type="range" id="instr-pam" min="20" max="200" step="1" value="100">
+          <label>Depleção volêmica (0=não, 1=grave): <span class="val" id="instr-lbl-voldep">0.00</span></label>
+          <input type="range" id="instr-voldep" min="0" max="1" step="0.05" value="0">
+        </div>
+      </div>
+      <canvas id="fsr-canvas" width="900" height="320" aria-label="Curva FSR por PAM"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- ============================== LAB ============================== -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — mova os parâmetros, leia a hemodinâmica renal</h3>
+      <div class="grid">
+        <div>
+          <label>DC — débito cardíaco (L/min): <span class="val" id="lbl-dc">5.0</span></label>
+          <input type="range" id="in-dc" min="0.5" max="10" step="0.1" value="5">
+          <label>PAM (mmHg): <span class="val" id="lbl-pam">100</span></label>
+          <input type="range" id="in-pam" min="20" max="200" step="1" value="100">
+          <label>Hct (%) — hematócrito: <span class="val" id="lbl-hct">45</span></label>
+          <input type="range" id="in-hct" min="20" max="65" step="1" value="45">
+          <label>Hgb (g/dL): <span class="val" id="lbl-hgb">14.0</span></label>
+          <input type="range" id="in-hgb" min="4" max="20" step="0.5" value="14">
+        </div>
+        <div>
+          <label>AINE (0=sem, 1=dose máx): <span class="val" id="lbl-aine">0.00</span></label>
+          <input type="range" id="in-aine" min="0" max="1" step="0.05" value="0">
+          <label>IECA/BRA (0=sem, 1=dose máx): <span class="val" id="lbl-ieca">0.00</span></label>
+          <input type="range" id="in-ieca" min="0" max="1" step="0.05" value="0">
+          <label>Depleção volêmica (amplifica AINE): <span class="val" id="lbl-voldep">0.00</span></label>
+          <input type="range" id="in-voldep" min="0" max="1" step="0.05" value="0">
+          <label>Fração cortical (f_cort): <span class="val" id="lbl-fcort">0.88</span></label>
+          <input type="range" id="in-fcort" min="0.5" max="0.97" step="0.01" value="0.88">
+        </div>
+      </div>
+
+      <table>
+        <tr><th>Variável</th><th>Atual</th><th>Normal ≈</th></tr>
+        <tr><td>FSR — fluxo sanguíneo renal (mL/min)</td><td class="num" id="out-fsr">—</td><td class="num">1090</td></tr>
+        <tr><td>FPR — fluxo plasmático renal (mL/min)</td><td class="num" id="out-fpr">—</td><td class="num">600</td></tr>
+        <tr><td>TFG (mL/min, 2 rins)</td><td class="num" id="out-tfg">—</td><td class="num">125</td></tr>
+        <tr><td>FF — fração de filtração</td><td class="num" id="out-ff">—</td><td class="num">0.20</td></tr>
+        <tr><td>P_GC — pressão capilar glomerular (mmHg)</td><td class="num" id="out-pgc">—</td><td class="num">60</td></tr>
+        <tr><td>Q_med — fluxo medular (mL/min)</td><td class="num" id="out-qmed">—</td><td class="num">~131</td></tr>
+        <tr><td>pO₂_med — pO₂ medular (mmHg)</td><td class="num" id="out-po2med">—</td><td class="num">~17</td></tr>
+        <tr><td>pO₂_cort — pO₂ cortical (mmHg)</td><td class="num" id="out-po2cort">—</td><td class="num">~55</td></tr>
+        <tr><td>ERO₂_med — extração de O₂ medular (%)</td><td class="num" id="out-ero2med">—</td><td class="num">~55%</td></tr>
+        <tr><td>Regime</td><td class="num" id="out-regime">—</td><td class="num">normal</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- ============================== AVALIAÇÃO ============================== -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (10)</button>
+        <button data-bank="textual">Textual (10)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica e farmacológica</b>.
+    Os fármacos citados (AINEs: ibuprofeno 400–800 mg q8h; naproxeno 250–500 mg q12h; IECA: enalapril 5–40 mg/dia,
+    ramipril 2,5–10 mg/dia; BRA: losartan 25–100 mg/dia) são apresentados com dose e mecanismo como conteúdo
+    educacional, computados pelo motor fisiológico. O modelo é uma simplificação didática e não substitui
+    julgamento clínico individualizado. A decisão e a responsabilidade finais são sempre do profissional de saúde.
+    <b>Nota de honestidade do modelo:</b> as constantes fisiológicas (VO₂_TAL, ERO₂, etc.) são estimativas
+    didáticas calibradas para reproduzir os valores qualitativos da literatura; variações individuais são
+    substanciais.
+  </div>
+
+  <footer>
+    CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira
+  </footer>
+</div>
+
+<script>
+/* =========================================================================
+ * ENGINE INLINE — espelho fiel de build/m2/model2.js (o motor manda no pixel)
+ * ========================================================================= */
+'use strict';
+
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a) n=a; if(n>b) n=b; return n; }
+function merge(a,b){ var o={},k; if(a) for(k in a) if(Object.prototype.hasOwnProperty.call(a,k)) o[k]=a[k]; if(b) for(k in b) if(Object.prototype.hasOwnProperty.call(b,k)) o[k]=b[k]; return o; }
+
+var DC_N=5.0, PV=8, RA0=1.0, RE0=1.3, KFLOW=15, PSTAR=60, GMIN=0.5, GMAX=3.0, FFMAX=0.65,
+    F_CORT0=0.88, P50_O2=26, N_HILL=2.7, VO2_TAL=18;
+
+function hillPO2(sO2){
+  var s=clampv(sO2,0.001,0.999);
+  return P50_O2*Math.pow(s/(1-s),1/N_HILL);
+}
+
+function hemoRenal(input){
+  var inp=input||{};
+  var DC     =clampv(inp.DC     !==undefined?inp.DC     :5.0, 0.5,15.0);
+  var PAM    =clampv(inp.PAM    !==undefined?inp.PAM    :100, 20, 260);
+  var Hct    =clampv(inp.Hct   !==undefined?inp.Hct   :0.45, 0.20,0.65);
+  var Hgb    =clampv(inp.Hgb   !==undefined?inp.Hgb   :14,   4,  20);
+  var SaO2   =clampv(inp.SaO2  !==undefined?inp.SaO2  :0.98, 0.60,1.0);
+  var f_cort =clampv(inp.f_cort!==undefined?inp.f_cort:F_CORT0, 0.50,0.97);
+  var aine   =clampv(inp.aine  !==undefined?inp.aine  :0, 0,1);
+  var ieca   =clampv(inp.ieca  !==undefined?inp.ieca  :0, 0,1);
+  var vol_dep=clampv(inp.vol_dep!==undefined?inp.vol_dep:0, 0,1);
+  var rA_in  =clampv(inp.rA    !==undefined?inp.rA    :1, 0.2,5);
+  var rE_in  =clampv(inp.rE    !==undefined?inp.rE    :1, 0.2,5);
+  var Kf     =clampv(inp.Kf    !==undefined?inp.Kf    :7.5, 0.5,20);
+  var piGC   =clampv(inp.piGC  !==undefined?inp.piGC  :28, 0,40);
+  var P_BC   =clampv(inp.P_BC  !==undefined?inp.P_BC  :15, 0,50);
+  var autoreg=inp.autoreg!==false;
+
+  var aine_rA=1+aine*(0.25+vol_dep*1.50);
+  var ieca_rE=clampv(1-ieca*0.45,0.20,1.0);
+  var rA=clampv(rA_in*aine_rA,0.2,8);
+  var rE=clampv(rE_in*ieca_rE,0.2,5);
+  var kflow_r=KFLOW*(DC/DC_N);
+  var RE=RE0*rE;
+  var g=1.0;
+  if(autoreg){
+    var relax=0.4;
+    for(var it=0;it<60;it++){
+      var RAi=RA0*rA*g;
+      var pgcI=(PAM*RE+PV*RAi)/(RAi+RE);
+      var err=(pgcI-PSTAR)/PSTAR;
+      g=clampv(g*(1+relax*err),GMIN,GMAX);
+    }
+  }
+  var RA=RA0*rA*g;
+  var P_GC=(PAM*RE+PV*RA)/(RA+RE); if(!isFinite(P_GC)) P_GC=PV;
+  var FPR=kflow_r*Math.max(PAM-PV,0)/(RA+RE); if(!isFinite(FPR)||FPR<0) FPR=0;
+  var FSR=FPR/Math.max(1-Hct,0.10);
+  var NFP=P_GC-P_BC-piGC;
+  var TFGraw=Kf*Math.max(NFP,0);
+  var TFG=Math.min(TFGraw,FFMAX*FPR); if(!isFinite(TFG)||TFG<0) TFG=0;
+  var FF=FPR>0?TFG/FPR:0;
+  var Q_cort=FSR*f_cort;
+  var Q_med=FSR*(1-f_cort);
+  var PaO2_est=95;
+  var CaO2_dl=Hgb*1.34*SaO2+0.003*PaO2_est;
+  var CaO2=CaO2_dl/100;
+  var DO2_total=FSR*CaO2;
+  var DO2_cort=Q_cort*CaO2;
+  var DO2_med=Q_med*CaO2;
+  var VO2_med=clampv(VO2_TAL,0,DO2_med*0.95);
+  var ERO2_med=DO2_med>0?VO2_med/DO2_med:0.95;
+  var hgb_carry=Q_med*Hgb*1.34/100;
+  var SvO2_med=hgb_carry>0?clampv(SaO2-VO2_med/hgb_carry,0.001,0.999):0.05;
+  var pO2_med=hillPO2(SvO2_med);
+  var ERO2_cort=0.08;
+  var VO2_cort=DO2_cort*ERO2_cort;
+  var hgb_carry_c=Q_cort*Hgb*1.34/100;
+  var SvO2_cort=hgb_carry_c>0?clampv(SaO2-VO2_cort/hgb_carry_c,0.001,0.999):0.70;
+  var pO2_cort=hillPO2(SvO2_cort);
+  var regime;
+  if(FSR<300)         regime='isquemia_critica';
+  else if(pO2_med<8)  regime='hipoxia_medular';
+  else if(FSR<600)    regime='hipoperfusao';
+  else if(P_GC<52)    regime='pre_renal';
+  else if(FSR>1500)   regime='hiperperfusao';
+  else                regime='normal';
+  return {
+    DC:DC,PAM:PAM,Hct:Hct,Hgb:Hgb,SaO2:SaO2,
+    f_cort:f_cort,aine:aine,ieca:ieca,vol_dep:vol_dep,
+    rA_in:rA_in,rE_in:rE_in,aine_rA:aine_rA,ieca_rE:ieca_rE,
+    rA:rA,rE:rE,RA:RA,RE:RE,g:g,
+    P_GC:P_GC,NFP:NFP,P_BC:P_BC,piGC:piGC,Kf:Kf,
+    FPR:FPR,FSR:FSR,TFG:TFG,FF:FF,
+    Q_cort:Q_cort,Q_med:Q_med,
+    CaO2:CaO2,CaO2_dl:CaO2_dl,
+    DO2_total:DO2_total,DO2_cort:DO2_cort,DO2_med:DO2_med,
+    VO2_med:VO2_med,VO2_cort:VO2_cort,
+    ERO2_med:ERO2_med,ERO2_cort:ERO2_cort,
+    SvO2_med:SvO2_med,SvO2_cort:SvO2_cort,
+    pO2_med:pO2_med,pO2_cort:pO2_cort,
+    regime:regime
+  };
+}
+
+function fsrCurveLayout(state,W,H){
+  state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=56,padR=16,padT=18,padB=38,baseY=H-padB;
+  var pamMin=20,pamMax=220,N=50;
+  var raw=[],i,pam,r,maxFSR=200,maxPO2=30;
+  for(i=0;i<=N;i++){
+    pam=pamMin+(pamMax-pamMin)*i/N;
+    r=hemoRenal(merge(state,{PAM:pam}));
+    raw.push({PAM:pam,FSR:r.FSR,FPR:r.FPR,TFG:r.TFG,pO2_med:r.pO2_med});
+    if(r.FSR>maxFSR) maxFSR=r.FSR;
+    if(r.pO2_med>maxPO2) maxPO2=r.pO2_med;
+  }
+  var yMaxFSR=maxFSR*1.12;
+  var yMaxPO2=Math.max(maxPO2*1.12,35);
+  var pxX=(W-padL-padR)/(pamMax-pamMin);
+  var pxFSR=(baseY-padT)/yMaxFSR;
+  var pxPO2=(baseY-padT)/yMaxPO2;
+  var pts=raw.map(function(d){
+    return{PAM:d.PAM,FSR:d.FSR,FPR:d.FPR,TFG:d.TFG,pO2_med:d.pO2_med,
+      x:padL+(d.PAM-pamMin)*pxX,
+      y_fsr:baseY-clampv(d.FSR,0,yMaxFSR)*pxFSR,
+      y_fpr:baseY-clampv(d.FPR,0,yMaxFSR)*pxFSR,
+      y_tfg:baseY-clampv(d.TFG*4,0,yMaxFSR)*pxFSR,
+      y_po2:baseY-clampv(d.pO2_med,0,yMaxPO2)*pxPO2
+    };
+  });
+  var curPAM=clampv(state.PAM!==undefined?state.PAM:100,pamMin,pamMax);
+  var cur=hemoRenal(state);
+  var cx=padL+(curPAM-pamMin)*pxX;
+  return{
+    W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,
+    pamMin:pamMin,pamMax:pamMax,yMaxFSR:yMaxFSR,yMaxPO2:yMaxPO2,
+    pxX:pxX,pxFSR:pxFSR,pxPO2:pxPO2,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},
+    pts:pts,
+    current:{x:cx,y_fsr:baseY-clampv(cur.FSR,0,yMaxFSR)*pxFSR,
+      y_po2:baseY-clampv(cur.pO2_med,0,yMaxPO2)*pxPO2,
+      PAM:curPAM,FSR:cur.FSR,FPR:cur.FPR,TFG:cur.TFG,pO2_med:cur.pO2_med}
+  };
+}
+
+function medulaLayout(state,W,H){
+  state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var r=hemoRenal(state);
+  var padL=12,padR=12,padT=20,padB=30;
+  var innerW=W-padL-padR;
+  var innerH=H-padT-padB;
+  var colW=innerW/2-8;
+  var xCort=padL;
+  var xMed=padL+innerW/2+8;
+  var FSR_REF=1090;
+  var DO2_REF=FSR_REF*0.187;
+  function bar(q,qRef,pO2,x,y0,label){
+    var frac=clampv(q/qRef,0,1.5);
+    var barH=frac*innerH*0.55;
+    var fracO2=clampv(r[q===r.Q_cort?'DO2_cort':'DO2_med']/(DO2_REF*(q===r.Q_cort?F_CORT0:(1-F_CORT0))),0,1.5);
+    var do2H=fracO2*innerH*0.35;
+    var po2H=clampv(pO2/100,0,1)*innerH*0.25;
+    var po2color=pO2>=20?'#22c55e':pO2>=10?'#f59e0b':'#ef4444';
+    return{
+      flow:{x:x,y:y0+innerH-barH,w:colW,h:barH,q:q,frac:frac},
+      do2:{x:x,y:y0+innerH-do2H,w:colW*0.55,h:do2H},
+      po2:{x:x,y:y0+innerH*0.05,w:colW*0.3,h:po2H,color:po2color,pO2:pO2},
+      label:{x:x+colW/2,y:y0+innerH+18,text:label}
+    };
+  }
+  var y0=padT;
+  var bCort=bar(r.Q_cort,FSR_REF*F_CORT0,r.pO2_cort,xCort,y0,'Córtex (~88%)');
+  var bMed=bar(r.Q_med,FSR_REF*(1-F_CORT0),r.pO2_med,xMed,y0,'Medula (~12%)');
+  var po2color=r.pO2_med>=20?'#22c55e':r.pO2_med>=10?'#f59e0b':'#ef4444';
+  return{W:W,H:H,r:r,cortex:bCort,medulla:bMed,
+    po2Indicator:{cx:W/2,cy:H-padB/2+2,r:10,pO2_med:r.pO2_med,color:po2color}};
+}
+
+window.hemoRenal=hemoRenal;
+window.fsrCurveLayout=fsrCurveLayout;
+window.medulaLayout=medulaLayout;
+window.hillPO2=hillPO2;
+window.MODEL={hemoRenal:hemoRenal,fsrCurveLayout:fsrCurveLayout,medulaLayout:medulaLayout,
+  clampv:clampv,merge:merge,hillPO2:hillPO2,
+  CONST:{DC_N:DC_N,PV:PV,RA0:RA0,RE0:RE0,KFLOW:KFLOW,PSTAR:PSTAR,
+         GMIN:GMIN,GMAX:GMAX,FFMAX:FFMAX,F_CORT0:F_CORT0,
+         P50_O2:P50_O2,N_HILL:N_HILL,VO2_TAL:VO2_TAL}};
+
+/* =========================================================================
+ * UI
+ * ========================================================================= */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=d||1; return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+
+var REGIME_TXT={
+  normal:'normal — FSR e pO₂_med adequados',
+  hipoxia_medular:'⚠ hipóxia medular — pO₂_med < 8 mmHg (risco de NTA)',
+  isquemia_critica:'🔴 isquemia crítica — FSR < 300 mL/min',
+  hipoperfusao:'⚠ hipoperfusão — FSR reduzido, vigilância',
+  pre_renal:'⚠ pré-renal — P_GC baixa',
+  hiperperfusao:'hiperperfusão — FSR elevado (vasodilatação/sepse?)'
+};
+
+// abas principais
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b) return;
+  var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on');
+  $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh();
+});
+
+// caso: prever-depois-revelar
+document.addEventListener('click',function(e){
+  var b=e.target.closest('button.act[data-rev]'); if(!b) return;
+  var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on');
+});
+
+function readLab(){
+  return{
+    DC:+$('in-dc').value, PAM:+$('in-pam').value,
+    Hct:+$('in-hct').value/100, Hgb:+$('in-hgb').value,
+    aine:+$('in-aine').value, ieca:+$('in-ieca').value,
+    vol_dep:+$('in-voldep').value, f_cort:+$('in-fcort').value
+  };
+}
+
+function refresh(){
+  var inp=readLab();
+  $('lbl-dc').textContent=fmt(inp.DC);
+  $('lbl-pam').textContent=inp.PAM;
+  $('lbl-hct').textContent=Math.round(inp.Hct*100);
+  $('lbl-hgb').textContent=fmt(inp.Hgb);
+  $('lbl-aine').textContent=fmt(inp.aine,2);
+  $('lbl-ieca').textContent=fmt(inp.ieca,2);
+  $('lbl-voldep').textContent=fmt(inp.vol_dep,2);
+  $('lbl-fcort').textContent=fmt(inp.f_cort,2);
+  var r=hemoRenal(inp);
+  $('out-fsr').textContent=Math.round(r.FSR);
+  $('out-fpr').textContent=Math.round(r.FPR);
+  $('out-tfg').textContent=Math.round(r.TFG);
+  $('out-ff').textContent=fmt(r.FF,3);
+  $('out-pgc').textContent=fmt(r.P_GC);
+  $('out-qmed').textContent=Math.round(r.Q_med);
+  $('out-po2med').textContent=fmt(r.pO2_med);
+  $('out-po2cort').textContent=fmt(r.pO2_cort);
+  $('out-ero2med').textContent=fmt(r.ERO2_med*100);
+  $('out-regime').textContent=REGIME_TXT[r.regime]||r.regime;
+  verdictLab(r); pearlLab(r,inp);
+  drawCanvas(inp);
+  // instrumento sliders
+  syncInstrToLab(inp);
+}
+
+function syncInstrToLab(inp){
+  if($('instr-dc')) $('instr-dc').value=inp.DC;
+  if($('instr-pam')) $('instr-pam').value=inp.PAM;
+  if($('instr-aine')) $('instr-aine').value=inp.aine;
+  if($('instr-ieca')) $('instr-ieca').value=inp.ieca;
+  if($('instr-voldep')) $('instr-voldep').value=inp.vol_dep;
+  updateInstrLabels(inp);
+}
+
+function readInstr(){
+  return{
+    DC:+$('instr-dc').value, PAM:+$('instr-pam').value,
+    aine:+$('instr-aine').value, ieca:+$('instr-ieca').value,
+    vol_dep:+$('instr-voldep').value
+  };
+}
+
+function updateInstrLabels(inp){
+  if($('instr-lbl-dc')) $('instr-lbl-dc').textContent=fmt(inp.DC);
+  if($('instr-lbl-pam')) $('instr-lbl-pam').textContent=inp.PAM;
+  if($('instr-lbl-aine')) $('instr-lbl-aine').textContent=fmt(inp.aine,2);
+  if($('instr-lbl-ieca')) $('instr-lbl-ieca').textContent=fmt(inp.ieca,2);
+  if($('instr-lbl-voldep')) $('instr-lbl-voldep').textContent=fmt(inp.vol_dep,2);
+}
+
+function refreshInstr(){
+  var inp=readInstr();
+  updateInstrLabels(inp);
+  var r=hemoRenal(inp);
+  pearlInstr(r,inp);
+  drawCanvas(inp);
+}
+
+function pearlInstr(r,inp){
+  var ip=$('instr-pearl'); if(!ip) return;
+  var t;
+  if(inp.aine>0.5 && inp.vol_dep>0.5){
+    t='PÉROLA: AINE+depleção — a PG é o safety net do rim depletado; bloqueá-la (aine_rA×'+fmt(r.aine_rA,2)+') sob RAAS ativado precipita isquemia medular (pO₂_med '+fmt(r.pO2_med)+' mmHg).';
+  } else if(inp.ieca>0.5){
+    t='PÉROLA: IECA — P_GC caiu para '+fmt(r.P_GC)+' mmHg (eferente abriu). A creatinina subirá — isso é o mecanismo hemodinâmico pretendido, não lesão, a não ser que o rim dependa da eferente fechada.';
+  } else if(r.pO2_med<12){
+    t='PÉROLA: pO₂_med = '+fmt(r.pO2_med)+' mmHg. A medula já opera abaixo do limiar de isquemia (<12 mmHg) — ramo espesso em risco de NTA.';
+  } else if(r.ERO2_med>0.6){
+    t='PÉROLA: ERO₂_med = '+fmt(r.ERO2_med*100,0)+'%. O rim normal já opera perto do limite de extração de O₂ — qualquer queda de FSR ou aumento de consumo → isquemia medular.';
+  } else {
+    t='FSR = '+Math.round(r.FSR)+' mL/min (~'+fmt(r.FSR/(r.DC*1000)*100)+'% do DC). Medula recebe '+Math.round(r.Q_med)+' mL/min, pO₂_med = '+fmt(r.pO2_med)+' mmHg (limite fisiológico ~15–20 mmHg).';
+  }
+  ip.textContent=t;
+}
+
+function verdictLab(r){
+  var v=$('veredito'); var cls='b-good', msg;
+  if(r.regime==='isquemia_critica'){
+    cls='b-bad'; msg='Isquemia crítica: FSR '+Math.round(r.FSR)+' mL/min. Hipóxia medular grave — alto risco de NTA do ramo espesso.';
+  } else if(r.regime==='hipoxia_medular'){
+    cls='b-bad'; msg='Hipóxia medular: pO₂_med '+fmt(r.pO2_med)+' mmHg. O ramo espesso da alça está isquêmico. FSR: '+Math.round(r.FSR)+' mL/min.';
+  } else if(r.regime==='hipoperfusao'){
+    cls='b-warn'; msg='Hipoperfusão: FSR '+Math.round(r.FSR)+' mL/min (abaixo do normal). Monitorar — a medula já está em risco.';
+  } else if(r.regime==='pre_renal'){
+    cls='b-warn'; msg='Pré-renal: P_GC '+fmt(r.P_GC)+' mmHg insuficiente para filtrar adequadamente. TFG: '+Math.round(r.TFG)+' mL/min.';
+  } else if(r.regime==='hiperperfusao'){
+    cls='b-warn'; msg='Hiperperfusão: FSR '+Math.round(r.FSR)+' mL/min. Verifique vasodilatação (sepse?).';
+  } else {
+    cls='b-good'; msg='Normal: FSR '+Math.round(r.FSR)+' mL/min (~20% DC), pO₂_med '+fmt(r.pO2_med)+' mmHg, TFG '+Math.round(r.TFG)+' mL/min.';
+  }
+  v.className='banner '+cls; v.textContent=msg;
+}
+
+function pearlLab(r,inp){
+  var p=$('lab-pearl'); if(!p) return;
+  var t;
+  if(inp.aine>0.5 && inp.vol_dep>0.5){
+    t='PÉROLA: AINE+depleção — a PG é o safety net do rim depletado; bloqueá-la (aine_rA×'+fmt(r.aine_rA,2)+') sob RAAS ativado precipita isquemia medular (pO₂_med '+fmt(r.pO2_med)+' mmHg).';
+  } else if(inp.ieca>0.5){
+    t='PÉROLA: IECA — P_GC caiu para '+fmt(r.P_GC)+' mmHg (eferente abriu). A creatinina subirá — isso é o mecanismo hemodinâmico pretendido, não lesão, a não ser que o rim dependa da eferente fechada.';
+  } else if(r.pO2_med<12){
+    t='PÉROLA: pO₂_med = '+fmt(r.pO2_med)+' mmHg. A medula já opera abaixo do limiar de isquemia (<12 mmHg) — ramo espesso em risco de NTA.';
+  } else if(r.ERO2_med>0.6){
+    t='PÉROLA: ERO₂_med = '+fmt(r.ERO2_med*100,0)+'%. O rim normal já opera perto do limite de extração de O₂ — qualquer queda de FSR ou aumento de consumo → isquemia medular.';
+  } else {
+    t='FSR = '+Math.round(r.FSR)+' mL/min (~'+fmt(r.FSR/(r.DC*1000)*100)+'% do DC). Medula recebe '+Math.round(r.Q_med)+' mL/min, pO₂_med = '+fmt(r.pO2_med)+' mmHg (limite fisiológico ~15–20 mmHg).';
+  }
+  p.textContent=t;
+}
+
+function drawCanvas(state){
+  var c=$('fsr-canvas'); if(!c) return;
+  var ctx; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; }
+  if(!ctx||!ctx.clearRect) return;
+  var L=fsrCurveLayout(state,c.width,c.height);
+  ctx.clearRect(0,0,L.W,L.H);
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('FSR/pO₂',6,L.padT+2); ctx.fillText('PAM (mmHg) →',L.W-124,L.baseY+24);
+  // legenda
+  ctx.strokeStyle='#39c0c8'; ctx.setLineDash([]); ctx.lineWidth=2;
+  ctx.beginPath(); ctx.moveTo(L.padL+10,L.padT+8); ctx.lineTo(L.padL+30,L.padT+8); ctx.stroke();
+  ctx.fillStyle='#39c0c8'; ctx.fillText('FSR',L.padL+33,L.padT+12);
+  ctx.strokeStyle='#e8a13a'; ctx.setLineDash([5,3]); ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.moveTo(L.padL+70,L.padT+8); ctx.lineTo(L.padL+90,L.padT+8); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle='#e8a13a'; ctx.fillText('pO₂ med',L.padL+93,L.padT+12);
+  // curva FSR (ciano)
+  ctx.strokeStyle='#39c0c8'; ctx.lineWidth=2; ctx.setLineDash([]); ctx.beginPath();
+  for(var i=0;i<L.pts.length;i++){ var p=L.pts[i]; if(i===0) ctx.moveTo(p.x,p.y_fsr); else ctx.lineTo(p.x,p.y_fsr); }
+  ctx.stroke();
+  // curva pO2_med (laranja, tracejada)
+  ctx.strokeStyle='#e8a13a'; ctx.lineWidth=1.5; ctx.setLineDash([5,3]); ctx.beginPath();
+  for(var i=0;i<L.pts.length;i++){ var p=L.pts[i]; if(i===0) ctx.moveTo(p.x,p.y_po2); else ctx.lineTo(p.x,p.y_po2); }
+  ctx.stroke(); ctx.setLineDash([]);
+  // marcador ponto atual
+  var cu=L.current;
+  ctx.strokeStyle='#e8a13a'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(cu.x,L.padT+20); ctx.lineTo(cu.x,L.baseY); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#e8a13a'; ctx.fillRect(cu.x-3,cu.y_fsr-3,6,6);
+  ctx.fillStyle='#e7eef4'; ctx.font='11px system-ui';
+  ctx.fillText('FSR '+Math.round(cu.FSR),cu.x+6,Math.max(cu.y_fsr-6,L.padT+22));
+  ctx.fillStyle='#e8a13a';
+  ctx.fillText('pO₂ '+cu.pO2_med.toFixed(1)+'mmHg',cu.x+6,Math.min(cu.y_po2+14,L.baseY-4));
+}
+
+['in-dc','in-pam','in-hct','in-hgb','in-aine','in-ieca','in-voldep','in-fcort'].forEach(function(id){
+  var el=$(id); if(el) el.addEventListener('input',refresh);
+});
+['instr-dc','instr-pam','instr-aine','instr-ieca','instr-voldep'].forEach(function(id){
+  var el=$(id); if(el) el.addEventListener('input',refreshInstr);
+});
+
+/* =========================================================================
+ * ILUSTRAÇÕES SVG — inline, computadas a partir do engine (física viva)
+ * ========================================================================= */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+
+// glomérulo: calibres ∝ 1/R_A, 1/R_E; barra P_GC; círculo do tufo
+function glomFig(state, titulo){
+  var r=(typeof state.P_GC!=='undefined')?state:hemoRenal(state);
+  var W=300,H=180;
+  var RA=clampv(r.RA||r.R_A||1,0.01,1e4), RE=clampv(r.RE||r.R_E||1.3,0.01,1e4);
+  var P_GC=clampv(r.P_GC,0,300);
+  var cx=W*0.5, cy=H*0.5;
+  var tuftR=Math.min(W,H)*0.16;
+  var wA=clampv(16/RA,3,46), wE=clampv(16/RE,3,46);
+  var barMax=80, barH=clampv(P_GC/barMax,0,1)*(H*0.42);
+  var s='';
+  s+='<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="#0f2233" fill-opacity="0.25"/>';
+  s+='<rect x="6" y="'+f1(cy-wA/2)+'" width="'+f1(Math.max(cx-tuftR-6,1))+'" height="'+f1(wA)+'" fill="#e0556b" fill-opacity="0.7"/>';
+  s+='<text x="10" y="'+f1(cy-wA/2-4)+'" fill="#e0556b" font-size="10">aferente</text>';
+  s+='<rect x="'+f1(cx+tuftR)+'" y="'+f1(cy-wE/2)+'" width="'+f1(Math.max(W-6-(cx+tuftR),1))+'" height="'+f1(wE)+'" fill="#3a7bd5" fill-opacity="0.7"/>';
+  s+='<text x="'+f1(cx+tuftR)+'" y="'+f1(cy-wE/2-4)+'" fill="#3a7bd5" font-size="10">eferente</text>';
+  s+='<circle cx="'+f1(cx)+'" cy="'+f1(cy)+'" r="'+f1(tuftR)+'" fill="#39c0c8" fill-opacity="0.30" stroke="#39c0c8"/>';
+  s+='<rect x="'+f1(cx-7)+'" y="'+f1(cy-barH)+'" width="14" height="'+f1(barH)+'" fill="#39c0c8"/>';
+  s+='<text x="'+f1(cx)+'" y="'+f1(cy+tuftR+16)+'" fill="#e7eef4" font-size="11" text-anchor="middle">P_GC '+Math.round(P_GC)+' mmHg</text>';
+  s+='<text x="'+f1(cx)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'glomérulo')+'</text>';
+  return svgEl(W,H,s);
+}
+
+// diagrama córtex × medula com barras de fluxo e indicador pO₂
+function medulaDiagram(state, titulo){
+  var W=300, H=200;
+  var L=medulaLayout(state,W,H);
+  var r=L.r;
+  var s='';
+  s+='<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="#0a1520"/>';
+  var bc=L.cortex, bm=L.medulla;
+  // barra cortical
+  s+='<rect x="'+f1(bc.flow.x)+'" y="'+f1(bc.flow.y)+'" width="'+f1(bc.flow.w)+'" height="'+f1(bc.flow.h)+'" fill="#39c0c8" fill-opacity="0.7"/>';
+  s+='<text x="'+f1(bc.label.x)+'" y="'+f1(bc.label.y)+'" fill="#9fb1c0" font-size="10" text-anchor="middle">'+bc.label.text+'</text>';
+  s+='<text x="'+f1(bc.flow.x+bc.flow.w/2)+'" y="'+f1(bc.flow.y-4)+'" fill="#e7eef4" font-size="10" text-anchor="middle">'+Math.round(r.Q_cort)+' mL/min</text>';
+  s+='<text x="'+f1(bc.flow.x+bc.flow.w/2)+'" y="'+f1(bc.flow.y+bc.flow.h/2)+'" fill="#e7eef4" font-size="9" text-anchor="middle">pO₂~'+Math.round(r.pO2_cort)+'mmHg</text>';
+  // barra medular (cor baseada no pO₂)
+  var medColor=r.pO2_med>=20?'#22c55e':r.pO2_med>=10?'#f59e0b':'#ef4444';
+  s+='<rect x="'+f1(bm.flow.x)+'" y="'+f1(bm.flow.y)+'" width="'+f1(bm.flow.w)+'" height="'+f1(bm.flow.h)+'" fill="'+medColor+'" fill-opacity="0.7"/>';
+  s+='<text x="'+f1(bm.label.x)+'" y="'+f1(bm.label.y)+'" fill="#9fb1c0" font-size="10" text-anchor="middle">'+bm.label.text+'</text>';
+  s+='<text x="'+f1(bm.flow.x+bm.flow.w/2)+'" y="'+f1(bm.flow.y-4)+'" fill="#e7eef4" font-size="10" text-anchor="middle">'+Math.round(r.Q_med)+' mL/min</text>';
+  // indicador pO₂ medular
+  s+='<circle cx="'+f1(L.po2Indicator.cx)+'" cy="'+f1(L.po2Indicator.cy)+'" r="16" fill="'+medColor+'" stroke="#e7eef4" stroke-width="1.5"/>';
+  s+='<text x="'+f1(L.po2Indicator.cx)+'" y="'+f1(L.po2Indicator.cy+4)+'" fill="#0c1014" font-size="9" text-anchor="middle" font-weight="bold">'+Math.round(r.pO2_med)+'</text>';
+  s+='<text x="'+f1(L.po2Indicator.cx+20)+'" y="'+f1(L.po2Indicator.cy+4)+'" fill="#9fb1c0" font-size="9">mmHg</text>';
+  s+='<text x="'+f1(L.po2Indicator.cx-20)+'" y="'+f1(L.po2Indicator.cy-12)+'" fill="#9fb1c0" font-size="8" text-anchor="end">pO₂_med</text>';
+  s+='<text x="'+W/2+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'córtex × medula')+'</text>';
+  return svgEl(W,H,s);
+}
+
+// mini curva FSR × PAM com pO₂_med tracejada
+function fsrMini(state, titulo){
+  var W=300, H=170;
+  var L=fsrCurveLayout(state,W,H);
+  var s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  var d=''; for(var i=0;i<L.pts.length;i++){ d+=(i===0?'M':'L')+f1(L.pts[i].x)+' '+f1(L.pts[i].y_fsr)+' '; }
+  s+='<path d="'+d+'" fill="none" stroke="#39c0c8" stroke-width="2"/>';
+  var d2=''; for(var i=0;i<L.pts.length;i++){ d2+=(i===0?'M':'L')+f1(L.pts[i].x)+' '+f1(L.pts[i].y_po2)+' '; }
+  s+='<path d="'+d2+'" fill="none" stroke="#e8a13a" stroke-width="1.5" stroke-dasharray="4 2"/>';
+  var cu=L.current;
+  s+='<rect x="'+f1(cu.x-3)+'" y="'+f1(cu.y_fsr-3)+'" width="6" height="6" fill="#e8a13a"/>';
+  s+='<text x="'+W/2+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'FSR × PAM')+'</text>';
+  s+='<text x="'+(L.axis.xEnd-2)+'" y="'+(L.baseY+14)+'" fill="#9fb1c0" font-size="9" text-anchor="end">PAM →</text>';
+  s+='<text x="'+(L.axis.x0+4)+'" y="'+L.padT+'" fill="#39c0c8" font-size="9">FSR</text>';
+  s+='<text x="'+(L.axis.x0+4)+'" y="'+(L.padT+12)+'" fill="#e8a13a" font-size="9">pO₂</text>';
+  return svgEl(W,H,s);
+}
+
+// esquema anatômico simples coração → rim com % DC
+function renalDiagram(){
+  var W=320, H=190, s='';
+  s+='<rect width="320" height="190" fill="#0a1520"/>';
+  s+='<defs><marker id="arr2" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#e8a13a"/></marker></defs>';
+  // coração
+  s+='<path d="M65,40 C65,30 55,20 45,28 C35,20 25,30 25,40 C25,52 65,75 65,75 C65,75 105,52 105,40 C105,30 95,20 85,28 C75,20 65,30 65,40 Z" fill="#e0556b" fill-opacity="0.75"/>';
+  s+='<text x="65" y="98" fill="#e0556b" font-size="11" text-anchor="middle" font-weight="bold">Coração</text>';
+  s+='<text x="65" y="110" fill="#9fb1c0" font-size="10" text-anchor="middle">DC = 5 L/min</text>';
+  // aorta
+  s+='<line x1="105" y1="55" x2="185" y2="55" stroke="#e0556b" stroke-width="8" stroke-linecap="round"/>';
+  s+='<text x="145" y="48" fill="#e08a96" font-size="9" text-anchor="middle">aorta</text>';
+  // rim
+  s+='<ellipse cx="220" cy="55" rx="30" ry="44" fill="#1a3a4a" stroke="#39c0c8" stroke-width="2"/>';
+  s+='<ellipse cx="220" cy="55" rx="18" ry="30" fill="#0f2233" stroke="#39c0c8" stroke-width="1" stroke-dasharray="3 2"/>';
+  s+='<text x="220" y="113" fill="#39c0c8" font-size="11" text-anchor="middle" font-weight="bold">Rim</text>';
+  // textos de fluxo
+  s+='<text x="65" y="135" fill="#9fb1c0" font-size="10" text-anchor="middle">5000 mL/min total</text>';
+  s+='<text x="220" y="135" fill="#39c0c8" font-size="10" text-anchor="middle">~1000 mL/min</text>';
+  s+='<text x="220" y="148" fill="#52c08a" font-size="11" text-anchor="middle" font-weight="bold">≈ 20% do DC</text>';
+  // seta de fração
+  s+='<line x1="140" y1="130" x2="180" y2="130" stroke="#e8a13a" stroke-width="1.5" marker-end="url(#arr2)"/>';
+  // ranking DO₂
+  s+='<text x="145" y="170" fill="#e8a13a" font-size="10" text-anchor="middle">4º em DO₂ (cérebro, coração, fígado, rim)</text>';
+  return svgEl(W,H,s);
+}
+
+// barras de ERO₂ córtex vs medula
+function ero2Bars(state){
+  var r=hemoRenal(state);
+  var W=300,H=170,base=130,sc=1.2,s='';
+  function bar(x,val,color,lab){
+    var h=clampv(val,0,100)*sc;
+    return '<rect x="'+x+'" y="'+f1(base-h)+'" width="50" height="'+f1(h)+'" fill="'+color+'" fill-opacity="0.7" stroke="'+color+'"/>'+
+      '<text x="'+(x+25)+'" y="'+(base+13)+'" fill="#9fb1c0" font-size="9" text-anchor="middle">'+lab+'</text>'+
+      '<text x="'+(x+25)+'" y="'+f1(base-h-4)+'" fill="#e7eef4" font-size="10" text-anchor="middle">'+Math.round(val)+'%</text>';
+  }
+  s+=bar(50,r.ERO2_cort*100,'#39c0c8','Córtex');
+  s+=bar(170,r.ERO2_med*100,'#e8a13a','Medula');
+  s+='<text x="150" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">ERO₂ (%): extração de O₂</text>';
+  s+='<line x1="30" y1="'+f1(base-80*sc)+'" x2="270" y2="'+f1(base-80*sc)+'" stroke="#3a4a58" stroke-dasharray="3 2"/>';
+  s+='<text x="272" y="'+f1(base-80*sc+4)+'" fill="#9fb1c0" font-size="8">80%</text>';
+  return svgEl(W,H,s);
+}
+
+/* =========================================================================
+ * TUTOR — DOIS blocos (ilustrado + textual), 10 cada
+ * ========================================================================= */
+function R2(extra){ return hemoRenal(merge({DC:5,PAM:100},extra||{})); }
+
+var TUTOR_ILUSTRADO=[
+  {q:'No diagrama, a barra medular está vermelha (pO₂ < 10 mmHg). Isso indica…',
+   o:['fluxo medular aumentado','hipóxia medular crítica — risco de NTA do ramo espesso','pO₂ medular normal','hiperoxia'],
+   c:1,e:'Barra vermelha = pO₂_med < 10 mmHg — abaixo do limiar de isquemia. O ramo espesso (NKCC2) é o mais vulnerável.',
+   fig:function(){ return medulaDiagram({DC:2.5,aine:0.8,vol_dep:0.8},'hipóxia medular'); }},
+  {q:'Com ICC (DC=2,5 L/min), o FSR cai para aproximadamente…',
+   o:['~1100 mL/min','~500 mL/min','~250 mL/min','~900 mL/min'],
+   c:1,e:'Com DC=2,5 L/min (metade do normal), o FSR cai para ~500 mL/min (20% de 2500). Essa é a base de vulnerabilidade.',
+   fig:function(){ return fsrMini({DC:2.5,PAM:85},'FSR × PAM — ICC (DC=2,5 L/min)'); }},
+  {q:'Com AINE dose máxima + depleção grave, o regime torna-se…',
+   o:['normal','hiperperfusão','hipóxia medular/isquemia crítica','pré-renal leve'],
+   c:2,e:'AINE + vol_dep: aine_rA sobe até 2,75 — a aferente fecha, o FSR despenca, a pO₂_med cai abaixo de 8 mmHg.',
+   fig:function(){ return medulaDiagram({DC:4,aine:1,vol_dep:1},'AINE + depleção'); }},
+  {q:'No glomérulo com AINE dose máxima, a arteríola aferente está…',
+   o:['dilatada (mais larga)','igual','constrita (mais estreita)','ocluída'],
+   c:2,e:'AINE bloqueia PGs → aferente constrita (rA × 2,75 com depleção). No diagrama, a barra aferente fica mais estreita.',
+   fig:function(){
+     var r=R2({aine:1,vol_dep:0.8,autoreg:false});
+     return glomFig(r,'aferente constrita (AINE+depleção)');
+   }},
+  {q:'No glomérulo com IECA dose máxima, a arteríola eferente está…',
+   o:['constrita','igual','dilatada (mais larga)','ocluída'],
+   c:2,e:'IECA bloqueia AngII → ieca_rE = 0,55 → eferente dilata. A barra eferente fica mais larga e a P_GC cai.',
+   fig:function(){
+     var r=R2({ieca:1,autoreg:false});
+     return glomFig(r,'eferente dilatada (IECA)');
+   }},
+  {q:'Na curva FSR × PAM, o precipício (FSR despenca) ocorre abaixo de aproximadamente…',
+   o:['180 mmHg','100 mmHg','80 mmHg','60 mmHg'],
+   c:2,e:'Abaixo de ~80 mmHg a aferente já está maximamente dilatada — sem reserva. O FSR e o pO₂_med despencam.',
+   fig:function(){ return fsrMini({DC:5,PAM:60},'precipício — PAM = 60 mmHg'); }},
+  {q:'O pO₂ medular no estado normal (FSR ~1090 mL/min) é aproximadamente…',
+   o:['~95 mmHg','~55 mmHg','~17 mmHg','~5 mmHg'],
+   c:2,e:'~15–20 mmHg — a medula é cronicamente hipóxica mesmo em repouso, porque o ramo espesso extrai 50–75% do O₂.',
+   fig:function(){ return medulaDiagram({DC:5,PAM:100},'normal — pO₂ medular ~17 mmHg'); }},
+  {q:'Com "tríplice ameaça" (ICC + AINE + IECA), o que mais sofre?',
+   o:['córtex renal (pO₂ > 50 mmHg)','medula renal — ramo espesso da alça de Henle','bexiga','ureteres'],
+   c:1,e:'A medula recebe só 12% do FSR e já extrai ~60% do O₂ em repouso. O ramo espesso (NKCC2) é o alvo da NTA.',
+   fig:function(){
+     var r=R2({DC:3,aine:0.8,ieca:0.8,vol_dep:0.5,autoreg:false});
+     return glomFig(r,'tríplice ameaça — P_GC colapsada');
+   }},
+  {q:'O ERO₂_med em repouso é ~50–75%. Isso significa que a medula está…',
+   o:['com grande reserva de O₂','próxima ao limite máximo de extração de O₂','em hipóxia aguda','com baixo consumo de O₂'],
+   c:1,e:'ERO₂_med = 50–75% em repouso: quase sem reserva. Qualquer queda de DO₂ (fluxo↓ ou Hgb↓) precipita isquemia.',
+   fig:function(){ return ero2Bars({DC:5,PAM:100}); }},
+  {q:'Autorregulação: abaixo do joelho inferior (~80 mmHg), a aferente está…',
+   o:['constrita ao máximo','em posição neutra','maximamente dilatada','fechada'],
+   c:2,e:'Abaixo do joelho a aferente já está maximamente dilatada (g = GMIN). Não há mais como compensar → precipício.',
+   fig:function(){ return fsrMini({DC:5,PAM:70},'joelho inferior — aferente no talo'); }}
+];
+
+var TUTOR_TEXTUAL=[
+  {q:'O FSR normal (2 rins) é aproximadamente…',
+   o:['~100–200 mL/min','~400–500 mL/min','~1000–1100 mL/min','~3000 mL/min'],
+   c:2,e:'~1000–1100 mL/min (~20% do DC de 5 L/min). É o 4º maior DO₂ do organismo.'},
+  {q:'Qual porcentagem do FSR vai para a medula?',
+   o:['~50%','~30%','~12%','~88%'],
+   c:2,e:'~12% — o córtex recebe ~88%. Esse desequilíbrio é a raiz da vulnerabilidade medular.'},
+  {q:'O pO₂ medular normal é aproximadamente…',
+   o:['~95 mmHg','~50 mmHg','~17 mmHg','~100 mmHg'],
+   c:2,e:'~15–20 mmHg — cronicamente hipóxico mesmo em repouso. Comparar com pO₂_cort ~50+ mmHg.'},
+  {q:'O AINE bloqueia qual mediador vasodilatador renal?',
+   o:['óxido nítrico','prostaglandinas (PGE₂/PGI₂) — via COX','bradicinina','adenosina'],
+   c:1,e:'Inibe a COX → sem PGE₂/PGI₂ → a aferente perde seu suporte vasodilatador → constri.'},
+  {q:'O AINE constri qual arteríola glomerular?',
+   o:['eferente','ambas por igual','aferente','nenhuma — atua no túbulo'],
+   c:2,e:'A aferente — as PGs vasodilatadoras atuam principalmente na aferente, mantendo-a aberta sob RAAS ativado.'},
+  {q:'O IECA dilata qual arteríola glomerular?',
+   o:['aferente','nenhuma','ambas por igual','eferente'],
+   c:3,e:'Bloqueia AngII → eferente dilata → tira a "represa" → P_GC↓ → TFG↓ → creatinina sobe.'},
+  {q:'A creatinina sobe com o IECA porque…',
+   o:['lesou o túbulo','causou obstrução','P_GC↓ → TFG↓ — efeito hemodinâmico pretendido','bloqueou a reabsorção tubular'],
+   c:2,e:'É o mecanismo esperado (hemodinâmico), não NTA. Só vira problema se o rim dependia da eferente fechada.'},
+  {q:'Qual segmento é mais vulnerável à hipóxia medular?',
+   o:['glomérulo','TCP (túbulo contorcido proximal)','ramo espesso ascendente da alça de Henle (TAL)','ducto coletor'],
+   c:2,e:'O TAL tem o maior consumo de O₂ do néfron (NKCC2 + Na/K-ATPase) e fica na medula — ERO₂ ~50–75%.'},
+  {q:'O ERO₂_med em repouso é…',
+   o:['~8%','~20%','~50–75%','~95%'],
+   c:2,e:'~50–75% em repouso — a medula opera perto do limite máximo de extração mesmo sem estresse.'},
+  {q:'A "tríplice ameaça" para NTA medular é…',
+   o:['hipertensão + diurético + esteróide','DC↓ (ICC) + AINE + IECA/depleção','hipercalemia + acidose + proteinúria','infecção + obstrução + contraste'],
+   c:1,e:'DC↓ reduz o FSR de base; AINE constri a aferente (remove safety net das PGs); IECA/depleção reduz P_GC. Três golpes simultâneos colapsam o pO₂_med.'}
+];
+
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO;
+window.TUTOR_TEXTUAL=TUTOR_TEXTUAL;
+window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+
+var BANKS={ilustrada:TUTOR_ILUSTRADO, textual:TUTOR_TEXTUAL};
+var curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+
+function renderTutor(){
+  var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():'';
+  $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false;
+  $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){
+    var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){
+      if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button');
+      btns[item.c].classList.add('ok');
+      if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block';
+      fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e;
+      $('tutor-score').textContent=tScore;
+      $('tutor-total').textContent=tTotal;
+    });
+    box.appendChild(b);
+  });
+}
+
+$('banktabs').addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor();
+});
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+/* =========================================================================
+ * ILUSTRAÇÕES DA ABA CONCEITO (populadas no boot)
+ * ========================================================================= */
+function populateConceito(){
+  // 1. Rim no débito cardíaco
+  var el=$('draw-cardiac');
+  if(el) el.innerHTML=renalDiagram();
+
+  // 2. Córtex × medula
+  var el2=$('draw-cortex-medula');
+  if(el2) el2.innerHTML=medulaDiagram({DC:5,PAM:100},'normal: pO₂_med ≈ 17 mmHg vs córtex ≈ 55 mmHg');
+
+  // 3. Autorregulação
+  var el3=$('draw-autorreg');
+  if(el3) el3.innerHTML=fsrMini({DC:5,PAM:100},'autorregulação do FSR — platô e precipício');
+
+  // 4. AINE — aferente
+  var el4=$('draw-aine');
+  if(el4){
+    var rAine=R2({aine:0.9,vol_dep:0.6,autoreg:false});
+    el4.innerHTML=glomFig(rAine,'AINE + depleção → aferente constrita (aine_rA≈2.4)');
+  }
+
+  // 5. IECA — eferente
+  var el5=$('draw-ieca');
+  if(el5){
+    var rIeca=R2({ieca:0.8,autoreg:false});
+    el5.innerHTML=glomFig(rIeca,'IECA → eferente dilatada → P_GC↓ → creatinina sobe');
+  }
+
+  // caso: figura inicial do caso (estado ICC normal sem AINE)
+  var elCaso=$('fig-caso');
+  if(elCaso) elCaso.innerHTML=medulaDiagram({DC:3,PAM:85},'ICC: DC=3 L/min, FSR ~600 mL/min');
+}
+
+/* =========================================================================
+ * BOOT
+ * ========================================================================= */
+refresh();
+renderTutor();
+populateConceito();
+</script>
+</body>
+</html>

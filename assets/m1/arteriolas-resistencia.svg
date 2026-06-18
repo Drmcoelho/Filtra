@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 380" font-family="Georgia, serif">
+  <rect width="680" height="380" fill="#fafaf8"/>
+  <text x="340" y="30" text-anchor="middle" font-size="15" font-weight="bold" fill="#1a1a2e">Arteriolas Aferente e Eferente — Controle da TFG</text>
+
+  <!-- Arteriola aferente (esquerda → glomérulo) -->
+  <rect x="30" y="155" width="160" height="40" rx="20" fill="#ff9999" stroke="#cc3333" stroke-width="2"/>
+  <text x="110" y="173" text-anchor="middle" font-size="12" font-weight="bold" fill="#880000">Arteriola</text>
+  <text x="110" y="187" text-anchor="middle" font-size="12" font-weight="bold" fill="#880000">Aferente</text>
+  <line x1="190" y1="175" x2="215" y2="175" stroke="#cc3333" stroke-width="2" marker-end="url(#a1)"/>
+
+  <!-- Glomérulo -->
+  <circle cx="290" cy="175" r="45" fill="#ffe8cc" stroke="#cc6600" stroke-width="2.5"/>
+  <text x="290" y="171" text-anchor="middle" font-size="12" font-weight="bold" fill="#884400">Glomérulo</text>
+  <text x="290" y="186" text-anchor="middle" font-size="11" fill="#884400">P_GC</text>
+
+  <!-- Arteriola eferente (glomérulo → direita) -->
+  <line x1="335" y1="175" x2="360" y2="175" stroke="#3366cc" stroke-width="2" marker-end="url(#a2)"/>
+  <rect x="360" y="155" width="160" height="40" rx="20" fill="#99bbff" stroke="#3366cc" stroke-width="2"/>
+  <text x="440" y="173" text-anchor="middle" font-size="12" font-weight="bold" fill="#002288">Arteriola</text>
+  <text x="440" y="187" text-anchor="middle" font-size="12" font-weight="bold" fill="#002288">Eferente</text>
+  <line x1="520" y1="175" x2="550" y2="175" stroke="#3366cc" stroke-width="2" marker-end="url(#a2)"/>
+
+  <!-- Caixa de regras -->
+  <rect x="540" y="80" width="125" height="190" rx="8" fill="#f5f5ff" stroke="#9999cc" stroke-width="1.2"/>
+  <text x="602" y="99" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Efeitos</text>
+  <text x="602" y="116" text-anchor="middle" font-size="10" fill="#cc3333">Aferente ↑R →</text>
+  <text x="602" y="129" text-anchor="middle" font-size="10" fill="#cc3333">P_GC ↓ → TFG ↓</text>
+  <line x1="555" y1="140" x2="645" y2="140" stroke="#ccc" stroke-width="1"/>
+  <text x="602" y="157" text-anchor="middle" font-size="10" fill="#cc3333">Aferente ↓R →</text>
+  <text x="602" y="170" text-anchor="middle" font-size="10" fill="#cc3333">P_GC ↑ → TFG ↑</text>
+  <line x1="555" y1="181" x2="645" y2="181" stroke="#ccc" stroke-width="1"/>
+  <text x="602" y="198" text-anchor="middle" font-size="10" fill="#3366cc">Eferente ↑R →</text>
+  <text x="602" y="211" text-anchor="middle" font-size="10" fill="#3366cc">P_GC ↑ → TFG ↑</text>
+  <line x1="555" y1="222" x2="645" y2="222" stroke="#ccc" stroke-width="1"/>
+  <text x="602" y="239" text-anchor="middle" font-size="10" fill="#3366cc">Eferente ↓R →</text>
+  <text x="602" y="252" text-anchor="middle" font-size="10" fill="#3366cc">P_GC ↓ → TFG ↓</text>
+
+  <!-- Mediadores aferente -->
+  <text x="110" y="138" text-anchor="middle" font-size="10" fill="#555">Vasodilatadores:</text>
+  <text x="110" y="151" text-anchor="middle" font-size="10" fill="#2a7a2a">PGE₂, NO, bradicinina</text>
+  <text x="110" y="210" text-anchor="middle" font-size="10" fill="#555">Vasoconstritores:</text>
+  <text x="110" y="223" text-anchor="middle" font-size="10" fill="#cc3333">Ang II, NE, adenosina</text>
+
+  <!-- Mediadores eferente -->
+  <text x="440" y="138" text-anchor="middle" font-size="10" fill="#555">Vasoconstritor:</text>
+  <text x="440" y="151" text-anchor="middle" font-size="10" fill="#cc3333">Ang II (dominante)</text>
+  <text x="440" y="210" text-anchor="middle" font-size="10" fill="#555">Vasodilatador:</text>
+  <text x="440" y="223" text-anchor="middle" font-size="10" fill="#2a7a2a">PGE₂</text>
+
+  <!-- Fórmula abaixo -->
+  <rect x="80" y="295" width="420" height="50" rx="8" fill="#fff8e0" stroke="#cc9900" stroke-width="1.5"/>
+  <text x="290" y="315" text-anchor="middle" font-size="12" fill="#665500" font-weight="bold">TFG = K_f · (P_GC − P_BC − π_GC)</text>
+  <text x="290" y="333" text-anchor="middle" font-size="11" fill="#665500">P_GC depende de: R_aferente e R_eferente</text>
+
+  <defs>
+    <marker id="a1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#cc3333"/>
+    </marker>
+    <marker id="a2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#3366cc"/>
+    </marker>
+  </defs>
+</svg>

@@ -41,10 +41,13 @@
   #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
   .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
   h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
-  .galeria{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;margin:10px 0}
-  .galeria figure{margin:0;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:6px}
-  .galeria img{width:100%;height:140px;object-fit:contain;background:#0a1016;border-radius:6px}
-  .galeria figcaption{font-size:11px;color:var(--dim);margin-top:5px;line-height:1.3}
+  /* figura viva: cada foto open-source vive INLINE na sua batida de conceito, com legenda que ensina */
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
   .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
   .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
   .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
@@ -100,44 +103,94 @@
     <div class="panel">
       <h3>Conceito — a água, a célula e o mar (explicação ilustrada)</h3>
 
+      <p class="sub" style="margin-top:0">Cada batida traz o <b>desenho computado</b> (à esquerda) e a <b>foto/figura
+      open-source</b> (à direita), com a legenda que ensina. As Fig. 1–8 são referenciadas no Caso, na Trilha e
+      na Avaliação. Atribuição em <code>CREDITS.md</code> (em curadoria).</p>
+
       <h4>1. Quanta água tem o corpo? A fórmula da Água Corporal Total (ÁGT)</h4>
       <p class="sub"><b>ÁGT = peso × fração.</b> Homem ≈ 0,6 · mulher ≈ 0,5 · idoso ≈ 0,45–0,5 · lactente ≈ 0,7
       (músculo carrega mais água que gordura, por isso a fração cai com idade e adiposidade). Regra
       <b>60-40-20</b>: ~60% do peso é água; <b>40%</b> dela no ICF e <b>20%</b> no ECF — e o ECF se reparte em
       ~5% plasma e ~15% interstício.</p>
-      <div class="concept" id="draw-tbw"></div>
+      <div class="frow">
+        <div class="concept" id="draw-tbw"></div>
+        <figure class="fviva"><img src="assets/m0/compartimentos-hidricos.png" alt="Diagrama dos compartimentos hídricos (ICF, ECF, plasma, interstício)" loading="lazy">
+          <figcaption><b>Fig. 1 · Os três tanques.</b> Repare na proporção: o ICF (40%) é maior que o ECF (20%), e o
+          <b>plasma é só ~5%</b> do peso — o menor tanque, e o único que enxergamos no exame de sangue. Por isso uma
+          perda pequena de volume plasmático já dá sinal clínico.</figcaption></figure>
+      </div>
 
       <h4>2. A banana no mar — por que a célula não estoura</h4>
       <p class="sub">O ICF é um saco cheio de <b>K⁺</b> (o cátion de dentro); o ECF é um <b>mar de Na⁺</b>. A
       <b>Na⁺/K⁺-ATPase</b> bombeia 3 Na⁺ para fora e 2 K⁺ para dentro, gastando ATP — é ela que mantém o
       gradiente e, com ele, o tamanho da célula. A água não decide nada: ela apenas segue os osmoles
       efetivos até a tonicidade se igualar dos dois lados.</p>
-      <div class="concept" id="draw-cell"></div>
+      <div class="frow">
+        <div class="concept" id="draw-cell"></div>
+        <figure class="fviva"><img src="assets/m0/membrana-na-k-atpase.svg" alt="Esquema da bomba Na+/K+-ATPase na membrana" loading="lazy">
+          <figcaption><b>Fig. 2 · A bomba que sustenta o gradiente.</b> 3 Na⁺ saem, 2 K⁺ entram, 1 ATP queimado.
+          Sem ATP (isquemia), a bomba para, o Na⁺ vaza para dentro, a água o segue → <b>edema celular</b> — o
+          primeiro passo da lesão isquêmica que reaparece no M2 (medula renal).</figcaption></figure>
+        <figure class="fviva"><img src="assets/m0/bicamada-lipidica.svg" alt="Bicamada de fosfolipídios da membrana" loading="lazy">
+          <figcaption><b>Fig. 3 · A barreira.</b> A bicamada lipídica é livremente permeável à <b>água</b>
+          (e a aquaporinas), mas barra os íons — por isso quem decide o fluxo de água é o gradiente de osmoles
+          efetivos, não a vontade da célula.</figcaption></figure>
+      </div>
 
-      <h4>3. Os componentes de cada meio</h4>
+      <h4>3. Osmose e tonicidade — a hemácia como leitor</h4>
+      <p class="sub"><b>Tonicidade</b> = osmoles <b>efetivos</b> por água (os que não atravessam livremente). Em meio
+      <b>hipotônico</b> a água entra e a célula incha (até hemolisar); em <b>hipertônico</b> sai e a célula murcha
+      (crenação); em <b>isotônico</b> nada se move. A hemácia é o leitor visual desse princípio.</p>
+      <div class="frow">
+        <div class="concept" id="draw-osmo"></div>
+        <figure class="fviva"><img src="assets/m0/osmose-tonicidade.svg" alt="Osmose e tonicidade em meios hipo, iso e hipertônico" loading="lazy">
+          <figcaption><b>Fig. 4 · Osmose.</b> A água migra do lado de <b>menor</b> para o de <b>maior</b>
+          concentração de osmoles efetivos, até igualar a tonicidade dos dois lados.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m0/hemacia-tonicidade.svg" alt="Hemácia em meio hipotônico, isotônico e hipertônico (crenação/hemólise)" loading="lazy">
+          <figcaption><b>Fig. 5 · A hemácia delata.</b> Hipotônico → incha/hemólise · isotônico → intacta ·
+          hipertônico → crenada. O mesmo destino vale para <b>toda</b> célula — inclusive o neurônio (Fig. 7).</figcaption></figure>
+      </div>
+
+      <h4>4. Os componentes de cada meio</h4>
       <p class="sub"><b>ICF:</b> K⁺ (~140), Mg²⁺, fosfatos e proteínas (ânions); quase nada de Na⁺. <b>ECF:</b>
       Na⁺ (~140), Cl⁻ (~100), HCO₃⁻ (~24), K⁺ (~4), Ca²⁺. E o ECF se divide em <b>plasma</b> (com proteínas →
       pressão oncótica, retém o coloide) e <b>interstício</b> (ultrafiltrado, quase sem proteína).</p>
       <div class="concept" id="draw-comp"></div>
 
-      <h4>4. O cérebro — a célula que importa</h4>
+      <h4>5. Fluidos IV — onde vai cada bolsa (e por quê)</h4>
+      <p class="sub">O destino do fluido é a sua <b>tonicidade</b>, não o nome. <b>SF 0,9% / Ringer / coloide</b>
+      (isotônicos) ficam no <b>ECF</b> — repõem volume; <b>SG 5%</b> é água livre disfarçada (a glicose é
+      metabolizada) → 2/3 vão para o <b>ICF</b>; <b>NaCl 3%</b> é hipertônico → expande o ECF e <b>encolhe</b> a
+      célula. Brinque com isso no Lab.</p>
+      <div class="frow">
+        <figure class="fviva"><img src="assets/m0/fluidos-iv.jpg" alt="Bolsas de fluido intravenoso" loading="lazy">
+          <figcaption><b>Fig. 6 · As bolsas.</b> A mesma "água" no plástico tem destinos opostos: o rótulo diz a
+          <b>composição</b>; a tonicidade diz <b>onde a água vai parar</b>. Reponha volume (ECF) com isotônico;
+          reponha água (ICF) com SG 5%.</figcaption></figure>
+      </div>
+
+      <h4>6. O cérebro — a célula que importa</h4>
       <p class="sub">O cérebro vive numa <b>caixa rígida</b> (o crânio). Hiponatremia <b>aguda</b> → água entra
       → edema → herniação (mata rápido). Na <b>cronicidade</b>, o neurônio expulsa osmólitos para se adaptar;
       por isso <b>corrigir o Na rápido demais o desidrata e desmieliniza</b> (mielinólise pontina — mata
       devagar). O cálculo da velocidade segura está no M10.</p>
-      <div class="concept" id="draw-brain"></div>
+      <div class="frow">
+        <div class="concept" id="draw-brain"></div>
+        <figure class="fviva"><img src="assets/m0/cerebro-edema.jpg" alt="Edema cerebral em ressonância magnética" loading="lazy">
+          <figcaption><b>Fig. 7 · Edema cerebral.</b> A mesma Fig. 5 (hemácia inchada) num órgão sem espaço para
+          inchar: sulcos apagados, ventrículos comprimidos. É a hiponatremia aguda virando emergência — e o motivo
+          de a <b>velocidade</b> de correção importar tanto quanto o alvo.</figcaption></figure>
+      </div>
 
-      <h4>Galeria — imagens open source</h4>
-      <p class="sub">Fotos e figuras complementares aos desenhos. Atribuição em <code>CREDITS.md</code> (em curadoria).</p>
-      <div class="galeria">
-        <figure><img src="assets/m0/compartimentos-hidricos.png" alt="Diagrama dos compartimentos hídricos (ICF, ECF, plasma, interstício)" loading="lazy"><figcaption>Compartimentos hídricos</figcaption></figure>
-        <figure><img src="assets/m0/membrana-na-k-atpase.svg" alt="Esquema da bomba Na+/K+-ATPase na membrana" loading="lazy"><figcaption>Bomba Na⁺/K⁺-ATPase</figcaption></figure>
-        <figure><img src="assets/m0/bicamada-lipidica.svg" alt="Bicamada de fosfolipídios da membrana" loading="lazy"><figcaption>Bicamada lipídica</figcaption></figure>
-        <figure><img src="assets/m0/osmose-tonicidade.svg" alt="Osmose e tonicidade em meios hipo, iso e hipertônico" loading="lazy"><figcaption>Osmose e tonicidade</figcaption></figure>
-        <figure><img src="assets/m0/hemacia-tonicidade.svg" alt="Hemácia em meio hipotônico, isotônico e hipertônico (crenação/hemólise)" loading="lazy"><figcaption>Hemácia × tonicidade</figcaption></figure>
-        <figure><img src="assets/m0/rim-anatomia.png" alt="Anatomia macroscópica do rim (córtex, medula, pirâmides)" loading="lazy"><figcaption>Rim — anatomia</figcaption></figure>
-        <figure><img src="assets/m0/cerebro-edema.jpg" alt="Edema cerebral em ressonância magnética" loading="lazy"><figcaption>Edema cerebral (RM)</figcaption></figure>
-        <figure><img src="assets/m0/fluidos-iv.jpg" alt="Bolsas de fluido intravenoso" loading="lazy"><figcaption>Fluidos IV</figcaption></figure>
+      <h4>7. O órgão que defende o mar — ponte para o M1</h4>
+      <p class="sub">Tudo isto — volume, tonicidade, composição — é defendido minuto a minuto por um órgão. O rim
+      filtra o plasma e ajusta o que volta e o que sai. No <b>M1</b> abrimos o néfron e as forças de Starling que
+      decidem a filtração.</p>
+      <div class="frow">
+        <figure class="fviva"><img src="assets/m0/rim-anatomia.png" alt="Anatomia macroscópica do rim (córtex, medula, pirâmides)" loading="lazy">
+          <figcaption><b>Fig. 8 · O defensor do meio interno.</b> Córtex (filtração) e medula (concentração) — o
+          mapa que o M1 e o M2 vão dissecar. Guarde a divisão córtex × medula: a medula vive à beira da hipóxia
+          (M2).</figcaption></figure>
       </div>
     </div>
   </section>
@@ -179,6 +232,31 @@
         <div class="reveal" id="r5"><b>Murcha.</b> A glicose é osmol <b>efetivo</b>: puxa água para fora da célula.
           O Na medido cai por diluição, mas a tonicidade SOBE — hiponatremia <i>hipertônica</i>.</div>
       </div>
+      <div class="step">
+        <b>Ato 6.</b> Pós-operatório, dor e náusea liberam ADH inadequado (SIADH): ele retém água livre.
+        O destino da célula (lembre a Fig. 5)?
+        <div><button class="act" data-rev="r6">Revelar</button></div>
+        <div class="reveal" id="r6"><b>Incha.</b> ADH ↑ → retém água livre → tonicidade↓ → água entra na célula.
+          Hiponatremia <i>euvolêmica</i> por excesso de água, não falta de sal — o eixo é a ÁGUA (M10).</div>
+      </div>
+      <div class="step">
+        <b>Ato 7.</b> Esse paciente convulsiona (Na 116, agudo). Damos um bolus de <b>NaCl 3%</b>. O que se
+        espera do cérebro (Fig. 7)?
+        <div><button class="act" data-rev="r7">Revelar</button></div>
+        <div class="reveal" id="r7"><b>Desincha um pouco.</b> O NaCl 3% é hipertônico: eleva a tonicidade do ECF,
+          puxa água de volta para fora do neurônio → reduz o edema. É a indicação da salina hipertônica na
+          hiponatremia <i>sintomática</i> — mas a <b>velocidade</b> é limitada (≤ ~6–8 mmol/L/dia) para não
+          desmielinizar (M10).</div>
+      </div>
+      <div class="step">
+        <b>Ato 8.</b> Outro doente, edema cerebral por trauma. Infundimos <b>manitol</b> (osmol efetivo que não
+        entra na célula). O neurônio?
+        <div><button class="act" data-rev="r8">Revelar</button></div>
+        <div class="reveal" id="r8"><b>Murcha (de propósito).</b> O manitol fica no ECF, eleva a tonicidade e puxa
+          água do ICF — é o uso terapêutico do osmol efetivo para baixar a PIC. Mesmo princípio da Fig. 4, agora
+          como ferramenta. <i>(o oposto exato da ureia do Ato 4: a ureia atravessa e não move água; o manitol não
+          atravessa e move.)</i></div>
+      </div>
     </div>
   </section>
 
@@ -212,6 +290,17 @@
         <p>O cérebro é a célula que importa: vive numa caixa rígida. Hipotônico agudo → edema → herniação;
         hipertônico → encolhe e rompe veias-ponte. E corrigir o sódio rápido demais lesa a mielina
         (detalhado no M10). A velocidade é tão importante quanto o alvo.</p></details>
+      <details><summary>12. Quero repor VOLUME (choque) — qual fluido? E para repor ÁGUA (hipernatremia)?</summary>
+        <p>Volume mora no ECF → use isotônico (SF 0,9%, Ringer, coloide), que lá permanece. Déficit de água é de
+        água livre → SG 5% (ou água enteral), que vai 2/3 para o ICF. Escolher pelo objetivo, não pelo hábito.</p></details>
+      <details><summary>13. Manitol e ureia sobem ambos a osm medida — por que só um move a célula?</summary>
+        <p>O manitol <b>não atravessa</b> a membrana → osmol efetivo → puxa água do ICF (encolhe o neurônio, baixa
+        PIC). A ureia <b>atravessa</b> → equilibra dos dois lados → inefetiva → não move água. Efetividade = não
+        permear.</p></details>
+      <details><summary>14. Como a parada da Na⁺/K⁺-ATPase (isquemia) leva a edema celular?</summary>
+        <p>Sem ATP a bomba para → o Na⁺ vaza para dentro e deixa de ser expulso → osmoles efetivos sobem no ICF →
+        a água segue → a célula incha (edema citotóxico). É a ponte da Fig. 2 com a lesão isquêmica da medula renal
+        no M2.</p></details>
     </div>
   </section>
 
@@ -240,6 +329,8 @@
           <input type="range" id="in-na" min="110" max="170" step="1" value="140">
           <label>Ureia basal (mmol/L): <span class="val" id="lbl-ureia">5</span></label>
           <input type="range" id="in-ureia" min="0" max="60" step="1" value="5">
+          <label>Glicose efetiva extra (mmol/L): <span class="val" id="lbl-glu">0</span></label>
+          <input type="range" id="in-glu" min="0" max="60" step="1" value="0">
         </div>
         <div>
           <label>Manobra</label>
@@ -276,6 +367,7 @@
         <tr><td>Tonicidade (mosm/L)</td><td class="num" id="out-tonic0">—</td><td class="num" id="out-tonic">—</td></tr>
         <tr><td>Osm medida (mosm/L)</td><td class="num" id="out-osm0">—</td><td class="num" id="out-osm">—</td></tr>
         <tr><td>Na⁺ (mmol/L)</td><td class="num" id="out-na0">—</td><td class="num" id="out-na">—</td></tr>
+        <tr><td>Glicose (mmol/L)</td><td class="num" id="out-glu0">—</td><td class="num" id="out-glu">—</td></tr>
       </table>
 
       <div class="banner" id="veredito">—</div>
@@ -318,8 +410,8 @@
     <div class="panel">
       <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
       <div class="tabs" id="banktabs">
-        <button data-bank="ilustrada" class="on">Ilustrada (10)</button>
-        <button data-bank="textual">Textual (10)</button>
+        <button data-bank="ilustrada" class="on">Ilustrada (16)</button>
+        <button data-bank="textual">Textual (16)</button>
       </div>
       <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
       <div id="tutor-fig" style="margin:10px 0"></div>
@@ -458,7 +550,7 @@ document.addEventListener('click',function(e){
 function readInputs(){
   return {
     pesoKg:+$('in-peso').value, sexo:$('in-sexo').value, na0:+$('in-na').value,
-    ureia0:+$('in-ureia').value, tipo:$('in-tipo').value, volumeL:+$('in-vol').value,
+    ureia0:+$('in-ureia').value, glu0:+$('in-glu').value, tipo:$('in-tipo').value, volumeL:+$('in-vol').value,
     solutoMmol:+$('in-soluto').value
   };
 }
@@ -467,7 +559,7 @@ function fmt(x,d){ return (Math.round(x*Math.pow(10,d||1))/Math.pow(10,d||1)).to
 function refresh(){
   var inp=readInputs();
   $('lbl-peso').textContent=inp.pesoKg; $('lbl-na').textContent=inp.na0;
-  $('lbl-ureia').textContent=inp.ureia0; $('lbl-vol').textContent=inp.volumeL;
+  $('lbl-ureia').textContent=inp.ureia0; $('lbl-glu').textContent=inp.glu0; $('lbl-vol').textContent=inp.volumeL;
   $('lbl-soluto').textContent=inp.solutoMmol;
   var r=compartimentos(inp);
   $('out-tbw0').textContent=fmt(r.TBW0); $('out-tbw').textContent=fmt(r.TBW);
@@ -477,6 +569,7 @@ function refresh(){
   $('out-osm0').textContent=fmt(r.osmMedida0);
   $('out-osm').textContent=fmt(r.osmMedida);
   $('out-na0').textContent=fmt(r.na0); $('out-na').textContent=fmt(r.na);
+  $('out-glu0').textContent=fmt(inp.glu0); $('out-glu').textContent=fmt(r.glu);
   verdict(r); drawDY(r); pearl(r);
 }
 function verdict(r){
@@ -519,7 +612,7 @@ function drawDY(r){
   ctx.fillStyle='#9fb1c0'; ctx.fillText('— — basal',L.W-110,L.padT+10);
 }
 
-['in-peso','in-sexo','in-na','in-ureia','in-tipo','in-vol','in-soluto'].forEach(function(id){
+['in-peso','in-sexo','in-na','in-ureia','in-glu','in-tipo','in-vol','in-soluto'].forEach(function(id){
   $(id).addEventListener('input',refresh);
 });
 
@@ -744,7 +837,10 @@ var TUTOR_ILUSTRADO=[
   {q:'A diferença entre osm medida e tonicidade (o "gap") é…',o:['o sódio','os osmoles inefetivos','o volume'],c:1,e:'O gap são osmoles inefetivos (ex.: ureia) — não movem água.',fig:function(){return barOsm(R0({tipo:'ureia',solutoMmol:500}));}},
   {q:'Onde vai majoritariamente o SF 0,9%?',o:['Para o ICF','Para o ECF','Distribui igual'],c:1,e:'Isotônico → fica no ECF; o ICF quase não se move.',fig:function(){return dyMini(R0({tipo:'sf09',volumeL:2}),'SF 0,9% (2 L)');}},
   {q:'O SG 5% se comporta como…',o:['salina','água livre','hipertônico'],c:1,e:'A glicose é metabolizada → sobra água livre, que vai 2/3 para o ICF.',fig:function(){return dyMini(R0({tipo:'sg5',volumeL:3}),'SG 5% (3 L)');}},
-  {q:'Hiponatremia AGUDA ameaça o cérebro por…',o:['encolhimento','edema e herniação','nada'],c:1,e:'Tonicidade↓ → água entra no cérebro → edema numa caixa rígida → herniação.',fig:function(){return brainFig('edema','cérebro em meio hipotônico');}}
+  {q:'Hiponatremia AGUDA ameaça o cérebro por…',o:['encolhimento','edema e herniação','nada'],c:1,e:'Tonicidade↓ → água entra no cérebro → edema numa caixa rígida → herniação.',fig:function(){return brainFig('edema','cérebro em meio hipotônico');}},
+  {q:'Manitol (osmol efetivo que não entra na célula) no edema cerebral: o neurônio…',o:['incha','murcha','não muda'],c:1,e:'O manitol fica no ECF e puxa água do ICF → murcha → baixa a PIC (oposto da ureia).',fig:function(){return brainFig('shrink','manitol → cérebro murcha');}},
+  {q:'SIADH retém água livre. A célula…',o:['murcha','incha','não muda'],c:1,e:'Água livre↑ → tonicidade↓ → '+cellWord('agua_livre',{volumeL:2})+'.',fig:function(){return dyMini(R0({tipo:'agua_livre',volumeL:2}),'SIADH (retém água)');}},
+  {q:'Comparado ao SG 5%, o coloide isotônico fica majoritariamente…',o:['no ICF','no ECF','distribui igual'],c:1,e:'Isotônico permanece no ECF (repõe volume); o SG 5% é água livre e entra na célula.',fig:function(){return dyMini(R0({tipo:'coloide',volumeL:2}),'coloide (2 L)');}}
 ];
 
 // Bloco TEXTUAL — sem ilustração, dificuldade crescente
@@ -761,7 +857,10 @@ var TUTOR_TEXTUAL=[
   {q:'Por que a osm medida pode enganar à beira do leito?',o:['Inclui inefetivos que não movem água','Ignora o sódio','Mede só o ICF','É sempre igual à tonicidade'],c:0,e:'Soma ureia/álcoois; a tonicidade é que governa a célula.'},
   {q:'Para repor SÓ o volume do ECF (ex.: choque), o fluido ideal…',o:['vai para o ICF','fica no ECF','é água livre'],c:1,e:'Cristaloide isotônico/coloide ficam no ECF — onde está o déficit de volume.'},
   {q:'Um balanço hídrico positivo tende a…',o:['concentrar (Na↑)','diluir (Na↓)','não mudar o Na'],c:1,e:'Reter água livre dilui o sódio.'},
-  {q:'Por que o cérebro é tão sensível ao sódio?',o:['Vive numa caixa rígida (crânio)','Não tem células','Porque produz urina'],c:0,e:'Inchar = herniar; murchar = romper veias-ponte; corrigir rápido demais → mielinólise (detalhe no M10).'}
+  {q:'Por que o cérebro é tão sensível ao sódio?',o:['Vive numa caixa rígida (crânio)','Não tem células','Porque produz urina'],c:0,e:'Inchar = herniar; murchar = romper veias-ponte; corrigir rápido demais → mielinólise (detalhe no M10).'},
+  {q:'Na hiponatremia AGUDA sintomática (convulsão), a conduta é…',o:['só restrição hídrica','NaCl 3% com limite de velocidade','SG 5%'],c:1,e:'Salina hipertônica eleva a tonicidade e desincha o cérebro; corrigir ≤ ~6–8 mmol/L/dia.'},
+  {q:'O que torna um osmol "efetivo"?',o:['ser carregado','NÃO atravessar livremente a membrana','ter alto peso molecular'],c:1,e:'Efetivo = não permeia → cria gradiente → move água (Na, glicose, manitol). A ureia atravessa → inefetiva.'},
+  {q:'A parada da Na⁺/K⁺-ATPase por isquemia causa…',o:['edema celular (Na entra, água segue)','encolhimento','nada'],c:0,e:'Sem ATP a bomba para; o Na⁺ acumula no ICF e a água o segue → edema citotóxico (ponte com o M2).'}
 ];
 window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL;
 window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
@@ -799,6 +898,7 @@ $('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank
 // desenhos da aba Conceito (explicação didática ilustrada)
 $('draw-tbw').innerHTML  = tbwTree();
 $('draw-cell').innerHTML = cellIons();
+$('draw-osmo').innerHTML = cellFig('in','hipotônico → incha') + cellFig('out','hipertônico → murcha');
 $('draw-comp').innerHTML = compositionDiagram();
 $('draw-brain').innerHTML= brainStates();
 

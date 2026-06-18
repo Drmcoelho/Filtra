@@ -267,14 +267,19 @@ M18 (anti-hipertensivos & RAAS) ↔ Choca M28 (vasopressores & inotrópicos) —
 ### 4.5 Estado atual da construção
 
 ```text
-FEITO  · M0  engine model0.js + test0.node.js (108 OK · fuzz 5000) + filtra0.html (Darrow–Yannet vivo)
-             + validate0.js (40 OK) — módulo completo, no rito do §5
-HARNESS· package.json (test:0/validate:0/check) · .github/workflows/check.yml · curriculum.json ·
-             filtra.html (índice) · FILTRA.md (constituição) · README.md (porta de entrada) · .gitignore
-A FAZER· M1 (néfron/Starling): build/m1/model1.js + test1.node.js → filtra1.html + validate1.js → seguir a escada §4.4
+FEITO  · M0  Compartimentos + fluidoterapia — PADRÃO DE OURO "figura viva" (8 fotos inline, caso 8 atos,
+             trilha 14, lab c/ glicose efetiva, 16+16 questões). check verde: 158 engine · 88 validador.
+FEITO  · M1  Néfron / forças de Starling — PADRÃO DE OURO (8 fotos inline + histologia + JGA, caso 8 atos,
+             trilha 13, 6 botões de cenário no lab, 13+13). check verde: 168 engine · 86 validador.
+FEITO  · M2  Hemodinâmica renal (AINEs/IECA com dose) — 8 fotos inline integradas. check verde: 90211 · 99.
+HARNESS· package.json (test:0..2/validate:0..2/check) · .github/workflows/check.yml · curriculum.json ·
+             filtra.html (índice) · assets/ (320 imgs M0–M39 + manifest.json + OnDemand.md) · CREDITS.md
+             (atribuição PENDENTE das imgs Wikimedia) · FILTRA.md · README.md · .gitignore
+A FAZER· M3 (glomérulo/barreira/Kf): build/m3/model3.js + test3.node.js → filtra3.html + validate3.js,
+             JÁ no padrão de ouro (figura viva + expansão máxima). Seguir a escada §4.4.
 ```
 
-`npm run check` = `npm test && npm run validate` → **verde** (M0: 108 OK no engine + 40 OK no validador).
+`npm run check` = `npm test && npm run validate` → **verde** (M0/M1/M2). Espelhe os M0/M1 como molde.
 Nota: `jsdom` é dependência só de validação; o produto publicado é offline e sem dependências de runtime.
 
 ---
@@ -284,10 +289,11 @@ Nota: `jsdom` é dependência só de validação; o produto publicado é offline
 ```text
 1. build/mN/modelN.js        engine PURO (a fórmula primeiro; nada de UI)
 2. build/mN/testN.node.js    bateria de robustez (ver §6) — 0 falhas
-3. filtraN.html              single-file: caso(5 atos) · trilha · instrumento vivo · lab · ilustrações de
-                             conceito (SVG) · Avaliação com 2 blocos (ilustrado 10 + textual 10)
+3. filtraN.html              single-file: caso(≥8 atos) · trilha(≥13) · instrumento vivo · lab(+ presets) ·
+                             ilustrações de conceito (SVG) + FOTOS open-source INLINE (figura viva, §6) ·
+                             Avaliação 2 blocos (ilustrado ≥13 + textual ≥13). Pedidos de img extra → OnDemand.md
 4. build/mN/validateN.js     portão jsdom: estrutura · engine≡UI · interativo · 2 bancos+ilustração · cromo ·
-                             guarda farmacológica (dose↔unidade↔mecanismo)
+                             guarda farmacológica (dose↔unidade↔mecanismo) · guarda FIGURA VIVA (§6)
 5. package.json              adicionar test:N e validate:N (e ao agregado test/validate/check)
 6. filtra.html               índice: cartão do módulo de "em breve" → "disponível"
 7. curriculum.json           manifesto curricular (status do módulo)
@@ -335,6 +341,19 @@ Critério: o teste é **determinístico entre execuções** (rode 3×, saída id
   gráfico; e (b) **figuras computadas a partir do engine** quando o dado é numérico (mini Darrow–Yannet,
   barras osm×tonicidade, setas de fluxo). Nunca imagens importadas. Aumentar os elementos ilustrativos é
   objetivo explícito do FILTRA.
+- **Figura viva — a foto open-source ENSINA, não decora (padrão de ouro, M0/M1/M2 são o molde):** as fotos
+  raster de `assets/mN/` **não** vão para um mural no rodapé. Cada uma vive **inline na batida de Conceito que
+  ilustra**, ao lado do desenho computado, dentro de um `<div class="frow">` (desenho à esquerda, foto à
+  direita) como `<figure class="fviva">`. Três exigências por figura: (1) `alt` descritivo; (2) **legenda
+  (`figcaption`) que ENSINA** (≥30 chars — diz *o que olhar* e *por que importa*, não um rótulo); (3)
+  **referência cruzada `Fig. N`** reaproveitada no Caso/Trilha/Avaliação (a mesma figura volta como âncora do
+  raciocínio). Quando faltar uma imagem mais diversa/profunda para a aula ficar **excelente**, registre o
+  pedido em `assets/OnDemand.md` (ciclo `PEDIDO → OBTIDO → INTEGRADO`) — não improvise nem deixe passar.
+- **Profundidade do conteúdo (expansão máxima, decisão do autor 2026-06):** mire acima dos mínimos. Padrão
+  entregue nos M0/M1: **Caso ≥8 atos** (incluindo a fronteira/exceção do mecanismo), **Trilha ≥13 passos**,
+  **Avaliação ≥13+13** (ilustrado reaproveita as figuras), e **Lab** com alavancas extras e/ou **botões de
+  cenário** (presets que movem os sliders para padrões clínicos e recomputam). Cada figura é uma batida
+  didática: 1 figura ⇒ ≥1 parágrafo causal + ≥1 questão ancorada nela.
 - Camada interativa: caso com decisões + "prever-depois-revelar".
 - Disclaimer educacional + nota de honestidade do modelo + rodapé de série + backlink relativo ao índice.
 
@@ -349,6 +368,11 @@ Critério: o teste é **determinístico entre execuções** (rode 3×, saída id
   `<img>` pode apontar para URL remota (hotlink). O raster mora em `assets/mN/<slug>.webp` e entra só por
   **caminho relativo**. **Sem exigência de crédito** (decisão do autor, 2026-06): `CREDITS.md` é opcional, a
   cargo da curadoria; o validador NÃO o exige — só garante o offline.
+- **Guarda "figura viva" (obrigatória — ver o bloco de validate0/1/2 como cópia de referência):** exige
+  `figure.fviva` ≥8 **dentro de `#tab-conceito`**, recusa o mural (`!doc.querySelector('.galeria')`), confere
+  que **todo arquivo referenciado existe em disco** (`fs.existsSync` em `assets/mN/`), que todo `<img>` tem
+  `alt`, que toda `figcaption` ensina (≥30 chars) e que o texto traz a convenção `Fig. N` (`/Fig\.\s*\d/`).
+  Assim o padrão de ouro não regride por descuido.
 
 ### CI
 - `.github/workflows/check.yml` roda `npm run check` em push/PR. Verde é mandatório para mesclar.
@@ -435,19 +459,27 @@ case com a UI. A ausência de dose onde o módulo a promete passa a ser falha.
 
 ## 9. Para o próximo agente — como pegar e construir o próximo módulo
 
-1. Leia `FILTRA.md` (constituição) e este §4–§6. O **M0 já está completo** (engine + teste + `filtra0.html`
-   com o Darrow–Yannet vivo + validador), e serve de molde para os próximos.
-2. O próximo módulo é o **M1 — néfron / forças de Starling** (a escada renumerou; ver §4.4): construa a pilha
-   inteira no rito do §5 — `build/m1/model1.js` + `test1.node.js` → `filtra1.html` + `build/m1/validate1.js`.
-   Instrumento sugerido: curva TFG×PAM com o platô da autorregulação e o precipício pré-renal; o paradoxo do
-   eferente (a creatinina sobe porque o IECA *funciona*). **Siga o novo formato** (M0 é o molde): ilustrações
-   de conceito em SVG (esquema do néfron/segmento, computado quando numérico) e Avaliação com os **dois
-   blocos de 10** (ilustrado + textual).
-3. Depois o M2 (hemodinâmica renal — 20% do DC, córtex×medula) e a partir do M5 a farmacologia **encadeada no
-   segmento** (§8): a droga é a alavanca daquele túbulo, com dose↔unidade↔mecanismo computados pelo motor.
+1. Leia `FILTRA.md` (constituição) e este §4–§6. Os **M0, M1 e M2 já estão completos e são o PADRÃO DE OURO**:
+   abra `filtra0.html`/`filtra1.html` e copie a estrutura — especialmente a **figura viva** (§6) e a expansão.
+2. O próximo módulo é o **M3 — o glomérulo / barreira de filtração / Kf / proteinúria** (ver §4.4): construa a
+   pilha inteira no rito do §5 — `build/m3/model3.js` + `test3.node.js` → `filtra3.html` + `build/m3/validate3.js`.
+   **Já entregue no padrão de ouro**, não no mínimo:
+   - **Figura viva (§6):** as 8 fotos de `assets/m3/` vão **inline** na batida de Conceito que cada uma ilustra
+     (`<div class="frow">` desenho+`<figure class="fviva">`), com **legenda que ensina** e referência `Fig. N`
+     reaproveitada no Caso/Trilha/Avaliação. Nada de mural no rodapé. Replique a guarda figura-viva no validador
+     (copie de `validate0/1/2.js`).
+   - **Expansão máxima:** Caso ≥8 atos (com a fronteira/exceção do mecanismo), Trilha ≥13, Avaliação ≥13+13,
+     Lab com presets de cenário. 1 figura ⇒ ≥1 parágrafo + ≥1 questão.
+   - **Faltou imagem mais diversa/profunda?** Registre em `assets/OnDemand.md` (`PEDIDO → OBTIDO → INTEGRADO`).
+     Não improvise nem hotlink.
+3. A partir do M5, a farmacologia é **encadeada no segmento** (§8): a droga é a alavanca daquele túbulo, com
+   dose↔unidade↔mecanismo computados pelo motor (a guarda farmacológica do validador é invertida).
 4. Então siga a escada §4.4, um módulo por vez, sempre fechando com `npm run check` verde.
 5. Mantenha o padrão de robustez (§6) em cada novo engine: faixas fisiológicas, identidades, leis,
    determinismo, robustez e **fuzzing semeado ≥ 5000**.
+6. **Pendência aberta (não esquecer):** a atribuição das imagens Wikimedia em `CREDITS.md` está marcada
+   "a creditar" (publicação adiantada, decisão do autor). Antes de declarar um módulo "finalizado", quite os
+   créditos das imagens que ele usa.
 
 ---
 
@@ -461,6 +493,9 @@ Sem armazenamento.       Nada de localStorage/telemetria.
 Engine antes de UI.      Fórmula validada antes de gráfico.
 Física viva.             Gráficos e questões são COMPUTADOS, não imagens.
 Ilustração viva.         Conceitos ganham SVG inline; numérico → computado do engine. 2 blocos (ilustrado+textual).
+Figura viva.             Foto open-source INLINE na batida que ilustra (figure.fviva), legenda que ensina,
+                         referência Fig. N; nunca um mural. Falta de img diversa/profunda → assets/OnDemand.md.
+Expansão máxima.         Acima dos mínimos: caso ≥8 atos · trilha ≥13 · avaliação ≥13+13 · lab com presets.
 Robustez inigualável.    clamp resiliente + determinismo + fuzzing ≥ 5000 (§6).
 Português do Brasil.     Prosa causal, seca, com setas.
 Farmacologia viva.       Mecanismo → fármaco → dose/conduta, computados pelo motor (§8).

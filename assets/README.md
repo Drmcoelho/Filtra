@@ -17,6 +17,8 @@ Fotos e figuras **raster** open source (histologia, micrografias, fotos reais) v
 - `m0/ … m39/` — uma pasta por módulo. As imagens vão em `assets/mN/<slug>.webp`.
 - `manifest.json` — a **lista de imagens desejadas por módulo** (slug · descrição · tipo). Legível por
   máquina; usada pelo curador e pela integração posterior.
+- `OnDemand.md` — o **backlog vivo de imagens adicionais** (mais diversas/profundas) que um agente descobre
+  serem necessárias enquanto constrói/revisa um módulo. Ciclo `PEDIDO → OBTIDO → INTEGRADO`.
 - `INSTRUCOES.md` — o **documento-mestre** para o LLM com internet curar/baixar/creditar tudo de uma vez.
 - `../CREDITS.md` — atribuição (fonte · autor · licença) de cada arquivo.
 

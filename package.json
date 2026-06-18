@@ -8,11 +8,13 @@
   "scripts": {
     "test:0": "node build/m0/test0.node.js",
     "test:1": "node build/m1/test1.node.js",
-    "test": "npm run test:0 && npm run test:1",
+    "test:2": "node build/m2/test2.node.js",
+    "test": "npm run test:0 && npm run test:1 && npm run test:2",
     "prevalidate": "node build/ensure-deps.js",
     "validate:0": "node build/m0/validate0.js",
     "validate:1": "node build/m1/validate1.js",
-    "validate": "npm run validate:0 && npm run validate:1",
+    "validate:2": "node build/m2/validate2.js",
+    "validate": "npm run validate:0 && npm run validate:1 && npm run validate:2",
     "check": "npm test && npm run validate"
   },
   "devDependencies": {

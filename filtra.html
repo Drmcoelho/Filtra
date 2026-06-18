@@ -3,181 +3,59 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FILTRA · DIALISA — índice do braço</title>
+<title>FILTRA — índice do antebraço</title>
+<meta name="description" content="FILTRA: compartimentos, néfron, hemodinâmica renal, meio interno, eletrólitos, ácido-base e farmacologia renal aplicada. Antebraço do braço renal no Hexápode de medicina crítica.">
 <style>
-  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--accent2:#cda24a;--mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace}
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
-  a{color:var(--accent);text-decoration:none}
-  header{padding:22px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
-  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
-  h1{margin:.2em 0;font-size:24px}
-  .sub{color:var(--dim);max-width:80ch}
-  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
-  nav.hex span,nav.hex a{font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:999px;color:var(--dim);background:var(--panel);transition:.12s;white-space:nowrap}
-  nav.hex a:hover{border-color:var(--accent);color:var(--ink);transform:translateY(-1px)}
-  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:700}
-  nav.hex .soon{opacity:.45;cursor:not-allowed}
-  .subnav{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:10px}
-  .subnav .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
-  .subnav button{font-family:var(--mono);font-size:11px;letter-spacing:.04em;padding:4px 10px;border:1px solid var(--line);border-radius:999px;color:var(--dim);background:var(--panel);cursor:pointer;transition:.12s}
-  .subnav button:hover{border-color:var(--accent);color:var(--ink)}
-  .subnav button.ativo{background:var(--accent2);color:#181305;border-color:var(--accent2);font-weight:700}
-  .direct-toggle{display:inline-flex;align-items:center;gap:7px;margin-top:10px;font-family:var(--mono);font-size:11px;color:var(--dim);user-select:none}
-  .direct-toggle input{accent-color:var(--accent2)}
-  .wrap{max-width:1040px;margin:0 auto;padding:18px 20px 60px}
-  .bloco{margin:0 0 6px}
-  h2{font-size:15px;color:var(--dim);text-transform:uppercase;letter-spacing:.08em;margin:26px 0 8px;border-bottom:1px solid var(--line);padding-bottom:6px}
-  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;display:block;color:var(--ink)}
-  a.card:hover{border-color:var(--accent);transform:translateY(-1px)}
-  .card.soon{opacity:.5}
-  .card .id{font-size:12px;color:var(--accent);font-weight:700}
-  .card.soon .id{color:var(--dim)}
-  .card .t{margin-top:4px;font-size:14px}
-  .tag{float:right;font-size:10px;text-transform:uppercase;letter-spacing:.08em;border:1px solid var(--line);border-radius:999px;padding:1px 7px;color:var(--dim)}
-  .tag.ok{color:#05181a;background:var(--accent);border-color:var(--accent)}
-  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
-  .note{font-size:13px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
-  @media(max-width:640px){header{padding:18px 14px}.wrap{padding:16px 14px 48px}nav.hex span,nav.hex a,.subnav button{font-size:10px;padding:4px 8px}}
+:root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--accent2:#cda24a;--mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}a{color:var(--accent);text-decoration:none}header{padding:22px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}.kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}h1{margin:.2em 0;font-size:24px}.sub{color:var(--dim);max-width:80ch}.hex,.subnav{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}.hex span,.hex a,.subnav span,.subnav a{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:999px;color:var(--dim);background:var(--panel);transition:.12s;white-space:nowrap}.hex a:hover,.subnav a:hover{border-color:var(--accent);color:var(--ink);transform:translateY(-1px)}.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:700}.hex .soon{opacity:.45;cursor:not-allowed}.subnav .lbl{border:0;background:transparent;padding-left:0;color:var(--dim)}.subnav .ativo{background:var(--accent2);color:#181305;border-color:var(--accent2);font-weight:700}.direct-toggle{display:inline-flex;align-items:center;gap:7px;margin-top:10px;font-family:var(--mono);font-size:11px;color:var(--dim);user-select:none}.direct-toggle input{accent-color:var(--accent2)}.wrap{max-width:1040px;margin:0 auto;padding:18px 20px 60px}h2{font-size:15px;color:var(--dim);text-transform:uppercase;letter-spacing:.08em;margin:26px 0 8px;border-bottom:1px solid var(--line);padding-bottom:6px}.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;display:block;color:var(--ink)}a.card:hover{border-color:var(--accent);transform:translateY(-1px)}.card.soon{opacity:.5}.card .id{font-size:12px;color:var(--accent);font-weight:700}.card.soon .id{color:var(--dim)}.card .t{margin-top:4px;font-size:14px}.tag{float:right;font-size:10px;text-transform:uppercase;letter-spacing:.08em;border:1px solid var(--line);border-radius:999px;padding:1px 7px;color:var(--dim)}.tag.ok{color:#05181a;background:var(--accent);border-color:var(--accent)}.note{font-size:13px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:18px}footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}@media(max-width:640px){header{padding:18px 14px}.wrap{padding:16px 14px 48px}.hex span,.hex a,.subnav span,.subnav a{font-size:10px;padding:4px 8px}}
 </style>
 </head>
 <body>
 <header>
-  <div class="kicker">hexápode de medicina crítica · braço 3</div>
-  <h1>FILTRA · DIALISA</h1>
-  <div class="sub">Filtração, meio interno e substituição renal — máquina educacional offline de fisiologia
-  causal e farmacologia clínica aplicada. <i>O motor manda no pixel.</i></div>
-
+  <div class="kicker">hexápode de medicina crítica · braço 3 · antebraço A</div>
+  <h1>FILTRA</h1>
+  <div class="sub">Compartimentos, néfron, hemodinâmica renal, meio interno, eletrólitos, ácido-base e farmacologia renal aplicada. O rim como regulador físico-químico, não como lista de exames.</div>
   <nav class="hex" aria-label="Hexápode de medicina crítica">
     <a href="https://drmcoelho.github.io/Respira/">RESPIRA</a>
-    <a href="https://drmcoelho.github.io/Choca/choca.html">CHOCA</a>
+    <a href="https://drmcoelho.github.io/Choca/">CHOCA</a>
     <span class="ativo" aria-current="page">FILTRA</span>
     <span class="soon" aria-disabled="true" title="Em construção">ALIMENTA</span>
     <span class="soon" aria-disabled="true" title="Em construção">METABOLIZA</span>
     <span class="soon" aria-disabled="true" title="Em construção">CONSCIÊNCIA</span>
   </nav>
-
   <label class="direct-toggle"><input type="checkbox" id="directArm"> entrar direto neste braço na próxima visita</label>
-
-  <nav class="subnav" aria-label="Metades do braço · Filtra e Dialisa">
-    <span class="lbl">Metades</span>
-    <button type="button" data-half="tudo" class="ativo" aria-pressed="true">Tudo</button>
-    <button type="button" data-half="filtra" aria-pressed="false">Filtra</button>
-    <button type="button" data-half="dialisa" aria-pressed="false">Dialisa</button>
+  <nav class="subnav" aria-label="Antebraços de Filtra">
+    <span class="lbl">Antebraços</span>
+    <span class="ativo" aria-current="page">Filtra</span>
+    <a href="dialisa.html">Dialisa</a>
   </nav>
 </header>
-
 <div class="wrap">
-  <section class="bloco" data-half="filtra">
-    <h2>Metade A · FILTRA — anatomia funcional, meio interno e farmacologia</h2>
-    <div class="cards" id="grid-filtra"></div>
-  </section>
-
-  <section class="bloco" data-half="dialisa">
-    <h2>Metade B · DIALISA — substituição renal e terapia crítica</h2>
-    <div class="cards" id="grid-dialisa"></div>
-  </section>
-
-  <section class="bloco" data-half="exame">
-    <h2>Avaliação</h2>
-    <div class="cards" id="grid-exame"></div>
-  </section>
-
-  <div class="note">
-    Escopo deste braço: além da fisiologia, inclui <b>farmacologia clínica aplicada</b> (diuréticos,
-    anti-hipertensivos, eixo endócrino-renal, prescrição de diálise) — decisão do autor, válida só para o
-    FILTRA. Ferramenta educacional; não substitui julgamento clínico.
+  <h2>Metade A · FILTRA — anatomia funcional, meio interno e farmacologia</h2>
+  <div class="cards">
+    <a class="card" href="filtra0.html"><span class="tag ok">disponível</span><div class="id">M0</div><div class="t">Compartimentos + introdução à fluidoterapia — a célula no oceano, fluidos, balanço e o cérebro</div></a>
+    <a class="card" href="filtra1.html"><span class="tag ok">disponível</span><div class="id">M1</div><div class="t">O néfron / forças de Starling glomerulares</div></a>
+    <a class="card" href="filtra2.html"><span class="tag ok">disponível</span><div class="id">M2</div><div class="t">Hemodinâmica renal — 20% do DC, autorregulação [AINEs, IECA/BRA]</div></a>
+    <div class="card soon"><span class="tag">em breve</span><div class="id">M3</div><div class="t">O glomérulo — barreira, Kf, podócito, proteinúria</div></div>
+    <div class="card soon"><span class="tag">em breve</span><div class="id">M4</div><div class="t">Clearance — por que a creatinina mente</div></div>
+    <div class="card soon"><span class="tag">em breve</span><div class="id">M5</div><div class="t">TCP — SGLT2, anidrase carbônica [acetazolamida, SGLT2i, manitol]</div></div>
+    <div class="card soon"><span class="tag">em breve</span><div class="id">M6</div><div class="t">Alça de Henle — NKCC2, contracorrente [diuréticos de alça]</div></div>
+    <div class="card soon"><span class="tag">em breve</span><div class="id">M7</div><div class="t">TCD — NCC, segmento diluidor [tiazídicos]</div></div>
+    <div class="card soon"><span class="tag">em breve</span><div class="id">M8</div><div class="t">Ducto coletor — ENaC/aldo, ADH [poupadores de K, vaptanos]</div></div>
+    <div class="card soon"><span class="tag">em breve</span><div class="id">M9</div><div class="t">Sódio e volume — o volume circulante efetivo</div></div>
+    <div class="card soon"><span class="tag">em breve</span><div class="id">M10</div><div class="t">Água livre e disnatremias — ADH, clearance de água livre</div></div>
+    <div class="card soon"><span class="tag">em breve</span><div class="id">M11</div><div class="t">Potássio — secreção distal, shift transcelular</div></div>
+    <div class="card soon"><span class="tag">em breve</span><div class="id">M12</div><div class="t">Cálcio · fósforo · magnésio — PTH, vit D, FGF23</div></div>
+    <div class="card soon"><span class="tag">em breve</span><div class="id">M13</div><div class="t">Ácido-base renal — AG, delta-delta, ATRs</div></div>
+    <div class="card soon"><span class="tag">em breve</span><div class="id">M14</div><div class="t">RAAS e o eixo endócrino renal — AngII, ADH, EPO, vit D</div></div>
+    <div class="card soon"><span class="tag">em breve</span><div class="id">M15</div><div class="t">Ureia, creatinina, eGFR e a urina — FE_Na, índices</div></div>
+    <div class="card soon"><span class="tag">em breve</span><div class="id">M16</div><div class="t">A LRA por mecanismo — KDIGO [capstone fisiológico]</div></div>
+    <div class="card soon"><span class="tag">em breve</span><div class="id">M17</div><div class="t">Farmacologia diurética integrada [capstone farmacológico 1]</div></div>
+    <div class="card soon"><span class="tag">em breve</span><div class="id">M18</div><div class="t">Anti-hipertensivos, RAAS e eixo endócrino-renal [capstone farmacológico 2]</div></div>
   </div>
-
-  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+  <div class="note">DIALISA agora tem entrada própria: <a href="dialisa.html">abrir antebraço Dialisa</a>.</div>
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira<br>FILTRA — antebraço funcional do braço renal</footer>
 </div>
-
-<script>
-/* Índice gerado a partir do mesmo manifesto da escada (curriculum.json espelhado inline p/ funcionar offline) */
-var MODULOS=[
-  ["M0","FILTRA","Compartimentos + introdução à fluidoterapia — a célula no oceano, fluidos, balanço e o cérebro","filtra0.html"],
-  ["M1","FILTRA","O néfron / forças de Starling glomerulares","filtra1.html"],
-  ["M2","FILTRA","Hemodinâmica renal — 20% do DC, autorregulação [AINEs, IECA/BRA]","filtra2.html"],
-  ["M3","FILTRA","O glomérulo — barreira, Kf, podócito, proteinúria"],
-  ["M4","FILTRA","Clearance — por que a creatinina mente"],
-  ["M5","FILTRA","TCP — SGLT2, anidrase carbônica [acetazolamida, SGLT2i, manitol]"],
-  ["M6","FILTRA","Alça de Henle — NKCC2, contracorrente [diuréticos de alça]"],
-  ["M7","FILTRA","TCD — NCC, segmento diluidor [tiazídicos]"],
-  ["M8","FILTRA","Ducto coletor — ENaC/aldo, ADH [poupadores de K, vaptanos]"],
-  ["M9","FILTRA","Sódio e volume — o volume circulante efetivo"],
-  ["M10","FILTRA","Água livre e disnatremias — ADH, clearance de água livre"],
-  ["M11","FILTRA","Potássio — secreção distal, shift transcelular"],
-  ["M12","FILTRA","Cálcio · fósforo · magnésio — PTH, vit D, FGF23"],
-  ["M13","FILTRA","Ácido-base renal — AG, delta-delta, ATRs"],
-  ["M14","FILTRA","RAAS e o eixo endócrino renal — AngII, ADH, EPO, vit D"],
-  ["M15","FILTRA","Ureia, creatinina, eGFR e a urina — FE_Na, índices"],
-  ["M16","FILTRA","A LRA por mecanismo — KDIGO [capstone fisiológico]"],
-  ["M17","FILTRA","Farmacologia diurética integrada [capstone farmacológico 1]"],
-  ["M18","FILTRA","Anti-hipertensivos, RAAS e eixo endócrino-renal [capstone farmacológico 2]"],
-  ["M19","DIALISA","Princípios físicos — difusão, convecção, UF, adsorção"],
-  ["M20","DIALISA","O circuito extracorpóreo — fluxos, TMP"],
-  ["M21","DIALISA","A membrana e o clearance — KoA, sieving"],
-  ["M22","DIALISA","A sessão de HDI — eficiência × tempo"],
-  ["M23","DIALISA","Ultrafiltração e o balanço de volume — peso seco"],
-  ["M24","DIALISA","Hipotensão intradialítica — stunning miocárdico"],
-  ["M25","DIALISA","Dose e adequação — Kt/V, URR; a prescrição"],
-  ["M26","DIALISA","Cinética da ureia — rebote pós-diálise"],
-  ["M27","DIALISA","TRRC/CRRT — CVVH × CVVHD × CVVHDF"],
-  ["M28","DIALISA","Dose e fluidos na TRRC — efluente mL/kg/h"],
-  ["M29","DIALISA","Anticoagulação — citrato × heparina"],
-  ["M30","DIALISA","Diálise peritoneal — UF osmótica, PET"],
-  ["M31","DIALISA","SLED / híbridas — o meio-termo"],
-  ["M32","DIALISA","Depuração de drogas — dosagem na diálise"],
-  ["M33","DIALISA","Remoção de toxinas — lítio, metanol; indicação e dose"],
-  ["M34","DIALISA","Síndrome de desequilíbrio dialítico"],
-  ["M35","DIALISA","Indicações de TRS — o AEIOU"],
-  ["M36","DIALISA","O momento da substituição — precoce × tardio"],
-  ["M37","DIALISA","Síndrome cardiorrenal e a UF (ponte com Choca)"],
-  ["M38","DIALISA","Capstone integrado — modalidade e prescrição por mecanismo"],
-  ["M39","EXAME","Revisão global · exame de domínio · 100 questões"]
-];
-function gridFor(metade,el){
-  MODULOS.filter(function(m){return m[1]===metade;}).forEach(function(m){
-    var href=m[3];
-    var a=document.createElement(href?'a':'div');
-    a.className='card'+(href?'':' soon'); if(href) a.href=href;
-    a.innerHTML='<span class="tag '+(href?'ok':'')+'">'+(href?'disponível':'em breve')+'</span>'+
-      '<div class="id">'+m[0]+'</div><div class="t">'+m[2]+'</div>';
-    el.appendChild(a);
-  });
-}
-gridFor('FILTRA',document.getElementById('grid-filtra'));
-gridFor('DIALISA',document.getElementById('grid-dialisa'));
-gridFor('EXAME',document.getElementById('grid-exame'));
-
-(function(){
-  var blocos=[].slice.call(document.querySelectorAll('.bloco'));
-  var btns=[].slice.call(document.querySelectorAll('.subnav button'));
-  var direct=document.getElementById('directArm');
-  var directKey='hexapode.direct.filtra';
-  function halfFromHash(){
-    var h=(location.hash||'').replace('#','').toLowerCase();
-    return /^(filtra|dialisa|tudo)$/.test(h)?h:'tudo';
-  }
-  function apply(half,writeHash){
-    blocos.forEach(function(b){
-      var h=b.getAttribute('data-half');
-      var show=(half==='tudo')||(h===half)||(half==='tudo'&&h==='exame');
-      b.style.display=show?'':'none';
-    });
-    btns.forEach(function(x){ var on=x.getAttribute('data-half')===half;
-      x.classList.toggle('ativo',on); x.setAttribute('aria-pressed',on?'true':'false'); });
-    if(writeHash){ history.replaceState(null,'', half==='tudo' ? location.pathname : '#'+half); }
-  }
-  btns.forEach(function(x){ x.addEventListener('click',function(){ apply(x.getAttribute('data-half'),true); }); });
-  window.addEventListener('hashchange',function(){ apply(halfFromHash(),false); });
-  if(direct){
-    direct.checked=localStorage.getItem(directKey)==='1';
-    direct.addEventListener('change',function(){ localStorage.setItem(directKey,direct.checked?'1':'0'); });
-  }
-  apply(halfFromHash(),false);
-})();
-</script>
+<script>(function(){var d=document.getElementById('directArm');var k='hexapode.direct.filtra';if(d){d.checked=localStorage.getItem(k)==='1';d.addEventListener('change',function(){localStorage.setItem(k,d.checked?'1':'0')})}})();</script>
 </body>
 </html>

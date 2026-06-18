@@ -15,7 +15,7 @@ depois) — preencher fonte/autor/licença antes de considerar o módulo finaliz
 | `assets/m0/membrana-na-k-atpase.svg` | Bomba Na⁺/K⁺-ATPase | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
 | `assets/m0/bicamada-lipidica.svg` | Bicamada lipídica | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
 | `assets/m0/osmose-tonicidade.svg` | Osmose e tonicidade | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
-| `assets/m0/hemacia-tonicidade.svg` | Hemácia × tonicidade | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
+| `assets/m0/hemacia-tonicidade.svg` | Hemácia × tonicidade | [Commons: Osmotic_pressure_on_blood_cells_diagram.svg](https://commons.wikimedia.org/wiki/File:Osmotic_pressure_on_blood_cells_diagram.svg) | Mariana Ruiz Villarreal (LadyofHats) | Domínio público (PD) |
 | `assets/m0/rim-anatomia.png` | Rim — anatomia | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
 | `assets/m0/cerebro-edema.jpg` | Edema cerebral (RM) | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
 | `assets/m0/fluidos-iv.jpg` | Fluidos IV | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |

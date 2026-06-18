@@ -344,11 +344,19 @@ Critério: o teste é **determinístico entre execuções** (rode 3×, saída id
 - **Figura viva — a foto open-source ENSINA, não decora (padrão de ouro, M0/M1/M2 são o molde):** as fotos
   raster de `assets/mN/` **não** vão para um mural no rodapé. Cada uma vive **inline na batida de Conceito que
   ilustra**, ao lado do desenho computado, dentro de um `<div class="frow">` (desenho à esquerda, foto à
-  direita) como `<figure class="fviva">`. Três exigências por figura: (1) `alt` descritivo; (2) **legenda
+  direita) como `<figure class="fviva">`. Quatro exigências por figura: (1) `alt` descritivo; (2) **legenda
   (`figcaption`) que ENSINA** (≥30 chars — diz *o que olhar* e *por que importa*, não um rótulo); (3)
   **referência cruzada `Fig. N`** reaproveitada no Caso/Trilha/Avaliação (a mesma figura volta como âncora do
-  raciocínio). Quando faltar uma imagem mais diversa/profunda para a aula ficar **excelente**, registre o
-  pedido em `assets/OnDemand.md` (ciclo `PEDIDO → OBTIDO → INTEGRADO`) — não improvise nem deixe passar.
+  raciocínio); (4) **a legenda DECODIFICA cada elemento** da figura — toda bomba (o que é, o que faz), seta,
+  número/legenda e painel; se o rótulo da imagem está em inglês ou em outra língua, **traduza na legenda**;
+  nada de elemento sem explicação (o aluno não pode ficar com "o que são os números 1–4 desta figura?"). Em
+  figuras computadas (SVG), prefira **legenda numerada própria** (①②③④) decodificada no texto. Quando faltar uma
+  imagem mais diversa/profunda para a aula ficar **excelente**, registre o pedido em `assets/OnDemand.md` (ciclo
+  `PEDIDO → OBTIDO → INTEGRADO`) — não improvise nem deixe passar.
+- **Homeostasia é o conceito-fio (decisão do autor 2026-06):** ao falar de água e íons, ancore explicitamente na
+  **homeostasia** (defender o meio interno — volume, eletrólitos, tonicidade, ácido-base — apesar de entradas e
+  perdas). E não confunda **iso-osmolar com fisiológico/homeostático**: o SF 0,9% (Na⁺ 154 / Cl⁻ 154) é
+  iso-osmolar mas hiperclorêmico (plasma Cl⁻ ~100) → acidose em volume; "isotônico" ≠ "homeostático".
 - **Profundidade do conteúdo (expansão máxima, decisão do autor 2026-06):** mire acima dos mínimos. Padrão
   entregue nos M0/M1: **Caso ≥8 atos** (incluindo a fronteira/exceção do mecanismo), **Trilha ≥13 passos**,
   **Avaliação ≥13+13** (ilustrado reaproveita as figuras), e **Lab** com alavancas extras e/ou **botões de

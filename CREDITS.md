@@ -27,7 +27,7 @@ depois) — preencher fonte/autor/licença antes de considerar o módulo finaliz
 | `assets/m1/glomerulo-aferente-eferente.jpg` | Glomérulo: aferente × eferente | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
 | `assets/m1/corpusculo-renal-histologia.jpg` | Corpúsculo renal (histologia) | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
 | `assets/m1/aparelho-justaglomerular.svg` | Aparelho justaglomerular | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
-| `assets/m1/rim-corte-sagital.png` | Rim — corte sagital | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
+| `assets/m1/rim-corte-sagital.png` | Rim — corte sagital | Gray's Anatomy (1918), via Wikimedia Commons | Henry Gray / Henry Vandyke Carter | Domínio público (PD) |
 | `assets/m1/forcas-starling-glomerulo.svg` | Forças de Starling | — | Projeto FILTRA | FILTRA (autoral) |
 | `assets/m1/autorregulacao-tfg-curva.svg` | Autorregulação TFG×PAM | — | Projeto FILTRA | FILTRA (autoral) |
 | `assets/m1/arteriolas-resistencia.svg` | Aferente × eferente | — | Projeto FILTRA | FILTRA (autoral) |

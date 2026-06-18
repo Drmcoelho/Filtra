@@ -345,6 +345,10 @@ Critério: o teste é **determinístico entre execuções** (rode 3×, saída id
   farmacológica (invertida — ver §8):** nos módulos com fármacos, EXIGE que toda dose traga unidade explícita
   (`mg/mcg/µg/mL·h⁻¹`) ancorada a um mecanismo, que o motor de dose-resposta case com a UI, e que o disclaimer
   educacional esteja presente.
+- **Guarda offline (`build/lib/img-guard.js`):** guarda compartilhada por todos os validadores — nenhum
+  `<img>` pode apontar para URL remota (hotlink). O raster mora em `assets/mN/<slug>.webp` e entra só por
+  **caminho relativo**. **Sem exigência de crédito** (decisão do autor, 2026-06): `CREDITS.md` é opcional, a
+  cargo da curadoria; o validador NÃO o exige — só garante o offline.
 
 ### CI
 - `.github/workflows/check.yml` roda `npm run check` em push/PR. Verde é mandatório para mesclar.
@@ -359,10 +363,11 @@ filtraN.html               módulo N, single-file
 build/mN/modelN.js         engine puro
 build/mN/testN.node.js     teste Node
 build/mN/validateN.js      validador jsdom
+build/lib/img-guard.js     guarda offline compartilhada: recusa <img> remoto (raster só por caminho relativo)
 package.json               scripts test:N / validate:N / test / validate / check
 curriculum.json            manifesto curricular legível por máquina (escada + formato do módulo)
 assets/                    fotos/figuras raster open source (offline; ver assets/README.md)
-CREDITS.md                 atribuição de cada asset (fonte · autor · licença)
+CREDITS.md                 atribuição OPCIONAL de assets (fonte · autor · licença) — sem exigência no validador
 FILTRA.md                  constituição do braço (o porquê)
 README.md                  porta de entrada do repo (o quê + como rodar)
 CLAUDE.md                  este guia (o como)
@@ -370,8 +375,9 @@ CLAUDE.md                  este guia (o como)
 
 - **Assets visuais (híbrido, decisão do autor):** o **capricho visual é maximizado**. Desenhos esquemáticos
   e figuras computadas são **SVG inline** (single-file de fato). **Fotos/figuras raster open source** (CC0/PD
-  preferido; CC-BY com crédito) vivem em `assets/`, sempre **offline** (caminho relativo, nunca URL remota),
-  e **toda imagem precisa de uma linha em `CREDITS.md`**. O validador recusa `<img>` remoto.
+  preferido) vivem em `assets/`, sempre **offline** (caminho relativo, nunca URL remota). **Crédito é
+  opcional** (decisão do autor, 2026-06): `CREDITS.md` fica a cargo da curadoria; o validador **não** o exige
+  — a guarda (`build/lib/img-guard.js`) só recusa `<img>` remoto, garantindo o offline.
 
 - **Idioma:** português do Brasil, prosa causal e seca, setas quando úteis (↑↓→).
 - **Rodapé obrigatório** em todo módulo: `CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira`.
@@ -449,7 +455,7 @@ case com a UI. A ausência de dose onde o módulo a promete passa a ser falha.
 
 ```text
 Offline.                 Nenhum módulo depende de rede (nem <img> remoto; raster só de assets/ local).
-Single-file (híbrido).   Lógica/engine/SVG inline no HTML; só FOTOS raster vão p/ assets/ com CREDITS.md.
+Single-file (híbrido).   Lógica/engine/SVG inline no HTML; só FOTOS raster vão p/ assets/ (crédito opcional).
 Zero dependência runtime.jsdom é só ferramenta de validação.
 Sem armazenamento.       Nada de localStorage/telemetria.
 Engine antes de UI.      Fórmula validada antes de gráfico.

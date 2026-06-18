@@ -13,6 +13,7 @@ var jsdom = require('jsdom');
 var JSDOM = jsdom.JSDOM;
 
 var ref = require('./model0.js'); // engine canônico (Node) p/ comparar com a UI
+var imgGuard = require('../lib/img-guard.js'); // guarda offline anti-hotlink (compartilhada)
 
 var oks = 0, fail = 0;
 function ok(c, m) { if (c) { oks++; } else { fail++; console.error('FALHA: ' + m); } }
@@ -194,10 +195,8 @@ ok(/educacional/i.test(body) && doc.querySelector('.disc') !== null, 'disclaimer
 // ----- guarda SaMD invertida (§8): M0 não promete fármaco; não pode haver dose solta -----
 ok(!/\b\d+\s?(mg|mcg|µg)\b/.test(body), 'M0 sem doses (a farmacologia entra no túbulo)');
 
-// ----- guarda OFFLINE: nenhuma imagem remota; raster só de assets/ local (§7 híbrido) -----
-var imgs = Array.prototype.slice.call(doc.querySelectorAll('img'));
-var remotas = imgs.filter(function (im) { return /^https?:|^\/\//i.test(im.getAttribute('src') || ''); });
-ok(remotas.length === 0, 'offline: nenhum <img> remoto (fotos só de assets/ local)');
+// ----- guarda OFFLINE: nenhum <img> remoto (guarda compartilhada; raster só de assets/ local, §7) -----
+ok(imgGuard.remoteImgs(doc).length === 0, 'offline: nenhum <img> remoto (fotos só de assets/ local)');
 
 console.log(oks + ' OK · ' + fail + ' falhas');
 process.exit(fail > 0 ? 1 : 0);

@@ -3,24 +3,35 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FILTRA · DIALISA</title>
-<meta http-equiv="refresh" content="0; url=filtra.html">
-<link rel="canonical" href="filtra.html">
+<title>FILTRA · DIALISA — hub do braço</title>
+<meta name="description" content="Hub do braço Filtra no Hexápode de medicina crítica: escolha entre Filtra, fisiologia renal e meio interno, e Dialisa, substituição renal e terapia crítica.">
 <style>
-  body{margin:0;background:#0c1014;color:#e7eef4;font:16px/1.6 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-       display:flex;min-height:100vh;align-items:center;justify-content:center;text-align:center}
-  a{color:#39c0c8}
-  .box{max-width:42ch;padding:24px}
-  .k{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#9fb1c0}
+:root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--cyan:#39c0c8;--gold:#cda24a;--mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(1100px 600px at 78% -10%,rgba(57,192,200,.12),transparent 58%),var(--bg);color:var(--ink);font:15px/1.55 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}a{color:var(--cyan);text-decoration:none}.wrap{max-width:1040px;margin:0 auto;padding:40px 20px 80px}.kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);font-family:var(--mono)}h1{font-size:clamp(2.3rem,6vw,3.8rem);line-height:1;margin:.2em 0}.sub{color:var(--dim);max-width:80ch;font-size:1.05rem}.tese{font-size:13px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-left:3px solid var(--cyan);border-radius:12px;padding:12px 14px;margin:20px 0}.tese b{color:var(--gold)}.hex,.subnav{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}.hex span,.hex a{font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:999px;color:var(--dim);background:var(--panel);transition:.12s;white-space:nowrap}.hex a:hover{border-color:var(--cyan);color:var(--ink);transform:translateY(-1px)}.hex .ativo{background:var(--cyan);color:#05181a;border-color:var(--cyan);font-weight:800}.hex .soon{opacity:.45;cursor:not-allowed}.direct-toggle{display:inline-flex;align-items:center;gap:7px;margin-top:10px;font-family:var(--mono);font-size:11px;color:var(--dim);user-select:none}.direct-toggle input{accent-color:var(--gold)}.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:24px}.choice{display:block;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px 24px;color:var(--ink);transition:.12s}.choice:hover{border-color:var(--cyan);transform:translateY(-2px)}.label{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:800}.choice h2{font-size:1.55rem;margin:.25em 0 .15em}.choice p{margin:0;color:var(--dim)}.meta{margin-top:13px;font-family:var(--mono);font-size:12px;color:var(--cyan)}.note{font-size:13px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:18px}footer{border-top:1px solid var(--line);margin-top:36px;padding-top:14px;color:var(--dim);font-size:13px;text-align:center}@media(max-width:680px){.wrap{padding:30px 14px 64px}.choices{grid-template-columns:1fr}.hex span,.hex a{font-size:10px;padding:4px 8px}}
 </style>
 </head>
 <body>
-  <div class="box">
-    <div class="k">hexápode de medicina crítica · braço 3</div>
-    <h1>FILTRA · DIALISA</h1>
-    <p>Redirecionando para o índice…</p>
-    <p>Se não for automático, abra <a href="filtra.html">filtra.html</a>.</p>
-  </div>
-  <script>location.replace('filtra.html');</script>
+<div class="wrap">
+  <div class="kicker">Hexápode de medicina crítica · braço 3</div>
+  <h1>FILTRA · DIALISA</h1>
+  <div class="sub">Filtração, meio interno e substituição renal: o rim como regulador físico-químico e a diálise como extensão mecânica desse raciocínio.</div>
+  <div class="tese"><b>Filtra</b> organiza o néfron, o meio interno e a farmacologia renal. <b>Dialisa</b> traduz isso em máquina: difusão, convecção, ultrafiltração, dose e modalidade.</div>
+  <nav class="hex" aria-label="Hexápode de medicina crítica">
+    <a href="https://drmcoelho.github.io/Respira/">RESPIRA</a>
+    <a href="https://drmcoelho.github.io/Choca/">CHOCA</a>
+    <span class="ativo" aria-current="page">FILTRA</span>
+    <span class="soon" aria-disabled="true" title="Em construção">ALIMENTA</span>
+    <span class="soon" aria-disabled="true" title="Em construção">METABOLIZA</span>
+    <span class="soon" aria-disabled="true" title="Em construção">CONSCIÊNCIA</span>
+  </nav>
+  <label class="direct-toggle"><input type="checkbox" id="directArm"> entrar direto neste braço na próxima visita</label>
+  <section class="choices" aria-label="Escolher antebraço">
+    <a class="choice" href="filtra.html" data-arm="filtra"><div class="label">Antebraço A</div><h2>Filtra</h2><p>Compartimentos, néfron, hemodinâmica renal, eletrólitos, ácido-base e farmacologia renal aplicada.</p><div class="meta">M0–M18 · M0–M2 disponíveis</div></a>
+    <a class="choice" href="dialisa.html" data-arm="dialisa"><div class="label">Antebraço B</div><h2>Dialisa</h2><p>Substituição renal, HDI, TRRC, UF, anticoagulação, toxinas, dose, fármacos e prescrição por mecanismo.</p><div class="meta">M19–M39 · em construção</div></a>
+  </section>
+  <div class="note">Material educacional; não substitui julgamento clínico. O objetivo é preservar a causalidade fisiológica antes de virar protocolo.</div>
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+</div>
+<script>(function(){var d=document.getElementById('directArm');var k='hexapode.direct.filtra';var last='hexapode.last.filtra';if(localStorage.getItem(k)==='1'&&!new URLSearchParams(location.search).has('hub')){location.replace(localStorage.getItem(last)||'filtra.html');return}if(d){d.checked=localStorage.getItem(k)==='1';d.addEventListener('change',function(){localStorage.setItem(k,d.checked?'1':'0')})}document.querySelectorAll('[data-arm]').forEach(function(a){a.addEventListener('click',function(){localStorage.setItem(last,a.getAttribute('href'))})})})();</script>
 </body>
 </html>

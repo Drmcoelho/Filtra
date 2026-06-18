@@ -41,10 +41,14 @@
   #tutor-fig svg,.concept svg,#glom-svg svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
   .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
   h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
-  .galeria{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;margin:10px 0}
-  .galeria figure{margin:0;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:6px}
-  .galeria img{width:100%;height:140px;object-fit:contain;background:#0a1016;border-radius:6px}
-  .galeria figcaption{font-size:11px;color:var(--dim);margin-top:5px;line-height:1.3}
+  /* figura viva: cada foto open-source vive INLINE na sua batida de conceito, com legenda que ensina */
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .presets{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
   .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
   .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
   .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
@@ -101,47 +105,82 @@
     <div class="panel">
       <h3>Conceito — o néfron e a pressão que filtra (explicação ilustrada)</h3>
 
+      <p class="sub" style="margin-top:0">Cada batida traz o <b>desenho computado</b> (à esquerda) e a <b>foto/figura
+      open-source</b> (à direita) com a legenda que ensina. As Fig. 1–8 voltam no Caso, na Trilha e na Avaliação.
+      Atribuição em <code>CREDITS.md</code> (em curadoria).</p>
+
       <h4>1. O néfron, segmento a segmento</h4>
       <p class="sub">O sangue chega pela <b>aferente</b>, é filtrado no <b>glomérulo</b> e o filtrado percorre
       o túbulo: <b>TCP</b> → <b>alça de Henle</b> (fina ↓ / espessa ↑, na medula) → <b>TCD</b> → <b>ducto
       coletor</b>. Cada segmento é uma alavanca diferente (e o alvo de uma classe de diurético).</p>
-      <div class="concept" id="draw-nefron"></div>
+      <div class="frow">
+        <div class="concept" id="draw-nefron"></div>
+        <figure class="fviva"><img src="assets/m1/nefron-rotulado.png" alt="Néfron completo rotulado (glomérulo, TCP, alça, TCD, ducto)" loading="lazy">
+          <figcaption><b>Fig. 1 · O néfron real.</b> Compare com o desenho ao lado: o glomérulo no córtex, a alça
+          mergulhando na medula. Cada rótulo é o palco de um módulo (TCP→M5, alça→M6, TCD→M7, ducto→M8).</figcaption></figure>
+        <figure class="fviva"><img src="assets/m1/rim-corte-sagital.png" alt="Corte sagital do rim (córtex, medula, pirâmides)" loading="lazy">
+          <figcaption><b>Fig. 2 · Córtex × medula.</b> Onde o néfron mora. O córtex filtra; a medula concentra e
+          vive à beira da hipóxia (M2). Guarde esta divisão: ela explica por que a isquemia ataca primeiro a
+          medula.</figcaption></figure>
+      </div>
 
       <h4>2. O glomérulo entre duas resistências</h4>
       <p class="sub">A <b>P_GC</b> (pressão que empurra a filtração) mora entre a <b>aferente</b> (entrada) e a
       <b>eferente</b> (saída). Fechar a aferente despressuriza tudo; fechar a eferente represa e <b>sobe</b> a
       P_GC. O calibre dos vasos no desenho é ∝ 1/resistência.</p>
-      <div class="concept" id="draw-glom"></div>
+      <div class="frow">
+        <div class="concept" id="draw-glom"></div>
+        <figure class="fviva"><img src="assets/m1/glomerulo-aferente-eferente.jpg" alt="Glomérulo com arteríolas aferente e eferente" loading="lazy">
+          <figcaption><b>Fig. 3 · As duas torneiras.</b> A aferente entra, a eferente sai — e o tufo capilar fica
+          espremido entre elas. É a única vascularização do corpo com <b>dois</b> leitos arteriolares em série, e é
+          isso que dá ao rim o controle fino da P_GC.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m1/arteriolas-resistencia.svg" alt="Resistência das arteríolas aferente e eferente" loading="lazy">
+          <figcaption><b>Fig. 4 · O divisor de pressão.</b> P_GC = (PAM·R_E + P_v·R_A)/(R_A+R_E). Mexa as duas
+          resistências no Lab e veja a P_GC subir (eferente↑) ou desabar (aferente↑).</figcaption></figure>
+      </div>
 
-      <h4>3. As forças de Starling — quem empurra, quem resiste</h4>
+      <h4>3. O corpúsculo renal de perto (histologia)</h4>
+      <p class="sub">O tufo glomerular é uma rede de capilares envolta pela cápsula de Bowman. O filtrado atravessa
+      três barreiras (endotélio fenestrado → membrana basal → podócitos) e cai no espaço de Bowman — onde a
+      <b>P_BC</b> resiste à filtração.</p>
+      <div class="frow">
+        <figure class="fviva"><img src="assets/m1/corpusculo-renal-histologia.jpg" alt="Corpúsculo renal em histologia" loading="lazy">
+          <figcaption><b>Fig. 5 · O filtro ao microscópio.</b> O novelo capilar (tufo) e o espaço de Bowman ao
+          redor. A barreira de filtração e a proteinúria por mecanismo são o tema do M3; aqui basta ver onde a
+          pressão de Bowman empurra de volta.</figcaption></figure>
+      </div>
+
+      <h4>4. As forças de Starling — quem empurra, quem resiste</h4>
       <p class="sub"><b>TFG = Kf · (P_GC − P_BC − π_GC).</b> Só a P_GC empurra; a pressão de Bowman (P_BC) e a
       oncótica (π_GC) resistem. Obstrução urinária sobe a P_BC e derruba a TFG (via pós-renal).</p>
-      <div class="concept" id="draw-starling"></div>
+      <div class="frow">
+        <div class="concept" id="draw-starling"></div>
+        <figure class="fviva"><img src="assets/m1/forcas-starling-glomerulo.svg" alt="Forças de Starling no glomérulo" loading="lazy">
+          <figcaption><b>Fig. 6 · O cabo de guerra.</b> Uma força puxa para filtrar (P_GC), duas puxam de volta
+          (P_BC e π_GC). O saldo (NFP) é o que de fato filtra — por isso a P_GC alta não basta se a P_BC subir
+          (obstrução).</figcaption></figure>
+      </div>
 
-      <h4>4. A autorregulação — o platô e o precipício</h4>
+      <h4>5. A autorregulação — o platô, o precipício e o sensor</h4>
       <p class="sub">Entre ~80 e ~180 mmHg de PAM a aferente ajusta o tônus (miogênico + feedback
       tubuloglomerular) e mantém a TFG quase constante — o <b>platô</b>. Abaixo do joelho, a aferente já está
       no talo: a TFG segue a PAM e <b>despenca</b> — o precipício pré-renal.</p>
-      <div class="concept" id="draw-autorreg"></div>
+      <div class="frow">
+        <div class="concept" id="draw-autorreg"></div>
+        <figure class="fviva"><img src="assets/m1/autorregulacao-tfg-curva.svg" alt="Curva de autorregulação TFG × PAM" loading="lazy">
+          <figcaption><b>Fig. 7 · O platô.</b> A mesma curva do Instrumento: plana no meio (TFG defendida),
+          despencando à esquerda (precipício pré-renal) e subindo à direita (hipertensão glomerular).</figcaption></figure>
+        <figure class="fviva"><img src="assets/m1/aparelho-justaglomerular.svg" alt="Aparelho justaglomerular (mácula densa, células granulares)" loading="lazy">
+          <figcaption><b>Fig. 8 · O sensor.</b> O aparelho justaglomerular: a <b>mácula densa</b> lê o NaCl no túbulo
+          distal e fecha/abre a aferente (feedback tubuloglomerular) e libera renina (RAAS, M14). É o termostato que
+          desenha o platô.</figcaption></figure>
+      </div>
 
-      <h4>5. O paradoxo do eferente (IECA/BRA)</h4>
+      <h4>6. O paradoxo do eferente (IECA/BRA)</h4>
       <p class="sub">O IECA <b>dilata a eferente</b> → tira a represa → P_GC↓ → TFG↓ e a <b>creatinina sobe</b>.
       Isso costuma ser o efeito <b>esperado</b> (hemodinâmico), não lesão — exceto na estenose bilateral de
       artéria renal / rim único, onde a TFG dependia da eferente fechada.</p>
       <div class="concept" id="draw-eferente"></div>
-
-      <h4>Galeria — imagens open source</h4>
-      <p class="sub">Fotos e figuras complementares aos desenhos. Atribuição em <code>CREDITS.md</code> (em curadoria).</p>
-      <div class="galeria">
-        <figure><img src="assets/m1/nefron-rotulado.png" alt="Néfron completo rotulado (glomérulo, TCP, alça, TCD, ducto)" loading="lazy"><figcaption>Néfron rotulado</figcaption></figure>
-        <figure><img src="assets/m1/glomerulo-aferente-eferente.jpg" alt="Glomérulo com arteríolas aferente e eferente" loading="lazy"><figcaption>Glomérulo: aferente × eferente</figcaption></figure>
-        <figure><img src="assets/m1/corpusculo-renal-histologia.jpg" alt="Corpúsculo renal em histologia" loading="lazy"><figcaption>Corpúsculo renal (histologia)</figcaption></figure>
-        <figure><img src="assets/m1/aparelho-justaglomerular.svg" alt="Aparelho justaglomerular" loading="lazy"><figcaption>Aparelho justaglomerular</figcaption></figure>
-        <figure><img src="assets/m1/rim-corte-sagital.png" alt="Corte sagital do rim" loading="lazy"><figcaption>Rim — corte sagital</figcaption></figure>
-        <figure><img src="assets/m1/forcas-starling-glomerulo.svg" alt="Forças de Starling no glomérulo" loading="lazy"><figcaption>Forças de Starling · ilustração do projeto</figcaption></figure>
-        <figure><img src="assets/m1/autorregulacao-tfg-curva.svg" alt="Curva de autorregulação TFG × PAM" loading="lazy"><figcaption>Autorregulação TFG×PAM · ilustração do projeto</figcaption></figure>
-        <figure><img src="assets/m1/arteriolas-resistencia.svg" alt="Resistência das arteríolas aferente e eferente" loading="lazy"><figcaption>Aferente × eferente · ilustração do projeto</figcaption></figure>
-      </div>
     </div>
   </section>
 
@@ -188,6 +227,30 @@
         <div class="reveal" id="r5">A creatinina contou a <b>P_GC</b>, não a volemia. Decompor a pressão de filtração entre
           as duas resistências vem <b>antes</b> de interpretar o número.</div>
       </div>
+      <div class="step">
+        <b>Ato 6.</b> <i>Outro doente.</i> Homem, 75 anos, próstata aumentada, anúrico, bexigoma palpável.
+        Creatinina subindo. Onde está a falha (volte à Fig. 6)?
+        <div><button class="act" data-rev="r6">Revelar</button></div>
+        <div class="reveal" id="r6"><b>Pós-renal.</b> A obstrução represa urina e <b>sobe a P_BC</b> — a contrapressão de
+          Bowman aniquila o saldo de Starling (NFP), com P_GC normal. O tratamento não é hemodinâmico: é uma
+          <b>sonda</b>. No Lab, suba o P_BC e veja a TFG cair com a P_GC intacta.</div>
+      </div>
+      <div class="step">
+        <b>Ato 7.</b> <i>O perigo real.</i> Paciente com <b>rim único</b> funcionante (nefrectomia prévia) inicia IECA;
+        a creatinina salta de 1,3 para 3,8 em dias. É o "efeito esperado" benigno?
+        <div><button class="act" data-rev="r7">Revelar</button></div>
+        <div class="reveal" id="r7"><b>Não — aqui é a exceção.</b> Quando a TFG depende da <b>eferente fechada</b> (estenose
+          bilateral / rim único), dilatar a eferente com IECA derruba a P_GC de verdade (Fig. 3/4). Salto > 30%
+          da creatinina manda <b>suspender</b> e investigar estenose. A regra do Ato 1 tem esta fronteira.</div>
+      </div>
+      <div class="step">
+        <b>Ato 8.</b> <i>Quando NÃO é hemodinâmico.</i> Choque séptico + contraste; oligúria persiste mesmo com PAM
+        normalizada; FE_Na alta, cilindros granulosos na urina. Qual o mecanismo?
+        <div><button class="act" data-rev="r8">Revelar</button></div>
+        <div class="reveal" id="r8"><b>Intrínseca (NTA).</b> Agora a lesão é do <b>túbulo</b>, não da pressão: o epitélio
+          isquêmico descama (a medula da Fig. 2 é a vítima). A P_GC já foi corrigida e a TFG não volta — porque o
+          problema saiu do glomérulo. Pré × intrínseca × pós-renal é o mapa do M16; os índices urinários, o do M15.</div>
+      </div>
     </div>
   </section>
 
@@ -223,6 +286,16 @@
       <details><summary>10. O que é a "tríplice ameaça hemodinâmica"?</summary>
         <p><b>AINE</b> (fecha aferente) + <b>IECA</b> (abre eferente) + <b>depleção</b> (↓PAM). Cada um sozinho é
         tolerável; somados, colapsam a P_GC. É o caso do Ato 1.</p></details>
+      <details><summary>11. Quem é o "termostato" da autorregulação (Fig. 8)?</summary>
+        <p>O <b>aparelho justaglomerular</b>: a mácula densa lê o NaCl que chega ao túbulo distal e ajusta o tônus
+        aferente (feedback tubuloglomerular) — mais NaCl distal → fecha a aferente → TFG↓. É também a fonte de
+        renina (RAAS, M14).</p></details>
+      <details><summary>12. Como distinguir pré-renal de pós-renal pelo mecanismo (Fig. 6)?</summary>
+        <p>Pré-renal = <b>P_GC↓</b> (pressão de entrada caiu); pós-renal = <b>P_BC↑</b> (contrapressão de Bowman pela
+        obstrução). Ambos derrubam o NFP, mas um se trata pela hemodinâmica e o outro com uma sonda/desobstrução.</p></details>
+      <details><summary>13. Por que o rim único é a exceção do "creatinina subiu, não suspenda o IECA"?</summary>
+        <p>Porque ali a TFG <b>dependia</b> da eferente fechada pela AngII. Dilatar a eferente despressuriza o único
+        glomérulo disponível — salto > 30% da creatinina manda suspender e investigar estenose.</p></details>
     </div>
   </section>
 
@@ -262,6 +335,15 @@
         </div>
       </div>
 
+      <div class="presets">
+        <button class="act" data-preset="normal">Normal</button>
+        <button class="act" data-preset="aine">AINE (aferente↑)</button>
+        <button class="act" data-preset="ieca">IECA (eferente↓)</button>
+        <button class="act" data-preset="triplice">Tríplice ameaça</button>
+        <button class="act" data-preset="obstrucao">Obstrução (P_BC↑)</button>
+        <button class="act" data-preset="hipotensao">Hipotensão (autorreg.)</button>
+      </div>
+
       <table>
         <tr><th>Variável</th><th>Atual</th><th>Normal ≈</th></tr>
         <tr><td>P_GC — pressão capilar glomerular (mmHg)</td><td class="num" id="out-pgc">—</td><td class="num">60</td></tr>
@@ -284,8 +366,8 @@
     <div class="panel">
       <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
       <div class="tabs" id="banktabs">
-        <button data-bank="ilustrada" class="on">Ilustrada (10)</button>
-        <button data-bank="textual">Textual (10)</button>
+        <button data-bank="ilustrada" class="on">Ilustrada (13)</button>
+        <button data-bank="textual">Textual (13)</button>
       </div>
       <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
       <div id="tutor-fig" style="margin:10px 0"></div>
@@ -475,6 +557,30 @@ function drawCurve(state){
 ['in-pam','in-ra','in-re','in-kf','in-pi','in-pbc'].forEach(function(id){ $(id).addEventListener('input',refresh); });
 $('in-autoreg').addEventListener('change',refresh);
 
+// --- cenários (presets): movem as alavancas para um padrão clínico e recomputam ---
+var PRESETS={
+  normal:{pam:100,ra:1,re:1,kf:7.5,pi:28,pbc:15,autoreg:true},
+  aine:{pam:100,ra:1.9,re:1,pbc:15,autoreg:false},
+  ieca:{pam:100,ra:1,re:0.45,pbc:15,autoreg:false},
+  triplice:{pam:75,ra:1.8,re:0.5,pbc:15,autoreg:false},
+  obstrucao:{pam:100,ra:1,re:1,pbc:32,autoreg:true},
+  hipotensao:{pam:60,ra:1,re:1,pbc:15,autoreg:true}
+};
+function applyPreset(p){
+  var d=PRESETS[p]; if(!d) return;
+  if(d.pam!==undefined) $('in-pam').value=d.pam;
+  if(d.ra!==undefined)  $('in-ra').value=d.ra;
+  if(d.re!==undefined)  $('in-re').value=d.re;
+  if(d.kf!==undefined)  $('in-kf').value=d.kf;
+  if(d.pi!==undefined)  $('in-pi').value=d.pi;
+  if(d.pbc!==undefined) $('in-pbc').value=d.pbc;
+  if(d.autoreg!==undefined) $('in-autoreg').checked=d.autoreg;
+  refresh();
+}
+document.querySelector('.presets').addEventListener('click',function(e){
+  var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset'));
+});
+
 /* =========================================================================
  * ILUSTRAÇÕES — SVG inline, computadas a partir do engine (física viva)
  * ========================================================================= */
@@ -544,7 +650,10 @@ var TUTOR_ILUSTRADO=[
   {q:'No saldo de Starling, quem EMPURRA a filtração?',o:['π_GC (oncótica)','P_GC (hidrostática glomerular)','P_BC (Bowman)'],c:1,e:'Só a P_GC empurra; a P_BC e a oncótica resistem. NFP = P_GC − P_BC − π_GC.',fig:function(){return starlingBars(R0({}));}},
   {q:'Obstrução urinária eleva a P_BC. A TFG…',o:['sobe','cai','não muda'],c:1,e:'A contrapressão de Bowman reduz o NFP → TFG cai. É a via pós-renal.',fig:function(){return starlingBars(R0({P_BC:32}));}},
   {q:'Eferente constrita: a TFG é preservada, mas a FF…',o:['cai','sobe','não muda'],c:1,e:'FF = TFG/FPR: com o fluxo plasmático caindo e a TFG mantida, a fração de filtração sobe.',fig:function(){return glomFig(R0({rE:2.0,autoreg:false}),'FF↑ na eferente fechada');}},
-  {q:'Tríplice ameaça (AINE + IECA + PAM baixa): a filtração…',o:['melhora','colapsa','fica igual'],c:1,e:'Os três golpes somam-se na P_GC e a TFG colapsa — cada fator isolado seria tolerável.',fig:function(){return curveMini({PAM:75,rA:1.8,rE:0.5},'AINE+IECA+depleção');}}
+  {q:'Tríplice ameaça (AINE + IECA + PAM baixa): a filtração…',o:['melhora','colapsa','fica igual'],c:1,e:'Os três golpes somam-se na P_GC e a TFG colapsa — cada fator isolado seria tolerável.',fig:function(){return curveMini({PAM:75,rA:1.8,rE:0.5},'AINE+IECA+depleção');}},
+  {q:'Obstrução urinária (P_BC↑): no saldo de Starling, o NFP…',o:['sobe','cai','não muda'],c:1,e:'A contrapressão de Bowman come o saldo: NFP = P_GC − P_BC − π_GC → TFG cai com a P_GC intacta (pós-renal).',fig:function(){return starlingBars(R0({P_BC:33}));}},
+  {q:'Rim único funcionante + início de IECA: a P_GC…',o:['sobe','cai de verdade (perigo)','não muda'],c:1,e:'Aqui a TFG dependia da eferente fechada; dilatá-la despressuriza o único glomérulo — a exceção real (salto >30%).',fig:function(){return glomFig(R0({rE:0.4,autoreg:false}),'rim único + IECA');}},
+  {q:'O que "desenha" o platô da curva TFG×PAM?',o:['o ajuste do tônus AFERENTE (autorregulação)','a oncótica','o Kf'],c:0,e:'Miogênico + feedback tubuloglomerular ajustam a aferente para manter a P_GC constante — daí o platô.',fig:function(){return curveMini({PAM:120,rA:1,rE:1},'platô defendido');}}
 ];
 
 var TUTOR_TEXTUAL=[
@@ -557,7 +666,10 @@ var TUTOR_TEXTUAL=[
   {q:'Abaixo do joelho inferior a autorregulação falha porque…',o:['a eferente fecha sozinha','a aferente já está maximamente dilatada','o Kf zera','a oncótica some'],c:1,e:'Sem reserva de dilatação aferente, a P_GC passa a seguir a PAM — precipício pré-renal.'},
   {q:'A fração de filtração (FF) sobe quando…',o:['a aferente fecha','a eferente fecha','a PAM cai no platô','o Kf sobe'],c:1,e:'FF = TFG/FPR; a eferente fechada preserva a TFG enquanto o FPR cai → FF↑.'},
   {q:'Em estenose BILATERAL de artéria renal, iniciar IECA tende a…',o:['não mudar a TFG','derrubar muito a TFG (a eferente sustentava a P_GC)','aumentar a TFG','curar a estenose'],c:1,e:'Ali a TFG dependia da constrição eferente pela AngII; tirá-la despressuriza o glomérulo — o precipício é real.'},
-  {q:'A mesma oligúria pré-renal e pós-renal diferem porque…',o:['a creatinina é diferente','o mecanismo: P_GC↓ (pré) vs P_BC↑ (pós)','a diurese é igual','não diferem'],c:1,e:'Decompor antes de interpretar: pré-renal cai a pressão de entrada; pós-renal sobe a contrapressão de Bowman.'}
+  {q:'A mesma oligúria pré-renal e pós-renal diferem porque…',o:['a creatinina é diferente','o mecanismo: P_GC↓ (pré) vs P_BC↑ (pós)','a diurese é igual','não diferem'],c:1,e:'Decompor antes de interpretar: pré-renal cai a pressão de entrada; pós-renal sobe a contrapressão de Bowman.'},
+  {q:'O sensor do feedback tubuloglomerular é…',o:['o podócito','a mácula densa (aparelho justaglomerular)','o ducto coletor','a cápsula de Bowman'],c:1,e:'A mácula densa lê o NaCl distal e ajusta o tônus aferente; é também fonte de renina (RAAS, M14).'},
+  {q:'Um salto > 30% da creatinina logo após iniciar IECA sugere…',o:['efeito esperado, manter','estenose bilateral / rim único — suspender e investigar','desidratação sempre','erro laboratorial'],c:1,e:'Quando a TFG dependia da eferente fechada, dilatá-la a derruba de verdade — é a fronteira da regra benigna.'},
+  {q:'Na NTA isquêmica, a TFG não volta com a PAM corrigida porque…',o:['a P_GC ainda está baixa','a lesão saiu do glomérulo para o TÚBULO','a oncótica subiu','o Kf zerou'],c:1,e:'É LRA intrínseca: o epitélio tubular (medula) descamou; o problema não é mais a pressão de filtração (M16).'}
 ];
 window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL;
 window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);

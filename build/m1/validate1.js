@@ -184,13 +184,19 @@ ok(!/\b\d+\s?(mg|mcg|µg)\b(?!\/)/.test(body), 'M1 sem doses soltas (a farmacolo
 // ----- guarda OFFLINE: nenhum <img> remoto (guarda compartilhada; raster só de assets/ local, §7) -----
 ok(imgGuard.remoteImgs(doc).length === 0, 'offline: nenhum <img> remoto (fotos só de assets/ local)');
 
-// ----- galeria open source: imagens locais, existem em disco e têm alt -----
-var galeria = Array.prototype.slice.call(doc.querySelectorAll('.galeria img'));
-ok(galeria.length >= 8, 'galeria: ≥8 imagens referenciadas (tem ' + galeria.length + ')');
-var faltam = galeria.filter(function (im) { var s = im.getAttribute('src') || ''; return !fs.existsSync(path.join(__dirname, '..', '..', s)); });
-ok(faltam.length === 0, 'galeria: todos os arquivos existem em assets/ (' + faltam.length + ' faltando)');
-var semAlt = galeria.filter(function (im) { return !((im.getAttribute('alt') || '').trim()); });
-ok(semAlt.length === 0, 'galeria: todo <img> tem alt descritivo');
+// ----- figura viva: fotos open-source INLINE na batida de conceito (não mais um mural) -----
+var figs = Array.prototype.slice.call(doc.querySelectorAll('figure.fviva'));
+ok(figs.length >= 8, 'figura viva: ≥8 figuras inline (tem ' + figs.length + ')');
+ok(!doc.querySelector('.galeria'), 'figura viva: sem mural .galeria (figuras dispersas, não amontoadas)');
+var noConceito = doc.querySelectorAll('#tab-conceito figure.fviva').length;
+ok(noConceito >= 8, 'figura viva: ≥8 figuras dentro da aba Conceito (tem ' + noConceito + ')');
+var faltam = figs.filter(function (fg) { var im = fg.querySelector('img'); var s = im ? (im.getAttribute('src') || '') : ''; return !s || !fs.existsSync(path.join(__dirname, '..', '..', s)); });
+ok(faltam.length === 0, 'figura viva: todos os arquivos existem em assets/ (' + faltam.length + ' faltando)');
+var semAlt = figs.filter(function (fg) { var im = fg.querySelector('img'); return !im || !((im.getAttribute('alt') || '').trim()); });
+ok(semAlt.length === 0, 'figura viva: todo <img> tem alt descritivo');
+var semCap = figs.filter(function (fg) { var cap = fg.querySelector('figcaption'); return !cap || (cap.textContent || '').trim().length < 30; });
+ok(semCap.length === 0, 'figura viva: toda figura tem legenda que ensina (≥30 chars)');
+ok(/Fig\.\s*\d/.test(body), 'figura viva: figuras referenciadas no texto ("Fig. N")');
 
 console.log(oks + ' OK · ' + fail + ' falhas');
 process.exit(fail > 0 ? 1 : 0);

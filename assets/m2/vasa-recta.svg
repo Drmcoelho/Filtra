@@ -1,22 +1,33 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M2</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">Hemodinâmica renal — 20% do DC, córtex×medula</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">vasa-recta</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">Vasa recta e troca por contracorrente</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 320" font-family="system-ui,Arial,sans-serif">
+  <defs><marker id="o" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#e8a13a"/></marker></defs>
+  <rect width="680" height="320" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="316" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Vasa recta — troca por contracorrente (e o shunt de O₂)</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">o arranjo que preserva o gradiente medular também desvia o oxigênio</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <!-- alça em grampo -->
+  <path d="M250,70 L250,250 Q250,285 290,285 Q330,285 330,250 L330,70" fill="none" stroke="#3a7bd5" stroke-width="14" stroke-linecap="round"/>
+  <path d="M250,70 L250,250 Q250,285 290,285 Q330,285 330,250 L330,70" fill="none" stroke="#e0556b" stroke-width="5" stroke-dasharray="2 220"/>
+  <text x="232" y="64" text-anchor="end" font-size="11" fill="#9bbef0">descendente ↓</text>
+  <text x="348" y="64" text-anchor="start" font-size="11" fill="#e08a96">ascendente ↑</text>
+  <text x="290" y="78" text-anchor="middle" font-size="10" fill="#9fb1c0">(O₂ entra rica)</text>
+
+  <!-- setas de O2 cruzando (shunt) -->
+  <g stroke="#e8a13a" stroke-width="2.5" marker-end="url(#o)">
+    <line x1="262" y1="110" x2="318" y2="110"/>
+    <line x1="262" y1="150" x2="318" y2="150"/>
+    <line x1="262" y1="190" x2="318" y2="190"/>
+  </g>
+  <text x="290" y="225" text-anchor="middle" font-size="10" fill="#e8a13a">O₂ "corta caminho" do ramo</text>
+  <text x="290" y="239" text-anchor="middle" font-size="10" fill="#e8a13a">que entra para o que sai</text>
+
+  <!-- explicação -->
+  <rect x="380" y="78" width="276" height="170" rx="8" fill="#10202c" stroke="#3a4a58"/>
+  <text x="518" y="104" text-anchor="middle" font-size="12" fill="#e7eef4" font-weight="bold">Dois efeitos do mesmo arranjo</text>
+  <text x="396" y="132" font-size="11" fill="#9fe3ec">✔ aprisiona solutos → gradiente</text>
+  <text x="412" y="148" font-size="10" fill="#cdd9e3">corticomedular (concentra a urina)</text>
+  <text x="396" y="176" font-size="11" fill="#e8a13a">✘ aprisiona O₂ → shunt</text>
+  <text x="412" y="192" font-size="10" fill="#cdd9e3">o O₂ difunde do ramo descendente</text>
+  <text x="412" y="206" font-size="10" fill="#cdd9e3">para o ascendente sem chegar à papila</text>
+  <text x="396" y="232" font-size="10" fill="#9fb1c0">preço fisiológico: a medula fica hipóxica</text>
 </svg>

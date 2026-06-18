@@ -1,23 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dce8ff" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#3366cc" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#3366cc"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M2</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#3366cc" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">diagrama</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a3a6e" opacity="0.7">Hemodinâmica renal — 20% do DC, córtex×medula</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a3a6e">vascularizacao-renal</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#3366cc" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#3366cc">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a3a6e">Vascularização renal (artéria → arqueadas →</text>
-<text x="320" y="203" text-anchor="middle" font-size="12" fill="#1a3a6e">interlobulares)</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <defs><marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#e0556b"/></marker></defs>
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Vascularização renal — a árvore arterial em série</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">do tronco ao glomérulo; estreitar a montante repercute em tudo a jusante</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a3a6e" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <g font-size="11" fill="#e7eef4" text-anchor="middle">
+    <rect x="20"  y="74" width="92" height="42" rx="6" fill="#7a2330" stroke="#e0556b"/><text x="66"  y="100">Aorta</text>
+    <rect x="128" y="74" width="92" height="42" rx="6" fill="#7a2330" stroke="#e0556b"/><text x="174" y="95">a. renal</text><text x="174" y="109" font-size="9" fill="#cdd9e3">~20% do DC</text>
+    <rect x="236" y="74" width="92" height="42" rx="6" fill="#6f2c3a" stroke="#e0556b"/><text x="282" y="100">segmentares</text>
+    <rect x="344" y="74" width="92" height="42" rx="6" fill="#6f2c3a" stroke="#e0556b"/><text x="390" y="100">interlobares</text>
+    <rect x="452" y="74" width="92" height="42" rx="6" fill="#5a3340" stroke="#e08a96"/><text x="498" y="100">arqueadas</text>
+    <rect x="560" y="74" width="100" height="42" rx="6" fill="#5a3340" stroke="#e08a96"/><text x="610" y="100">interlobulares</text>
+  </g>
+  <g stroke="#e0556b" stroke-width="2" marker-end="url(#a)">
+    <line x1="112" y1="95" x2="126" y2="95"/><line x1="220" y1="95" x2="234" y2="95"/>
+    <line x1="328" y1="95" x2="342" y2="95"/><line x1="436" y1="95" x2="450" y2="95"/><line x1="544" y1="95" x2="558" y2="95"/>
+  </g>
+
+  <line x1="610" y1="116" x2="610" y2="150" stroke="#e0556b" stroke-width="3"/>
+  <text x="610" y="166" text-anchor="middle" font-size="10" fill="#e08a96">aferente</text>
+  <circle cx="340" cy="218" r="38" fill="#0f3540" stroke="#39c0c8" stroke-width="2"/>
+  <path d="M321,226 q6,-17 14,-6 q7,-12 14,1 q8,0 3,11 q-15,8 -31,3 z" fill="#39c0c8" fill-opacity="0.55"/>
+  <text x="340" y="276" text-anchor="middle" font-size="12" fill="#9fe3ec" font-weight="bold">glomérulo (tufo de capilares)</text>
+  <line x1="572" y1="200" x2="382" y2="212" stroke="#e0556b" stroke-width="3" marker-end="url(#a)"/>
+  <line x1="298" y1="212" x2="150" y2="200" stroke="#3a7bd5" stroke-width="3"/>
+  <text x="150" y="190" text-anchor="middle" font-size="10" fill="#9bbef0">eferente →</text>
 </svg>

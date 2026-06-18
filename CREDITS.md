@@ -32,6 +32,22 @@ depois) — preencher fonte/autor/licença antes de considerar o módulo finaliz
 | `assets/m1/autorregulacao-tfg-curva.svg` | Autorregulação TFG×PAM | — | Projeto FILTRA | FILTRA (autoral) |
 | `assets/m1/arteriolas-resistencia.svg` | Aferente × eferente | — | Projeto FILTRA | FILTRA (autoral) |
 
+## M2 — Hemodinâmica renal
+| Arquivo | Descrição | Fonte (URL) | Autor | Licença |
+|---|---|---|---|---|
+| `assets/m2/fluxo-sanguineo-renal.png` | Os quatro processos renais (1–4) | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
+| `assets/m2/cortex-medula.png` | Rim in situ + inervação (Gray's) | Gray's Anatomy (1918), via Wikimedia Commons | Henry Gray / Henry Vandyke Carter | Domínio público (PD) |
+| `assets/m2/vascularizacao-renal.svg` | Árvore arterial renal | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m2/medula-hipoxia.svg` | Gradiente de pO₂ córtex×medula | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m2/vasa-recta.svg` | Vasa recta · shunt de O₂ | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m2/autorregulacao-miogenica.svg` | Reflexo miogênico | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m2/macula-densa-feedback.svg` | Mácula densa / feedback TG | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m2/aines-ieca-hemodinamica.svg` | AINE (aferente) × IECA/BRA (eferente) | — | Projeto FILTRA | FILTRA (autoral) |
+
+> Nota: os 6 SVGs do M2 eram placeholders gerados automaticamente; foram **reescritos como figuras
+> didáticas autorais** (FILTRA) nesta revisão. A `cortex-medula.png` (Gray's) mostra o rim in situ e sua
+> inervação, **não** a histologia córtex×medula — uma imagem real desta está pedida em `assets/OnDemand.md`.
+
 ## Regras
 - Preferir **CC0 / domínio público**; **CC-BY / CC-BY-SA** aceitos **com atribuição** nesta tabela.
 - O caminho no `<img>` é sempre **relativo** (`assets/…`), nunca uma URL remota — o produto é offline.

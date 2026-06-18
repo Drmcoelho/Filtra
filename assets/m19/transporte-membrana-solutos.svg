@@ -1,0 +1,58 @@
+<svg width="674" height="365" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<marker id="arrow" orient="auto" overflow="visible"><path d="M-1.4 0-2.65 1.27 1.8 0-2.65-1.27"/></marker>
+<g id="u1" fill="none" stroke="#333">
+<ellipse cx="14.83" cy="81" rx="11.83" ry="12.72" stroke-width="2.4"/>
+<path d="M15 93.57v12.86L6.07 110l4.29 9.64-6.43 8.22 6.43 4.28.35 3.93-7.5 7.5 6.43 7.14-.71 9.65-2.5 3.57-.36 6.78 5.72 8.58-.36 2.5m3.61-75.18 5.32 2.99-4.6 5.13 6.07 5.67.04 5-5.53 4.2 3.26 5.58 6.65 2.41-7.86 6.52 2.86 15.31-4.15 12.54 8.12 7.15" stroke-width="2.3"/>
+</g>
+<use xlink:href="#u1" x="27.18" y="-0.19"/>
+<use xlink:href="#u1" x="54.18" y="-0.19"/>
+<use xlink:href="#u1" x="81.18" y=".81"/>
+<use xlink:href="#u1" x="108.18" y="2.81"/>
+<use xlink:href="#u1" x="135.18" y="2.81"/>
+<use xlink:href="#u1" x="162.18" y="2.81"/>
+<use xlink:href="#u1" x="189.18" y="2.81"/>
+
+<use xlink:href="#u1" x="457.18" y="5.81"/>
+<use xlink:href="#u1" x="483.18" y="5.81"/>
+<use xlink:href="#u1" x="510.18" y="4.81"/>
+<use xlink:href="#u1" x="537.18" y="6.81"/>
+<use xlink:href="#u1" x="565.18" y="6.81"/>
+<use xlink:href="#u1" x="592.18" y="8.81"/>
+<use xlink:href="#u1" x="619.18" y="7.81"/>
+<use xlink:href="#u1" x="645.18" y="7.81"/>
+
+<g id="u2"><use xlink:href="#u1" transform="matrix(1,0,0,-1,-1.91,372.5)"/></g>
+<use xlink:href="#u2" x="27.17" y=".19"/>
+<use xlink:href="#u2" x="54.17" y=".19"/>
+<use xlink:href="#u2" x="81.17" y=".19"/>
+<use xlink:href="#u2" x="108.17" y="-2.81"/>
+<use xlink:href="#u2" x="135.17" y="-2.81"/>
+<use xlink:href="#u2" x="162.17" y="-2.81"/>
+<use xlink:href="#u2" x="189.17" y="-2.81"/>
+
+<use xlink:href="#u2" x="457" y="5"/>
+<use xlink:href="#u2" x="484.17" y="5.19"/>
+<use xlink:href="#u2" x="511.17" y="5.19"/>
+<use xlink:href="#u2" x="537.17" y="3.19"/>
+<use xlink:href="#u2" x="565.17" y="2.19"/>
+<use xlink:href="#u2" x="592.17" y="2.19"/>
+<use xlink:href="#u2" x="619.17" y="2.19"/>
+<use xlink:href="#u2" x="646.17" y="2.19"/>
+
+<path d="M333 128.5c-33.06-15.11-41.82-55.34-90.5-31-37.37 18.68-34.19 165.15 4.5 184.5 49.45 24.72 93.89-32.55 104-27.5 34.52 17.26 75.09 58.83 102 5C469.3 226.91 474.72 75 426.5 75c-37.21 0-66.78 63.52-93.5 53.5Z" fill="#0F0"/>
+<path d="M313.92 368.41c-5.18-69.3 39.44-72.74 43.7-32.26" fill="none" stroke="#F00" stroke-width="10" transform="scale(1,.85)"/>
+<path d="M347.6 284.33l20.06.33-10.38 14.52" fill="#F00"/>
+<g fill="none" stroke="#000" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow)">
+<path d="M253 312a190 190 0 0 0-16-257"/>
+<path d="M407.4 51.61a190 190 0 0 0 16 257"/>
+</g>
+<g font-family="DejaVu Sans" font-size="28">
+<text x="212" y="38">Na<tspan dx="-4" dy="-16" font-size="22">+</tspan></text>
+<text x="425" y="346">K<tspan dy="-16" font-size="22">+</tspan></text>
+<g font-size="22">
+<text x="285.67" y="352.27">ATP</text>
+<text x="342.24" y="323.99">ADP</text>
+<text x="339.41" y="352.27">+Pi</text>
+</g>
+</g>
+</svg>

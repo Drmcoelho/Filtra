@@ -14,6 +14,7 @@ var jsdom = require('jsdom');
 var JSDOM = jsdom.JSDOM;
 
 var ref = require('./model1.js'); // engine canônico (Node) p/ comparar com a UI
+var imgGuard = require('../lib/img-guard.js'); // guarda offline anti-hotlink (compartilhada)
 
 var oks = 0, fail = 0;
 function ok(c, m) { if (c) { oks++; } else { fail++; console.error('FALHA: ' + m); } }
@@ -179,6 +180,9 @@ ok(/educacional/i.test(body) && doc.querySelector('.disc') !== null, 'disclaimer
 ok(/AINE/.test(body) && /IECA/.test(body), 'fármaco como alavanca (AINE/IECA citados)');
 // dose = massa solta (ex.: "40 mg"); NÃO conta concentração laboratorial (ex.: "2,3 mg/dL")
 ok(!/\b\d+\s?(mg|mcg|µg)\b(?!\/)/.test(body), 'M1 sem doses soltas (a farmacologia dosada entra no M2)');
+
+// ----- guarda OFFLINE: nenhum <img> remoto (guarda compartilhada; raster só de assets/ local, §7) -----
+ok(imgGuard.remoteImgs(doc).length === 0, 'offline: nenhum <img> remoto (fotos só de assets/ local)');
 
 console.log(oks + ' OK · ' + fail + ' falhas');
 process.exit(fail > 0 ? 1 : 0);

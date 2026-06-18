@@ -41,6 +41,10 @@
   #tutor-fig svg,.concept svg,#glom-svg svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
   .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
   h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .galeria{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;margin:10px 0}
+  .galeria figure{margin:0;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:6px}
+  .galeria img{width:100%;height:140px;object-fit:contain;background:#0a1016;border-radius:6px}
+  .galeria figcaption{font-size:11px;color:var(--dim);margin-top:5px;line-height:1.3}
   .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
   .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
   .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
@@ -125,6 +129,19 @@
       Isso costuma ser o efeito <b>esperado</b> (hemodinâmico), não lesão — exceto na estenose bilateral de
       artéria renal / rim único, onde a TFG dependia da eferente fechada.</p>
       <div class="concept" id="draw-eferente"></div>
+
+      <h4>Galeria — imagens open source</h4>
+      <p class="sub">Fotos e figuras complementares aos desenhos. Atribuição em <code>CREDITS.md</code> (em curadoria).</p>
+      <div class="galeria">
+        <figure><img src="assets/m1/nefron-rotulado.png" alt="Néfron completo rotulado (glomérulo, TCP, alça, TCD, ducto)" loading="lazy"><figcaption>Néfron rotulado</figcaption></figure>
+        <figure><img src="assets/m1/glomerulo-aferente-eferente.jpg" alt="Glomérulo com arteríolas aferente e eferente" loading="lazy"><figcaption>Glomérulo: aferente × eferente</figcaption></figure>
+        <figure><img src="assets/m1/corpusculo-renal-histologia.jpg" alt="Corpúsculo renal em histologia" loading="lazy"><figcaption>Corpúsculo renal (histologia)</figcaption></figure>
+        <figure><img src="assets/m1/aparelho-justaglomerular.svg" alt="Aparelho justaglomerular" loading="lazy"><figcaption>Aparelho justaglomerular</figcaption></figure>
+        <figure><img src="assets/m1/rim-corte-sagital.png" alt="Corte sagital do rim" loading="lazy"><figcaption>Rim — corte sagital</figcaption></figure>
+        <figure><img src="assets/m1/forcas-starling-glomerulo.svg" alt="Forças de Starling no glomérulo" loading="lazy"><figcaption>Forças de Starling · ilustração do projeto</figcaption></figure>
+        <figure><img src="assets/m1/autorregulacao-tfg-curva.svg" alt="Curva de autorregulação TFG × PAM" loading="lazy"><figcaption>Autorregulação TFG×PAM · ilustração do projeto</figcaption></figure>
+        <figure><img src="assets/m1/arteriolas-resistencia.svg" alt="Resistência das arteríolas aferente e eferente" loading="lazy"><figcaption>Aferente × eferente · ilustração do projeto</figcaption></figure>
+      </div>
     </div>
   </section>
 

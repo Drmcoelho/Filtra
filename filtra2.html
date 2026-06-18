@@ -41,6 +41,13 @@
   #tutor-fig svg,.concept svg,#glom-svg svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
   .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
   h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  /* figura viva: cada foto open-source vive INLINE na sua batida de conceito, com legenda que ensina */
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
   .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
   .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
   .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
@@ -102,27 +109,65 @@
       <p class="sub">O coração bombeia ~5 L/min. O rim (dois) recebe ~1 L/min — 20% do DC, apesar de
       representar &lt;0,5% do peso corporal. É o <b>4º órgão em DO₂</b> (após cérebro, coração, fígado).
       Um DC baixo (ex.: ICC) reduz o FSR proporcionalmente.</p>
-      <div class="concept" id="draw-cardiac"></div>
+      <p class="sub" style="margin-top:0;font-size:13px">As Fig. 1–8 abaixo são referenciadas no Caso, na Trilha e na
+      Avaliação. Atribuição em <code>CREDITS.md</code> (em curadoria).</p>
+      <div class="frow">
+        <div class="concept" id="draw-cardiac"></div>
+        <figure class="fviva"><img src="assets/m2/fluxo-sanguineo-renal.png" alt="Fluxo sanguíneo renal (20% do débito cardíaco)" loading="lazy">
+          <figcaption><b>Fig. 1 · 20% do DC.</b> O rim pesa pouco e bebe muito: ~1 L/min dos ~5 L/min do coração.
+          Não é por necessidade metabólica — é para <b>filtrar</b>. Por isso o FSR cai junto com o débito (a ponte com
+          o Choca).</figcaption></figure>
+        <figure class="fviva"><img src="assets/m2/vascularizacao-renal.svg" alt="Vascularização renal (artéria renal, interlobares, arqueadas)" loading="lazy">
+          <figcaption><b>Fig. 2 · A árvore arterial.</b> Artéria renal → interlobares → arqueadas → interlobulares →
+          aferentes. Uma via em série: estreitar a montante (estenose) repercute em todos os glomérulos a
+          jusante.</figcaption></figure>
+      </div>
 
       <h4>2. Córtex × medula: dois mundos de O₂</h4>
       <p class="sub">O córtex (88% do FSR) tem pO₂ &gt; 50 mmHg — abundância relativa. A medula (12% do FSR)
       recebe pouco fluxo e o <b>ramo espesso da alça de Henle</b> (NKCC2 + Na/K-ATPase) consome O₂ de forma
       intensa → ERO₂_med ≈ 50–75% → pO₂_med ≈ 15–20 mmHg <em>mesmo no normal</em>. Qualquer queda precipita
       <b>hipóxia medular → NTA</b>.</p>
-      <div class="concept" id="draw-cortex-medula"></div>
+      <div class="frow">
+        <div class="concept" id="draw-cortex-medula"></div>
+        <figure class="fviva"><img src="assets/m2/cortex-medula.png" alt="Córtex e medula renal" loading="lazy">
+          <figcaption><b>Fig. 3 · Dois mundos.</b> O córtex (claro, externo) recebe 88% do FSR; a medula (escura,
+          interna) só 12%. A mesma divisão da Fig. 2 do M1 — agora pela ótica do oxigênio.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m2/medula-hipoxia.svg" alt="Hipóxia medular: baixa pO2 no ramo espesso" loading="lazy">
+          <figcaption><b>Fig. 4 · A medula no fio da navalha.</b> Pouco fluxo + alto consumo (NKCC2 + Na/K-ATPase do
+          ramo espesso) → pO₂ ≈ 15–20 mmHg <em>no normal</em>. Qualquer queda → hipóxia → <b>NTA</b>.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m2/vasa-recta.svg" alt="Vasa recta em alça (troca contracorrente)" loading="lazy">
+          <figcaption><b>Fig. 5 · A vasa recta.</b> As alças contracorrente que preservam o gradiente medular
+          também fazem <b>shunt</b> de O₂ — o preço fisiológico de concentrar a urina é a medula viver hipóxica.</figcaption></figure>
+      </div>
 
       <h4>3. Autorregulação do FSR</h4>
       <p class="sub">Entre ~80 e ~180 mmHg de PAM, a arteríola <b>aferente</b> ajusta o tônus
       (miogênico + feedback tubuloglomerular da mácula densa) e mantém o FSR quase constante — o <b>platô</b>.
       Abaixo do joelho inferior a aferente já está no talo → FSR segue a PAM → <b>precipício</b>.</p>
-      <div class="concept" id="draw-autorreg"></div>
+      <div class="frow">
+        <div class="concept" id="draw-autorreg"></div>
+        <figure class="fviva"><img src="assets/m2/autorregulacao-miogenica.svg" alt="Autorregulação miogênica da arteríola aferente" loading="lazy">
+          <figcaption><b>Fig. 6 · O reflexo miogênico.</b> Pressão↑ estira a parede → a aferente se contrai → o fluxo
+          a jusante se mantém. É a resposta rápida que, somada ao feedback tubuloglomerular, desenha o platô.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m2/macula-densa-feedback.svg" alt="Mácula densa e feedback tubuloglomerular" loading="lazy">
+          <figcaption><b>Fig. 7 · O sensor químico.</b> A mácula densa lê o NaCl que chega ao distal: muito NaCl →
+          fecha a aferente (feedback tubuloglomerular); pouco → libera renina (RAAS, M14). O termostato do
+          M1, Fig. 8, revisitado.</figcaption></figure>
+      </div>
 
       <h4>4. AINEs — chave da arteríola aferente</h4>
       <p class="sub">As prostaglandinas (PGE₂/PGI₂) sintetizadas localmente <b>dilatam a aferente</b> e são o
       <em>safety net</em> do rim sob RAAS ativado. Os AINEs (ibuprofeno 400–800 mg q8h; naproxeno 250–500 mg q12h)
       bloqueiam a COX → sem PGs → <b>constrição aferente → FSR↓ → pO₂_med↓</b>. O efeito é amplificado por
       depleção volêmica (RAAS ativado depende ainda mais das PGs).</p>
-      <div class="concept" id="draw-aine"></div>
+      <div class="frow">
+        <div class="concept" id="draw-aine"></div>
+        <figure class="fviva"><img src="assets/m2/aines-ieca-hemodinamica.svg" alt="Efeito de AINEs (aferente) e IECA/BRA (eferente) na hemodinâmica glomerular" loading="lazy">
+          <figcaption><b>Fig. 8 · As duas chaves.</b> AINE fecha a <b>aferente</b> (tira a PGE₂); IECA/BRA abre a
+          <b>eferente</b> (tira a AngII). Juntos espremem a P_GC dos dois lados — o mapa do AINE × IECA que o Lab
+          reproduz, e a tríplice ameaça do M1.</figcaption></figure>
+      </div>
 
       <h4>5. IECA/BRA — chave da arteríola eferente + pérola da creatinina</h4>
       <p class="sub">A angiotensina II (AngII) <b>constrange a eferente</b> — represa o sangue e mantém a P_GC.

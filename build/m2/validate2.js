@@ -227,5 +227,19 @@ ok(/aine_rA/.test(win.pearlInstr ? win.pearlInstr.toString() : '') ||
 // ─── guarda OFFLINE: nenhum <img> remoto ──────────────────────────────────────
 ok(imgGuard.remoteImgs(doc).length === 0, 'offline: nenhum <img> remoto (fotos só de assets/ local)');
 
+// ─── figura viva: fotos open-source INLINE na batida de conceito ──────────────
+var figs = Array.prototype.slice.call(doc.querySelectorAll('figure.fviva'));
+ok(figs.length >= 8, 'figura viva: ≥8 figuras inline (tem ' + figs.length + ')');
+ok(!doc.querySelector('.galeria'), 'figura viva: sem mural .galeria (figuras dispersas)');
+var noConceito = doc.querySelectorAll('#tab-conceito figure.fviva').length;
+ok(noConceito >= 8, 'figura viva: ≥8 figuras dentro da aba Conceito (tem ' + noConceito + ')');
+var faltam = figs.filter(function (fg) { var im = fg.querySelector('img'); var s = im ? (im.getAttribute('src') || '') : ''; return !s || !fs.existsSync(path.join(__dirname, '..', '..', s)); });
+ok(faltam.length === 0, 'figura viva: todos os arquivos existem em assets/ (' + faltam.length + ' faltando)');
+var semAlt = figs.filter(function (fg) { var im = fg.querySelector('img'); return !im || !((im.getAttribute('alt') || '').trim()); });
+ok(semAlt.length === 0, 'figura viva: todo <img> tem alt descritivo');
+var semCap = figs.filter(function (fg) { var cap = fg.querySelector('figcaption'); return !cap || (cap.textContent || '').trim().length < 30; });
+ok(semCap.length === 0, 'figura viva: toda figura tem legenda que ensina (≥30 chars)');
+ok(/Fig\.\s*\d/.test(html), 'figura viva: figuras referenciadas no texto ("Fig. N")');
+
 console.log(oks + ' OK · ' + fail + ' falhas');
 process.exit(fail > 0 ? 1 : 0);

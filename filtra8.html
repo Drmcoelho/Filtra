@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M8 — Ducto coletor: ENaC/aldosterona, célula intercalar, ADH/aquaporinas</title>
+<style>
+  :root{
+    --bg:#0c1014; --panel:#141b22; --panel2:#1b242d; --line:#283642;
+    --ink:#e7eef4; --dim:#9fb1c0; --accent:#39c0c8; --warn:#e8a13a; --bad:#e0556b; --good:#52c08a;
+    --aff:#e0556b; --eff:#3a7bd5; --tuft:#39c0c8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none}
+  section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg,#dose-svg svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px}
+  .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)}
+  .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)}
+  .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)}
+  .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+  code{background:#0a1016;border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:13px}
+  .dose{display:inline-block;background:#0a1016;border:1px solid var(--accent);border-radius:5px;padding:1px 6px;color:var(--accent);font-variant-numeric:tabular-nums}
+  .preset{margin:4px 6px 4px 0}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M8</div>
+  <h1>Ducto coletor — célula principal (ENaC/aldosterona) × intercalar (H⁺/HCO₃), ADH/aquaporinas</h1>
+  <div class="sub">"Aldosterona = sódio" é meia-verdade. A aldosterona <b>não só retém Na⁺</b>: ela <b>TROCA Na⁺ por
+  K⁺ e H⁺</b>. O <b>ENaC</b> apical reabsorve Na⁺ → a luz fica <b>eletronegativa</b> → essa voltagem
+  <b>impulsiona</b> a secreção de K⁺ e H⁺ (hiperaldo → hipocalemia + alcalose). A <b>célula intercalar</b> faz o
+  ajuste fino do ácido-base. E o <b>ADH</b> é uma alavanca <b>separada</b>: abre <b>aquaporina-2</b> → reabsorve
+  <b>água livre</b> (volume × água livre são eixos distintos). É o alvo de <b>poupadores de K⁺</b>
+  (espironolactona, eplerenona, amilorida) e do <b>vaptano</b> (tolvaptana). Dose-resposta:
+  <code>efeito = Emax · D / (EC50 + D)</code>.</div>
+  <nav class="hex">
+    <a class="soon" title="em breve">RESPIRA</a>
+    <a class="soon" title="em breve">CHOCA</a>
+    <span class="ativo">FILTRA</span>
+    <a class="soon" title="em breve">ALIMENTA</a>
+    <a class="soon" title="em breve">METABOLIZA</a>
+    <a class="soon" title="em breve">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="filtra.html">&larr; índice do braço FILTRA</a>
+
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- ============================== CONCEITO ============================== -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — o ducto coletor, célula a célula</h3>
+
+      <h4>1. A célula principal — ENaC, voltagem luminal e a Na⁺/K⁺-ATPase</h4>
+      <p class="sub">A <b>célula principal</b> reabsorve Na⁺ pelo canal <b>ENaC</b> apical. Ao retirar cátions da
+      luz, a luz fica <b>eletronegativa</b> — e essa voltagem é o <b>motor</b> que empurra K⁺ e H⁺ para a urina.
+      A <b>Na⁺/K⁺-ATPase</b> basolateral mantém o gradiente. Por isso o ducto maneja só <b>~2–3% do Na⁺</b>
+      filtrado, mas <b>define o K⁺, o H⁺ e a água final</b> (Fig. 1–2).</p>
+      <div class="frow">
+        <div class="concept" id="draw-principal"></div>
+        <figure class="fviva"><img src="assets/m8/celula-principal-enac.png" alt="Célula principal do ducto coletor com canal ENaC apical reabsorvendo sódio e Na/K-ATPase basolateral" loading="lazy">
+          <figcaption><b>Fig. 1 · Célula principal.</b> O <b>ENaC</b> apical (①) reabsorve Na⁺ → a <b>luz fica
+          eletronegativa</b> (②); a <b>Na⁺/K⁺-ATPase</b> basolateral (③) joga K⁺ para dentro da célula, que sai
+          pela luz (④). A voltagem é o <b>motor</b> da secreção de K⁺ e H⁺.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m8/ducto-coletor-celulas.svg" alt="O ducto coletor com célula principal e células intercaladas tipo A e tipo B lado a lado" loading="lazy">
+          <figcaption><b>Fig. 2 · As duas células.</b> O ducto reúne a <b>principal</b> (Na/K/água) e a
+          <b>intercalar</b> (H⁺/HCO₃). Pouco Na⁺ passa aqui (~2–3%), mas é onde o meio interno é <b>afinado</b>:
+          K⁺, ácido-base e a concentração final da urina.</figcaption></figure>
+      </div>
+
+      <h4>2. A aldosterona TROCA Na⁺ por K⁺ e H⁺ — não "só retém sódio"</h4>
+      <p class="sub">A <b>aldosterona</b> liga-se ao <b>receptor mineralocorticoide (MR)</b> → ↑ENaC + ↑Na⁺/K⁺-ATPase
+      → reabsorve mais Na⁺ e, pela voltagem, <b>secreta mais K⁺ e H⁺</b>. Logo: <b>hiperaldosteronismo →
+      hipocalemia + alcalose metabólica</b>. É a TROCA que mata o "aldosterona = sódio". O <span class="dose">poupador
+      de K⁺</span> bloqueia esse eixo: <span class="dose">espironolactona 25–100 mg/dia VO</span> e
+      <span class="dose">eplerenona 25–50 mg/dia VO</span> (MR), <span class="dose">amilorida 5–10 mg/dia VO</span>
+      (ENaC direto) → natriurese leve + <b>retenção de K⁺</b> (Fig. 3–4).</p>
+      <div class="frow">
+        <div class="concept" id="draw-aldo"></div>
+        <figure class="fviva"><img src="assets/m8/aldosterona-acao.svg" alt="Aldosterona ligando o receptor mineralocorticoide e induzindo ENaC e Na/K-ATPase, trocando sódio por potássio e hidrogênio" loading="lazy">
+          <figcaption><b>Fig. 3 · A troca da aldosterona.</b> MR → ↑ENaC + ↑Na⁺/K⁺-ATPase: <b>entra Na⁺, saem K⁺ e
+          H⁺</b>. Não é "só reter sódio": é uma <b>troca</b>. Por isso hiperaldo dá <b>hipocalemia + alcalose</b>;
+          os poupadores bloqueiam o MR (espiro/eplerenona) ou o canal (amilorida).</figcaption></figure>
+        <figure class="fviva"><img src="assets/m8/poupadores-k-sitio.png" alt="Sítio de ação dos diuréticos poupadores de potássio no ducto coletor: antagonistas do MR e bloqueadores do ENaC" loading="lazy">
+          <figcaption><b>Fig. 4 · Os poupadores de K⁺.</b> Espironolactona/eplerenona bloqueiam o <b>MR</b>;
+          amilorida bloqueia o <b>ENaC</b> direto. Resultado: menos Na⁺ reabsorvido (natriurese leve) e <b>menos K⁺
+          secretado</b> → o K⁺ sobe. Cuidado com IECA/BRA junto (Fig. 8).</figcaption></figure>
+      </div>
+
+      <h4>3. A célula intercalar — H⁺/HCO₃ e o ajuste fino do ácido-base</h4>
+      <p class="sub">A <b>célula intercalar tipo A</b> secreta <b>H⁺</b> (H⁺-ATPase) e <b>regenera HCO₃⁻</b>
+      (acidez titulável + NH₄⁺); a <b>tipo B</b> secreta HCO₃⁻ quando sobra base. É o <b>ajuste fino</b> renal do
+      pH — o complemento do bicarbonato resgatado no proximal (M5/M13). A voltagem negativa da célula principal
+      <b>facilita</b> a secreção de H⁺ — por isso o hiperaldo também alcaliniza (Fig. 5).</p>
+      <div class="frow">
+        <div class="concept" id="draw-intercalar"></div>
+        <figure class="fviva"><img src="assets/m8/celula-intercalar-h.svg" alt="Célula intercalar tipo A secretando H+ pela H-ATPase e regenerando bicarbonato; tipo B secretando bicarbonato" loading="lazy">
+          <figcaption><b>Fig. 5 · Célula intercalar.</b> <b>Tipo A</b>: H⁺-ATPase secreta H⁺ na luz → titula
+          fosfato (acidez titulável) e NH₃→NH₄⁺ → <b>regenera HCO₃⁻</b> no sangue. <b>Tipo B</b>: faz o oposto
+          (secreta HCO₃⁻). O ducto é o <b>ajuste fino</b> do ácido-base.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m8/ducto-coletor-celulas.svg" alt="Esquema do ducto coletor cortical e medular com as células e o gradiente de concentração" loading="lazy">
+          <figcaption><b>Fig. 6 · O ducto medular.</b> Ao atravessar a medula hipertônica (gradiente da alça, M6),
+          a água é reabsorvida <b>se</b> o ADH abriu as aquaporinas. Sem ADH, a urina diluída passa direto. A
+          concentração final mora aqui.</figcaption></figure>
+      </div>
+
+      <h4>4. O ADH abre aquaporinas — a alavanca SEPARADA da água livre</h4>
+      <p class="sub">O <b>ADH/vasopressina</b> liga o receptor <b>V2</b> basolateral → insere <b>aquaporina-2 (AQP2)</b>
+      na membrana apical → reabsorve <b>água livre</b> → concentra a urina. É um eixo <b>independente</b> do Na⁺
+      (volume × água livre): mover o ADH não mexe no K⁺; mover a aldosterona não mexe na osmolalidade urinária. A
+      <span class="dose">tolvaptana 15–60 mg/dia VO</span> bloqueia o V2 → <b>aquarese</b> (perde só água) →
+      clearance de água livre↑ → <b>Na⁺ sérico↑</b> SEM mexer no Na⁺ corporal (corrige a hiponatremia do SIADH — Fig. 7).</p>
+      <div class="frow">
+        <div class="concept" id="draw-adh"></div>
+        <figure class="fviva"><img src="assets/m8/aquaporina-adh.svg" alt="ADH ligando o receptor V2, ativando AMP cíclico e inserindo aquaporina-2 na membrana apical da célula principal" loading="lazy">
+          <figcaption><b>Fig. 7 · ADH → AQP2.</b> V2 → AMPc → a <b>AQP2</b> migra à membrana apical → a água segue o
+          gradiente medular → urina <b>concentrada</b>. Sem ADH (ou com <b>tolvaptana</b>), a AQP2 some → urina
+          diluída → <b>aquarese</b>. Eixo da <b>água livre</b>, distinto do Na⁺.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m8/vaptano-v2.svg" alt="Tolvaptana, antagonista do receptor V2, bloqueando a vasopressina e gerando aquarese" loading="lazy">
+          <figcaption><b>Fig. 8 · O vaptano.</b> A <b>tolvaptana</b> antagoniza o <b>V2</b> → sem AQP2 → perde-se
+          <b>água livre</b> (aquarese), não Na⁺ → o Na⁺ sérico <b>sobe</b>. Corrige a hiponatremia pela <b>água</b>,
+          não pelo sódio. As Fig. 1–8 reaparecem no Caso, na Trilha e na Avaliação.</figcaption></figure>
+      </div>
+
+      <h4>5. A farmacologia do segmento — dose-resposta sigmoide e o perigo do K⁺</h4>
+      <p class="sub">Cada fármaco é a <b>chave</b> de um alvo, e seu efeito segue <code>efeito = Emax · D / (EC50 + D)</code>:
+      há <b>teto</b> (Emax), <b>potência</b> (EC50) e <b>saturação</b>.
+      <span class="dose">espironolactona 25–100 mg/dia VO</span> · <span class="dose">eplerenona 25–50 mg/dia VO</span> ·
+      <span class="dose">amilorida 5–10 mg/dia VO</span> · <span class="dose">tolvaptana 15–60 mg/dia VO</span>.
+      O <b>perigo</b>: poupador + <b>IECA/BRA</b> (que também baixa a aldosterona) → <b>hipercalemia</b> — dois golpes
+      no mesmo eixo do K⁺ (Fig. 8 e a aba Lab).</p>
+      <div class="frow">
+        <div class="concept" id="draw-dose"></div>
+        <figure class="fviva"><img src="assets/m8/adh-vasopressina-eixo.svg" alt="Curva dose-resposta hiperbólica com teto Emax e meia-resposta em EC50 para os fármacos do ducto coletor" loading="lazy">
+          <figcaption><b>Fig. 9 · A dose-resposta.</b> <code>efeito = Emax·D/(EC50+D)</code>: cresce rápido,
+          desacelera e <b>plateia no Emax</b>. Em EC50, o efeito é metade do teto. É a forma que justifica o teto de
+          cada poupador e do vaptano — dobrar a dose perto do Emax rende pouco.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== CASO (5 atos) ============================== -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — cinco atos, decida antes de revelar</h3>
+      <p class="sub">Cinco situações do ducto coletor. <b>(A)</b> HAS resistente com K⁺ 2.9 e HCO₃ 32. <b>(B)</b>
+      ICC/cirrose: por que se escolhe a espironolactona? <b>(C)</b> Idoso com IECA + espironolactona chega com K⁺
+      6.3. <b>(D)</b> Pneumonia, Na⁺ 122, urina concentrada (SIADH). <b>(E)</b> Jovem hipertenso, hipocalêmico, com
+      aldosterona e renina BAIXAS — e a espironolactona não resolve.</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step">
+        <b>Ato 1.</b> A HAS resistente (A) com K⁺ 2.9 + alcalose — qual o mecanismo?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>Hiperaldosteronismo</b> (ex.: adenoma de Conn). A aldosterona alta <b>TROCA
+        Na⁺ por K⁺ e H⁺</b>: reabsorve Na⁺ (HAS), <b>secreta K⁺</b> (hipocalemia) e <b>H⁺</b> (alcalose metabólica).
+        No engine: <code>aldo 2.5</code> → K secretado↑, K sérico ~2.9, HCO₃↑. Não é "só reter sódio" — é a
+        <b>troca</b> (Fig. 3).</div>
+      </div>
+      <div class="step">
+        <b>Ato 2.</b> Na ICC/cirrose (B), por que a <b>espironolactona</b> e não outro diurético?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2">Porque nesses estados há <b>hiperaldosteronismo secundário</b> (volume circulante
+        efetivo baixo → RAAS ligado). A <span class="dose">espironolactona 25–100 mg/dia VO</span> bloqueia o <b>MR</b>
+        → natriurese leve <b>poupando K⁺</b> (e antagoniza a fibrose na ICC). Na cirrose é o diurético de escolha
+        (a relação espiro:furosemida). No engine: <code>espiro 50</code> → K sérico↑, natriurese leve.</div>
+      </div>
+      <div class="step">
+        <b>Ato 3.</b> O idoso (C) com IECA + espironolactona e K⁺ 6.3 — o que aconteceu?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3"><b>Hipercalemia iatrogênica.</b> O IECA/BRA <b>baixa a aldosterona</b> e a
+        espironolactona <b>bloqueia o MR</b> — <b>dois golpes no mesmo eixo do K⁺</b>. No engine:
+        <code>espiro 50 + ieca</code> → regime <b>poupador+IECA</b>, K sérico &gt; 5.0. Suspenda o poupador, trate o
+        K⁺ (gluconato de Ca, insulina+glicose, β₂), e revise a função renal (Fig. 4/8).</div>
+      </div>
+      <div class="step">
+        <b>Ato 4.</b> A pneumonia (D) com Na⁺ 122 e urina concentrada — diagnóstico e conduta?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>SIADH</b>: ADH inapropriadamente alto → reabsorve <b>água livre</b> → dilui o
+        Na⁺ (urina concentrada apesar da hiponatremia). É um problema de <b>ÁGUA</b>, não de sódio. A
+        <span class="dose">tolvaptana 15–60 mg/dia VO</span> (antagonista do V2) gera <b>aquarese</b> → clearance de
+        água livre↑ → Na⁺ sobe SEM dar sódio. No engine: <code>adh 3 + tolvaptana 30</code> → Na⁺ sobe pela água.
+        Corrija devagar (risco de mielinólise — ponte M10).</div>
+      </div>
+      <div class="step">
+        <b>Ato 5.</b> O jovem (E) hipertenso e hipocalêmico com aldosterona+renina BAIXAS e espiro ineficaz — e a síntese.
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>Síndrome de Liddle</b>: o <b>ENaC é constitutivamente ATIVO</b> (mutação) →
+        reabsorve Na⁺ e secreta K⁺ <b>sem precisar de aldosterona</b> (por isso aldo/renina baixas). A
+        <b>espironolactona não resolve</b> (não há MR a bloquear) — a <span class="dose">amilorida 5–10 mg/dia VO</span>,
+        que bloqueia o <b>canal direto</b>, é o tratamento. No engine: <code>liddle true</code> → espiro inútil,
+        amilorida corrige.
+        <br><b>Lição:</b> o ducto é o <b>ajuste fino</b>. A aldosterona <b>troca</b> Na⁺ por K⁺/H⁺ (não só retém Na);
+        o ADH é uma alavanca <b>separada</b> da água livre. Cada fármaco é a chave de um alvo; a dose-resposta é
+        fisiologia.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== TRILHA ============================== -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — dez passos que constroem o conceito</h3>
+      <details><summary>1. Quanto do Na⁺ filtrado o ducto coletor maneja?</summary>
+        <p><em>Pista: pouco, mas decisivo.</em><br>
+        Só ~<b>2–3%</b> do Na⁺ filtrado. Mas é o <b>ajuste fino</b>: define o K⁺, o H⁺ e a concentração final da
+        urina. Pouco sódio, grande poder sobre o meio interno.</p></details>
+      <details><summary>2. Como o ENaC impulsiona a secreção de K⁺ e H⁺?</summary>
+        <p><em>Pista: voltagem.</em><br>
+        Ao reabsorver Na⁺ (cátion) pela célula principal, a <b>luz fica eletronegativa</b>. Essa voltagem
+        <b>empurra</b> K⁺ e H⁺ para a urina. O ENaC é, indiretamente, o motor da secreção de potássio.</p></details>
+      <details><summary>3. Por que "aldosterona = sódio" é uma meia-verdade?</summary>
+        <p><em>Pista: pense na troca.</em><br>
+        Porque a aldosterona <b>TROCA</b> Na⁺ por K⁺ e H⁺: ↑ENaC + ↑Na⁺/K⁺-ATPase → reabsorve Na⁺ <b>e secreta K⁺ e
+        H⁺</b>. Por isso hiperaldo dá <b>hipocalemia + alcalose</b>, não só retenção de sódio.</p></details>
+      <details><summary>4. O que fazem a espironolactona e a amilorida — e onde diferem?</summary>
+        <p><em>Pista: receptor × canal.</em><br>
+        A <b>espironolactona</b> (e a eplerenona) bloqueia o <b>receptor mineralocorticoide (MR)</b>; a
+        <b>amilorida</b> bloqueia o <b>ENaC direto</b>. Ambas poupam K⁺. A diferença importa no Liddle: lá só a
+        amilorida funciona.</p></details>
+      <details><summary>5. O que faz a célula intercalar tipo A?</summary>
+        <p><em>Pista: H⁺ e bicarbonato.</em><br>
+        Secreta <b>H⁺</b> pela H⁺-ATPase → titula fosfato (acidez titulável) e captura NH₃→NH₄⁺ → <b>regenera
+        HCO₃⁻</b> no sangue. É o ajuste fino renal do ácido-base. A tipo B faz o oposto (secreta HCO₃⁻).</p></details>
+      <details><summary>6. Como o ADH concentra a urina?</summary>
+        <p><em>Pista: V2 e aquaporina.</em><br>
+        O ADH liga o <b>V2</b> → insere <b>aquaporina-2</b> na membrana apical → a água segue o gradiente medular →
+        urina concentrada. Sem ADH, a AQP2 some → urina diluída.</p></details>
+      <details><summary>7. Por que ADH e aldosterona são alavancas DISTINTAS?</summary>
+        <p><em>Pista: água livre × volume.</em><br>
+        O ADH controla a <b>água livre</b> (tonicidade/Na⁺ sérico); a aldosterona controla o <b>Na⁺/K⁺</b> (volume e
+        potássio). Mover um não mexe no outro: o ADH não muda o K⁺; a aldosterona não muda a osmolalidade urinária.</p></details>
+      <details><summary>8. Como a tolvaptana corrige a hiponatremia do SIADH?</summary>
+        <p><em>Pista: aquarese, não sódio.</em><br>
+        Bloqueia o <b>V2</b> → a água livre escapa (<b>aquarese</b>) → clearance de água livre↑ → o Na⁺ sérico
+        <b>sobe</b> SEM dar sódio. Corrige pela <b>ÁGUA</b>. O Na⁺ corporal não muda.</p></details>
+      <details><summary>9. Por que poupador de K⁺ + IECA/BRA dá hipercalemia?</summary>
+        <p><em>Pista: dois golpes no mesmo eixo.</em><br>
+        O IECA/BRA <b>baixa a aldosterona</b> e o poupador <b>bloqueia o MR/ENaC</b> — ambos reduzem a secreção
+        distal de K⁺. Somados, o K⁺ sobe perigosamente. Monitore K⁺ e creatinina.</p></details>
+      <details><summary>10. Como a dose-resposta explica o "teto" dos poupadores e do vaptano?</summary>
+        <p><em>Pista: efeito = Emax·D/(EC50+D).</em><br>
+        A curva satura: perto do <b>Emax</b>, dobrar a dose rende cada vez menos. Em EC50 o efeito é metade do teto.
+        É a mesma forma sigmoide que governa todos os fármacos do néfron.</p></details>
+    </div>
+  </section>
+
+  <!-- ============================== INSTRUMENTO ============================== -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — a secreção de K⁺ vs a atividade da aldosterona/ENaC</h3>
+      <p class="sub">A linha <span style="color:#e8a13a">âmbar</span> é a secreção de K⁺ <b>sem bloqueio</b> (só a
+      aldosterona): mais aldo → mais ENaC → mais K⁺ na urina (e menos K⁺ no sangue). A
+      <span style="color:#52c08a">verde</span> é a secreção <b>com o poupador atual</b> — espironolactona/amilorida
+      <b>derrubam</b> a curva → <b>poupam K⁺</b>. Suba a dose do poupador e veja a verde despencar abaixo da âmbar.</p>
+      <div class="grid" style="margin-bottom:10px">
+        <div>
+          <label>Aldosterona (×normal): <span class="val" id="instr-lbl-aldo">1.0</span></label>
+          <input type="range" id="instr-aldo" min="0" max="4" step="0.1" value="1">
+          <label>Espironolactona (mg/dia VO): <span class="val" id="instr-lbl-spiro">0</span></label>
+          <input type="range" id="instr-spiro" min="0" max="100" step="5" value="0">
+        </div>
+        <div>
+          <label>Amilorida (mg/dia VO): <span class="val" id="instr-lbl-amil">0</span></label>
+          <input type="range" id="instr-amil" min="0" max="10" step="1" value="0">
+          <label>Síndrome de Liddle:</label>
+          <select id="instr-liddle">
+            <option value="0">desligada</option>
+            <option value="1">ligada</option>
+          </select>
+        </div>
+      </div>
+      <canvas id="ksec-canvas" width="900" height="320" aria-label="Secreção de K vs atividade da aldosterona"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+      <h4>A dose-resposta da espironolactona (computada): <code>efeito = Emax·D/(EC50+D)</code></h4>
+      <div class="concept" id="dose-svg"></div>
+    </div>
+  </section>
+
+  <!-- ============================== LAB ============================== -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — mova a fisiologia e a farmacologia, leia o ducto por mecanismo</h3>
+      <div style="margin-bottom:8px">
+        <button class="act preset" data-preset="hiperaldo">Hiperaldosteronismo (Conn)</button>
+        <button class="act preset" data-preset="espiro">Espironolactona 50 mg (ICC)</button>
+        <button class="act preset" data-preset=" poupieca" data-p="poupieca">Poupador + IECA</button>
+        <button class="act preset" data-preset="siadh">SIADH + tolvaptana</button>
+        <button class="act preset" data-preset="liddle">Liddle + amilorida</button>
+        <button class="act preset" data-preset="normal">Normal</button>
+      </div>
+      <div class="grid">
+        <div>
+          <label>Aldosterona (×normal): <span class="val" id="lbl-aldo">1.0</span></label>
+          <input type="range" id="in-aldo" min="0" max="4" step="0.1" value="1">
+          <label>ADH / vasopressina (×normal): <span class="val" id="lbl-adh">1.0</span></label>
+          <input type="range" id="in-adh" min="0" max="5" step="0.1" value="1">
+          <label>Espironolactona (mg/dia VO — antagonista do MR): <span class="val" id="lbl-spiro">0</span></label>
+          <input type="range" id="in-spiro" min="0" max="100" step="5" value="0">
+          <label>Eplerenona (mg/dia VO — MR seletivo): <span class="val" id="lbl-eple">0</span></label>
+          <input type="range" id="in-eple" min="0" max="50" step="5" value="0">
+        </div>
+        <div>
+          <label>Amilorida (mg/dia VO — bloqueia ENaC): <span class="val" id="lbl-amil">0</span></label>
+          <input type="range" id="in-amil" min="0" max="10" step="1" value="0">
+          <label>Tolvaptana (mg/dia VO — antagonista V2): <span class="val" id="lbl-tolva">0</span></label>
+          <input type="range" id="in-tolva" min="0" max="60" step="5" value="0">
+          <label>IECA/BRA concomitante:</label>
+          <select id="in-ieca">
+            <option value="0">não</option>
+            <option value="1">sim</option>
+          </select>
+          <label>Síndrome de Liddle (ENaC constitutivo):</label>
+          <select id="in-liddle">
+            <option value="0">desligada</option>
+            <option value="1">ligada</option>
+          </select>
+        </div>
+      </div>
+
+      <table>
+        <tr><th>Variável</th><th>Atual</th><th>Normal ≈</th></tr>
+        <tr><td>Atividade efetiva do ENaC (×)</td><td class="num" id="out-enac">—</td><td class="num">~1</td></tr>
+        <tr><td>Na⁺ reabsorvido no ducto (fração filtrada)</td><td class="num" id="out-fracna">—</td><td class="num">~0.025</td></tr>
+        <tr><td>Secreção de K⁺ (relativa)</td><td class="num" id="out-ksec">—</td><td class="num">~1.0</td></tr>
+        <tr><td>K⁺ sérico (mEq/L)</td><td class="num" id="out-k">—</td><td class="num">3.5–5.0</td></tr>
+        <tr><td>HCO₃⁻ plasmático (mEq/L)</td><td class="num" id="out-hco3">—</td><td class="num">24</td></tr>
+        <tr><td>Osmolalidade urinária (mOsm/kg)</td><td class="num" id="out-osmu">—</td><td class="num">300–900</td></tr>
+        <tr><td>Clearance de água livre (mL/min)</td><td class="num" id="out-cal">—</td><td class="num">—</td></tr>
+        <tr><td>Na⁺ sérico (mEq/L)</td><td class="num" id="out-na">—</td><td class="num">135–145</td></tr>
+        <tr><td>Natriurese do poupador (fração)</td><td class="num" id="out-natr">—</td><td class="num">~0</td></tr>
+        <tr><td>Efeitos dose-resposta (espiro · eple · amil · tolva)</td><td class="num" id="out-efeitos">—</td><td class="num">0 · 0 · 0 · 0</td></tr>
+        <tr><td>Regime</td><td class="num" id="out-regime">—</td><td class="num">normal</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- ============================== AVALIAÇÃO ============================== -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (13)</button>
+        <button data-bank="textual">Textual (12)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica e farmacológica</b>.
+    A farmacologia entra como conteúdo de primeira classe (decisão do autor, CLAUDE.md §8): as doses citadas —
+    <b>espironolactona 25–100 mg/dia VO</b>, <b>eplerenona 25–50 mg/dia VO</b>, <b>amilorida 5–10 mg/dia VO</b>,
+    <b>tolvaptana 15–60 mg/dia VO</b> — aparecem ancoradas ao <b>mecanismo</b> (o MR, o ENaC, o V2) que cada
+    fármaco bloqueia, e o efeito é <b>computado pelo motor</b> (dose-resposta <code>efeito = Emax·D/(EC50+D)</code>),
+    nunca tabelado. A ferramenta é <b>educacional</b>, não está conectada a nenhum paciente real nem é
+    <b>dispositivo médico</b> certificado; a decisão e a <b>responsabilidade</b> finais são sempre do prescritor.
+    <b>Nota de honestidade do modelo:</b> as constantes (a fração de Na⁺ do ducto, as sensibilidades do K⁺/Na⁺
+    sérico ao eixo aldosterona/ADH, e os EC50/Emax de cada fármaco) são estimativas <b>didáticas</b> calibradas
+    para reproduzir a <b>forma</b> dos fenômenos (a troca Na⁺↔K⁺/H⁺; a hipercalemia do poupador+IECA; a aquarese do
+    vaptano; as duas alavancas independentes). Os EC50 são ilustrativos: a curva ensina teto, potência e saturação,
+    não a farmacocinética exata.
+  </div>
+
+  <footer>
+    CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira
+  </footer>
+</div>
+
+<script>
+/* =========================================================================
+ * ENGINE INLINE — espelho fiel de build/m8/model8.js (o motor manda no pixel)
+ * ========================================================================= */
+'use strict';
+
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a) n=a; if(n>b) n=b; return n; }
+function merge(a,b){ var o={},k; if(a) for(k in a) if(Object.prototype.hasOwnProperty.call(a,k)) o[k]=a[k]; if(b) for(k in b) if(Object.prototype.hasOwnProperty.call(b,k)) o[k]=b[k]; return o; }
+
+var ALDO_N=1.0, ADH_N=1.0, K_N=4.2, NA_N=140, FRAC_NA_DUCTO=0.025, KSEC_N=1.0,
+    K_PER_ALDO=0.9, K_PER_BLOCK=1.6, NA_PER_AQUA=12,
+    SPIRO_EC50=50, SPIRO_EMAX=0.85, EPLE_EC50=50, EPLE_EMAX=0.75,
+    AMIL_EC50=5, AMIL_EMAX=0.80, TOLVA_EC50=15, TOLVA_EMAX=0.90;
+
+function doseResposta(D,EC50,Emax){
+  var d=clampv(D,0,1e9), ec=clampv(EC50,1e-9,1e9), em=clampv(Emax,0,1);
+  var e=em*d/(ec+d); if(!isFinite(e)||e<0) e=0; if(e>em) e=em; return e;
+}
+
+function ductoColetor(input){
+  var inp=input||{};
+  var aldo =clampv(inp.aldo !==undefined?inp.aldo :ALDO_N,0,10);
+  var adh  =clampv(inp.adh  !==undefined?inp.adh  :ADH_N,0,10);
+  var espiro    =clampv(inp.espiro    !==undefined?inp.espiro    :0,0,400);
+  var eplerenona=clampv(inp.eplerenona!==undefined?inp.eplerenona:0,0,400);
+  var amilorida =clampv(inp.amilorida !==undefined?inp.amilorida :0,0,80);
+  var tolvaptana=clampv(inp.tolvaptana!==undefined?inp.tolvaptana:0,0,120);
+  var ieca  =(inp.ieca  ===true||inp.ieca  ===1||inp.ieca  ==='sim')?true:false;
+  var liddle=(inp.liddle===true||inp.liddle===1||inp.liddle==='sim')?true:false;
+
+  var eSpiro=doseResposta(espiro,SPIRO_EC50,SPIRO_EMAX);
+  var eEple =doseResposta(eplerenona,EPLE_EC50,EPLE_EMAX);
+  var eAmil =doseResposta(amilorida,AMIL_EC50,AMIL_EMAX);
+  var eTolva=doseResposta(tolvaptana,TOLVA_EC50,TOLVA_EMAX);
+
+  var blocoMR=1-(1-eSpiro)*(1-eEple); if(blocoMR<0) blocoMR=0; if(blocoMR>1) blocoMR=1;
+  var blocoENaC=1-(1-blocoMR)*(1-eAmil); if(blocoENaC<0) blocoENaC=0; if(blocoENaC>1) blocoENaC=1;
+
+  var enacAldo=liddle?Math.max(aldo,2.2):aldo;
+  var blocoENaCef=liddle?eAmil:blocoENaC;
+  if(blocoENaCef<0) blocoENaCef=0; if(blocoENaCef>1) blocoENaCef=1;
+  var enacAtiv=enacAldo*(1-blocoENaCef); if(enacAtiv<0) enacAtiv=0;
+
+  var fracNaDucto=FRAC_NA_DUCTO*clampv(enacAtiv,0,4); if(fracNaDucto>0.06) fracNaDucto=0.06;
+  var voltagemLuminal=-8*clampv(enacAtiv,0,4);
+  var kSecrecao=KSEC_N*clampv(enacAtiv,0,4);
+  var hSecrecao=KSEC_N*clampv(enacAtiv,0,4)*0.8;
+
+  var deltaKaldo =-K_PER_ALDO*(enacAldo-1);
+  var deltaKblock= K_PER_BLOCK*blocoENaCef;
+  var deltaKieca = ieca?0.5:0;
+  var kSerico=clampv(K_N+deltaKaldo+deltaKblock+deltaKieca,1.5,9.0);
+
+  var deltaHco3=2.5*(enacAldo-1)-3.0*blocoENaCef;
+  var hco3Plasma=clampv(24+deltaHco3,14,36);
+
+  var adhEf=adh*(1-eTolva); if(adhEf<0) adhEf=0;
+  var osmUrina=clampv(80+720*(adhEf/(0.4+adhEf)),50,1200);
+  var urinaConcentrada=osmUrina>300;
+  var aguaLivreReab=clampv(adhEf,0,10);
+  var clearanceAguaLivre=2.5-3.0*(adhEf/(0.4+adhEf));
+
+  var diluicaoADH=-6*(clampv(adh,0,10)/(0.5+clampv(adh,0,10))-(1/1.5));
+  var correcaoAquarese=NA_PER_AQUA*eTolva*(clampv(adh,0,10)/(0.5+clampv(adh,0,10)));
+  var naSerico=clampv(NA_N+diluicaoADH+correcaoAquarese,110,165);
+
+  var natriurese=clampv(FRAC_NA_DUCTO*blocoENaCef*(liddle?eAmil:1),0,0.06);
+  var fluxoUrinario=clampv(1+3.0*eTolva+10*natriurese,0.2,8);
+
+  var regime;
+  if(liddle&&eAmil<0.2)                                regime='liddle';
+  else if(liddle&&eAmil>=0.2)                          regime='liddle_amilorida';
+  else if(eTolva>0.25&&adh>1.1)                        regime='tolvaptana_aquarese';
+  else if((eSpiro>0.25||eEple>0.25||eAmil>0.25)&&ieca) regime='poupador_ieca_hipercalemia';
+  else if(eSpiro>0.25||eEple>0.25||eAmil>0.25)         regime='poupador_k';
+  else if(aldo>1.5)                                    regime='hiperaldosteronismo';
+  else if(aldo<0.4)                                    regime='hipoaldosteronismo';
+  else                                                 regime='normal';
+
+  var trocaNaK=kSecrecao;
+
+  return {
+    aldo:aldo,adh:adh,espiro:espiro,eplerenona:eplerenona,amilorida:amilorida,
+    tolvaptana:tolvaptana,ieca:ieca,liddle:liddle,
+    eSpiro:eSpiro,eEple:eEple,eAmil:eAmil,eTolva:eTolva,
+    blocoMR:blocoMR,blocoENaC:blocoENaC,blocoENaCef:blocoENaCef,
+    spiroEC50:SPIRO_EC50,spiroEmax:SPIRO_EMAX,epleEC50:EPLE_EC50,epleEmax:EPLE_EMAX,
+    amilEC50:AMIL_EC50,amilEmax:AMIL_EMAX,tolvaEC50:TOLVA_EC50,tolvaEmax:TOLVA_EMAX,
+    enacAtiv:enacAtiv,fracNaDucto:fracNaDucto,voltagemLuminal:voltagemLuminal,
+    kSecrecao:kSecrecao,hSecrecao:hSecrecao,trocaNaK:trocaNaK,
+    kSerico:kSerico,hco3Plasma:hco3Plasma,deltaHco3:deltaHco3,
+    adhEf:adhEf,osmUrina:osmUrina,urinaConcentrada:urinaConcentrada,
+    aguaLivreReab:aguaLivreReab,clearanceAguaLivre:clearanceAguaLivre,naSerico:naSerico,
+    natriurese:natriurese,fluxoUrinario:fluxoUrinario,
+    regime:regime
+  };
+}
+
+function kSecrecaoLayout(state,W,H){
+  state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var r0=ductoColetor(state);
+  var padL=54,padR=16,padT=18,padB=38,baseY=H-padB;
+  var aMin=0,aMax=4,N=60,yMax=4.2;
+  var pxX=(W-padL-padR)/(aMax-aMin);
+  var pxY=(baseY-padT)/yMax;
+  function X(a){ return padL+(clampv(a,aMin,aMax)-aMin)*pxX; }
+  function Y(v){ return baseY-clampv(v,0,yMax)*pxY; }
+  var semBloco=[],comBloco=[],i,a,rs,rc;
+  for(i=0;i<=N;i++){ a=aMin+(aMax-aMin)*i/N;
+    rs=ductoColetor(merge(state,{aldo:a,espiro:0,eplerenona:0,amilorida:0,liddle:false}));
+    rc=ductoColetor(merge(state,{aldo:a}));
+    semBloco.push({a:a,v:rs.kSecrecao,x:X(a),y:Y(rs.kSecrecao)});
+    comBloco.push({a:a,v:rc.kSecrecao,x:X(a),y:Y(rc.kSecrecao)});
+  }
+  var aCur=clampv(r0.aldo,aMin,aMax);
+  var aCurX=X(aCur);
+  var kCur=r0.kSecrecao;
+  var current={a:aCur,k:kCur,x:X(aCur),y:Y(kCur)};
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,
+    aMin:aMin,aMax:aMax,yMax:yMax,pxX:pxX,pxY:pxY,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},
+    semBloco:semBloco,comBloco:comBloco,aCurX:aCurX,current:current};
+}
+
+function doseRespostaLayout(EC50,Emax,dMax,W,H,curD){
+  W=clampv(W,160,100000); H=clampv(H,100,100000);
+  var ec=clampv(EC50,1e-6,1e9), em=clampv(Emax,0.01,1), dM=clampv(dMax,ec*2,1e9), cd=clampv(curD,0,dM);
+  var padL=40,padR=12,padT=14,padB=28,baseY=H-padB;
+  var N=50,yMax=em*1.08;
+  var pxX=(W-padL-padR)/dM;
+  var pxY=(baseY-padT)/yMax;
+  function X(d){ return padL+clampv(d,0,dM)*pxX; }
+  function Y(e){ return baseY-clampv(e,0,yMax)*pxY; }
+  var pts=[],i,d,e;
+  for(i=0;i<=N;i++){ d=dM*i/N; e=doseResposta(d,ec,em); pts.push({d:d,e:e,x:X(d),y:Y(e)}); }
+  var ec50X=X(ec), emaxY=Y(em);
+  var eCur=doseResposta(cd,ec,em);
+  var cur={d:cd,e:eCur,x:X(cd),y:Y(eCur)};
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,
+    EC50:ec,Emax:em,dMax:dM,yMax:yMax,pxX:pxX,pxY:pxY,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},
+    pts:pts,ec50X:ec50X,emaxY:emaxY,cur:cur};
+}
+
+window.ductoColetor=ductoColetor;
+window.doseResposta=doseResposta;
+window.kSecrecaoLayout=kSecrecaoLayout;
+window.doseRespostaLayout=doseRespostaLayout;
+window.MODEL={ductoColetor:ductoColetor,doseResposta:doseResposta,
+  kSecrecaoLayout:kSecrecaoLayout,doseRespostaLayout:doseRespostaLayout,clampv:clampv,merge:merge,
+  CONST:{ALDO_N:ALDO_N,ADH_N:ADH_N,K_N:K_N,NA_N:NA_N,FRAC_NA_DUCTO:FRAC_NA_DUCTO,KSEC_N:KSEC_N,
+    K_PER_ALDO:K_PER_ALDO,K_PER_BLOCK:K_PER_BLOCK,NA_PER_AQUA:NA_PER_AQUA,
+    SPIRO_EC50:SPIRO_EC50,SPIRO_EMAX:SPIRO_EMAX,EPLE_EC50:EPLE_EC50,EPLE_EMAX:EPLE_EMAX,
+    AMIL_EC50:AMIL_EC50,AMIL_EMAX:AMIL_EMAX,TOLVA_EC50:TOLVA_EC50,TOLVA_EMAX:TOLVA_EMAX}};
+
+/* =========================================================================
+ * UI
+ * ========================================================================= */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=d||1; return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+
+var REGIME_TXT={
+  normal:'normal — aldosterona basal; o ducto afina K⁺, H⁺ e água',
+  hiperaldosteronismo:'hiperaldosteronismo — troca Na⁺ por K⁺/H⁺ → hipocalemia + alcalose',
+  hipoaldosteronismo:'hipoaldosteronismo — menos troca → hipercalemia + acidose',
+  poupador_k:'poupador de K⁺ — bloqueia MR/ENaC → natriurese leve + retém K⁺',
+  poupador_ieca_hipercalemia:'⚠ poupador + IECA/BRA — dois golpes no eixo do K⁺ → HIPERCALEMIA',
+  tolvaptana_aquarese:'tolvaptana — aquarese (perde água livre) → Na⁺ sérico↑ sem mexer no Na corporal',
+  liddle:'⚠ LIDDLE — ENaC constitutivo; aldo/renina baixas; a espiro NÃO resolve',
+  liddle_amilorida:'Liddle tratado — a amilorida bloqueia o canal (a espiro não bastava)'
+};
+
+// abas principais
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b) return;
+  var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on');
+  $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh();
+});
+
+// caso: prever-depois-revelar
+document.addEventListener('click',function(e){
+  var b=e.target.closest('button.act[data-rev]'); if(!b) return;
+  var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on');
+});
+
+function readLab(){
+  return {
+    aldo:+$('in-aldo').value, adh:+$('in-adh').value, espiro:+$('in-spiro').value,
+    eplerenona:+$('in-eple').value, amilorida:+$('in-amil').value, tolvaptana:+$('in-tolva').value,
+    ieca:$('in-ieca').value==='1', liddle:$('in-liddle').value==='1'
+  };
+}
+
+function refresh(){
+  var inp=readLab();
+  $('lbl-aldo').textContent=fmt(inp.aldo,1);
+  $('lbl-adh').textContent=fmt(inp.adh,1);
+  $('lbl-spiro').textContent=Math.round(inp.espiro);
+  $('lbl-eple').textContent=Math.round(inp.eplerenona);
+  $('lbl-amil').textContent=Math.round(inp.amilorida);
+  $('lbl-tolva').textContent=Math.round(inp.tolvaptana);
+  var r=ductoColetor(inp);
+  $('out-enac').textContent=fmt(r.enacAtiv,2);
+  $('out-fracna').textContent=fmt(r.fracNaDucto,3);
+  $('out-ksec').textContent=fmt(r.kSecrecao,2);
+  $('out-k').textContent=fmt(r.kSerico,2);
+  $('out-hco3').textContent=fmt(r.hco3Plasma,1);
+  $('out-osmu').textContent=fmt(r.osmUrina,0);
+  $('out-cal').textContent=fmt(r.clearanceAguaLivre,2);
+  $('out-na').textContent=fmt(r.naSerico,1);
+  $('out-natr').textContent=fmt(r.natriurese,3);
+  $('out-efeitos').textContent=fmt(r.eSpiro,2)+' · '+fmt(r.eEple,2)+' · '+fmt(r.eAmil,2)+' · '+fmt(r.eTolva,2);
+  $('out-regime').textContent=REGIME_TXT[r.regime]||r.regime;
+  verdictLab(r,inp); pearlLab(r,inp);
+  drawCanvas(inp);
+  $('dose-svg').innerHTML=doseFig(inp);
+  syncInstrToLab(inp);
+}
+
+var PRESETS={
+  hiperaldo:{aldo:2.5,adh:1,espiro:0,eplerenona:0,amilorida:0,tolvaptana:0,ieca:false,liddle:false},
+  espiro:{aldo:1.8,adh:1,espiro:50,eplerenona:0,amilorida:0,tolvaptana:0,ieca:false,liddle:false},
+  poupieca:{aldo:1.5,adh:1,espiro:50,eplerenona:0,amilorida:0,tolvaptana:0,ieca:true,liddle:false},
+  siadh:{aldo:1,adh:3,espiro:0,eplerenona:0,amilorida:0,tolvaptana:30,ieca:false,liddle:false},
+  liddle:{aldo:1,adh:1,espiro:0,eplerenona:0,amilorida:10,tolvaptana:0,ieca:false,liddle:true},
+  normal:{aldo:1,adh:1,espiro:0,eplerenona:0,amilorida:0,tolvaptana:0,ieca:false,liddle:false}
+};
+function applyPreset(name){
+  var p=PRESETS[name]; if(!p) return;
+  $('in-aldo').value=p.aldo; $('in-adh').value=p.adh; $('in-spiro').value=p.espiro;
+  $('in-eple').value=p.eplerenona; $('in-amil').value=p.amilorida; $('in-tolva').value=p.tolvaptana;
+  $('in-ieca').value=p.ieca?'1':'0'; $('in-liddle').value=p.liddle?'1':'0';
+  refresh();
+}
+document.addEventListener('click',function(e){
+  var b=e.target.closest('button.preset'); if(!b) return;
+  applyPreset(b.getAttribute('data-p')||b.getAttribute('data-preset'));
+});
+
+function syncInstrToLab(inp){
+  if($('instr-aldo')) $('instr-aldo').value=inp.aldo;
+  if($('instr-spiro')) $('instr-spiro').value=inp.espiro;
+  if($('instr-amil')) $('instr-amil').value=inp.amilorida;
+  if($('instr-liddle')) $('instr-liddle').value=inp.liddle?'1':'0';
+  updateInstrLabels(inp);
+}
+function readInstr(){
+  return { aldo:+$('instr-aldo').value, espiro:+$('instr-spiro').value,
+    amilorida:+$('instr-amil').value, liddle:$('instr-liddle').value==='1' };
+}
+function updateInstrLabels(inp){
+  if($('instr-lbl-aldo')) $('instr-lbl-aldo').textContent=fmt(inp.aldo,1);
+  if($('instr-lbl-spiro')) $('instr-lbl-spiro').textContent=Math.round(inp.espiro);
+  if($('instr-lbl-amil')) $('instr-lbl-amil').textContent=Math.round(inp.amilorida);
+}
+function refreshInstr(){
+  var inp=readInstr();
+  updateInstrLabels(inp);
+  var r=ductoColetor(inp);
+  pearlInstr(r,inp);
+  drawCanvas(inp);
+  $('dose-svg').innerHTML=doseFig(inp);
+}
+
+function pearlInstr(r,inp){
+  var ip=$('instr-pearl'); if(!ip) return;
+  var t;
+  if(inp.liddle){
+    t='LIDDLE: o ENaC está LIGADO sozinho (enac '+fmt(r.enacAtiv,2)+'×) → K secretado '+fmt(r.kSecrecao,2)+', K sérico '+fmt(r.kSerico,2)+'. A espironolactona (MR) é INÚTIL aqui — só a AMILORIDA (bloqueio de canal) derruba a curva.';
+  } else if(inp.espiro>0||inp.amilorida>0){
+    t='POUPADOR: o bloqueio derrubou a secreção de K⁺ para '+fmt(r.kSecrecao,2)+' (a verde abaixo da âmbar) → K sérico subiu a '+fmt(r.kSerico,2)+'. Menos Na⁺ reabsorvido (natriurese leve), menos K⁺ secretado: é o "poupar K⁺".';
+  } else if(inp.aldo>1.5){
+    t='HIPERALDO: aldosterona '+fmt(inp.aldo,1)+'× → ENaC '+fmt(r.enacAtiv,2)+'× → K secretado '+fmt(r.kSecrecao,2)+' (alto). A troca Na⁺↔K⁺/H⁺ derruba o K sérico a '+fmt(r.kSerico,2)+' e alcaliniza (HCO₃ '+fmt(r.hco3Plasma,1)+'). Não é "só sódio".';
+  } else {
+    t='Aldosterona basal '+fmt(inp.aldo,1)+'×: secreção de K⁺ '+fmt(r.kSecrecao,2)+', K sérico '+fmt(r.kSerico,2)+'. Suba a aldosterona e a curva âmbar sobe; ligue um poupador e a verde despenca abaixo dela (poupa K⁺).';
+  }
+  ip.textContent=t;
+}
+
+function verdictLab(r,inp){
+  var v=$('veredito'); var cls='b-good', msg;
+  if(r.regime==='poupador_ieca_hipercalemia'){
+    cls='b-bad'; msg='⚠ POUPADOR + IECA/BRA: dois golpes no eixo do K⁺ (o IECA baixa a aldo, o poupador bloqueia o MR/ENaC) → K sérico '+fmt(r.kSerico,2)+' mEq/L (HIPERCALEMIA). Suspenda o poupador, trate o K⁺ e revise a função renal.';
+  } else if(r.regime==='liddle'){
+    cls='b-bad'; msg='⚠ LIDDLE: ENaC constitutivamente ativo → HAS + hipocalemia (K '+fmt(r.kSerico,2)+') com aldo/renina BAIXAS. A espironolactona NÃO resolve (não há MR a bloquear). Use AMILORIDA (bloqueio do canal).';
+  } else if(r.regime==='liddle_amilorida'){
+    cls='b-good'; msg='LIDDLE tratado: a amilorida bloqueou o canal ENaC → K secretado caiu, K sérico '+fmt(r.kSerico,2)+'. A espiro teria falhado aqui — a chave era o CANAL, não o receptor.';
+  } else if(r.regime==='tolvaptana_aquarese'){
+    cls='b-good'; msg='TOLVAPTANA: bloqueio do V2 '+fmt(r.eTolva*100,0)+'% → AQUARESE → clearance de água livre '+fmt(r.clearanceAguaLivre,2)+' mL/min → Na⁺ sérico '+fmt(r.naSerico,1)+' (subiu). Corrige a hiponatremia pela ÁGUA, não pelo sódio. Devagar (mielinólise).';
+  } else if(r.regime==='poupador_k'){
+    cls='b-warn'; msg='POUPADOR de K⁺: bloqueio MR/ENaC → natriurese leve (o ducto é fino, '+fmt(r.fracNaDucto*100,1)+'% do Na) e RETENÇÃO de K⁺ → K sérico '+fmt(r.kSerico,2)+'. Útil na ICC/cirrose (hiperaldo 2º). Cuidado com IECA/BRA junto.';
+  } else if(r.regime==='hiperaldosteronismo'){
+    cls='b-warn'; msg='HIPERALDOSTERONISMO: a aldo TROCA Na⁺ por K⁺/H⁺ → HAS + K sérico '+fmt(r.kSerico,2)+' (hipocalemia) + HCO₃ '+fmt(r.hco3Plasma,1)+' (alcalose). O alvo é o MR (espironolactona/eplerenona). Não é "só reter sódio".';
+  } else if(r.regime==='hipoaldosteronismo'){
+    cls='b-warn'; msg='HIPOALDOSTERONISMO: pouca troca → K sérico '+fmt(r.kSerico,2)+' (tende à hipercalemia) e HCO₃ '+fmt(r.hco3Plasma,1)+' (acidose, ATR tipo 4). O eixo da aldosterona está fraco.';
+  } else {
+    cls='b-good'; msg='Ducto normal: a aldosterona basal mantém o ENaC e a troca Na⁺↔K⁺/H⁺ equilibrada → K sérico '+fmt(r.kSerico,2)+', osmU '+fmt(r.osmUrina,0)+'. O ducto maneja só '+fmt(r.fracNaDucto*100,1)+'% do Na⁺, mas afina K, H⁺ e água.';
+  }
+  v.className='banner '+cls; v.textContent=msg;
+}
+
+function pearlLab(r,inp){
+  var p=$('lab-pearl'); if(!p) return;
+  var t;
+  if(inp.tolvaptana>0){
+    t='PÉROLA alavancas: a tolvaptana subiu o Na⁺ sérico a '+fmt(r.naSerico,1)+' SEM tocar no K⁺ ('+fmt(r.kSerico,2)+') nem na natriurese — porque o ADH é o eixo da ÁGUA LIVRE, separado do eixo Na⁺/K⁺ da aldosterona. Duas alavancas distintas.';
+  } else if(inp.ieca&&(inp.espiro>0||inp.amilorida>0||inp.eplerenona>0)){
+    t='PÉROLA poupador+IECA: o K⁺ subiu a '+fmt(r.kSerico,2)+' porque DOIS fármacos batem no mesmo eixo (o IECA baixa a aldo; o poupador bloqueia o MR/ENaC). A secreção distal de K⁺ desaba — hipercalemia.';
+  } else if(inp.aldo>1.5){
+    t='PÉROLA troca: aldo '+fmt(inp.aldo,1)+'× não "só retém Na". Ela TROCA: K secretado '+fmt(r.kSecrecao,2)+' (↑), K sérico '+fmt(r.kSerico,2)+' (↓) e HCO₃ '+fmt(r.hco3Plasma,1)+' (↑, alcalose). Entra Na⁺, saem K⁺ e H⁺.';
+  } else if(inp.espiro>0||inp.amilorida>0||inp.eplerenona>0){
+    t='PÉROLA poupador: o bloqueio derrubou a secreção de K⁺ a '+fmt(r.kSecrecao,2)+' → K sérico '+fmt(r.kSerico,2)+'. A natriurese é LEVE ('+fmt(r.natriurese*100,1)+'% do Na filtrado) porque o ducto é o ajuste fino — o poder é sobre o K⁺, não sobre o volume.';
+  } else {
+    t='PÉROLA ajuste fino: o ducto maneja só '+fmt(r.fracNaDucto*100,1)+'% do Na⁺ filtrado, MAS define o K⁺ ('+fmt(r.kSerico,2)+'), o H⁺ (HCO₃ '+fmt(r.hco3Plasma,1)+') e a água (osmU '+fmt(r.osmUrina,0)+'). Pouco sódio, grande poder sobre o meio interno.';
+  }
+  p.textContent=t;
+}
+
+function drawCanvas(state){
+  var c=$('ksec-canvas'); if(!c) return;
+  var ctx; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; }
+  if(!ctx||!ctx.clearRect) return;
+  var L=kSecrecaoLayout(state,c.width,c.height);
+  ctx.clearRect(0,0,L.W,L.H);
+  // eixos
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('secreção de K⁺ (rel.)',6,L.padT-4);
+  ctx.fillText('atividade da aldosterona (×) →',L.W-210,L.baseY+24);
+  // linha da aldo atual (vertical)
+  ctx.strokeStyle='#23303b'; ctx.setLineDash([3,3]);
+  ctx.beginPath(); ctx.moveTo(L.aCurX,L.padT); ctx.lineTo(L.aCurX,L.baseY); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle='#9fb1c0'; ctx.font='11px system-ui';
+  ctx.fillText('aldo '+fmt(L.current.a,1),L.aCurX+4,L.padT+12);
+  // sem bloqueio (âmbar)
+  ctx.strokeStyle='#e8a13a'; ctx.lineWidth=2; ctx.beginPath();
+  for(var i=0;i<L.semBloco.length;i++){ var p=L.semBloco[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); }
+  ctx.stroke();
+  // com bloqueio (verde) — a polilinha que o validador confere
+  ctx.strokeStyle='#52c08a'; ctx.beginPath();
+  for(i=0;i<L.comBloco.length;i++){ p=L.comBloco[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); }
+  ctx.stroke();
+  // legenda (marcadores fill)
+  ctx.fillStyle='#e8a13a'; ctx.fillRect(L.axis.x0+10,L.padT,8,8); ctx.fillStyle='#9fb1c0'; ctx.fillText('sem bloqueio',L.axis.x0+22,L.padT+8);
+  ctx.fillStyle='#52c08a'; ctx.fillRect(L.axis.x0+120,L.padT,8,8); ctx.fillStyle='#9fb1c0'; ctx.fillText('com poupador',L.axis.x0+132,L.padT+8);
+  ctx.fillStyle='#39c0c8'; ctx.fillRect(L.axis.x0+240,L.padT,8,8); ctx.fillStyle='#9fb1c0'; ctx.fillText('aldo atual',L.axis.x0+252,L.padT+8);
+  // ponto da aldo atual sobre a curva com bloqueio (branco)
+  var cu=L.current;
+  ctx.fillStyle='#e7eef4'; ctx.beginPath(); ctx.arc(cu.x,cu.y,5,0,2*Math.PI); ctx.fill();
+}
+
+['in-aldo','in-adh','in-spiro','in-eple','in-amil','in-tolva','in-ieca','in-liddle'].forEach(function(id){
+  var el=$(id); if(el) el.addEventListener('input',refresh);
+});
+['instr-aldo','instr-spiro','instr-amil','instr-liddle'].forEach(function(id){
+  var el=$(id); if(el) el.addEventListener('input',refreshInstr);
+});
+
+/* =========================================================================
+ * ILUSTRAÇÕES SVG — inline, computadas a partir do engine (física viva)
+ * ========================================================================= */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+
+// mini gráfico secreção de K vs aldosterona (computado do engine)
+function ksecMini(state, titulo){
+  var W=300,H=180;
+  var L=kSecrecaoLayout(state,W,H);
+  var s='';
+  s+='<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="#0a1520"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+f1(L.aCurX)+'" y1="'+L.padT+'" x2="'+f1(L.aCurX)+'" y2="'+L.baseY+'" stroke="#7a8a96" stroke-dasharray="4 3"/>';
+  function poly(arr,col){ var d=''; for(var i=0;i<arr.length;i++){ d+=(i===0?'M':'L')+f1(arr[i].x)+' '+f1(arr[i].y)+' '; } return '<path d="'+d+'" fill="none" stroke="'+col+'" stroke-width="2"/>'; }
+  s+=poly(L.semBloco,'#e8a13a');
+  s+=poly(L.comBloco,'#52c08a');
+  s+='<text x="'+W/2+'" y="13" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'K⁺ secretado vs aldosterona')+'</text>';
+  s+='<text x="'+f1(L.aCurX+3)+'" y="'+(L.padT+10)+'" fill="#9fb1c0" font-size="8">aldo '+fmt(L.current.a,1)+'</text>';
+  return svgEl(W,H,s);
+}
+
+// curva dose-resposta sigmoide (computada do engine) — espironolactona
+function doseFig(state, titulo){
+  var W=320,H=180;
+  var inp=state||{};
+  var dose=clampv(inp.espiro!==undefined?inp.espiro:0,0,100);
+  var L=doseRespostaLayout(SPIRO_EC50,SPIRO_EMAX,100,W,H,dose);
+  var s='';
+  s+='<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="#0a1520"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  // teto Emax
+  s+='<line x1="'+L.axis.x0+'" y1="'+f1(L.emaxY)+'" x2="'+L.axis.xEnd+'" y2="'+f1(L.emaxY)+'" stroke="#e8a13a" stroke-dasharray="5 3"/>';
+  s+='<text x="'+(L.axis.xEnd-2)+'" y="'+f1(L.emaxY-3)+'" fill="#e8a13a" font-size="8" text-anchor="end">Emax '+fmt(L.Emax,2)+'</text>';
+  // EC50 vertical
+  s+='<line x1="'+f1(L.ec50X)+'" y1="'+L.padT+'" x2="'+f1(L.ec50X)+'" y2="'+L.baseY+'" stroke="#7a8a96" stroke-dasharray="3 3"/>';
+  s+='<text x="'+f1(L.ec50X+3)+'" y="'+(L.baseY-4)+'" fill="#9fb1c0" font-size="8">EC50 '+fmt(L.EC50,0)+'mg</text>';
+  // a curva
+  var d=''; for(var i=0;i<L.pts.length;i++){ d+=(i===0?'M':'L')+f1(L.pts[i].x)+' '+f1(L.pts[i].y)+' '; }
+  s+='<path d="'+d+'" fill="none" stroke="#3a7bd5" stroke-width="2"/>';
+  // ponto da dose atual
+  s+='<circle cx="'+f1(L.cur.x)+'" cy="'+f1(L.cur.y)+'" r="4" fill="#e7eef4"/>';
+  s+='<text x="'+f1(L.cur.x)+'" y="'+f1(L.cur.y-7)+'" fill="#e7eef4" font-size="9" text-anchor="middle">'+Math.round(dose)+'mg → '+fmt(L.cur.e,2)+'</text>';
+  s+='<text x="'+W/2+'" y="13" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'espironolactona: efeito = Emax·D/(EC50+D)')+'</text>';
+  return svgEl(W,H,s);
+}
+
+// esquema: célula principal (ENaC + voltagem + secreção de K/H)
+function principalDiagram(state, titulo){
+  var r=ductoColetor(state||{});
+  var W=320,H=190,s='';
+  s+='<rect width="320" height="190" fill="#0a1520"/>';
+  // luz tubular (cima) e célula
+  s+='<rect x="30" y="38" width="260" height="22" fill="#11202c" stroke="#3a4a58"/>';
+  s+='<text x="160" y="53" fill="#9fb1c0" font-size="9" text-anchor="middle">luz tubular (voltagem '+fmt(r.voltagemLuminal,0)+' mV)</text>';
+  s+='<rect x="30" y="68" width="260" height="52" fill="#16222c" stroke="#3a4a58"/>';
+  s+='<text x="160" y="84" fill="#9fb1c0" font-size="9" text-anchor="middle">célula principal (Na⁺/K⁺-ATPase)</text>';
+  // ENaC: Na para dentro
+  s+='<line x1="90" y1="60" x2="90" y2="80" stroke="#3a7bd5" stroke-width="3"/>';
+  s+='<polygon points="90,82 86,74 94,74" fill="#3a7bd5"/>';
+  s+='<text x="60" y="74" fill="#3a7bd5" font-size="8">ENaC Na⁺↓</text>';
+  // K para a luz (secreção)
+  var col=r.kSecrecao>1.4?'#e0556b':(r.kSecrecao<0.7?'#52c08a':'#e8a13a');
+  s+='<line x1="200" y1="68" x2="200" y2="48" stroke="'+col+'" stroke-width="3"/>';
+  s+='<polygon points="200,46 196,54 204,54" fill="'+col+'"/>';
+  s+='<text x="208" y="52" fill="'+col+'" font-size="8">K⁺/H⁺ →luz</text>';
+  // estado
+  s+='<rect x="30" y="128" width="260" height="50" rx="6" fill="#10171e" stroke="#283642"/>';
+  s+='<text x="160" y="146" fill="#e7eef4" font-size="10" text-anchor="middle">ENaC '+fmt(r.enacAtiv,2)+'× · K secretado '+fmt(r.kSecrecao,2)+' · K sérico '+fmt(r.kSerico,2)+'</text>';
+  s+='<text x="160" y="164" fill="#9fb1c0" font-size="9" text-anchor="middle">só ~'+fmt(r.fracNaDucto*100,1)+'% do Na⁺, mas define K⁺, H⁺ e água</text>';
+  s+='<text x="'+W/2+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'célula principal: ENaC e a voltagem')+'</text>';
+  return svgEl(W,H,s);
+}
+
+// esquema: aldosterona TROCA Na por K/H (desenho)
+function aldoDiagram(state, titulo){
+  var base=ductoColetor(merge(state||{},{aldo:1}));
+  var r=ductoColetor(merge(state||{},{aldo:2.5}));
+  var W=320,H=190,s='';
+  s+='<rect width="320" height="190" fill="#0a1520"/>';
+  s+='<rect x="40" y="40" width="240" height="30" rx="14" fill="#3a2a10" fill-opacity="0.6" stroke="#e8a13a" stroke-opacity="0.7"/>';
+  s+='<text x="160" y="59" fill="#e8c98a" font-size="10" text-anchor="middle">aldosterona → MR → ↑ENaC + ↑Na/K-ATPase</text>';
+  // entra Na, saem K e H
+  s+='<line x1="90" y1="70" x2="90" y2="92" stroke="#3a7bd5" stroke-width="3"/>';
+  s+='<polygon points="90,94 86,86 94,86" fill="#3a7bd5"/>';
+  s+='<text x="90" y="106" fill="#3a7bd5" font-size="8" text-anchor="middle">Na⁺ entra</text>';
+  s+='<line x1="170" y1="92" x2="170" y2="70" stroke="#e0556b" stroke-width="3"/>';
+  s+='<polygon points="170,68 166,76 174,76" fill="#e0556b"/>';
+  s+='<text x="170" y="106" fill="#e0556b" font-size="8" text-anchor="middle">K⁺ sai</text>';
+  s+='<line x1="240" y1="92" x2="240" y2="70" stroke="#e0556b" stroke-width="3"/>';
+  s+='<polygon points="240,68 236,76 244,76" fill="#e0556b"/>';
+  s+='<text x="240" y="106" fill="#e0556b" font-size="8" text-anchor="middle">H⁺ sai</text>';
+  s+='<rect x="30" y="125" width="260" height="50" rx="6" fill="#10171e" stroke="#283642"/>';
+  s+='<text x="160" y="143" fill="#e7eef4" font-size="10" text-anchor="middle">aldo 2.5×: K sérico '+fmt(base.kSerico,1)+'→'+fmt(r.kSerico,1)+' · HCO₃ '+fmt(base.hco3Plasma,0)+'→'+fmt(r.hco3Plasma,0)+'</text>';
+  s+='<text x="160" y="161" fill="#9fb1c0" font-size="9" text-anchor="middle">TROCA Na⁺ por K⁺/H⁺ → hipocalemia + alcalose (não "só Na")</text>';
+  s+='<text x="'+W/2+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'a aldosterona TROCA Na⁺ por K⁺/H⁺')+'</text>';
+  return svgEl(W,H,s);
+}
+
+// esquema: célula intercalar H/HCO3 (desenho)
+function intercalarDiagram(state, titulo){
+  var W=320,H=190,s='';
+  s+='<rect width="320" height="190" fill="#0a1520"/>';
+  s+='<rect x="30" y="38" width="260" height="22" fill="#11202c" stroke="#3a4a58"/>';
+  s+='<text x="160" y="53" fill="#9fb1c0" font-size="9" text-anchor="middle">luz tubular</text>';
+  // tipo A
+  s+='<rect x="40" y="68" width="110" height="52" fill="#16222c" stroke="#52c08a" stroke-opacity="0.6"/>';
+  s+='<text x="95" y="84" fill="#52c08a" font-size="9" text-anchor="middle">intercalar A</text>';
+  s+='<line x1="95" y1="68" x2="95" y2="48" stroke="#e8a13a" stroke-width="3"/>';
+  s+='<polygon points="95,46 91,54 99,54" fill="#e8a13a"/>';
+  s+='<text x="95" y="104" fill="#9fb1c0" font-size="8" text-anchor="middle">H⁺→luz · HCO₃⁻→sangue</text>';
+  // tipo B
+  s+='<rect x="170" y="68" width="110" height="52" fill="#16222c" stroke="#3a7bd5" stroke-opacity="0.6"/>';
+  s+='<text x="225" y="84" fill="#3a7bd5" font-size="9" text-anchor="middle">intercalar B</text>';
+  s+='<line x1="225" y1="68" x2="225" y2="48" stroke="#3a7bd5" stroke-width="3"/>';
+  s+='<polygon points="225,46 221,54 229,54" fill="#3a7bd5"/>';
+  s+='<text x="225" y="104" fill="#9fb1c0" font-size="8" text-anchor="middle">HCO₃⁻→luz (excesso de base)</text>';
+  s+='<rect x="30" y="128" width="260" height="50" rx="6" fill="#10171e" stroke="#283642"/>';
+  s+='<text x="160" y="146" fill="#e7eef4" font-size="10" text-anchor="middle">o ducto é o AJUSTE FINO do ácido-base</text>';
+  s+='<text x="160" y="164" fill="#9fb1c0" font-size="9" text-anchor="middle">tipo A regenera HCO₃ (acidez titulável + NH₄⁺); tipo B excreta base</text>';
+  s+='<text x="'+W/2+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'célula intercalar: H⁺/HCO₃')+'</text>';
+  return svgEl(W,H,s);
+}
+
+// esquema: ADH → AQP2 (água livre) (desenho)
+function adhDiagram(state, titulo){
+  var r=ductoColetor(state||{});
+  var W=320,H=190,s='';
+  s+='<rect width="320" height="190" fill="#0a1520"/>';
+  s+='<rect x="30" y="38" width="260" height="22" fill="#11202c" stroke="#3a4a58"/>';
+  s+='<text x="160" y="53" fill="#9fb1c0" font-size="9" text-anchor="middle">luz (urina, osmU '+fmt(r.osmUrina,0)+' mOsm/kg)</text>';
+  s+='<rect x="30" y="68" width="260" height="52" fill="#16222c" stroke="#3a4a58"/>';
+  s+='<text x="160" y="84" fill="#9fb1c0" font-size="9" text-anchor="middle">célula principal · V2 → AQP2</text>';
+  // água para o sangue (se ADH)
+  var aberta=r.adhEf>0.7;
+  var col=aberta?'#39c0c8':'#7a8a96';
+  s+='<line x1="160" y1="68" x2="160" y2="118" stroke="'+col+'" stroke-width="'+(aberta?4:1.5)+'" stroke-dasharray="'+(aberta?'0':'3 3')+'"/>';
+  s+='<text x="168" y="98" fill="'+col+'" font-size="8">H₂O '+(aberta?'reabsorvida':'escapa (aquarese)')+'</text>';
+  s+='<rect x="30" y="128" width="260" height="50" rx="6" fill="#10171e" stroke="#283642"/>';
+  s+='<text x="160" y="146" fill="#e7eef4" font-size="10" text-anchor="middle">ADH ef '+fmt(r.adhEf,2)+'× · clearance água livre '+fmt(r.clearanceAguaLivre,2)+' · Na⁺ '+fmt(r.naSerico,0)+'</text>';
+  s+='<text x="160" y="164" fill="#9fb1c0" font-size="9" text-anchor="middle">eixo da ÁGUA LIVRE — separado do Na⁺/K⁺ (tolvaptana bloqueia o V2)</text>';
+  s+='<text x="'+W/2+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'ADH → aquaporina-2 (água livre)')+'</text>';
+  return svgEl(W,H,s);
+}
+
+/* =========================================================================
+ * TUTOR — DOIS blocos (ilustrado + textual)
+ * ========================================================================= */
+// helper: figura raster/SVG real de assets/m8/ dentro do exercício (offline, caminho relativo)
+function imgFig(slug,alt){ return '<img src="assets/m8/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+var TUTOR_ILUSTRADO=[
+  {q:'Por que "aldosterona = sódio" é uma meia-verdade?',
+   o:['porque ela só retém água','porque ela TROCA Na⁺ por K⁺ e H⁺','porque ela bloqueia o ENaC','porque age no proximal'],
+   c:1,e:'A aldosterona ↑ENaC + ↑Na/K-ATPase: reabsorve Na⁺ E secreta K⁺ e H⁺. Por isso hiperaldo dá hipocalemia + alcalose — não "só reter sódio".',
+   fig:function(){ return aldoDiagram({},'a troca Na⁺↔K⁺/H⁺'); }},
+  {q:'O ENaC apical impulsiona a secreção de K⁺ porque…',
+   o:['transporta K diretamente','reabsorve Na⁺ e deixa a luz eletronegativa (a voltagem empurra o K⁺)','aumenta a TFG','bloqueia a Na/K-ATPase'],
+   c:1,e:'Ao reabsorver Na⁺ (cátion), a luz fica negativa. Essa voltagem empurra K⁺ e H⁺ para a urina. O ENaC é o motor indireto da secreção de K⁺.',
+   fig:function(){ return principalDiagram({aldo:2},'ENaC → voltagem → K⁺'); }},
+  {q:'Na HAS resistente com K⁺ 2.9 e HCO₃ 32, o mecanismo é…',
+   o:['hipoaldosteronismo','hiperaldosteronismo (troca Na⁺ por K⁺/H⁺)','SIADH','Liddle tratado'],
+   c:1,e:'Aldosterona alta reabsorve Na⁺ (HAS) e secreta K⁺ (hipocalemia) e H⁺ (alcalose). A assinatura é HAS + hipocalemia + alcalose.',
+   fig:function(){ return ksecMini({aldo:2.5},'hiperaldo: K⁺ secretado↑'); }},
+  {q:'A espironolactona (25–100 mg/dia VO) age como…',
+   o:['bloqueador do ENaC','antagonista do receptor mineralocorticoide (poupador de K⁺)','antagonista do V2','inibidor da anidrase carbônica'],
+   c:1,e:'Bloqueia o MR → ↓ENaC → natriurese leve e RETENÇÃO de K⁺. Na ICC/cirrose (hiperaldo 2º) é diurético de escolha.',
+   fig:function(){ return doseFig({espiro:50},'espironolactona 50 mg'); }},
+  {q:'A amilorida (5–10 mg/dia VO) difere da espironolactona porque…',
+   o:['age no glomérulo','bloqueia o ENaC DIRETO (canal), não o receptor MR','elimina K⁺','é um vaptano'],
+   c:1,e:'A amilorida bloqueia o canal ENaC diretamente; a espironolactona bloqueia o receptor MR. A diferença é decisiva no Liddle.',
+   fig:function(){ return imgFig('poupadores-k-sitio.png','sítio dos poupadores de potássio'); }},
+  {q:'Poupador de K⁺ + IECA/BRA juntos →',
+   o:['hipocalemia','hipercalemia (dois golpes no eixo do K⁺)','alcalose','hiponatremia'],
+   c:1,e:'O IECA baixa a aldosterona e o poupador bloqueia o MR/ENaC — ambos reduzem a secreção distal de K⁺. Somados → hipercalemia perigosa.',
+   fig:function(){ return ksecMini({aldo:1.5,espiro:50},'poupador derruba o K⁺ secretado'); }},
+  {q:'No SIADH (Na⁺ 122, urina concentrada), a tolvaptana corrige porque…',
+   o:['dá sódio ao paciente','bloqueia o V2 → aquarese → remove água livre → Na⁺ sobe','retém água','bloqueia o ENaC'],
+   c:1,e:'Antagoniza o V2 → a AQP2 some → perde-se ÁGUA LIVRE (aquarese) → o Na⁺ sérico sobe SEM mexer no Na⁺ corporal. Corrige pela água.',
+   fig:function(){ return adhDiagram({adh:3,tolvaptana:30},'tolvaptana: aquarese'); }},
+  {q:'O ADH concentra a urina por meio de…',
+   o:['ENaC','aquaporina-2 inserida pelo V2','NKCC2','SGLT2'],
+   c:1,e:'V2 → AMPc → AQP2 migra à membrana apical → a água segue o gradiente medular → urina concentrada. Sem ADH, AQP2 some.',
+   fig:function(){ return imgFig('aquaporina-adh.svg','ADH inserindo aquaporina-2'); }},
+  {q:'A célula intercalar tipo A faz…',
+   o:['reabsorve Na','secreta H⁺ e regenera HCO₃⁻ (ajuste fino do ácido-base)','abre aquaporinas','secreta K direto'],
+   c:1,e:'Secreta H⁺ (H⁺-ATPase) → acidez titulável + NH₄⁺ → regenera HCO₃⁻. A tipo B faz o oposto (secreta HCO₃⁻).',
+   fig:function(){ return imgFig('celula-intercalar-h.svg','célula intercalar H+/HCO3'); }},
+  {q:'O jovem hipertenso, hipocalêmico, com aldo+renina BAIXAS e espiro ineficaz tem…',
+   o:['Conn','síndrome de Liddle (ENaC constitutivo)','SIADH','ATR tipo 4'],
+   c:1,e:'O ENaC está ligado sozinho (sem aldo). A espironolactona (MR) não resolve — a amilorida (bloqueio de canal) é o tratamento.',
+   fig:function(){ return principalDiagram({liddle:true},'Liddle: ENaC constitutivo'); }},
+  {q:'ADH e aldosterona são alavancas distintas porque…',
+   o:['fazem a mesma coisa','o ADH controla a ÁGUA LIVRE e a aldosterona controla o Na⁺/K⁺','ambos controlam o K','ambos controlam a água'],
+   c:1,e:'Mover o ADH não muda o K⁺; mover a aldosterona não muda a osmolalidade urinária. Volume/K⁺ × água livre são eixos independentes.',
+   fig:function(){ return adhDiagram({adh:2.5},'eixo da água livre'); }},
+  {q:'O ducto coletor maneja quanto do Na⁺ filtrado?',
+   o:['~25%','~10%','~2–3% (mas define K, H⁺ e água)','~65%'],
+   c:2,e:'Só ~2–3% do Na⁺ filtrado, mas é o ajuste fino: define o potássio, o ácido-base e a concentração final da urina.',
+   fig:function(){ return imgFig('ducto-coletor-celulas.svg','células do ducto coletor'); }},
+  {q:'A eplerenona (25–50 mg/dia VO) é…',
+   o:['um vaptano','um MR-antagonista SELETIVO (menos ginecomastia que a espiro)','um bloqueador do ENaC','um diurético de alça'],
+   c:1,e:'É antagonista seletivo do MR — mesma classe da espironolactona, com menos efeitos antiandrogênicos. Também poupa K⁺.',
+   fig:function(){ return doseFig({espiro:0},'dose-resposta do MR-antagonista'); }}
+];
+
+var TUTOR_TEXTUAL=[
+  {q:'O ducto coletor reabsorve cerca de quanto do Na⁺ filtrado?',
+   o:['65%','25%','2–3%','0%'],
+   c:2,e:'~2–3%. Pouco, mas é o ajuste fino do K⁺, do ácido-base e da água.'},
+  {q:'O hiperaldosteronismo causa que distúrbio do potássio e do ácido-base?',
+   o:['hipercalemia + acidose','hipocalemia + alcalose metabólica','hipercalemia + alcalose','sem alteração'],
+   c:1,e:'A aldosterona troca Na⁺ por K⁺ e H⁺ → hipocalemia + alcalose metabólica.'},
+  {q:'Qual fármaco bloqueia o ENaC DIRETAMENTE (não o receptor MR)?',
+   o:['espironolactona','eplerenona','amilorida','tolvaptana'],
+   c:2,e:'A amilorida bloqueia o canal ENaC. Espiro/eplerenona bloqueiam o receptor MR.'},
+  {q:'A tolvaptana corrige a hiponatremia do SIADH por…',
+   o:['reposição de sódio','aquarese (bloqueio do V2 → perde água livre)','retenção de água','bloqueio do ENaC'],
+   c:1,e:'Bloqueia o V2 → aquarese → remove ÁGUA LIVRE → o Na⁺ sérico sobe sem dar sódio.'},
+  {q:'Por que poupador de K⁺ + IECA é arriscado?',
+   o:['causa hipocalemia','ambos reduzem a secreção distal de K⁺ → hipercalemia','baixa a TFG','causa alcalose'],
+   c:1,e:'O IECA baixa a aldosterona e o poupador bloqueia o MR/ENaC — dois golpes no eixo do K⁺ → hipercalemia.'},
+  {q:'O ENaC gera a secreção de K⁺ ao…',
+   o:['transportar K para a luz','reabsorver Na⁺ e tornar a luz eletronegativa (voltagem)','bloquear a Na/K-ATPase','abrir aquaporinas'],
+   c:1,e:'A reabsorção de Na⁺ deixa a luz negativa; essa voltagem empurra K⁺ (e H⁺) para a urina.'},
+  {q:'A célula intercalar tipo A…',
+   o:['secreta HCO₃⁻','secreta H⁺ e regenera HCO₃⁻','reabsorve Na','abre aquaporinas'],
+   c:1,e:'Secreta H⁺ (acidez titulável + NH₄⁺) e regenera HCO₃⁻ no sangue. A tipo B secreta HCO₃⁻.'},
+  {q:'Na síndrome de Liddle, o tratamento correto é…',
+   o:['espironolactona','amilorida (bloqueio do canal ENaC)','tolvaptana','furosemida'],
+   c:1,e:'O ENaC é constitutivamente ativo (sem aldo) → a espiro (MR) falha; a amilorida bloqueia o canal e resolve.'},
+  {q:'Na curva efeito = Emax·D/(EC50+D), em D = EC50 o efeito é…',
+   o:['zero','Emax/2','Emax','2·Emax'],
+   c:1,e:'Por definição, em D=EC50 o efeito é metade do teto (Emax/2).'},
+  {q:'ADH e aldosterona controlam, respectivamente…',
+   o:['o mesmo eixo','água livre × Na⁺/K⁺ (eixos independentes)','K⁺ × K⁺','água × água'],
+   c:1,e:'O ADH controla a água livre (tonicidade); a aldosterona, o Na⁺/K⁺ (volume e potássio). Mover um não mexe no outro.'},
+  {q:'A osmolalidade urinária com ADH alto tende a…',
+   o:['cair (urina diluída)','subir (urina concentrada)','não mudar','ficar 300 fixa'],
+   c:1,e:'ADH alto → AQP2 → reabsorve água livre → urina concentrada (osmU↑). Sem ADH, diluída.'},
+  {q:'Na ICC/cirrose, a espironolactona é escolhida porque há…',
+   o:['hipoaldosteronismo','hiperaldosteronismo secundário (RAAS ligado)','Liddle','SIADH'],
+   c:1,e:'O volume circulante efetivo baixo liga o RAAS → hiperaldo 2º. A espiro bloqueia o MR, poupa K⁺ e antagoniza a fibrose.'}
+];
+
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO;
+window.TUTOR_TEXTUAL=TUTOR_TEXTUAL;
+window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+
+var BANKS={ilustrada:TUTOR_ILUSTRADO, textual:TUTOR_TEXTUAL};
+var curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+
+function renderTutor(){
+  var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():'';
+  $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false;
+  $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){
+    var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){
+      if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button');
+      btns[item.c].classList.add('ok');
+      if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block';
+      fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e;
+      $('tutor-score').textContent=tScore;
+      $('tutor-total').textContent=tTotal;
+    });
+    box.appendChild(b);
+  });
+}
+
+$('banktabs').addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor();
+});
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+/* =========================================================================
+ * ILUSTRAÇÕES DA ABA CONCEITO (populadas no boot)
+ * ========================================================================= */
+function populateConceito(){
+  var el;
+  el=$('draw-principal'); if(el) el.innerHTML=principalDiagram({aldo:1},'célula principal: ENaC e a voltagem');
+  el=$('draw-aldo');      if(el) el.innerHTML=aldoDiagram({},'a aldosterona TROCA Na⁺ por K⁺/H⁺');
+  el=$('draw-intercalar');if(el) el.innerHTML=intercalarDiagram({},'célula intercalar: H⁺/HCO₃');
+  el=$('draw-adh');       if(el) el.innerHTML=adhDiagram({adh:2},'ADH → aquaporina-2 (água livre)');
+  el=$('draw-dose');      if(el) el.innerHTML=doseFig({espiro:50},'dose-resposta da espironolactona');
+  var elCaso=$('fig-caso'); if(elCaso) elCaso.innerHTML=ksecMini({aldo:2.5},'hiperaldo: K⁺ secretado vs aldosterona');
+}
+
+/* =========================================================================
+ * BOOT
+ * ========================================================================= */
+refresh();
+renderTutor();
+populateConceito();
+</script>
+</body>
+</html>

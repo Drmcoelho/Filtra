@@ -217,8 +217,24 @@
     {
       "id": "M8",
       "metade": "FILTRA",
-      "titulo": "Ducto coletor — ENaC/aldosterona, ADH/aquaporinas [fármaco: poupadores de K, vaptanos]",
-      "status": "planejado"
+      "arquivo": "filtra8.html",
+      "titulo": "Ducto coletor — ENaC/aldosterona × intercalar (H⁺/HCO₃), ADH/aquaporinas [fármaco: poupadores de K (espironolactona/eplerenona/amilorida), vaptanos]",
+      "status": "disponivel",
+      "instrumento": "secreção de K⁺ vs atividade da aldosterona/ENaC; o poupador (espironolactona/amilorida) derruba a curva → poupa K⁺ (duas séries: sem bloqueio × com poupador)",
+      "questoes": {
+        "ilustrado": 13,
+        "textual": 12
+      },
+      "inclui": [
+        "principalDiagram (célula principal: ENaC reabsorve Na → voltagem luminal negativa → impulsiona secreção de K⁺/H⁺)",
+        "aldoDiagram (a aldosterona TROCA Na⁺ por K⁺/H⁺ — não 'só retém sódio'; hiperaldo → hipocalemia + alcalose)",
+        "intercalarDiagram (célula intercalar tipo A secreta H⁺/regenera HCO₃; tipo B secreta HCO₃ — ajuste fino do ácido-base)",
+        "adhDiagram (ADH → V2 → aquaporina-2 → água livre; eixo independente do Na⁺; tolvaptana → aquarese)",
+        "doseFig (dose-resposta sigmoide efeito = Emax·D/(EC50+D))",
+        "farmacologia §8: espironolactona 25–100 mg/dia VO, eplerenona 25–50 mg/dia VO, amilorida 5–10 mg/dia VO, tolvaptana 15–60 mg/dia VO — dose↔unidade↔mecanismo computados pelo motor",
+        "pérola poupador+IECA → hipercalemia; tolvaptana corrige água sem mexer no Na corporal; Liddle vs amilorida",
+        "ducto = ajuste fino (~2–3% do Na, mas define K, H⁺ e água final)"
+      ]
     },
     {
       "id": "M9",

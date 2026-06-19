@@ -1,65 +1,410 @@
 {
   "braco": "FILTRA · DIALISA",
   "ordem": 3,
-  "hexapode": ["RESPIRA","CHOCA","FILTRA","ALIMENTA","METABOLIZA","CONSCIENCIA"],
+  "hexapode": [
+    "RESPIRA",
+    "CHOCA",
+    "FILTRA",
+    "ALIMENTA",
+    "METABOLIZA",
+    "CONSCIENCIA"
+  ],
   "escopo": "educacao fisiologica + farmacologia clinica aplicada (decisao do autor, ver CLAUDE.md §8)",
   "rodape": "CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira",
   "formatoModulo": {
     "singleFile": true,
     "offline": true,
-    "abas": ["Conceito (explicacao didatica ilustrada, desenhos)", "Caso (5 atos)", "Trilha (>=9 passos)", "Instrumento (canvas computado)", "Lab (sliders + veredito)", "Avaliacao (2 blocos)"],
+    "abas": [
+      "Conceito (explicacao didatica ilustrada, desenhos)",
+      "Caso (5 atos)",
+      "Trilha (>=9 passos)",
+      "Instrumento (canvas computado)",
+      "Lab (sliders + veredito)",
+      "Avaliacao (2 blocos)"
+    ],
     "ilustracaoViva": "SVG inline: desenhos esquematicos (celula/bomba/nefron/cerebro) + figuras computadas do engine (nao imagens importadas)",
-    "avaliacao": { "blocos": ["ilustrado", "textual"], "questoesPorBloco": 10 },
+    "avaliacao": {
+      "blocos": [
+        "ilustrado",
+        "textual"
+      ],
+      "questoesPorBloco": 10
+    },
     "robustez": "engine puro + clampv + identidades + leis + perolas + determinismo + fuzzing semeado >=5000",
     "portao": "npm run check (engine + validador) — 0 falhas"
   },
   "modulos": [
-    { "id": "M0",  "metade": "FILTRA",  "arquivo": "filtra0.html",  "titulo": "Compartimentos do líquido corporal — a célula no oceano + introdução à fluidoterapia", "status": "disponivel",
-      "instrumento": "diagrama de Darrow–Yannet vivo", "inclui": ["fluidos IV (SF/Ringer/SG5%/NaCl3%/coloide)", "balanço hídrico (ingesta×perdas)", "a banana no mar", "o cérebro e a sensibilidade ao Na"], "questoes": { "ilustrado": 13, "textual": 13 } },
-    { "id": "M1",  "metade": "FILTRA",  "arquivo": "filtra1.html",  "titulo": "O néfron / forças de Starling glomerulares (aferente×eferente)", "status": "disponivel",
-      "instrumento": "curva TFG × PAM (autorregulação + precipício)", "questoes": { "ilustrado": 10, "textual": 10 }, "inclui": ["aba Conceito", "desenho anatômico do néfron", "glomérulo entre duas resistências", "forças de Starling", "paradoxo do eferente"] },
-    { "id": "M2",  "metade": "FILTRA",  "arquivo": "filtra2.html",  "titulo": "Hemodinâmica renal — 20% do DC, autorregulação, córtex×medula [fármaco: AINEs, IECA/BRA]", "status": "disponivel",
-      "instrumento": "curva FSR × PAM + pO₂ medular (platô, precipício e hipóxia medular)", "questoes": { "ilustrado": 10, "textual": 10 }, "inclui": ["renalDiagram (coração→rim 20% DC)", "medulaDiagram (córtex×medula + indicador pO₂)", "fsrMini (curva FSR×PAM)", "glomFig (aferente×eferente)", "caso ICC+diclofenaco+enalapril", "farmacologia AINEs + IECA/BRA com dose e mecanismo"] },
-    { "id": "M3",  "metade": "FILTRA",  "arquivo": "filtra3.html",  "titulo": "O glomérulo — barreira de filtração, Kf, podócito, proteinúria", "status": "disponivel",
-      "instrumento": "curva de peneiramento θ × raio molecular", "questoes": { "ilustrado": 13, "textual": 12 }, "figuras": 13, "inclui": ["barreira por tamanho × carga", "coeficiente de peneiramento θ (inulina/albumina/IgG)", "Kf = permeabilidade × superfície", "proteinúria por mecanismo (glomerular seletiva/não-seletiva, tubular, overflow)", "nefrótica × nefrítica", "caso lesão mínima 8 atos", "figuras nos exercícios"] },
-    { "id": "M4",  "metade": "FILTRA",  "arquivo": "filtra4.html",  "titulo": "Clearance — medir a função e por que a creatinina mente", "status": "disponivel",
-      "instrumento": "hipérbole creatinina × TFG (faixa cega)", "questoes": { "ilustrado": 13, "textual": 12 }, "figuras": 13, "inclui": ["clearance C=U·V̇/P", "inulina padrão-ouro", "hipérbole Pcr×TFG + faixa cega", "as três mentiras (secreção, cinética, massa muscular)", "eGFR (CKD-EPI) × cistatina C", "estágios KDIGO + critérios de LRA", "caso idoso sarcopênico 8 atos", "figuras nos exercícios"] },
-    { "id": "M5",  "metade": "FILTRA",  "arquivo": "filtra5.html",  "titulo": "TCP — Na/glicose (SGLT2), HCO₃/anidrase carbônica, Fanconi [fármaco: acetazolamida, SGLT2i, manitol]", "status": "disponivel",
-      "instrumento": "curva de titulação da glicose (filtrada/reabsorvida/excretada)", "questoes": { "ilustrado": 13, "textual": 12 }, "figuras": 13, "farmacologia": ["SGLT2i empagliflozina 10–25 mg/dia (SGLT2)", "acetazolamida 250–500 mg/dia (anidrase carbônica)", "manitol 0,25–1 g/kg (osmótico)"], "inclui": ["reabsorção isosmótica 65% do Na", "limiar/Tm de glicose", "anidrase carbônica/NHE3", "dose-resposta Emax computada", "Fanconi (glicosúria normoglicêmica)", "guarda farmacológica invertida §8", "figuras nos exercícios"] },
-    { "id": "M6",  "metade": "FILTRA",  "arquivo": "filtra6.html",  "titulo": "Alça de Henle — NKCC2, contracorrente, gradiente corticomedular [fármaco: diuréticos de alça]", "status": "disponivel",
-      "instrumento": "perfil do gradiente corticomedular (córtex 300 → papila 1200 mOsm); o bloqueio do NKCC2 o abole + curva dose-resposta da natriurese com 2ª curva (resistência) à direita", "questoes": { "ilustrado": 12, "textual": 10 }, "figuras": 9, "farmacologia": ["furosemida 20–80 mg VO / 200–400 mg IV (NKCC2)", "bumetanida 0,5–2 mg (NKCC2, ~40× potente)", "torasemida 10–20 mg (NKCC2, VO ~80%)"], "inclui": ["ramosDiagram (fina descendente água × TAL impermeável à água, NaCl)", "nkcc2Diagram (Na-K-2Cl + reciclagem de K → voltagem luminal+ → Ca/Mg paracelular)", "gradienteMini (multiplicador de contracorrente, vasa recta)", "doseFig (dose-resposta sigmoide efeito = Emax·D/(EC50+D) com braking/resistência à direita)", "a alça CRIA o gradiente; o TAL é o motor diluidor", "teto alto + perda de Ca²⁺/Mg²⁺ (≠ tiazídico) + IV>VO + ototoxicidade", "guarda farmacológica invertida §8", "presets de cenário no lab"] },
-    { "id": "M7",  "metade": "FILTRA",  "titulo": "TCD — NCC, manejo de Ca, segmento diluidor [fármaco: tiazídicos]", "status": "planejado" },
-    { "id": "M8",  "metade": "FILTRA",  "titulo": "Ducto coletor — ENaC/aldosterona, ADH/aquaporinas [fármaco: poupadores de K, vaptanos]", "status": "planejado" },
-    { "id": "M9",  "metade": "FILTRA",  "titulo": "Sódio e volume — o rim defende o volume circulante efetivo", "status": "planejado" },
-    { "id": "M10", "metade": "FILTRA",  "titulo": "Água livre e disnatremias — ADH/vasopressina, clearance de água livre", "status": "planejado" },
-    { "id": "M11", "metade": "FILTRA",  "titulo": "Potássio — secreção distal, aldosterona, shift transcelular", "status": "planejado" },
-    { "id": "M12", "metade": "FILTRA",  "titulo": "Cálcio · fósforo · magnésio — PTH, vitamina D, FGF23", "status": "planejado" },
-    { "id": "M13", "metade": "FILTRA",  "titulo": "Ácido-base renal — HCO₃, NH₄⁺, AG, delta-delta, ATRs", "status": "planejado" },
-    { "id": "M14", "metade": "FILTRA",  "titulo": "RAAS e o eixo endócrino renal — renina→AngII→aldo, ADH, EPO, vitamina D", "status": "planejado" },
-    { "id": "M15", "metade": "FILTRA",  "titulo": "Ureia, creatinina, eGFR e a urina — FE_Na, FE_ureia, índices", "status": "planejado" },
-    { "id": "M16", "metade": "FILTRA",  "titulo": "A LRA por mecanismo — KDIGO; pré/intrínseca/pós [capstone fisiológico]", "status": "planejado" },
-    { "id": "M17", "metade": "FILTRA",  "titulo": "Farmacologia diurética integrada — dose-resposta, teto, braking, sinergia [capstone farmacológico 1]", "status": "planejado" },
-    { "id": "M18", "metade": "FILTRA",  "titulo": "Anti-hipertensivos, RAAS e eixo endócrino-renal + ajuste renal de fármacos [capstone farmacológico 2]", "status": "planejado" },
-    { "id": "M19", "metade": "DIALISA", "titulo": "Princípios físicos do transporte — difusão, convecção, ultrafiltração, adsorção", "status": "planejado" },
-    { "id": "M20", "metade": "DIALISA", "titulo": "O circuito extracorpóreo — acesso, bomba, dialisador, fluxos, TMP", "status": "planejado" },
-    { "id": "M21", "metade": "DIALISA", "titulo": "A membrana e o clearance — KoA, sieving, backfiltration (high×low flux)", "status": "planejado" },
-    { "id": "M22", "metade": "DIALISA", "titulo": "A sessão de HDI — gradientes, eficiência × tempo", "status": "planejado" },
-    { "id": "M23", "metade": "DIALISA", "titulo": "Ultrafiltração e o balanço de volume — peso seco, taxa de UF, refilling", "status": "planejado" },
-    { "id": "M24", "metade": "DIALISA", "titulo": "Hipotensão intradialítica — UF > refilling, stunning miocárdico", "status": "planejado" },
-    { "id": "M25", "metade": "DIALISA", "titulo": "Dose e adequação — Kt/V, URR; a prescrição de dose por mecanismo", "status": "planejado" },
-    { "id": "M26", "metade": "DIALISA", "titulo": "Cinética da ureia — single × duplo compartimento, rebote pós-diálise", "status": "planejado" },
-    { "id": "M27", "metade": "DIALISA", "titulo": "TRRC/CRRT — CVVH × CVVHD × CVVHDF", "status": "planejado" },
-    { "id": "M28", "metade": "DIALISA", "titulo": "Dose e fluidos na TRRC — efluente mL/kg/h, pré × pós-diluição", "status": "planejado" },
-    { "id": "M29", "metade": "DIALISA", "titulo": "Anticoagulação do circuito — citrato regional × heparina; protocolos e doses", "status": "planejado" },
-    { "id": "M30", "metade": "DIALISA", "titulo": "Diálise peritoneal — o peritônio como membrana; UF osmótica; PET", "status": "planejado" },
-    { "id": "M31", "metade": "DIALISA", "titulo": "SLED / híbridas — o meio-termo entre HDI e TRRC", "status": "planejado" },
-    { "id": "M32", "metade": "DIALISA", "titulo": "Depuração de solutos e drogas — PM, ligação proteica, Vd; dosagem de fármacos na diálise", "status": "planejado" },
-    { "id": "M33", "metade": "DIALISA", "titulo": "Remoção de toxinas — lítio, salicilato, metanol, etilenoglicol; indicação e dose", "status": "planejado" },
-    { "id": "M34", "metade": "DIALISA", "titulo": "Síndrome de desequilíbrio dialítico — edema cerebral por osmose reversa", "status": "planejado" },
-    { "id": "M35", "metade": "DIALISA", "titulo": "Indicações de TRS — o AEIOU como mapa de conduta", "status": "planejado" },
-    { "id": "M36", "metade": "DIALISA", "titulo": "O momento da substituição — quando iniciar; precoce × tardio", "status": "planejado" },
-    { "id": "M37", "metade": "DIALISA", "titulo": "Síndrome cardiorrenal e a ultrafiltração — diuréticos × UF (ponte com Choca)", "status": "planejado" },
-    { "id": "M38", "metade": "DIALISA", "titulo": "Capstone integrado — LRA grave → modalidade e prescrição por mecanismo", "status": "planejado" },
-    { "id": "M39", "metade": "EXAME",   "titulo": "Revisão global · exame de domínio · 100 questões", "status": "planejado" }
+    {
+      "id": "M0",
+      "metade": "FILTRA",
+      "arquivo": "filtra0.html",
+      "titulo": "Compartimentos do líquido corporal — a célula no oceano + introdução à fluidoterapia",
+      "status": "disponivel",
+      "instrumento": "diagrama de Darrow–Yannet vivo",
+      "inclui": [
+        "fluidos IV (SF/Ringer/SG5%/NaCl3%/coloide)",
+        "balanço hídrico (ingesta×perdas)",
+        "a banana no mar",
+        "o cérebro e a sensibilidade ao Na"
+      ],
+      "questoes": {
+        "ilustrado": 13,
+        "textual": 13
+      }
+    },
+    {
+      "id": "M1",
+      "metade": "FILTRA",
+      "arquivo": "filtra1.html",
+      "titulo": "O néfron / forças de Starling glomerulares (aferente×eferente)",
+      "status": "disponivel",
+      "instrumento": "curva TFG × PAM (autorregulação + precipício)",
+      "questoes": {
+        "ilustrado": 10,
+        "textual": 10
+      },
+      "inclui": [
+        "aba Conceito",
+        "desenho anatômico do néfron",
+        "glomérulo entre duas resistências",
+        "forças de Starling",
+        "paradoxo do eferente"
+      ]
+    },
+    {
+      "id": "M2",
+      "metade": "FILTRA",
+      "arquivo": "filtra2.html",
+      "titulo": "Hemodinâmica renal — 20% do DC, autorregulação, córtex×medula [fármaco: AINEs, IECA/BRA]",
+      "status": "disponivel",
+      "instrumento": "curva FSR × PAM + pO₂ medular (platô, precipício e hipóxia medular)",
+      "questoes": {
+        "ilustrado": 10,
+        "textual": 10
+      },
+      "inclui": [
+        "renalDiagram (coração→rim 20% DC)",
+        "medulaDiagram (córtex×medula + indicador pO₂)",
+        "fsrMini (curva FSR×PAM)",
+        "glomFig (aferente×eferente)",
+        "caso ICC+diclofenaco+enalapril",
+        "farmacologia AINEs + IECA/BRA com dose e mecanismo"
+      ]
+    },
+    {
+      "id": "M3",
+      "metade": "FILTRA",
+      "arquivo": "filtra3.html",
+      "titulo": "O glomérulo — barreira de filtração, Kf, podócito, proteinúria",
+      "status": "disponivel",
+      "instrumento": "curva de peneiramento θ × raio molecular",
+      "questoes": {
+        "ilustrado": 13,
+        "textual": 12
+      },
+      "figuras": 13,
+      "inclui": [
+        "barreira por tamanho × carga",
+        "coeficiente de peneiramento θ (inulina/albumina/IgG)",
+        "Kf = permeabilidade × superfície",
+        "proteinúria por mecanismo (glomerular seletiva/não-seletiva, tubular, overflow)",
+        "nefrótica × nefrítica",
+        "caso lesão mínima 8 atos",
+        "figuras nos exercícios"
+      ]
+    },
+    {
+      "id": "M4",
+      "metade": "FILTRA",
+      "arquivo": "filtra4.html",
+      "titulo": "Clearance — medir a função e por que a creatinina mente",
+      "status": "disponivel",
+      "instrumento": "hipérbole creatinina × TFG (faixa cega)",
+      "questoes": {
+        "ilustrado": 13,
+        "textual": 12
+      },
+      "figuras": 13,
+      "inclui": [
+        "clearance C=U·V̇/P",
+        "inulina padrão-ouro",
+        "hipérbole Pcr×TFG + faixa cega",
+        "as três mentiras (secreção, cinética, massa muscular)",
+        "eGFR (CKD-EPI) × cistatina C",
+        "estágios KDIGO + critérios de LRA",
+        "caso idoso sarcopênico 8 atos",
+        "figuras nos exercícios"
+      ]
+    },
+    {
+      "id": "M5",
+      "metade": "FILTRA",
+      "arquivo": "filtra5.html",
+      "titulo": "TCP — Na/glicose (SGLT2), HCO₃/anidrase carbônica, Fanconi [fármaco: acetazolamida, SGLT2i, manitol]",
+      "status": "disponivel",
+      "instrumento": "curva de titulação da glicose (filtrada/reabsorvida/excretada)",
+      "questoes": {
+        "ilustrado": 13,
+        "textual": 12
+      },
+      "figuras": 13,
+      "farmacologia": [
+        "SGLT2i empagliflozina 10–25 mg/dia (SGLT2)",
+        "acetazolamida 250–500 mg/dia (anidrase carbônica)",
+        "manitol 0,25–1 g/kg (osmótico)"
+      ],
+      "inclui": [
+        "reabsorção isosmótica 65% do Na",
+        "limiar/Tm de glicose",
+        "anidrase carbônica/NHE3",
+        "dose-resposta Emax computada",
+        "Fanconi (glicosúria normoglicêmica)",
+        "guarda farmacológica invertida §8",
+        "figuras nos exercícios"
+      ]
+    },
+    {
+      "id": "M6",
+      "metade": "FILTRA",
+      "arquivo": "filtra6.html",
+      "titulo": "Alça de Henle — NKCC2, contracorrente, gradiente corticomedular [fármaco: diuréticos de alça]",
+      "status": "disponivel",
+      "instrumento": "perfil do gradiente corticomedular (córtex 300 → papila 1200 mOsm); o bloqueio do NKCC2 o abole + curva dose-resposta da natriurese com 2ª curva (resistência) à direita",
+      "questoes": {
+        "ilustrado": 12,
+        "textual": 10
+      },
+      "figuras": 9,
+      "farmacologia": [
+        "furosemida 20–80 mg VO / 200–400 mg IV (NKCC2)",
+        "bumetanida 0,5–2 mg (NKCC2, ~40× potente)",
+        "torasemida 10–20 mg (NKCC2, VO ~80%)"
+      ],
+      "inclui": [
+        "ramosDiagram (fina descendente água × TAL impermeável à água, NaCl)",
+        "nkcc2Diagram (Na-K-2Cl + reciclagem de K → voltagem luminal+ → Ca/Mg paracelular)",
+        "gradienteMini (multiplicador de contracorrente, vasa recta)",
+        "doseFig (dose-resposta sigmoide efeito = Emax·D/(EC50+D) com braking/resistência à direita)",
+        "a alça CRIA o gradiente; o TAL é o motor diluidor",
+        "teto alto + perda de Ca²⁺/Mg²⁺ (≠ tiazídico) + IV>VO + ototoxicidade",
+        "guarda farmacológica invertida §8",
+        "presets de cenário no lab"
+      ]
+    },
+    {
+      "id": "M7",
+      "metade": "FILTRA",
+      "arquivo": "filtra7.html",
+      "titulo": "TCD — NCC, manejo de Ca²⁺, segmento diluidor [fármaco: tiazídicos]",
+      "status": "disponivel",
+      "instrumento": "as DUAS curvas vs dose de tiazídico — natriurese (sobe, teto baixo) × Ca urinário (CAI, o paradoxo); a divergência é a pérola",
+      "questoes": {
+        "ilustrado": 12,
+        "textual": 10
+      },
+      "inclui": [
+        "nccDiagram (NCC reabsorve ~5% do Na⁺ no TCD; diurético modesto; não é tudo igual no túbulo)",
+        "caDiagram (paradoxo do Ca: bloqueio do NCC → NCX basolateral acelera → Ca urinário CAI)",
+        "diluidorDiagram (segmento diluidor distal → risco de hiponatremia na idosa)",
+        "duasCurvasMini (natriurese × Ca urinário vs dose: a divergência)",
+        "doseFig (dose-resposta sigmoide efeito = Emax·D/(EC50+D))",
+        "farmacologia PIVÔ §8: hidroclorotiazida 25–50 mg, clortalidona 12,5–25 mg, indapamida 1,5–2,5 mg — dose↔unidade↔mecanismo (bloqueio do NCC) computados pelo motor",
+        "ineficácia em TFG<30",
+        "bloqueio sequencial alça+tiazida (sinergia)",
+        "hipercalcemia como efeito adverso espelho da hipocalciúria"
+      ]
+    },
+    {
+      "id": "M8",
+      "metade": "FILTRA",
+      "titulo": "Ducto coletor — ENaC/aldosterona, ADH/aquaporinas [fármaco: poupadores de K, vaptanos]",
+      "status": "planejado"
+    },
+    {
+      "id": "M9",
+      "metade": "FILTRA",
+      "titulo": "Sódio e volume — o rim defende o volume circulante efetivo",
+      "status": "planejado"
+    },
+    {
+      "id": "M10",
+      "metade": "FILTRA",
+      "titulo": "Água livre e disnatremias — ADH/vasopressina, clearance de água livre",
+      "status": "planejado"
+    },
+    {
+      "id": "M11",
+      "metade": "FILTRA",
+      "titulo": "Potássio — secreção distal, aldosterona, shift transcelular",
+      "status": "planejado"
+    },
+    {
+      "id": "M12",
+      "metade": "FILTRA",
+      "titulo": "Cálcio · fósforo · magnésio — PTH, vitamina D, FGF23",
+      "status": "planejado"
+    },
+    {
+      "id": "M13",
+      "metade": "FILTRA",
+      "titulo": "Ácido-base renal — HCO₃, NH₄⁺, AG, delta-delta, ATRs",
+      "status": "planejado"
+    },
+    {
+      "id": "M14",
+      "metade": "FILTRA",
+      "titulo": "RAAS e o eixo endócrino renal — renina→AngII→aldo, ADH, EPO, vitamina D",
+      "status": "planejado"
+    },
+    {
+      "id": "M15",
+      "metade": "FILTRA",
+      "titulo": "Ureia, creatinina, eGFR e a urina — FE_Na, FE_ureia, índices",
+      "status": "planejado"
+    },
+    {
+      "id": "M16",
+      "metade": "FILTRA",
+      "titulo": "A LRA por mecanismo — KDIGO; pré/intrínseca/pós [capstone fisiológico]",
+      "status": "planejado"
+    },
+    {
+      "id": "M17",
+      "metade": "FILTRA",
+      "titulo": "Farmacologia diurética integrada — dose-resposta, teto, braking, sinergia [capstone farmacológico 1]",
+      "status": "planejado"
+    },
+    {
+      "id": "M18",
+      "metade": "FILTRA",
+      "titulo": "Anti-hipertensivos, RAAS e eixo endócrino-renal + ajuste renal de fármacos [capstone farmacológico 2]",
+      "status": "planejado"
+    },
+    {
+      "id": "M19",
+      "metade": "DIALISA",
+      "titulo": "Princípios físicos do transporte — difusão, convecção, ultrafiltração, adsorção",
+      "status": "planejado"
+    },
+    {
+      "id": "M20",
+      "metade": "DIALISA",
+      "titulo": "O circuito extracorpóreo — acesso, bomba, dialisador, fluxos, TMP",
+      "status": "planejado"
+    },
+    {
+      "id": "M21",
+      "metade": "DIALISA",
+      "titulo": "A membrana e o clearance — KoA, sieving, backfiltration (high×low flux)",
+      "status": "planejado"
+    },
+    {
+      "id": "M22",
+      "metade": "DIALISA",
+      "titulo": "A sessão de HDI — gradientes, eficiência × tempo",
+      "status": "planejado"
+    },
+    {
+      "id": "M23",
+      "metade": "DIALISA",
+      "titulo": "Ultrafiltração e o balanço de volume — peso seco, taxa de UF, refilling",
+      "status": "planejado"
+    },
+    {
+      "id": "M24",
+      "metade": "DIALISA",
+      "titulo": "Hipotensão intradialítica — UF > refilling, stunning miocárdico",
+      "status": "planejado"
+    },
+    {
+      "id": "M25",
+      "metade": "DIALISA",
+      "titulo": "Dose e adequação — Kt/V, URR; a prescrição de dose por mecanismo",
+      "status": "planejado"
+    },
+    {
+      "id": "M26",
+      "metade": "DIALISA",
+      "titulo": "Cinética da ureia — single × duplo compartimento, rebote pós-diálise",
+      "status": "planejado"
+    },
+    {
+      "id": "M27",
+      "metade": "DIALISA",
+      "titulo": "TRRC/CRRT — CVVH × CVVHD × CVVHDF",
+      "status": "planejado"
+    },
+    {
+      "id": "M28",
+      "metade": "DIALISA",
+      "titulo": "Dose e fluidos na TRRC — efluente mL/kg/h, pré × pós-diluição",
+      "status": "planejado"
+    },
+    {
+      "id": "M29",
+      "metade": "DIALISA",
+      "titulo": "Anticoagulação do circuito — citrato regional × heparina; protocolos e doses",
+      "status": "planejado"
+    },
+    {
+      "id": "M30",
+      "metade": "DIALISA",
+      "titulo": "Diálise peritoneal — o peritônio como membrana; UF osmótica; PET",
+      "status": "planejado"
+    },
+    {
+      "id": "M31",
+      "metade": "DIALISA",
+      "titulo": "SLED / híbridas — o meio-termo entre HDI e TRRC",
+      "status": "planejado"
+    },
+    {
+      "id": "M32",
+      "metade": "DIALISA",
+      "titulo": "Depuração de solutos e drogas — PM, ligação proteica, Vd; dosagem de fármacos na diálise",
+      "status": "planejado"
+    },
+    {
+      "id": "M33",
+      "metade": "DIALISA",
+      "titulo": "Remoção de toxinas — lítio, salicilato, metanol, etilenoglicol; indicação e dose",
+      "status": "planejado"
+    },
+    {
+      "id": "M34",
+      "metade": "DIALISA",
+      "titulo": "Síndrome de desequilíbrio dialítico — edema cerebral por osmose reversa",
+      "status": "planejado"
+    },
+    {
+      "id": "M35",
+      "metade": "DIALISA",
+      "titulo": "Indicações de TRS — o AEIOU como mapa de conduta",
+      "status": "planejado"
+    },
+    {
+      "id": "M36",
+      "metade": "DIALISA",
+      "titulo": "O momento da substituição — quando iniciar; precoce × tardio",
+      "status": "planejado"
+    },
+    {
+      "id": "M37",
+      "metade": "DIALISA",
+      "titulo": "Síndrome cardiorrenal e a ultrafiltração — diuréticos × UF (ponte com Choca)",
+      "status": "planejado"
+    },
+    {
+      "id": "M38",
+      "metade": "DIALISA",
+      "titulo": "Capstone integrado — LRA grave → modalidade e prescrição por mecanismo",
+      "status": "planejado"
+    },
+    {
+      "id": "M39",
+      "metade": "EXAME",
+      "titulo": "Revisão global · exame de domínio · 100 questões",
+      "status": "planejado"
+    }
   ]
 }

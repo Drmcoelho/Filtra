@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M7 — TCD: NCC, manejo de Ca²⁺, segmento diluidor [tiazídicos]</title>
+<style>
+  :root{
+    --bg:#0c1014; --panel:#141b22; --panel2:#1b242d; --line:#283642;
+    --ink:#e7eef4; --dim:#9fb1c0; --accent:#39c0c8; --warn:#e8a13a; --bad:#e0556b; --good:#52c08a;
+    --aff:#e0556b; --eff:#3a7bd5; --tuft:#39c0c8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none}
+  section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg,#dose-svg svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px}
+  .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)}
+  .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)}
+  .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)}
+  .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+  code{background:#0a1016;border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:13px}
+  .dose{display:inline-block;background:#0a1016;border:1px solid var(--accent);border-radius:5px;padding:1px 6px;color:var(--accent);font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M7</div>
+  <h1>Túbulo contorcido distal — NCC, manejo de Ca²⁺, o segmento diluidor [tiazídicos]</h1>
+  <div class="sub"><b>Não</b> "tudo é igual no túbulo". O TCD <b>ajusta fino</b>: o <b>NCC</b> (Na-Cl apical)
+  reabsorve só <b>~5% do Na⁺</b> filtrado e é <b>impermeável à água</b> (continua diluindo). Por isso o
+  <b>tiazídico</b> é um diurético <b>modesto</b> (≠ alça). E há o <b>paradoxo do Ca²⁺</b>: bloquear o NCC faz a
+  célula perder Na⁺ → ↑ a troca basolateral Na/Ca → o <b>Ca²⁺ urinário CAI</b> (oposto da alça) — trata
+  litíase/osteoporose, mas causa <b>hipercalcemia</b>. Bloquear o diluidor distal → risco de <b>hiponatremia</b>
+  (a idosa). E em <b>TFG&lt;30</b> o tiazida perde eficácia. Dose-resposta: <code>efeito = Emax · D / (EC50 + D)</code>.</div>
+  <nav class="hex">
+    <a class="soon" title="em breve">RESPIRA</a>
+    <a class="soon" title="em breve">CHOCA</a>
+    <span class="ativo">FILTRA</span>
+    <a class="soon" title="em breve">ALIMENTA</a>
+    <a class="soon" title="em breve">METABOLIZA</a>
+    <a class="soon" title="em breve">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="filtra.html">&larr; índice do braço FILTRA</a>
+
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- ============================== CONCEITO ============================== -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — o TCD, transportador a transportador</h3>
+
+      <h4>1. O NCC e o ajuste fino — só ~5% do Na⁺, sem água</h4>
+      <p class="sub">O TCD inicial reabsorve Na⁺ pelo <b>NCC</b> (cotransporte Na-Cl apical) — mas só <b>~5%</b> do
+      Na⁺ filtrado, em <b>ajuste fino</b>. O segmento é <b>impermeável à água</b>: reabsorve sal <b>sem</b> água,
+      então continua <b>diluindo</b> o filtrado. Como o alvo é pequeno, o <span class="dose">tiazídico</span> é um
+      diurético <b>modesto</b> — o teto natriurético é <b>baixo</b> (a alça, que ataca ~25% do Na⁺, é o diurético
+      potente). Aqui o lema do módulo: <b>não é tudo igual no túbulo</b> (Fig. 1–2).</p>
+      <div class="frow">
+        <div class="concept" id="draw-ncc"></div>
+        <figure class="fviva"><img src="assets/m7/tcd-ncc.png" alt="Túbulo contorcido distal com o cotransportador NCC (Na-Cl) na membrana apical reabsorvendo cerca de 5% do sódio filtrado" loading="lazy">
+          <figcaption><b>Fig. 1 · O NCC no TCD.</b> O cotransporte <b>Na-Cl</b> apical é o motor do TCD inicial e o
+          alvo do tiazídico. Reabsorve só <b>~5%</b> do Na⁺ filtrado — por isso o tiazídico é diurético
+          <b>modesto</b>. O segmento não deixa água passar: reabsorve sal e <b>dilui</b>.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m7/conexao-tubular.svg" alt="Esquema do túbulo distal e sua conexão com o ducto coletor: segmentos sequenciais do néfron distal" loading="lazy">
+          <figcaption><b>Fig. 2 · O néfron distal em sequência.</b> O TCD vem depois da alça e antes do coletor; ele
+          <b>refina</b> o que a alça entregou. Cada segmento tem seu transportador (NKCC2 na alça, <b>NCC</b> aqui,
+          ENaC no coletor) — <b>não é tudo igual no túbulo</b>.</figcaption></figure>
+      </div>
+
+      <h4>2. O paradoxo do Ca²⁺ — o Ca urinário CAI com o tiazídico</h4>
+      <p class="sub">Aqui mora a pérola. Bloquear o NCC faz a célula <b>perder Na⁺</b> → a bomba basolateral
+      <b>Na/Ca (NCX)</b> acelera para repor o Na⁺ → ela <b>extrai mais Ca²⁺</b> da luz → o <b>Ca²⁺ urinário CAI</b>
+      (hipocalciúria). É o <b>oposto da alça</b>, que <em>aumenta</em> o Ca urinário. Clinicamente: o tiazida trata a
+      <b>litíase cálcica/hipercalciúria</b> e a <b>osteoporose</b> — mas pode causar <b>hipercalcemia</b> (Fig. 3–4).</p>
+      <div class="frow">
+        <div class="concept" id="draw-ca"></div>
+        <figure class="fviva"><img src="assets/m7/paradoxo-calcio-tiazidico.svg" alt="Paradoxo do cálcio do tiazídico: bloqueio do NCC aumenta a troca basolateral sódio-cálcio e reduz o cálcio urinário" loading="lazy">
+          <figcaption><b>Fig. 3 · O paradoxo.</b> NCC bloqueado → célula perde Na⁺ → <b>NCX basolateral</b> (Na/Ca)
+          acelera → mais Ca²⁺ entra na célula e é reabsorvido → <b>Ca²⁺ urinário CAI</b>. Diurético que <em>retém</em>
+          cálcio: a chave da litíase e da osteoporose.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m7/manejo-calcio-distal.svg" alt="Manejo do cálcio no túbulo distal: canal apical TRPV5 e trocador basolateral sódio-cálcio" loading="lazy">
+          <figcaption><b>Fig. 4 · O cálcio no TCD.</b> O Ca²⁺ entra pelo <b>TRPV5</b> apical e sai pelo <b>NCX</b>
+          basolateral. O tiazida, ao baixar o Na⁺ intracelular, <b>favorece o NCX</b> → mais reabsorção de Ca²⁺. É
+          regulação <b>ativa</b>, não passiva — o oposto da alça.</figcaption></figure>
+      </div>
+
+      <h4>3. O segmento diluidor distal — e o risco de hiponatremia</h4>
+      <p class="sub">Porque reabsorve <b>Na sem água</b>, o TCD é um <b>segmento diluidor</b>: ele afina o filtrado e
+      ajuda a gerar <b>água livre</b> para excretar. Bloqueá-lo com o tiazida <b>prejudica a diluição</b> → o rim
+      retém água relativa → risco de <b>HIPONATREMIA</b>, clássica na <b>idosa</b> magra (baixo volume de
+      distribuição, sede preservada — Fig. 5–6). O <span class="dose">hidroclorotiazida 25–50 mg/dia</span> é o
+      gatilho típico.</p>
+      <div class="frow">
+        <div class="concept" id="draw-diluidor"></div>
+        <figure class="fviva"><img src="assets/m7/segmento-diluidor-distal.svg" alt="O segmento diluidor distal reabsorve sódio sem água, diluindo o filtrado e gerando água livre" loading="lazy">
+          <figcaption><b>Fig. 5 · O diluidor.</b> Sal sai, água fica → o filtrado <b>dilui</b>. É assim que o rim
+          gera <b>água livre</b>. O tiazida bloqueia essa diluição → menos água livre excretada → <b>hiponatremia</b>
+          (o efeito adverso mais temido na idosa).</figcaption></figure>
+        <figure class="fviva"><img src="assets/m7/tiazidico-sitio.png" alt="Sítio de ação do tiazídico no túbulo distal: bloqueio do NCC na membrana apical" loading="lazy">
+          <figcaption><b>Fig. 6 · O sítio do tiazídico.</b> A droga age na luz, bloqueando o <b>NCC</b> apical. Uma
+          chave numa fechadura de <b>um</b> segmento. Como o NCC só reabsorve ~5% do Na⁺, o efeito diurético é
+          <b>modesto</b> — mas o ácido-base, o Ca²⁺ e a água livre mudam todos.</figcaption></figure>
+      </div>
+
+      <h4>4. A eficácia cai em TFG&lt;30 — e o bloqueio sequencial</h4>
+      <p class="sub">O tiazida precisa ser <b>filtrado</b> e precisa de <b>carga distal</b>: quando a
+      <b>TFG&lt;30 mL/min</b>, ambos falham → o tiazida <b>perde eficácia</b> (clássico ensinamento: "tiazida não
+      funciona em rim ruim", embora as evidências mais novas relativizem). Aí entra o <b>bloqueio sequencial</b>:
+      somar o tiazida a um <b>diurético de alça</b> bloqueia o <em>escape</em> distal da alça → <b>sinergia</b>
+      natriurética (Fig. 7–8).</p>
+      <div class="frow">
+        <div class="concept" id="draw-tfg"></div>
+        <figure class="fviva"><img src="assets/m7/trpv5-calcio.svg" alt="Canal TRPV5 apical para entrada de cálcio na célula do túbulo distal, regulado pela vitamina D e PTH" loading="lazy">
+          <figcaption><b>Fig. 7 · TRPV5.</b> A porta de entrada apical do Ca²⁺ no TCD. Sua atividade, somada ao NCX
+          basolateral acelerado pelo tiazida, define a <b>hipocalciúria</b>. Liga o módulo ao eixo do cálcio (M12):
+          PTH e vitamina D modulam o TRPV5.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m7/tubulo-distal-histologia.svg" alt="Histologia do túbulo contorcido distal: epitélio cúbico com células ricas em mitocôndrias" loading="lazy">
+          <figcaption><b>Fig. 8 · Histologia do TCD.</b> Epitélio cúbico, células densas em mitocôndrias (transporte
+          ativo de Na/Cl/Ca). É um segmento <b>especializado</b> no ajuste fino — a prova histológica de que <b>não é
+          tudo igual no túbulo</b>. As Fig. 1–8 reaparecem no Caso, na Trilha e na Avaliação.</figcaption></figure>
+      </div>
+
+      <h4>5. A farmacologia do segmento — dose-resposta sigmoide</h4>
+      <p class="sub">Cada tiazídico é a <b>chave</b> do NCC, e seu efeito segue a curva
+      <code>efeito = Emax · D / (EC50 + D)</code>: há <b>teto</b> (Emax), <b>potência</b> (EC50) e <b>saturação</b>.
+      <span class="dose">hidroclorotiazida 25–50 mg/dia VO</span> · <span class="dose">clortalidona 12,5–25 mg/dia VO</span>
+      (meia-vida longa, mais potente) · <span class="dose">indapamida 1,5–2,5 mg/dia VO</span> (potente em baixa dose).
+      Dobrar a dose <b>não</b> dobra o efeito perto do teto — e o teto natriurético do tiazida é, ele próprio,
+      <b>baixo</b>.</p>
+      <div class="frow">
+        <div class="concept" id="draw-dose"></div>
+        <figure class="fviva"><img src="assets/m7/tcd-ncc.png" alt="Curva dose-resposta hiperbólica do tiazídico com teto Emax e meia-resposta em EC50" loading="lazy">
+          <figcaption><b>Fig. 9 · A dose-resposta.</b> <code>efeito = Emax·D/(EC50+D)</code>: cresce rápido,
+          desacelera e <b>plateia no Emax</b>. Em EC50, o efeito é metade do teto. A clortalidona tem EC50
+          <b>menor</b> e Emax <b>maior</b> que a HCTZ — por isso é mais potente e dura mais.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== CASO (5 atos) ============================== -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — cinco atos, decida antes de revelar</h3>
+      <p class="sub">Cinco encontros com o TCD. <b>(A)</b> Homem 50a, HAS, com cálculos renais de cálcio de repetição
+      e hipercalciúria. <b>(B)</b> Idosa magra de 78a, em tiazida, chega confusa com Na 124. <b>(C)</b> Cálcio sérico
+      sobe num paciente em tiazida há meses. <b>(D)</b> Cardiopata com TFG 25, edemaciado, "o tiazida não faz nada".
+      <b>(E)</b> Refratário ao diurético de alça em dose máxima — o que somar?</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step">
+        <b>Ato 1.</b> No homem (A) com litíase cálcica e hipercalciúria, por que um diurético ajuda?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>Pelo paradoxo do Ca²⁺.</b> O <b>tiazídico</b>
+        (<span class="dose">hidroclorotiazida 25–50 mg/dia</span> ou <span class="dose">clortalidona 12,5–25 mg/dia</span>)
+        bloqueia o NCC → a célula perde Na⁺ → ↑ NCX basolateral → <b>↑ reabsorção de Ca²⁺</b> → o <b>Ca urinário CAI</b>
+        (Fig. 3). No engine: <code>hctz 50, caUrinBasal 400</code> → Ca urinário despenca. Menos cálcio na urina =
+        menos pedra. É o <em>único</em> diurético que retém cálcio.</div>
+      </div>
+      <div class="step">
+        <b>Ato 2.</b> A idosa (B) com Na 124 em tiazida — qual o mecanismo?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2"><b>Hiponatremia do tiazídico.</b> O TCD é o <b>segmento diluidor</b> (Fig. 5):
+        reabsorve Na sem água. Bloqueá-lo prejudica a <b>clearance de água livre</b> → o rim retém água relativa → o
+        Na sérico cai. A idosa magra é o alvo clássico (baixo volume de distribuição, sede preservada). No engine:
+        <code>hctz 50</code> → Na sérico ↓. Suspenda o tiazida e corrija a água com cautela (mielinólise!).</div>
+      </div>
+      <div class="step">
+        <b>Ato 3.</b> O cálcio sérico subiu (C) num paciente estável em tiazida. Coincidência?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3"><b>Não — é o mesmo paradoxo, agora como efeito adverso.</b> Reter cálcio na urina
+        significa <b>devolvê-lo ao sangue</b> → tendência à <b>HIPERcalcemia</b>. Em geral leve, mas pode
+        <b>desmascarar um hiperparatireoidismo primário</b> latente. No engine: a queda do Ca urinário vem com
+        <code>tendHipercalcemia</code> ↑. Dose a <b>PTH</b> e o cálcio antes de culpar só o tiazida.</div>
+      </div>
+      <div class="step">
+        <b>Ato 4.</b> No cardiopata (D) com TFG 25, por que o tiazida "não faz nada"?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>Ineficácia em TFG baixa.</b> O tiazida precisa ser <b>filtrado</b> e precisa de
+        <b>carga distal</b>: com <b>TFG&lt;30</b>, ambos caem → o bloqueio efetivo do NCC despenca. No engine:
+        <code>hctz 50, TFG 25</code> → <code>bloqEff</code> e natriurese muito menores que em TFG 120; regime
+        <b>tiazidico_ineficaz_tfg_baixa</b>. Em rim ruim, o cavalo de batalha é o <b>diurético de alça</b>.</div>
+      </div>
+      <div class="step">
+        <b>Ato 5.</b> O refratário à alça (E) — o que somar, e por quê? Síntese.
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>Bloqueio sequencial: some um tiazídico</b> (frequentemente
+        <span class="dose">clortalidona 25 mg</span> ou <span class="dose">indapamida 2,5 mg</span>) ao diurético de
+        alça. A alça causa <b>hipertrofia/escape</b> do TCD distal; o tiazida bloqueia exatamente esse escape →
+        <b>sinergia</b> natriurética. No engine: <code>hctz 50, alca true</code> → natriurese extra. <b>Cuidado:</b>
+        a sinergia também espolia <b>K⁺</b> e pode causar grande perda de volume — monitore.
+        <br><b>Lição:</b> o TCD <b>não</b> é "mais do mesmo". É ajuste fino: pouco Na⁺, mas o manejo do <b>Ca²⁺</b>, da
+        <b>água livre</b> e a <b>sinergia</b> com a alça moram aqui. Cada fármaco é a chave de um transportador; a
+        dose-resposta é fisiologia.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== TRILHA ============================== -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — dez passos que constroem o conceito</h3>
+      <details><summary>1. Que transportador o TCD inicial usa para reabsorver Na⁺?</summary>
+        <p><em>Pista: cotransporte de dois íons.</em><br>
+        O <b>NCC</b> (Na-Cl, apical) — o alvo dos tiazídicos. Reabsorve só ~<b>5%</b> do Na⁺ filtrado, em ajuste
+        fino. Não é o NKCC2 (alça) nem o ENaC (coletor): <b>não é tudo igual no túbulo</b>.</p></details>
+      <details><summary>2. Por que o tiazídico é um diurético MODESTO?</summary>
+        <p><em>Pista: o tamanho do alvo.</em><br>
+        Porque o NCC só reabsorve ~<b>5%</b> do Na⁺ filtrado — o teto natriurético é <b>baixo</b>. A alça ataca
+        ~25% (NKCC2) e é o diurético potente. O tiazida brilha não pela diurese, mas pelo manejo do Ca e da PA.</p></details>
+      <details><summary>3. O TCD reabsorve água junto com o Na⁺?</summary>
+        <p><em>Pista: impermeável.</em><br>
+        <b>Não.</b> O segmento é <b>impermeável à água</b>: reabsorve sal <b>sem</b> água → continua <b>diluindo</b> o
+        filtrado. Por isso é um <b>segmento diluidor</b> e gera água livre.</p></details>
+      <details><summary>4. Qual é o paradoxo do cálcio do tiazídico?</summary>
+        <p><em>Pista: um diurético que retém cálcio.</em><br>
+        O tiazida <b>baixa</b> o Ca²⁺ urinário (hipocalciúria) — oposto da alça, que o aumenta. Por isso trata
+        litíase cálcica e osteoporose.</p></details>
+      <details><summary>5. Por que bloquear o NCC reduz o Ca²⁺ urinário?</summary>
+        <p><em>Pista: o que acontece com o Na⁺ intracelular?</em><br>
+        Bloquear o NCC faz a célula <b>perder Na⁺</b> → o trocador basolateral <b>Na/Ca (NCX)</b> acelera para repor
+        Na⁺ → extrai <b>mais Ca²⁺</b> da luz → mais reabsorção de Ca²⁺ → menos na urina.</p></details>
+      <details><summary>6. Qual o efeito adverso "espelho" da hipocalciúria?</summary>
+        <p><em>Pista: para onde vai o cálcio retido?</em><br>
+        A <b>HIPERcalcemia</b>: reter cálcio na urina é devolvê-lo ao sangue. Em geral leve, mas pode desmascarar um
+        <b>hiperparatireoidismo</b> latente.</p></details>
+      <details><summary>7. Por que o tiazídico causa HIPONATREMIA?</summary>
+        <p><em>Pista: bloqueia a diluição.</em><br>
+        O TCD é o <b>segmento diluidor</b>; bloqueá-lo prejudica a <b>clearance de água livre</b> → o rim retém água
+        relativa → o Na sérico cai. A <b>idosa magra</b> é o alvo clássico.</p></details>
+      <details><summary>8. Por que o tiazida perde eficácia em TFG&lt;30?</summary>
+        <p><em>Pista: precisa ser filtrado e ter carga distal.</em><br>
+        Em <b>TFG&lt;30</b>, menos fármaco é filtrado e chega menos Na⁺ ao TCD → o bloqueio efetivo do NCC despenca.
+        Em rim ruim, o diurético de alça é o cavalo de batalha.</p></details>
+      <details><summary>9. O que é o bloqueio sequencial do néfron?</summary>
+        <p><em>Pista: alça + tiazida.</em><br>
+        Somar um tiazídico ao diurético de alça bloqueia o <b>escape/hipertrofia</b> distal que a alça provoca →
+        <b>sinergia</b> natriurética. Potente — e perigoso (perde K⁺ e volume).</p></details>
+      <details><summary>10. Como a dose-resposta distingue HCTZ, clortalidona e indapamida?</summary>
+        <p><em>Pista: efeito = Emax·D/(EC50+D).</em><br>
+        A <b>clortalidona</b> tem EC50 menor e Emax maior (mais potente, meia-vida longa); a <b>indapamida</b> é
+        potente em mg baixos; a <b>HCTZ</b> é a referência. A curva ensina potência e teto.</p></details>
+    </div>
+  </section>
+
+  <!-- ============================== INSTRUMENTO ============================== -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — as DUAS curvas vs dose: natriurese (sobe) × Ca urinário (CAI)</h3>
+      <p class="sub">A linha <span style="color:#39c0c8">ciano</span> é a <b>natriurese</b> (sobe com a dose, mas com
+      <b>teto baixo</b>); a <span style="color:#e8a13a">laranja</span> é o <b>Ca²⁺ urinário</b> (<b>CAI</b> com a dose
+      — o paradoxo). A <b>divergência</b> entre elas É a pérola do módulo: um diurético que <em>perde</em> Na⁺ mas
+      <em>retém</em> Ca²⁺. Suba a dose de <b>hidroclorotiazida</b> e veja as curvas se afastarem.</p>
+      <div class="grid" style="margin-bottom:10px">
+        <div>
+          <label>Hidroclorotiazida (mg): <span class="val" id="instr-lbl-hctz">25</span></label>
+          <input type="range" id="instr-hctz" min="0" max="100" step="5" value="25">
+          <label>Cálcio urinário basal (mg/dia): <span class="val" id="instr-lbl-ca">200</span></label>
+          <input type="range" id="instr-ca" min="100" max="600" step="25" value="200">
+        </div>
+        <div>
+          <label>TFG (mL/min): <span class="val" id="instr-lbl-tfg">120</span></label>
+          <input type="range" id="instr-tfg" min="10" max="180" step="5" value="120">
+          <label>Diurético de alça associado (sequencial):</label>
+          <select id="instr-alca">
+            <option value="0">não</option>
+            <option value="1">sim</option>
+          </select>
+        </div>
+      </div>
+      <canvas id="curvas-canvas" width="900" height="320" aria-label="Natriurese e cálcio urinário vs dose de tiazídico"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+      <h4>A dose-resposta do tiazídico (computada): <code>efeito = Emax·D/(EC50+D)</code></h4>
+      <div class="concept" id="dose-svg"></div>
+    </div>
+  </section>
+
+  <!-- ============================== LAB ============================== -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — mova a farmacologia e leia o TCD por mecanismo</h3>
+      <div style="margin-bottom:8px">
+        <button class="act" data-preset="litiase">Litíase cálcica (Ca basal alto)</button>
+        <button class="act" data-preset="idosa">Idosa: hiponatremia</button>
+        <button class="act" data-preset="tfgbaixa">TFG 25 (ineficácia)</button>
+        <button class="act" data-preset="sequencial">Bloqueio sequencial (alça+tiazida)</button>
+        <button class="act" data-preset="potente">Clortalidona potente</button>
+      </div>
+      <div class="grid">
+        <div>
+          <label>Hidroclorotiazida (mg/dia VO — bloqueia o NCC): <span class="val" id="lbl-hctz">25</span></label>
+          <input type="range" id="in-hctz" min="0" max="100" step="5" value="25">
+          <label>Clortalidona (mg/dia VO — meia-vida longa, mais potente): <span class="val" id="lbl-ctd">0</span></label>
+          <input type="range" id="in-ctd" min="0" max="50" step="2.5" value="0">
+          <label>Indapamida (mg/dia VO — potente em baixa dose): <span class="val" id="lbl-indap">0.0</span></label>
+          <input type="range" id="in-indap" min="0" max="5" step="0.5" value="0">
+        </div>
+        <div>
+          <label>TFG (mL/min): <span class="val" id="lbl-tfg">120</span></label>
+          <input type="range" id="in-tfg" min="10" max="180" step="5" value="120">
+          <label>Cálcio urinário basal (mg/dia): <span class="val" id="lbl-ca">200</span></label>
+          <input type="range" id="in-ca" min="100" max="600" step="25" value="200">
+          <label>Diurético de alça associado (sequencial):</label>
+          <select id="in-alca">
+            <option value="0">não</option>
+            <option value="1">sim</option>
+          </select>
+        </div>
+      </div>
+
+      <table>
+        <tr><th>Variável</th><th>Atual</th><th>Normal ≈</th></tr>
+        <tr><td>Bloqueio do NCC (efetivo)</td><td class="num" id="out-bloq">—</td><td class="num">0</td></tr>
+        <tr><td>Fração do Na⁺ reabsorvida pelo NCC</td><td class="num" id="out-fracna">—</td><td class="num">~0.05</td></tr>
+        <tr><td>Natriurese (mEq/min — MODESTA)</td><td class="num" id="out-natr">—</td><td class="num">~0</td></tr>
+        <tr><td>Cálcio urinário (mg/dia — CAI)</td><td class="num" id="out-caurin">—</td><td class="num">200</td></tr>
+        <tr><td>Queda do Ca urinário (paradoxo, %)</td><td class="num" id="out-quedaca">—</td><td class="num">0</td></tr>
+        <tr><td>Na⁺ sérico estimado (mEq/L)</td><td class="num" id="out-naserico">—</td><td class="num">140</td></tr>
+        <tr><td>Fator de eficácia pela TFG</td><td class="num" id="out-ftfg">—</td><td class="num">~1</td></tr>
+        <tr><td>Efeitos dose-resposta (HCTZ · CTD · IND)</td><td class="num" id="out-efeitos">—</td><td class="num">0 · 0 · 0</td></tr>
+        <tr><td>Tendência à hipercalcemia</td><td class="num" id="out-hipercalc">—</td><td class="num">nenhuma</td></tr>
+        <tr><td>Risco de hiponatremia</td><td class="num" id="out-riscohipo">—</td><td class="num">—</td></tr>
+        <tr><td>Regime</td><td class="num" id="out-regime">—</td><td class="num">normal</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- ============================== AVALIAÇÃO ============================== -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (12)</button>
+        <button data-bank="textual">Textual (10)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica e farmacológica</b>.
+    Como nos módulos farmacológicos (decisão do autor, CLAUDE.md §8), a farmacologia entra como conteúdo de primeira
+    classe: as doses citadas — <b>hidroclorotiazida 25–50 mg/dia VO</b>, <b>clortalidona 12,5–25 mg/dia VO</b>,
+    <b>indapamida 1,5–2,5 mg/dia VO</b> — aparecem ancoradas ao <b>mecanismo</b> (bloqueio do NCC no TCD), e o efeito
+    é <b>computado pelo motor</b> (dose-resposta <code>efeito = Emax·D/(EC50+D)</code>), nunca tabelado. A ferramenta
+    é <b>educacional</b>, não está conectada a nenhum paciente real nem é dispositivo médico certificado; a decisão e
+    a <b>responsabilidade</b> finais são sempre do prescritor.
+    <b>Nota de honestidade do modelo:</b> as constantes (a fração de ~5% do Na⁺ do NCC, o teto natriurético baixo, a
+    queda máxima do Ca urinário, o limiar de TFG e os EC50/Emax de cada tiazídico) são estimativas <b>didáticas</b>
+    calibradas para reproduzir a <b>forma</b> dos fenômenos (a natriurese modesta; o paradoxo do Ca — Na⁺ urinário↑
+    mas Ca²⁺ urinário↓; a hiponatremia; a ineficácia em TFG baixa; a potência relativa). Os EC50 são ilustrativos: a
+    curva ensina teto, potência e saturação, não a farmacocinética exata.
+  </div>
+
+  <footer>
+    CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira
+  </footer>
+</div>
+
+<script>
+/* =========================================================================
+ * ENGINE INLINE — espelho fiel de build/m7/model7.js (o motor manda no pixel)
+ * ========================================================================= */
+'use strict';
+
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a) n=a; if(n>b) n=b; return n; }
+function merge(a,b){ var o={},k; if(a) for(k in a) if(Object.prototype.hasOwnProperty.call(a,k)) o[k]=a[k]; if(b) for(k in b) if(Object.prototype.hasOwnProperty.call(b,k)) o[k]=b[k]; return o; }
+
+var TFG_N=120, NA_PLASMA=140, FRAC_NA_NCC=0.05, CA_URIN_BASAL=200, NA_SERICO_N=140,
+    HCTZ_EC50=25, HCTZ_EMAX=0.85, CTD_EC50=12.5, CTD_EMAX=0.95, IND_EC50=1.5, IND_EMAX=0.90,
+    TIAZ_NATR_CAP=0.05, CA_QUEDA_MAX=0.50, TFG_FALHA=30;
+
+function doseResposta(D,EC50,Emax){
+  var d=clampv(D,0,1e9), ec=clampv(EC50,1e-9,1e9), em=clampv(Emax,0,1);
+  var e=em*d/(ec+d); if(!isFinite(e)||e<0) e=0; if(e>em) e=em; return e;
+}
+
+function eficaciaTFG(tfg){
+  var t=clampv(tfg,0,200);
+  var f=1/(1+Math.exp(-(t-TFG_FALHA)/6));
+  if(!isFinite(f)||f<0) f=0; if(f>1) f=1; return f;
+}
+
+function distal(input){
+  var inp=input||{};
+  var TFG  =clampv(inp.TFG  !==undefined?inp.TFG  :TFG_N,1,200);
+  var hctz =clampv(inp.hctz !==undefined?inp.hctz :0,0,500);
+  var ctd  =clampv(inp.ctd  !==undefined?inp.ctd  :0,0,200);
+  var indap=clampv(inp.indap!==undefined?inp.indap:0,0,50);
+  var caUrinBasal=clampv(inp.caUrinBasal!==undefined?inp.caUrinBasal:CA_URIN_BASAL,0,2000);
+  var alca=(inp.alca===true||inp.alca===1||inp.alca==='sim')?true:false;
+
+  var eHctz=doseResposta(hctz,HCTZ_EC50,HCTZ_EMAX);
+  var eCtd =doseResposta(ctd,CTD_EC50,CTD_EMAX);
+  var eInd =doseResposta(indap,IND_EC50,IND_EMAX);
+
+  var bloqNCC=1-(1-eHctz)*(1-eCtd)*(1-eInd);
+  if(bloqNCC<0) bloqNCC=0; if(bloqNCC>1) bloqNCC=1;
+  var fTFG=eficaciaTFG(TFG);
+  var bloqEff=bloqNCC*fTFG;
+
+  var naFiltrado=TFG*NA_PLASMA/1000;
+  var fracNaNcc=FRAC_NA_NCC*(1-bloqEff);
+  var naReabNcc=naFiltrado*fracNaNcc;
+  var naEscapaNcc=naFiltrado*FRAC_NA_NCC*bloqEff;
+
+  var natriurese=naFiltrado*TIAZ_NATR_CAP*bloqEff;
+  if(alca) natriurese+=naFiltrado*0.04*bloqEff;
+  if(!isFinite(natriurese)||natriurese<0) natriurese=0;
+
+  var quedaCaFrac=CA_QUEDA_MAX*bloqEff;
+  if(quedaCaFrac<0) quedaCaFrac=0; if(quedaCaFrac>CA_QUEDA_MAX) quedaCaFrac=CA_QUEDA_MAX;
+  var caUrinario=caUrinBasal*(1-quedaCaFrac);
+  if(!isFinite(caUrinario)||caUrinario<0) caUrinario=0;
+  var tendHipercalcemia=quedaCaFrac;
+
+  var deltaNa=-8.0*bloqEff;
+  var naSerico=clampv(NA_SERICO_N+deltaNa,120,145);
+  var riscoHipoNa=bloqEff;
+
+  var eficacia=bloqEff;
+  var falhaTFG=TFG<TFG_FALHA;
+
+  var regime;
+  if(bloqNCC>0.1&&falhaTFG)                regime='tiazidico_ineficaz_tfg_baixa';
+  else if(alca&&bloqNCC>0.1)               regime='bloqueio_sequencial';
+  else if(bloqEff>0.1&&caUrinBasal>300)    regime='tiazidico_hipercalciuria';
+  else if(bloqEff>0.1&&naSerico<135)       regime='tiazidico_hiponatremia';
+  else if(bloqEff>0.1)                     regime='tiazidico';
+  else                                     regime='normal';
+
+  var paradoxoCa=(natriurese>0&&caUrinario<caUrinBasal);
+
+  return {
+    TFG:TFG,hctz:hctz,ctd:ctd,indap:indap,caUrinBasal:caUrinBasal,alca:alca,
+    eHctz:eHctz,eCtd:eCtd,eInd:eInd,bloqNCC:bloqNCC,bloqEff:bloqEff,fTFG:fTFG,
+    hctzEC50:HCTZ_EC50,hctzEmax:HCTZ_EMAX,ctdEC50:CTD_EC50,ctdEmax:CTD_EMAX,
+    indEC50:IND_EC50,indEmax:IND_EMAX,
+    naFiltrado:naFiltrado,fracNaNcc:fracNaNcc,naReabNcc:naReabNcc,naEscapaNcc:naEscapaNcc,
+    natriurese:natriurese,fracNaNccBasal:FRAC_NA_NCC,
+    caUrinario:caUrinario,quedaCaFrac:quedaCaFrac,tendHipercalcemia:tendHipercalcemia,
+    paradoxoCa:paradoxoCa,
+    naSerico:naSerico,deltaNa:deltaNa,riscoHipoNa:riscoHipoNa,
+    eficacia:eficacia,falhaTFG:falhaTFG,tfgFalha:TFG_FALHA,
+    regime:regime
+  };
+}
+
+function duasCurvasLayout(state,W,H){
+  state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var base=merge(state,{});
+  var dMax=100,N=60;
+  var rRef=distal(base);
+  var caBasal=rRef.caUrinBasal>0?rRef.caUrinBasal:CA_URIN_BASAL;
+  var natrMax=rRef.naFiltrado*TIAZ_NATR_CAP*1.5; if(!isFinite(natrMax)||natrMax<=0) natrMax=1;
+  var padL=50,padR=16,padT=18,padB=38,baseY=H-padB;
+  var pxX=(W-padL-padR)/dMax;
+  var pxY=(baseY-padT);
+  function X(d){ return padL+clampv(d,0,dMax)*pxX; }
+  function Yn(frac){ return baseY-clampv(frac,0,1)*pxY; }
+  var natr=[],ca=[],i,d,r,natrFrac,caFrac;
+  for(i=0;i<=N;i++){ d=dMax*i/N; r=distal(merge(base,{hctz:d}));
+    natrFrac=natrMax>0?r.natriurese/natrMax:0; if(natrFrac>1) natrFrac=1;
+    caFrac=caBasal>0?r.caUrinario/caBasal:0; if(caFrac>1) caFrac=1; if(caFrac<0) caFrac=0;
+    natr.push({d:d,v:r.natriurese,frac:natrFrac,x:X(d),y:Yn(natrFrac)});
+    ca.push({d:d,v:r.caUrinario,frac:caFrac,x:X(d),y:Yn(caFrac)});
+  }
+  var dCur=clampv(state.hctz!==undefined?state.hctz:0,0,dMax);
+  var rCur=distal(merge(base,{hctz:dCur}));
+  var natrCurFrac=natrMax>0?rCur.natriurese/natrMax:0; if(natrCurFrac>1) natrCurFrac=1;
+  var caCurFrac=caBasal>0?rCur.caUrinario/caBasal:0; if(caCurFrac>1) caCurFrac=1;
+  var curN ={d:dCur,v:rCur.natriurese,x:X(dCur),y:Yn(natrCurFrac)};
+  var curCa={d:dCur,v:rCur.caUrinario,x:X(dCur),y:Yn(caCurFrac)};
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,
+    dMax:dMax,natrMax:natrMax,caBasal:caBasal,pxX:pxX,pxY:pxY,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},
+    natr:natr,ca:ca,curN:curN,curCa:curCa};
+}
+
+function doseRespostaLayout(EC50,Emax,dMax,W,H,curD){
+  W=clampv(W,160,100000); H=clampv(H,100,100000);
+  var ec=clampv(EC50,1e-6,1e9), em=clampv(Emax,0.01,1), dM=clampv(dMax,ec*2,1e9), cd=clampv(curD,0,dM);
+  var padL=40,padR=12,padT=14,padB=28,baseY=H-padB;
+  var N=50,yMax=em*1.08;
+  var pxX=(W-padL-padR)/dM;
+  var pxY=(baseY-padT)/yMax;
+  function X(d){ return padL+clampv(d,0,dM)*pxX; }
+  function Y(e){ return baseY-clampv(e,0,yMax)*pxY; }
+  var pts=[],i,d,e;
+  for(i=0;i<=N;i++){ d=dM*i/N; e=doseResposta(d,ec,em); pts.push({d:d,e:e,x:X(d),y:Y(e)}); }
+  var ec50X=X(ec), emaxY=Y(em);
+  var eCur=doseResposta(cd,ec,em);
+  var cur={d:cd,e:eCur,x:X(cd),y:Y(eCur)};
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,
+    EC50:ec,Emax:em,dMax:dM,yMax:yMax,pxX:pxX,pxY:pxY,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},
+    pts:pts,ec50X:ec50X,emaxY:emaxY,cur:cur};
+}
+
+window.distal=distal;
+window.doseResposta=doseResposta;
+window.eficaciaTFG=eficaciaTFG;
+window.duasCurvasLayout=duasCurvasLayout;
+window.doseRespostaLayout=doseRespostaLayout;
+window.MODEL={distal:distal,doseResposta:doseResposta,eficaciaTFG:eficaciaTFG,
+  duasCurvasLayout:duasCurvasLayout,doseRespostaLayout:doseRespostaLayout,clampv:clampv,merge:merge,
+  CONST:{TFG_N:TFG_N,NA_PLASMA:NA_PLASMA,FRAC_NA_NCC:FRAC_NA_NCC,CA_URIN_BASAL:CA_URIN_BASAL,
+    NA_SERICO_N:NA_SERICO_N,HCTZ_EC50:HCTZ_EC50,HCTZ_EMAX:HCTZ_EMAX,CTD_EC50:CTD_EC50,CTD_EMAX:CTD_EMAX,
+    IND_EC50:IND_EC50,IND_EMAX:IND_EMAX,TIAZ_NATR_CAP:TIAZ_NATR_CAP,CA_QUEDA_MAX:CA_QUEDA_MAX,TFG_FALHA:TFG_FALHA}};
+
+/* =========================================================================
+ * UI
+ * ========================================================================= */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=d||1; return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+
+var REGIME_TXT={
+  normal:'normal — sem tiazídico; NCC reabsorve ~5% do Na⁺',
+  tiazidico:'tiazídico — natriurese modesta + Ca urinário↓ (paradoxo)',
+  tiazidico_hipercalciuria:'tiazídico na hipercalciúria — Ca urinário derrubado (trata litíase)',
+  tiazidico_hiponatremia:'tiazídico — risco de HIPONATREMIA (segmento diluidor bloqueado)',
+  tiazidico_ineficaz_tfg_baixa:'⚠ tiazídico INEFICAZ — TFG<30 (use diurético de alça)',
+  bloqueio_sequencial:'bloqueio SEQUENCIAL alça+tiazida — sinergia natriurética'
+};
+
+// abas principais
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b) return;
+  var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on');
+  $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh();
+});
+
+// caso: prever-depois-revelar
+document.addEventListener('click',function(e){
+  var b=e.target.closest('button.act[data-rev]'); if(!b) return;
+  var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on');
+});
+
+function readLab(){
+  return {
+    hctz:+$('in-hctz').value, ctd:+$('in-ctd').value, indap:+$('in-indap').value,
+    TFG:+$('in-tfg').value, caUrinBasal:+$('in-ca').value,
+    alca:$('in-alca').value==='1'
+  };
+}
+
+function refresh(){
+  var inp=readLab();
+  $('lbl-hctz').textContent=Math.round(inp.hctz);
+  $('lbl-ctd').textContent=fmt(inp.ctd,1);
+  $('lbl-indap').textContent=fmt(inp.indap,1);
+  $('lbl-tfg').textContent=Math.round(inp.TFG);
+  $('lbl-ca').textContent=Math.round(inp.caUrinBasal);
+  var r=distal(inp);
+  $('out-bloq').textContent=fmt(r.bloqEff,2);
+  $('out-fracna').textContent=fmt(r.fracNaNcc,3);
+  $('out-natr').textContent=fmt(r.natriurese,2);
+  $('out-caurin').textContent=fmt(r.caUrinario,0);
+  $('out-quedaca').textContent=fmt(r.quedaCaFrac*100,0)+'%';
+  $('out-naserico').textContent=fmt(r.naSerico,1);
+  $('out-ftfg').textContent=fmt(r.fTFG,2);
+  $('out-efeitos').textContent=fmt(r.eHctz,2)+' · '+fmt(r.eCtd,2)+' · '+fmt(r.eInd,2);
+  $('out-hipercalc').textContent=r.tendHipercalcemia>0.05?('↑ '+fmt(r.tendHipercalcemia*100,0)+'%'):'nenhuma';
+  $('out-riscohipo').textContent=fmt(r.riscoHipoNa*100,0)+'%';
+  $('out-regime').textContent=REGIME_TXT[r.regime]||r.regime;
+  verdictLab(r,inp); pearlLab(r,inp);
+  drawCanvas(inp);
+  $('dose-svg').innerHTML=doseFig(inp);
+  syncInstrToLab(inp);
+}
+
+function syncInstrToLab(inp){
+  if($('instr-hctz')) $('instr-hctz').value=inp.hctz;
+  if($('instr-ca')) $('instr-ca').value=inp.caUrinBasal;
+  if($('instr-tfg')) $('instr-tfg').value=inp.TFG;
+  if($('instr-alca')) $('instr-alca').value=inp.alca?'1':'0';
+  updateInstrLabels(inp);
+}
+function readInstr(){
+  return { hctz:+$('instr-hctz').value, caUrinBasal:+$('instr-ca').value,
+    TFG:+$('instr-tfg').value, alca:$('instr-alca').value==='1' };
+}
+function updateInstrLabels(inp){
+  if($('instr-lbl-hctz')) $('instr-lbl-hctz').textContent=Math.round(inp.hctz);
+  if($('instr-lbl-ca')) $('instr-lbl-ca').textContent=Math.round(inp.caUrinBasal);
+  if($('instr-lbl-tfg')) $('instr-lbl-tfg').textContent=Math.round(inp.TFG);
+}
+function refreshInstr(){
+  var inp=readInstr();
+  updateInstrLabels(inp);
+  var r=distal(inp);
+  pearlInstr(r,inp);
+  drawCanvas(inp);
+  $('dose-svg').innerHTML=doseFig(inp);
+}
+
+function pearlInstr(r,inp){
+  var ip=$('instr-pearl'); if(!ip) return;
+  var t;
+  if(r.falhaTFG && r.bloqNCC>0.1){
+    t='TFG '+Math.round(r.TFG)+' (<30): o fator de eficácia caiu a '+fmt(r.fTFG,2)+' → mesmo com '+Math.round(inp.hctz)+' mg de HCTZ, o bloqueio efetivo é só '+fmt(r.bloqEff,2)+' e a natriurese, '+fmt(r.natriurese,2)+' mEq/min. Em rim ruim, o tiazida falha — vá de alça.';
+  } else if(inp.hctz>0){
+    t='HCTZ '+Math.round(inp.hctz)+' mg → natriurese '+fmt(r.natriurese,2)+' mEq/min (MODESTA) MAS o Ca urinário CAIU de '+Math.round(r.caUrinBasal)+' para '+fmt(r.caUrinario,0)+' mg/dia ('+fmt(r.quedaCaFrac*100,0)+'%). É o PARADOXO: perde Na⁺, retém Ca²⁺. As duas curvas divergem — a ciano sobe, a laranja desce.';
+  } else {
+    t='Sem tiazídico: o NCC reabsorve ~5% do Na⁺, o Ca urinário fica no basal ('+Math.round(r.caUrinBasal)+' mg/dia) e o Na sérico, 140. Suba a HCTZ e veja a natriurese subir POUCO (teto baixo) enquanto o Ca urinário DESPENCA.';
+  }
+  ip.textContent=t;
+}
+
+function verdictLab(r,inp){
+  var v=$('veredito'); var cls='b-good', msg;
+  if(r.regime==='tiazidico_ineficaz_tfg_baixa'){
+    cls='b-bad'; msg='TIAZÍDICO INEFICAZ: TFG '+Math.round(r.TFG)+' (<30) → fator de eficácia '+fmt(r.fTFG,2)+', bloqueio efetivo só '+fmt(r.bloqEff,2)+', natriurese '+fmt(r.natriurese,2)+' mEq/min. O tiazida precisa ser filtrado e ter carga distal — em rim ruim, troque pelo diurético de ALÇA.';
+  } else if(r.regime==='bloqueio_sequencial'){
+    cls='b-warn'; msg='BLOQUEIO SEQUENCIAL (alça+tiazida): o tiazida bloqueia o escape distal da alça → natriurese '+fmt(r.natriurese,2)+' mEq/min (sinérgica). Potente — mas vigie K⁺ e volume: a sinergia espolia os dois.';
+  } else if(r.regime==='tiazidico_hipercalciuria'){
+    cls='b-good'; msg='HIPERCALCIÚRIA tratada: Ca urinário caiu de '+Math.round(r.caUrinBasal)+' para '+fmt(r.caUrinario,0)+' mg/dia ('+fmt(r.quedaCaFrac*100,0)+'%). O paradoxo do Ca a serviço da litíase — o único diurético que RETÉM cálcio. Vigie a calcemia (tendência à hipercalcemia).';
+  } else if(r.regime==='tiazidico_hiponatremia'){
+    cls='b-warn'; msg='RISCO de HIPONATREMIA: o segmento diluidor bloqueado derrubou o Na sérico a '+fmt(r.naSerico,1)+' (risco '+fmt(r.riscoHipoNa*100,0)+'%). A idosa magra é o alvo clássico. Se sintomática, suspenda e corrija a ÁGUA com cautela (mielinólise).';
+  } else if(r.regime==='tiazidico'){
+    cls='b-good'; msg='Tiazídico em ação: bloqueio do NCC '+fmt(r.bloqEff,2)+' → natriurese MODESTA ('+fmt(r.natriurese,2)+' mEq/min) e Ca urinário '+fmt(r.caUrinario,0)+' mg/dia (paradoxo: caiu '+fmt(r.quedaCaFrac*100,0)+'%). Na sérico '+fmt(r.naSerico,1)+'. Diurético fraco, mas excelente anti-hipertensivo e anti-litíase.';
+  } else {
+    cls='b-good'; msg='TCD em repouso: NCC reabsorve '+fmt(r.fracNaNcc*100,0)+'% do Na⁺ filtrado (ajuste fino), sem tiazídico. Ca urinário '+Math.round(r.caUrinBasal)+' mg/dia, Na sérico 140. Lembre: NÃO é tudo igual no túbulo — este segmento dilui e maneja o Ca.';
+  }
+  v.className='banner '+cls; v.textContent=msg;
+}
+
+function pearlLab(r,inp){
+  var p=$('lab-pearl'); if(!p) return;
+  var t;
+  if(inp.hctz>0||inp.ctd>0||inp.indap>0){
+    t='PÉROLA paradoxo: a natriurese subiu (modesta: '+fmt(r.natriurese,2)+' mEq/min) ENQUANTO o Ca urinário CAIU ('+fmt(r.caUrinario,0)+' mg/dia, −'+fmt(r.quedaCaFrac*100,0)+'%). Na⁺ urinário↑ mas Ca²⁺ urinário↓ — o oposto da alça. Bloquear o NCC esvazia o Na⁺ da célula e o NCX basolateral puxa mais Ca²⁺ de volta.';
+  } else {
+    t='PÉROLA do ajuste fino: o NCC reabsorve só '+fmt(r.fracNaNccBasal*100,0)+'% do Na⁺ filtrado — por isso o tiazídico é diurético MODESTO. O segmento dilui (sem água) e maneja o Ca²⁺. NÃO é tudo igual no túbulo: cada segmento tem sua chave.';
+  }
+  p.textContent=t;
+}
+
+function drawCanvas(state){
+  var c=$('curvas-canvas'); if(!c) return;
+  var ctx; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; }
+  if(!ctx||!ctx.clearRect) return;
+  var L=duasCurvasLayout(state,c.width,c.height);
+  ctx.clearRect(0,0,L.W,L.H);
+  // eixos
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('efeito (normalizado)',6,L.padT-4);
+  ctx.fillText('dose hidroclorotiazida (mg) →',L.W-220,L.baseY+24);
+  // natriurese (ciano) — SOBE
+  ctx.strokeStyle='#39c0c8'; ctx.lineWidth=2; ctx.beginPath();
+  for(var i=0;i<L.natr.length;i++){ var p=L.natr[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); }
+  ctx.stroke();
+  // ca urinário (laranja) — CAI
+  ctx.strokeStyle='#e8a13a'; ctx.beginPath();
+  for(i=0;i<L.ca.length;i++){ p=L.ca[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); }
+  ctx.stroke();
+  // legenda (marcadores fill)
+  ctx.fillStyle='#39c0c8'; ctx.fillRect(L.axis.x0+10,L.padT,8,8); ctx.fillStyle='#9fb1c0'; ctx.fillText('natriurese',L.axis.x0+22,L.padT+8);
+  ctx.fillStyle='#e8a13a'; ctx.fillRect(L.axis.x0+120,L.padT,8,8); ctx.fillStyle='#9fb1c0'; ctx.fillText('Ca urinário',L.axis.x0+132,L.padT+8);
+  // ponto da dose atual nas duas curvas
+  var cn=L.curN, cc=L.curCa;
+  ctx.strokeStyle='#e7eef4'; ctx.setLineDash([4,3]);
+  ctx.beginPath(); ctx.moveTo(cn.x,L.padT+18); ctx.lineTo(cn.x,L.baseY); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#39c0c8'; ctx.beginPath(); ctx.arc(cn.x,cn.y,5,0,2*Math.PI); ctx.fill();
+  ctx.fillStyle='#e8a13a'; ctx.beginPath(); ctx.arc(cc.x,cc.y,5,0,2*Math.PI); ctx.fill();
+}
+
+['in-hctz','in-ctd','in-indap','in-tfg','in-ca','in-alca'].forEach(function(id){
+  var el=$(id); if(el) el.addEventListener('input',refresh);
+});
+['instr-hctz','instr-ca','instr-tfg','instr-alca'].forEach(function(id){
+  var el=$(id); if(el) el.addEventListener('input',refreshInstr);
+});
+
+// presets de cenário
+var PRESETS={
+  litiase:   {hctz:50, ctd:0, indap:0, TFG:120, ca:400, alca:0},
+  idosa:     {hctz:50, ctd:0, indap:0, TFG:110, ca:200, alca:0},
+  tfgbaixa:  {hctz:50, ctd:0, indap:0, TFG:25,  ca:200, alca:0},
+  sequencial:{hctz:50, ctd:0, indap:0, TFG:90,  ca:200, alca:1},
+  potente:   {hctz:0,  ctd:25,indap:0, TFG:120, ca:200, alca:0}
+};
+document.addEventListener('click',function(e){
+  var b=e.target.closest('button.act[data-preset]'); if(!b) return;
+  var pr=PRESETS[b.getAttribute('data-preset')]; if(!pr) return;
+  $('in-hctz').value=pr.hctz; $('in-ctd').value=pr.ctd; $('in-indap').value=pr.indap;
+  $('in-tfg').value=pr.TFG; $('in-ca').value=pr.ca; $('in-alca').value=String(pr.alca);
+  refresh();
+});
+
+/* =========================================================================
+ * ILUSTRAÇÕES SVG — inline, computadas a partir do engine (física viva)
+ * ========================================================================= */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+
+// mini gráfico das DUAS curvas (natriurese × Ca urinário) computado do engine
+function duasCurvasMini(state, titulo){
+  var W=300,H=180;
+  var L=duasCurvasLayout(state,W,H);
+  var s='';
+  s+='<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="#0a1520"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  function poly(arr,col){ var d=''; for(var i=0;i<arr.length;i++){ d+=(i===0?'M':'L')+f1(arr[i].x)+' '+f1(arr[i].y)+' '; } return '<path d="'+d+'" fill="none" stroke="'+col+'" stroke-width="2"/>'; }
+  s+=poly(L.natr,'#39c0c8');
+  s+=poly(L.ca,'#e8a13a');
+  s+='<text x="'+W/2+'" y="13" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'natriurese × Ca urinário')+'</text>';
+  s+='<text x="'+(L.axis.x0+22)+'" y="'+(L.padT+30)+'" fill="#39c0c8" font-size="8">natriurese↑</text>';
+  s+='<text x="'+(L.axis.x0+22)+'" y="'+(L.baseY-8)+'" fill="#e8a13a" font-size="8">Ca urinário↓</text>';
+  return svgEl(W,H,s);
+}
+
+// curva dose-resposta sigmoide (computada do engine)
+function doseFig(state, titulo){
+  var W=320,H=180;
+  var inp=state||{};
+  var dose=clampv(inp.hctz!==undefined?inp.hctz:0,0,100);
+  var L=doseRespostaLayout(HCTZ_EC50,HCTZ_EMAX,100,W,H,dose);
+  var s='';
+  s+='<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="#0a1520"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  // teto Emax
+  s+='<line x1="'+L.axis.x0+'" y1="'+f1(L.emaxY)+'" x2="'+L.axis.xEnd+'" y2="'+f1(L.emaxY)+'" stroke="#e8a13a" stroke-dasharray="5 3"/>';
+  s+='<text x="'+(L.axis.xEnd-2)+'" y="'+f1(L.emaxY-3)+'" fill="#e8a13a" font-size="8" text-anchor="end">Emax '+fmt(L.Emax,2)+'</text>';
+  // EC50 vertical
+  s+='<line x1="'+f1(L.ec50X)+'" y1="'+L.padT+'" x2="'+f1(L.ec50X)+'" y2="'+L.baseY+'" stroke="#7a8a96" stroke-dasharray="3 3"/>';
+  s+='<text x="'+f1(L.ec50X+3)+'" y="'+(L.baseY-4)+'" fill="#9fb1c0" font-size="8">EC50 '+fmt(L.EC50,0)+'mg</text>';
+  // a curva
+  var d=''; for(var i=0;i<L.pts.length;i++){ d+=(i===0?'M':'L')+f1(L.pts[i].x)+' '+f1(L.pts[i].y)+' '; }
+  s+='<path d="'+d+'" fill="none" stroke="#3a7bd5" stroke-width="2"/>';
+  // ponto da dose atual
+  s+='<circle cx="'+f1(L.cur.x)+'" cy="'+f1(L.cur.y)+'" r="4" fill="#e7eef4"/>';
+  s+='<text x="'+f1(L.cur.x)+'" y="'+f1(L.cur.y-7)+'" fill="#e7eef4" font-size="9" text-anchor="middle">'+Math.round(dose)+'mg → '+fmt(L.cur.e,2)+'</text>';
+  s+='<text x="'+W/2+'" y="13" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'HCTZ: efeito = Emax·D/(EC50+D)')+'</text>';
+  return svgEl(W,H,s);
+}
+
+// esquema: o NCC no TCD (desenho)
+function nccDiagram(state, titulo){
+  var r=distal(state||{});
+  var W=320,H=190,s='';
+  s+='<rect width="320" height="190" fill="#0a1520"/>';
+  // o TCD como uma barra; ~5% reabsorvido pelo NCC
+  s+='<rect x="30" y="60" width="260" height="34" rx="16" fill="#1b242d" stroke="#3a4a58"/>';
+  var frac=clampv(r.fracNaNcc,0,1);
+  s+='<rect x="30" y="60" width="'+f1(260*frac*4)+'" height="34" rx="16" fill="#3a7bd5" fill-opacity="0.5"/>';
+  s+='<text x="160" y="82" fill="#cdd9e3" font-size="10" text-anchor="middle">NCC reabsorve '+fmt(frac*100,0)+'% do Na⁺ (modesto)</text>';
+  // seta: sem água (dilui)
+  s+='<line x1="100" y1="100" x2="100" y2="125" stroke="#52c08a" stroke-width="3"/>';
+  s+='<polygon points="100,127 96,119 104,119" fill="#52c08a"/>';
+  s+='<text x="110" y="123" fill="#52c08a" font-size="9">Na sem água → DILUI</text>';
+  s+='<rect x="30" y="135" width="260" height="44" rx="6" fill="#10171e" stroke="#283642"/>';
+  s+='<text x="160" y="153" fill="#e7eef4" font-size="10" text-anchor="middle">natriurese (tiazida): '+fmt(r.natriurese,2)+' mEq/min</text>';
+  s+='<text x="160" y="170" fill="#9fb1c0" font-size="9" text-anchor="middle">diurético MODESTO — não é tudo igual no túbulo</text>';
+  s+='<text x="'+W/2+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'o NCC no TCD')+'</text>';
+  return svgEl(W,H,s);
+}
+
+// esquema: o paradoxo do Ca (desenho)
+function caDiagram(state, titulo){
+  var r=distal(merge(state||{},{hctz:(state&&state.hctz)?state.hctz:50}));
+  var W=320,H=190,s='';
+  s+='<rect width="320" height="190" fill="#0a1520"/>';
+  // luz e célula
+  s+='<rect x="30" y="40" width="260" height="22" fill="#11202c" stroke="#3a4a58"/>';
+  s+='<text x="160" y="55" fill="#9fb1c0" font-size="9" text-anchor="middle">luz tubular (Ca²⁺)</text>';
+  s+='<rect x="30" y="70" width="260" height="50" fill="#16222c" stroke="#3a4a58"/>';
+  s+='<text x="160" y="90" fill="#9fb1c0" font-size="9" text-anchor="middle">célula do TCD: Na⁺ baixo (NCC bloqueado)</text>';
+  // NCX basolateral acelerado
+  s+='<line x1="220" y1="120" x2="220" y2="142" stroke="#e8a13a" stroke-width="3"/>';
+  s+='<polygon points="220,144 216,136 224,136" fill="#e8a13a"/>';
+  s+='<text x="150" y="112" fill="#e8a13a" font-size="8">NCX: Na entra · Ca SAI (reabsorve)</text>';
+  // TRPV5 apical (Ca entra)
+  s+='<line x1="100" y1="62" x2="100" y2="72" stroke="#39c0c8" stroke-width="3"/>';
+  s+='<polygon points="100,74 96,66 104,66" fill="#39c0c8"/>';
+  s+='<text x="106" y="70" fill="#39c0c8" font-size="8">TRPV5</text>';
+  var col=r.caUrinario<r.caUrinBasal?'#52c08a':'#e0556b';
+  s+='<rect x="30" y="150" width="260" height="30" rx="6" fill="#10171e" stroke="#283642"/>';
+  s+='<text x="160" y="169" fill="'+col+'" font-size="10" text-anchor="middle">Ca urinário '+fmt(r.caUrinario,0)+' mg/dia (CAIU '+fmt(r.quedaCaFrac*100,0)+'%) — paradoxo</text>';
+  s+='<text x="'+W/2+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'paradoxo do Ca²⁺')+'</text>';
+  return svgEl(W,H,s);
+}
+
+// esquema: o segmento diluidor / hiponatremia (desenho)
+function diluidorDiagram(state, titulo){
+  var r=distal(merge(state||{},{hctz:(state&&state.hctz)?state.hctz:50}));
+  var W=300,H=190,s='';
+  s+='<rect width="300" height="190" fill="#0a1520"/>';
+  s+='<rect x="40" y="45" width="220" height="30" rx="6" fill="#16222c" stroke="#3a4a58"/>';
+  s+='<text x="150" y="64" fill="#9fb1c0" font-size="9" text-anchor="middle">TCD: reabsorve Na SEM água → dilui</text>';
+  // bloqueio → menos água livre
+  s+='<line x1="150" y1="75" x2="150" y2="98" stroke="#e0556b" stroke-width="3"/>';
+  s+='<polygon points="150,100 146,92 154,92" fill="#e0556b"/>';
+  s+='<text x="158" y="92" fill="#e0556b" font-size="8">tiazida bloqueia a diluição</text>';
+  var col=r.naSerico<135?'#e0556b':(r.naSerico<138?'#e8a13a':'#52c08a');
+  s+='<rect x="30" y="115" width="240" height="58" rx="6" fill="#10171e" stroke="#283642"/>';
+  s+='<text x="150" y="136" fill="'+col+'" font-size="11" text-anchor="middle">Na⁺ sérico '+fmt(r.naSerico,1)+' mEq/L</text>';
+  s+='<text x="150" y="156" fill="#9fb1c0" font-size="9" text-anchor="middle">menos água livre excretada → HIPONATREMIA</text>';
+  s+='<text x="150" y="169" fill="#9fb1c0" font-size="8" text-anchor="middle">a idosa magra é o alvo clássico</text>';
+  s+='<text x="'+W/2+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'segmento diluidor: hiponatremia')+'</text>';
+  return svgEl(W,H,s);
+}
+
+/* =========================================================================
+ * TUTOR — DOIS blocos (ilustrado + textual)
+ * ========================================================================= */
+// helper: figura raster/SVG real de assets/m7/ dentro do exercício (offline, caminho relativo)
+function imgFig(slug,alt){ return '<img src="assets/m7/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+var TUTOR_ILUSTRADO=[
+  {q:'Que transportador o tiazídico bloqueia, e onde?',
+   o:['NKCC2 na alça','NCC (Na-Cl) no TCD','ENaC no coletor','SGLT2 no proximal'],
+   c:1,e:'O NCC (cotransporte Na-Cl apical) no TCD inicial. Reabsorve só ~5% do Na⁺ — por isso o tiazídico é diurético modesto. Não é tudo igual no túbulo.',
+   fig:function(){ return nccDiagram({hctz:50},'NCC no TCD'); }},
+  {q:'Por que o tiazídico é um diurético MODESTO (≠ alça)?',
+   o:['é pouco potente por dose','o NCC só reabsorve ~5% do Na⁺ (teto natriurético baixo)','não chega ao túbulo','bloqueia água'],
+   c:1,e:'O alvo é pequeno: o NCC recupera só ~5% do Na⁺ filtrado. A alça (NKCC2) ataca ~25% e é o diurético potente.',
+   fig:function(){ return nccDiagram({hctz:100},'teto natriurético baixo'); }},
+  {q:'Com tiazídico, o que acontece com o Ca²⁺ URINÁRIO?',
+   o:['sobe (como na alça)','CAI (paradoxo: hipocalciúria)','não muda','vira zero'],
+   c:1,e:'CAI. Bloquear o NCC esvazia o Na⁺ da célula → o NCX basolateral acelera → mais reabsorção de Ca²⁺ → menos na urina. Oposto da alça.',
+   fig:function(){ return caDiagram({hctz:50},'paradoxo: Ca urinário cai'); }},
+  {q:'O mecanismo do paradoxo do Ca²⁺ envolve…',
+   o:['o ENaC','o trocador basolateral Na/Ca (NCX) acelerado','a aquaporina','o SGLT2'],
+   c:1,e:'Com o NCC bloqueado, a célula perde Na⁺ → o NCX (Na/Ca) basolateral acelera para repor Na⁺, extraindo mais Ca²⁺ da luz → hipocalciúria.',
+   fig:function(){ return imgFig('paradoxo-calcio-tiazidico.svg','paradoxo do cálcio do tiazídico'); }},
+  {q:'A hiponatremia do tiazídico acontece porque o TCD é…',
+   o:['o segmento concentrador','o segmento DILUIDOR (reabsorve Na sem água)','impermeável a Na','o glomérulo'],
+   c:1,e:'O TCD dilui (Na sem água) e gera água livre. Bloqueá-lo prejudica a clearance de água livre → o rim retém água → Na sérico cai.',
+   fig:function(){ return diluidorDiagram({hctz:50},'diluidor: hiponatremia'); }},
+  {q:'A dose-resposta efeito = Emax·D/(EC50+D) ensina que, perto do Emax…',
+   o:['dobrar a dose dobra o efeito','dobrar a dose rende cada vez MENOS (teto)','o efeito é negativo','não há teto'],
+   c:1,e:'A curva satura no Emax. Em EC50 o efeito é metade do teto. E o teto natriurético do tiazida é, em si, baixo.',
+   fig:function(){ return doseFig({hctz:25},'dose-resposta: teto Emax'); }},
+  {q:'Comparando a mesma dose, qual tiazídico é mais POTENTE?',
+   o:['hidroclorotiazida','clortalidona (EC50 menor, Emax maior, meia-vida longa)','nenhum difere','indapamida é a mais fraca'],
+   c:1,e:'A clortalidona tem EC50 menor e Emax maior que a HCTZ — mais potente e com meia-vida longa. A indapamida é potente em mg baixos.',
+   fig:function(){ return doseFig({hctz:12.5},'potência: EC50 e Emax'); }},
+  {q:'Em TFG 25 mL/min, o tiazídico…',
+   o:['fica mais potente','perde eficácia (precisa ser filtrado e ter carga distal)','vira diurético de alça','retém Na'],
+   c:1,e:'Em TFG<30, menos fármaco é filtrado e chega menos Na⁺ ao TCD → o bloqueio efetivo despenca. Em rim ruim, use o diurético de alça.',
+   fig:function(){ return nccDiagram({hctz:50,TFG:25},'ineficácia em TFG baixa'); }},
+  {q:'O canal apical que admite Ca²⁺ na célula do TCD é o…',
+   o:['NKCC2','NCC','TRPV5','SGLT2'],
+   c:2,e:'O TRPV5 é a porta de entrada apical do Ca²⁺ no TCD; o NCX basolateral o devolve ao sangue. PTH e vitamina D modulam o TRPV5 (ponte M12).',
+   fig:function(){ return imgFig('trpv5-calcio.svg','canal TRPV5 de cálcio'); }},
+  {q:'A clínica do paradoxo do Ca: o tiazídico é útil para…',
+   o:['hipocalcemia','litíase cálcica / hipercalciúria e osteoporose','diabetes insípido','hipernatremia'],
+   c:1,e:'Por baixar o Ca urinário, trata a litíase cálcica e a hipercalciúria; e, por reter cálcio, ajuda na osteoporose. Cuidado: pode causar hipercalcemia.',
+   fig:function(){ return imgFig('manejo-calcio-distal.svg','manejo do cálcio no distal'); }},
+  {q:'O "bloqueio sequencial do néfron" é…',
+   o:['dobrar a dose do tiazida','somar tiazida ao diurético de alça (sinergia)','usar dois proximais','bloquear o glomérulo'],
+   c:1,e:'Somar um tiazídico à alça bloqueia o escape/hipertrofia distal que a alça provoca → sinergia natriurética. Potente — vigie K⁺ e volume.',
+   fig:function(){ return duasCurvasMini({hctz:50,alca:true},'sequencial: sinergia'); }},
+  {q:'No instrumento, as duas curvas vs dose mostram que…',
+   o:['ambas sobem','a natriurese sobe (pouco) e o Ca urinário CAI — elas divergem','ambas caem','não se movem'],
+   c:1,e:'A divergência É a pérola: a natriurese sobe (teto baixo) enquanto o Ca urinário desce. Um diurético que perde Na⁺ mas retém Ca²⁺.',
+   fig:function(){ return duasCurvasMini({hctz:50,caUrinBasal:300},'natriurese↑ × Ca urinário↓'); }}
+];
+
+var TUTOR_TEXTUAL=[
+  {q:'O NCC reabsorve cerca de quanto do Na⁺ filtrado?',
+   o:['~5%','~25%','~65%','~95%'],
+   c:0,e:'~5% — ajuste fino. Por isso o tiazídico é diurético modesto. A alça (NKCC2) ataca ~25%.'},
+  {q:'O TCD é permeável à água?',
+   o:['sim, muito','não — reabsorve Na sem água (segmento diluidor)','só com ADH','só com tiazida'],
+   c:1,e:'Não. Reabsorve sal sem água → dilui o filtrado e gera água livre.'},
+  {q:'O efeito do tiazídico sobre o cálcio urinário é…',
+   o:['aumentá-lo','reduzi-lo (hipocalciúria)','zerá-lo','sem efeito'],
+   c:1,e:'Reduz o Ca urinário (paradoxo) — oposto da alça. Trata litíase cálcica e osteoporose.'},
+  {q:'O efeito adverso "espelho" da hipocalciúria do tiazida é…',
+   o:['hipocalcemia','HIPERcalcemia','hipernatremia','acidose'],
+   c:1,e:'Reter cálcio na urina é devolvê-lo ao sangue → tendência à hipercalcemia (pode desmascarar hiperparatireoidismo).'},
+  {q:'A hiponatremia do tiazídico decorre de…',
+   o:['perda de sódio pura','bloqueio da diluição distal → menos água livre excretada','excesso de água ingerida só','hiperglicemia'],
+   c:1,e:'O TCD é o segmento diluidor; bloqueá-lo reduz a clearance de água livre → o rim retém água → Na sérico cai. A idosa magra é o alvo.'},
+  {q:'Em TFG < 30 mL/min, o tiazídico…',
+   o:['fica mais forte','perde eficácia','vira poupador de K','retém água'],
+   c:1,e:'Precisa ser filtrado e ter carga distal — ambos caem em TFG baixa. Em rim ruim, o cavalo de batalha é o diurético de alça.'},
+  {q:'Qual tiazídico tem meia-vida longa e maior potência?',
+   o:['hidroclorotiazida','clortalidona','indapamida','nenhum'],
+   c:1,e:'A clortalidona — EC50 menor, Emax maior, meia-vida longa. Mais usada hoje na HAS por isso.'},
+  {q:'Na dose-resposta efeito = Emax·D/(EC50+D), em D = EC50 o efeito é…',
+   o:['zero','Emax/2','Emax','2·Emax'],
+   c:1,e:'Por definição, em D=EC50 o efeito é metade do teto (Emax/2) — a potência do fármaco.'},
+  {q:'O bloqueio sequencial (alça + tiazida) produz…',
+   o:['antagonismo','sinergia natriurética (bloqueia o escape distal da alça)','nada','só hipocalciúria'],
+   c:1,e:'Sinergia: o tiazida bloqueia a hipertrofia/escape distal que a alça provoca. Potente — e espolia K⁺ e volume.'},
+  {q:'A frase-chave do módulo M7 é…',
+   o:['"tudo é igual no túbulo"','"NÃO é tudo igual no túbulo: o TCD ajusta fino"','"o rim só filtra"','"creatinina = função"'],
+   c:1,e:'O TCD não é "mais do mesmo": pouco Na⁺, mas o manejo do Ca²⁺, da água livre e a sinergia com a alça moram aqui.'}
+];
+
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO;
+window.TUTOR_TEXTUAL=TUTOR_TEXTUAL;
+window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+
+var BANKS={ilustrada:TUTOR_ILUSTRADO, textual:TUTOR_TEXTUAL};
+var curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+
+function renderTutor(){
+  var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():'';
+  $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false;
+  $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){
+    var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){
+      if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button');
+      btns[item.c].classList.add('ok');
+      if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block';
+      fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e;
+      $('tutor-score').textContent=tScore;
+      $('tutor-total').textContent=tTotal;
+    });
+    box.appendChild(b);
+  });
+}
+
+$('banktabs').addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor();
+});
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+/* =========================================================================
+ * ILUSTRAÇÕES DA ABA CONCEITO (populadas no boot)
+ * ========================================================================= */
+function populateConceito(){
+  var el;
+  el=$('draw-ncc');     if(el) el.innerHTML=nccDiagram({},'o NCC no TCD');
+  el=$('draw-ca');      if(el) el.innerHTML=caDiagram({hctz:50},'paradoxo do Ca²⁺');
+  el=$('draw-diluidor');if(el) el.innerHTML=diluidorDiagram({hctz:50},'segmento diluidor');
+  el=$('draw-tfg');     if(el) el.innerHTML=nccDiagram({hctz:50,TFG:25},'ineficácia em TFG<30');
+  el=$('draw-dose');    if(el) el.innerHTML=doseFig({hctz:25},'dose-resposta do tiazídico');
+  var elCaso=$('fig-caso'); if(elCaso) elCaso.innerHTML=duasCurvasMini({hctz:50,caUrinBasal:400},'paradoxo: Na↑ × Ca↓');
+}
+
+/* =========================================================================
+ * BOOT
+ * ========================================================================= */
+refresh();
+renderTutor();
+populateConceito();
+</script>
+</body>
+</html>

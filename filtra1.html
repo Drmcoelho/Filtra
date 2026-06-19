@@ -196,6 +196,36 @@
       Isso costuma ser o efeito <b>esperado</b> (hemodinâmico), não lesão — exceto na estenose bilateral de
       artéria renal / rim único, onde a TFG dependia da eferente fechada.</p>
       <div class="concept" id="draw-eferente"></div>
+
+      <h4>7. Aprofundamento — o circuito, os três mecanismos e as fronteiras</h4>
+      <p class="sub"><b>O mecanismo, formalizado.</b> A P_GC é literalmente um divisor de pressão entre duas
+      resistências; e a mesma azotemia nasce de <b>três mecânicas opostas</b> — decompor antes de interpretar.</p>
+      <div class="frow">
+        <figure class="fviva"><img src="assets/m1/divisor-pressao.svg" alt="P_GC como divisor de pressão entre R_A (aferente) e R_E (eferente) em série" loading="lazy">
+          <figcaption><b>Fig. 9 · O divisor de pressão.</b> Como num circuito em série: a fonte é a PAM, R_A
+          (aferente) e R_E (eferente) são os resistores, e a <b>P_GC é a pressão no nó do meio</b>. P_GC =
+          (PAM·R_E + P_v·R_A)/(R_A+R_E): sobe com R_E (eferente fecha) e cai com R_A (aferente fecha).</figcaption></figure>
+        <figure class="fviva"><img src="assets/m1/pre-intrinseca-pos.svg" alt="Três mecanismos da azotemia: pré-renal (P_GC baixa), intrínseca (túbulo/Kf), pós-renal (P_BC alta)" loading="lazy">
+          <figcaption><b>Fig. 10 · A mesma creatinina, três mecanismos.</b> <b>Pré-renal</b> (P_GC↓, reversível pela
+          pressão, FE_Na baixa) · <b>intrínseca</b> (túbulo/Kf lesados — NTA/NIA, não volta só com pressão, FE_Na
+          alta) · <b>pós-renal</b> (P_BC↑ por obstrução, reversível com sonda). A azotemia é uma sombra.</figcaption></figure>
+      </div>
+      <p class="sub"><b>As fronteiras do mecanismo.</b> Onde a regra geral tem exceção: a obstrução (pós-renal), a
+      dependência da eferente (rim único), e o porquê de a creatinina enganar sob fluxo baixo.</p>
+      <div class="frow">
+        <figure class="fviva"><img src="assets/m1/obstrucao-posrenal.svg" alt="Obstrução distal represa urina e eleva a P_BC, reduzindo o NFP" loading="lazy">
+          <figcaption><b>Fig. 11 · Pós-renal.</b> A obstrução (próstata/cálculo) represa a urina → a <b>P_BC sobe</b>
+          rio acima → o saldo NFP = P_GC − P_BC − π_GC cai, <b>com a P_GC normal</b>. O tratamento é desobstruir
+          (sonda), não hemodinâmico (US: hidronefrose). É o Ato 6 do Caso.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m1/rim-unico-ieca.svg" alt="Rim único com estenose: Ang II fecha a eferente para sustentar P_GC; IECA a derruba" loading="lazy">
+          <figcaption><b>Fig. 12 · A exceção (rim único + IECA).</b> Quando a entrada está estreitada, a Ang II fecha a
+          <b>eferente</b> para sustentar a P_GC. O IECA tira a represa → a P_GC <b>desaba</b>. Salto &gt; 30% da
+          creatinina ao iniciar IECA → suspender e investigar estenose. É o Ato 7.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m1/ff-eferente.svg" alt="FF = TFG/FPR; eferente fechada mantém TFG e reduz FPR, elevando a FF" loading="lazy">
+          <figcaption><b>Fig. 13 · Fração de filtração (FF = TFG/FPR).</b> Com a eferente fechada, a TFG é mantida
+          mas o <b>FPR cai</b> → a <b>FF sobe</b>. Por isso a creatinina pode enganar: a Ang II preserva a filtração à
+          custa do fluxo, e o IECA reverte (FF↓, creatinina↑ <i>esperada</i>).</figcaption></figure>
+      </div>
     </div>
   </section>
 
@@ -385,7 +415,7 @@
     <div class="panel">
       <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
       <div class="tabs" id="banktabs">
-        <button data-bank="ilustrada" class="on">Ilustrada (13)</button>
+        <button data-bank="ilustrada" class="on">Ilustrada (15)</button>
         <button data-bank="textual">Textual (14)</button>
       </div>
       <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
@@ -659,6 +689,9 @@ function starlingBars(r){
 function R0(extra){ return nefron(merge({PAM:100},extra)); }
 function dirTFG(extra){ var t=R0(extra).TFG, b=nefron({PAM:100,autoreg:(extra&&extra.autoreg)===false?false:true}).TFG; return t>b+1?'sobe':t<b-1?'cai':'estável'; }
 
+// helper: renderiza uma figura raster real de assets/m1/ dentro do exercício (offline, caminho relativo)
+function imgFig(slug,alt){ return '<img src="assets/m1/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
 var TUTOR_ILUSTRADO=[
   {q:'No esquema, onde mora a pressão que empurra a filtração (P_GC)?',o:['Na arteríola aferente','No tufo glomerular, entre as duas arteríolas','Na arteríola eferente','No túbulo'],c:1,e:'A P_GC é a pressão no capilar glomerular — entre a aferente (entrada) e a eferente (saída).',fig:function(){return glomFig(R0({}),'glomérulo normal');}},
   {q:'AINE fecha a aferente. A TFG…',o:['sobe','cai','não muda'],c:1,e:'Aferente↑ → fluxo↓, P_GC↓ → TFG cai. (A torneira de entrada estrangula tudo a jusante.)',fig:function(){return glomFig(R0({rA:1.9,autoreg:false}),'aferente constrita (AINE)');}},
@@ -672,7 +705,9 @@ var TUTOR_ILUSTRADO=[
   {q:'Tríplice ameaça (AINE + IECA + PAM baixa): a filtração…',o:['melhora','colapsa','fica igual'],c:1,e:'Os três golpes somam-se na P_GC e a TFG colapsa — cada fator isolado seria tolerável.',fig:function(){return curveMini({PAM:75,rA:1.8,rE:0.5},'AINE+IECA+depleção');}},
   {q:'Obstrução urinária (P_BC↑): no saldo de Starling, o NFP…',o:['sobe','cai','não muda'],c:1,e:'A contrapressão de Bowman come o saldo: NFP = P_GC − P_BC − π_GC → TFG cai com a P_GC intacta (pós-renal).',fig:function(){return starlingBars(R0({P_BC:33}));}},
   {q:'Rim único funcionante + início de IECA: a P_GC…',o:['sobe','cai de verdade (perigo)','não muda'],c:1,e:'Aqui a TFG dependia da eferente fechada; dilatá-la despressuriza o único glomérulo — a exceção real (salto >30%).',fig:function(){return glomFig(R0({rE:0.4,autoreg:false}),'rim único + IECA');}},
-  {q:'O que "desenha" o platô da curva TFG×PAM?',o:['o ajuste do tônus AFERENTE (autorregulação)','a oncótica','o Kf'],c:0,e:'Miogênico + feedback tubuloglomerular ajustam a aferente para manter a P_GC constante — daí o platô.',fig:function(){return curveMini({PAM:120,rA:1,rE:1},'platô defendido');}}
+  {q:'O que "desenha" o platô da curva TFG×PAM?',o:['o ajuste do tônus AFERENTE (autorregulação)','a oncótica','o Kf'],c:0,e:'Miogênico + feedback tubuloglomerular ajustam a aferente para manter a P_GC constante — daí o platô.',fig:function(){return curveMini({PAM:120,rA:1,rE:1},'platô defendido');}},
+  {q:'Na figura dos três mecanismos, qual NÃO volta só com a correção da pressão?',o:['pré-renal','intrínseca (NTA)','pós-renal'],c:1,e:'Na intrínseca o túbulo/Kf estão lesados — o problema saiu do glomérulo; pré e pós são reversíveis (pressão / sonda).',fig:function(){return imgFig('pre-intrinseca-pos.svg','pré × intrínseca × pós-renal');}},
+  {q:'Na figura do rim único, iniciar IECA faz a P_GC…',o:['subir','desabar (a eferente sustentava a P_GC)','não mudar'],c:1,e:'Ali a TFG dependia da eferente fechada pela Ang II; o IECA tira a represa → P_GC↓↓ (salto >30% manda suspender).',fig:function(){return imgFig('rim-unico-ieca.svg','rim único + IECA');}}
 ];
 
 var TUTOR_TEXTUAL=[

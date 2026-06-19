@@ -212,6 +212,38 @@
           mapa que o M1 e o M2 vão dissecar. Guarde a divisão córtex × medula: a medula vive à beira da hipóxia
           (M2).</figcaption></figure>
       </div>
+
+      <h4>8. Aprofundamento — as ferramentas de leitura e a fluidoterapia aplicada</h4>
+      <p class="sub"><b>As ferramentas do raciocínio.</b> O <b>diagrama de Darrow–Yannet</b> (volume × tonicidade) é
+      como visualizamos toda manobra; e separar <b>osmoles efetivos × inefetivos</b> é o que decide se a célula se
+      move.</p>
+      <div class="frow">
+        <figure class="fviva"><img src="assets/m0/darrow-yannet.svg" alt="Diagrama de Darrow-Yannet: largura=volume, altura=tonicidade, tracejado=basal, sólido=após manobra" loading="lazy">
+          <figcaption><b>Fig. 9 · Lendo o Darrow–Yannet.</b> A <b>largura</b> de cada caixa é o volume; a <b>altura</b>,
+          a tonicidade; o <b>tracejado</b> é o basal e o <b>sólido</b>, o resultado. No exemplo (+água livre): caixas
+          mais largas e mais baixas → a célula (ICF) inchou. É o mesmo diagrama vivo do Instrumento.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m0/osmoles-efetivos.svg" alt="Osmoles efetivos (Na, glicose, manitol) versus inefetivos (ureia, álcoois)" loading="lazy">
+          <figcaption><b>Fig. 10 · Efetivos × inefetivos.</b> <b>Efetivos</b> (Na⁺, glicose, manitol, NaCl 3%) não
+          atravessam → criam gradiente → entram na <b>tonicidade</b> e movem a célula. <b>Inefetivos</b> (ureia,
+          álcoois) atravessam → entram só na <b>osm medida</b>. A diferença (o "gap") são os inefetivos.</figcaption></figure>
+      </div>
+      <p class="sub"><b>A fluidoterapia, aplicada à homeostasia.</b> O destino de cada bolsa segue a tonicidade; e
+      "isotônico" não quer dizer "fisiológico" (Fig. 6). Na disnatremia, a <b>velocidade</b> de correção é tão
+      crítica quanto o alvo.</p>
+      <div class="frow">
+        <figure class="fviva"><img src="assets/m0/fluidos-destino.svg" alt="Distribuição de 1 L de cada fluido entre ICF e ECF" loading="lazy">
+          <figcaption><b>Fig. 11 · Para onde vai cada litro.</b> SG 5% (água livre) → ~2/3 ICF; SF 0,9% e Ringer →
+          ~todo no ECF (repõem volume); NaCl 3% → expande o ECF e <b>puxa água da célula</b> (ICF↓). Reponha volume
+          com cristaloide; reponha água com SG 5%.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m0/sf-hipercloremia.svg" alt="Comparação Na/Cl do plasma (140/100) versus SF 0,9% (154/154)" loading="lazy">
+          <figcaption><b>Fig. 12 · SF 0,9% × plasma.</b> Barras lado a lado: o SF tem <b>Cl⁻ 154</b> contra os ~100 do
+          plasma (+54). Esse excesso de cloreto desloca o HCO₃⁻ → <b>acidose hiperclorêmica</b> em volume. Iso-osmolar,
+          mas <b>não homeostático</b>; o Ringer é mais próximo do plasma.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m0/velocidade-correcao.svg" alt="Cérebro na hiponatremia aguda (edema), crônica adaptada e correção rápida (mielinólise)" loading="lazy">
+          <figcaption><b>Fig. 13 · A velocidade importa.</b> Agudo → edema/hérnia; crônico → adaptado (osmólitos
+          expulsos); corrigir <b>rápido demais</b> o crônico → murcha/desmieliniza (mielinólise). Limite de segurança:
+          <b>≤ ~6–8 mmol/L/dia</b> (cálculo no M10).</figcaption></figure>
+      </div>
     </div>
   </section>
 
@@ -434,7 +466,7 @@
     <div class="panel">
       <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
       <div class="tabs" id="banktabs">
-        <button data-bank="ilustrada" class="on">Ilustrada (16)</button>
+        <button data-bank="ilustrada" class="on">Ilustrada (18)</button>
         <button data-bank="textual">Textual (18)</button>
       </div>
       <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
@@ -854,6 +886,9 @@ function cellWord(t,extra){ var r=compartimentos(Object.assign({pesoKg:70,na0:14
 function R0(extra){ return compartimentos(Object.assign({pesoKg:70,na0:140},extra)); }
 
 // Bloco ILUSTRADO — cada item traz fig() que devolve uma ilustração SVG
+// helper: renderiza uma figura raster real de assets/m0/ dentro do exercício (offline, caminho relativo)
+function imgFig(slug,alt){ return '<img src="assets/m0/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
 var TUTOR_ILUSTRADO=[
   {q:'Que fração da água corporal é intracelular?',o:['1/3','1/2','2/3','3/4'],c:2,e:'ICF ≈ 2/3; ECF ≈ 1/3.',fig:function(){return barSplit();}},
   {q:'Após +3 L de água livre, a célula…',o:['murcha','incha','não muda'],c:1,e:'Tonicidade↓ → água entra → '+cellWord('agua_livre',{volumeL:3})+'.',fig:function(){return dyMini(R0({tipo:'agua_livre',volumeL:3}),'+3 L água livre');}},
@@ -870,7 +905,9 @@ var TUTOR_ILUSTRADO=[
   {q:'Hiponatremia AGUDA ameaça o cérebro por…',o:['encolhimento','edema e herniação','nada'],c:1,e:'Tonicidade↓ → água entra no cérebro → edema numa caixa rígida → herniação.',fig:function(){return brainFig('edema','cérebro em meio hipotônico');}},
   {q:'Manitol (osmol efetivo que não entra na célula) no edema cerebral: o neurônio…',o:['incha','murcha','não muda'],c:1,e:'O manitol fica no ECF e puxa água do ICF → murcha → baixa a PIC (oposto da ureia).',fig:function(){return brainFig('shrink','manitol → cérebro murcha');}},
   {q:'SIADH retém água livre. A célula…',o:['murcha','incha','não muda'],c:1,e:'Água livre↑ → tonicidade↓ → '+cellWord('agua_livre',{volumeL:2})+'.',fig:function(){return dyMini(R0({tipo:'agua_livre',volumeL:2}),'SIADH (retém água)');}},
-  {q:'Comparado ao SG 5%, o coloide isotônico fica majoritariamente…',o:['no ICF','no ECF','distribui igual'],c:1,e:'Isotônico permanece no ECF (repõe volume); o SG 5% é água livre e entra na célula.',fig:function(){return dyMini(R0({tipo:'coloide',volumeL:2}),'coloide (2 L)');}}
+  {q:'Comparado ao SG 5%, o coloide isotônico fica majoritariamente…',o:['no ICF','no ECF','distribui igual'],c:1,e:'Isotônico permanece no ECF (repõe volume); o SG 5% é água livre e entra na célula.',fig:function(){return dyMini(R0({tipo:'coloide',volumeL:2}),'coloide (2 L)');}},
+  {q:'Na figura, por que o SF 0,9% não é "fisiológico"?',o:['tem pouco sódio','tem Cl⁻ 154 (>plasma ~100) → acidose hiperclorêmica','é hipotônico'],c:1,e:'Iso-osmolar (não move a célula) ≠ homeostático: o Cl⁻ suprafisiológico acidifica em volume.',fig:function(){return imgFig('sf-hipercloremia.svg','SF 0,9% × plasma (Na/Cl)');}},
+  {q:'Na figura dos osmoles, a ureia é inefetiva porque…',o:['é carregada','atravessa a membrana e equilibra dos dois lados','tem alto peso molecular'],c:1,e:'Inefetivo = permeia → não cria gradiente → entra só na osm medida, não move a célula.',fig:function(){return imgFig('osmoles-efetivos.svg','efetivos × inefetivos');}}
 ];
 
 // Bloco TEXTUAL — sem ilustração, dificuldade crescente

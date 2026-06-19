@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Pós-renal — a obstrução represa a urina e sobe a P_BC</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">a P_GC pode estar normal; o que cai é o saldo (NFP = P_GC − P_BC − π_GC)</text>
+
+  <!-- glomérulo + cápsula -->
+  <circle cx="170" cy="150" r="46" fill="#0f3540" stroke="#39c0c8" stroke-width="2"/>
+  <path d="M148,160 q7,-22 18,-8 q9,-15 18,1 q9,0 4,13 q-19,10 -40,4 z" fill="#39c0c8" fill-opacity="0.5"/>
+  <text x="170" y="150" text-anchor="middle" font-size="10" fill="#06121a">glomérulo</text>
+  <text x="170" y="214" text-anchor="middle" font-size="10" fill="#9fe3ec">P_GC normal</text>
+
+  <!-- túbulo até obstrução -->
+  <path d="M216,150 q60,-4 90,30 q30,34 90,30 l90,0" fill="none" stroke="#c9a0e0" stroke-width="16" stroke-linecap="round"/>
+  <!-- urina represada -->
+  <rect x="300" y="120" width="180" height="60" rx="8" fill="#3a7bd5" fill-opacity="0.25" stroke="#3a7bd5" stroke-dasharray="4 3"/>
+  <text x="390" y="116" text-anchor="middle" font-size="10" fill="#9bbef0">urina represada → P_BC ↑</text>
+
+  <!-- obstrução -->
+  <rect x="560" y="135" width="22" height="60" rx="4" fill="#e0556b"/>
+  <text x="571" y="214" text-anchor="middle" font-size="10" fill="#e08a96">obstrução</text>
+  <text x="571" y="228" text-anchor="middle" font-size="9" fill="#9fb1c0">(próstata/cálculo)</text>
+
+  <!-- setas de contrapressão -->
+  <line x1="470" y1="150" x2="240" y2="150" stroke="#e8a13a" stroke-width="2.5" stroke-dasharray="6 4"/>
+  <text x="350" y="262" text-anchor="middle" font-size="11" fill="#e8a13a">a contrapressão sobe rio acima → NFP ↓ → TFG ↓</text>
+  <text x="350" y="282" text-anchor="middle" font-size="10" fill="#8fe0b0">tratamento: desobstruir (sonda) — não é hemodinâmico</text>
+</svg>

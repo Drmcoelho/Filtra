@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 320" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="320" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="316" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">A exceção: rim único / estenose bilateral + IECA</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">quando a TFG DEPENDE da eferente fechada, dilatá-la a derruba de verdade</text>
+
+  <!-- ANTES (com AngII) -->
+  <text x="180" y="78" text-anchor="middle" font-size="12" fill="#cdd9e3" font-weight="bold">Estenose: fluxo de entrada ↓</text>
+  <line x1="60" y1="150" x2="120" y2="150" stroke="#e0556b" stroke-width="6"/>
+  <rect x="120" y="143" width="20" height="14" fill="#e8a13a"/><text x="130" y="176" text-anchor="middle" font-size="8" fill="#e8a13a">estenose</text>
+  <circle cx="200" cy="150" r="34" fill="#0f3540" stroke="#39c0c8" stroke-width="2"/>
+  <text x="200" y="154" text-anchor="middle" font-size="9" fill="#9fe3ec">P_GC ok</text>
+  <line x1="234" y1="150" x2="300" y2="150" stroke="#3a7bd5" stroke-width="3"/>
+  <text x="270" y="140" text-anchor="middle" font-size="9" fill="#9bbef0">eferente</text>
+  <text x="270" y="128" text-anchor="middle" font-size="9" fill="#9bbef0">FECHADA (Ang II)</text>
+  <text x="180" y="210" text-anchor="middle" font-size="10" fill="#8fe0b0">a Ang II represa e sustenta a P_GC</text>
+
+  <!-- DEPOIS (IECA) -->
+  <text x="500" y="78" text-anchor="middle" font-size="12" fill="#cdd9e3" font-weight="bold">+ IECA/BRA → tira a Ang II</text>
+  <line x1="380" y1="150" x2="440" y2="150" stroke="#e0556b" stroke-width="6"/>
+  <rect x="440" y="143" width="20" height="14" fill="#e8a13a"/>
+  <circle cx="520" cy="150" r="26" fill="#2a1418" stroke="#e0556b" stroke-width="2"/>
+  <text x="520" y="154" text-anchor="middle" font-size="9" fill="#e08a96">P_GC ↓↓</text>
+  <line x1="546" y1="150" x2="620" y2="150" stroke="#3a7bd5" stroke-width="8"/>
+  <text x="585" y="138" text-anchor="middle" font-size="9" fill="#9bbef0">eferente ABERTA</text>
+  <text x="500" y="210" text-anchor="middle" font-size="10" fill="#e08a96">sem a represa, a P_GC desaba → TFG ↓↓</text>
+
+  <rect x="120" y="244" width="440" height="56" rx="8" fill="#10202c" stroke="#e8a13a"/>
+  <text x="340" y="266" text-anchor="middle" font-size="12" fill="#e7eef4">Salto &gt; 30% da creatinina ao iniciar IECA →</text>
+  <text x="340" y="286" text-anchor="middle" font-size="12" fill="#f0c078" font-weight="bold">suspender e investigar estenose (a fronteira da regra benigna)</text>
+</svg>

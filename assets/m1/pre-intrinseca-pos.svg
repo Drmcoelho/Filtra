@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 320" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="320" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="316" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">A mesma creatinina alta, três mecanismos opostos</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">decompor antes de interpretar: a azotemia é uma sombra com três origens</text>
+
+  <!-- PRÉ -->
+  <rect x="24" y="64" width="200" height="232" rx="8" fill="#10202c" stroke="#e8a13a"/>
+  <text x="124" y="88" text-anchor="middle" font-size="13" fill="#f0c078" font-weight="bold">PRÉ-RENAL</text>
+  <text x="124" y="112" text-anchor="middle" font-size="11" fill="#e7eef4">P_GC ↓</text>
+  <text x="124" y="136" text-anchor="middle" font-size="10" fill="#cdd9e3">hipoperfusão, AINE,</text>
+  <text x="124" y="150" text-anchor="middle" font-size="10" fill="#cdd9e3">IECA, depleção</text>
+  <text x="124" y="182" text-anchor="middle" font-size="10" fill="#9fb1c0">glomérulo e túbulo</text>
+  <text x="124" y="196" text-anchor="middle" font-size="10" fill="#9fb1c0">íntegros</text>
+  <text x="124" y="232" text-anchor="middle" font-size="11" fill="#8fe0b0">reversível: corrige</text>
+  <text x="124" y="246" text-anchor="middle" font-size="11" fill="#8fe0b0">a pressão</text>
+  <text x="124" y="278" text-anchor="middle" font-size="10" fill="#9fb1c0">FE_Na baixa (&lt;1%)</text>
+
+  <!-- INTRÍNSECA -->
+  <rect x="240" y="64" width="200" height="232" rx="8" fill="#10202c" stroke="#e0556b"/>
+  <text x="340" y="88" text-anchor="middle" font-size="13" fill="#e08a96" font-weight="bold">INTRÍNSECA</text>
+  <text x="340" y="112" text-anchor="middle" font-size="11" fill="#e7eef4">túbulo / Kf lesados</text>
+  <text x="340" y="136" text-anchor="middle" font-size="10" fill="#cdd9e3">NTA, NIA,</text>
+  <text x="340" y="150" text-anchor="middle" font-size="10" fill="#cdd9e3">glomerulonefrite</text>
+  <text x="340" y="182" text-anchor="middle" font-size="10" fill="#9fb1c0">o parênquima está</text>
+  <text x="340" y="196" text-anchor="middle" font-size="10" fill="#9fb1c0">doente</text>
+  <text x="340" y="232" text-anchor="middle" font-size="11" fill="#e08a96">NÃO volta só com</text>
+  <text x="340" y="246" text-anchor="middle" font-size="11" fill="#e08a96">pressão</text>
+  <text x="340" y="278" text-anchor="middle" font-size="10" fill="#9fb1c0">FE_Na alta · cilindros</text>
+
+  <!-- PÓS -->
+  <rect x="456" y="64" width="200" height="232" rx="8" fill="#10202c" stroke="#3a7bd5"/>
+  <text x="556" y="88" text-anchor="middle" font-size="13" fill="#9bbef0" font-weight="bold">PÓS-RENAL</text>
+  <text x="556" y="112" text-anchor="middle" font-size="11" fill="#e7eef4">P_BC ↑</text>
+  <text x="556" y="136" text-anchor="middle" font-size="10" fill="#cdd9e3">obstrução: próstata,</text>
+  <text x="556" y="150" text-anchor="middle" font-size="10" fill="#cdd9e3">cálculo, tumor</text>
+  <text x="556" y="182" text-anchor="middle" font-size="10" fill="#9fb1c0">contrapressão de</text>
+  <text x="556" y="196" text-anchor="middle" font-size="10" fill="#9fb1c0">Bowman sobe</text>
+  <text x="556" y="232" text-anchor="middle" font-size="11" fill="#8fe0b0">reversível:</text>
+  <text x="556" y="246" text-anchor="middle" font-size="11" fill="#8fe0b0">desobstruir (sonda)</text>
+  <text x="556" y="278" text-anchor="middle" font-size="10" fill="#9fb1c0">US: hidronefrose</text>
+</svg>

@@ -19,6 +19,11 @@ depois) — preencher fonte/autor/licença antes de considerar o módulo finaliz
 | `assets/m0/rim-anatomia.png` | Rim — anatomia | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
 | `assets/m0/cerebro-edema.jpg` | Edema cerebral (RM) | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
 | `assets/m0/fluidos-iv.jpg` | Fluidos IV | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
+| `assets/m0/darrow-yannet.svg` | Diagrama de Darrow–Yannet (leitura) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m0/osmoles-efetivos.svg` | Osmoles efetivos × inefetivos | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m0/fluidos-destino.svg` | Destino dos fluidos IV (ICF×ECF) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m0/sf-hipercloremia.svg` | SF 0,9% × plasma (Na/Cl) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m0/velocidade-correcao.svg` | Velocidade de correção do Na⁺ | — | Projeto FILTRA | FILTRA (autoral) |
 
 ## M1 — Néfron / forças de Starling
 | Arquivo | Descrição | Fonte (URL) | Autor | Licença |
@@ -31,6 +36,11 @@ depois) — preencher fonte/autor/licença antes de considerar o módulo finaliz
 | `assets/m1/forcas-starling-glomerulo.svg` | Forças de Starling | — | Projeto FILTRA | FILTRA (autoral) |
 | `assets/m1/autorregulacao-tfg-curva.svg` | Autorregulação TFG×PAM | — | Projeto FILTRA | FILTRA (autoral) |
 | `assets/m1/arteriolas-resistencia.svg` | Aferente × eferente | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m1/divisor-pressao.svg` | P_GC como divisor de pressão | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m1/pre-intrinseca-pos.svg` | Pré × intrínseca × pós-renal | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m1/obstrucao-posrenal.svg` | Obstrução pós-renal (P_BC↑) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m1/rim-unico-ieca.svg` | Rim único / estenose + IECA | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m1/ff-eferente.svg` | Fração de filtração e o eferente | — | Projeto FILTRA | FILTRA (autoral) |
 
 ## M2 — Hemodinâmica renal
 | Arquivo | Descrição | Fonte (URL) | Autor | Licença |

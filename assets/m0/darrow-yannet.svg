@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 320" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="320" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="316" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Como ler o diagrama de Darrow–Yannet</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">largura = volume · altura = tonicidade · tracejado = basal · sólido = após a manobra</text>
+
+  <!-- eixos -->
+  <line x1="70" y1="280" x2="640" y2="280" stroke="#3a4a58"/>
+  <line x1="70" y1="70" x2="70" y2="280" stroke="#3a4a58"/>
+  <text x="355" y="304" text-anchor="middle" font-size="11" fill="#9fb1c0">volume →</text>
+  <text x="24" y="180" font-size="11" fill="#9fb1c0" transform="rotate(-90 24 180)">tonicidade →</text>
+
+  <!-- basal (tracejado) -->
+  <rect x="70" y="150" width="200" height="130" fill="none" stroke="#cdd9e3" stroke-dasharray="5 4"/>
+  <rect x="270" y="150" width="120" height="130" fill="none" stroke="#cdd9e3" stroke-dasharray="5 4"/>
+  <!-- após: ganho de água livre (mais largo, mais baixo) -->
+  <rect x="70" y="186" width="232" height="94" fill="#3a7bd5" fill-opacity="0.5" stroke="#3a7bd5"/>
+  <rect x="302" y="186" width="150" height="94" fill="#39c0c8" fill-opacity="0.5" stroke="#39c0c8"/>
+  <text x="180" y="240" text-anchor="middle" font-size="12" fill="#dcebff" font-weight="bold">ICF</text>
+  <text x="377" y="240" text-anchor="middle" font-size="12" fill="#bfeef0" font-weight="bold">ECF</text>
+
+  <text x="500" y="120" font-size="11" fill="#cdd9e3">Exemplo: + água livre</text>
+  <text x="500" y="140" font-size="10" fill="#9fb1c0">→ tonicidade ↓ (caixas mais baixas)</text>
+  <text x="500" y="158" font-size="10" fill="#9fb1c0">→ volume ↑ (mais largas)</text>
+  <text x="500" y="176" font-size="10" fill="#9fb1c0">→ a célula (ICF) incha</text>
+  <text x="500" y="206" font-size="10" fill="#cdd9e3">— — basal</text>
+  <rect x="500" y="216" width="22" height="12" fill="#3a7bd5" fill-opacity="0.5" stroke="#3a7bd5"/>
+  <text x="528" y="226" font-size="10" fill="#9fb1c0">após a manobra</text>
+</svg>

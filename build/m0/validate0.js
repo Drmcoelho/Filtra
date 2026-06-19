@@ -164,15 +164,20 @@ ok(Array.isArray(TI) && TI.length >= 10, 'tutor: bloco ILUSTRADO ≥10 (tem ' + 
 ok(Array.isArray(TT) && TT.length >= 10, 'tutor: bloco TEXTUAL ≥10 (tem ' + (TT ? TT.length : 0) + ')');
 ok(malformados(TI) === 0, 'tutor ilustrado: itens bem-formados');
 ok(malformados(TT) === 0, 'tutor textual: itens bem-formados');
-// cada item ilustrado precisa de uma ilustração SVG não-vazia, computada
-var semFig = 0;
+// cada item ilustrado precisa de ilustração: SVG computado OU figura raster real (<img> de assets/)
+var semFig = 0, comImg = 0;
 (TI || []).forEach(function (it) {
   if (typeof it.fig !== 'function') { semFig++; return; }
-  var svg = '';
-  try { svg = it.fig(); } catch (e) { svg = ''; }
-  if (!/<svg[\s>]/.test(String(svg)) || !/<(rect|circle|line|path|text)/.test(String(svg))) semFig++;
+  var s = '';
+  try { s = String(it.fig()); } catch (e) { s = ''; }
+  var ehSvg = /<svg[\s>]/.test(s) && /<(rect|circle|line|path|text)/.test(s);
+  var img = s.match(/<img[^>]+src=["']([^"']+)["']/i);
+  var ehImg = img ? (!/^https?:/i.test(img[1]) && fs.existsSync(path.join(__dirname, '..', '..', img[1]))) : false;
+  if (!ehSvg && !ehImg) semFig++;
+  if (ehImg) comImg++;
 });
-ok(semFig === 0, 'tutor ilustrado: toda questão traz ilustração SVG não-vazia (' + semFig + ' sem)');
+ok(semFig === 0, 'tutor ilustrado: toda questão traz ilustração (SVG ou raster real) (' + semFig + ' sem)');
+ok(comImg >= 1, 'tutor ilustrado: usa figuras-raster nos exercícios (' + comImg + ')');
 
 // ----- ilustração viva: a aba Avaliação renderiza a figura no DOM + conceito no Caso -----
 ok(doc.getElementById('tutor-fig') !== null && doc.querySelector('#tutor-fig svg') !== null,

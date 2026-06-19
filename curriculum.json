@@ -274,8 +274,24 @@
     {
       "id": "M12",
       "metade": "FILTRA",
-      "titulo": "Cálcio · fósforo · magnésio — PTH, vitamina D, FGF23",
-      "status": "planejado"
+      "arquivo": "filtra12.html",
+      "titulo": "Cálcio · fósforo · magnésio — o eixo ósseo-mineral (PTH, vitamina D, FGF23)",
+      "status": "disponivel",
+      "instrumento": "curva do Ca ionizado × albumina em dois pH (normal × alcalose) + progressão da DRC (PO₄/PTH/calcitriol × TFG)",
+      "questoes": {
+        "ilustrado": 12,
+        "textual": 10
+      },
+      "inclui": [
+        "albuminaDiagram (Ca total = ligado + complexado + ionizado; Ca_corr = Ca + 0,8·(4−alb))",
+        "caIonMini (Ca ionizado × albumina; pH normal × alcalose; limiar de tetania)",
+        "pthDiagram (três ações do PTH: Ca↑ TCD, fosfatúria, calcitriol↑)",
+        "drcFig (PO₄↑/PTH↑/calcitriol↓ conforme TFG↓ — hiperPTH 2º)",
+        "trianguloDiagram (triângulo Ca–PO₄–PTH; DRC)",
+        "FGF23 fosfatúrico do osso (inibe calcitriol; sobe cedo na DRC)",
+        "magnésio como cofator do PTH (Mg↓↓ → hipocalcemia refratária)",
+        "hipercalcemia da malignidade (PTHrP) com PTH suprimido; pseudo-hipocalcemia da albumina; tetania da alcalose"
+      ]
     },
     {
       "id": "M13",

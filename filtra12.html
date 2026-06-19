@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M12 — Cálcio, fósforo e magnésio: o eixo ósseo-mineral</title>
+<style>
+  :root{
+    --bg:#0c1014; --panel:#141b22; --panel2:#1b242d; --line:#283642;
+    --ink:#e7eef4; --dim:#9fb1c0; --accent:#39c0c8; --warn:#e8a13a; --bad:#e0556b; --good:#52c08a;
+    --aff:#e0556b; --eff:#3a7bd5; --tuft:#39c0c8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none}
+  section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg,#drc-svg svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px}
+  .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)}
+  .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)}
+  .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)}
+  .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+  code{background:#0a1016;border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:13px}
+  .preset{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+  .preset button{background:var(--panel2);border:1px solid var(--line);color:var(--ink);border-radius:6px;padding:5px 9px;font-size:12px;cursor:pointer}
+  .preset button:hover{border-color:var(--accent)}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M12</div>
+  <h1>Cálcio · fósforo · magnésio — o eixo ósseo-mineral (PTH, vitamina D, FGF23)</h1>
+  <div class="sub">"Cálcio sérico" <b>não</b> é "cálcio". O que importa é o <b>ionizado</b> (livre, ativo). O Ca
+  TOTAL engana por <b>albumina</b> (corrige-se: <code>Ca_corr = Ca + 0,8·(4 − alb)</code>) e por <b>pH</b>
+  (alcalose → ligação↑ → ionizado↓ → tetania; acidose → ionizado↑). A homeostasia mineral é um <b>triângulo
+  Ca–PO₄–PTH</b>, regido por três hormônios: <b>PTH</b> (Ca↑, PO₄↓, calcitriol↑), <b>calcitriol</b> (absorção
+  intestinal de Ca e PO₄) e <b>FGF23</b> (PO₄↓, calcitriol↓). Na DRC o triângulo quebra: PO₄↑ + calcitriol↓ →
+  <b>hiperPTH secundário</b>. E o <b>magnésio</b> é o cofator secreto: Mg↓↓ paralisa o PTH.</div>
+  <nav class="hex">
+    <a class="soon" title="em breve">RESPIRA</a>
+    <a class="soon" title="em breve">CHOCA</a>
+    <span class="ativo">FILTRA</span>
+    <a class="soon" title="em breve">ALIMENTA</a>
+    <a class="soon" title="em breve">METABOLIZA</a>
+    <a class="soon" title="em breve">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="filtra.html">&larr; índice do braço FILTRA</a>
+
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- ============================== CONCEITO ============================== -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — o ionizado, e o triângulo que o defende</h3>
+
+      <h4>1. O cálcio que IMPORTA é o ionizado (corrigir por albumina)</h4>
+      <p class="sub">Do Ca sérico total, ~40% circula <b>ligado à albumina</b>, ~10% complexado e só ~50% está
+      <b>ionizado</b> (livre, fisiologicamente ativo). Uma <b>hipoalbuminemia</b> derruba o Ca TOTAL sem mexer no
+      ionizado — é <b>pseudo-hipocalcemia</b>. Corrige-se com <code>Ca_corr = Ca_total + 0,8·(4 − albumina)</code>.
+      A homeostasia defende o ionizado, não o número total.</p>
+      <div class="frow">
+        <div class="concept" id="draw-albumina"></div>
+        <figure class="fviva"><img src="assets/m12/calcio-ionizado-albumina.svg" alt="Esquema: cálcio total dividido em ligado à albumina, complexado e ionizado livre; a fração ionizada é a ativa" loading="lazy">
+          <figcaption><b>Fig. 1 · Ca total × ionizado.</b> ① fração <b>ligada à albumina</b> (~40%) · ② complexada
+          (~10%) · ③ <b>ionizada livre</b> (~50%, a ativa). Hipoalbuminemia encolhe ① → o TOTAL cai mas o
+          ionizado fica. Por isso se <b>corrige por albumina</b> antes de chamar de hipocalcemia.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m12/eixo-osseo-mineral.svg" alt="Visão geral do eixo ósseo-mineral: rim, osso, intestino, paratireoide e os hormônios PTH, calcitriol e FGF23" loading="lazy">
+          <figcaption><b>Fig. 2 · O eixo ósseo-mineral.</b> Quatro órgãos (paratireoide, rim, osso, intestino) e
+          três hormônios (PTH, calcitriol, FGF23) mantêm Ca e PO₄ estáveis. A <b>homeostasia</b>: defender o meio
+          interno mineral apesar de oferta e perdas variáveis.</figcaption></figure>
+      </div>
+
+      <h4>2. O pH move o ionizado — a tetania da alcalose</h4>
+      <p class="sub">O H⁺ compete com o Ca²⁺ pela albumina. Na <b>alcalose</b> (menos H⁺) a albumina prende
+      <em>mais</em> cálcio → <b>ionizado↓</b> → parestesias, espasmo carpopedal, <b>tetania</b> — mesmo com o Ca
+      TOTAL normal. Na <b>acidose</b>, o H⁺ desloca o Ca da albumina → <b>ionizado↑</b>. Cada 0,1 de ΔpH move o
+      ionizado ~0,2 mg/dL (em sentido inverso). Por isso a hiperventilação dá formigamento perioral.</p>
+      <div class="frow">
+        <div class="concept" id="draw-ph"></div>
+        <figure class="fviva"><img src="assets/m12/paratireoide-histologia.svg" alt="Histologia da paratireoide: células principais que secretam PTH em resposta à queda do cálcio ionizado" loading="lazy">
+          <figcaption><b>Fig. 3 · A paratireoide.</b> As <b>células principais</b> têm um sensor de Ca (CaSR) que lê o
+          <b>ionizado</b> — não o total. Ionizado↓ (por alcalose ou perda real) → secreção de PTH↑. O sensor não
+          "vê" o cálcio preso à albumina.</figcaption></figure>
+      </div>
+
+      <h4>3. O PTH — três ações, um eixo</h4>
+      <p class="sub">Sentindo o ionizado cair, a paratireoide libera <b>PTH</b>, que faz três coisas:
+      <b>(a)</b> ↑ reabsorção renal de Ca no <b>TCD</b> → Ca↑; <b>(b)</b> inibe o NaPi no <b>TCP</b> → <b>fosfatúria</b>
+      → PO₄↓; <b>(c)</b> ativa a <b>1α-hidroxilase</b> renal → <b>calcitriol↑</b>. Sobe o Ca, baixa o PO₄, e recruta
+      a vitamina D. É a alavanca central do triângulo.</p>
+      <div class="frow">
+        <div class="concept" id="draw-pth"></div>
+        <figure class="fviva"><img src="assets/m12/pth-acao.svg" alt="Ações do PTH: reabsorção renal de cálcio, fosfatúria por inibição do NaPi e ativação da 1-alfa-hidroxilase" loading="lazy">
+          <figcaption><b>Fig. 4 · As três ações do PTH.</b> ① <b>rim/TCD</b>: reabsorve Ca → Ca↑ · ② <b>rim/TCP</b>:
+          inibe NaPi → <b>fosfatúria</b> → PO₄↓ · ③ <b>1α-hidroxilase</b> → calcitriol↑. Mnemônico: o PTH
+          <b>sobe o Ca e joga fora o fósforo</b>.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m12/vitamina-d-metabolismo.svg" alt="Metabolismo da vitamina D: pele e dieta a colecalciferol, 25-OH no fígado, 1-alfa-hidroxilação renal a calcitriol" loading="lazy">
+          <figcaption><b>Fig. 5 · A vitamina D ativa.</b> Pele/dieta → 25-OH-D (fígado) → <b>calcitriol</b>
+          (1α-hidroxilase <b>renal</b>, estimulada por PTH, <b>inibida por FGF23</b>). O calcitriol ↑ a <b>absorção
+          intestinal</b> de Ca e PO₄. Rim lesado = fábrica de vit D ativa parada.</figcaption></figure>
+      </div>
+
+      <h4>4. O FGF23 — o fosfatúrico do osso</h4>
+      <p class="sub">O <b>FGF23</b>, secretado pelo <b>osteócito</b>, é o guardião do fosfato: aumenta a excreção renal
+      de PO₄ (fosfatúrico) e <b>inibe o calcitriol</b>. Na DRC ele <b>sobe cedo</b> — antes do PO₄ e do PTH —
+      tentando segurar o fósforo, mas ao custo de derrubar a vitamina D ativa.</p>
+      <div class="frow">
+        <div class="concept" id="draw-fgf23"></div>
+        <figure class="fviva"><img src="assets/m12/fgf23.svg" alt="FGF23 secretado pelo osso: aumenta a fosfatúria e inibe a 1-alfa-hidroxilase, reduzindo o calcitriol" loading="lazy">
+          <figcaption><b>Fig. 6 · O FGF23.</b> Do <b>osso</b> (osteócito): ① <b>fosfatúrico</b> (PO₄↓) e ② <b>inibe
+          a 1α-hidroxilase</b> (calcitriol↓). Sobe <b>cedo</b> na DRC — é o primeiro sinal do desarranjo
+          mineral. Segura o fósforo, mas apaga a vitamina D.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m12/magnesio-renal.svg" alt="Manejo renal do magnésio na alça de Henle (TAL); o magnésio é cofator da secreção de PTH" loading="lazy">
+          <figcaption><b>Fig. 7 · O magnésio, cofator secreto.</b> Reabsorvido na <b>alça (TAL)</b> por via
+          paracelular. O Mg é <b>cofator da secreção e da ação do PTH</b>: Mg↓↓ <b>paralisa</b> a paratireoide →
+          hipocalcemia <b>refratária</b> que só corrige repondo Mg.</figcaption></figure>
+      </div>
+
+      <h4>5. O triângulo Ca–PO₄–PTH e o hiperPTH secundário da DRC</h4>
+      <p class="sub">Ca, PO₄ e PTH formam um <b>triângulo</b> de feedback: Ca↓ → PTH↑ → Ca↑ (e PO₄↓). Na <b>DRC</b>
+      o triângulo se rompe: TFG↓ → o rim não excreta PO₄ (<b>PO₄ retido↑</b>) e não ativa a vit D
+      (<b>calcitriol↓</b>); FGF23 sobe. PO₄↑ + calcitriol↓ + Ca↓ → estímulo <b>triplo</b> ao PTH →
+      <b>PTH↑↑ (hiperPTH 2º)</b> → doença óssea (osteíte fibrosa). As Fig. 1–8 reaparecem no Caso, na Trilha e
+      na Avaliação.</p>
+      <div class="frow">
+        <div class="concept" id="draw-triangulo"></div>
+        <figure class="fviva"><img src="assets/m12/triangulo-ca-po4-pth.svg" alt="O triângulo de feedback cálcio, fosfato e PTH; na doença renal crônica vira hiperparatireoidismo secundário" loading="lazy">
+          <figcaption><b>Fig. 8 · O triângulo Ca–PO₄–PTH.</b> No equilíbrio, Ca↓ puxa PTH↑ que restaura o Ca e
+          baixa o PO₄. Na <b>DRC</b>: PO₄↑ + calcitriol↓ + Ca↓ → PTH↑↑ (<b>hiperPTH 2º</b>). Tratar o número Ca
+          isolado ignora o triângulo inteiro.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== CASO (5 atos) ============================== -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — cinco atos, decida antes de revelar</h3>
+      <p class="sub">Quatro pacientes, quatro "cálcios". <b>(A)</b> Cirrótica, albumina 2,0, Ca total 7,4 — "baixo".
+      <b>(B)</b> Ansiosa hiperventilando, Ca total 9,4, pH 7,62, formigamento e espasmo. <b>(C)</b> DRC G5, Ca
+      8,2 · PO₄ 6,8 · PTH 600. <b>(D)</b> Câncer de pulmão, Ca total 13,0. E um adendo: <b>(E)</b> hipocalcemia
+      que não corrige com cálcio IV.</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step">
+        <b>Ato 1.</b> A cirrótica (A) tem Ca total 7,4 — você diagnostica hipocalcemia e infunde cálcio?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>Não — corrija pela albumina primeiro.</b> <code>Ca_corr = 7,4 + 0,8·(4 − 2,0)
+        = 9,0 mg/dL</code> — normal. O ionizado está normal: é <b>pseudo-hipocalcemia</b> da hipoalbuminemia
+        (Fig. 1). No engine: <code>caTotal 7,4 · alb 2,0</code> → caCorr ~9,0, regime <b>pseudo_hipocalcemia</b>.
+        Infundir cálcio aqui é tratar um número, não o paciente. Confirme com Ca ionizado direto.</div>
+      </div>
+      <div class="step">
+        <b>Ato 2.</b> A hiperventilante (B) tem Ca total NORMAL (9,4). Por que tem tetania?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2"><b>Alcalose respiratória.</b> O pH 7,62 faz a albumina prender mais Ca²⁺ →
+        <b>ionizado↓</b> (~4,3 mg/dL) apesar do total normal (Fig. 3). É a <b>tetania da alcalose</b>. No engine:
+        <code>caTotal 9,4 · pH 7,62</code> → caIon &lt; 4,3, regime <b>tetania_alcalose</b>. Trate a
+        hiperventilação, não jogue cálcio — quando o pH normaliza, o ionizado volta.</div>
+      </div>
+      <div class="step">
+        <b>Ato 3.</b> Na DRC G5 (C): Ca 8,2 baixo, PO₄ 6,8 alto, PTH 600 altíssimo. Qual o mecanismo?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3"><b>HiperPTH secundário.</b> TFG no chão → o rim não excreta PO₄ (<b>retido↑</b>) e
+        não faz calcitriol (<b>vit D ativa↓</b>); FGF23 já subiu cedo. PO₄↑ + calcitriol↓ + Ca↓ → estímulo
+        <b>triplo</b> ao PTH → PTH↑↑ (Fig. 8). No engine: <code>gfr 12 · po4 6,8 · caTotal 8,2</code> → PTH ↑↑,
+        calcitriol baixo, regime <b>hiperpth_secundario</b>. A conduta ataca o triângulo: quelar PO₄, repor vit D
+        ativa, controlar o PTH.</div>
+      </div>
+      <div class="step">
+        <b>Ato 4.</b> O câncer de pulmão (D) tem Ca total 13,0. O que esperar do PTH?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>PTH SUPRIMIDO.</b> A hipercalcemia da malignidade costuma ser por <b>PTHrP</b>
+        (peptídeo relacionado ao PTH) — que age como o PTH mas <b>não é medido</b> pelo ensaio de PTH. Logo o Ca↑
+        suprime a paratireoide → <b>PTH baixo</b>. No engine: <code>caTotal 13 · pthExtra 1,6</code> → estado
+        hipercalcemia, PTH endógeno suprimido, regime <b>hipercalcemia_pthrp</b>. PTH alto + Ca alto seria
+        hiperPTH primário — outra história.</div>
+      </div>
+      <div class="step">
+        <b>Ato 5.</b> Hipocalcemia (E) que não sobe com cálcio IV repetido. O que falta checar — e síntese.
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>O magnésio.</b> Hipomagnesemia grave <b>paralisa</b> a secreção e a ação do PTH
+        (Fig. 7) → hipocalcemia <b>refratária</b>: o PTH fica inadequadamente baixo apesar do Ca baixo. Só corrige
+        <b>repondo Mg</b>. No engine: <code>caTotal 7,4 · mg 0,8</code> → mgGate fechado, PTH &lt; normal, regime
+        <b>hipocalcemia_mg</b>.
+        <br><b>Lição:</b> o número "cálcio" é uma sombra. Decomponha — albumina, pH, o triângulo Ca–PO₄–PTH e o
+        magnésio — antes de interpretar e tratar.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== TRILHA ============================== -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — dez passos que constroem o conceito</h3>
+      <details><summary>1. Qual fração do cálcio sérico é fisiologicamente ativa?</summary>
+        <p><em>Pista: a livre.</em><br>
+        Só o <b>ionizado</b> (~50% do total) é ativo. O resto está ligado à albumina (~40%) ou complexado (~10%).
+        O CaSR da paratireoide lê o ionizado, não o total.</p></details>
+      <details><summary>2. Por que a hipoalbuminemia "baixa" o cálcio?</summary>
+        <p><em>Pista: o carregador.</em><br>
+        Menos albumina → menos cálcio LIGADO → o Ca TOTAL medido cai, mas o ionizado fica. Corrige-se:
+        <code>Ca_corr = Ca + 0,8·(4 − alb)</code>. É pseudo-hipocalcemia.</p></details>
+      <details><summary>3. Como a alcalose causa tetania com cálcio total normal?</summary>
+        <p><em>Pista: H⁺ compete com Ca²⁺.</em><br>
+        Menos H⁺ (alcalose) → a albumina prende <b>mais</b> Ca²⁺ → <b>ionizado↓</b> → tetania, mesmo com total
+        normal. A acidose faz o inverso (ionizado↑).</p></details>
+      <details><summary>4. Quais são as três ações do PTH?</summary>
+        <p><em>Pista: rim, rim e vitamina.</em><br>
+        ↑ reabsorção renal de Ca (TCD) → Ca↑; ↓ reabsorção de PO₄ (inibe NaPi no TCP) → fosfatúria → PO₄↓;
+        ↑ 1α-hidroxilase → calcitriol↑. Sobe o Ca, joga fora o fósforo.</p></details>
+      <details><summary>5. O que o calcitriol faz e onde é ativado?</summary>
+        <p><em>Pista: intestino e rim.</em><br>
+        O calcitriol (vit D ativa) ↑ a <b>absorção intestinal</b> de Ca e PO₄. É ativado no <b>rim</b>
+        (1α-hidroxilase, estimulada por PTH, inibida por FGF23). Rim lesado = pouca vit D ativa.</p></details>
+      <details><summary>6. De onde vem o FGF23 e o que ele faz?</summary>
+        <p><em>Pista: o osso fala.</em><br>
+        Do <b>osteócito</b> (osso): é <b>fosfatúrico</b> (PO₄↓) e <b>inibe o calcitriol</b>. Sobe cedo na DRC,
+        antes do PO₄ e do PTH — o primeiro sinal do desarranjo mineral.</p></details>
+      <details><summary>7. Por que a DRC dá hiperparatireoidismo secundário?</summary>
+        <p><em>Pista: estímulo triplo.</em><br>
+        TFG↓ → PO₄ retido↑ e calcitriol↓ (e Ca tende a cair). PO₄↑ + calcitriol↓ + Ca↓ → estímulo triplo ao
+        PTH → PTH↑↑. É secundário (a glândula responde a um problema fora dela).</p></details>
+      <details><summary>8. Por que a hipomagnesemia perpetua a hipocalcemia?</summary>
+        <p><em>Pista: cofator do PTH.</em><br>
+        O Mg é cofator da secreção e da ação do PTH. Mg↓↓ <b>paralisa</b> a paratireoide → PTH inadequadamente
+        baixo apesar do Ca baixo → hipocalcemia refratária. Só corrige repondo Mg.</p></details>
+      <details><summary>9. Hipercalcemia da malignidade: o PTH está alto ou baixo?</summary>
+        <p><em>Pista: o ensaio não vê o PTHrP.</em><br>
+        Geralmente <b>baixo/suprimido</b>: o PTHrP age como PTH mas não é medido pelo ensaio. O Ca alto suprime
+        a paratireoide. PTH alto + Ca alto seria hiperPTH primário.</p></details>
+      <details><summary>10. Por que corrigir o cálcio rápido demais é perigoso, e onde mora o produto Ca×PO₄?</summary>
+        <p><em>Pista: precipitação.</em><br>
+        Ca e PO₄ ambos altos elevam o <b>produto Ca×PO₄</b> → risco de <b>calcificação metastática</b> (vasos,
+        tecidos). Na DRC controla-se o PO₄ (quelantes) antes de empurrar Ca/vit D, justamente para não disparar
+        o produto.</p></details>
+    </div>
+  </section>
+
+  <!-- ============================== INSTRUMENTO ============================== -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — o Ca ionizado × albumina (pH normal × alcalose)</h3>
+      <p class="sub">A curva <span style="color:#39c0c8">ciano</span> é o Ca <b>ionizado</b> em pH 7,40 conforme a
+      albumina varia (mantido o Ca <em>corrigido</em> constante): quase <b>plana</b> — corrigir resolve o viés da
+      albumina. A curva <span style="color:#e8a13a">laranja</span> é o mesmo em <b>alcalose</b> (pH 7,55): a curva
+      inteira <b>desce</b> abaixo do limiar de tetania. O ponto branco é o seu paciente. Mexa o <b>pH</b> e veja a
+      curva subir/descer — o ionizado obedece ao pH, não ao número total.</p>
+      <div class="grid" style="margin-bottom:10px">
+        <div>
+          <label>Ca corrigido "verdadeiro" (mg/dL): <span class="val" id="instr-lbl-ca">9.4</span></label>
+          <input type="range" id="instr-ca" min="6" max="12" step="0.1" value="9.4">
+          <label>Albumina do paciente (g/dL): <span class="val" id="instr-lbl-alb">4.0</span></label>
+          <input type="range" id="instr-alb" min="1" max="6" step="0.1" value="4">
+        </div>
+        <div>
+          <label>pH sanguíneo: <span class="val" id="instr-lbl-ph">7.40</span></label>
+          <input type="range" id="instr-ph" min="7.0" max="7.7" step="0.01" value="7.40">
+        </div>
+      </div>
+      <canvas id="caion-canvas" width="900" height="320" aria-label="Ca ionizado por albumina em dois pH"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+      <h4>A progressão da DRC: PO₄ / PTH / calcitriol × TFG (computado)</h4>
+      <div class="concept" id="drc-svg"></div>
+    </div>
+  </section>
+
+  <!-- ============================== LAB ============================== -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — mova a fisiologia, leia o eixo mineral por mecanismo</h3>
+      <div class="preset" id="presets">
+        <button data-preset="normal">Normal</button>
+        <button data-preset="hipoalb">Hipoalbuminemia</button>
+        <button data-preset="alcalose">Alcalose / tetania</button>
+        <button data-preset="drc">DRC avançada</button>
+        <button data-preset="malig">Hipercalcemia (malignidade)</button>
+        <button data-preset="mg">Hipocalcemia por Mg↓</button>
+      </div>
+      <div class="grid">
+        <div>
+          <label>Ca total medido (mg/dL): <span class="val" id="lbl-ca">9.4</span></label>
+          <input type="range" id="in-ca" min="4" max="16" step="0.1" value="9.4">
+          <label>Albumina (g/dL): <span class="val" id="lbl-alb">4.0</span></label>
+          <input type="range" id="in-alb" min="1" max="6" step="0.1" value="4">
+          <label>pH sanguíneo: <span class="val" id="lbl-ph">7.40</span></label>
+          <input type="range" id="in-ph" min="7.0" max="7.7" step="0.01" value="7.40">
+          <label>Fosfato ofertado (mg/dL): <span class="val" id="lbl-po4">3.5</span></label>
+          <input type="range" id="in-po4" min="1" max="10" step="0.1" value="3.5">
+        </div>
+        <div>
+          <label>Magnésio (mg/dL): <span class="val" id="lbl-mg">2.0</span></label>
+          <input type="range" id="in-mg" min="0.4" max="3.5" step="0.1" value="2.0">
+          <label>TFG (mL/min): <span class="val" id="lbl-gfr">120</span></label>
+          <input type="range" id="in-gfr" min="5" max="120" step="1" value="120">
+          <label>Estímulo extra ao Ca (PTHrP/hiperPTH 1º): <span class="val" id="lbl-pthx">1.0</span></label>
+          <input type="range" id="in-pthx" min="1" max="3" step="0.1" value="1">
+          <label>Marcador exibido na figura:</label>
+          <select id="in-marker">
+            <option value="ion">Ca ionizado</option>
+            <option value="pth">PTH</option>
+          </select>
+        </div>
+      </div>
+
+      <table>
+        <tr><th>Variável</th><th>Atual</th><th>Normal ≈</th></tr>
+        <tr><td>Ca corrigido (mg/dL)</td><td class="num" id="out-cacorr">—</td><td class="num">8.5–10.2</td></tr>
+        <tr><td>Ca IONIZADO (mg/dL)</td><td class="num" id="out-caion">—</td><td class="num">4.5–5.3</td></tr>
+        <tr><td>PTH (pg/mL)</td><td class="num" id="out-pth">—</td><td class="num">15–65</td></tr>
+        <tr><td>Calcitriol — vit D ativa (pg/mL)</td><td class="num" id="out-calc">—</td><td class="num">20–60</td></tr>
+        <tr><td>FGF23 (RU/mL)</td><td class="num" id="out-fgf23">—</td><td class="num">~50</td></tr>
+        <tr><td>Fosfato sérico (mg/dL)</td><td class="num" id="out-po4">—</td><td class="num">2.5–4.5</td></tr>
+        <tr><td>Fosfatúria (excesso relativo)</td><td class="num" id="out-fosf">—</td><td class="num">~0</td></tr>
+        <tr><td>Produto Ca×PO₄</td><td class="num" id="out-caxpo4">—</td><td class="num">&lt; 55</td></tr>
+        <tr><td>Gate do Mg sobre o PTH (0–1)</td><td class="num" id="out-mggate">—</td><td class="num">1.0</td></tr>
+        <tr><td>Estado do cálcio</td><td class="num" id="out-estado">—</td><td class="num">normal</td></tr>
+        <tr><td>Regime</td><td class="num" id="out-regime">—</td><td class="num">normal</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- ============================== AVALIAÇÃO ============================== -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (12)</button>
+        <button data-bank="textual">Textual (10)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica e farmacológica</b>.
+    As condutas citadas (corrigir o cálcio pela albumina, repor magnésio na hipocalcemia refratária, quelar
+    fosfato e repor vit D ativa na DRC) aparecem como <b>mecanismo</b> que o eixo mineral justifica — conteúdo
+    educacional. As constantes do triângulo Ca–PO₄–PTH são simplificações didáticas. O modelo não substitui o
+    julgamento clínico individualizado; a decisão e a responsabilidade finais são sempre do profissional de saúde.
+    <b>Nota de honestidade do modelo:</b> as constantes (ganho do PTH, set-point do Ca ionizado, gate do Mg,
+    coeficientes de FGF23/calcitriol, o fator de fosfatúria) são estimativas didáticas calibradas para reproduzir
+    as âncoras qualitativas (Ca ionizado ~4,7 em normalidade; a tetania da alcalose; o hiperPTH 2º da DRC com
+    PO₄↑ e calcitriol↓; a paralisia do PTH pelo Mg baixo). A fórmula de correção <code>Ca + 0,8·(4 − alb)</code>
+    é a clássica, mas a literatura mostra variação individual; o Ca ionizado medido direto é o padrão.
+  </div>
+
+  <footer>
+    CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira
+  </footer>
+</div>
+
+<script>
+/* =========================================================================
+ * ENGINE INLINE — espelho fiel de build/m12/model12.js (o motor manda no pixel)
+ * ========================================================================= */
+'use strict';
+
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a) n=a; if(n>b) n=b; return n; }
+function merge(a,b){ var o={},k; if(a) for(k in a) if(Object.prototype.hasOwnProperty.call(a,k)) o[k]=a[k]; if(b) for(k in b) if(Object.prototype.hasOwnProperty.call(b,k)) o[k]=b[k]; return o; }
+
+var ALB_N=4.0, CORR_K=0.8, PH_N=7.40, PH_SLOPE=0.20, ION_FRAC=0.50,
+    CA_TOT_N=9.4, CA_ION_N=4.7, PO4_N=3.5, MG_N=2.0,
+    PTH_N=40, CALCITRIOL_N=40, FGF23_N=50, GFR_N=120,
+    CA_SETPOINT=4.7, PTH_GAIN=6.0, MG_GATE_LO=1.2, MG_GATE_HI=1.6;
+
+function caCorrigido(caTotal,alb){
+  var ca=clampv(caTotal,2,20), a=clampv(alb,0.5,7);
+  return ca+CORR_K*(ALB_N-a);
+}
+function caIonizado(caCorr,pH){
+  var cc=clampv(caCorr,2,20), p=clampv(pH,6.6,7.8);
+  var base=ION_FRAC*cc;
+  var shift=PH_SLOPE*((p-PH_N)/0.1);
+  var ion=base-shift;
+  return clampv(ion,1.5,9);
+}
+function mgGate(mg){
+  var m=clampv(mg,0.1,6);
+  if(m>=MG_GATE_HI) return 1;
+  if(m<=MG_GATE_LO) return 0.12;
+  var f=0.12+(1-0.12)*(m-MG_GATE_LO)/(MG_GATE_HI-MG_GATE_LO);
+  return clampv(f,0.12,1);
+}
+function renalActivation(gfr){ var g=clampv(gfr,1,200); return clampv(g/GFR_N,0.05,1.2); }
+
+function mineral(input){
+  var inp=input||{};
+  var caTotal=clampv(inp.caTotal!==undefined?inp.caTotal:CA_TOT_N,2,20);
+  var alb    =clampv(inp.alb    !==undefined?inp.alb    :ALB_N,0.5,7);
+  var pH     =clampv(inp.pH     !==undefined?inp.pH     :PH_N,6.6,7.8);
+  var po4In  =clampv(inp.po4    !==undefined?inp.po4    :PO4_N,0.5,15);
+  var mg     =clampv(inp.mg     !==undefined?inp.mg     :MG_N,0.1,6);
+  var gfr    =clampv(inp.gfr    !==undefined?inp.gfr    :GFR_N,1,200);
+  var pthExtra=clampv(inp.pthExtra!==undefined?inp.pthExtra:1,0,8);
+  var calcDose=clampv(inp.calcitriolDose!==undefined?inp.calcitriolDose:0,0,200);
+
+  var caCorr=caCorrigido(caTotal,alb); caCorr=clampv(caCorr,2,20);
+  var caIon=caIonizado(caCorr,pH);
+
+  var renalCap=renalActivation(gfr);
+  var retencao=clampv((1-renalCap),0,1);
+
+  var fgf23=FGF23_N*(1+2.6*retencao)*(0.6+0.4*(po4In/PO4_N));
+  fgf23=clampv(fgf23,5,5000);
+
+  var pth=PTH_N, calcitriol=CALCITRIOL_N, po4=po4In;
+  var gate=mgGate(mg);
+  var i;
+  for(i=0;i<24;i++){
+    var fosfaturia=clampv(0.30*(pth/PTH_N)+0.30*(fgf23/FGF23_N)-0.60,0,4);
+    var po4New=po4In*(1+1.4*retencao)/(1+0.55*fosfaturia);
+    po4New=clampv(po4New,0.5,18);
+
+    var stimPTH=clampv(pth/PTH_N,0.1,6);
+    var inhFGF =clampv(FGF23_N/fgf23,0.05,1.5);
+    var calcNew=CALCITRIOL_N*Math.pow(stimPTH,0.45)*Math.pow(inhFGF,0.6)*renalCap+calcDose;
+    calcNew=clampv(calcNew,2,300);
+
+    var caDeficit=clampv((CA_SETPOINT-caIon),-3,3);
+    var po4Drive =clampv((po4New-PO4_N)/PO4_N,-0.8,4);
+    var calcDrive=clampv((CALCITRIOL_N-calcNew)/CALCITRIOL_N,-1,1);
+    var drive=1
+      +PTH_GAIN*Math.max(caDeficit,0)*0.18
+      -2.6*Math.max(-caDeficit,0)*0.30
+      +0.8*Math.max(po4Drive,0)
+      +1.1*Math.max(calcDrive,0);
+    if(drive<0.02) drive=0.02;
+    var pthNew=PTH_N*drive*pthExtra*gate;
+    pthNew=clampv(pthNew,1,3000);
+
+    var lam=0.5;
+    pth       =pth       +lam*(pthNew-pth);
+    calcitriol=calcitriol+lam*(calcNew-calcitriol);
+    po4       =po4       +lam*(po4New-po4);
+  }
+  pth=clampv(pth,1,3000); calcitriol=clampv(calcitriol,2,300); po4=clampv(po4,0.5,18);
+
+  var fosfaturiaRel=clampv(0.30*(pth/PTH_N)+0.30*(fgf23/FGF23_N)-0.60,0,4);
+  var caxpo4=caCorr*po4;
+
+  var estadoCa;
+  if(caIon<4.0) estadoCa='hipocalcemia';
+  else if(caIon>5.4) estadoCa='hipercalcemia';
+  else estadoCa='normal';
+
+  var pseudoHipo=(caTotal<8.5)&&(caCorr>=8.5)&&(caIon>=4.0);
+  var tetaniaAlcalose=(pH>7.46)&&(caIon<4.3)&&(caTotal>=8.5);
+
+  var regime;
+  if(mg<MG_GATE_LO&&caIon<4.3)                       regime='hipocalcemia_mg';
+  else if(tetaniaAlcalose)                            regime='tetania_alcalose';
+  else if(pseudoHipo)                                 regime='pseudo_hipocalcemia';
+  else if(gfr<45&&pth>PTH_N*2&&po4>PO4_N)             regime='hiperpth_secundario';
+  else if(estadoCa==='hipercalcemia'&&pthExtra>1.2)   regime='hipercalcemia_pthrp';
+  else if(estadoCa==='hipocalcemia')                  regime='hipocalcemia';
+  else if(estadoCa==='hipercalcemia')                 regime='hipercalcemia';
+  else                                                regime='normal';
+
+  return {
+    caTotal:caTotal,alb:alb,pH:pH,po4In:po4In,mg:mg,gfr:gfr,pthExtra:pthExtra,calcitriolDose:calcDose,
+    caCorr:caCorr,caIon:caIon,ionFrac:ION_FRAC,
+    pth:pth,calcitriol:calcitriol,fgf23:fgf23,
+    po4:po4,fosfaturia:fosfaturiaRel,retencao:retencao,renalCap:renalCap,
+    mgGate:gate,
+    caxpo4:caxpo4,estadoCa:estadoCa,pseudoHipo:pseudoHipo,tetaniaAlcalose:tetaniaAlcalose,regime:regime
+  };
+}
+
+function caIonLayout(state,W,H){
+  state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var caTrueCorr=clampv(state.caCorr!==undefined?state.caCorr
+    :caCorrigido(state.caTotal!==undefined?state.caTotal:CA_TOT_N,state.alb!==undefined?state.alb:ALB_N),5,14);
+  var padL=52,padR=16,padT=18,padB=38,baseY=H-padB;
+  var albMin=1.0,albMax=6.0,N=50,ionMin=2.0,ionMax=7.0;
+  var pxX=(W-padL-padR)/(albMax-albMin);
+  var pxY=(baseY-padT)/(ionMax-ionMin);
+  function X(a){ return padL+(clampv(a,albMin,albMax)-albMin)*pxX; }
+  function Y(ion){ return baseY-(clampv(ion,ionMin,ionMax)-ionMin)*pxY; }
+  function ionAt(a,pH){
+    var caTotObs=caTrueCorr-CORR_K*(ALB_N-clampv(a,albMin,albMax));
+    var cc=caCorrigido(caTotObs,a);
+    return caIonizado(cc,pH);
+  }
+  var ptsN=[],ptsAlc=[],i,a;
+  for(i=0;i<=N;i++){ a=albMin+(albMax-albMin)*i/N; var iN=ionAt(a,PH_N),iA=ionAt(a,7.55);
+    ptsN.push({alb:a,ion:iN,x:X(a),y:Y(iN)}); ptsAlc.push({alb:a,ion:iA,x:X(a),y:Y(iA)}); }
+  function mk(av,pH){ var iv=ionAt(av,pH); return {alb:av,ion:iv,x:X(av),y:Y(iv)}; }
+  var markers=[mk(4.0,PH_N),mk(2.0,PH_N)];
+  var limiarY=Y(4.0);
+  var aCur=clampv(state.alb!==undefined?state.alb:ALB_N,albMin,albMax);
+  var pHcur=clampv(state.pH!==undefined?state.pH:PH_N,6.6,7.8);
+  var current={alb:aCur,ion:ionAt(aCur,pHcur),x:X(aCur),y:Y(ionAt(aCur,pHcur))};
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,
+    albMin:albMin,albMax:albMax,ionMin:ionMin,ionMax:ionMax,pxX:pxX,pxY:pxY,
+    caTrueCorr:caTrueCorr,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},
+    ptsN:ptsN,ptsAlc:ptsAlc,markers:markers,limiarY:limiarY,current:current};
+}
+
+function drcLayout(state,W,H){
+  state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=48,padR=14,padT=16,padB=34,baseY=H-padB;
+  var gfrMin=5,gfrMax=120,N=46;
+  var pxX=(W-padL-padR)/(gfrMax-gfrMin);
+  var PO4_TOP=10,PTH_TOP=600,CALC_TOP=60;
+  function X(g){ return padL+(clampv(g,gfrMin,gfrMax)-gfrMin)*pxX; }
+  function Yn(frac){ return baseY-clampv(frac,0,1)*(baseY-padT); }
+  var ptsPO4=[],ptsPTH=[],ptsCalc=[],i,g,r;
+  for(i=0;i<=N;i++){ g=gfrMin+(gfrMax-gfrMin)*i/N; r=mineral(merge(state,{gfr:g}));
+    ptsPO4.push({gfr:g,v:r.po4,x:X(g),y:Yn(r.po4/PO4_TOP)});
+    ptsPTH.push({gfr:g,v:r.pth,x:X(g),y:Yn(r.pth/PTH_TOP)});
+    ptsCalc.push({gfr:g,v:r.calcitriol,x:X(g),y:Yn(r.calcitriol/CALC_TOP)}); }
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,
+    gfrMin:gfrMin,gfrMax:gfrMax,PO4_TOP:PO4_TOP,PTH_TOP:PTH_TOP,CALC_TOP:CALC_TOP,pxX:pxX,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},
+    ptsPO4:ptsPO4,ptsPTH:ptsPTH,ptsCalc:ptsCalc};
+}
+
+window.mineral=mineral;
+window.caCorrigido=caCorrigido;
+window.caIonizado=caIonizado;
+window.mgGate=mgGate;
+window.renalActivation=renalActivation;
+window.caIonLayout=caIonLayout;
+window.drcLayout=drcLayout;
+window.MODEL={mineral:mineral,caCorrigido:caCorrigido,caIonizado:caIonizado,mgGate:mgGate,
+  renalActivation:renalActivation,caIonLayout:caIonLayout,drcLayout:drcLayout,clampv:clampv,merge:merge,
+  CONST:{ALB_N:ALB_N,CORR_K:CORR_K,PH_N:PH_N,PH_SLOPE:PH_SLOPE,ION_FRAC:ION_FRAC,
+    CA_TOT_N:CA_TOT_N,CA_ION_N:CA_ION_N,PO4_N:PO4_N,MG_N:MG_N,
+    PTH_N:PTH_N,CALCITRIOL_N:CALCITRIOL_N,FGF23_N:FGF23_N,GFR_N:GFR_N,
+    CA_SETPOINT:CA_SETPOINT,PTH_GAIN:PTH_GAIN,MG_GATE_LO:MG_GATE_LO,MG_GATE_HI:MG_GATE_HI}};
+
+/* =========================================================================
+ * UI
+ * ========================================================================= */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=d||1; return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+
+var REGIME_TXT={
+  normal:'normal — Ca ionizado, PO₄ e PTH em equilíbrio',
+  hipocalcemia:'hipocalcemia — Ca ionizado baixo (PTH responde)',
+  hipercalcemia:'hipercalcemia — Ca ionizado alto',
+  pseudo_hipocalcemia:'PSEUDO-hipocalcemia — Ca total baixo por albumina, ionizado normal',
+  tetania_alcalose:'⚠ TETANIA por alcalose — Ca total normal, ionizado baixo',
+  hiperpth_secundario:'⚠ hiperPTH SECUNDÁRIO da DRC — PO₄↑ + calcitriol↓ → PTH↑↑',
+  hipercalcemia_pthrp:'hipercalcemia da malignidade (PTHrP) — PTH endógeno suprimido',
+  hipocalcemia_mg:'⚠ hipocalcemia por Mg↓ — PTH paralisado (refratária; repor Mg)'
+};
+
+// abas principais
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b) return;
+  var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on');
+  $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh();
+});
+
+// caso: prever-depois-revelar
+document.addEventListener('click',function(e){
+  var b=e.target.closest('button.act[data-rev]'); if(!b) return;
+  var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on');
+});
+
+function readLab(){
+  return {
+    caTotal:+$('in-ca').value, alb:+$('in-alb').value, pH:+$('in-ph').value,
+    po4:+$('in-po4').value, mg:+$('in-mg').value, gfr:+$('in-gfr').value,
+    pthExtra:+$('in-pthx').value
+  };
+}
+
+function refresh(){
+  var inp=readLab();
+  $('lbl-ca').textContent=fmt(inp.caTotal,1);
+  $('lbl-alb').textContent=fmt(inp.alb,1);
+  $('lbl-ph').textContent=fmt(inp.pH,2);
+  $('lbl-po4').textContent=fmt(inp.po4,1);
+  $('lbl-mg').textContent=fmt(inp.mg,1);
+  $('lbl-gfr').textContent=Math.round(inp.gfr);
+  $('lbl-pthx').textContent=fmt(inp.pthExtra,1);
+  var r=mineral(inp);
+  $('out-cacorr').textContent=fmt(r.caCorr,2);
+  $('out-caion').textContent=fmt(r.caIon,2);
+  $('out-pth').textContent=fmt(r.pth,0);
+  $('out-calc').textContent=fmt(r.calcitriol,0);
+  $('out-fgf23').textContent=fmt(r.fgf23,0);
+  $('out-po4').textContent=fmt(r.po4,2);
+  $('out-fosf').textContent=fmt(r.fosfaturia,2);
+  $('out-caxpo4').textContent=fmt(r.caxpo4,0);
+  $('out-mggate').textContent=fmt(r.mgGate,2);
+  $('out-estado').textContent=r.estadoCa;
+  $('out-regime').textContent=REGIME_TXT[r.regime]||r.regime;
+  verdictLab(r,inp); pearlLab(r,inp);
+  drawCanvas(inp);
+  $('drc-svg').innerHTML=drcFig(inp);
+  syncInstrToLab(inp);
+}
+
+function syncInstrToLab(inp){
+  if($('instr-ca')) $('instr-ca').value=mineral(inp).caCorr;
+  if($('instr-alb')) $('instr-alb').value=inp.alb;
+  if($('instr-ph')) $('instr-ph').value=inp.pH;
+  updateInstrLabels(readInstr());
+}
+function readInstr(){
+  return { caCorr:+$('instr-ca').value, alb:+$('instr-alb').value, pH:+$('instr-ph').value };
+}
+function updateInstrLabels(inp){
+  if($('instr-lbl-ca')) $('instr-lbl-ca').textContent=fmt(inp.caCorr,1);
+  if($('instr-lbl-alb')) $('instr-lbl-alb').textContent=fmt(inp.alb,1);
+  if($('instr-lbl-ph')) $('instr-lbl-ph').textContent=fmt(inp.pH,2);
+}
+function refreshInstr(){
+  var inp=readInstr();
+  updateInstrLabels(inp);
+  var r=mineral({caTotal:inp.caCorr,alb:4.0,pH:inp.pH});
+  pearlInstr(r,inp);
+  drawCanvas(merge(inp,{caTotal:inp.caCorr}));
+  $('drc-svg').innerHTML=drcFig({po4:5,caTotal:8.5});
+}
+
+function pearlInstr(r,inp){
+  var ip=$('instr-pearl'); if(!ip) return;
+  var t;
+  if(inp.pH>7.46){
+    t='ALCALOSE (pH '+fmt(inp.pH,2)+'): a curva inteira DESCEU. O Ca ionizado caiu para '+fmt(r.caIon,2)+' mg/dL mesmo com o corrigido em '+fmt(inp.caCorr,1)+'. É a tetania da alcalose — o número total não te avisa.';
+  } else if(inp.pH<7.34){
+    t='ACIDOSE (pH '+fmt(inp.pH,2)+'): a curva subiu — o H⁺ desloca o Ca da albumina → ionizado '+fmt(r.caIon,2)+' mg/dL. A acidose "protege" o ionizado; corrigir o pH rápido pode desmascarar hipocalcemia.';
+  } else {
+    t='A curva do ionizado é quase PLANA com a albumina (corrigir resolve o viés). O ionizado é '+fmt(r.caIon,2)+' mg/dL. Mexa o pH e veja a curva inteira subir (acidose) ou descer (alcalose, tetania).';
+  }
+  ip.textContent=t;
+}
+
+function verdictLab(r,inp){
+  var v=$('veredito'); var cls='b-good', msg;
+  if(r.regime==='hipocalcemia_mg'){
+    cls='b-bad'; msg='HIPOCALCEMIA POR Mg↓: Ca ionizado '+fmt(r.caIon,2)+', mas o PTH está em '+fmt(r.pth,0)+' pg/mL — inadequadamente BAIXO. O Mg ('+fmt(inp.mg,1)+') paralisou a paratireoide (gate '+fmt(r.mgGate,2)+'). Repor Mg é a chave; cálcio sozinho não corrige.';
+  } else if(r.regime==='tetania_alcalose'){
+    cls='b-bad'; msg='TETANIA DA ALCALOSE: o Ca TOTAL ('+fmt(inp.caTotal,1)+') é normal, mas o pH '+fmt(inp.pH,2)+' derrubou o IONIZADO para '+fmt(r.caIon,2)+' mg/dL. Trate a hiperventilação/alcalose — quando o pH volta, o ionizado volta.';
+  } else if(r.regime==='pseudo_hipocalcemia'){
+    cls='b-warn'; msg='PSEUDO-HIPOCALCEMIA: o Ca total ('+fmt(inp.caTotal,1)+') está baixo por albumina '+fmt(inp.alb,1)+', mas o CORRIGIDO é '+fmt(r.caCorr,2)+' e o ionizado '+fmt(r.caIon,2)+' — normais. Não infunda cálcio; o problema é a albumina.';
+  } else if(r.regime==='hiperpth_secundario'){
+    cls='b-bad'; msg='HIPERPTH SECUNDÁRIO (DRC): TFG '+Math.round(inp.gfr)+' → PO₄ retido '+fmt(r.po4,1)+', calcitriol '+fmt(r.calcitriol,0)+' baixo, FGF23 '+fmt(r.fgf23,0)+' alto → PTH '+fmt(r.pth,0)+'↑↑. Conduta pelo triângulo: quelar PO₄, repor vit D ativa, vigiar o produto Ca×PO₄ ('+fmt(r.caxpo4,0)+').';
+  } else if(r.regime==='hipercalcemia_pthrp'){
+    cls='b-warn'; msg='HIPERCALCEMIA (malignidade/PTHrP): Ca ionizado '+fmt(r.caIon,2)+' alto e o PTH SUPRIMIDO ('+fmt(r.pth,0)+'). O PTHrP age como PTH mas não é medido. PTH alto + Ca alto seria hiperPTH primário.';
+  } else if(r.estadoCa==='hipocalcemia'){
+    cls='b-warn'; msg='HIPOCALCEMIA real: Ca ionizado '+fmt(r.caIon,2)+' → o PTH responde subindo a '+fmt(r.pth,0)+' e o calcitriol a '+fmt(r.calcitriol,0)+'. O eixo trabalha para restaurar o Ca.';
+  } else if(r.estadoCa==='hipercalcemia'){
+    cls='b-warn'; msg='HIPERCALCEMIA: Ca ionizado '+fmt(r.caIon,2)+'. O PTH endógeno suprime ('+fmt(r.pth,0)+'). Investigue a causa (PTH-dependente × independente).';
+  } else {
+    cls='b-good'; msg='EIXO MINERAL EQUILIBRADO: Ca ionizado '+fmt(r.caIon,2)+', PO₄ '+fmt(r.po4,1)+', PTH '+fmt(r.pth,0)+', calcitriol '+fmt(r.calcitriol,0)+'. O triângulo Ca–PO₄–PTH defende o meio interno.';
+  }
+  v.className='banner '+cls; v.textContent=msg;
+}
+
+function pearlLab(r,inp){
+  var p=$('lab-pearl'); if(!p) return;
+  var t;
+  if(r.pseudoHipo){
+    t='PÉROLA albumina: Ca_corr = '+fmt(inp.caTotal,1)+' + 0,8·(4 − '+fmt(inp.alb,1)+') = '+fmt(r.caCorr,2)+' mg/dL. O número "baixo" some quando você corrige. Corrigir antes de interpretar.';
+  } else if(r.regime==='tetania_alcalose'){
+    t='PÉROLA pH: ΔpH de '+fmt(inp.pH-7.40,2)+' deslocou o ionizado em ~'+fmt((inp.pH-7.40)/0.1*0.2,2)+' mg/dL. O Ca total mentiu: ele está normal, mas o ionizado ('+fmt(r.caIon,2)+') causa tetania.';
+  } else if(r.regime==='hiperpth_secundario'){
+    t='PÉROLA DRC: o hiperPTH 2º é PO₄↑ ('+fmt(r.po4,1)+') + calcitriol↓ ('+fmt(r.calcitriol,0)+') + FGF23↑ ('+fmt(r.fgf23,0)+'), os três empurrando o PTH a '+fmt(r.pth,0)+'. Não é a glândula doente — é o rim.';
+  } else if(r.regime==='hipocalcemia_mg'){
+    t='PÉROLA Mg: o Mg é cofator do PTH. Com Mg '+fmt(inp.mg,1)+', o gate é '+fmt(r.mgGate,2)+' → PTH só '+fmt(r.pth,0)+' apesar da hipocalcemia. A hipocalcemia é refratária até repor o magnésio.';
+  } else if(r.estadoCa==='hipercalcemia'){
+    t='PÉROLA: na hipercalcemia o PTH endógeno deve SUPRIMIR ('+fmt(r.pth,0)+'). Se estivesse ALTO com Ca alto → hiperPTH primário (adenoma). O par Ca↔PTH conta a história.';
+  } else {
+    t='PÉROLA: o sensor da paratireoide (CaSR) lê o Ca IONIZADO ('+fmt(r.caIon,2)+'), não o total ('+fmt(inp.caTotal,1)+'). Toda a regulação gira em torno do livre, não do número do laudo.';
+  }
+  p.textContent=t;
+}
+
+function drawCanvas(state){
+  var c=$('caion-canvas'); if(!c) return;
+  var ctx; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; }
+  if(!ctx||!ctx.clearRect) return;
+  var L=caIonLayout(state,c.width,c.height);
+  ctx.clearRect(0,0,L.W,L.H);
+  // zona de hipocalcemia ionizada (abaixo do limiar ~4,0) sombreada
+  ctx.fillStyle='rgba(224,85,107,0.08)';
+  ctx.fillRect(L.axis.x0,L.limiarY,L.axis.xEnd-L.axis.x0,L.baseY-L.limiarY);
+  // eixos
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('Ca ion (mg/dL)',6,L.padT-4);
+  ctx.fillText('albumina (g/dL) →',L.W-150,L.baseY+24);
+  // gridlines Ca ion = 4 e 5
+  ctx.strokeStyle='#23303b'; ctx.setLineDash([3,3]);
+  [4,5,6].forEach(function(cv){
+    var y=L.baseY-(cv-L.ionMin)*L.pxY;
+    ctx.beginPath(); ctx.moveTo(L.axis.x0,y); ctx.lineTo(L.axis.xEnd,y); ctx.stroke();
+    ctx.fillStyle='#9fb1c0'; ctx.fillText(String(cv),6,y+4); ctx.strokeStyle='#23303b';
+  });
+  ctx.setLineDash([]);
+  // limiar de tetania
+  ctx.strokeStyle='#e0556b'; ctx.setLineDash([5,3]);
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.limiarY); ctx.lineTo(L.axis.xEnd,L.limiarY); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle='#e0556b'; ctx.font='11px system-ui';
+  ctx.fillText('limiar de tetania (ion ~4,0)',L.axis.x0+8,L.limiarY-4);
+  // curva alcalose (laranja) — desenhada primeiro
+  ctx.strokeStyle='#e8a13a'; ctx.lineWidth=2; ctx.beginPath();
+  for(var k=0;k<L.ptsAlc.length;k++){ var pa=L.ptsAlc[k]; if(k===0) ctx.moveTo(pa.x,pa.y); else ctx.lineTo(pa.x,pa.y); }
+  ctx.stroke();
+  // curva pH normal (ciano) — a polilinha que o validador confere (== ptsN)
+  ctx.strokeStyle='#39c0c8'; ctx.lineWidth=2; ctx.beginPath();
+  for(var i=0;i<L.ptsN.length;i++){ var p=L.ptsN[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); }
+  ctx.stroke();
+  // marcadores de albumina (4.0 / 2.0)
+  ctx.fillStyle='#52c08a';
+  L.markers.forEach(function(m){
+    ctx.fillStyle='#52c08a'; ctx.fillRect(m.x-3,m.y-3,6,6);
+    ctx.fillStyle='#cdd9e3'; ctx.font='10px system-ui'; ctx.fillText('alb '+fmt(m.alb,1),m.x+5,m.y-5);
+  });
+  // legendas das curvas
+  ctx.font='11px system-ui';
+  ctx.fillStyle='#39c0c8'; ctx.fillText('pH 7,40 (normal)',L.axis.xEnd-130,L.padT+14);
+  ctx.fillStyle='#e8a13a'; ctx.fillText('alcalose (pH 7,55)',L.axis.xEnd-130,L.padT+30);
+  // ponto atual (branco)
+  var cu=L.current;
+  ctx.strokeStyle='#e7eef4'; ctx.setLineDash([4,3]);
+  ctx.beginPath(); ctx.moveTo(cu.x,L.padT+18); ctx.lineTo(cu.x,L.baseY); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#e7eef4'; ctx.beginPath(); ctx.arc(cu.x,cu.y,5,0,2*Math.PI); ctx.fill();
+}
+
+['in-ca','in-alb','in-ph','in-po4','in-mg','in-gfr','in-pthx','in-marker'].forEach(function(id){
+  var el=$(id); if(el) el.addEventListener('input',refresh);
+});
+['instr-ca','instr-alb','instr-ph'].forEach(function(id){
+  var el=$(id); if(el) el.addEventListener('input',refreshInstr);
+});
+
+// presets do lab (botões de cenário)
+var PRESETS={
+  normal:  {caTotal:9.4,alb:4.0,pH:7.40,po4:3.5,mg:2.0,gfr:120,pthExtra:1.0},
+  hipoalb: {caTotal:7.4,alb:2.0,pH:7.40,po4:3.5,mg:2.0,gfr:120,pthExtra:1.0},
+  alcalose:{caTotal:9.4,alb:4.0,pH:7.62,po4:3.5,mg:2.0,gfr:120,pthExtra:1.0},
+  drc:     {caTotal:8.2,alb:4.0,pH:7.34,po4:6.8,mg:2.0,gfr:12, pthExtra:1.0},
+  malig:   {caTotal:13.0,alb:4.0,pH:7.42,po4:3.5,mg:2.0,gfr:90,pthExtra:1.6},
+  mg:      {caTotal:7.4,alb:4.0,pH:7.40,po4:3.5,mg:0.8,gfr:120,pthExtra:1.0}
+};
+$('presets').addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b) return;
+  var p=PRESETS[b.getAttribute('data-preset')]; if(!p) return;
+  $('in-ca').value=p.caTotal; $('in-alb').value=p.alb; $('in-ph').value=p.pH;
+  $('in-po4').value=p.po4; $('in-mg').value=p.mg; $('in-gfr').value=p.gfr; $('in-pthx').value=p.pthExtra;
+  refresh();
+});
+
+/* =========================================================================
+ * ILUSTRAÇÕES SVG — inline, computadas a partir do engine (física viva)
+ * ========================================================================= */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+
+// mini Ca ionizado × albumina (computada do engine)
+function caIonMini(state, titulo){
+  var W=300,H=170;
+  var L=caIonLayout(state,W,H);
+  var s='';
+  s+='<rect x="'+L.axis.x0+'" y="'+f1(L.limiarY)+'" width="'+f1(L.axis.xEnd-L.axis.x0)+'" height="'+f1(L.baseY-L.limiarY)+'" fill="#e0556b" fill-opacity="0.08"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  var da=''; for(var k=0;k<L.ptsAlc.length;k++){ da+=(k===0?'M':'L')+f1(L.ptsAlc[k].x)+' '+f1(L.ptsAlc[k].y)+' '; }
+  s+='<path d="'+da+'" fill="none" stroke="#e8a13a" stroke-width="2"/>';
+  var d=''; for(var i=0;i<L.ptsN.length;i++){ d+=(i===0?'M':'L')+f1(L.ptsN[i].x)+' '+f1(L.ptsN[i].y)+' '; }
+  s+='<path d="'+d+'" fill="none" stroke="#39c0c8" stroke-width="2"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+f1(L.limiarY)+'" x2="'+L.axis.xEnd+'" y2="'+f1(L.limiarY)+'" stroke="#e0556b" stroke-width="1" stroke-dasharray="4 3"/>';
+  L.markers.forEach(function(m){ s+='<rect x="'+f1(m.x-2.5)+'" y="'+f1(m.y-2.5)+'" width="5" height="5" fill="#52c08a"/>'; });
+  var cu=L.current;
+  s+='<circle cx="'+f1(cu.x)+'" cy="'+f1(cu.y)+'" r="4" fill="#e7eef4"/>';
+  s+='<text x="'+W/2+'" y="13" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'Ca ionizado × albumina')+'</text>';
+  s+='<text x="'+(L.axis.x0+3)+'" y="'+L.padT+'" fill="#9fb1c0" font-size="8">ion</text>';
+  s+='<text x="'+(L.axis.xEnd-2)+'" y="'+(L.baseY+12)+'" fill="#9fb1c0" font-size="8" text-anchor="end">alb→</text>';
+  return svgEl(W,H,s);
+}
+
+// a progressão da DRC (PO₄ / PTH / calcitriol × TFG)
+function drcFig(state, titulo){
+  var W=300,H=180;
+  var L=drcLayout(state,W,H);
+  var s='';
+  s+='<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="#0a1520"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  function pathOf(pts,col){ var d=''; for(var i=0;i<pts.length;i++){ d+=(i===0?'M':'L')+f1(pts[i].x)+' '+f1(pts[i].y)+' '; } return '<path d="'+d+'" fill="none" stroke="'+col+'" stroke-width="2"/>'; }
+  s+=pathOf(L.ptsPO4,'#e8a13a');
+  s+=pathOf(L.ptsPTH,'#e0556b');
+  s+=pathOf(L.ptsCalc,'#52c08a');
+  s+='<text x="'+W/2+'" y="13" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'DRC: PO₄↑ PTH↑ calcitriol↓ conforme TFG↓')+'</text>';
+  s+='<text x="'+(L.axis.x0+4)+'" y="'+(L.padT+10)+'" fill="#e0556b" font-size="9">PTH↑</text>';
+  s+='<text x="'+(L.axis.x0+4)+'" y="'+(L.padT+22)+'" fill="#e8a13a" font-size="9">PO₄↑</text>';
+  s+='<text x="'+(L.axis.x0+4)+'" y="'+(L.padT+34)+'" fill="#52c08a" font-size="9">calcitriol↓</text>';
+  s+='<text x="'+(L.axis.x0+3)+'" y="'+(L.baseY+12)+'" fill="#9fb1c0" font-size="8">←TFG baixa</text>';
+  s+='<text x="'+(L.axis.xEnd-2)+'" y="'+(L.baseY+12)+'" fill="#9fb1c0" font-size="8" text-anchor="end">TFG normal→</text>';
+  return svgEl(W,H,s);
+}
+
+// esquema do cálcio total × ionizado (desenho, não gráfico)
+function albuminaDiagram(state, titulo){
+  var r=mineral(state||{});
+  var W=320,H=190,s='';
+  s+='<rect width="320" height="190" fill="#0a1520"/>';
+  // barra do Ca total dividida
+  s+='<text x="160" y="16" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'Ca total = ligado + complexado + IONIZADO')+'</text>';
+  // ligado à albumina (~40%)
+  s+='<rect x="40" y="40" width="112" height="34" fill="#3a7bd5" fill-opacity="0.4" stroke="#3a7bd5"/>';
+  s+='<text x="96" y="61" fill="#9cc0f0" font-size="9" text-anchor="middle">① ligado à albumina ~40%</text>';
+  // complexado
+  s+='<rect x="152" y="40" width="40" height="34" fill="#9fb1c0" fill-opacity="0.3" stroke="#9fb1c0"/>';
+  s+='<text x="172" y="61" fill="#cdd9e3" font-size="8" text-anchor="middle">② ~10%</text>';
+  // ionizado (ativo)
+  s+='<rect x="192" y="40" width="88" height="34" fill="#39c0c8" fill-opacity="0.4" stroke="#39c0c8"/>';
+  s+='<text x="236" y="61" fill="#39c0c8" font-size="9" text-anchor="middle">③ IONIZADO ~50%</text>';
+  // veredito da correção
+  s+='<rect x="30" y="100" width="260" height="56" rx="6" fill="#10171e" stroke="#283642"/>';
+  s+='<text x="160" y="120" fill="#e7eef4" font-size="11" text-anchor="middle">Ca_corr = '+fmt(r.caTotal,1)+' + 0,8·(4 − '+fmt(r.alb,1)+') = '+fmt(r.caCorr,2)+'</text>';
+  s+='<text x="160" y="140" fill="#9fb1c0" font-size="10" text-anchor="middle">ionizado '+fmt(r.caIon,2)+' mg/dL — '+(r.pseudoHipo?'pseudo-hipocalcemia (albumina)':'o que importa é este')+'</text>';
+  return svgEl(W,H,s);
+}
+
+// esquema das ações do PTH (desenho)
+function pthDiagram(state, titulo){
+  var r=mineral(state||{});
+  var W=300,H=180,s='';
+  s+='<rect width="300" height="180" fill="#0a1520"/>';
+  // glândula
+  s+='<circle cx="50" cy="60" r="22" fill="#e0556b" fill-opacity="0.3" stroke="#e0556b"/>';
+  s+='<text x="50" y="63" fill="#e08a96" font-size="8" text-anchor="middle">PTH</text>';
+  // três setas
+  s+='<line x1="74" y1="50" x2="150" y2="36" stroke="#39c0c8" stroke-width="2"/>';
+  s+='<text x="155" y="38" fill="#39c0c8" font-size="9">① Ca↑ (TCD)</text>';
+  s+='<line x1="74" y1="62" x2="150" y2="62" stroke="#e8a13a" stroke-width="2"/>';
+  s+='<text x="155" y="65" fill="#e8a13a" font-size="9">② PO₄↓ (fosfatúria)</text>';
+  s+='<line x1="74" y1="74" x2="150" y2="92" stroke="#52c08a" stroke-width="2"/>';
+  s+='<text x="155" y="96" fill="#52c08a" font-size="9">③ calcitriol↑</text>';
+  // veredito computado
+  s+='<rect x="30" y="120" width="240" height="44" rx="6" fill="#10171e" stroke="#283642"/>';
+  s+='<text x="150" y="138" fill="#e7eef4" font-size="10" text-anchor="middle">PTH '+fmt(r.pth,0)+' pg/mL · Ca ion '+fmt(r.caIon,2)+' · PO₄ '+fmt(r.po4,1)+'</text>';
+  s+='<text x="150" y="155" fill="#9fb1c0" font-size="9" text-anchor="middle">calcitriol '+fmt(r.calcitriol,0)+' pg/mL</text>';
+  s+='<text x="'+W/2+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'as três ações do PTH')+'</text>';
+  return svgEl(W,H,s);
+}
+
+// esquema do triângulo Ca-PO4-PTH (desenho)
+function trianguloDiagram(state, titulo){
+  var r=mineral(state||{});
+  var W=300,H=180,s='';
+  s+='<rect width="300" height="180" fill="#0a1520"/>';
+  var Ca=[150,42], PO4=[70,130], PTH=[230,130];
+  s+='<polygon points="'+Ca[0]+','+Ca[1]+' '+PO4[0]+','+PO4[1]+' '+PTH[0]+','+PTH[1]+'" fill="none" stroke="#283642" stroke-width="1"/>';
+  // Ca
+  s+='<circle cx="'+Ca[0]+'" cy="'+Ca[1]+'" r="20" fill="#39c0c8" fill-opacity="0.3" stroke="#39c0c8"/>';
+  s+='<text x="'+Ca[0]+'" y="'+(Ca[1]+4)+'" fill="#39c0c8" font-size="9" text-anchor="middle">Ca</text>';
+  // PO4
+  s+='<circle cx="'+PO4[0]+'" cy="'+PO4[1]+'" r="20" fill="#e8a13a" fill-opacity="0.3" stroke="#e8a13a"/>';
+  s+='<text x="'+PO4[0]+'" y="'+(PO4[1]+4)+'" fill="#e8a13a" font-size="9" text-anchor="middle">PO₄</text>';
+  // PTH
+  s+='<circle cx="'+PTH[0]+'" cy="'+PTH[1]+'" r="20" fill="#e0556b" fill-opacity="0.3" stroke="#e0556b"/>';
+  s+='<text x="'+PTH[0]+'" y="'+(PTH[1]+4)+'" fill="#e08a96" font-size="9" text-anchor="middle">PTH</text>';
+  // veredito
+  var hiper=(r.regime==='hiperpth_secundario');
+  s+='<text x="150" y="168" fill="'+(hiper?'#e0556b':'#9fb1c0')+'" font-size="10" text-anchor="middle">'+(hiper?'DRC: PO₄↑ + calcitriol↓ → PTH↑↑ (2º)':'equilíbrio: Ca↓→PTH↑→Ca↑')+'</text>';
+  s+='<text x="'+W/2+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'o triângulo Ca–PO₄–PTH')+'</text>';
+  return svgEl(W,H,s);
+}
+
+/* =========================================================================
+ * TUTOR — DOIS blocos (ilustrado + textual)
+ * ========================================================================= */
+// helper: figura raster/SVG real de assets/m12/ dentro do exercício (offline, caminho relativo)
+function imgFig(slug,alt){ return '<img src="assets/m12/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+var TUTOR_ILUSTRADO=[
+  {q:'A fração do cálcio sérico que é fisiologicamente ativa é…',
+   o:['a ligada à albumina','o IONIZADO (livre)','a complexada','o cálcio ósseo'],
+   c:1,e:'Só o ionizado (~50% do total) é ativo. O CaSR da paratireoide lê o ionizado, não o número total.',
+   fig:function(){ return albuminaDiagram({},'Ca total × ionizado'); }},
+  {q:'Cirrótica com albumina 2,0 e Ca total 7,4. O cálcio corrigido é…',
+   o:['ainda baixo (5,8)','normal (~9,0) — pseudo-hipocalcemia','alto (12)','não dá para corrigir'],
+   c:1,e:'Ca_corr = 7,4 + 0,8·(4 − 2,0) = 9,0 mg/dL. O total caiu pela albumina; o ionizado está normal.',
+   fig:function(){ return albuminaDiagram({caTotal:7.4,alb:2.0},'pseudo-hipocalcemia'); }},
+  {q:'Paciente hiperventilando, Ca total normal, com tetania. O mecanismo é…',
+   o:['hiperPTH','alcalose → ligação à albumina↑ → ionizado↓','hipercalcemia','hipoalbuminemia'],
+   c:1,e:'Na alcalose a albumina prende mais Ca²⁺ → ionizado↓ apesar do total normal → tetania. Corrija o pH.',
+   fig:function(){ return caIonMini({caTotal:9.4,alb:4.0,pH:7.55},'alcalose derruba o ionizado'); }},
+  {q:'Na curva Ca ionizado × albumina, por que a curva ciano (pH normal) é quase PLANA?',
+   o:['erro de medida','porque corrigir por albumina remove o viés — o ionizado real pouco muda','porque o ionizado depende da albumina','porque o pH é alto'],
+   c:1,e:'Mantido o Ca real, variar só a albumina quase não muda o ionizado — daí a correção. A alcalose (laranja) é que desce a curva inteira.',
+   fig:function(){ return caIonMini({caTotal:9.4,alb:4.0},'ionizado × albumina'); }},
+  {q:'As três ações do PTH são…',
+   o:['Ca↓, PO₄↑, calcitriol↓','Ca↑ (TCD), PO₄↓ (fosfatúria), calcitriol↑','só reabsorver Na','só absorver no intestino'],
+   c:1,e:'PTH sobe o Ca (reabsorção no TCD), joga fora o fósforo (fosfatúria) e ativa a 1α-hidroxilase → calcitriol↑.',
+   fig:function(){ return pthDiagram({caTotal:7.0},'as três ações do PTH'); }},
+  {q:'O calcitriol (vit D ativa) é ativado onde, e estimulado por quê?',
+   o:['no fígado, pela albumina','no RIM (1α-hidroxilase), estimulado por PTH e inibido por FGF23','no osso, pelo cálcio','no intestino, pelo PO₄'],
+   c:1,e:'A 1α-hidroxilase renal faz o calcitriol; PTH a estimula, FGF23 a inibe. Por isso o rim lesado tem pouca vit D ativa.',
+   fig:function(){ return imgFig('vitamina-d-metabolismo.svg','metabolismo da vitamina D'); }},
+  {q:'O FGF23, secretado pelo osso, faz…',
+   o:['retém PO₄ e ativa o calcitriol','é fosfatúrico (PO₄↓) e INIBE o calcitriol; sobe cedo na DRC','sobe o cálcio','nada no rim'],
+   c:1,e:'FGF23 aumenta a excreção de PO₄ e baixa o calcitriol. É o primeiro a subir na DRC — antes do PO₄ e do PTH.',
+   fig:function(){ return imgFig('fgf23.svg','FGF23 fosfatúrico'); }},
+  {q:'Na DRC avançada, o padrão do hiperPTH SECUNDÁRIO é…',
+   o:['PO₄↓ + calcitriol↑','PO₄↑ + calcitriol↓ + PTH↑↑','PTH baixo','Ca alto'],
+   c:1,e:'TFG↓ → PO₄ retido↑ e calcitriol↓ (e Ca↓) → estímulo triplo → PTH↑↑. Tratar o triângulo inteiro.',
+   fig:function(){ return drcFig({po4:6.5,caTotal:8.2},'hiperPTH 2º na DRC'); }},
+  {q:'Hipocalcemia que não corrige com cálcio IV repetido — o que checar?',
+   o:['o sódio','o MAGNÉSIO (cofator do PTH; Mg↓↓ paralisa a glândula)','a glicose','o cloro'],
+   c:1,e:'Mg muito baixo paralisa a secreção/ação do PTH → hipocalcemia refratária. Só corrige repondo Mg.',
+   fig:function(){ return imgFig('magnesio-renal.svg','o magnésio como cofator do PTH'); }},
+  {q:'No triângulo Ca–PO₄–PTH em equilíbrio, quando o Ca cai…',
+   o:['o PTH cai também','o PTH sobe → restaura o Ca e baixa o PO₄','o PO₄ sobe sem mexer o PTH','nada acontece'],
+   c:1,e:'Ca↓ → PTH↑ → reabsorve Ca (Ca↑) e faz fosfatúria (PO₄↓). É o feedback central do triângulo.',
+   fig:function(){ return trianguloDiagram({},'o triângulo em equilíbrio'); }},
+  {q:'Câncer com Ca total 13,0. O que o PTH endógeno tende a mostrar (Fig. 8)?',
+   o:['alto (hiperPTH)','SUPRIMIDO — o PTHrP age como PTH mas não é medido','normal','indetectável só se hipocalcêmico'],
+   c:1,e:'A hipercalcemia da malignidade costuma ser PTHrP-mediada; o Ca alto suprime a paratireoide → PTH baixo.',
+   fig:function(){ return trianguloDiagram({caTotal:13,pthExtra:1.6},'hipercalcemia da malignidade'); }},
+  {q:'Na figura do eixo ósseo-mineral (Fig. 2), os três hormônios reguladores são…',
+   o:['insulina, glucagon, cortisol','PTH, calcitriol e FGF23','ADH, aldosterona, renina','adrenalina, TSH, GH'],
+   c:1,e:'PTH (paratireoide), calcitriol (rim ativa) e FGF23 (osso) governam Ca e PO₄ — a homeostasia mineral.',
+   fig:function(){ return imgFig('eixo-osseo-mineral.svg','o eixo ósseo-mineral'); }}
+];
+
+var TUTOR_TEXTUAL=[
+  {q:'A fórmula de correção do cálcio pela albumina é…',
+   o:['Ca − 0,8·(4 − alb)','Ca + 0,8·(4 − albumina)','Ca · alb / 4','Ca + alb'],
+   c:1,e:'Ca_corr = Ca_total + 0,8·(4 − albumina). Sobe o Ca medido quando a albumina está baixa.'},
+  {q:'A alcalose afeta o cálcio ionizado como?',
+   o:['aumenta o ionizado','diminui o ionizado (mais ligação à albumina) → tetania','não afeta','aumenta o total'],
+   c:1,e:'Menos H⁺ → albumina liga mais Ca²⁺ → ionizado↓. Acidose faz o inverso (ionizado↑).'},
+  {q:'O sensor da paratireoide (CaSR) responde a…',
+   o:['cálcio total','cálcio IONIZADO','albumina','fosfato'],
+   c:1,e:'O CaSR lê o ionizado livre. Por isso o total pode enganar (albumina, pH) mas a regulação segue o livre.'},
+  {q:'O PTH age sobre o fosfato…',
+   o:['retendo PO₄','causando fosfatúria (inibe o NaPi no TCP) → PO₄↓','sem efeito','aumentando a absorção intestinal'],
+   c:1,e:'PTH inibe o cotransportador NaPi no túbulo proximal → menos reabsorção → fosfatúria → PO₄ sérico↓.'},
+  {q:'A 1α-hidroxilase renal é estimulada por ___ e inibida por ___:',
+   o:['FGF23 / PTH','PTH / FGF23','cálcio / fósforo','albumina / pH'],
+   c:1,e:'PTH estimula, FGF23 inibe a 1α-hidroxilase. O calcitriol é o produto; o rim é a fábrica.'},
+  {q:'O FGF23 é secretado por ___ e sobe ___ na DRC:',
+   o:['rim / tarde','osso (osteócito) / cedo','paratireoide / nunca','intestino / tarde'],
+   c:1,e:'Do osteócito; é o primeiro marcador a subir na DRC, fosfatúrico e inibidor do calcitriol.'},
+  {q:'O hiperparatireoidismo SECUNDÁRIO da DRC caracteriza-se por…',
+   o:['PTH baixo','PO₄ alto + calcitriol baixo + PTH alto','Ca alto + PTH alto','PO₄ baixo'],
+   c:1,e:'TFG↓ → PO₄ retido↑ e calcitriol↓ → estímulo triplo ao PTH → PTH↑↑. É secundário ao rim doente.'},
+  {q:'A hipomagnesemia grave causa hipocalcemia porque…',
+   o:['quela o cálcio','paralisa a secreção/ação do PTH (cofator) → hipocalcemia refratária','aumenta o FGF23','baixa a albumina'],
+   c:1,e:'O Mg é cofator do PTH. Mg↓↓ → PTH inadequadamente baixo apesar do Ca baixo. Só corrige repondo Mg.'},
+  {q:'Hipercalcemia + PTH SUPRIMIDO sugere…',
+   o:['hiperPTH primário','malignidade (PTHrP) ou outra causa PTH-independente','hipomagnesemia','pseudo-hipocalcemia'],
+   c:1,e:'PTH suprimido com Ca alto aponta causa independente do PTH (ex.: PTHrP da malignidade). PTH alto+Ca alto = hiperPTH 1º.'},
+  {q:'O produto Ca×PO₄ elevado importa porque…',
+   o:['melhora o osso','aumenta o risco de calcificação metastática (vasos/tecidos)','baixa o PTH','não tem efeito'],
+   c:1,e:'Ca e PO₄ ambos altos precipitam em tecidos. Na DRC controla-se o PO₄ antes de empurrar Ca/vit D.'}
+];
+
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO;
+window.TUTOR_TEXTUAL=TUTOR_TEXTUAL;
+window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+
+var BANKS={ilustrada:TUTOR_ILUSTRADO, textual:TUTOR_TEXTUAL};
+var curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+
+function renderTutor(){
+  var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():'';
+  $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false;
+  $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){
+    var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){
+      if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button');
+      btns[item.c].classList.add('ok');
+      if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block';
+      fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e;
+      $('tutor-score').textContent=tScore;
+      $('tutor-total').textContent=tTotal;
+    });
+    box.appendChild(b);
+  });
+}
+
+$('banktabs').addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor();
+});
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+/* =========================================================================
+ * ILUSTRAÇÕES DA ABA CONCEITO (populadas no boot)
+ * ========================================================================= */
+function populateConceito(){
+  var el;
+  el=$('draw-albumina'); if(el) el.innerHTML=albuminaDiagram({},'Ca total × ionizado: corrigir por albumina');
+  el=$('draw-ph');       if(el) el.innerHTML=caIonMini({caTotal:9.4,alb:4.0,pH:7.55},'o pH move o ionizado (alcalose↓)');
+  el=$('draw-pth');      if(el) el.innerHTML=pthDiagram({caTotal:7.0},'as três ações do PTH');
+  el=$('draw-fgf23');    if(el) el.innerHTML=drcFig({po4:6,caTotal:8.2},'FGF23 e a progressão da DRC');
+  el=$('draw-triangulo');if(el) el.innerHTML=trianguloDiagram({gfr:12,po4:6.5,caTotal:8.2},'o triângulo na DRC');
+  var elCaso=$('fig-caso'); if(elCaso) elCaso.innerHTML=caIonMini({caTotal:9.4,alb:4.0,pH:7.55},'a tetania da alcalose');
+}
+
+/* =========================================================================
+ * BOOT
+ * ========================================================================= */
+refresh();
+renderTutor();
+populateConceito();
+</script>
+</body>
+</html>

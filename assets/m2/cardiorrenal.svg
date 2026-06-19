@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 320" font-family="system-ui,Arial,sans-serif">
+  <defs><marker id="c" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#e8a13a"/></marker></defs>
+  <rect width="680" height="320" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="316" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Síndrome cardiorrenal — a ponte com o Choca</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">o rim depende do débito; a falência do coração ataca a TFG por dois caminhos</text>
+
+  <!-- coração -->
+  <path d="M120,120 a26,26 0 0 1 44,0 a26,26 0 0 1 44,0 q0,34 -44,58 q-44,-24 -44,-58 z" fill="#7a2330" stroke="#e0556b" stroke-width="2"/>
+  <text x="164" y="210" text-anchor="middle" font-size="12" fill="#e08a96" font-weight="bold">coração: DC↓</text>
+
+  <!-- rim -->
+  <path d="M540,120 q40,8 40,55 q0,47 -40,55 q-22,-10 -22,-55 q0,-45 22,-55 z" fill="#0f3540" stroke="#39c0c8" stroke-width="2"/>
+  <text x="540" y="210" text-anchor="middle" font-size="12" fill="#9fe3ec" font-weight="bold">rim: TFG↓</text>
+
+  <!-- caminho 1: anterógrado -->
+  <line x1="215" y1="140" x2="505" y2="140" stroke="#e8a13a" stroke-width="2.5" marker-end="url(#c)"/>
+  <text x="360" y="130" text-anchor="middle" font-size="11" fill="#e8a13a">1) anterógrado: DC↓ → FSR↓ → P_GC↓</text>
+
+  <!-- caminho 2: retrógrado (congestão venosa) -->
+  <line x1="505" y1="178" x2="215" y2="178" stroke="#e8a13a" stroke-width="2.5" marker-end="url(#c)"/>
+  <text x="360" y="198" text-anchor="middle" font-size="11" fill="#e8a13a">2) retrógrado: congestão venosa → P_BC↑ → TFG↓</text>
+
+  <!-- RAAS -->
+  <rect x="220" y="232" width="280" height="74" rx="8" fill="#10202c" stroke="#3a4a58"/>
+  <text x="360" y="254" text-anchor="middle" font-size="11" fill="#e7eef4" font-weight="bold">resposta: RAAS + simpático ativados</text>
+  <text x="360" y="274" text-anchor="middle" font-size="10" fill="#cdd9e3">retêm Na/água → mais congestão (círculo vicioso)</text>
+  <text x="360" y="290" text-anchor="middle" font-size="10" fill="#9fb1c0">o IECA quebra o ciclo, mas pode baixar a TFG pela eferente (M1)</text>
+</svg>

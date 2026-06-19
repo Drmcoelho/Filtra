@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 320" font-family="system-ui,Arial,sans-serif">
+  <defs><marker id="t" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#e8a13a"/></marker></defs>
+  <rect width="680" height="320" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="316" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">A tríplice ameaça hemodinâmica</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">cada golpe é tolerável sozinho; somados, colapsam a P_GC</text>
+
+  <!-- glomérulo alvo -->
+  <circle cx="340" cy="200" r="52" fill="#3a1a20" stroke="#e0556b" stroke-width="3"/>
+  <text x="340" y="196" text-anchor="middle" font-size="13" fill="#ffd0d6" font-weight="bold">P_GC</text>
+  <text x="340" y="214" text-anchor="middle" font-size="11" fill="#e08a96">colapsa</text>
+
+  <!-- 3 golpes -->
+  <rect x="40"  y="96" width="180" height="56" rx="8" fill="#10202c" stroke="#e0556b"/>
+  <text x="130" y="118" text-anchor="middle" font-size="12" fill="#e08a96" font-weight="bold">1) AINE</text>
+  <text x="130" y="138" text-anchor="middle" font-size="10" fill="#cdd9e3">fecha a AFERENTE (sem PGE₂)</text>
+
+  <rect x="460" y="96" width="180" height="56" rx="8" fill="#10202c" stroke="#3a7bd5"/>
+  <text x="550" y="118" text-anchor="middle" font-size="12" fill="#9bbef0" font-weight="bold">2) IECA/BRA</text>
+  <text x="550" y="138" text-anchor="middle" font-size="10" fill="#cdd9e3">abre a EFERENTE (sem Ang II)</text>
+
+  <rect x="250" y="276" width="180" height="38" rx="8" fill="#10202c" stroke="#e8a13a"/>
+  <text x="340" y="300" text-anchor="middle" font-size="12" fill="#e8a13a" font-weight="bold">3) depleção → PAM↓</text>
+
+  <!-- setas convergindo -->
+  <line x1="200" y1="150" x2="300" y2="186" stroke="#e8a13a" stroke-width="2.5" marker-end="url(#t)"/>
+  <line x1="480" y1="150" x2="380" y2="186" stroke="#e8a13a" stroke-width="2.5" marker-end="url(#t)"/>
+  <line x1="340" y1="276" x2="340" y2="256" stroke="#e8a13a" stroke-width="2.5" marker-end="url(#t)"/>
+
+  <text x="130" y="170" text-anchor="middle" font-size="9" fill="#9fb1c0">↓ pressão de entrada</text>
+  <text x="550" y="170" text-anchor="middle" font-size="9" fill="#9fb1c0">↓ represa de saída</text>
+  <text x="340" y="76" text-anchor="middle" font-size="10" fill="#9fb1c0">é o caso do idoso com ICC + diclofenaco + enalapril desidratado</text>
+</svg>

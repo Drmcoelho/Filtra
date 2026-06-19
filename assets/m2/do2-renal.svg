@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 320" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="320" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="316" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">DO₂ renal e a extração de O₂ — por que a medula sofre primeiro</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">DO₂ = FSR × CaO₂ · a oferta é enorme no córtex, mas a medula já extrai quase tudo</text>
+
+  <!-- equação -->
+  <rect x="40" y="60" width="600" height="30" rx="6" fill="#10202c" stroke="#3a4a58"/>
+  <text x="340" y="80" text-anchor="middle" font-size="13" fill="#e7eef4">DO₂ = FSR (~1000 mL/min) × CaO₂ (~20 mL O₂/dL) → entrega abundante de O₂</text>
+
+  <!-- barras de extração -->
+  <text x="180" y="118" text-anchor="middle" font-size="12" fill="#cdd9e3" font-weight="bold">CÓRTEX</text>
+  <text x="500" y="118" text-anchor="middle" font-size="12" fill="#cdd9e3" font-weight="bold">MEDULA</text>
+  <!-- córtex: extração baixa -->
+  <rect x="120" y="130" width="120" height="150" fill="#10202c" stroke="#5aa0e0"/>
+  <rect x="120" y="232" width="120" height="48" fill="#5aa0e0" fill-opacity="0.7"/>
+  <text x="180" y="258" text-anchor="middle" font-size="12" fill="#dcebff">extrai ~18%</text>
+  <text x="180" y="300" text-anchor="middle" font-size="10" fill="#9fb1c0">pO₂ &gt; 50 · reserva ampla</text>
+  <!-- medula: extração alta -->
+  <rect x="440" y="130" width="120" height="150" fill="#10202c" stroke="#e0556b"/>
+  <rect x="440" y="148" width="120" height="132" fill="#e0556b" fill-opacity="0.65"/>
+  <text x="500" y="200" text-anchor="middle" font-size="13" fill="#ffd0d6" font-weight="bold">extrai 50–75%</text>
+  <text x="500" y="300" text-anchor="middle" font-size="10" fill="#e08a96">pO₂ 15–20 · quase sem reserva</text>
+
+  <!-- seta de conclusão -->
+  <text x="340" y="170" text-anchor="middle" font-size="11" fill="#e8a13a">a barra = fração do O₂</text>
+  <text x="340" y="186" text-anchor="middle" font-size="11" fill="#e8a13a">já consumida</text>
+  <text x="340" y="214" text-anchor="middle" font-size="11" fill="#e8a13a">↓FSR não muda</text>
+  <text x="340" y="230" text-anchor="middle" font-size="11" fill="#e8a13a">o córtex, mas</text>
+  <text x="340" y="246" text-anchor="middle" font-size="11" fill="#e8a13a">asfixia a medula</text>
+</svg>

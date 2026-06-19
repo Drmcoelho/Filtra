@@ -10,6 +10,27 @@
 
 ---
 
+## ⚠️ Estado da curadoria — bloqueio de rede (2026-06)
+
+Tentativa de curar as imagens abaixo numa sessão de agente: **o egresso de rede deste ambiente bloqueia o
+Wikimedia.** `commons.wikimedia.org`, `upload.wikimedia.org` e `en.wikipedia.org` retornam **HTTP 403 (host
+fora da allowlist)** — tanto via `curl` quanto via WebFetch. Só `github.com` está liberado. A ferramenta
+**WebSearch funciona** (retorna links), mas não permite baixar binários nem abrir as páginas de licença.
+
+**Para destravar a curadoria**, adicione estes hosts à allowlist de egresso do ambiente
+(ver https://code.claude.com/docs/en/claude-code-on-the-web — configuração de rede):
+
+```
+commons.wikimedia.org
+upload.wikimedia.org
+en.wikipedia.org
+```
+(opcional, para imagens clínicas: `radiopaedia.org`, `openi.nlm.nih.gov`)
+
+Com isso liberado, o agente consegue: (1) baixar os arquivos `PEDIDO` abaixo para `assets/mN/`, (2) ler a
+página do arquivo no Commons para preencher autor/licença, (3) integrar inline e marcar `INTEGRADO`. Sem
+isso, a curadoria fica pendente.
+
 ## Como funciona (ciclo de vida)
 
 1. **Quem constrói/revisa** (sem internet) adiciona uma linha na tabela do módulo, com status `PEDIDO`.

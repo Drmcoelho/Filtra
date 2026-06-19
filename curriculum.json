@@ -302,8 +302,25 @@
     {
       "id": "M14",
       "metade": "FILTRA",
+      "arquivo": "filtra14.html",
       "titulo": "RAAS e o eixo endócrino renal — renina→AngII→aldo, ADH, EPO, vitamina D",
-      "status": "planejado"
+      "status": "disponivel",
+      "instrumento": "cascata RAAS computada (renina/AngII/aldo × volume, com a alça de feedback volume↑→renina↓) + barras de resposta dos 5 hormônios",
+      "questoes": {
+        "ilustrado": 12,
+        "textual": 10
+      },
+      "inclui": [
+        "jgaDiagram (aparelho justaglomerular + os 3 sinais da renina)",
+        "cascataDiagram (angiotensinogênio→Ang I→Ang II→aldosterona)",
+        "angEffDiagram (Ang II na eferente preserva a TFG — ponte M2 — + aldosterona/ENaC — ponte M8)",
+        "adhDiagram (ADH osmótico × não-osmótico/volume — ponte M10)",
+        "epoDiagram (EPO/HIF × massa renal: EPO↓ na DRC = anemia)",
+        "vitamina D/calcitriol pela 1α-hidroxilase renal (ponte M12)",
+        "caso: hipovolemia · estenose renal (HAS renovascular) · hiperaldo 1º (Conn, ARR↑) · anemia da DRC · SIADH × ADH apropriado",
+        "presets de cenário no lab",
+        "fisiologia do eixo: os fármacos do RAAS são o capstone M18"
+      ]
     },
     {
       "id": "M15",

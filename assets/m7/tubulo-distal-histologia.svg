@@ -1,22 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#ffe0ec" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#aa3366" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#aa3366"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M7</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#aa3366" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">histologia</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#602040" opacity="0.7">TCD — NCC, manejo de Ca</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#602040">tubulo-distal-histologia</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#aa3366" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#aa3366">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#602040">Túbulo distal em histologia</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">O TCD ao microscópio — como distinguir do proximal</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">luz LIMPA (sem borda em escova), mais células por corte, núcleos apicais</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#602040" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <!-- corte de túbulo distal: luz lisa -->
+  <circle cx="230" cy="170" r="100" fill="#0c1620" stroke="#3a4a58"/>
+  <circle cx="230" cy="170" r="54" fill="#10202c" stroke="#5aa0e0"/>
+  <text x="230" y="174" text-anchor="middle" font-size="10" fill="#9bbef0">luz lisa</text>
+  <!-- mais núcleos (apicais) -->
+  <g fill="#5aa0e0"><circle cx="230" cy="92" r="6"/><circle cx="290" cy="108" r="6"/><circle cx="320" cy="160" r="6"/><circle cx="300" cy="220" r="6"/><circle cx="250" cy="250" r="6"/><circle cx="190" cy="252" r="6"/><circle cx="148" cy="212" r="6"/><circle cx="142" cy="150" r="6"/><circle cx="172" cy="104" r="6"/></g>
+
+  <rect x="370" y="84" width="270" height="150" rx="8" fill="#10202c" stroke="#3a4a58"/>
+  <text x="505" y="108" text-anchor="middle" font-size="11" fill="#e7eef4" font-weight="bold">TCD × TCP (M5)</text>
+  <text x="386" y="136" font-size="11" fill="#cdd9e3">• TCD: luz lisa, mais células, núcleos apicais</text>
+  <text x="386" y="162" font-size="11" fill="#cdd9e3">• TCP: luz "felpuda" (borda em escova), rosa</text>
+  <text x="386" y="190" font-size="11" fill="#cdd9e3">• TCD: parede mais espessa por corte</text>
+  <text x="386" y="216" font-size="10" fill="#9fb1c0">o NCC e o TRPV5 moram aqui (alvos do tiazídico/PTH)</text>
 </svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 320" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="320" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="316" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Teto BAIXO (tiazídico) × teto ALTO (alça)</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">o tiazídico age depois do proximal e da alça → sobra pouco Na para tirar (FENa ~5%)</text>
+  <line x1="70" y1="270" x2="640" y2="270" stroke="#3a4a58"/>
+  <line x1="70" y1="64" x2="70" y2="270" stroke="#3a4a58"/>
+  <text x="355" y="296" text-anchor="middle" font-size="11" fill="#9fb1c0">dose →</text>
+  <text x="28" y="180" font-size="11" fill="#9fb1c0" transform="rotate(-90 28 180)">FENa (%)</text>
+  <!-- escala 0..25 -->
+  <text x="64" y="78" text-anchor="end" font-size="9" fill="#9fb1c0">25</text>
+  <text x="64" y="222" text-anchor="end" font-size="9" fill="#9fb1c0">5</text>
+  <!-- alça: teto alto -->
+  <path d="M70,262 C160,150 260,95 400,84 C500,80 560,79 640,78" fill="none" stroke="#e0556b" stroke-width="2.5" stroke-dasharray="6 4"/>
+  <text x="500" y="74" font-size="10" fill="#e08a96">diurético de alça (M6) — teto ~25%</text>
+  <!-- tiazídico: teto baixo (~5% → perto da base) -->
+  <path d="M70,266 C160,238 260,224 400,222 C500,221 560,221 640,220" fill="none" stroke="#39c0c8" stroke-width="3"/>
+  <text x="430" y="214" font-size="10" fill="#9fe3ec">tiazídico — teto ~5%</text>
+  <text x="340" y="312" text-anchor="middle" font-size="9" fill="#9fb1c0">por isso o tiazídico é fraco como diurético, mas excelente anti-hipertensivo</text>
+</svg>

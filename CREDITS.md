@@ -163,6 +163,26 @@ depois) — preencher fonte/autor/licença antes de considerar o módulo finaliz
 > Nota: 5 SVGs do M8 eram placeholders e foram **reescritos como autorais**; 1 SVG real (células do ducto) e
 > 2 PNGs reais (célula principal, sítio dos poupadores) seguem com crédito pendente (depende do Wikimedia).
 
+## M7 — TCD (NCC, manejo de Ca, tiazídicos)
+| Arquivo | Descrição | Fonte (URL) | Autor | Licença |
+|---|---|---|---|---|
+| `assets/m7/tcd-ncc.png` | TCD com o NCC | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
+| `assets/m7/tiazidico-sitio.png` | Sítio do tiazídico | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
+| `assets/m7/conexao-tubular.svg` | Conexão alça-TCD-ducto | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
+| `assets/m7/segmento-diluidor-distal.svg` | Diluidor distal (NCC) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m7/manejo-calcio-distal.svg` | Manejo de Ca (TRPV5/NCX) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m7/trpv5-calcio.svg` | TRPV5 (canal de Ca) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m7/paradoxo-calcio-tiazidico.svg` | Paradoxo do cálcio | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m7/tubulo-distal-histologia.svg` | Histologia do TCD | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m7/ncc-tiazidico.svg` | Tiazídico (chave do NCC) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m7/teto-baixo-vs-alca.svg` | Teto baixo × alça | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m7/tiazidico-efeitos.svg` | Efeitos do tiazídico | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m7/gitelman-sindrome.svg` | Gitelman × Bartter | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m7/dose-resposta-emax.svg` | Dose-resposta (Emax) | — | Projeto FILTRA | FILTRA (autoral) |
+
+> Nota: 5 SVGs do M7 eram placeholders e foram **reescritos como autorais**; 1 SVG real (conexão) e 2 PNGs
+> reais (TCD/NCC, sítio do tiazídico) seguem com crédito pendente (depende do Wikimedia).
+
 ## Regras
 - Preferir **CC0 / domínio público**; **CC-BY / CC-BY-SA** aceitos **com atribuição** nesta tabela.
 - O caminho no `<img>` é sempre **relativo** (`assets/…`), nunca uma URL remota — o produto é offline.

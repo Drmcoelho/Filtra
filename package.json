@@ -13,7 +13,7 @@
     "test:4": "node build/m4/test4.node.js",
     "test:5": "node build/m5/test5.node.js",
     "test:6": "node build/m6/test6.node.js",
-    "test": "npm run test:0 && npm run test:1 && npm run test:2 && npm run test:3 && npm run test:4 && npm run test:5 && npm run test:6 && npm run test:8",
+    "test": "npm run test:0 && npm run test:1 && npm run test:2 && npm run test:3 && npm run test:4 && npm run test:5 && npm run test:6 && npm run test:7 && npm run test:8",
     "prevalidate": "node build/ensure-deps.js",
     "validate:0": "node build/m0/validate0.js",
     "validate:1": "node build/m1/validate1.js",
@@ -22,10 +22,12 @@
     "validate:4": "node build/m4/validate4.js",
     "validate:5": "node build/m5/validate5.js",
     "validate:6": "node build/m6/validate6.js",
-    "validate": "npm run validate:0 && npm run validate:1 && npm run validate:2 && npm run validate:3 && npm run validate:4 && npm run validate:5 && npm run validate:6 && npm run validate:8",
+    "validate": "npm run validate:0 && npm run validate:1 && npm run validate:2 && npm run validate:3 && npm run validate:4 && npm run validate:5 && npm run validate:6 && npm run validate:7 && npm run validate:8",
     "check": "npm test && npm run validate",
     "test:8": "node build/m8/test8.node.js",
-    "validate:8": "node build/m8/validate8.js"
+    "validate:8": "node build/m8/validate8.js",
+    "test:7": "node build/m7/test7.node.js",
+    "validate:7": "node build/m7/validate7.js"
   },
   "devDependencies": {
     "jsdom": "^24.0.0"

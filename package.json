@@ -10,13 +10,15 @@
     "test:1": "node build/m1/test1.node.js",
     "test:2": "node build/m2/test2.node.js",
     "test:3": "node build/m3/test3.node.js",
-    "test": "npm run test:0 && npm run test:1 && npm run test:2 && npm run test:3",
+    "test:4": "node build/m4/test4.node.js",
+    "test": "npm run test:0 && npm run test:1 && npm run test:2 && npm run test:3 && npm run test:4",
     "prevalidate": "node build/ensure-deps.js",
     "validate:0": "node build/m0/validate0.js",
     "validate:1": "node build/m1/validate1.js",
     "validate:2": "node build/m2/validate2.js",
     "validate:3": "node build/m3/validate3.js",
-    "validate": "npm run validate:0 && npm run validate:1 && npm run validate:2 && npm run validate:3",
+    "validate:4": "node build/m4/validate4.js",
+    "validate": "npm run validate:0 && npm run validate:1 && npm run validate:2 && npm run validate:3 && npm run validate:4",
     "check": "npm test && npm run validate"
   },
   "devDependencies": {

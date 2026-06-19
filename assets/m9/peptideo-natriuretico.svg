@@ -1,22 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M9</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">Sódio e volume</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">peptideo-natriuretico</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">Peptídeos natriuréticos (ANP/BNP)</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <defs><marker id="n" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#52c08a"/></marker></defs>
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Peptídeos natriuréticos (ANP/BNP) — o contrapeso que elimina Na</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">o estiramento do coração (volume↑) libera ANP/BNP → natriurese e vasodilatação</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <path d="M120,110 a22,22 0 0 1 38,0 a22,22 0 0 1 38,0 q0,30 -38,52 q-38,-22 -38,-52 z" fill="#7a2330" stroke="#e0556b" stroke-width="2"/>
+  <text x="158" y="200" text-anchor="middle" font-size="11" fill="#e08a96">átrio estirado (volume↑)</text>
+
+  <g font-size="11" fill="#e7eef4">
+    <line x1="210" y1="130" x2="260" y2="110" stroke="#52c08a" stroke-width="2" marker-end="url(#n)"/>
+    <rect x="260" y="92" width="380" height="36" rx="6" fill="#10202c" stroke="#52c08a"/><text x="276" y="115">↑TFG + ↓reabsorção de Na (ducto) → NATRIURESE</text>
+    <line x1="210" y1="150" x2="260" y2="150" stroke="#52c08a" stroke-width="2" marker-end="url(#n)"/>
+    <rect x="260" y="132" width="380" height="36" rx="6" fill="#10202c" stroke="#3a7bd5"/><text x="276" y="155">vasodilatação + inibe renina/aldosterona/ADH</text>
+    <line x1="210" y1="170" x2="260" y2="190" stroke="#52c08a" stroke-width="2" marker-end="url(#n)"/>
+    <rect x="260" y="172" width="380" height="36" rx="6" fill="#10202c" stroke="#e8a13a"/><text x="276" y="195">BNP: marcador de ICC (quanto maior, mais estiramento)</text>
+  </g>
+  <text x="340" y="240" text-anchor="middle" font-size="11" fill="#e8a13a">na ICC, porém, há "resistência" ao ANP → a retenção pelo RAAS vence (subenchimento)</text>
+  <text x="340" y="262" text-anchor="middle" font-size="10" fill="#9fb1c0">o sacubitril (M18) potencializa os natriuréticos inibindo sua degradação</text>
 </svg>

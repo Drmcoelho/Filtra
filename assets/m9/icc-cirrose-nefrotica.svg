@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Os três edemas de subenchimento — VCE baixo, ECF alto</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">causas diferentes, mesmo resultado: o rim retém Na avidamente (FENa baixa)</text>
+
+  <rect x="24" y="70" width="206" height="170" rx="8" fill="#10202c" stroke="#e0556b"/>
+  <text x="127" y="94" text-anchor="middle" font-size="12" fill="#e08a96" font-weight="bold">ICC</text>
+  <text x="40" y="120" font-size="11" fill="#e7eef4">débito cardíaco↓</text>
+  <text x="40" y="142" font-size="11" fill="#e7eef4">→ enchimento arterial↓</text>
+  <text x="40" y="170" font-size="10" fill="#9fb1c0">VCE↓ apesar de congesto</text>
+  <text x="40" y="198" font-size="10" fill="#f0c078">RAAS↑ → retém Na → edema</text>
+  <text x="40" y="222" font-size="9" fill="#9fb1c0">(ponte com o Choca)</text>
+
+  <rect x="237" y="70" width="206" height="170" rx="8" fill="#10202c" stroke="#e8a13a"/>
+  <text x="340" y="94" text-anchor="middle" font-size="12" fill="#f0c078" font-weight="bold">Cirrose</text>
+  <text x="253" y="120" font-size="11" fill="#e7eef4">vasodilatação esplâncnica</text>
+  <text x="253" y="142" font-size="11" fill="#e7eef4">→ "rouba" o volume arterial</text>
+  <text x="253" y="170" font-size="10" fill="#9fb1c0">VCE↓ + hipoalbuminemia</text>
+  <text x="253" y="198" font-size="10" fill="#f0c078">RAAS↑ → ascite/edema</text>
+  <text x="253" y="222" font-size="9" fill="#9fb1c0">(hepatorrenal no extremo, M16)</text>
+
+  <rect x="450" y="70" width="206" height="170" rx="8" fill="#10202c" stroke="#3a7bd5"/>
+  <text x="553" y="94" text-anchor="middle" font-size="12" fill="#9bbef0" font-weight="bold">Nefrótica</text>
+  <text x="466" y="120" font-size="11" fill="#e7eef4">proteinúria → albumina↓</text>
+  <text x="466" y="142" font-size="11" fill="#e7eef4">→ oncótica↓ (e lesão renal)</text>
+  <text x="466" y="170" font-size="10" fill="#9fb1c0">subenchimento e/ou retenção</text>
+  <text x="466" y="198" font-size="10" fill="#f0c078">primária de Na → edema</text>
+  <text x="466" y="222" font-size="9" fill="#9fb1c0">(barreira: M3)</text>
+
+  <text x="340" y="268" text-anchor="middle" font-size="11" fill="#e8a13a">em todos: tratar restringindo Na + diurético; o rim "pensa" que falta volume</text>
+</svg>

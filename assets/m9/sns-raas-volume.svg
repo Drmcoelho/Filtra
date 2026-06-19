@@ -1,22 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M9</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">Sódio e volume</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">sns-raas-volume</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">SNS e RAAS na regulação de volume</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <defs><marker id="r" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#e8a13a"/></marker></defs>
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">RAAS e simpático — os retentores de Na quando o VCE cai</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">VCE baixo dispara uma cascata que reabsorve Na em vários segmentos</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <rect x="40" y="64" width="160" height="40" rx="6" fill="#7a2330" fill-opacity="0.4" stroke="#e0556b"/>
+  <text x="120" y="89" text-anchor="middle" font-size="12" fill="#e08a96" font-weight="bold">VCE ↓</text>
+
+  <g font-size="11" fill="#e7eef4">
+    <line x1="200" y1="84" x2="250" y2="84" stroke="#e8a13a" stroke-width="2" marker-end="url(#r)"/>
+    <rect x="250" y="66" width="390" height="38" rx="6" fill="#10202c" stroke="#e8a13a"/><text x="266" y="89">renina → Ang II → vasoconstrição + reabsorção proximal de Na</text>
+    <rect x="250" y="112" width="390" height="38" rx="6" fill="#10202c" stroke="#e8a13a"/><text x="266" y="135">Ang II → aldosterona → ENaC no ducto (Na in, K out, M8)</text>
+    <rect x="250" y="158" width="390" height="38" rx="6" fill="#10202c" stroke="#3a7bd5"/><text x="266" y="181">simpático → constrição renal + renina + reabsorção de Na</text>
+    <rect x="250" y="204" width="390" height="38" rx="6" fill="#10202c" stroke="#39c0c8"/><text x="266" y="227">ADH (override de volume) → retém água (pode dar hiponatremia, M10)</text>
+  </g>
+  <text x="120" y="180" text-anchor="middle" font-size="10" fill="#9fb1c0">resultado: FENa baixa</text>
+  <text x="120" y="196" text-anchor="middle" font-size="10" fill="#9fb1c0">(urina pobre em Na)</text>
+  <text x="120" y="230" text-anchor="middle" font-size="9" fill="#e8a13a">é o que o IECA/BRA/ARM bloqueiam</text>
 </svg>

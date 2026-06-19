@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">O conteúdo de Na⁺ define o VOLUME do ECF</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">o Na é o osmol que "segura" a água no ECF; mais Na corporal → mais volume de ECF</text>
+
+  <!-- três tanques com mais Na = mais volume -->
+  <g text-anchor="middle">
+    <rect x="80" y="150" width="120" height="80" rx="6" fill="#0f3a40" fill-opacity="0.5" stroke="#39c0c8"/>
+    <text x="140" y="195" font-size="11" fill="#9fe3ec">Na baixo</text><text x="140" y="245" font-size="9" fill="#9fb1c0">ECF menor</text>
+    <rect x="280" y="110" width="120" height="120" rx="6" fill="#0f3a40" fill-opacity="0.5" stroke="#39c0c8"/>
+    <text x="340" y="175" font-size="11" fill="#9fe3ec">Na normal</text><text x="340" y="245" font-size="9" fill="#9fb1c0">ECF normal</text>
+    <rect x="480" y="80" width="120" height="150" rx="6" fill="#0f3a40" fill-opacity="0.5" stroke="#39c0c8"/>
+    <text x="540" y="160" font-size="11" fill="#9fe3ec">Na alto</text><text x="540" y="245" font-size="9" fill="#9fb1c0">ECF maior (edema)</text>
+  </g>
+  <g fill="#43d4dc"><circle cx="120" cy="210" r="4"/><circle cx="160" cy="210" r="4"/>
+    <circle cx="310" cy="200" r="4"/><circle cx="340" cy="180" r="4"/><circle cx="370" cy="210" r="4"/>
+    <circle cx="510" cy="120" r="4"/><circle cx="540" cy="150" r="4"/><circle cx="570" cy="190" r="4"/><circle cx="520" cy="210" r="4"/></g>
+
+  <text x="340" y="276" text-anchor="middle" font-size="11" fill="#e8a13a">por isso "ganhar volume" = reter Na; "perder volume" = perder Na. A água segue o sódio.</text>
+</svg>

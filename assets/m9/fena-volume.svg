@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">A FENa como medidor do volume circulante efetivo</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">FENa = fração de Na filtrado que é excretada; baixa = rim retendo (VCE baixo)</text>
+  <line x1="70" y1="262" x2="640" y2="262" stroke="#3a4a58"/>
+  <line x1="70" y1="64" x2="70" y2="262" stroke="#3a4a58"/>
+  <text x="355" y="288" text-anchor="middle" font-size="11" fill="#9fb1c0">VCE →</text>
+  <text x="30" y="170" font-size="11" fill="#9fb1c0" transform="rotate(-90 30 170)">FENa (%)</text>
+  <!-- curva crescente -->
+  <path d="M70,250 C180,236 280,210 360,180 C440,150 540,110 640,86" fill="none" stroke="#39c0c8" stroke-width="3"/>
+  <!-- linha 1% -->
+  <line x1="70" y1="214" x2="640" y2="214" stroke="#e8a13a" stroke-dasharray="4 3" stroke-opacity="0.6"/>
+  <text x="80" y="210" font-size="10" fill="#f0c078">FENa 1%</text>
+  <text x="170" y="244" font-size="10" fill="#e08a96">&lt;1% = retém (VCE baixo,</text>
+  <text x="170" y="258" font-size="10" fill="#e08a96">pré-renal ou edema ávido)</text>
+  <text x="500" y="120" font-size="10" fill="#9fe3ec">&gt;1–2% = eliminando (VCE ok/alto ou NTA)</text>
+  <text x="340" y="296" text-anchor="middle" font-size="9" fill="#9fb1c0">cuidado: a FENa também sobe na NTA (túbulo lesado, M16) e com diurético</text>
+</svg>

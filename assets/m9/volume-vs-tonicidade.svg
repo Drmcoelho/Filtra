@@ -1,22 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M9</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">Sódio e volume</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">volume-vs-tonicidade</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">Volume × tonicidade (eixos distintos)</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Dois eixos distintos: VOLUME (Na) × TONICIDADE (água)</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">não confundir — são regulados por sistemas diferentes e tratados de formas diferentes</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <rect x="40" y="70" width="290" height="180" rx="8" fill="#10202c" stroke="#39c0c8"/>
+  <text x="185" y="94" text-anchor="middle" font-size="12" fill="#9fe3ec" font-weight="bold">VOLUME (este módulo, M9)</text>
+  <text x="60" y="122" font-size="11" fill="#e7eef4">• determinado pelo CONTEÚDO de Na⁺</text>
+  <text x="60" y="146" font-size="11" fill="#e7eef4">• sensor: VCE (baro/mácula densa)</text>
+  <text x="60" y="170" font-size="11" fill="#e7eef4">• reguladores: RAAS, SNS, ANP</text>
+  <text x="60" y="196" font-size="11" fill="#e7eef4">• distúrbio: edema / hipovolemia</text>
+  <text x="60" y="224" font-size="10" fill="#9fb1c0">trata-se com Na/diuréticos (volume)</text>
+
+  <rect x="350" y="70" width="290" height="180" rx="8" fill="#10202c" stroke="#3a7bd5"/>
+  <text x="495" y="94" text-anchor="middle" font-size="12" fill="#9bbef0" font-weight="bold">TONICIDADE (M10)</text>
+  <text x="370" y="122" font-size="11" fill="#e7eef4">• determinada pela ÁGUA livre</text>
+  <text x="370" y="146" font-size="11" fill="#e7eef4">• sensor: osmorreceptores</text>
+  <text x="370" y="170" font-size="11" fill="#e7eef4">• reguladores: ADH, sede</text>
+  <text x="370" y="196" font-size="11" fill="#e7eef4">• distúrbio: dis/hipernatremia</text>
+  <text x="370" y="224" font-size="10" fill="#9fb1c0">trata-se com ÁGUA (M10)</text>
+
+  <text x="340" y="276" text-anchor="middle" font-size="11" fill="#e8a13a">o Na⁺ sérico (concentração) é problema de ÁGUA; o Na⁺ corporal (conteúdo) é o volume</text>
 </svg>

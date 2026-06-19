@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Natriurese de pressão (Guyton) — a PA também regula o Na</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">↑PA → ↑excreção de Na e água → o volume cai → a PA volta (alça de retroalimentação)</text>
+  <line x1="70" y1="262" x2="640" y2="262" stroke="#3a4a58"/>
+  <line x1="70" y1="64" x2="70" y2="262" stroke="#3a4a58"/>
+  <text x="355" y="288" text-anchor="middle" font-size="11" fill="#9fb1c0">pressão arterial (mmHg) →</text>
+  <text x="30" y="170" font-size="11" fill="#9fb1c0" transform="rotate(-90 30 170)">excreção de Na</text>
+  <!-- curva íngreme -->
+  <path d="M90,250 C200,244 280,220 360,170 C420,132 500,96 600,80" fill="none" stroke="#39c0c8" stroke-width="3"/>
+  <line x1="300" y1="64" x2="300" y2="262" stroke="#3a4a58" stroke-dasharray="3 3"/>
+  <text x="300" y="60" text-anchor="middle" font-size="9" fill="#9fb1c0">PA normal</text>
+  <text x="470" y="120" font-size="10" fill="#9fe3ec">PA↑ → muito mais Na excretado</text>
+  <text x="340" y="296" text-anchor="middle" font-size="9" fill="#e8a13a">desloca-se para a direita na HAS essencial (o rim "aceita" uma PA mais alta) — ponte com o Choca</text>
+</svg>

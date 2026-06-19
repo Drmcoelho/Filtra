@@ -183,6 +183,26 @@ depois) — preencher fonte/autor/licença antes de considerar o módulo finaliz
 > Nota: 5 SVGs do M7 eram placeholders e foram **reescritos como autorais**; 1 SVG real (conexão) e 2 PNGs
 > reais (TCD/NCC, sítio do tiazídico) seguem com crédito pendente (depende do Wikimedia).
 
+## M9 — Sódio e volume (volume circulante efetivo)
+| Arquivo | Descrição | Fonte (URL) | Autor | Licença |
+|---|---|---|---|---|
+| `assets/m9/volume-circulante-efetivo.svg` | Volume circulante efetivo | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m9/volume-vs-tonicidade.svg` | Volume × tonicidade | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m9/balanco-sodio-rim.svg` | Balanço de sódio | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m9/barorreceptores.svg` | Sensores de volume | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m9/sns-raas-volume.svg` | RAAS/SNS (retentores) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m9/peptideo-natriuretico.svg` | ANP/BNP (natriuréticos) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m9/edema-fisiopatologia.svg` | Fisiopatologia do edema | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m9/terceiro-espaco.svg` | Terceiro espaço | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m9/efetivo-vs-total.svg` | Efetivo × total | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m9/fena-volume.svg` | FENa como medidor | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m9/natriurese-pressao.svg` | Natriurese de pressão | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m9/icc-cirrose-nefrotica.svg` | Três subenchimentos | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m9/na-define-volume.svg` | Na define o volume | — | Projeto FILTRA | FILTRA (autoral) |
+
+> Nota: os 8 SVGs do M9 eram placeholders e foram **reescritos como autorais** + 5 novos; o M9 não usa
+> imagens raster importadas (todas as 13 figuras são autorais FILTRA).
+
 ## Regras
 - Preferir **CC0 / domínio público**; **CC-BY / CC-BY-SA** aceitos **com atribuição** nesta tabela.
 - O caminho no `<img>` é sempre **relativo** (`assets/…`), nunca uma URL remota — o produto é offline.

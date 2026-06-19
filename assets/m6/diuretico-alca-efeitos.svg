@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <defs><marker id="d" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#e0556b"/></marker></defs>
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Diurético de alça — uma chave (NKCC2), muitos efeitos</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">potente na congestão (ICC, edema); mas leva junto K, Ca, Mg e H⁺</text>
+
+  <circle cx="110" cy="150" r="40" fill="#16202a" stroke="#39c0c8" stroke-width="2"/>
+  <text x="110" y="146" text-anchor="middle" font-size="11" fill="#9fe3ec" font-weight="bold">NKCC2</text>
+  <text x="110" y="162" text-anchor="middle" font-size="9" fill="#e08a96">bloqueado</text>
+
+  <g font-size="11" fill="#e7eef4">
+    <line x1="150" y1="150" x2="250" y2="92" stroke="#e0556b" stroke-width="2" marker-end="url(#d)"/>
+    <rect x="250" y="74" width="390" height="34" rx="6" fill="#10202c" stroke="#52c08a"/><text x="266" y="96">natriurese potente → ↓edema/congestão (ICC, edema agudo)</text>
+    <line x1="150" y1="150" x2="250" y2="138" stroke="#e0556b" stroke-width="2" marker-end="url(#d)"/>
+    <rect x="250" y="120" width="390" height="34" rx="6" fill="#10202c" stroke="#e8a13a"/><text x="266" y="142">perde K⁺ e H⁺ → hipocalemia + alcalose metabólica</text>
+    <line x1="150" y1="150" x2="250" y2="184" stroke="#e0556b" stroke-width="2" marker-end="url(#d)"/>
+    <rect x="250" y="166" width="390" height="34" rx="6" fill="#10202c" stroke="#3a7bd5"/><text x="266" y="188">perde Ca²⁺ e Mg²⁺ → útil na HIPERcalcemia</text>
+    <line x1="150" y1="150" x2="250" y2="230" stroke="#e0556b" stroke-width="2" marker-end="url(#d)"/>
+    <rect x="250" y="212" width="390" height="34" rx="6" fill="#10202c" stroke="#a06ad0"/><text x="266" y="234">ototoxicidade (dose alta/rápida) e hiperuricemia</text>
+  </g>
+  <text x="340" y="276" text-anchor="middle" font-size="10" fill="#9fb1c0">contraste com o tiazídico (M7): este RETÉM cálcio</text>
+</svg>

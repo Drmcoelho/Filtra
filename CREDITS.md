@@ -123,6 +123,26 @@ depois) — preencher fonte/autor/licença antes de considerar o módulo finaliz
 > Nota: 6 SVGs do M5 eram placeholders e foram **reescritos como figuras autorais**; 2 PNGs reais
 > (proximal 65%, anidrase carbônica) seguem com crédito pendente (depende de acesso ao Wikimedia).
 
+## M6 — Alça de Henle (NKCC2, diuréticos de alça)
+| Arquivo | Descrição | Fonte (URL) | Autor | Licença |
+|---|---|---|---|---|
+| `assets/m6/diureticos-alca-sitio.png` | Sítio dos diuréticos de alça | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
+| `assets/m6/ramo-fino-descendente.svg` | Ramo fino descendente | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
+| `assets/m6/alca-henle-contracorrente.svg` | Os dois ramos da alça | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m6/nkcc2-ramo-espesso.svg` | NKCC2 (Na/K/2Cl) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m6/gradiente-corticomedular.svg` | Gradiente corticomedular | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m6/multiplicacao-contracorrente.svg` | Multiplicador contracorrente | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m6/segmento-diluidor.svg` | O segmento diluidor | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m6/vasa-recta-troca.svg` | Vasa recta (troca contracorrente) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m6/teto-dose-resposta.svg` | Teto alto + braking | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m6/potencia-comparada.svg` | Potência dos três de alça | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m6/diuretico-alca-efeitos.svg` | Efeitos do diurético de alça | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m6/congestao-icc.svg` | Uso na congestão (ICC) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m6/braking-resistencia.svg` | Braking e resistência | — | Projeto FILTRA | FILTRA (autoral) |
+
+> Nota: 6 SVGs do M6 eram placeholders e foram **reescritos como autorais**; 1 SVG real (ramo fino) e 1 PNG
+> real (sítio dos diuréticos) seguem com crédito pendente (depende de acesso ao Wikimedia).
+
 ## Regras
 - Preferir **CC0 / domínio público**; **CC-BY / CC-BY-SA** aceitos **com atribuição** nesta tabela.
 - O caminho no `<img>` é sempre **relativo** (`assets/…`), nunca uma URL remota — o produto é offline.

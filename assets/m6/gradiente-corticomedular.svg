@@ -1,22 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M6</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">Alça de Henle — NKCC2, contracorrente</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">gradiente-corticomedular</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">Gradiente corticomedular de osmolalidade</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 320" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="320" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="316" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">O gradiente corticomedular — de 300 (córtex) a 1200 (papila)</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">é a "pilha" osmótica que o TAL carrega; sem ela não se concentra a urina</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <!-- coluna com gradiente -->
+  <defs><linearGradient id="grad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1d4e74"/><stop offset="100%" stop-color="#7a2330"/></linearGradient></defs>
+  <rect x="200" y="64" width="120" height="220" fill="url(#grad)" stroke="#3a4a58"/>
+  <text x="260" y="84" text-anchor="middle" font-size="10" fill="#dcebff">CÓRTEX · 300</text>
+  <text x="260" y="170" text-anchor="middle" font-size="10" fill="#e7eef4">medula · 600</text>
+  <text x="260" y="274" text-anchor="middle" font-size="10" fill="#ffd0d6">PAPILA · 1200 mOsm</text>
+
+  <!-- escala -->
+  <text x="180" y="70" text-anchor="end" font-size="9" fill="#9fb1c0">300</text>
+  <text x="180" y="180" text-anchor="end" font-size="9" fill="#9fb1c0">600–900</text>
+  <text x="180" y="284" text-anchor="end" font-size="9" fill="#9fb1c0">1200</text>
+
+  <rect x="360" y="80" width="280" height="190" rx="8" fill="#10202c" stroke="#3a4a58"/>
+  <text x="500" y="104" text-anchor="middle" font-size="11" fill="#e7eef4" font-weight="bold">Quem mantém a pilha</text>
+  <text x="376" y="132" font-size="11" fill="#cdd9e3">• TAL bombeia NaCl (NKCC2) → o motor</text>
+  <text x="376" y="158" font-size="11" fill="#cdd9e3">• reciclagem de UREIA (ducto medular)</text>
+  <text x="376" y="184" font-size="11" fill="#cdd9e3">• vasa recta: troca contracorrente preserva</text>
+  <text x="376" y="216" font-size="11" fill="#e8a13a">diurético de alça → derruba a pilha →</text>
+  <text x="376" y="236" font-size="11" fill="#e8a13a">isostenúria (urina ~300, nem concentra</text>
+  <text x="376" y="252" font-size="11" fill="#e8a13a">nem dilui ao máximo)</text>
 </svg>

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M6 — Alça de Henle: NKCC2, contracorrente, diuréticos de alça</title>
+<style>
+  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--warn:#e8a13a;--bad:#e0556b;--good:#52c08a;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none} section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .presets{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  .dose{background:rgba(232,161,58,.10);border:1px solid var(--warn);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px} .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)} .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)} .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)} .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M6</div>
+  <h1>Alça de Henle — NKCC2, contracorrente e os diuréticos de alça</h1>
+  <div class="sub">O ramo espesso (TAL) bombeia NaCl pelo <b>NKCC2</b> e cria o <b>gradiente corticomedular</b> —
+  a pilha que permite concentrar a urina. O <b>diurético de alça</b> (furosemida 20–80 mg, bumetanida 0,5–2 mg,
+  torasemida 10–20 mg) bloqueia o NKCC2: natriurese de <b>teto alto</b>, abole o gradiente, com curva
+  dose-resposta e <b>braking</b>. É homeostasia do volume — e a chave da congestão.</div>
+  <nav class="hex">
+    <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
+    <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="filtra.html">&larr; índice do braço FILTRA</a>
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- CONCEITO -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — a alça de Henle e seus diuréticos, ilustrado</h3>
+      <p class="sub" style="margin-top:0"><b>A alça cria a pilha que defende a água — homeostasia.</b> O ramo
+      espesso bombeia NaCl e ergue o gradiente corticomedular; com ele (e o ADH no ducto, M8) o rim concentra a
+      urina. As Fig. 1–13 voltam no Caso, na Trilha e na Avaliação (algumas reaparecem nos exercícios). Atribuição
+      em <code>CREDITS.md</code> (em curadoria).</p>
+
+      <h4>1. Os dois ramos da alça</h4>
+      <p class="sub">O <b>fino descendente</b> é permeável à água (água sai → concentra o conteúdo); o <b>espesso
+      ascendente</b> é impermeável à água e bombeia NaCl (dilui o conteúdo).</p>
+      <div class="frow">
+        <div class="concept" id="draw-gradiente"></div>
+        <figure class="fviva"><img src="assets/m6/alca-henle-contracorrente.svg" alt="Alça de Henle: ramo fino descendente e ramo espesso ascendente com papéis opostos" loading="lazy">
+          <figcaption><b>Fig. 1 · Os dois ramos.</b> Descendente: sai água. Espesso: sai NaCl, não a água. Papéis
+          opostos no mesmo grampo — a base da contracorrente.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m6/ramo-fino-descendente.svg" alt="Ramo fino descendente da alça de Henle (histologia/esquema)" loading="lazy">
+          <figcaption><b>Fig. 2 · O ramo fino.</b> Epitélio delgado, permeável à água: equilibra-se com o
+          interstício hipertônico e concentra o filtrado à medida que desce.</figcaption></figure>
+      </div>
+
+      <h4>2. O NKCC2 e o segmento diluidor</h4>
+      <p class="sub">No ramo espesso, o <b>NKCC2</b> reabsorve Na⁺/K⁺/2Cl⁻ — é o alvo do diurético de alça. Como a
+      água não acompanha, o fluido que segue fica <b>diluído</b> (o "segmento diluidor").</p>
+      <div class="frow">
+        <div class="concept" id="draw-eletro"></div>
+        <figure class="fviva"><img src="assets/m6/nkcc2-ramo-espesso.svg" alt="NKCC2 reabsorve Na/K/2Cl no ramo espesso; alvo do diurético de alça" loading="lazy">
+          <figcaption><b>Fig. 3 · O NKCC2.</b> Reabsorve Na/K/2Cl; o K⁺ reciclado deixa a luz positiva e puxa Ca²⁺ e
+          Mg²⁺ paracelular — por isso o diurético de alça também perde Ca/Mg.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m6/segmento-diluidor.svg" alt="O ramo espesso dilui o filtrado removendo NaCl sem água" loading="lazy">
+          <figcaption><b>Fig. 4 · O segmento diluidor.</b> Tira NaCl sem água → o fluido sai hipotônico. Bloquear o
+          NKCC2 tira a diluição máxima (e a concentração).</figcaption></figure>
+      </div>
+
+      <h4>3. O gradiente corticomedular — o multiplicador e a vasa recta</h4>
+      <p class="sub">O passo único do TAL (~200 mOsm) é "multiplicado" pelo fluxo em alça até <b>1200 mOsm</b> na
+      papila. A <b>vasa recta</b> troca em contracorrente e preserva a pilha.</p>
+      <div class="frow">
+        <figure class="fviva"><img src="assets/m6/gradiente-corticomedular.svg" alt="Gradiente corticomedular de 300 no córtex a 1200 na papila" loading="lazy">
+          <figcaption><b>Fig. 5 · A pilha osmótica.</b> 300 no córtex → 1200 na papila. É o que o ADH usa depois para
+          puxar água do ducto coletor (M8). Sem ela: isostenúria.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m6/multiplicacao-contracorrente.svg" alt="Multiplicador contracorrente: passo de 200 vira gradiente vertical de 900" loading="lazy">
+          <figcaption><b>Fig. 6 · A multiplicação.</b> Um passo horizontal pequeno (~200), repetido ao longo da alça
+          com fluxo em sentidos opostos, vira um gradiente vertical enorme (300→1200).</figcaption></figure>
+        <figure class="fviva"><img src="assets/m6/vasa-recta-troca.svg" alt="Vasa recta: troca contracorrente que preserva o gradiente medular" loading="lazy">
+          <figcaption><b>Fig. 7 · A vasa recta.</b> Capilares em alça trocam solutos na descida e na subida → não
+          "lavam" o gradiente (washout). Ponte com a hipóxia medular do M2.</figcaption></figure>
+      </div>
+
+      <h4>4. Os diuréticos de alça — sítio, efeitos e potência</h4>
+      <p class="sub">Bloqueiam o NKCC2: natriurese potente (a maior dos diuréticos), com perda de K⁺, H⁺, Ca²⁺ e
+      Mg²⁺. <b>Furosemida 20–80 mg · bumetanida 0,5–2 mg (≈40×) · torasemida 10–20 mg.</b></p>
+      <div class="frow">
+        <figure class="fviva"><img src="assets/m6/diureticos-alca-sitio.png" alt="Sítio de ação dos diuréticos de alça no néfron" loading="lazy">
+          <figcaption><b>Fig. 8 · O sítio.</b> O alvo é o NKCC2 no ramo espesso ascendente — o ponto de maior
+          natriurese possível no néfron (depois do proximal).</figcaption></figure>
+        <figure class="fviva"><img src="assets/m6/diuretico-alca-efeitos.svg" alt="Efeitos do diurético de alça: natriurese, perda de K/Ca/Mg, alcalose, ototoxicidade" loading="lazy">
+          <figcaption><b>Fig. 9 · Uma chave, muitos efeitos.</b> Natriurese (↓congestão) + hipocalemia/alcalose +
+          perda de Ca/Mg (útil na hipercalcemia) + ototoxicidade. Note: perde Ca (≠ tiazídico).</figcaption></figure>
+        <figure class="fviva"><img src="assets/m6/potencia-comparada.svg" alt="Furosemida, bumetanida e torasemida: mesma eficácia, potências diferentes" loading="lazy">
+          <figcaption><b>Fig. 10 · Potência ≠ eficácia.</b> Mesmo teto; doses diferentes. Bumetanida ≈40× (melhor
+          absorção oral); torasemida tem meia-vida maior (1×/dia).</figcaption></figure>
+      </div>
+
+      <h4>5. A dose-resposta — teto, braking e o uso</h4>
+      <p class="sub">A curva tem um <b>limiar</b> (subdose não faz nada) e um <b>teto alto</b>; o uso crônico desloca
+      a curva (<b>braking</b>). O uso central é a <b>congestão</b> (ICC, edema).</p>
+      <div class="frow">
+        <div class="concept" id="draw-curva"></div>
+        <figure class="fviva"><img src="assets/m6/teto-dose-resposta.svg" alt="Curva dose-resposta do diurético de alça com teto alto e deslocamento por braking" loading="lazy">
+          <figcaption><b>Fig. 11 · Teto alto + braking.</b> FENa sobe até ~25% (vs teto baixo do tiazídico). O
+          crônico desloca a curva para baixo/direita — daí a "resistência".</figcaption></figure>
+        <figure class="fviva"><img src="assets/m6/congestao-icc.svg" alt="Uso do diurético de alça na congestão (ICC, edema)" loading="lazy">
+          <figcaption><b>Fig. 12 · O uso — congestão.</b> A ferramenta da sobrecarga de volume (ICC, edema). Precisa
+          ultrapassar um limiar para "abrir" a natriurese; subdose não funciona. Ponte com o M37.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m6/braking-resistencia.svg" alt="Braking e resistência ao diurético de alça e suas saídas" loading="lazy">
+          <figcaption><b>Fig. 13 · Braking e resistência.</b> Rebote pós-diurético + hipertrofia distal. Saídas:
+          restringir sal, dose acima do limiar, infusão contínua e bloqueio sequencial (alça + tiazídico, M17).</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASO -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — oito atos, decida antes de revelar</h3>
+      <p class="sub">Homem, ICC descompensada, edema de membros e dispneia. Vamos descongestionar pela alça.</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step"><b>Ato 1.</b> Por que o diurético de alça é o escolhido na sobrecarga de volume (Fig. 12)?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1">É o de <b>maior natriurese</b> (teto alto): bloqueia o NKCC2 no ramo espesso, o
+          ponto de maior reabsorção depois do proximal → tira muito Na e água → ↓congestão.</div></div>
+
+      <div class="step"><b>Ato 2.</b> Demos <b>furosemida 20 mg VO</b> e "não fez nada". O que provavelmente faltou (Fig. 11)?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2"><b>Dose abaixo do limiar.</b> A curva precisa ser ultrapassada para "abrir" a
+          natriurese; subdose não faz efeito. Suba a dose (ou IV) até passar do joelho da curva. No Lab, veja a FENa
+          só subir após o limiar.</div></div>
+
+      <div class="step"><b>Ato 3.</b> <i>Prever:</i> trocamos para <b>bumetanida 1 mg</b>. Por que uma dose tão menor (Fig. 10)?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3">Porque a bumetanida é ≈<b>40× mais potente</b> (EC50 menor) e tem melhor absorção
+          oral. Mesma eficácia (teto), dose muito menor. Potência ≠ eficácia.</div></div>
+
+      <div class="step"><b>Ato 4.</b> Após dias, a resposta cai apesar da mesma dose. O que houve (Fig. 13)?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>Braking</b>: rebote pós-diurético + hipertrofia do túbulo distal, que passa a
+          reabsorver mais. No Lab, ligue "crônico" e veja a curva cair.</div></div>
+
+      <div class="step"><b>Ato 5.</b> <i>Conduta da resistência.</i> O que fazer?
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5">Restringir sal, garantir dose acima do limiar (ou infusão contínua), e
+          <b>bloqueio sequencial</b>: associar um tiazídico (que age no distal hipertrofiado) → sinergia (M17).</div></div>
+
+      <div class="step"><b>Ato 6.</b> Exames: K⁺ 3,0, HCO₃ alto. Por que (Fig. 9)?
+        <div><button class="act" data-rev="r6">Revelar</button></div>
+        <div class="reveal" id="r6"><b>Hipocalemia + alcalose metabólica</b>: mais Na chega ao ducto, troca por K⁺ e
+          H⁺ (aldosterona) → perde K e H. Efeito clássico do diurético de alça.</div></div>
+
+      <div class="step"><b>Ato 7.</b> <i>Outro doente</i> com hipercalcemia grave. O diurético de alça ajuda (Fig. 3)?
+        <div><button class="act" data-rev="r7">Revelar</button></div>
+        <div class="reveal" id="r7"><b>Sim</b> (com volume reposto): a alça <b>perde Ca²⁺</b> (ao contrário do
+          tiazídico). Mas o pilar é a hidratação salina; o diurético de alça é adjuvante.</div></div>
+
+      <div class="step"><b>Ato 8.</b> <i>Síntese.</i> Qual a lição de uma linha?
+        <div><button class="act" data-rev="r8">Revelar</button></div>
+        <div class="reveal" id="r8">O diurético de alça é a chave do NKCC2: teto alto, mas com limiar, braking e perdas
+          eletrolíticas. Abolir o gradiente é o preço de tirar tanto sódio.</div></div>
+    </div>
+  </section>
+
+  <!-- TRILHA -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — treze perguntas que constroem o conceito</h3>
+      <details><summary>1. O que faz o ramo fino descendente?</summary><p>É permeável à água: a água sai para o
+        interstício hipertônico e o conteúdo se concentra ao descer.</p></details>
+      <details><summary>2. E o ramo espesso ascendente?</summary><p>É impermeável à água e bombeia NaCl (NKCC2) — o
+        "segmento diluidor"; o fluido sai hipotônico.</p></details>
+      <details><summary>3. O que é o NKCC2?</summary><p>O cotransportador Na⁺/K⁺/2Cl⁻ apical do ramo espesso — o alvo
+        dos diuréticos de alça.</p></details>
+      <details><summary>4. Por que a alça perde Ca²⁺ e Mg²⁺?</summary><p>O K⁺ reciclado deixa a luz positiva, o que
+        puxa Ca²⁺ e Mg²⁺ pela via paracelular. Bloquear o NKCC2 tira essa força → perde Ca/Mg.</p></details>
+      <details><summary>5. Como nasce o gradiente corticomedular?</summary><p>Pelo multiplicador contracorrente: o
+        passo do TAL (~200) é multiplicado pelo fluxo em alça até ~1200 mOsm na papila.</p></details>
+      <details><summary>6. Para que serve o gradiente?</summary><p>É a pilha osmótica que o ADH usa no ducto coletor
+        (M8) para reabsorver água e concentrar a urina.</p></details>
+      <details><summary>7. O que faz a vasa recta?</summary><p>Troca contracorrente nos capilares medulares →
+        preserva o gradiente (evita o washout).</p></details>
+      <details><summary>8. O que o diurético de alça faz ao gradiente?</summary><p>Abole-o (o TAL para) → isostenúria:
+        a urina não concentra nem dilui ao máximo.</p></details>
+      <details><summary>9. Por que o teto é "alto"?</summary><p>O NKCC2 fica logo após o proximal e antes do ajuste
+        fino: bloqueá-lo entrega muito Na adiante → FENa pode chegar a ~25%.</p></details>
+      <details><summary>10. Potência × eficácia entre eles?</summary><p>Mesma eficácia (teto); bumetanida ≈40× mais
+        potente (dose menor), torasemida com meia-vida maior. A curva só desliza na horizontal.</p></details>
+      <details><summary>11. O que é o braking?</summary><p>A adaptação ao uso crônico: rebote pós-diurético +
+        hipertrofia distal → o efeito líquido cai. Daí a "resistência ao diurético".</p></details>
+      <details><summary>12. Como vencer a resistência?</summary><p>Dose acima do limiar/IV contínua, restrição de
+        sal e bloqueio sequencial (associar tiazídico) → sinergia (M17).</p></details>
+      <details><summary>13. Em que sentido isto é homeostasia?</summary><p>A alça constrói a reserva osmótica para
+        defender a ÁGUA; o diurético reescreve essa defesa para tirar volume na congestão.</p></details>
+    </div>
+  </section>
+
+  <!-- INSTRUMENTO -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — a curva dose-resposta (FENa × dose)</h3>
+      <p class="sub">Os controles do <b>Lab</b> alimentam esta curva. Veja o <b>limiar</b> (subdose não faz nada), o
+      <b>teto alto</b> e, ligando "crônico", o deslocamento do <b>braking</b>.</p>
+      <canvas id="alca-canvas" width="900" height="360" aria-label="Curva FENa por dose do diurético de alça"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- LAB -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — a alça e seus diuréticos (dose computada)</h3>
+      <div class="grid">
+        <div>
+          <label>TFG (mL/min): <span class="val" id="lbl-gfr">120</span></label>
+          <input type="range" id="in-gfr" min="10" max="160" step="1" value="120">
+          <div style="display:flex;align-items:center;gap:8px;margin-top:12px"><input type="checkbox" id="in-adh" checked style="width:auto"><label style="margin:0">ADH presente (concentrando)</label></div>
+          <div style="display:flex;align-items:center;gap:8px;margin-top:10px"><input type="checkbox" id="in-cronico" style="width:auto"><label style="margin:0">Uso crônico (braking)</label></div>
+        </div>
+        <div>
+          <label>Diurético de alça (chave do NKCC2)</label>
+          <select id="in-droga">
+            <option value="nenhum">— nenhum —</option>
+            <option value="furosemida" selected>Furosemida</option>
+            <option value="bumetanida">Bumetanida (≈40×)</option>
+            <option value="torasemida">Torasemida</option>
+          </select>
+          <label>Dose: <span class="val" id="lbl-dose">40</span></label>
+          <input type="range" id="in-dose" min="0" max="200" step="1" value="40">
+          <div class="dose" id="dose-box">—</div>
+        </div>
+      </div>
+
+      <div class="presets">
+        <button class="act" data-preset="normal">Normal</button>
+        <button class="act" data-preset="furo">Furosemida 80 mg</button>
+        <button class="act" data-preset="bume">Bumetanida 2 mg</button>
+        <button class="act" data-preset="tora">Torasemida 20 mg</button>
+        <button class="act" data-preset="cronico">Crônico (braking)</button>
+        <button class="act" data-preset="subdose">Subdose (sem efeito)</button>
+      </div>
+
+      <table>
+        <tr><th>Variável</th><th>Atual</th><th>Comentário</th></tr>
+        <tr><td>Atividade do NKCC2</td><td class="num" id="out-nkcc2">—</td><td class="num">100% = sem fármaco</td></tr>
+        <tr><td>Gradiente corticomedular (mOsm)</td><td class="num" id="out-grad">—</td><td class="num">300 → 1200</td></tr>
+        <tr><td>FENa (%)</td><td class="num" id="out-fena">—</td><td class="num">teto ~25%</td></tr>
+        <tr><td>Osmolalidade urinária (mOsm)</td><td class="num" id="out-uosm">—</td><td class="num">isostenúria ~300</td></tr>
+        <tr><td>Concentra a urina?</td><td class="num" id="out-conc">—</td><td class="num">precisa do gradiente</td></tr>
+        <tr><td>Perde Ca²⁺?</td><td class="num" id="out-ca">—</td><td class="num">≠ tiazídico</td></tr>
+        <tr><td>Padrão</td><td class="num" id="out-classe">—</td><td class="num">—</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÃO -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (13)</button>
+        <button data-bank="textual">Textual (12)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica</b>. Este módulo M6
+    inclui <b>farmacologia aplicada</b> (diuréticos de alça) com doses, unidades e mecanismo — escopo do autor,
+    válido só para este braço (§8). <b>Nota de honestidade do modelo:</b> a curva dose-resposta (Emax), o teto e o
+    braking são simplificações didáticas calibradas para ensinar o mecanismo, não para calcular prescrições reais.
+    Não substitui julgamento clínico; a decisão e a responsabilidade finais são sempre do profissional.
+  </div>
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+</div>
+
+<script>
+/* ENGINE INLINE — espelho fiel de build/m6/model6.js */
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
+var FARMACOS={
+  nenhum:{nome:'— nenhum —',unidade:'',faixa:[0,0],ec50:1,alvo:'',potencia:''},
+  furosemida:{nome:'Furosemida',unidade:'mg',faixa:[20,80],ec50:20,alvo:'NKCC2 (ramo espesso ascendente)',potencia:'referência (1×)'},
+  bumetanida:{nome:'Bumetanida',unidade:'mg',faixa:[0.5,2],ec50:0.5,alvo:'NKCC2 (ramo espesso ascendente)',potencia:'≈40× a furosemida'},
+  torasemida:{nome:'Torasemida',unidade:'mg',faixa:[10,20],ec50:7.5,alvo:'NKCC2 (ramo espesso ascendente)',potencia:'≈2–3× a furosemida; meia-vida maior'}
+};
+function emaxModel(dose,ec50,emax){ dose=clampv(dose,0,1e6); ec50=clampv(ec50,1e-6,1e6); emax=clampv(emax,0,1); return clampv(emax*dose/(ec50+dose),0,1); }
+function alca(input){ var inp=input||{};
+  var gfr=clampv(inp.gfr!==undefined?inp.gfr:120,1,250);
+  var adh=inp.adh!==false, cronico=inp.cronico===true;
+  var droga=String(inp.droga==null?'nenhum':inp.droga).toLowerCase(); if(!FARMACOS.hasOwnProperty(droga)) droga='nenhum';
+  var meta=FARMACOS[droga], dose=clampv(inp.dose!==undefined?inp.dose:(meta.faixa[0]||0),0,5000);
+  var bloqueio=droga==='nenhum'?0:emaxModel(dose,meta.ec50,0.9), nkcc2=clampv(1-bloqueio,0,1);
+  var gradiente=clampv(300+nkcc2*900,300,1200);
+  var braking=cronico?0.6:1, FENa=clampv(0.8+bloqueio*24*braking,0.8,25);
+  var urineOsm=adh?gradiente:clampv(50+(gradiente-300)*0.3,50,1200);
+  var podeConcentrar=gradiente>600, podeDiluirMax=nkcc2>0.5, perda=bloqueio, perdaCa=bloqueio>0.2, ceilingReached=bloqueio>0.85;
+  var classe; if(droga==='nenhum') classe='normal'; else if(ceilingReached) classe='diuretico_alca_teto'; else classe='diuretico_alca';
+  return {gfr:gfr,adh:adh,cronico:cronico,droga:droga,dose:dose,unidade:meta.unidade,alvo:meta.alvo,faixa:meta.faixa,
+    nomeFarmaco:meta.nome,potencia:meta.potencia,bloqueio:bloqueio,nkcc2:nkcc2,gradiente:gradiente,FENa:FENa,braking:braking,
+    urineOsm:urineOsm,podeConcentrar:podeConcentrar,podeDiluirMax:podeDiluirMax,perda:perda,perdaCa:perdaCa,ceilingReached:ceilingReached,classe:classe}; }
+function alcaLayout(state,W,H){ state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=52,padR=16,padT=18,padB=38,baseY=H-padB;
+  var droga=String(state.droga==null?'furosemida':state.droga).toLowerCase(); if(!FARMACOS.hasOwnProperty(droga)||droga==='nenhum') droga='furosemida';
+  var meta=FARMACOS[droga], cronico=state.cronico===true, braking=cronico?0.6:1, dMax=meta.ec50*10, N=60, yMax=26;
+  var pxX=(W-padL-padR)/dMax, pxY=(baseY-padT)/yMax, pts=[],i,d,b,fena;
+  for(i=0;i<=N;i++){ d=dMax*i/N; b=emaxModel(d,meta.ec50,0.9); fena=clampv(0.8+b*24*braking,0.8,25);
+    pts.push({dose:d,FENa:fena,x:padL+d*pxX,y:baseY-clampv(fena,0,yMax)*pxY}); }
+  var dc=clampv(state.dose!==undefined?state.dose:meta.faixa[0],0,dMax), bc=emaxModel(dc,meta.ec50,0.9), fc=clampv(0.8+bc*24*braking,0.8,25);
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,dMax:dMax,yMax:yMax,pxX:pxX,pxY:pxY,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},pts:pts,current:{x:padL+dc*pxX,y:baseY-clampv(fc,0,yMax)*pxY,dose:dc,FENa:fc}}; }
+window.alca=alca; window.emaxModel=emaxModel; window.alcaLayout=alcaLayout; window.FARMACOS=FARMACOS;
+window.MODEL={alca:alca,emaxModel:emaxModel,alcaLayout:alcaLayout,FARMACOS:FARMACOS,clampv:clampv};
+
+/* UI */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=(d===undefined?1:d); return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+var CLASSE_TXT={normal:'normal',diuretico_alca:'diurético de alça (abaixo do teto)',diuretico_alca_teto:'diurético de alça (no teto)'};
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on'); b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on'); $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh(); });
+document.addEventListener('click',function(e){ var b=e.target.closest('button.act[data-rev]'); if(!b) return; var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on'); });
+
+function readInputs(){ return { gfr:+$('in-gfr').value, adh:$('in-adh').checked, cronico:$('in-cronico').checked, droga:$('in-droga').value, dose:+$('in-dose').value }; }
+function refresh(){ var inp=readInputs(); var meta=FARMACOS[inp.droga]||FARMACOS.nenhum;
+  $('lbl-gfr').textContent=inp.gfr; $('lbl-dose').textContent=inp.dose+(meta.unidade?(' '+meta.unidade):'');
+  var r=alca(inp);
+  $('out-nkcc2').textContent=fmt(r.nkcc2*100,0)+'%'; $('out-grad').textContent=fmt(r.gradiente,0); $('out-fena').textContent=fmt(r.FENa,1);
+  $('out-uosm').textContent=fmt(r.urineOsm,0); $('out-conc').textContent=r.podeConcentrar?'sim':'não (isostenúria)';
+  $('out-ca').textContent=r.perdaCa?'sim (perde Ca)':'não'; $('out-classe').textContent=CLASSE_TXT[r.classe]||r.classe;
+  if(inp.droga==='nenhum'){ $('dose-box').textContent='Selecione um diurético para ver dose, unidade e mecanismo (computados).'; }
+  else { $('dose-box').innerHTML='<b>'+meta.nome+'</b> — dose '+inp.dose+' '+meta.unidade+' (faixa '+meta.faixa[0]+'–'+meta.faixa[1]+' '+meta.unidade+') · alvo: '+meta.alvo+' · potência: '+meta.potencia+' · bloqueio do NKCC2 '+fmt(r.bloqueio*100,0)+'% (curva Emax).'; }
+  verdict(r,inp); drawAlca(inp); pearl(r,inp); }
+function verdict(r,inp){ var v=$('veredito'), cls='b-good', msg;
+  if(r.classe==='normal'){ cls='b-good'; msg='Sem diurético: NKCC2 100%, gradiente '+fmt(r.gradiente,0)+' mOsm, concentra a urina. FENa basal '+fmt(r.FENa,1)+'%.'; }
+  else if(r.ceilingReached){ cls='b-bad'; msg='No teto: bloqueio '+fmt(r.bloqueio*100,0)+'%, FENa '+fmt(r.FENa,1)+'% — natriurese máxima; gradiente abolido ('+fmt(r.gradiente,0)+' mOsm → isostenúria).'; }
+  else if(r.bloqueio<0.1){ cls='b-warn'; msg='Subdose: bloqueio só '+fmt(r.bloqueio*100,0)+'% → FENa '+fmt(r.FENa,1)+'%. Abaixo do limiar a natriurese mal "abre".'; }
+  else { cls='b-warn'; msg='Diurético ativo: bloqueio '+fmt(r.bloqueio*100,0)+'%, FENa '+fmt(r.FENa,1)+'%'+(inp.cronico?' (com braking)':'')+'; gradiente caindo ('+fmt(r.gradiente,0)+' mOsm).'; }
+  v.className='banner '+cls; v.textContent=msg; }
+function pearl(r,inp){ var p=$('lab-pearl'), ip=$('instr-pearl'), t;
+  if(inp.cronico&&r.bloqueio>0.3) t='PÉROLA (braking): no uso crônico o distal hipertrofia → a mesma dose rende menos (FENa '+fmt(r.FENa,1)+'%). Saída: bloqueio sequencial (M17).';
+  else if(inp.droga==='bumetanida'&&r.bloqueio>0.4) t='PÉROLA (potência): bumetanida '+inp.dose+' mg já bloqueia '+fmt(r.bloqueio*100,0)+'% do NKCC2 — ≈40× a furosemida. Mesma eficácia, dose menor.';
+  else if(r.bloqueio>0.2) t='PÉROLA: ao abolir o gradiente ('+fmt(r.gradiente,0)+' mOsm), o rim perde a concentração E a diluição máxima → isostenúria. E perde Ca²⁺ (≠ tiazídico).';
+  else t='Sem bloqueio relevante, o NKCC2 mantém o gradiente em '+fmt(r.gradiente,0)+' mOsm e a urina pode concentrar.';
+  p.textContent=t; ip.textContent=t; }
+function drawAlca(state){ var c=$('alca-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
+  var L=alcaLayout(state,c.width,c.height); ctx.clearRect(0,0,L.W,L.H);
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('FENa (%)',8,L.padT+2); ctx.fillText('dose →',L.W-90,L.baseY+24);
+  ctx.strokeStyle='#39c0c8'; ctx.lineWidth=2; ctx.beginPath();
+  for(var i=0;i<L.pts.length;i++){ var p=L.pts[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); } ctx.stroke();
+  var cu=L.current; ctx.strokeStyle='#e8a13a'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(cu.x,L.padT); ctx.lineTo(cu.x,L.baseY); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#e8a13a'; ctx.fillRect(cu.x-3,cu.y-3,6,6);
+  ctx.fillStyle='#e7eef4'; ctx.fillText('FENa '+fmt(cu.FENa,1),cu.x+6,Math.max(cu.y-6,L.padT+10)); }
+function syncDoseRange(){ var d=$('in-droga').value, meta=FARMACOS[d]||FARMACOS.nenhum;
+  if(d==='nenhum'){ $('in-dose').max=200; $('in-dose').step=1; $('in-dose').value=0; }
+  else if(d==='bumetanida'){ $('in-dose').max=5; $('in-dose').step=0.1; $('in-dose').value=meta.faixa[1]; }
+  else if(d==='torasemida'){ $('in-dose').max=60; $('in-dose').step=1; $('in-dose').value=meta.faixa[1]; }
+  else { $('in-dose').max=200; $('in-dose').step=1; $('in-dose').value=meta.faixa[1]; } }
+['in-gfr','in-dose'].forEach(function(id){ $(id).addEventListener('input',refresh); });
+['in-adh','in-cronico'].forEach(function(id){ $(id).addEventListener('change',refresh); });
+$('in-droga').addEventListener('change',function(){ syncDoseRange(); refresh(); });
+
+var PRESETS={
+  normal:{gfr:120,droga:'nenhum',dose:0,cronico:false},
+  furo:{gfr:120,droga:'furosemida',dose:80,cronico:false},
+  bume:{gfr:120,droga:'bumetanida',dose:2,cronico:false},
+  tora:{gfr:120,droga:'torasemida',dose:20,cronico:false},
+  cronico:{gfr:120,droga:'furosemida',dose:80,cronico:true},
+  subdose:{gfr:120,droga:'furosemida',dose:5,cronico:false}
+};
+function applyPreset(p){ var d=PRESETS[p]; if(!d) return;
+  $('in-gfr').value=d.gfr; $('in-droga').value=d.droga; $('in-cronico').checked=d.cronico; syncDoseRange(); $('in-dose').value=d.dose; refresh(); }
+document.querySelector('.presets').addEventListener('click',function(e){ var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset')); });
+
+/* ILUSTRAÇÕES computadas + helper raster */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+function curveMini(state,titulo){ var W=300,H=170,L=alcaLayout(state,W,H),s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  var d=''; for(var i=0;i<L.pts.length;i++){ d+=(i===0?'M':'L')+f1(L.pts[i].x)+' '+f1(L.pts[i].y)+' '; }
+  s+='<path d="'+d+'" fill="none" stroke="#39c0c8" stroke-width="2"/>';
+  s+='<rect x="'+f1(L.current.x-3)+'" y="'+f1(L.current.y-3)+'" width="6" height="6" fill="#e8a13a"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'FENa × dose')+'</text>';
+  s+='<text x="'+(W-8)+'" y="'+(L.baseY+14)+'" fill="#9fb1c0" font-size="9" text-anchor="end">dose →</text>';
+  return svgEl(W,H,s); }
+function gradBar(r){ var W=300,H=170,s='';
+  var h=clampv((r.gradiente-300)/900,0,1)*110;
+  s+='<rect x="120" y="'+f1(140-h)+'" width="70" height="'+f1(h)+'" fill="#e0556b" fill-opacity="0.6" stroke="#e0556b"/>';
+  s+='<text x="155" y="155" fill="#9fb1c0" font-size="10" text-anchor="middle">gradiente</text>';
+  s+='<text x="155" y="'+f1(140-h-4)+'" fill="#e7eef4" font-size="11" text-anchor="middle">'+fmt(r.gradiente,0)+'</text>';
+  s+='<text x="150" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">gradiente corticomedular (mOsm)</text>';
+  s+='<text x="150" y="168" fill="#9fb1c0" font-size="9" text-anchor="middle">'+(r.podeConcentrar?'concentra a urina':'isostenúria (~300)')+'</text>';
+  return svgEl(W,H,s); }
+function eletroBars(r){ var W=300,H=170,base=130,s='';
+  function bar(x,val,max,color,lab){ var h=clampv(val/max,0,1)*96; return '<rect x="'+x+'" y="'+f1(base-h)+'" width="64" height="'+f1(h)+'" fill="'+color+'" fill-opacity="0.65" stroke="'+color+'"/>'+
+    '<text x="'+(x+32)+'" y="'+(base+13)+'" fill="#9fb1c0" font-size="9" text-anchor="middle">'+lab+'</text>'+
+    '<text x="'+(x+32)+'" y="'+f1(base-h-4)+'" fill="#e7eef4" font-size="10" text-anchor="middle">'+fmt(val,0)+'</text>'; }
+  s+=bar(70,r.FENa,25,'#39c0c8','FENa %'); s+=bar(176,r.bloqueio*100,100,'#e0556b','NKCC2 bloq %');
+  s+='<text x="150" y="150" fill="#9fb1c0" font-size="10" text-anchor="middle">'+(r.perdaCa?'perde Ca²⁺/Mg²⁺':'sem perda relevante')+'</text>';
+  s+='<text x="150" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">natriurese e bloqueio</text>';
+  return svgEl(W,H,s); }
+function imgFig(slug,alt){ return '<img src="assets/m6/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+/* TUTOR */
+function R0(extra){ var o={}; if(extra) for(var k in extra) o[k]=extra[k]; return alca(o); }
+var TUTOR_ILUSTRADO=[
+  {q:'Na curva, uma subdose de furosemida dá…',o:['natriurese máxima','quase nada (abaixo do limiar)','o teto'],c:1,e:'Há limiar: subdose mal "abre" a natriurese.',fig:function(){return curveMini({droga:'furosemida',dose:5},'furosemida 5 mg (subdose)');}},
+  {q:'Furosemida 80 mg: a FENa…',o:['fica basal','sobe perto do teto','cai'],c:1,e:'Acima do limiar, sobe rápido até o teto alto.',fig:function(){return curveMini({droga:'furosemida',dose:80},'furosemida 80 mg');}},
+  {q:'No uso crônico (braking), a curva…',o:['sobe','desloca para baixo/direita','some'],c:1,e:'A adaptação distal reduz o efeito líquido — a "resistência".',fig:function(){return curveMini({droga:'furosemida',dose:80,cronico:true},'crônico (braking)');}},
+  {q:'O diurético de alça faz o gradiente corticomedular…',o:['subir','cair (abole)','não mexe'],c:1,e:'Para o TAL → o gradiente desaba → isostenúria.',fig:function(){return gradBar(R0({droga:'furosemida',dose:120}));}},
+  {q:'Sem fármaco, o gradiente está…',o:['~300','~1200 (concentra)','zero'],c:1,e:'NKCC2 ativo → ~1200 mOsm → concentra a urina.',fig:function(){return gradBar(R0({}));}},
+  {q:'No teto, o bloqueio do NKCC2 e a FENa estão…',o:['baixos','altos','iguais a zero'],c:1,e:'Bloqueio alto → FENa perto de 25% (teto alto).',fig:function(){return eletroBars(R0({droga:'furosemida',dose:200}));}},
+  {q:'Na figura do NKCC2, ele transporta…',o:['Na/glicose','Na/K/2Cl','só água'],c:1,e:'Cotransporte Na⁺/K⁺/2Cl⁻ no ramo espesso.',fig:function(){return imgFig('nkcc2-ramo-espesso.svg','NKCC2');}},
+  {q:'Na figura do gradiente, a papila chega a…',o:['300','600','1200 mOsm'],c:2,e:'A pilha vai de 300 (córtex) a ~1200 (papila).',fig:function(){return imgFig('gradiente-corticomedular.svg','gradiente');}},
+  {q:'Na figura da potência, a bumetanida é…',o:['igual à furosemida','≈40× mais potente','menos potente'],c:1,e:'Mesma eficácia (teto), ≈40× a potência (dose menor).',fig:function(){return imgFig('potencia-comparada.svg','potência');}},
+  {q:'Na figura dos efeitos, o diurético de alça perde…',o:['retém Ca','perde Ca/Mg','não mexe em Ca'],c:1,e:'Perde Ca²⁺ e Mg²⁺ (útil na hipercalcemia); ao contrário do tiazídico.',fig:function(){return imgFig('diuretico-alca-efeitos.svg','efeitos');}},
+  {q:'Na figura do braking, a saída para a resistência inclui…',o:['parar o diurético','bloqueio sequencial (+ tiazídico)','dobrar água'],c:1,e:'Associar tiazídico ao distal hipertrofiado → sinergia (M17).',fig:function(){return imgFig('braking-resistencia.svg','braking');}},
+  {q:'Na figura da vasa recta, a alça serve para…',o:['lavar o gradiente','preservar o gradiente','filtrar'],c:1,e:'Troca contracorrente evita o washout do gradiente.',fig:function(){return imgFig('vasa-recta-troca.svg','vasa recta');}},
+  {q:'Comparada à furosemida, a torasemida tem…',o:['meia-vida menor','meia-vida maior (1×/dia)','sem efeito'],c:1,e:'≈2–3× a potência e meia-vida maior → dose única diária.',fig:function(){return curveMini({droga:'torasemida',dose:20},'torasemida 20 mg');}}
+];
+var TUTOR_TEXTUAL=[
+  {q:'O alvo dos diuréticos de alça é…',o:['SGLT2','NKCC2','ENaC'],c:1,e:'NKCC2 no ramo espesso ascendente.'},
+  {q:'O ramo espesso é chamado de…',o:['segmento concentrador','segmento diluidor','filtro'],c:1,e:'Tira NaCl sem água → dilui o fluido.'},
+  {q:'O gradiente corticomedular vai de…',o:['100 a 300','300 a 1200','600 a 800'],c:1,e:'~300 (córtex) a ~1200 mOsm (papila).'},
+  {q:'O diurético de alça é de teto…',o:['baixo','alto','sem teto'],c:1,e:'FENa pode chegar a ~25% — o mais potente.'},
+  {q:'Bumetanida vs furosemida: a potência é…',o:['igual','≈40× maior','menor'],c:1,e:'Mesma eficácia, dose ~40× menor.'},
+  {q:'A alça, quanto ao cálcio,…',o:['retém','perde','não mexe'],c:1,e:'Perde Ca²⁺ (útil na hipercalcemia); o tiazídico retém.'},
+  {q:'Hipocalemia + alcalose metabólica com diurético de alça vêm de…',o:['perder Na só','mais Na ao ducto → troca por K⁺/H⁺','reter K'],c:1,e:'A entrega distal de Na aumenta a troca por K e H (aldosterona).'},
+  {q:'"Não respondeu à furosemida 20 mg VO" geralmente é…',o:['alergia','subdose abaixo do limiar','dose tóxica'],c:1,e:'Precisa ultrapassar o limiar da curva (ou via/absorção).'},
+  {q:'O braking é…',o:['efeito tóxico','adaptação que reduz o efeito no uso crônico','alergia'],c:1,e:'Rebote + hipertrofia distal → resistência.'},
+  {q:'A saída clássica para a resistência é…',o:['parar tudo','bloqueio sequencial (alça + tiazídico)','mais água'],c:1,e:'Sinergia bloqueando dois segmentos (M17).'},
+  {q:'Abolir o gradiente leva a…',o:['urina concentrada','isostenúria (~300)','anúria'],c:1,e:'Sem pilha osmótica não há como concentrar.'},
+  {q:'A alça defende, em essência,…',o:['o potássio','a ÁGUA (pela reserva osmótica)','o cálcio'],c:1,e:'Constrói o gradiente que permite reter água — homeostasia.'}
+];
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL; window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+var BANKS={ilustrada:TUTOR_ILUSTRADO,textual:TUTOR_TEXTUAL}, curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+function renderTutor(){ var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():''; $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false; $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){ if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button'); btns[item.c].classList.add('ok'); if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block'; fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e; $('tutor-score').textContent=tScore; $('tutor-total').textContent=tTotal; });
+    box.appendChild(b); }); }
+$('banktabs').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor(); });
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+$('draw-gradiente').innerHTML = gradBar(alca({}));
+$('draw-eletro').innerHTML = eletroBars(alca({droga:'furosemida',dose:80}));
+$('draw-curva').innerHTML = curveMini({droga:'furosemida',dose:40},'FENa × dose (furosemida)');
+$('fig-caso').innerHTML = curveMini({droga:'furosemida',dose:40},'furosemida — limiar e teto') + gradBar(alca({droga:'furosemida',dose:80}));
+
+syncDoseRange(); refresh(); renderTutor();
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Braking e resistência ao diurético de alça</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">o néfron se adapta: o efeito líquido cai com o tempo — e há saídas</text>
+
+  <g font-size="11" fill="#e7eef4">
+    <rect x="40" y="66" width="600" height="40" rx="6" fill="#10202c" stroke="#e8a13a"/>
+    <text x="56" y="91">1) pós-diurético: retenção de Na entre as doses (rebote) → restrinja sal</text>
+    <rect x="40" y="114" width="600" height="40" rx="6" fill="#10202c" stroke="#e8a13a"/>
+    <text x="56" y="139">2) crônico: o túbulo distal HIPERTROFIA e reabsorve mais (braking)</text>
+    <rect x="40" y="162" width="600" height="40" rx="6" fill="#10202c" stroke="#3a7bd5"/>
+    <text x="56" y="187">saída: bloqueio SEQUENCIAL (alça + tiazídico) → sinergia (M17)</text>
+    <rect x="40" y="210" width="600" height="40" rx="6" fill="#10202c" stroke="#52c08a"/>
+    <text x="56" y="235">outras: infusão contínua, dose adequada acima do limiar, tratar a hipoalbuminemia</text>
+  </g>
+  <text x="340" y="276" text-anchor="middle" font-size="10" fill="#9fb1c0">"resistência ao diurético" raramente é o fármaco; é a adaptação + a entrega/absorção</text>
+</svg>

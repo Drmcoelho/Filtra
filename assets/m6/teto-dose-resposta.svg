@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 320" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="320" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="316" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Diurético de alça = teto ALTO (e o braking)</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">a curva sobe muito (FENa até ~25%); o uso crônico desloca-a para baixo/direita</text>
+  <line x1="70" y1="270" x2="640" y2="270" stroke="#3a4a58"/>
+  <line x1="70" y1="64" x2="70" y2="270" stroke="#3a4a58"/>
+  <text x="355" y="296" text-anchor="middle" font-size="11" fill="#9fb1c0">dose →</text>
+  <text x="28" y="180" font-size="11" fill="#9fb1c0" transform="rotate(-90 28 180)">FENa (%)</text>
+  <!-- curva aguda -->
+  <path d="M70,262 C160,150 260,95 400,84 C500,80 560,79 640,78" fill="none" stroke="#39c0c8" stroke-width="3"/>
+  <text x="500" y="74" font-size="10" fill="#39c0c8">agudo</text>
+  <!-- teto -->
+  <line x1="70" y1="78" x2="640" y2="78" stroke="#52c08a" stroke-dasharray="4 3" stroke-opacity="0.6"/>
+  <text x="80" y="74" font-size="10" fill="#8fe0b0">teto (~25%)</text>
+  <!-- curva crônica (braking) -->
+  <path d="M70,266 C180,200 280,150 400,140 C500,134 560,132 640,130" fill="none" stroke="#e8a13a" stroke-width="2.5" stroke-dasharray="6 4"/>
+  <text x="560" y="124" font-size="10" fill="#e8a13a">crônico (braking)</text>
+  <text x="340" y="312" text-anchor="middle" font-size="9" fill="#9fb1c0">compare com o tiazídico (M7): teto BAIXO. O braking pede bloqueio sequencial (M17)</text>
+</svg>

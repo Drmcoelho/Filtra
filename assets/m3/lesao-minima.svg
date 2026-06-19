@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Lesão mínima — a pérola da carga</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">microscopia óptica normal, mas nefrótica: a barreira de CARGA caiu</text>
+
+  <!-- normal -->
+  <text x="180" y="76" text-anchor="middle" font-size="12" fill="#cdd9e3" font-weight="bold">Normal</text>
+  <path d="M110,96 q40,-26 80,0" fill="none" stroke="#a06ad0" stroke-width="10"/>
+  <g stroke="#a06ad0" stroke-width="4"><line x1="120" y1="100" x2="120" y2="130"/><line x1="140" y1="100" x2="140" y2="130"/><line x1="160" y1="100" x2="160" y2="130"/><line x1="180" y1="100" x2="180" y2="130"/><line x1="200" y1="100" x2="200" y2="130"/></g>
+  <text x="150" y="148" text-anchor="middle" font-size="9" fill="#c9a0e0">pedicelos + carga (−)</text>
+  <text x="150" y="170" text-anchor="middle" font-size="10" fill="#52c08a">albumina (−) repelida → urina limpa</text>
+
+  <!-- lesão mínima -->
+  <text x="500" y="76" text-anchor="middle" font-size="12" fill="#cdd9e3" font-weight="bold">Lesão mínima</text>
+  <path d="M430,96 q40,-26 80,0" fill="none" stroke="#a06ad0" stroke-width="10" opacity="0.6"/>
+  <rect x="440" y="100" width="120" height="14" fill="#a06ad0" fill-opacity="0.5"/>
+  <text x="500" y="148" text-anchor="middle" font-size="9" fill="#c9a0e0">pedicelos APAGADOS + sem carga</text>
+  <text x="500" y="170" text-anchor="middle" font-size="10" fill="#e0556b">albumina passa → albuminúria seletiva</text>
+
+  <rect x="120" y="196" width="440" height="80" rx="8" fill="#10202c" stroke="#3a4a58"/>
+  <text x="340" y="218" text-anchor="middle" font-size="11" fill="#e7eef4">A peneira de TAMANHO está ~intacta (IgG ainda barrada) →</text>
+  <text x="340" y="238" text-anchor="middle" font-size="11" fill="#f0c078">proteinúria SELETIVA (predomínio de albumina), nefrótica</text>
+  <text x="340" y="262" text-anchor="middle" font-size="10" fill="#9fb1c0">só a microscopia ELETRÔNICA vê o apagamento; a óptica é "mínima"</text>
+</svg>

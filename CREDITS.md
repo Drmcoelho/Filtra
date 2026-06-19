@@ -63,6 +63,26 @@ depois) — preencher fonte/autor/licença antes de considerar o módulo finaliz
 > didáticas autorais** (FILTRA) nesta revisão. A `cortex-medula.png` (Gray's) mostra o rim in situ e sua
 > inervação, **não** a histologia córtex×medula — uma imagem real desta está pedida em `assets/OnDemand.md`.
 
+## M3 — O glomérulo (barreira de filtração)
+| Arquivo | Descrição | Fonte (URL) | Autor | Licença |
+|---|---|---|---|---|
+| `assets/m3/endotelio-fenestrado.png` | Endotélio fenestrado (micrografia) | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
+| `assets/m3/barreira-filtracao.svg` | Barreira de filtração (camadas) | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
+| `assets/m3/podocito-pedicelos.svg` | Podócito e pedicelos | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
+| `assets/m3/glomerulo-mev.svg` | Tufo glomerular (esquema) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m3/membrana-basal-glomerular.svg` | MBG em três lâminas | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m3/diafragma-fenda-nefrina.svg` | Diafragma de fenda / nefrina | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m3/barreira-carga-tamanho.svg` | Peneiras de tamanho e carga | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m3/proteinuria-mecanismo.svg` | Proteinúria por mecanismo | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m3/sieving-curve.svg` | Curva θ × raio molecular | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m3/kf-perm-area.svg` | Kf = permeabilidade × superfície | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m3/lesao-minima.svg` | Lesão mínima (perda de carga) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m3/nefrotico-vs-nefritico.svg` | Nefrótica × nefrítica | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m3/dano-tamanho-naoseletiva.svg` | Dano de tamanho → não-seletiva | — | Projeto FILTRA | FILTRA (autoral) |
+
+> Nota: 5 SVGs do M3 eram placeholders e foram **reescritos como figuras autorais**; 3 imagens reais
+> (endotélio, barreira, podócito) seguem com crédito pendente (depende de acesso ao Wikimedia, ver OnDemand.md).
+
 ## Regras
 - Preferir **CC0 / domínio público**; **CC-BY / CC-BY-SA** aceitos **com atribuição** nesta tabela.
 - O caminho no `<img>` é sempre **relativo** (`assets/…`), nunca uma URL remota — o produto é offline.

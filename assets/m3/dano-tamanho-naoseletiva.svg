@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Dano de TAMANHO → proteinúria NÃO-seletiva</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">poros maiores deixam passar até a IgG; a razão IgG/albumina sobe</text>
+
+  <!-- barreira normal -->
+  <text x="180" y="76" text-anchor="middle" font-size="12" fill="#cdd9e3" font-weight="bold">Barreira íntegra</text>
+  <line x1="100" y1="150" x2="260" y2="150" stroke="#52c08a" stroke-width="4"/>
+  <g><line x1="130" y1="142" x2="130" y2="158" stroke="#0f1720" stroke-width="6"/><line x1="170" y1="142" x2="170" y2="158" stroke="#0f1720" stroke-width="6"/><line x1="210" y1="142" x2="210" y2="158" stroke="#0f1720" stroke-width="6"/></g>
+  <circle cx="120" cy="120" r="6" fill="#e8a13a"/><text x="150" y="112" font-size="9" fill="#f0c078">albumina (limítrofe)</text>
+  <circle cx="220" cy="118" r="14" fill="#e0556b"/><text x="220" y="100" text-anchor="middle" font-size="9" fill="#e08a96">IgG barrada ✓</text>
+  <text x="180" y="184" text-anchor="middle" font-size="9" fill="#9fb1c0">poros pequenos</text>
+
+  <!-- barreira danificada -->
+  <text x="500" y="76" text-anchor="middle" font-size="12" fill="#cdd9e3" font-weight="bold">Dano de tamanho</text>
+  <line x1="420" y1="150" x2="580" y2="150" stroke="#e0556b" stroke-width="4"/>
+  <g><line x1="455" y1="138" x2="455" y2="162" stroke="#0f1720" stroke-width="10"/><line x1="510" y1="138" x2="510" y2="162" stroke="#0f1720" stroke-width="10"/><line x1="555" y1="138" x2="555" y2="162" stroke="#0f1720" stroke-width="10"/></g>
+  <circle cx="455" cy="180" r="6" fill="#e8a13a"/>
+  <circle cx="510" cy="182" r="14" fill="#e0556b"/><text x="510" y="208" text-anchor="middle" font-size="9" fill="#e08a96">IgG agora VAZA</text>
+  <text x="500" y="120" text-anchor="middle" font-size="9" fill="#9fb1c0">poros alargados</text>
+
+  <rect x="120" y="224" width="440" height="52" rx="8" fill="#10202c" stroke="#3a4a58"/>
+  <text x="340" y="246" text-anchor="middle" font-size="11" fill="#e7eef4">Seletividade = θ(IgG) / θ(albumina): baixa = seletiva · alta = não-seletiva</text>
+  <text x="340" y="266" text-anchor="middle" font-size="10" fill="#f0c078">índice de seletividade é prognóstico (seletiva responde melhor a corticoide)</text>
+</svg>

@@ -103,6 +103,26 @@ depois) — preencher fonte/autor/licença antes de considerar o módulo finaliz
 > Nota: 7 SVGs do M4 eram placeholders e foram **reescritos como figuras autorais**; `clearance-conceito.png`
 > (real) segue com crédito pendente (depende de acesso ao Wikimedia, ver OnDemand.md).
 
+## M5 — TCP (SGLT2, anidrase carbônica, manitol)
+| Arquivo | Descrição | Fonte (URL) | Autor | Licença |
+|---|---|---|---|---|
+| `assets/m5/proximal-65pct-na.png` | TCP reabsorve ~65% do Na | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
+| `assets/m5/anidrase-carbonica-hco3.png` | Anidrase carbônica / HCO₃ | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
+| `assets/m5/reabsorcao-isosmotica.svg` | Reabsorção isosmótica | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m5/borda-escova-microvilosidades.svg` | Borda em escova | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m5/nhe3-troca-na-h.svg` | NHE3 (troca Na/H) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m5/sglt2-transportador.svg` | SGLT2 (cotransporte Na/glicose) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m5/sindrome-fanconi.svg` | Síndrome de Fanconi | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m5/tubulo-proximal-histologia.svg` | Histologia do TCP | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m5/glicose-titulacao.svg` | Curva de titulação da glicose | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m5/sglt2i-mecanismo.svg` | SGLT2i — três efeitos | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m5/acetazolamida-mecanismo.svg` | Acetazolamida (anidrase) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m5/manitol-osmotico.svg` | Manitol (diurese osmótica) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m5/dose-resposta-emax.svg` | Curva dose-resposta (Emax) | — | Projeto FILTRA | FILTRA (autoral) |
+
+> Nota: 6 SVGs do M5 eram placeholders e foram **reescritos como figuras autorais**; 2 PNGs reais
+> (proximal 65%, anidrase carbônica) seguem com crédito pendente (depende de acesso ao Wikimedia).
+
 ## Regras
 - Preferir **CC0 / domínio público**; **CC-BY / CC-BY-SA** aceitos **com atribuição** nesta tabela.
 - O caminho no `<img>` é sempre **relativo** (`assets/…`), nunca uma URL remota — o produto é offline.

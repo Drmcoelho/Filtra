@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <defs><marker id="ac" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#52c08a"/></marker></defs>
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Acetazolamida — inibe a anidrase carbônica do TCP</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">250–500 mg/dia · alvo: anidrase carbônica · diurético fraco com usos próprios</text>
+
+  <circle cx="120" cy="140" r="40" fill="#16202a" stroke="#52c08a" stroke-width="2"/>
+  <text x="120" y="136" text-anchor="middle" font-size="10" fill="#8fe0b0" font-weight="bold">anidrase</text>
+  <text x="120" y="150" text-anchor="middle" font-size="10" fill="#8fe0b0">carbônica</text>
+  <line x1="98" y1="118" x2="142" y2="162" stroke="#e0556b" stroke-width="3"/>
+
+  <g font-size="11" fill="#e7eef4">
+    <line x1="162" y1="140" x2="250" y2="100" stroke="#52c08a" stroke-width="2" marker-end="url(#ac)"/>
+    <rect x="250" y="80" width="380" height="38" rx="6" fill="#10202c" stroke="#e8a13a"/><text x="266" y="104">HCO₃ não é recuperado → bicarbonatúria → acidose metabólica</text>
+    <line x1="162" y1="140" x2="250" y2="150" stroke="#52c08a" stroke-width="2" marker-end="url(#ac)"/>
+    <rect x="250" y="130" width="380" height="38" rx="6" fill="#10202c" stroke="#3a7bd5"/><text x="266" y="154">Na acoplado não reabsorve → natriurese (diurético fraco)</text>
+    <line x1="162" y1="140" x2="250" y2="200" stroke="#52c08a" stroke-width="2" marker-end="url(#ac)"/>
+    <rect x="250" y="180" width="380" height="38" rx="6" fill="#10202c" stroke="#39c0c8"/><text x="266" y="204">usos: glaucoma, mal das alturas, alcalose, ↓pressão liquórica</text>
+  </g>
+  <text x="340" y="252" text-anchor="middle" font-size="10" fill="#9fb1c0">autolimitado: a acidose que ele gera reduz o próprio efeito (taquifilaxia)</text>
+  <text x="340" y="274" text-anchor="middle" font-size="10" fill="#e8a13a">cuidado em DPOC (a acidose some o estímulo... e pode piorar a retenção de CO₂)</text>
+</svg>

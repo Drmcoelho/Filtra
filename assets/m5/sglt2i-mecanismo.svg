@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <defs><marker id="i" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#39c0c8"/></marker></defs>
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">SGLT2i — uma chave, três efeitos</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">empagliflozina/dapagliflozina 10–25 mg/dia · alvo: SGLT2 no S1 do TCP</text>
+
+  <circle cx="120" cy="150" r="38" fill="#16202a" stroke="#39c0c8" stroke-width="2"/>
+  <text x="120" y="146" text-anchor="middle" font-size="11" fill="#9fe3ec" font-weight="bold">SGLT2</text>
+  <text x="120" y="162" text-anchor="middle" font-size="9" fill="#e08a96">bloqueado</text>
+  <line x1="98" y1="128" x2="142" y2="172" stroke="#e0556b" stroke-width="3"/>
+
+  <g font-size="11" fill="#e7eef4">
+    <line x1="158" y1="150" x2="250" y2="100" stroke="#39c0c8" stroke-width="2" marker-end="url(#i)"/>
+    <rect x="250" y="80" width="380" height="40" rx="6" fill="#10202c" stroke="#3a7bd5"/><text x="266" y="105">1) glicosúria → ↓glicemia (efeito antidiabético)</text>
+    <line x1="158" y1="150" x2="250" y2="150" stroke="#39c0c8" stroke-width="2" marker-end="url(#i)"/>
+    <rect x="250" y="130" width="380" height="40" rx="6" fill="#10202c" stroke="#52c08a"/><text x="266" y="155">2) natriurese + diurese osmótica → ↓PA, ↓volume</text>
+    <line x1="158" y1="150" x2="250" y2="200" stroke="#39c0c8" stroke-width="2" marker-end="url(#i)"/>
+    <rect x="250" y="180" width="380" height="40" rx="6" fill="#10202c" stroke="#e8a13a"/><text x="266" y="205">3) ↑NaCl na mácula densa → feedback → nefroproteção</text>
+  </g>
+  <text x="340" y="252" text-anchor="middle" font-size="10" fill="#9fb1c0">a dose-resposta satura em dose terapêutica (Emax) — dobrar a dose pouco acrescenta</text>
+  <text x="340" y="274" text-anchor="middle" font-size="10" fill="#e8a13a">risco: cetoacidose euglicêmica e infecção genital (glicose na urina)</text>
+</svg>

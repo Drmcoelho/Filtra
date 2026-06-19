@@ -1,22 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M5</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">TCP — SGLT2, anidrase carbônica</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">sglt2-transportador</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">Cotransporte Na+/glicose (SGLT2)</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <defs><marker id="g" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#39c0c8"/></marker></defs>
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">SGLT2 — o cotransportador Na/glicose do TCP (S1)</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">reabsorve ~90% da glicose; a glicose "pega carona" no gradiente de Na</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <rect x="40" y="70" width="600" height="40" rx="6" fill="#3a214a" fill-opacity="0.4" stroke="#a06ad0"/><text x="56" y="64" font-size="10" fill="#c9a0e0">LUZ (filtrado com glicose)</text>
+  <rect x="40" y="150" width="600" height="60" fill="#10202c" stroke="#3a4a58"/><text x="56" y="146" font-size="10" fill="#9fb1c0">CÉLULA TCP</text>
+
+  <!-- SGLT2 apical -->
+  <rect x="200" y="100" width="90" height="60" rx="6" fill="#16202a" stroke="#39c0c8" stroke-width="2"/>
+  <text x="245" y="135" text-anchor="middle" font-size="11" fill="#9fe3ec" font-weight="bold">SGLT2</text>
+  <line x1="225" y1="110" x2="225" y2="150" stroke="#39c0c8" stroke-width="2.5" marker-end="url(#g)"/><text x="210" y="128" font-size="9" fill="#9fe3ec">Na⁺</text>
+  <line x1="265" y1="110" x2="265" y2="150" stroke="#e8a13a" stroke-width="2.5" marker-end="url(#g)"/><text x="278" y="128" font-size="9" fill="#f0c078">glicose</text>
+
+  <!-- GLUT2 basolateral -->
+  <rect x="440" y="150" width="90" height="60" rx="6" fill="#16202a" stroke="#3a7bd5" stroke-width="2"/>
+  <text x="485" y="185" text-anchor="middle" font-size="11" fill="#9bbef0" font-weight="bold">GLUT2</text>
+  <line x1="485" y1="150" x2="485" y2="120" stroke="#e8a13a" stroke-width="2.5" marker-end="url(#g)"/><text x="500" y="138" font-size="9" fill="#f0c078">glicose → sangue</text>
+
+  <text x="340" y="240" text-anchor="middle" font-size="11" fill="#e8a13a">SGLT2i (empagliflozina 10–25 mg/dia) bloqueia o SGLT2 → glicosúria + natriurese</text>
+  <text x="340" y="262" text-anchor="middle" font-size="10" fill="#9fb1c0">extra: o Na que chega à mácula densa ativa o feedback → nefroproteção (M2)</text>
 </svg>

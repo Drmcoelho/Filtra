@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Manitol — diurético osmótico (a água presa na luz)</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">0,25–1 g/kg · filtrado e NÃO reabsorvido → segura a água no túbulo</text>
+
+  <rect x="40" y="74" width="600" height="50" rx="8" fill="#3a214a" fill-opacity="0.4" stroke="#a06ad0"/>
+  <text x="56" y="68" font-size="10" fill="#c9a0e0">LUZ tubular</text>
+  <g fill="#e8a13a"><circle cx="120" cy="99" r="7"/><circle cx="180" cy="99" r="7"/><circle cx="240" cy="99" r="7"/><circle cx="300" cy="99" r="7"/></g>
+  <text x="210" y="118" text-anchor="middle" font-size="9" fill="#f0c078">manitol (osmol que não sai)</text>
+  <g fill="#39c0c8" font-size="11"><text x="380" y="103">H₂O</text><text x="440" y="103">H₂O</text><text x="500" y="103">H₂O</text></g>
+  <text x="500" y="118" text-anchor="middle" font-size="9" fill="#9fe3ec">água retida pela osmose</text>
+
+  <rect x="40" y="150" width="600" height="60" rx="8" fill="#10202c" stroke="#3a4a58"/>
+  <text x="340" y="174" text-anchor="middle" font-size="11" fill="#e7eef4">retém água em TODO o néfron → diurese osmótica abundante</text>
+  <text x="340" y="196" text-anchor="middle" font-size="11" fill="#e8a13a">usos: ↓PIC e ↓pressão intraocular (puxa água do tecido para o plasma antes de filtrar)</text>
+
+  <text x="340" y="240" text-anchor="middle" font-size="10" fill="#9fb1c0">cuidado: expande o ECF antes de diurese (risco em ICC) e pode dar hiponatremia/edema</text>
+  <text x="340" y="262" text-anchor="middle" font-size="10" fill="#9fb1c0">contraste com SG 5% (M0): o manitol NÃO entra na célula → osmol efetivo</text>
+</svg>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 320" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="320" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="316" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">A curva dose-resposta (Emax) — por que dobrar a dose nem sempre faz mais</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">efeito = Emax·D/(EC50+D): satura num teto; EC50 é a dose de meio-efeito</text>
+  <line x1="70" y1="270" x2="640" y2="270" stroke="#3a4a58"/>
+  <line x1="70" y1="64" x2="70" y2="270" stroke="#3a4a58"/>
+  <text x="355" y="296" text-anchor="middle" font-size="11" fill="#9fb1c0">dose →</text>
+  <text x="30" y="180" font-size="11" fill="#9fb1c0" transform="rotate(-90 30 180)">efeito</text>
+  <!-- curva sigmoide/hiperbólica -->
+  <path d="M70,270 C150,150 260,96 400,86 C500,80 560,78 640,77" fill="none" stroke="#39c0c8" stroke-width="3"/>
+  <!-- Emax assíntota -->
+  <line x1="70" y1="77" x2="640" y2="77" stroke="#52c08a" stroke-dasharray="4 3" stroke-opacity="0.6"/>
+  <text x="80" y="73" font-size="10" fill="#8fe0b0">Emax (teto)</text>
+  <!-- EC50 -->
+  <line x1="180" y1="174" x2="180" y2="270" stroke="#e8a13a" stroke-dasharray="3 3"/>
+  <text x="180" y="286" text-anchor="middle" font-size="9" fill="#e8a13a">EC50</text>
+  <circle cx="180" cy="174" r="4" fill="#e8a13a"/>
+  <text x="430" y="120" font-size="11" fill="#9fb1c0">faixa terapêutica já perto do teto</text>
+  <text x="340" y="312" text-anchor="middle" font-size="9" fill="#9fb1c0">é assim que o motor calcula cada efeito (SGLT2i, acetazolamida, manitol) no Lab</text>
+</svg>

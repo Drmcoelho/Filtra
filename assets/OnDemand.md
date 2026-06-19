@@ -106,28 +106,68 @@ ou computado do engine** elevaria a aula, o pedido vem marcado `svg` (desenho au
 
 ---
 
-## Lâminas-síntese autorais (Dr. Matheus M. Coelho, 2026-06) — obra própria, licença livre
+## Lâmina-síntese autoral por módulo (M0–M39) — rastreador "a figura pra chamar de sua"
 
-Oito **lâminas-síntese** no cromo FILTRA (autorais, fornecidas pelo autor; tratadas como obra própria — sem
-exigência de crédito). Cada uma é a aba Conceito inteira de um segmento desenhada como prancha-âncora. Convertidas
-de PNG (~2,5 MB) para **webp ~155–205 KB** (1448 px, `sharp`, q82) e integradas **inline** no topo da aba Conceito
-como `figure.fviva.lamina`, com legenda que orienta *o que olhar* e remete às `Fig. 1–13` decompostas (não
-substituem as figuras computadas/SVG). Caveat do autor: "imperfeitas" — entram como **mapa de visão geral**, não
-como figura de precisão de pixel; a decodificação fina segue nas figuras computadas de cada módulo.
+O autor (Dr. Matheus M. Coelho) está desenhando, no cromo FILTRA, uma **lâmina-síntese** por módulo: a aba
+Conceito inteira do tema como prancha-âncora (obra própria, licença livre, sem exigência de crédito). Esta tabela
+é o **rastreador**: qual módulo **já tem a sua** lâmina e qual **ainda falta** o autor desenhar. Regra de integração:
+converter o PNG (~2,5 MB) para **webp ~155–205 KB** (1448 px, `sharp` q82), gravar em `assets/mN/<slug>.webp` e
+inserir **inline** no topo da aba Conceito como `figure.fviva.lamina` (regra CSS já existe nos integrados — copiar
+de `filtra1/3/5/6/8.html`), com legenda que orienta *o que olhar* e remete às `Fig. N` decompostas. As lâminas
+**complementam, não substituem** as figuras computadas/SVG; caveat do autor ("imperfeitas") → entram como **mapa de
+visão geral**, a decodificação fina segue nas figuras computadas.
 
-| slug | módulo | tema | status |
+Status: `INTEGRADO` (no HTML) · `OBTIDO` (webp em disco, aguarda o módulo ser construído) · `PEDIDO` (o autor
+ainda vai desenhar). `[c]` = módulo construído (integra na hora) · `[p]` = HTML pendente (entra na construção).
+
+| módulo | slug-destino | tema da lâmina-síntese | status |
 |---|---|---|---|
-| m1/atlas-nefron-visual.webp | M1 | atlas do néfron (rim macro → néfron → segmentos) | INTEGRADO |
-| m3/glomerulo-barreira-sintese.webp | M3 | Starling (+10 mmHg) + barreira de 3 camadas | INTEGRADO |
-| m5/tcp-sintese.webp | M5 | TCP: NHE3/SGLT2/NaPi-IIa/AC + acetazolamida/SGLT2i/manitol | INTEGRADO |
-| m6/alca-henle-sintese.webp | M6 | alça: NKCC2, contracorrente, gradiente 300→1200 | INTEGRADO |
-| m8/ducto-coletor-sintese.webp | M8 | ducto: ENaC/aldo, ADH/AQP2, intercalares, poupadores/vaptano | INTEGRADO |
-| m7/tcd-sintese.webp | M7 | TCD: NCC, Ca²⁺, tiazídicos (paradoxo do Ca) | OBTIDO (aguarda M7) |
-| m14/endocrinologia-renal-sintese.webp | M14 | rim como glândula: RAAS, EPO, vit D, PG, autorregulação | OBTIDO (aguarda M14) |
-| m14/jga-raas-sintese.webp | M14 | aparelho justaglomerular + eixo renina-angiotensina-aldosterona | OBTIDO (aguarda M14) |
+| M0 `[c]`  | m0/compartimentos-sintese.webp | compartimentos ICF/ECF/plasma · tonicidade × osmolalidade · fluidos IV e onde vão | **PEDIDO** |
+| M1 `[c]`  | m1/atlas-nefron-visual.webp | atlas do néfron (rim macro → néfron → segmentos) | INTEGRADO |
+| M2 `[c]`  | m2/hemodinamica-renal-sintese.webp | 20% do DC · autorregulação miogênica + FTG · córtex × medula (hipóxia) | **PEDIDO** |
+| M3 `[c]`  | m3/glomerulo-barreira-sintese.webp | Starling (+10 mmHg) + barreira de 3 camadas (carga/tamanho) | INTEGRADO |
+| M4 `[c]`  | m4/clearance-sintese.webp | clearance · a hipérbole Cr×TFG · secreção tubular · massa muscular | **PEDIDO** |
+| M5 `[c]`  | m5/tcp-sintese.webp | TCP: NHE3/SGLT2/NaPi-IIa/AC + acetazolamida/SGLT2i/manitol | INTEGRADO |
+| M6 `[c]`  | m6/alca-henle-sintese.webp | alça: NKCC2, contracorrente, gradiente 300→1200 | INTEGRADO |
+| M7 `[p]`  | m7/tcd-sintese.webp | TCD: NCC, Ca²⁺, tiazídicos (paradoxo do Ca) | OBTIDO |
+| M8 `[c]`  | m8/ducto-coletor-sintese.webp | ducto: ENaC/aldo, ADH/AQP2, intercalares, poupadores/vaptano | INTEGRADO |
+| M9 `[p]`  | m9/sodio-volume-sintese.webp | volume circulante efetivo × tonicidade · barorreceptores · SNS/RAAS/PN | **PEDIDO** |
+| M10 `[p]` | m10/agua-livre-sintese.webp | disnatremias = distúrbio de água · ADH/sede · velocidade de correção (mielinólise/edema) | **PEDIDO** |
+| M11 `[p]` | m11/potassio-sintese.webp | K gradiente × estoque · secreção distal · pH/insulina/β · ECG como mecanismo | **PEDIDO** |
+| M12 `[p]` | m12/ca-po4-mg-sintese.webp | triângulo Ca-PO₄-PTH · vit D · FGF23 · ionizado/albumina/pH | **PEDIDO** |
+| M13 `[p]` | m13/acidobase-renal-sintese.webp | HCO₃⁻/NH₄⁺/acidez titulável · ânion gap · delta-delta · ATRs | **PEDIDO** |
+| M14 `[p]` | m14/endocrinologia-renal-sintese.webp | rim como glândula: RAAS, EPO, vit D, PG, autorregulação | OBTIDO |
+| M14 `[p]` | m14/jga-raas-sintese.webp | aparelho justaglomerular + eixo renina-angiotensina-aldosterona | OBTIDO |
+| M15 `[p]` | m15/urina-indices-sintese.webp | a urina conta a história · FE_Na/FE_ureia · sedimento/cilindros · pré-renal × NTA | **PEDIDO** |
+| M16 `[p]` | m16/lra-mecanismo-sintese.webp | KDIGO · pré-renal / intrínseca (NTA·NIA·glomerular) / pós-renal · cardio/hepatorrenal | **PEDIDO** |
+| M17 `[p]` | m17/diureticos-sintese.webp | néfron inteiro como alvo · dose-resposta/teto/braking · bloqueio sequencial/sinergia | **PEDIDO** |
+| M18 `[p]` | m18/antihipertensivos-raas-sintese.webp | IECA/BRA/IDR/ARM/sacubitril · hemodinâmica eferente · EPO/quelantes/calcimiméticos | **PEDIDO** |
+| M19 `[p]` | m19/transporte-principios-sintese.webp | difusão · convecção · ultrafiltração · adsorção (a base da diálise) | **PEDIDO** |
+| M20 `[p]` | m20/circuito-extracorporeo-sintese.webp | acesso · bomba · dialisador · fluxos Qb/Qd · pressões/TMP | **PEDIDO** |
+| M21 `[p]` | m21/membrana-clearance-sintese.webp | KoA · sieving · backfiltration · high-flux × low-flux | **PEDIDO** |
+| M22 `[p]` | m22/sessao-hdi-sintese.webp | a sessão de HDI · eficiência × tempo · o custo do "intermitente" | **PEDIDO** |
+| M23 `[p]` | m23/uf-volume-sintese.webp | peso seco · taxa de UF · refilling plasmático · volume relativo | **PEDIDO** |
+| M24 `[p]` | m24/hipotensao-intradialitica-sintese.webp | UF > refilling · stunning miocárdico · tolerância · Na/temperatura do dialisato | **PEDIDO** |
+| M25 `[p]` | m25/dose-adequacao-sintese.webp | Kt/V · URR · tempo × fluxo · prescrição de dose | **PEDIDO** |
+| M26 `[p]` | m26/cinetica-ureia-sintese.webp | compartimento único × duplo · rebote pós-diálise | **PEDIDO** |
+| M27 `[p]` | m27/trrc-modalidades-sintese.webp | CVVH (convecção) × CVVHD (difusão) × CVVHDF · por que "contínuo" | **PEDIDO** |
+| M28 `[p]` | m28/dose-trrc-sintese.webp | efluente mL/kg/h · pré × pós-diluição · fração de filtração | **PEDIDO** |
+| M29 `[p]` | m29/anticoagulacao-sintese.webp | citrato regional (quelação de Ca²⁺) × heparina · protocolos | **PEDIDO** |
+| M30 `[p]` | m30/dialise-peritoneal-sintese.webp | peritônio como membrana · UF osmótica pela glicose · PET/transportadores | **PEDIDO** |
+| M31 `[p]` | m31/sled-hibridas-sintese.webp | o meio-termo HDI↔TRRC · racional hemodinâmico | **PEDIDO** |
+| M32 `[p]` | m32/depuracao-drogas-sintese.webp | PM · ligação proteica · Vd · dose suplementar pós-HD | **PEDIDO** |
+| M33 `[p]` | m33/remocao-toxinas-sintese.webp | dialisáveis (lítio/salicilato/metanol/EG) · gap osmolar → aniônico | **PEDIDO** |
+| M34 `[p]` | m34/desequilibrio-dialitico-sintese.webp | edema cerebral por osmose reversa · o gradiente que machuca | **PEDIDO** |
+| M35 `[p]` | m35/aeiou-indicacoes-sintese.webp | AEIOU (acidose/eletrólitos/intoxicação/sobrecarga/uremia) como mapa de conduta | **PEDIDO** |
+| M36 `[p]` | m36/momento-trs-sintese.webp | precoce × tardio · gatilhos · o mecanismo que pede suporte | **PEDIDO** |
+| M37 `[p]` | m37/cardiorrenal-uf-sintese.webp | coração–rim–volume · congestão venosa renal · diurético × UF (ponte Choca) | **PEDIDO** |
+| M38 `[p]` | m38/capstone-modalidade-sintese.webp | LRA grave → escolha de modalidade/prescrição por mecanismo | **PEDIDO** |
+| M39 `[p]` | m39/mapa-integrador-sintese.webp | mapa integrador néfron→meio interno→falência→fármaco→diálise · hexápode | **PEDIDO** |
 
-> Ao construir **M7** e **M14**, integrar as lâminas `OBTIDO` acima como `figure.fviva.lamina` (a regra CSS já
-> existe nos módulos integrados — copiar de `filtra1/3/5/6/8.html`) e mudar o status para `INTEGRADO`.
+**Resumo:** 7 módulos já têm a lâmina autoral (M1·M3·M5·M6·M8 `INTEGRADO`; M7·M14×2 `OBTIDO`).
+**Faltam 33 lâminas** a desenhar (`PEDIDO`): M0, M2, M4 (já construídos → integram na hora) + M9–M13, M15–M39.
+Ao entregar cada lâmina nova: se `[c]`, integro inline e marco `INTEGRADO`; se `[p]`, gravo o webp e marco
+`OBTIDO` até o módulo ser construído.
 
 ## M3 — O glomérulo / barreira de filtração  [módulo construído]
 > Erro que corrige: "proteinúria = rim falhando"; verdade: glomerular × tubular; barreira de **carga** e **tamanho**.

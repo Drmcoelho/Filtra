@@ -1,22 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M8</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">Ducto coletor — ENaC/aldo, ADH/aquaporina</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">adh-vasopressina-eixo</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">Eixo ADH/vasopressina</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <defs><marker id="x" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#39c0c8"/></marker></defs>
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">O eixo do ADH (vasopressina) — o que liga e o que faz</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">estímulos: osmolalidade↑ (osmorreceptores) e volume↓ (barorreceptores)</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <!-- hipotálamo/hipófise -->
+  <circle cx="120" cy="120" r="34" fill="#3a214a" fill-opacity="0.6" stroke="#a06ad0"/>
+  <text x="120" y="116" text-anchor="middle" font-size="9" fill="#c9a0e0">hipotálamo/</text>
+  <text x="120" y="128" text-anchor="middle" font-size="9" fill="#c9a0e0">neuro-hipófise</text>
+
+  <g font-size="11" fill="#e7eef4">
+    <line x1="60" y1="90" x2="86" y2="110" stroke="#39c0c8" stroke-width="2" marker-end="url(#x)"/><text x="20" y="86" font-size="10" fill="#9fe3ec">osm↑</text>
+    <line x1="60" y1="150" x2="86" y2="130" stroke="#39c0c8" stroke-width="2" marker-end="url(#x)"/><text x="20" y="158" font-size="10" fill="#9fe3ec">volume↓</text>
+    <line x1="154" y1="120" x2="250" y2="120" stroke="#39c0c8" stroke-width="2" marker-end="url(#x)"/><text x="200" y="112" text-anchor="middle" font-size="10" fill="#9fe3ec">libera ADH</text>
+  </g>
+
+  <rect x="260" y="80" width="380" height="80" rx="8" fill="#10202c" stroke="#3a7bd5"/>
+  <text x="450" y="104" text-anchor="middle" font-size="11" fill="#9bbef0" font-weight="bold">ADH no rim (V2)</text>
+  <text x="276" y="128" font-size="11" fill="#cdd9e3">→ aquaporina-2 → reabsorve água → urina concentrada</text>
+  <text x="276" y="148" font-size="11" fill="#cdd9e3">→ também recicla ureia (reforça o gradiente medular)</text>
+
+  <text x="340" y="196" text-anchor="middle" font-size="11" fill="#e8a13a">SIADH (ADH inapropriado) → retém água → hiponatremia (M0/M10)</text>
+  <text x="340" y="220" text-anchor="middle" font-size="11" fill="#e8a13a">diabetes insipidus (falta ADH ou rim não responde) → poliúria, urina diluída</text>
+  <text x="340" y="246" text-anchor="middle" font-size="10" fill="#9fb1c0">o ADH tem dois receptores: V2 (água, aqui) e V1 (vasoconstrição, Choca)</text>
 </svg>

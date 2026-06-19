@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Poupadores de K⁺ — dois caminhos para o mesmo fim</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">ambos reduzem o ENaC → menos K secretado → poupam K (risco de hipercalemia)</text>
+
+  <rect x="40" y="70" width="290" height="170" rx="8" fill="#10202c" stroke="#e8a13a"/>
+  <text x="185" y="94" text-anchor="middle" font-size="12" fill="#f0c078" font-weight="bold">ARM (antagonista do receptor)</text>
+  <text x="60" y="122" font-size="11" fill="#e7eef4">espironolactona 25–100 mg/dia</text>
+  <text x="60" y="146" font-size="11" fill="#e7eef4">eplerenona 25–50 mg/dia (seletiva)</text>
+  <text x="60" y="172" font-size="10" fill="#9fb1c0">bloqueia a aldosterona → menos ENaC</text>
+  <text x="60" y="196" font-size="10" fill="#9fb1c0">precisa de aldosterona presente p/ agir</text>
+  <text x="60" y="222" font-size="10" fill="#e08a96">espiro: antiandrogênico (ginecomastia)</text>
+
+  <rect x="350" y="70" width="290" height="170" rx="8" fill="#10202c" stroke="#3a7bd5"/>
+  <text x="495" y="94" text-anchor="middle" font-size="12" fill="#9bbef0" font-weight="bold">Bloqueador do ENaC (canal)</text>
+  <text x="370" y="122" font-size="11" fill="#e7eef4">amilorida 5–10 mg/dia</text>
+  <text x="370" y="146" font-size="11" fill="#e7eef4">triantereno</text>
+  <text x="370" y="172" font-size="10" fill="#9fb1c0">bloqueia o canal DIRETO</text>
+  <text x="370" y="196" font-size="10" fill="#9fb1c0">age mesmo sem aldosterona (Liddle)</text>
+  <text x="370" y="222" font-size="10" fill="#9fb1c0">sem efeito hormonal</text>
+
+  <text x="340" y="268" text-anchor="middle" font-size="11" fill="#e8a13a">uso: hiperaldosteronismo, ICC (com IECA), cirrose; cuidado com K⁺ + IECA/BRA</text>
+</svg>

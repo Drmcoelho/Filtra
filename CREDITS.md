@@ -143,6 +143,26 @@ depois) — preencher fonte/autor/licença antes de considerar o módulo finaliz
 > Nota: 6 SVGs do M6 eram placeholders e foram **reescritos como autorais**; 1 SVG real (ramo fino) e 1 PNG
 > real (sítio dos diuréticos) seguem com crédito pendente (depende de acesso ao Wikimedia).
 
+## M8 — Ducto coletor (ENaC/aldosterona, ADH; poupadores de K, vaptanos)
+| Arquivo | Descrição | Fonte (URL) | Autor | Licença |
+|---|---|---|---|---|
+| `assets/m8/celula-principal-enac.png` | Célula principal (ENaC) | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
+| `assets/m8/poupadores-k-sitio.png` | Sítio dos poupadores de K | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
+| `assets/m8/ducto-coletor-celulas.svg` | Células do ducto coletor | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
+| `assets/m8/aldosterona-acao.svg` | Ação da aldosterona (ENaC) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m8/aquaporina-adh.svg` | ADH e aquaporina-2 | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m8/celula-intercalar-h.svg` | Células intercalares α/β | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m8/adh-vasopressina-eixo.svg` | Eixo do ADH | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m8/vaptano-v2.svg` | Vaptano (antagonista V2) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m8/enac-k-secrecao.svg` | Balança Na↔K (ENaC) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m8/poupadores-mecanismo.svg` | ARM × amilorida | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m8/dose-resposta-emax.svg` | Dose-resposta (Emax) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m8/adh-dois-receptores.svg` | V1 × V2 da vasopressina | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m8/liddle-pseudoaldo.svg` | Liddle × pseudo-hipoaldo | — | Projeto FILTRA | FILTRA (autoral) |
+
+> Nota: 5 SVGs do M8 eram placeholders e foram **reescritos como autorais**; 1 SVG real (células do ducto) e
+> 2 PNGs reais (célula principal, sítio dos poupadores) seguem com crédito pendente (depende do Wikimedia).
+
 ## Regras
 - Preferir **CC0 / domínio público**; **CC-BY / CC-BY-SA** aceitos **com atribuição** nesta tabela.
 - O caminho no `<img>` é sempre **relativo** (`assets/…`), nunca uma URL remota — o produto é offline.

@@ -1,22 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M8</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">Ducto coletor — ENaC/aldo, ADH/aquaporina</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">vaptano-v2</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">Antagonista V2 (vaptano)</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Vaptano — antagonista do receptor V2</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">tolvaptan 15–60 mg/dia bloqueia o V2 → sem aquaporina → AQUARESE (água livre sai)</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <circle cx="120" cy="150" r="40" fill="#16202a" stroke="#3a7bd5" stroke-width="2"/>
+  <text x="120" y="146" text-anchor="middle" font-size="11" fill="#9bbef0" font-weight="bold">V2</text>
+  <text x="120" y="162" text-anchor="middle" font-size="9" fill="#e08a96">bloqueado</text>
+  <line x1="98" y1="128" x2="142" y2="172" stroke="#e0556b" stroke-width="3"/>
+
+  <g font-size="11" fill="#e7eef4">
+    <rect x="200" y="84" width="440" height="36" rx="6" fill="#10202c" stroke="#52c08a"/><text x="216" y="107">sem aquaporina-2 → perde ÁGUA sem sal (aquarese) → Na⁺ sobe</text>
+    <rect x="200" y="128" width="440" height="36" rx="6" fill="#10202c" stroke="#3a7bd5"/><text x="216" y="151">uso: hiponatremia da SIADH; doença renal policística (tolvaptan)</text>
+    <rect x="200" y="172" width="440" height="36" rx="6" fill="#10202c" stroke="#e0556b"/><text x="216" y="195">risco: correção RÁPIDA do Na → mielinólise (M0/M10) → limitar a velocidade</text>
+  </g>
+  <text x="340" y="240" text-anchor="middle" font-size="10" fill="#9fb1c0">contraste: a restrição hídrica corrige devagar; o vaptano é uma alavanca ativa da água</text>
+  <text x="340" y="262" text-anchor="middle" font-size="10" fill="#9fb1c0">hepatotoxicidade limita o uso prolongado (monitorar)</text>
 </svg>

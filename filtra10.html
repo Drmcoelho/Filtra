@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M10 — Água livre e o sódio: disnatremias são distúrbios de água</title>
+<style>
+  :root{
+    --bg:#0c1014; --panel:#141b22; --panel2:#1b242d; --line:#283642;
+    --ink:#e7eef4; --dim:#9fb1c0; --accent:#39c0c8; --warn:#e8a13a; --bad:#e0556b; --good:#52c08a;
+    --aff:#e0556b; --eff:#3a7bd5; --tuft:#39c0c8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none}
+  section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg,#agualivre-svg svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px}
+  .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)}
+  .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)}
+  .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)}
+  .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+  code{background:#0a1016;border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:13px}
+  .preset{display:inline-block}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M10</div>
+  <h1>Água livre e o sódio — disnatremias são distúrbios de ÁGUA</h1>
+  <div class="sub">O Na⁺ <b>não</b> mede o sal: é o <b>proxy da ÁGUA</b>. Pela equação de <b>Edelman</b>,
+  <code>Na ≈ (Na+K trocáveis)/ÁGT</code> — mexa a água (o denominador) e o Na se move. O <b>ADH</b> abre a
+  <b>aquaporina-2</b> e reabsorve água livre; a <b>sede</b> é a segunda defesa. O <b>clearance de água livre</b>
+  <code>C_H2O = V̇ − C_osm</code> diz se o rim dilui (C_H2O&gt;0) ou concentra (C_H2O&lt;0). E o perigo central é a
+  <b>VELOCIDADE</b>: hiponatremia crônica corrigida rápido → <b>mielinólise</b>; hipernatremia crônica corrigida
+  rápido → <b>edema cerebral</b>. Corredor seguro ~6–8 mEq/L/24h. Tratar a ÁGUA, não o número.</div>
+  <nav class="hex">
+    <a class="soon" title="em breve">RESPIRA</a>
+    <a class="soon" title="em breve">CHOCA</a>
+    <span class="ativo">FILTRA</span>
+    <a class="soon" title="em breve">ALIMENTA</a>
+    <a class="soon" title="em breve">METABOLIZA</a>
+    <a class="soon" title="em breve">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="filtra.html">&larr; índice do braço FILTRA</a>
+
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- ============================== CONCEITO ============================== -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — o sódio é a sombra da água</h3>
+
+      <h4>1. Edelman — o Na⁺ é proxy da ÁGUA</h4>
+      <p class="sub">O Na⁺ plasmático não conta quanto sal há no corpo; conta a razão entre os <b>osmoles trocáveis
+      (Na+K)</b> e a <b>água corporal total (ÁGT)</b>: <code>Na ≈ (Na+K trocáveis)/ÁGT</code> (equação de
+      <b>Edelman</b>). Com o numerador praticamente fixo, <b>ganhar água livre dilui</b> o Na (hiponatremia) e
+      <b>perder água</b> o concentra (hipernatremia). Disnatremia = distúrbio de <b>ÁGUA</b>, não de sal.</p>
+      <div class="frow">
+        <div class="concept" id="draw-edelman"></div>
+        <figure class="fviva"><img src="assets/m10/clearance-agua-livre.svg" alt="Esquema do clearance de água livre: o rim excreta ou reabsorve água sem soluto" loading="lazy">
+          <figcaption><b>Fig. 1 · O clearance de água livre.</b> O rim separa a água do soluto: <code>C_H2O = V̇ − C_osm</code>.
+          ① urina diluída → <b>excreta água livre</b> (C_H2O&gt;0, dilui o corpo). ② urina concentrada →
+          <b>reabsorve água</b> (C_H2O&lt;0, concentra). É a alavanca que move o Na pela ÁGUA.</figcaption></figure>
+      </div>
+
+      <h4>2. ADH/vasopressina e a aquaporina-2</h4>
+      <p class="sub">A osmolalidade é vigiada por osmorreceptores hipotalâmicos. Se ela sobe, liberam <b>ADH
+      (vasopressina)</b>, que insere <b>aquaporina-2</b> no ducto coletor → reabsorção de água livre → urina
+      concentrada (U_osm alta). Se a osmolalidade cai, o ADH desliga → urina diluída (U_osm baixa) → o rim
+      <b>expele água</b>. A <b>sede</b> é a segunda defesa, ajustando a ingestão.</p>
+      <div class="frow">
+        <div class="concept" id="draw-adh"></div>
+        <figure class="fviva"><img src="assets/m10/osmorregulacao-adh-sede.svg" alt="Osmorregulação: osmorreceptores, ADH/vasopressina e sede defendendo a tonicidade" loading="lazy">
+          <figcaption><b>Fig. 2 · Osmorregulação (ADH + sede).</b> O osmorreceptor lê a tonicidade e move duas alavancas:
+          o <b>ADH</b> (retém/excreta água via AQP2 no rim) e a <b>sede</b> (entrada de água). Juntas defendem a
+          <b>homeostasia</b> do meio interno — a tonicidade, não o número absoluto de Na.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m10/clearance-agua-livre.svg" alt="C_H2O positivo dilui e negativo concentra: o ADH desloca o sinal" loading="lazy">
+          <figcaption><b>Fig. 3 · ADH desloca o C_H2O.</b> ADH alto → U_osm↑ → C_H2O fica <b>negativo</b> (concentra,
+          retém água, Na↓). ADH baixo → U_osm↓ → C_H2O <b>positivo</b> (dilui, perde água, Na↑). O instrumento
+          mostra essa curva cruzando o zero.</figcaption></figure>
+      </div>
+
+      <h4>3. SIADH × Diabetes insípido — imagens espelhadas</h4>
+      <p class="sub">No <b>SIADH</b>, o ADH é liberado <em>inapropriadamente</em> (sem estímulo osmótico) → o rim
+      retém água → <b>hiponatremia euvolêmica</b> com <b>U_osm alta</b> (urina inadequadamente concentrada). No
+      <b>diabetes insípido</b> (central = falta de ADH; nefrogênico = rim surdo ao ADH), o rim <b>não concentra</b> →
+      poliúria de água livre → <b>hipernatremia</b> com <b>U_osm baixa</b>. Mesmo eixo (água), sinais opostos.</p>
+      <div class="frow">
+        <div class="concept" id="draw-siadh"></div>
+        <figure class="fviva"><img src="assets/m10/siadh.svg" alt="SIADH: ADH inapropriadamente alto retém água, hiponatremia euvolêmica, urina concentrada" loading="lazy">
+          <figcaption><b>Fig. 4 · SIADH.</b> ADH alto sem motivo → AQP2 abertas → <b>retém água</b> → o Na cai por
+          <b>diluição</b> (hiponatremia euvolêmica). A pista: <b>U_osm alta</b> (urina concentrada) num paciente
+          hiponatrêmico — o rim deveria estar despejando água, e não está.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m10/diabetes-insipidus.svg" alt="Diabetes insípido: rim não concentra, poliúria de água livre, hipernatremia, urina diluída" loading="lazy">
+          <figcaption><b>Fig. 5 · Diabetes insípido.</b> Sem ADH eficaz (central ou nefrogênico) → AQP2 fechadas →
+          <b>poliúria de água livre</b> → o Na sobe por <b>concentração</b> (hipernatremia). Pista: <b>U_osm baixa</b>
+          apesar da hiperosmolalidade. O corpo perde a água que precisa reter.</figcaption></figure>
+      </div>
+
+      <h4>4. A VELOCIDADE da correção — onde o perigo mora</h4>
+      <p class="sub">Em horas, o cérebro se adapta a uma disnatremia <b>crônica</b> trocando osmolitos para igualar a
+      tonicidade e manter seu volume. Por isso a correção <b>rápida demais</b> é o que mata: numa hiponatremia
+      <b>crônica</b>, subir o Na rápido encolhe os neurônios → <b>mielinólise pontina</b> (desmielinização osmótica).
+      Numa hipernatremia <b>crônica</b>, baixar o Na rápido inunda os neurônios carregados de osmolitos →
+      <b>edema cerebral</b>. Limite seguro: <b>~6–8 mEq/L por 24 h</b>. A fórmula de <b>Adrogué–Madias</b> estima o
+      ΔNa por litro de infusato: <code>ΔNa = (Na_inf − Na_sérico)/(ÁGT + 1)</code>.</p>
+      <div class="frow">
+        <div class="concept" id="draw-corredor"></div>
+        <figure class="fviva"><img src="assets/m10/adaptacao-cerebral-osmolitos.svg" alt="Adaptação cerebral: troca de osmolitos para defender o volume na disnatremia crônica" loading="lazy">
+          <figcaption><b>Fig. 6 · A adaptação cerebral.</b> Na disnatremia <b>crônica</b>, o neurônio troca osmolitos
+          (ganha na hiper, perde na hipo) para igualar a tonicidade e <b>não mudar de volume</b>. Essa adaptação é o
+          que torna a correção rápida perigosa — o cérebro já não está na tonicidade do plasma.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m10/correcao-velocidade-na.svg" alt="Corredor seguro de correção do Na: 6 a 8 mEq por 24h, com zonas de perigo" loading="lazy">
+          <figcaption><b>Fig. 7 · O corredor seguro (Fig. 7).</b> A trajetória do Na deve ficar dentro de
+          <b>~6–8 mEq/L/24h</b> (faixa sombreada). Fora dela: rápido demais. O <b>instrumento</b> reproduz essa
+          trajetória a partir do infusato e da taxa que você escolher.</figcaption></figure>
+      </div>
+
+      <h4>5. As duas lesões da pressa</h4>
+      <p class="sub">São dois desastres simétricos. A <b>mielinólise pontina</b> segue a correção rápida da hiponatremia
+      <b>crônica</b> (sobe-se o Na rápido, o cérebro encolhe). O <b>edema cerebral</b> segue a correção rápida da
+      hipernatremia <b>crônica</b> — ou a hiponatremia <b>aguda</b> não tratada (a água entra no cérebro). As Fig. 1–9
+      reaparecem no Caso, na Trilha e na Avaliação como âncoras do raciocínio.</p>
+      <div class="frow">
+        <div class="concept" id="draw-lesoes"></div>
+        <figure class="fviva"><img src="assets/m10/mielinolise-pontina.svg" alt="Mielinólise pontina: desmielinização osmótica por correção rápida de hiponatremia crônica" loading="lazy">
+          <figcaption><b>Fig. 8 · Mielinólise pontina.</b> Correção <b>rápida</b> de hiponatremia <b>crônica</b> → o Na
+          sobe mais rápido que o cérebro readapta → desmielinização da ponte. Por isso o teto de 6–8 mEq/24h não é
+          burocracia: é a margem entre tratar e lesar.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m10/edema-cerebral-hiponatremia.svg" alt="Edema cerebral: água entra no cérebro na hiponatremia aguda ou na correção rápida da hipernatremia" loading="lazy">
+          <figcaption><b>Fig. 9 · Edema cerebral.</b> A água invade o cérebro: na <b>hiponatremia aguda</b> (queda
+          brusca da tonicidade) ou na correção <b>rápida</b> de uma hipernatremia crônica. A célula incha dentro do
+          crânio rígido — a face oposta da mielinólise.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== CASO (5 atos) ============================== -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — cinco atos, decida antes de revelar</h3>
+      <p class="sub">Cinco cenários de água e sódio. <b>(A)</b> Mulher, 68 anos, etilista crônica, confusa há dias:
+      Na 116 mEq/L. <b>(B)</b> Idoso com pneumonia, Na 124, U_osm 480, euvolêmico. <b>(C)</b> Pós-operatório de
+      neurocirurgia hipofisária, poliúria 400 mL/h, Na sobe para 152, urina clara. <b>(D)</b> Maratonista que bebeu
+      muita água, Na 124 agudo, convulsão. <b>(E)</b> Idoso acamado, demente, sem acesso à água: Na 165.</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step">
+        <b>Ato 1.</b> Na etilista crônica (A) com Na 116 há dias, você corrige rápido com NaCl 3% em bólus generoso?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>Não — é hiponatremia CRÔNICA.</b> O cérebro já adaptou (osmolitos). Subir o Na
+        rápido encolhe os neurônios → <b>mielinólise pontina</b> (Fig. 8). O alvo é <b>≤6–8 mEq/L/24h</b>. No engine:
+        <code>na 116, cronico 1, NaCl 3% a taxa alta</code> → corr24 &gt; teto, regime <b>mielinolise</b>. Corrija
+        devagar, dentro do corredor (Fig. 7).</div>
+      </div>
+      <div class="step">
+        <b>Ato 2.</b> No idoso com pneumonia (B), Na 124, U_osm 480, euvolêmico — qual o mecanismo?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2"><b>SIADH</b> (Fig. 4). ADH inapropriadamente alto → retém água livre → hiponatremia
+        por <b>diluição</b>. A pista é a <b>U_osm alta</b> (urina concentrada) num paciente hiponatrêmico — o rim
+        deveria despejar água. No engine: <code>na 124, adh 0.9</code> → regime <b>siadh</b>, C_H2O negativo
+        (concentra). Restrição de água é a base; o problema é a ÁGUA, não o sal.</div>
+      </div>
+      <div class="step">
+        <b>Ato 3.</b> Pós-neurocirurgia (C): poliúria de urina clara e Na subindo a 152. O que é?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3"><b>Diabetes insípido central</b> (Fig. 5): lesão hipotalâmico-hipofisária → falta
+        de ADH → o rim <b>não concentra</b> → poliúria de água livre → hipernatremia. Pista: <b>U_osm baixa</b>
+        apesar da hiperosmolalidade. No engine: <code>na 152, adh 0.05</code> → regime <b>diabetes_insipido</b>,
+        C_H2O positivo (excreta água). Repõe-se a água e a vasopressina; trata-se a ÁGUA perdida.</div>
+      </div>
+      <div class="step">
+        <b>Ato 4.</b> O maratonista (D) com Na 124 AGUDO e convulsão — corrigir rápido é perigoso aqui também?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>Aqui é o contrário — é uma emergência de EDEMA agudo</b> (Fig. 9). A queda foi
+        em <b>horas</b>: o cérebro NÃO adaptou → está inchando agora. Bólus de NaCl 3% para subir ~4–6 mEq rápido é
+        salvador, não perigoso. No engine: <code>na 124, cronico 0</code> → sem risco de mielinólise (cérebro não
+        adaptado). A <b>cronicidade</b> inverte a conduta — o mesmo número, decisões opostas.</div>
+      </div>
+      <div class="step">
+        <b>Ato 5.</b> Conduta e síntese.
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>(A) hipo crônica:</b> corrigir <em>devagar</em> (≤6–8/24h), vigiar a velocidade.
+        <b>(B) SIADH:</b> restrição hídrica; o erro é dar SF, que pode piorar. <b>(C) DI central:</b> repor água +
+        desmopressina; seguir a U_osm. <b>(D) hipo aguda sintomática:</b> NaCl 3% em bólus, rápido e salvador.
+        <b>(E) hipernatremia do idoso:</b> repor água livre <em>devagar</em> se crônica (risco de edema, Fig. 9).
+        <br><b>Lição:</b> em toda disnatremia, pergunte primeiro <em>"é a água?"</em> e <em>"é aguda ou crônica?"</em>.
+        O Na é a sombra; a ÁGUA e o tempo são a luz.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== TRILHA ============================== -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — dez passos que constroem o conceito</h3>
+      <details><summary>1. O que o Na⁺ plasmático realmente mede?</summary>
+        <p><em>Pista: razão, não quantidade.</em><br>
+        Pela equação de Edelman, Na ≈ (Na+K trocáveis)/ÁGT. Ele mede a <b>concentração</b> — a razão entre soluto e
+        ÁGUA. É proxy da água, não do estoque de sal.</p></details>
+      <details><summary>2. Por que ganhar água livre baixa o Na?</summary>
+        <p><em>Pista: o denominador cresce.</em><br>
+        Com os osmoles trocáveis ~fixos, mais ÁGT → o mesmo numerador dividido por mais água → Na menor. Hiponatremia
+        é, quase sempre, <b>excesso de água</b>, não falta de sal.</p></details>
+      <details><summary>3. O que o ADH faz no ducto coletor?</summary>
+        <p><em>Pista: aquaporina-2.</em><br>
+        O ADH insere <b>AQP2</b> na membrana luminal → reabsorção de água livre → urina concentrada (U_osm alta). Sem
+        ADH, o ducto fica impermeável → urina diluída → o rim expele água.</p></details>
+      <details><summary>4. O que é o clearance de água livre (C_H2O)?</summary>
+        <p><em>Pista: V̇ menos C_osm.</em><br>
+        C_H2O = V̇ − C_osm, com C_osm = (U_osm·V̇)/P_osm. C_H2O &gt; 0 → o rim excreta água livre (dilui o corpo);
+        C_H2O &lt; 0 → reabsorve água (concentra). É a água que sobra ou falta na urina.</p></details>
+      <details><summary>5. Como reconhecer um SIADH?</summary>
+        <p><em>Pista: urina concentrada onde deveria ser diluída.</em><br>
+        Hiponatremia euvolêmica + <b>U_osm alta</b>: ADH inapropriadamente ligado, retendo água. O rim deveria despejar
+        água e não despeja. O tratamento ataca a ÁGUA (restrição), não o sal.</p></details>
+      <details><summary>6. Como reconhecer um diabetes insípido?</summary>
+        <p><em>Pista: poliúria clara com hipernatremia.</em><br>
+        Hipernatremia + <b>U_osm baixa</b> + poliúria: o rim não concentra (falta ADH = central; rim surdo = nefrogênico).
+        Perde-se água livre que deveria ser retida. Repõe-se a água.</p></details>
+      <details><summary>7. Por que a disnatremia CRÔNICA muda a conduta?</summary>
+        <p><em>Pista: o cérebro adaptou.</em><br>
+        Em horas-dias, o neurônio troca osmolitos para igualar a tonicidade e manter o volume. Por isso corrigir rápido
+        passa a ser perigoso — o cérebro já não está na tonicidade do plasma.</p></details>
+      <details><summary>8. Por que a correção rápida da hipoNa crônica causa mielinólise?</summary>
+        <p><em>Pista: encolhimento osmótico.</em><br>
+        O Na sobe mais rápido que o cérebro recupera osmolitos → a água sai dos neurônios → desmielinização osmótica
+        (mielinólise pontina). Teto: ~6–8 mEq/L/24h.</p></details>
+      <details><summary>9. Por que a correção rápida da hiperNa crônica causa edema?</summary>
+        <p><em>Pista: água entra no cérebro carregado.</em><br>
+        O cérebro acumulou osmolitos para sobreviver à hiperosmolalidade. Baixar o Na rápido faz a água invadir esses
+        neurônios → edema cerebral. Repor a água livre <b>devagar</b>.</p></details>
+      <details><summary>10. Para que serve a fórmula de Adrogué–Madias?</summary>
+        <p><em>Pista: planejar a velocidade.</em><br>
+        Estima o ΔNa por litro de infusato: ΔNa = (Na_inf − Na_sérico)/(ÁGT + 1). Com a taxa (mL/h), prevê-se o ΔNa em
+        24 h e ajusta-se para ficar dentro do corredor seguro.</p></details>
+    </div>
+  </section>
+
+  <!-- ============================== INSTRUMENTO ============================== -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — a trajetória de correção do Na (com o corredor seguro)</h3>
+      <p class="sub">A reta <span style="color:#39c0c8">ciano</span> é a trajetória prevista do Na em 24 h dada a sua
+      escolha de <b>infusato</b> e <b>taxa</b> (Adrogué–Madias). A faixa <span style="color:#52c08a">verde</span> é o
+      <b>corredor seguro</b> (±8 mEq/L/24h); fora dela é a zona de perigo <span style="color:#e0556b">vermelha</span>
+      (mielinólise se subindo numa hipoNa crônica; edema se descendo numa hiperNa crônica). Mexa a taxa e veja a
+      trajetória sair do corredor.</p>
+      <div class="grid" style="margin-bottom:10px">
+        <div>
+          <label>Na⁺ atual (mEq/L): <span class="val" id="instr-lbl-na">120</span></label>
+          <input type="range" id="instr-na" min="105" max="175" step="1" value="120">
+          <label>Taxa de infusão (mL/h): <span class="val" id="instr-lbl-taxa">40</span></label>
+          <input type="range" id="instr-taxa" min="0" max="300" step="5" value="40">
+        </div>
+        <div>
+          <label>Infusato:</label>
+          <select id="instr-infusato">
+            <option value="nacl3">NaCl 3% (hipertônico)</option>
+            <option value="sf">SF 0,9%</option>
+            <option value="ringer">Ringer lactato</option>
+            <option value="meiosf">NaCl 0,45% (meio-salina)</option>
+            <option value="sg5">SG 5% (água livre)</option>
+            <option value="agua">água oral</option>
+          </select>
+          <label>Cronicidade (0 aguda · 1 crônica): <span class="val" id="instr-lbl-cron">1.00</span></label>
+          <input type="range" id="instr-cron" min="0" max="1" step="0.05" value="1">
+        </div>
+      </div>
+      <canvas id="correcao-canvas" width="900" height="320" aria-label="Trajetória de correção do Na com o corredor seguro"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+      <h4>O clearance de água livre × tônus de ADH (computado)</h4>
+      <div class="concept" id="agualivre-svg"></div>
+    </div>
+  </section>
+
+  <!-- ============================== LAB ============================== -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — mova a água, leia a disnatremia por mecanismo</h3>
+      <div style="margin:6px 0 12px">
+        <span class="sub">Cenários:</span>
+        <button class="act preset" data-preset="siadh">SIADH</button>
+        <button class="act preset" data-preset="di">Diabetes insípido</button>
+        <button class="act preset" data-preset="cronrap">HipoNa crônica · correção rápida</button>
+        <button class="act preset" data-preset="cronlento">HipoNa crônica · correção segura</button>
+        <button class="act preset" data-preset="aguda">HipoNa aguda (potomania)</button>
+        <button class="act preset" data-preset="hiper">Hipernatremia do idoso</button>
+      </div>
+      <div class="grid">
+        <div>
+          <label>Na⁺ atual (mEq/L): <span class="val" id="lbl-na">120</span></label>
+          <input type="range" id="in-na" min="105" max="175" step="1" value="120">
+          <label>Cronicidade (0 aguda · 1 crônica): <span class="val" id="lbl-cron">1.00</span></label>
+          <input type="range" id="in-cron" min="0" max="1" step="0.05" value="1">
+          <label>Tônus de ADH (0 desligado · 1 máximo): <span class="val" id="lbl-adh">0.50</span></label>
+          <input type="range" id="in-adh" min="0" max="1" step="0.05" value="0.5">
+          <label>Osmolalidade urinária — U_osm (mOsm/kg): <span class="val" id="lbl-uosm">auto</span></label>
+          <input type="range" id="in-uosm" min="40" max="1200" step="10" value="600">
+        </div>
+        <div>
+          <label>Peso (kg): <span class="val" id="lbl-peso">70</span></label>
+          <input type="range" id="in-peso" min="35" max="120" step="1" value="70">
+          <label>Sexo:</label>
+          <select id="in-sex">
+            <option value="M">masculino</option>
+            <option value="F">feminino</option>
+          </select>
+          <label>Infusato:</label>
+          <select id="in-infusato">
+            <option value="nacl3">NaCl 3% (hipertônico)</option>
+            <option value="sf">SF 0,9%</option>
+            <option value="ringer">Ringer lactato</option>
+            <option value="meiosf">NaCl 0,45% (meio-salina)</option>
+            <option value="sg5">SG 5% (água livre)</option>
+            <option value="agua">água oral</option>
+          </select>
+          <label>Taxa de infusão (mL/h): <span class="val" id="lbl-taxa">40</span></label>
+          <input type="range" id="in-taxa" min="0" max="300" step="5" value="40">
+        </div>
+      </div>
+
+      <table>
+        <tr><th>Variável</th><th>Atual</th><th>Normal ≈</th></tr>
+        <tr><td>Na⁺ sérico (mEq/L)</td><td class="num" id="out-na">—</td><td class="num">135–145</td></tr>
+        <tr><td>Água corporal total — ÁGT (L)</td><td class="num" id="out-agt">—</td><td class="num">~42</td></tr>
+        <tr><td>Osmolalidade urinária U_osm (mOsm/kg)</td><td class="num" id="out-uosm">—</td><td class="num">50–1200</td></tr>
+        <tr><td>Clearance de água livre C_H2O (mL/h)</td><td class="num" id="out-ch2o">—</td><td class="num">±</td></tr>
+        <tr><td>↳ o rim está…</td><td class="num" id="out-concentra">—</td><td class="num">—</td></tr>
+        <tr><td>ΔNa por litro de infusato (mEq/L)</td><td class="num" id="out-dnapl">—</td><td class="num">—</td></tr>
+        <tr><td>ΔNa previsto em 24 h pela infusão (mEq/L)</td><td class="num" id="out-dna24">—</td><td class="num">≤ 6–8</td></tr>
+        <tr><td>Correção em 24 h |ΔNa| (mEq/L)</td><td class="num" id="out-corr24">—</td><td class="num">≤ 8</td></tr>
+        <tr><td>Risco de mielinólise (0–1)</td><td class="num" id="out-mielino">—</td><td class="num">0</td></tr>
+        <tr><td>Risco de edema cerebral (0–1)</td><td class="num" id="out-edema">—</td><td class="num">0</td></tr>
+        <tr><td>Dentro do corredor seguro?</td><td class="num" id="out-corredor">—</td><td class="num">sim</td></tr>
+        <tr><td>Regime</td><td class="num" id="out-regime">—</td><td class="num">normal</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- ============================== AVALIAÇÃO ============================== -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (12)</button>
+        <button data-bank="textual">Textual (10)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica e farmacológica</b>.
+    As estimativas de correção (Adrogué–Madias), os infusatos e os tetos de velocidade aparecem como
+    <b>mecanismo</b> e raciocínio — conteúdo educacional, não prescrição individualizada. O modelo não substitui
+    julgamento clínico nem a monitorização laboratorial seriada; a decisão e a responsabilidade finais são sempre
+    do profissional de saúde. <b>Nota de honestidade do modelo:</b> as constantes (faixas de Na, derivação do
+    U_osm a partir do ADH, escala dos riscos de mielinólise/edema, tetos de 6–8 mEq/L/24h) são estimativas
+    didáticas calibradas para reproduzir as âncoras qualitativas (Edelman; SIADH com U_osm alta; DI com U_osm baixa;
+    a velocidade que machuca). A fisiologia individual e a etiologia variam substancialmente.
+  </div>
+
+  <footer>
+    CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira
+  </footer>
+</div>
+
+<script>
+/* =========================================================================
+ * ENGINE INLINE — espelho fiel de build/m10/model10.js (o motor manda no pixel)
+ * ========================================================================= */
+'use strict';
+
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a) n=a; if(n>b) n=b; return n; }
+function merge(a,b){ var o={},k; if(a) for(k in a) if(Object.prototype.hasOwnProperty.call(a,k)) o[k]=a[k]; if(b) for(k in b) if(Object.prototype.hasOwnProperty.call(b,k)) o[k]=b[k]; return o; }
+
+var NA_N=140, POSM_N=285, SEGURO_24=8, ALVO_24=6,
+    TBW_FRAC_M=0.6, TBW_FRAC_F=0.5, PESO_N=70,
+    NA_HIPO_G=120, NA_HIPO=135, NA_HIPER=145, NA_HIPER_G=160;
+
+var INFUSATOS={
+  nacl3:{na:513,nome:'NaCl 3% (hipertônico)'},
+  sf:{na:154,nome:'SF 0,9% (salina isotônica)'},
+  ringer:{na:130,nome:'Ringer lactato'},
+  meiosf:{na:77,nome:'NaCl 0,45% (meio-salina)'},
+  sg5:{na:0,nome:'SG 5% (água livre, isenta de Na)'},
+  agua:{na:0,nome:'água livre / oral'}
+};
+
+function agtDe(peso,sexF){ var p=clampv(peso,25,250); var f=sexF?TBW_FRAC_F:TBW_FRAC_M; return p*f; }
+function naEdelman(naK,agt){ var nk=clampv(naK,1,1e7), w=clampv(agt,1,1000); var na=nk/w; if(!isFinite(na)) na=NA_N; return na; }
+function clearanceAguaLivre(uOsm,vdot,pOsm){
+  var u=clampv(uOsm,0,1400), v=clampv(vdot,0,1e6), p=clampv(pOsm,50,600);
+  var cOsm=(u*v)/p; if(!isFinite(cOsm)) cOsm=0;
+  var cH2O=v-cOsm; if(!isFinite(cH2O)) cH2O=0;
+  return {cOsm:cOsm,cH2O:cH2O};
+}
+function deltaNaPorLitro(naInf,naSerico,agt){
+  var ni=clampv(naInf,0,1200), ns=clampv(naSerico,100,200), w=clampv(agt,1,1000);
+  var d=(ni-ns)/(w+1); if(!isFinite(d)) d=0; return d;
+}
+function classNa(na){
+  var n=clampv(na,90,200);
+  if(n<NA_HIPO_G) return 'hipo_grave'; if(n<NA_HIPO) return 'hipo';
+  if(n<=NA_HIPER) return 'normal'; if(n<NA_HIPER_G) return 'hiper'; return 'hiper_grave';
+}
+
+function disnatremia(input){
+  var inp=input||{};
+  var na     =clampv(inp.na     !==undefined?inp.na     :NA_N,100,190);
+  var peso   =clampv(inp.peso   !==undefined?inp.peso   :PESO_N,25,250);
+  var sexF=(inp.sexF===true||inp.sexF===1||inp.sexF==='F')?true:false;
+  var cronico=clampv(inp.cronico!==undefined?inp.cronico:1,0,1);
+  var adh    =clampv(inp.adh    !==undefined?inp.adh    :0.5,0,1);
+  var vUrina =clampv(inp.vUrina !==undefined?inp.vUrina :60,0,2000);
+  var taxa   =clampv(inp.taxa   !==undefined?inp.taxa   :0,0,2000);
+
+  var uOsm;
+  if(inp.uOsm!==undefined && isFinite(Number(inp.uOsm))){ uOsm=clampv(inp.uOsm,0,1400); }
+  else { uOsm=50+adh*1100; }
+
+  var pOsm=clampv(inp.pOsm!==undefined?inp.pOsm:2*na,150,400);
+  var agt=agtDe(peso,sexF);
+
+  var naK=na*agt;
+  var naPrev=naEdelman(naK,agt);
+
+  var ca=clearanceAguaLivre(uOsm,vUrina,pOsm);
+  var cOsm=ca.cOsm, cH2O=ca.cH2O;
+  var concentra=cH2O<0;
+
+  var infKey=(inp.infusato&&INFUSATOS[inp.infusato])?inp.infusato:'sf';
+  var inf=INFUSATOS[infKey];
+  var naInf=inf.na;
+  var dNaPorL=deltaNaPorLitro(naInf,na,agt);
+
+  var volDia=taxa*24/1000;
+  var dNa24=dNaPorL*volDia; if(!isFinite(dNa24)) dNa24=0;
+
+  var classe=classNa(na);
+  var hipo=na<NA_HIPO, hiper=na>NA_HIPER;
+
+  var corr24=Math.abs(dNa24);
+  var excesso=corr24-SEGURO_24;
+
+  var subindo=dNa24>0, descendo=dNa24<0;
+  var riscoMielinolise=0;
+  if(hipo&&cronico>0.5&&subindo&&corr24>ALVO_24){
+    riscoMielinolise=clampv((corr24-ALVO_24)/(SEGURO_24-ALVO_24+6)+cronico*0.3,0,1);
+  }
+  var riscoEdema=0;
+  if(hiper&&cronico>0.5&&descendo&&corr24>ALVO_24){
+    riscoEdema=clampv((corr24-ALVO_24)/(SEGURO_24-ALVO_24+6)+cronico*0.3,0,1);
+  }
+  var agudaHipoEdema=hipo&&cronico<0.5;
+  var riscoEdemaAgudo=agudaHipoEdema?clampv((NA_HIPO-na)/30+(1-cronico)*0.4,0,1):0;
+
+  var dentroCorredor=corr24<=SEGURO_24+1e-9;
+
+  var regime;
+  if(riscoMielinolise>0.5)              regime='mielinolise';
+  else if(riscoEdema>0.5)               regime='edema_correcao';
+  else if(hipo&&uOsm>100&&adh>0.5)      regime='siadh';
+  else if(hiper&&uOsm<300&&adh<0.4)     regime='diabetes_insipido';
+  else if(hipo)                         regime='hiponatremia';
+  else if(hiper)                        regime='hipernatremia';
+  else                                  regime='normal';
+
+  return {
+    na:na,peso:peso,sexF:sexF,cronico:cronico,adh:adh,
+    uOsm:uOsm,pOsm:pOsm,vUrina:vUrina,taxa:taxa,infusato:infKey,naInf:naInf,
+    agt:agt,naK:naK,naPrev:naPrev,
+    cOsm:cOsm,cH2O:cH2O,concentra:concentra,
+    dNaPorL:dNaPorL,volDia:volDia,dNa24:dNa24,
+    corr24:corr24,excesso:excesso,dentroCorredor:dentroCorredor,
+    riscoMielinolise:riscoMielinolise,riscoEdema:riscoEdema,riscoEdemaAgudo:riscoEdemaAgudo,
+    subindo:subindo,descendo:descendo,
+    classe:classe,hipo:hipo,hiper:hiper,regime:regime,
+    alvo24:ALVO_24,seguro24:SEGURO_24
+  };
+}
+
+function correcaoLayout(state,W,H){
+  state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var r=disnatremia(state); var na0=r.na, dNa24=r.dNa24;
+  var padL=50,padR=16,padT=18,padB=36,baseY=H-padB;
+  var hMin=0,hMax=24,N=48;
+  var span=Math.max(Math.abs(dNa24),SEGURO_24)+6;
+  var naMin=na0-span, naMax=na0+span;
+  var pxX=(W-padL-padR)/(hMax-hMin);
+  var pxY=(baseY-padT)/(naMax-naMin);
+  function X(h){ return padL+(clampv(h,hMin,hMax)-hMin)*pxX; }
+  function Y(na){ return baseY-(clampv(na,naMin,naMax)-naMin)*pxY; }
+  var pts=[],i,h,na;
+  for(i=0;i<=N;i++){ h=hMin+(hMax-hMin)*i/N; na=na0+dNa24*(h/24); pts.push({h:h,na:na,x:X(h),y:Y(na)}); }
+  var naSafeUp=na0+SEGURO_24, naSafeDn=na0-SEGURO_24;
+  var corridorTopY=Y(naSafeUp), corridorBotY=Y(naSafeDn), na0Y=Y(na0);
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,
+    hMin:hMin,hMax:hMax,naMin:naMin,naMax:naMax,pxX:pxX,pxY:pxY,
+    na0:na0,dNa24:dNa24,na0Y:na0Y,
+    corridorTopY:corridorTopY,corridorBotY:corridorBotY,naSafeUp:naSafeUp,naSafeDn:naSafeDn,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},
+    pts:pts};
+}
+
+function aguaLivreLayout(state,W,H){
+  state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=52,padR=16,padT=18,padB=36,baseY=H-padB;
+  var aMin=0,aMax=1,N=50;
+  var vUrina=clampv(state.vUrina!==undefined?state.vUrina:60,0,2000);
+  var na=clampv(state.na!==undefined?state.na:NA_N,100,190);
+  var pOsm=clampv(state.pOsm!==undefined?state.pOsm:2*na,150,400);
+  function ch2oOf(a){ var uOsm=50+clampv(a,0,1)*1100; var ca=clearanceAguaLivre(uOsm,vUrina,pOsm); return ca.cH2O; }
+  var maxAbs=Math.max(Math.abs(ch2oOf(0)),Math.abs(ch2oOf(1)),10);
+  var yMin=-maxAbs, yMax=maxAbs;
+  var pxX=(W-padL-padR)/(aMax-aMin);
+  var pxY=(baseY-padT)/(yMax-yMin);
+  function X(a){ return padL+(clampv(a,aMin,aMax)-aMin)*pxX; }
+  function Y(c){ return baseY-(clampv(c,yMin,yMax)-yMin)*pxY; }
+  var pts=[],i,a,c;
+  for(i=0;i<=N;i++){ a=aMin+(aMax-aMin)*i/N; c=ch2oOf(a); pts.push({adh:a,cH2O:c,x:X(a),y:Y(c)}); }
+  var zeroY=Y(0);
+  var aCur=clampv(state.adh!==undefined?state.adh:0.5,0,1);
+  var current={adh:aCur,cH2O:ch2oOf(aCur),x:X(aCur),y:Y(ch2oOf(aCur))};
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,
+    aMin:aMin,aMax:aMax,yMin:yMin,yMax:yMax,pxX:pxX,pxY:pxY,
+    zeroY:zeroY,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},
+    pts:pts,current:current};
+}
+
+window.disnatremia=disnatremia;
+window.agtDe=agtDe;
+window.naEdelman=naEdelman;
+window.clearanceAguaLivre=clearanceAguaLivre;
+window.deltaNaPorLitro=deltaNaPorLitro;
+window.classNa=classNa;
+window.correcaoLayout=correcaoLayout;
+window.aguaLivreLayout=aguaLivreLayout;
+window.INFUSATOS=INFUSATOS;
+window.MODEL={disnatremia:disnatremia,agtDe:agtDe,naEdelman:naEdelman,clearanceAguaLivre:clearanceAguaLivre,
+  deltaNaPorLitro:deltaNaPorLitro,classNa:classNa,correcaoLayout:correcaoLayout,aguaLivreLayout:aguaLivreLayout,
+  clampv:clampv,merge:merge,INFUSATOS:INFUSATOS,
+  CONST:{NA_N:NA_N,POSM_N:POSM_N,SEGURO_24:SEGURO_24,ALVO_24:ALVO_24,
+    TBW_FRAC_M:TBW_FRAC_M,TBW_FRAC_F:TBW_FRAC_F,PESO_N:PESO_N,
+    NA_HIPO_G:NA_HIPO_G,NA_HIPO:NA_HIPO,NA_HIPER:NA_HIPER,NA_HIPER_G:NA_HIPER_G}};
+
+/* =========================================================================
+ * UI
+ * ========================================================================= */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=d||1; return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+
+var REGIME_TXT={
+  normal:'normal — Na fiel à tonicidade (água em equilíbrio)',
+  hiponatremia:'hiponatremia — excesso de água livre (o Na é proxy da água)',
+  hipernatremia:'hipernatremia — déficit de água livre',
+  siadh:'SIADH — ADH inapropriado retém água (U_osm alta, hipoNa euvolêmica)',
+  diabetes_insipido:'diabetes insípido — o rim não concentra (U_osm baixa, hiperNa)',
+  mielinolise:'⚠ MIELINÓLISE — correção rápida demais de hipoNa CRÔNICA',
+  edema_correcao:'⚠ EDEMA — correção rápida demais de hiperNa CRÔNICA'
+};
+
+// abas principais
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b) return;
+  var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on');
+  $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh();
+});
+
+// caso: prever-depois-revelar
+document.addEventListener('click',function(e){
+  var b=e.target.closest('button.act[data-rev]'); if(!b) return;
+  var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on');
+});
+
+function readLab(){
+  return {
+    na:+$('in-na').value, cronico:+$('in-cron').value, adh:+$('in-adh').value,
+    uOsm:+$('in-uosm').value, peso:+$('in-peso').value, sexF:$('in-sex').value==='F',
+    infusato:$('in-infusato').value, taxa:+$('in-taxa').value
+  };
+}
+
+function refresh(){
+  var inp=readLab();
+  $('lbl-na').textContent=Math.round(inp.na);
+  $('lbl-cron').textContent=fmt(inp.cronico,2);
+  $('lbl-adh').textContent=fmt(inp.adh,2);
+  $('lbl-uosm').textContent=Math.round(inp.uOsm);
+  $('lbl-peso').textContent=Math.round(inp.peso);
+  $('lbl-taxa').textContent=Math.round(inp.taxa);
+  var r=disnatremia(inp);
+  $('out-na').textContent=fmt(r.na,0);
+  $('out-agt').textContent=fmt(r.agt,1);
+  $('out-uosm').textContent=fmt(r.uOsm,0);
+  $('out-ch2o').textContent=fmt(r.cH2O,1);
+  $('out-concentra').textContent=r.concentra?'concentrando (retém água)':'diluindo (excreta água)';
+  $('out-dnapl').textContent=fmt(r.dNaPorL,2);
+  $('out-dna24').textContent=fmt(r.dNa24,1);
+  $('out-corr24').textContent=fmt(r.corr24,1);
+  $('out-mielino').textContent=fmt(r.riscoMielinolise,2);
+  $('out-edema').textContent=fmt(r.riscoEdema,2);
+  $('out-corredor').textContent=r.dentroCorredor?'SIM':'NÃO';
+  $('out-regime').textContent=REGIME_TXT[r.regime]||r.regime;
+  verdictLab(r,inp); pearlLab(r,inp);
+  drawCanvas(inp);
+  $('agualivre-svg').innerHTML=aguaLivreFig(inp);
+  syncInstrToLab(inp);
+}
+
+function syncInstrToLab(inp){
+  if($('instr-na')) $('instr-na').value=inp.na;
+  if($('instr-taxa')) $('instr-taxa').value=inp.taxa;
+  if($('instr-infusato')) $('instr-infusato').value=inp.infusato;
+  if($('instr-cron')) $('instr-cron').value=inp.cronico;
+  updateInstrLabels(inp);
+}
+function readInstr(){
+  return { na:+$('instr-na').value, taxa:+$('instr-taxa').value,
+    infusato:$('instr-infusato').value, cronico:+$('instr-cron').value };
+}
+function updateInstrLabels(inp){
+  if($('instr-lbl-na')) $('instr-lbl-na').textContent=Math.round(inp.na);
+  if($('instr-lbl-taxa')) $('instr-lbl-taxa').textContent=Math.round(inp.taxa);
+  if($('instr-lbl-cron')) $('instr-lbl-cron').textContent=fmt(inp.cronico,2);
+}
+function refreshInstr(){
+  var inp=readInstr();
+  updateInstrLabels(inp);
+  var r=disnatremia(inp);
+  pearlInstr(r,inp);
+  drawCanvas(inp);
+  $('agualivre-svg').innerHTML=aguaLivreFig(merge(inp,{adh:0.5}));
+}
+
+function pearlInstr(r,inp){
+  var ip=$('instr-pearl'); if(!ip) return;
+  var t;
+  if(r.regime==='mielinolise'){
+    t='ZONA DE PERIGO (mielinólise): a trajetória sobe '+fmt(r.corr24,1)+' mEq/24h — acima do teto de 8. Numa hipoNa CRÔNICA isso encolhe o cérebro adaptado → mielinólise pontina. Reduza a taxa.';
+  } else if(r.regime==='edema_correcao'){
+    t='ZONA DE PERIGO (edema): o Na cai '+fmt(r.corr24,1)+' mEq/24h numa hiperNa CRÔNICA — rápido demais. A água invade os neurônios carregados de osmolitos → edema cerebral. Reduza a taxa.';
+  } else if(r.corr24<=r.alvo24){
+    t='DENTRO DO CORREDOR: '+fmt(r.corr24,1)+' mEq/24h (alvo ≤6). A trajetória fica na faixa segura. Adrogué–Madias prevê ΔNa de '+fmt(r.dNaPorL,2)+' mEq por litro deste infusato.';
+  } else {
+    t='No limite: '+fmt(r.corr24,1)+' mEq/24h (teto 8). Cuidado se a disnatremia for crônica — a margem entre tratar e lesar é estreita. Cronicidade '+fmt(inp.cronico,2)+'.';
+  }
+  ip.textContent=t;
+}
+
+function verdictLab(r,inp){
+  var v=$('veredito'); var cls='b-good', msg;
+  if(r.regime==='mielinolise'){
+    cls='b-bad'; msg='MIELINÓLISE EM RISCO: hipoNa crônica (Na '+fmt(r.na,0)+') corrigida a '+fmt(r.corr24,1)+' mEq/24h — acima de 8. O cérebro adaptado encolhe ao subir o Na rápido. Reduza a velocidade (alvo ≤6–8/24h).';
+  } else if(r.regime==='edema_correcao'){
+    cls='b-bad'; msg='EDEMA CEREBRAL EM RISCO: hiperNa crônica (Na '+fmt(r.na,0)+') baixando '+fmt(r.corr24,1)+' mEq/24h — rápido demais. Reponha a água LIVRE devagar; a água invade os neurônios carregados.';
+  } else if(r.regime==='siadh'){
+    cls='b-warn'; msg='SIADH: Na '+fmt(r.na,0)+', U_osm '+fmt(r.uOsm,0)+' (urina concentrada onde deveria diluir). ADH inapropriado retém água → hipoNa por diluição. A base é restrição hídrica — o problema é a ÁGUA.';
+  } else if(r.regime==='diabetes_insipido'){
+    cls='b-warn'; msg='DIABETES INSÍPIDO: Na '+fmt(r.na,0)+', U_osm '+fmt(r.uOsm,0)+' (não concentra apesar da hiperosmolalidade). Poliúria de água livre → hiperNa. Reponha água; trate a causa do ADH ausente/ineficaz.';
+  } else if(r.hipo){
+    cls='b-warn'; msg='Hiponatremia (Na '+fmt(r.na,0)+'): excesso de água livre. C_H2O '+fmt(r.cH2O,0)+' mL/h. Pergunte: é aguda ou crônica? '+(inp.cronico<0.5?'AGUDA → corrigir é seguro/urgente se sintomática.':'crônica → corrigir DEVAGAR.');
+  } else if(r.hiper){
+    cls='b-warn'; msg='Hipernatremia (Na '+fmt(r.na,0)+'): déficit de água livre. Reponha água; se crônica, devagar (risco de edema). C_H2O '+fmt(r.cH2O,0)+' mL/h.';
+  } else {
+    cls='b-good'; msg='Tonicidade preservada: Na '+fmt(r.na,0)+', ÁGT '+fmt(r.agt,1)+' L. O rim está '+(r.concentra?'concentrando':'diluindo')+' (C_H2O '+fmt(r.cH2O,0)+' mL/h). A homeostasia da água está mantida.';
+  }
+  v.className='banner '+cls; v.textContent=msg;
+}
+
+function pearlLab(r,inp){
+  var p=$('lab-pearl'); if(!p) return;
+  var t;
+  if(r.regime==='mielinolise'||r.regime==='edema_correcao'){
+    t='PÉROLA velocidade: a VELOCIDADE mata, não o número. '+fmt(r.corr24,1)+' mEq/24h numa disnatremia crônica (cronicidade '+fmt(inp.cronico,2)+'). O corredor seguro é 6–8 mEq/24h — Adrogué–Madias ajuda a planejar a taxa.';
+  } else if(r.regime==='siadh'){
+    t='PÉROLA SIADH: a pista é a U_osm '+fmt(r.uOsm,0)+' (alta) com Na baixo. C_H2O '+fmt(r.cH2O,0)+' mL/h (negativo = concentra, retém água). O sal não é o réu; a ÁGUA retida é.';
+  } else if(r.regime==='diabetes_insipido'){
+    t='PÉROLA DI: U_osm '+fmt(r.uOsm,0)+' (baixa) apesar da hiperosmolalidade → o rim perde água livre que deveria reter (C_H2O '+fmt(r.cH2O,0)+', positivo = excreta). Repor a ÁGUA.';
+  } else if(r.hipo&&inp.cronico<0.5){
+    t='PÉROLA aguda × crônica: a MESMA Na '+fmt(r.na,0)+' aguda (cérebro não adaptado) inverte a conduta — aqui o perigo é o EDEMA agudo, e corrigir rápido é salvador. A cronicidade decide.';
+  } else {
+    t='PÉROLA Edelman: o Na '+fmt(r.na,0)+' = (Na+K trocáveis)/ÁGT ('+fmt(r.agt,1)+' L). Mexer a ÁGUA move o Na. ΔNa por litro deste infusato: '+fmt(r.dNaPorL,2)+' mEq/L (Adrogué–Madias).';
+  }
+  p.textContent=t;
+}
+
+function drawCanvas(state){
+  var c=$('correcao-canvas'); if(!c) return;
+  var ctx; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; }
+  if(!ctx||!ctx.clearRect) return;
+  var L=correcaoLayout(state,c.width,c.height);
+  ctx.clearRect(0,0,L.W,L.H);
+  // corredor seguro (faixa verde entre as bordas ±8)
+  var topY=Math.min(L.corridorTopY,L.corridorBotY);
+  var botY=Math.max(L.corridorTopY,L.corridorBotY);
+  ctx.fillStyle='rgba(82,192,138,0.10)';
+  ctx.fillRect(L.axis.x0,topY,L.axis.xEnd-L.axis.x0,botY-topY);
+  // zonas de perigo (acima e abaixo do corredor)
+  ctx.fillStyle='rgba(224,85,107,0.07)';
+  ctx.fillRect(L.axis.x0,L.padT,L.axis.xEnd-L.axis.x0,topY-L.padT);
+  ctx.fillRect(L.axis.x0,botY,L.axis.xEnd-L.axis.x0,L.baseY-botY);
+  // eixos
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('Na (mEq/L)',6,L.padT-4);
+  ctx.fillText('horas →',L.W-90,L.baseY+24);
+  // linha do Na inicial
+  ctx.strokeStyle='#23303b'; ctx.setLineDash([3,3]);
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.na0Y); ctx.lineTo(L.axis.xEnd,L.na0Y); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle='#9fb1c0'; ctx.fillText('Na '+Math.round(L.na0),L.axis.x0+4,L.na0Y-4);
+  // bordas do corredor seguro
+  ctx.strokeStyle='#52c08a'; ctx.lineWidth=1; ctx.setLineDash([5,3]);
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.corridorTopY); ctx.lineTo(L.axis.xEnd,L.corridorTopY); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.corridorBotY); ctx.lineTo(L.axis.xEnd,L.corridorBotY); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle='#52c08a'; ctx.font='11px system-ui';
+  ctx.fillText('corredor seguro (±8 mEq/24h)',L.axis.x0+8,topY+14);
+  // a trajetória (ciano) — a polilinha que o validador confere
+  ctx.strokeStyle='#39c0c8'; ctx.lineWidth=2; ctx.setLineDash([]); ctx.beginPath();
+  for(var i=0;i<L.pts.length;i++){ var p=L.pts[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); }
+  ctx.stroke();
+  // marcadores: início e fim da trajetória
+  ctx.fillStyle='#e7eef4';
+  ctx.fillRect(L.pts[0].x-3,L.pts[0].y-3,6,6);
+  var last=L.pts[L.pts.length-1];
+  ctx.fillRect(last.x-3,last.y-3,6,6);
+  // rótulo do ΔNa
+  ctx.fillStyle='#cdd9e3'; ctx.font='11px system-ui';
+  ctx.fillText('ΔNa 24h: '+fmt(L.dNa24,1),last.x-90,last.y-8);
+}
+
+['in-na','in-cron','in-adh','in-uosm','in-peso','in-sex','in-infusato','in-taxa'].forEach(function(id){
+  var el=$(id); if(el) el.addEventListener('input',refresh);
+});
+['instr-na','instr-taxa','instr-infusato','instr-cron'].forEach(function(id){
+  var el=$(id); if(el) el.addEventListener('input',refreshInstr);
+});
+
+// presets de cenário
+var PRESETS={
+  siadh:    { na:124, cronico:1, adh:0.9, uOsm:480, peso:70, sexF:false, infusato:'sf', taxa:0 },
+  di:       { na:152, cronico:1, adh:0.05, uOsm:120, peso:70, sexF:false, infusato:'sg5', taxa:0 },
+  cronrap:  { na:116, cronico:1, adh:0.7, uOsm:500, peso:70, sexF:false, infusato:'nacl3', taxa:90 },
+  cronlento:{ na:118, cronico:1, adh:0.7, uOsm:500, peso:70, sexF:false, infusato:'nacl3', taxa:10 },
+  aguda:    { na:124, cronico:0, adh:0.1, uOsm:80, peso:70, sexF:false, infusato:'nacl3', taxa:60 },
+  hiper:    { na:165, cronico:1, adh:0.3, uOsm:300, peso:65, sexF:false, infusato:'sg5', taxa:100 }
+};
+document.addEventListener('click',function(e){
+  var b=e.target.closest('button.preset'); if(!b) return;
+  var p=PRESETS[b.getAttribute('data-preset')]; if(!p) return;
+  $('in-na').value=p.na; $('in-cron').value=p.cronico; $('in-adh').value=p.adh;
+  $('in-uosm').value=p.uOsm; $('in-peso').value=p.peso; $('in-sex').value=p.sexF?'F':'M';
+  $('in-infusato').value=p.infusato; $('in-taxa').value=p.taxa;
+  refresh();
+});
+
+/* =========================================================================
+ * ILUSTRAÇÕES SVG — inline, computadas a partir do engine (física viva)
+ * ========================================================================= */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+
+// mini trajetória de correção (computada do engine)
+function correcaoMini(state, titulo){
+  var W=300,H=180;
+  var L=correcaoLayout(state,W,H);
+  var s='';
+  s+='<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="#0a1520"/>';
+  var topY=Math.min(L.corridorTopY,L.corridorBotY), botY=Math.max(L.corridorTopY,L.corridorBotY);
+  s+='<rect x="'+L.axis.x0+'" y="'+f1(topY)+'" width="'+f1(L.axis.xEnd-L.axis.x0)+'" height="'+f1(botY-topY)+'" fill="#52c08a" fill-opacity="0.12"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+f1(L.corridorTopY)+'" x2="'+L.axis.xEnd+'" y2="'+f1(L.corridorTopY)+'" stroke="#52c08a" stroke-dasharray="4 3"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+f1(L.corridorBotY)+'" x2="'+L.axis.xEnd+'" y2="'+f1(L.corridorBotY)+'" stroke="#52c08a" stroke-dasharray="4 3"/>';
+  var d=''; for(var i=0;i<L.pts.length;i++){ d+=(i===0?'M':'L')+f1(L.pts[i].x)+' '+f1(L.pts[i].y)+' '; }
+  var col=(Math.abs(L.dNa24)>L.naSafeUp-L.na0)?'#e0556b':'#39c0c8';
+  s+='<path d="'+d+'" fill="none" stroke="'+col+'" stroke-width="2"/>';
+  s+='<text x="'+W/2+'" y="13" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'trajetória do Na (24h)')+'</text>';
+  s+='<text x="'+(L.axis.x0+3)+'" y="'+L.padT+'" fill="#9fb1c0" font-size="8">Na</text>';
+  s+='<text x="'+(L.axis.xEnd-2)+'" y="'+(L.baseY+12)+'" fill="#9fb1c0" font-size="8" text-anchor="end">horas→</text>';
+  return svgEl(W,H,s);
+}
+
+// o clearance de água livre × ADH (computado do engine)
+function aguaLivreFig(state, titulo){
+  var W=300,H=180;
+  var L=aguaLivreLayout(state,W,H);
+  var s='';
+  s+='<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="#0a1520"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  // linha do zero (C_H2O = 0)
+  s+='<line x1="'+L.axis.x0+'" y1="'+f1(L.zeroY)+'" x2="'+L.axis.xEnd+'" y2="'+f1(L.zeroY)+'" stroke="#e8a13a" stroke-width="1" stroke-dasharray="5 3"/>';
+  s+='<text x="'+(L.axis.x0+4)+'" y="'+f1(L.zeroY-3)+'" fill="#e8a13a" font-size="8">C_H2O = 0</text>';
+  // a curva
+  var d=''; for(var i=0;i<L.pts.length;i++){ d+=(i===0?'M':'L')+f1(L.pts[i].x)+' '+f1(L.pts[i].y)+' '; }
+  s+='<path d="'+d+'" fill="none" stroke="#3a7bd5" stroke-width="2"/>';
+  // ponto atual
+  var cu=L.current;
+  s+='<circle cx="'+f1(cu.x)+'" cy="'+f1(cu.y)+'" r="4" fill="#e7eef4"/>';
+  s+='<text x="'+W/2+'" y="13" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'C_H2O × ADH (dilui ↑ · concentra ↓)')+'</text>';
+  s+='<text x="'+(L.axis.x0+3)+'" y="'+L.padT+'" fill="#9fb1c0" font-size="8">C_H2O</text>';
+  s+='<text x="'+(L.axis.xEnd-2)+'" y="'+(L.baseY+12)+'" fill="#9fb1c0" font-size="8" text-anchor="end">ADH→</text>';
+  return svgEl(W,H,s);
+}
+
+// esquema da equação de Edelman (desenho, não gráfico)
+function edelmanDiagram(state, titulo){
+  var r=disnatremia(state||{});
+  var W=320,H=190,s='';
+  s+='<rect width="320" height="190" fill="#0a1520"/>';
+  // o oceano (ECF) com a célula
+  s+='<rect x="30" y="40" width="170" height="80" rx="10" fill="#3a7bd5" fill-opacity="0.18" stroke="#3a7bd5"/>';
+  s+='<text x="115" y="36" fill="#9fb1c0" font-size="9" text-anchor="middle">ÁGUA corporal (ÁGT '+fmt(r.agt,0)+' L)</text>';
+  s+='<circle cx="115" cy="80" r="22" fill="#39c0c8" fill-opacity="0.25" stroke="#39c0c8"/>';
+  s+='<text x="115" y="84" fill="#39c0c8" font-size="9" text-anchor="middle">célula</text>';
+  // a fórmula de Edelman
+  s+='<rect x="30" y="130" width="260" height="36" rx="6" fill="#10171e" stroke="#283642"/>';
+  s+='<text x="160" y="146" fill="#e7eef4" font-size="12" text-anchor="middle">Na ≈ (Na+K trocáveis) / ÁGT</text>';
+  s+='<text x="160" y="160" fill="#9fb1c0" font-size="9" text-anchor="middle">Na '+fmt(r.na,0)+' mEq/L — proxy da ÁGUA, não do sal</text>';
+  s+='<text x="'+W/2+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'a equação de Edelman')+'</text>';
+  return svgEl(W,H,s);
+}
+
+// esquema do ADH/aquaporina-2 (desenho)
+function adhDiagram(state, titulo){
+  var r=disnatremia(state||{});
+  var W=300,H=180,s='';
+  s+='<rect width="300" height="180" fill="#0a1520"/>';
+  // ducto coletor
+  s+='<rect x="60" y="40" width="40" height="110" fill="#1b242d" stroke="#3a4a58"/>';
+  s+='<text x="80" y="36" fill="#9fb1c0" font-size="8" text-anchor="middle">ducto</text>';
+  // aquaporinas (mais abertas com ADH alto)
+  var n=Math.round(clampv(r.adh,0,1)*5)+1;
+  var aqCol=r.adh>0.5?'#39c0c8':'#5a6a76';
+  for(var i=0;i<n;i++){
+    var y=50+i*16;
+    s+='<rect x="100" y="'+y+'" width="14" height="8" rx="2" fill="'+aqCol+'"/>';
+    s+='<polygon points="114,'+(y+1)+' 124,'+(y+4)+' 114,'+(y+7)+'" fill="'+aqCol+'"/>';
+  }
+  s+='<text x="150" y="44" fill="'+aqCol+'" font-size="9">AQP2 '+(r.adh>0.5?'abertas':'fechadas')+'</text>';
+  // ADH
+  s+='<circle cx="40" cy="95" r="14" fill="#e8a13a" fill-opacity="0.3" stroke="#e8a13a"/>';
+  s+='<text x="40" y="98" fill="#e8a13a" font-size="8" text-anchor="middle">ADH</text>';
+  s+='<line x1="54" y1="95" x2="60" y2="95" stroke="#e8a13a" stroke-width="2"/>';
+  // veredito
+  s+='<rect x="30" y="128" width="240" height="40" rx="6" fill="#10171e" stroke="#283642"/>';
+  s+='<text x="150" y="145" fill="#e7eef4" font-size="10" text-anchor="middle">ADH '+fmt(r.adh,2)+' → U_osm '+fmt(r.uOsm,0)+' mOsm/kg</text>';
+  s+='<text x="150" y="161" fill="#9fb1c0" font-size="9" text-anchor="middle">'+(r.concentra?'concentra (retém água, C_H2O&lt;0)':'dilui (excreta água, C_H2O&gt;0)')+'</text>';
+  s+='<text x="'+W/2+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'ADH e a aquaporina-2')+'</text>';
+  return svgEl(W,H,s);
+}
+
+// esquema SIADH × DI (desenho)
+function siadhDiagram(state, titulo){
+  var r=disnatremia(state||{});
+  var W=300,H=180,s='';
+  s+='<rect width="300" height="180" fill="#0a1520"/>';
+  var ehSiadh=r.regime==='siadh'||(r.hipo&&r.adh>0.5);
+  var col=ehSiadh?'#e0556b':'#3a7bd5';
+  // rim
+  s+='<ellipse cx="80" cy="80" rx="34" ry="48" fill="'+col+'" fill-opacity="0.18" stroke="'+col+'"/>';
+  s+='<text x="80" y="84" fill="'+col+'" font-size="9" text-anchor="middle">rim</text>';
+  // gota de urina
+  s+='<path d="M180 60 q14 18 0 30 q-14 -12 0 -30 Z" fill="'+col+'" fill-opacity="0.4" stroke="'+col+'"/>';
+  s+='<text x="180" y="105" fill="'+col+'" font-size="8" text-anchor="middle">U_osm '+fmt(r.uOsm,0)+'</text>';
+  s+='<line x1="114" y1="78" x2="166" y2="72" stroke="#9fb1c0" stroke-width="1.5"/>';
+  // veredito
+  s+='<rect x="30" y="128" width="240" height="40" rx="6" fill="#10171e" stroke="#283642"/>';
+  s+='<text x="150" y="145" fill="#e7eef4" font-size="10" text-anchor="middle">'+(ehSiadh?'SIADH: retém água → hipoNa (U_osm alta)':'DI: não concentra → hiperNa (U_osm baixa)')+'</text>';
+  s+='<text x="150" y="161" fill="#9fb1c0" font-size="9" text-anchor="middle">Na '+fmt(r.na,0)+' mEq/L · '+(r.concentra?'concentrando':'diluindo')+'</text>';
+  s+='<text x="'+W/2+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'SIADH × diabetes insípido')+'</text>';
+  return svgEl(W,H,s);
+}
+
+/* =========================================================================
+ * TUTOR — DOIS blocos (ilustrado + textual)
+ * ========================================================================= */
+// helper: figura raster/SVG real de assets/m10/ dentro do exercício (offline, caminho relativo)
+function imgFig(slug,alt){ return '<img src="assets/m10/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+var TUTOR_ILUSTRADO=[
+  {q:'Pela equação de Edelman, o Na⁺ plasmático mede…',
+   o:['a quantidade de sal no corpo','a razão (Na+K trocáveis)/ÁGT — proxy da ÁGUA','a pressão arterial','a função renal'],
+   c:1,e:'Na ≈ (Na+K trocáveis)/ÁGT. Com o numerador fixo, mexer a ÁGUA move o Na. Disnatremia = distúrbio de água.',
+   fig:function(){ return edelmanDiagram({na:124},'Edelman: o Na é proxy da água'); }},
+  {q:'Adicionar ÁGUA LIVRE ao corpo (sem soluto) faz o Na…',
+   o:['subir','cair (diluição: o denominador ÁGT cresce)','não mudar','virar potássio'],
+   c:1,e:'Mais ÁGT com os mesmos osmoles → Na menor. Hiponatremia é, quase sempre, excesso de água, não falta de sal.',
+   fig:function(){ return edelmanDiagram({na:118},'ganhar água dilui o Na'); }},
+  {q:'O ADH (vasopressina) age no ducto coletor inserindo…',
+   o:['canais de sódio','aquaporina-2 (reabsorve água livre → urina concentrada)','bombas de cálcio','ureia'],
+   c:1,e:'ADH → AQP2 na membrana luminal → reabsorção de água → urina concentrada (U_osm alta). Sem ADH, urina diluída.',
+   fig:function(){ return adhDiagram({na:124,adh:0.9},'ADH alto: AQP2 abertas'); }},
+  {q:'O clearance de água livre C_H2O = V̇ − C_osm. Quando C_H2O < 0, o rim…',
+   o:['excreta água livre','reabsorve água (concentra, retém água)','para de filtrar','perde sódio'],
+   c:1,e:'C_H2O < 0 significa que o rim devolve mais água do que despeja → concentra o corpo. ADH alto leva a isso.',
+   fig:function(){ return aguaLivreFig({adh:0.9,na:124},'ADH alto → C_H2O negativo'); }},
+  {q:'Hiponatremia euvolêmica com U_osm ALTA (urina concentrada) sugere…',
+   o:['diabetes insípido','SIADH (ADH inapropriado retém água)','desidratação','hiperaldosteronismo'],
+   c:1,e:'A urina deveria estar diluída numa hiponatremia; se está concentrada, o ADH está ligado sem motivo → SIADH.',
+   fig:function(){ return siadhDiagram({na:124,adh:0.9},'SIADH: U_osm alta com Na baixo'); }},
+  {q:'Hipernatremia com poliúria e U_osm BAIXA (urina diluída) sugere…',
+   o:['SIADH','diabetes insípido (o rim não concentra)','sobrecarga de sal','insuficiência cardíaca'],
+   c:1,e:'O rim deveria reter água na hiperosmolalidade; se a urina é diluída, falta ADH eficaz → diabetes insípido.',
+   fig:function(){ return siadhDiagram({na:152,adh:0.05},'DI: U_osm baixa com Na alto'); }},
+  {q:'Corrigir RÁPIDO demais uma hiponatremia CRÔNICA causa…',
+   o:['edema cerebral','mielinólise pontina (desmielinização osmótica)','hipercalemia','nada'],
+   c:1,e:'O cérebro adaptado encolhe quando o Na sobe rápido → mielinólise. Teto seguro: ~6–8 mEq/L/24h.',
+   fig:function(){ return correcaoMini({na:116,cronico:1,infusato:'nacl3',taxa:90},'rápido na crônica → mielinólise'); }},
+  {q:'A MESMA hiponatremia (Na 116) mas AGUDA (cérebro não adaptado) — corrigir rápido é…',
+   o:['perigoso (mielinólise)','seguro/urgente: o perigo é o edema agudo','proibido','irrelevante'],
+   c:1,e:'Na aguda o cérebro ainda não trocou osmolitos → está inchando. Subir o Na rápido é salvador. A cronicidade inverte a conduta.',
+   fig:function(){ return correcaoMini({na:116,cronico:0,infusato:'nacl3',taxa:90},'aguda: corrigir é seguro'); }},
+  {q:'Na trajetória do Na em 24h, a faixa VERDE representa…',
+   o:['a zona de perigo','o corredor seguro (±6–8 mEq/L/24h)','a hipernatremia','o erro de medida'],
+   c:1,e:'A trajetória deve ficar dentro do corredor. Sair dele (zona vermelha) é correção rápida demais.',
+   fig:function(){ return correcaoMini({na:120,cronico:1,infusato:'nacl3',taxa:10},'dentro do corredor seguro'); }},
+  {q:'A adaptação cerebral à disnatremia crônica (troca de osmolitos) serve para…',
+   o:['acelerar a correção','defender o VOLUME do neurônio (igualar a tonicidade)','aumentar o Na','produzir ADH'],
+   c:1,e:'O neurônio troca osmolitos para não mudar de volume. É essa adaptação que torna a correção rápida perigosa.',
+   fig:function(){ return imgFig('adaptacao-cerebral-osmolitos.svg','adaptação cerebral por osmolitos'); }},
+  {q:'Na figura do corredor (Fig. 7), o limite seguro de correção do Na é cerca de…',
+   o:['20 mEq/L/24h','6–8 mEq/L/24h','1 mEq/L/24h','não há limite'],
+   c:1,e:'~6–8 mEq/L/24h é a margem entre tratar e lesar. Adrogué–Madias ajuda a planejar a taxa para ficar dentro.',
+   fig:function(){ return imgFig('correcao-velocidade-na.svg','corredor seguro de correção do Na'); }},
+  {q:'Na figura da mielinólise (Fig. 8), a lesão da ponte aparece após…',
+   o:['hiponatremia aguda','correção rápida de hiponatremia crônica','excesso de potássio','jejum'],
+   c:1,e:'Subir o Na mais rápido que o cérebro readapta → desmielinização osmótica da ponte (mielinólise pontina).',
+   fig:function(){ return imgFig('mielinolise-pontina.svg','mielinólise pontina por correção rápida'); }}
+];
+
+var TUTOR_TEXTUAL=[
+  {q:'A equação de Edelman afirma que Na ≈ …',
+   o:['ÁGT/(Na+K)','(Na+K trocáveis)/ÁGT','Na · ÁGT','U_osm/P_osm'],
+   c:1,e:'Na ≈ (Na+K trocáveis)/ÁGT — o sódio é proxy da concentração, isto é, da ÁGUA.'},
+  {q:'Hiponatremia é, na maioria das vezes, um problema de…',
+   o:['falta de sal','excesso de água livre','excesso de potássio','acidose'],
+   c:1,e:'O Na cai porque sobra água (denominador ÁGT cresce). Tratar a água, não o sal.'},
+  {q:'O clearance de água livre é definido como…',
+   o:['V̇ + C_osm','V̇ − C_osm (com C_osm = U_osm·V̇/P_osm)','U_osm/P_osm','C_osm − V̇'],
+   c:1,e:'C_H2O = V̇ − C_osm. Positivo → excreta água (dilui); negativo → reabsorve (concentra).'},
+  {q:'No SIADH, a urina é…',
+   o:['diluída (U_osm baixa)','inadequadamente concentrada (U_osm alta) numa hiponatremia','ausente','sanguinolenta'],
+   c:1,e:'O ADH inapropriado mantém a urina concentrada quando deveria ser diluída → hiponatremia por retenção de água.'},
+  {q:'No diabetes insípido, a urina é…',
+   o:['concentrada','diluída (U_osm baixa) apesar da hipernatremia','escassa','alcalina'],
+   c:1,e:'Sem ADH eficaz, o rim não concentra → poliúria de água livre → hipernatremia com U_osm baixa.'},
+  {q:'A mielinólise pontina decorre de…',
+   o:['hiponatremia crônica não tratada','correção RÁPIDA de hiponatremia crônica','hipernatremia leve','hipocalemia'],
+   c:1,e:'Subir o Na rápido demais (>6–8/24h) num cérebro adaptado → desmielinização osmótica.'},
+  {q:'A correção rápida de uma hipernatremia crônica pode causar…',
+   o:['mielinólise','edema cerebral','hipercalemia','alcalose'],
+   c:1,e:'Baixar o Na rápido faz a água invadir neurônios carregados de osmolitos → edema cerebral. Repor água devagar.'},
+  {q:'O limite seguro de correção do sódio é aproximadamente…',
+   o:['6–8 mEq/L por 24 h','20 mEq/L por hora','0,5 mEq/L por dia','sem limite'],
+   c:0,e:'~6–8 mEq/L/24h. É a margem entre tratar e lesar, válida para a disnatremia crônica.'},
+  {q:'A fórmula de Adrogué–Madias (ΔNa = (Na_inf − Na)/(ÁGT+1)) serve para…',
+   o:['medir a TFG','estimar o ΔNa por litro de infusato e planejar a velocidade','dosar potássio','calcular o débito'],
+   c:1,e:'Estima quanto cada litro do fluido move o Na → permite ajustar a taxa para ficar dentro do corredor seguro.'},
+  {q:'Por que a cronicidade da disnatremia muda a conduta?',
+   o:['não muda','porque o cérebro adapta-se (osmolitos), tornando a correção rápida perigosa','porque muda o sexo','porque altera a TFG'],
+   c:1,e:'Na crônica o cérebro já igualou a tonicidade trocando osmolitos; corrigir rápido o desequilibra → lesão. Na aguda, não.'}
+];
+
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO;
+window.TUTOR_TEXTUAL=TUTOR_TEXTUAL;
+window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+
+var BANKS={ilustrada:TUTOR_ILUSTRADO, textual:TUTOR_TEXTUAL};
+var curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+
+function renderTutor(){
+  var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():'';
+  $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false;
+  $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){
+    var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){
+      if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button');
+      btns[item.c].classList.add('ok');
+      if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block';
+      fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e;
+      $('tutor-score').textContent=tScore;
+      $('tutor-total').textContent=tTotal;
+    });
+    box.appendChild(b);
+  });
+}
+
+$('banktabs').addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor();
+});
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+/* =========================================================================
+ * ILUSTRAÇÕES DA ABA CONCEITO (populadas no boot)
+ * ========================================================================= */
+function populateConceito(){
+  var el;
+  el=$('draw-edelman');  if(el) el.innerHTML=edelmanDiagram({na:124},'Edelman: Na é proxy da água');
+  el=$('draw-adh');      if(el) el.innerHTML=adhDiagram({na:124,adh:0.9},'ADH e a aquaporina-2');
+  el=$('draw-siadh');    if(el) el.innerHTML=siadhDiagram({na:124,adh:0.9},'SIADH × DI');
+  el=$('draw-corredor'); if(el) el.innerHTML=correcaoMini({na:120,cronico:1,infusato:'nacl3',taxa:10},'o corredor seguro');
+  el=$('draw-lesoes');   if(el) el.innerHTML=correcaoMini({na:116,cronico:1,infusato:'nacl3',taxa:90},'rápido demais: a lesão');
+  var elCaso=$('fig-caso'); if(elCaso) elCaso.innerHTML=correcaoMini({na:116,cronico:1,infusato:'nacl3',taxa:90},'hipoNa crônica: cuidado com a velocidade');
+}
+
+/* =========================================================================
+ * BOOT
+ * ========================================================================= */
+refresh();
+renderTutor();
+populateConceito();
+</script>
+</body>
+</html>

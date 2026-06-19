@@ -245,8 +245,25 @@
     {
       "id": "M10",
       "metade": "FILTRA",
-      "titulo": "Água livre e disnatremias — ADH/vasopressina, clearance de água livre",
-      "status": "planejado"
+      "arquivo": "filtra10.html",
+      "titulo": "Água livre e o sódio — disnatremias são distúrbios de ÁGUA (ADH, clearance de água livre, velocidade de correção)",
+      "status": "disponivel",
+      "instrumento": "trajetória de correção do Na em 24h com o corredor seguro (±6–8 mEq/L/24h) e as zonas de perigo",
+      "questoes": {
+        "ilustrado": 12,
+        "textual": 10
+      },
+      "figuras": 9,
+      "inclui": [
+        "equação de Edelman (Na ≈ Na+K trocáveis/ÁGT) — o Na é proxy da ÁGUA",
+        "ADH/vasopressina e a aquaporina-2",
+        "clearance de água livre C_H2O = V̇ − C_osm (dilui × concentra)",
+        "SIADH (U_osm alta) × diabetes insípido (U_osm baixa)",
+        "a velocidade mata — mielinólise pontina × edema cerebral",
+        "corredor seguro de correção e fórmula de Adrogué–Madias",
+        "aguda × crônica inverte a conduta",
+        "presets de cenário no lab"
+      ]
     },
     {
       "id": "M11",

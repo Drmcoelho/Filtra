@@ -17,7 +17,8 @@
     "validate:1": "node build/m1/validate1.js",
     "validate:2": "node build/m2/validate2.js",
     "validate:3": "node build/m3/validate3.js",
-    "validate": "npm run validate:0 && npm run validate:1 && npm run validate:2 && npm run validate:3",
+    "validate:4": "node build/m4/validate4.js",
+    "validate": "npm run validate:0 && npm run validate:1 && npm run validate:2 && npm run validate:3 && npm run validate:4",
     "check": "npm test && npm run validate"
   },
   "devDependencies": {

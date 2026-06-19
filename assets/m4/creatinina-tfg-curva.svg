@@ -1,22 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M4</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">Clearance — por que a creatinina mente</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">creatinina-tfg-curva</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">Relação hiperbólica creatinina × TFG</text>
-
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 320" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="320" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="316" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">A hipérbole creatinina × TFG — e a "faixa cega"</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">Pcr ∝ 1/TFG: cair metade da TFG mal mexe a creatinina</text>
+  <line x1="70" y1="270" x2="640" y2="270" stroke="#3a4a58"/>
+  <line x1="70" y1="64" x2="70" y2="270" stroke="#3a4a58"/>
+  <text x="355" y="296" text-anchor="middle" font-size="11" fill="#9fb1c0">TFG (mL/min) →</text>
+  <text x="28" y="170" font-size="11" fill="#9fb1c0" transform="rotate(-90 28 170)">creatinina (mg/dL)</text>
+  <text x="70" y="286" text-anchor="middle" font-size="9" fill="#9fb1c0">0</text>
+  <text x="300" y="286" text-anchor="middle" font-size="9" fill="#9fb1c0">60</text>
+  <text x="530" y="286" text-anchor="middle" font-size="9" fill="#9fb1c0">120</text>
+  <!-- hipérbole (TFG grande à direita = Pcr baixa) -->
+  <path d="M120,255 C160,250 220,242 300,232 C360,224 420,210 470,188 C520,166 560,120 600,80" fill="none" stroke="#39c0c8" stroke-width="3"/>
+  <!-- faixa cega 120->60 -->
+  <rect x="300" y="64" width="230" height="206" fill="#52c08a" fill-opacity="0.07"/>
+  <text x="415" y="80" text-anchor="middle" font-size="10" fill="#52c08a">faixa "cega" (TFG 60–120)</text>
+  <text x="415" y="150" text-anchor="middle" font-size="9" fill="#9fb1c0">metade dos néfrons perdida,</text>
+  <text x="415" y="164" text-anchor="middle" font-size="9" fill="#9fb1c0">creatinina ainda quase normal</text>
+  <circle cx="530" cy="188" r="4" fill="#e8a13a"/><text x="530" y="178" text-anchor="middle" font-size="9" fill="#f0c078">TFG 60 ≈ 1,5</text>
+  <circle cx="600" cy="80" r="4" fill="#e8a13a"/><text x="600" y="70" text-anchor="middle" font-size="9" fill="#f0c078">TFG 120 ≈ 0,8</text>
+  <circle cx="180" cy="248" r="4" fill="#e0556b"/><text x="180" y="238" text-anchor="middle" font-size="9" fill="#e08a96">TFG 20 ≈ 3+</text>
 </svg>

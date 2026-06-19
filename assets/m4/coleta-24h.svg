@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">A coleta de urina de 24 h — medir o clearance na prática</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">Ccr = (U · volume / tempo) / P — útil, mas com armadilhas</text>
+
+  <!-- jarra -->
+  <path d="M120,120 l120,0 l-12,140 l-96,0 z" fill="#1b242d" stroke="#3a7bd5" stroke-width="2"/>
+  <rect x="126" y="190" width="102" height="66" fill="#39c0c8" fill-opacity="0.3"/>
+  <text x="180" y="110" text-anchor="middle" font-size="11" fill="#9bbef0">urina de 24 h</text>
+  <text x="180" y="234" text-anchor="middle" font-size="10" fill="#9fe3ec">volume + U_creat</text>
+
+  <rect x="300" y="96" width="340" height="160" rx="8" fill="#10202c" stroke="#3a4a58"/>
+  <text x="470" y="120" text-anchor="middle" font-size="12" fill="#e7eef4" font-weight="bold">Armadilhas da coleta</text>
+  <text x="316" y="148" font-size="11" fill="#f0c078">• coleta incompleta → subestima</text>
+  <text x="316" y="172" font-size="11" fill="#f0c078">• secreção tubular → superestima a TFG</text>
+  <text x="316" y="196" font-size="11" fill="#f0c078">• fora do equilíbrio (LRA) → inválida</text>
+  <text x="316" y="224" font-size="10" fill="#9fb1c0">checagem: creatinina excretada ~15–25 mg/kg/dia</text>
+  <text x="316" y="242" font-size="10" fill="#9fb1c0">(se muito baixa, a coleta foi incompleta)</text>
+</svg>

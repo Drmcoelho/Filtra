@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M4 — Clearance: medir a função e por que a creatinina mente</title>
+<style>
+  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--warn:#e8a13a;--bad:#e0556b;--good:#52c08a;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none} section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .presets{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px} .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)} .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)} .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)} .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M4</div>
+  <h1>Clearance — medir a função, e por que a creatinina mente</h1>
+  <div class="sub">A inulina é o padrão-ouro (C = U·V̇/P); a creatinina é prática, mas <b>mente</b> por três
+  motivos: <b>secreção</b> (superestima), <b>cinética lenta</b> (atrasa na fase aguda) e <b>massa muscular</b>
+  (pouca massa → creatinina "normal" com TFG baixa). É homeostasia da informação: o número precisa ser lido
+  pelo mecanismo que o gera.</div>
+  <nav class="hex">
+    <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
+    <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="filtra.html">&larr; índice do braço FILTRA</a>
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- CONCEITO -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — medir a função renal, ilustrado</h3>
+      <p class="sub" style="margin-top:0"><b>Medir a TFG é ler a homeostasia.</b> Mas todo marcador tem viés. As
+      Fig. 1–13 voltam no Caso, na Trilha e na Avaliação (algumas reaparecem nos exercícios). Atribuição em
+      <code>CREDITS.md</code> (em curadoria).</p>
+
+      <h4>1. O que é clearance — e a inulina como padrão-ouro</h4>
+      <p class="sub">Clearance é o volume de plasma "limpo" de uma substância por minuto: <b>C = U·V̇/P</b>. Se a
+      substância é só filtrada (não secretada nem reabsorvida), o clearance dela = TFG. A inulina é assim.</p>
+      <div class="frow">
+        <div class="concept" id="draw-clear"></div>
+        <figure class="fviva"><img src="assets/m4/clearance-conceito.png" alt="Conceito de clearance renal" loading="lazy">
+          <figcaption><b>Fig. 1 · O conceito de clearance.</b> O rim "depura" um volume de plasma por minuto. A
+          medida formal é a coleta de urina com a fórmula C = U·V̇/P.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m4/inulina-padrao-ouro.svg" alt="Inulina: filtrada, não secretada nem reabsorvida; clearance = TFG" loading="lazy">
+          <figcaption><b>Fig. 2 · Inulina, o padrão-ouro.</b> Filtra 100%, não secreta nem reabsorve → o que filtra =
+          o que sai → clearance = TFG exata. Precisa de infusão contínua (pesquisa); iohexol/⁵¹Cr-EDTA são
+          alternativas.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m4/coleta-24h.svg" alt="Coleta de urina de 24h e suas armadilhas" loading="lazy">
+          <figcaption><b>Fig. 3 · A coleta de 24 h.</b> Ccr = U·volume/tempo ÷ P. Armadilhas: coleta incompleta
+          (subestima), secreção (superestima), fora de equilíbrio (inválida). Confira a creatinina excretada
+          (~15–25 mg/kg/dia).</figcaption></figure>
+      </div>
+
+      <h4>2. A hipérbole Pcr × TFG e a "faixa cega"</h4>
+      <p class="sub">No equilíbrio, <b>produção = TFG × Pcr</b> ⟹ <b>Pcr = produção/TFG</b>. Como é uma hipérbole,
+      perder metade da TFG (120→60) mal mexe a creatinina — a <b>faixa cega</b>.</p>
+      <div class="frow">
+        <div class="concept" id="draw-hiper"></div>
+        <figure class="fviva"><img src="assets/m4/creatinina-tfg-curva.svg" alt="Hipérbole creatinina versus TFG, com a faixa cega" loading="lazy">
+          <figcaption><b>Fig. 4 · A hipérbole e a faixa cega.</b> TFG 120 → Pcr ~0,8; TFG 60 → ~1,5 (ainda quase
+          normal!); TFG 20 → 3+. O mesmo ΔTFG move muito mais a creatinina quando a TFG já é baixa.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m4/equilibrio-producao.svg" alt="Equilíbrio de massa: produção igual a excreção (TFG x Pcr)" loading="lazy">
+          <figcaption><b>Fig. 5 · O equilíbrio de massa.</b> Estável: produção (músculo) = excreção (TFG×Pcr). TFG
+          cai → excreção cai → o pool sobe até reequilibrar. Daí a hipérbole — e o reequilíbrio leva dias.</figcaption></figure>
+      </div>
+
+      <h4>3. As três mentiras da creatinina</h4>
+      <p class="sub">(1) <b>secreção</b> tubular → o Ccr superestima a TFG; (2) <b>cinética</b> → na LRA a creatinina
+      atrasa e subestima a lesão; (3) <b>massa muscular</b> → pouca massa esconde TFG baixa.</p>
+      <div class="frow">
+        <div class="concept" id="draw-kinetica"></div>
+        <figure class="fviva"><img src="assets/m4/secrecao-tubular-creatinina.svg" alt="Secreção tubular de creatinina faz o clearance superestimar a TFG" loading="lazy">
+          <figcaption><b>Fig. 6 · Mentira 1 — secreção.</b> A creatinina é filtrada <b>e</b> secretada (~10–15%) →
+          Ccr = TFG + secreção &gt; TFG. A inulina, só filtrada, não tem esse viés.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m4/cinetica-creatinina-tempo.svg" alt="Cinética: a TFG cai no dia 0 mas a creatinina sobe ao longo de dias" loading="lazy">
+          <figcaption><b>Fig. 7 · Mentira 2 — cinética.</b> A TFG despenca no dia 0; a creatinina só sobe em 2–4 dias
+          (τ = Vd/clearance). Na janela inicial o número engana → eGFR superestima a TFG real.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m4/massa-muscular-creatinina.svg" alt="Massa muscular: pouca massa produz pouca creatinina, mascarando TFG baixa" loading="lazy">
+          <figcaption><b>Fig. 8 · Mentira 3 — massa.</b> A creatinina vem do músculo. O idoso sarcopênico com TFG 40
+          pode ter creatinina ~1,0 ("normal"). O jovem musculoso com TFG ótima pode ter ~1,1 ("alta").</figcaption></figure>
+      </div>
+
+      <h4>4. Estimar e comparar — eGFR, cistatina, marcadores</h4>
+      <p class="sub">As fórmulas de eGFR usam idade/sexo como proxy da produção. A <b>cistatina C</b> independe de
+      massa. Quando creatinina e cistatina discordam, suspeite da massa.</p>
+      <div class="frow">
+        <div class="concept" id="draw-marcadores"></div>
+        <figure class="fviva"><img src="assets/m4/formulas-egfr.svg" alt="Fórmulas de eGFR: Cockcroft-Gault e CKD-EPI" loading="lazy">
+          <figcaption><b>Fig. 9 · As fórmulas de eGFR.</b> Cockcroft-Gault (clearance, usa peso) e CKD-EPI (a
+          recomendada; raça removida em 2021). Todas pressupõem <b>equilíbrio</b> e produção típica — por isso
+          enganam na LRA e nos extremos de massa.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m4/cistatina-c.svg" alt="Cistatina C versus creatinina como marcadores de TFG" loading="lazy">
+          <figcaption><b>Fig. 10 · Cistatina C.</b> Produzida por todas as células nucleadas → <b>independe de
+          massa</b>; melhor no idoso/sarcopênico. Sofre com corticoide/tireoide. Combinar creat+cistatina é o
+          mais acurado.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m4/marcadores-comparados.svg" alt="Inulina, creatinina e cistatina C comparadas" loading="lazy">
+          <figcaption><b>Fig. 11 · Três marcadores, três vieses.</b> Inulina = verdade (impraticável); creatinina =
+          barata, mas mente por 3 vias; cistatina = independe de massa. Escolha pela pergunta clínica.</figcaption></figure>
+      </div>
+
+      <h4>5. Aplicação — estadiar a DRC e detectar a LRA</h4>
+      <p class="sub">eGFR estável estadia a <b>DRC</b> (KDIGO G1–G5). Na <b>LRA</b>, como a creatinina atrasa, usa-se
+      também o <b>débito urinário</b> — que cai mais cedo.</p>
+      <div class="frow">
+        <figure class="fviva"><img src="assets/m4/ckd-estagios.svg" alt="Estágios KDIGO da doença renal crônica por eGFR" loading="lazy">
+          <figcaption><b>Fig. 12 · Estágios da DRC.</b> G1 ≥90 · G2 60–89 · G3a 45–59 · G3b 30–44 · G4 15–29 ·
+          G5 &lt;15. G1–G2 exigem dano associado (a creatinina ainda é normal na faixa cega).</figcaption></figure>
+        <figure class="fviva"><img src="assets/m4/aki-criterios.svg" alt="Critérios KDIGO de LRA: creatinina e débito urinário" loading="lazy">
+          <figcaption><b>Fig. 13 · LRA — dois critérios.</b> Creatinina (↑0,3 em 48 h ou ↑1,5× em 7 d) <b>atrasa</b>;
+          o débito urinário (&lt;0,5 mL/kg/h) cai em tempo real. Juntos cobrem a fraqueza um do outro.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASO -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — oito atos, decida antes de revelar</h3>
+      <p class="sub">Mulher de 82 anos, magra, internada. "A creatinina está normal (0,9), o rim está bem." Será?</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step"><b>Ato 1.</b> Creatinina 0,9 mg/dL. Mas é frágil, ~45 kg, pouca massa muscular. O 0,9 é
+        tranquilizador (volte à Fig. 8)?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>Não necessariamente.</b> Pouca massa → pouca produção → creatinina baixa
+          mesmo com TFG reduzida. Em idosa magra, 0,9 pode esconder uma TFG de 40. A creatinina <b>mente pela
+          massa</b>.</div></div>
+
+      <div class="step"><b>Ato 2.</b> O eGFR (CKD-EPI) já corrige por idade/sexo: dá <b>42 mL/min</b>. E a cistatina?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2">A cistatina C (independe de massa) confirma ~40. Creatinina "normal" + eGFR baixo
+          + cistatina baixa = a massa enganava. <b>G3b</b> de DRC, não rim "normal".</div></div>
+
+      <div class="step"><b>Ato 3.</b> <i>Por que a fórmula salvou aqui?</i>
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3">Porque o eGFR usa <b>idade e sexo</b> como proxy da produção: assume que a idosa
+          produz menos creatinina. Por isso o eGFR é melhor que a creatinina crua — mas ainda pressupõe
+          equilíbrio.</div></div>
+
+      <div class="step"><b>Ato 4.</b> <i>Vira a chave.</i> No 2º dia ela faz sepse e a TFG real despenca para 15. A
+        creatinina no dia seguinte é 1,3. O rim melhorou?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>Piorou muito.</b> A creatinina <b>atrasa</b> (Fig. 7): a TFG já é 15, mas o
+          número ainda sobe devagar (τ longo). O eGFR calculado nesse 1,3 <b>superestima</b> grosseiramente a TFG —
+          a mentira da cinética.</div></div>
+
+      <div class="step"><b>Ato 5.</b> <i>O que pega a lesão antes do número?</i>
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5">O <b>débito urinário</b> (Fig. 13): caiu para &lt;0,5 mL/kg/h horas antes de a
+          creatinina reagir. Por isso a LRA usa os dois critérios. A oligúria precede o número.</div></div>
+
+      <div class="step"><b>Ato 6.</b> <i>Outro doente.</i> Homem jovem, musculoso, faz suplemento de creatina e come
+        muita carne; creatinina 1,3 com eGFR 75. Rim doente?
+        <div><button class="act" data-rev="r6">Revelar</button></div>
+        <div class="reveal" id="r6"><b>Provavelmente não.</b> Muita massa + carne (creatinina exógena) elevam a
+          creatinina sem queda de TFG. A cistatina C ~normal confirmaria. É a mentira da massa <b>ao contrário</b>.</div></div>
+
+      <div class="step"><b>Ato 7.</b> <i>A coleta.</i> Pedem clearance de creatinina de 24 h: dá 95 mL/min, mas a
+        creatinina urinária total é baixíssima. Confiável?
+        <div><button class="act" data-rev="r7">Revelar</button></div>
+        <div class="reveal" id="r7"><b>Coleta incompleta</b> (Fig. 3): creatinina excretada abaixo de ~15 mg/kg/dia
+          denuncia que parte da urina não entrou no frasco → o clearance está <b>subestimado</b> (ou inválido).</div></div>
+
+      <div class="step"><b>Ato 8.</b> <i>Síntese.</i> Qual a lição de uma linha?
+        <div><button class="act" data-rev="r8">Revelar</button></div>
+        <div class="reveal" id="r8">A creatinina é uma <b>sombra</b> da TFG distorcida por secreção, tempo e massa.
+          Leia o número pelo mecanismo: eGFR no estável, débito urinário no agudo, cistatina nos extremos de massa.</div></div>
+    </div>
+  </section>
+
+  <!-- TRILHA -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — treze perguntas que constroem o conceito</h3>
+      <details><summary>1. O que é clearance?</summary><p>O volume de plasma depurado de uma substância por minuto:
+        C = U·V̇/P. Se a substância só é filtrada, C = TFG.</p></details>
+      <details><summary>2. Por que a inulina é o padrão-ouro?</summary><p>É livremente filtrada e não é secretada nem
+        reabsorvida → o que filtra é exatamente o que sai → clearance = TFG exata.</p></details>
+      <details><summary>3. Por que Pcr ∝ 1/TFG?</summary><p>No equilíbrio, produção = excreção = TFG·Pcr. Logo
+        Pcr = produção/TFG — uma hipérbole.</p></details>
+      <details><summary>4. O que é a "faixa cega" da creatinina?</summary><p>Por ser hipérbole, perder metade da TFG
+        (120→60) mal eleva a creatinina (0,8→1,5). Metade dos néfrons pode estar perdida com creatinina quase
+        normal.</p></details>
+      <details><summary>5. Primeira mentira: a secreção.</summary><p>A creatinina é filtrada E secretada (~10–15%) →
+        o clearance de creatinina <b>superestima</b> a TFG verdadeira.</p></details>
+      <details><summary>6. Segunda mentira: a cinética.</summary><p>Quando a TFG cai de repente, a creatinina sobe ao
+        longo de dias (τ = Vd/clearance). Na fase aguda, o número <b>atrasa</b> e subestima a lesão.</p></details>
+      <details><summary>7. Por que o τ é maior quando a TFG é baixa?</summary><p>τ = Vd/clearance; com clearance
+        menor, o pool reequilibra mais devagar → a creatinina demora ainda mais a refletir a TFG.</p></details>
+      <details><summary>8. Terceira mentira: a massa muscular.</summary><p>A creatinina vem do músculo. Pouca massa →
+        pouca produção → creatinina baixa, que <b>mascara</b> uma TFG reduzida (idoso, amputado, caquético).</p></details>
+      <details><summary>9. Como o eGFR tenta corrigir?</summary><p>Usando idade e sexo como proxies da produção
+        (CKD-EPI). Melhor que a creatinina crua, mas ainda pressupõe equilíbrio e produção típica.</p></details>
+      <details><summary>10. Quando usar a cistatina C?</summary><p>Quando a massa engana (idoso, sarcopênico,
+        atleta) — ela independe de músculo. Cuidado com corticoide/tireoide.</p></details>
+      <details><summary>11. Por que a LRA usa também o débito urinário?</summary><p>Porque a creatinina atrasa; a
+        oligúria (&lt;0,5 mL/kg/h) cai em tempo real e pega a lesão mais cedo.</p></details>
+      <details><summary>12. O que invalida uma coleta de 24 h?</summary><p>Coleta incompleta (creatinina excretada
+        muito baixa), secreção (superestima) e estar fora do equilíbrio.</p></details>
+      <details><summary>13. Em que sentido isto é homeostasia?</summary><p>Medir a TFG é medir a capacidade de manter o
+        meio interno. O número (creatinina) é uma sombra — só vale lido pelo mecanismo que o produz.</p></details>
+    </div>
+  </section>
+
+  <!-- INSTRUMENTO -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — a hipérbole creatinina × TFG</h3>
+      <p class="sub">Os controles do <b>Lab</b> alimentam esta curva. O marcador laranja é o ponto de operação; veja
+      a faixa cega à direita (TFG alta, creatinina quase plana) e a subida íngreme à esquerda.</p>
+      <canvas id="pcr-canvas" width="900" height="360" aria-label="Hipérbole creatinina por TFG"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- LAB -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — mova a TFG, a massa e o tempo; veja a creatinina mentir</h3>
+      <div class="grid">
+        <div>
+          <label>TFG verdadeira (mL/min): <span class="val" id="lbl-gfr">120</span></label>
+          <input type="range" id="in-gfr" min="5" max="160" step="1" value="120">
+          <label>TFG antes da mudança (mL/min): <span class="val" id="lbl-gfrprev">120</span></label>
+          <input type="range" id="in-gfrprev" min="5" max="160" step="1" value="120">
+          <label>Tempo desde a mudança (dias): <span class="val" id="lbl-tempo">30</span></label>
+          <input type="range" id="in-tempo" min="0" max="30" step="0.5" value="30">
+        </div>
+        <div>
+          <label>Massa muscular (relativa): <span class="val" id="lbl-musculo">1.0</span></label>
+          <input type="range" id="in-musculo" min="0.2" max="2" step="0.1" value="1">
+          <label>Secreção tubular (fração): <span class="val" id="lbl-secr">0.10</span></label>
+          <input type="range" id="in-secr" min="0" max="0.5" step="0.05" value="0.1">
+        </div>
+      </div>
+
+      <div class="presets">
+        <button class="act" data-preset="normal">Normal</button>
+        <button class="act" data-preset="idoso">Idoso sarcopênico</button>
+        <button class="act" data-preset="lra">LRA aguda (dia 1)</button>
+        <button class="act" data-preset="atleta">Atleta musculoso</button>
+        <button class="act" data-preset="drc">DRC estável (G4)</button>
+      </div>
+
+      <table>
+        <tr><th>Variável</th><th>Atual</th><th>Comentário</th></tr>
+        <tr><td>Creatinina atual (mg/dL)</td><td class="num" id="out-pcr">—</td><td class="num">o que o exame mostra</td></tr>
+        <tr><td>Creatinina no equilíbrio (mg/dL)</td><td class="num" id="out-pcrss">—</td><td class="num">para onde vai</td></tr>
+        <tr><td>τ (dias)</td><td class="num" id="out-tau">—</td><td class="num">rapidez de reação</td></tr>
+        <tr><td>Clearance de creatinina (mL/min)</td><td class="num" id="out-ccr">—</td><td class="num">&gt; TFG (secreção)</td></tr>
+        <tr><td>eGFR creatinina (mL/min)</td><td class="num" id="out-egfr">—</td><td class="num">estimado</td></tr>
+        <tr><td>eGFR cistatina ≈ TFG (mL/min)</td><td class="num" id="out-egfrcys">—</td><td class="num">a verdade</td></tr>
+        <tr><td>Erro do eGFR (mL/min)</td><td class="num" id="out-erro">—</td><td class="num">+ = parece melhor que a verdade</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÃO -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (13)</button>
+        <button data-bank="textual">Textual (12)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica</b>. Este módulo M4 trata
+    de medir a função renal; os números (creatinina, eGFR, estágios) são apresentados como <b>mecanismo</b>, não
+    como guia de prescrição. O modelo de cinética e equilíbrio é uma simplificação didática calibrada. Não
+    substitui julgamento clínico; a decisão e a responsabilidade finais são sempre do profissional.
+  </div>
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+</div>
+
+<script>
+/* ENGINE INLINE — espelho fiel de build/m4/model4.js */
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
+var PROD_STD=1500, VD=42, SECR_STD=0.10;
+function clearanceMedido(Ux,Vfluxo,Px){ Ux=clampv(Ux,0,1e6); Vfluxo=clampv(Vfluxo,0,100); Px=clampv(Px,1e-6,1e6); var c=Ux*Vfluxo/Px; return isFinite(c)&&c>=0?c:0; }
+function pcrEquilibrio(gfr,producao,secr){ gfr=clampv(gfr,1,250); producao=clampv(producao,50,6000); secr=clampv(secr,0,1);
+  var ccrLdia=gfr*(1+secr)*1.44, pcrMgL=producao/ccrLdia; return clampv(pcrMgL/10,0.05,60); }
+function clearance(input){ var inp=input||{};
+  var gfr=clampv(inp.gfr!==undefined?inp.gfr:120,1,250);
+  var gfrPrev=clampv(inp.gfrPrev!==undefined?inp.gfrPrev:gfr,1,250);
+  var tempoDias=clampv(inp.tempoDias!==undefined?inp.tempoDias:30,0,60);
+  var muscleFactor=clampv(inp.muscleFactor!==undefined?inp.muscleFactor:1,0.2,2);
+  var secr=clampv(inp.secrecaoFrac!==undefined?inp.secrecaoFrac:SECR_STD,0,1);
+  var producao=muscleFactor*PROD_STD;
+  var pcrSSnova=pcrEquilibrio(gfr,producao,secr), pcrSSvelha=pcrEquilibrio(gfrPrev,producao,secr);
+  var ccrLdiaNova=gfr*(1+secr)*1.44, tau=VD/Math.max(ccrLdiaNova,1e-6);
+  var pcrAtual=clampv(pcrSSnova+(pcrSSvelha-pcrSSnova)*Math.exp(-tempoDias/tau),0.05,60);
+  var ccrMedido=gfr*(1+secr);
+  var eGFRcreatNaive=clampv((PROD_STD/(pcrAtual*10*1.44))/(1+SECR_STD),1,300);
+  var eGFRcistatina=gfr, erroEgfr=eGFRcreatNaive-gfr;
+  var foraEquilibrio=Math.abs(pcrAtual-pcrSSnova)>0.1, creatininaParecesNormal=pcrAtual<1.3;
+  var enganaPorMusculo=creatininaParecesNormal&&gfr<60, superestimaPorSecrecao=(ccrMedido-gfr)/gfr>0.05;
+  return {gfr:gfr,gfrPrev:gfrPrev,tempoDias:tempoDias,muscleFactor:muscleFactor,secrecaoFrac:secr,producao:producao,
+    pcrSSnova:pcrSSnova,pcrSSvelha:pcrSSvelha,pcrAtual:pcrAtual,tau:tau,ccrMedido:ccrMedido,
+    eGFRcreatNaive:eGFRcreatNaive,eGFRcistatina:eGFRcistatina,erroEgfr:erroEgfr,
+    foraEquilibrio:foraEquilibrio,creatininaParecesNormal:creatininaParecesNormal,
+    enganaPorMusculo:enganaPorMusculo,superestimaPorSecrecao:superestimaPorSecrecao}; }
+function pcrCurveLayout(state,W,H){ state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=52,padR=16,padT=18,padB=38,baseY=H-padB, gMin=5,gMax=150,N=58;
+  var muscleFactor=clampv(state.muscleFactor!==undefined?state.muscleFactor:1,0.2,2);
+  var secr=clampv(state.secrecaoFrac!==undefined?state.secrecaoFrac:SECR_STD,0,1), prod=muscleFactor*PROD_STD, yMax=6;
+  var pxX=(W-padL-padR)/(gMax-gMin), pxY=(baseY-padT)/yMax, pts=[],i,g,pcr;
+  for(i=0;i<=N;i++){ g=gMin+(gMax-gMin)*i/N; pcr=pcrEquilibrio(g,prod,secr);
+    pts.push({gfr:g,pcr:pcr,x:padL+(g-gMin)*pxX,y:baseY-clampv(pcr,0,yMax)*pxY}); }
+  var gc=clampv(state.gfr!==undefined?state.gfr:120,gMin,gMax), pcrc=pcrEquilibrio(gc,prod,secr);
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,gMin:gMin,gMax:gMax,yMax:yMax,pxX:pxX,pxY:pxY,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},pts:pts,
+    current:{x:padL+(gc-gMin)*pxX,y:baseY-clampv(pcrc,0,yMax)*pxY,gfr:gc,pcr:pcrc}}; }
+window.clearance=clearance; window.pcrEquilibrio=pcrEquilibrio; window.clearanceMedido=clearanceMedido; window.pcrCurveLayout=pcrCurveLayout;
+window.MODEL={clearance:clearance,pcrEquilibrio:pcrEquilibrio,clearanceMedido:clearanceMedido,pcrCurveLayout:pcrCurveLayout,clampv:clampv,PROD_STD:PROD_STD,VD:VD,SECR_STD:SECR_STD};
+
+/* UI */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=(d===undefined?1:d); return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on'); b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on'); $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh(); });
+document.addEventListener('click',function(e){ var b=e.target.closest('button.act[data-rev]'); if(!b) return; var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on'); });
+
+function readInputs(){ return { gfr:+$('in-gfr').value, gfrPrev:+$('in-gfrprev').value, tempoDias:+$('in-tempo').value, muscleFactor:+$('in-musculo').value, secrecaoFrac:+$('in-secr').value }; }
+function refresh(){ var inp=readInputs();
+  $('lbl-gfr').textContent=inp.gfr; $('lbl-gfrprev').textContent=inp.gfrPrev; $('lbl-tempo').textContent=fmt(inp.tempoDias,1);
+  $('lbl-musculo').textContent=fmt(inp.muscleFactor,1); $('lbl-secr').textContent=fmt(inp.secrecaoFrac,2);
+  var r=clearance(inp);
+  $('out-pcr').textContent=fmt(r.pcrAtual,2); $('out-pcrss').textContent=fmt(r.pcrSSnova,2); $('out-tau').textContent=fmt(r.tau,2);
+  $('out-ccr').textContent=fmt(r.ccrMedido,0); $('out-egfr').textContent=fmt(r.eGFRcreatNaive,0);
+  $('out-egfrcys').textContent=fmt(r.eGFRcistatina,0); $('out-erro').textContent=(r.erroEgfr>=0?'+':'')+fmt(r.erroEgfr,0);
+  verdict(r); drawHiper(inp); pearl(r,inp); }
+function verdict(r){ var v=$('veredito'), cls='b-good', msg;
+  if(r.enganaPorMusculo){ cls='b-bad'; msg='A MENTIRA DA MASSA: creatinina '+fmt(r.pcrAtual,2)+' parece normal, mas a TFG é só '+fmt(r.gfr,0)+'. Use eGFR/cistatina.'; }
+  else if(r.foraEquilibrio){ cls='b-warn'; msg='FORA DE EQUILÍBRIO (cinética): creatinina '+fmt(r.pcrAtual,2)+' caminhando para '+fmt(r.pcrSSnova,2)+'; o eGFR ('+fmt(r.eGFRcreatNaive,0)+') engana a TFG real ('+fmt(r.gfr,0)+').'; }
+  else if(Math.abs(r.erroEgfr)>15){ cls='b-warn'; msg='eGFR-creatinina ('+fmt(r.eGFRcreatNaive,0)+') difere da TFG ('+fmt(r.gfr,0)+') por massa/secreção — confira a cistatina.'; }
+  else { cls='b-good'; msg='Estável e massa típica: eGFR ('+fmt(r.eGFRcreatNaive,0)+') ≈ TFG ('+fmt(r.gfr,0)+'). A creatinina aqui é confiável.'; }
+  v.className='banner '+cls; v.textContent=msg; }
+function pearl(r,inp){ var p=$('lab-pearl'), ip=$('instr-pearl'), t;
+  if(r.foraEquilibrio) t='PÉROLA (cinética): a TFG já é '+fmt(r.gfr,0)+', mas a creatinina ainda é '+fmt(r.pcrAtual,2)+' (vai a '+fmt(r.pcrSSnova,2)+' em ~'+fmt(r.tau*3,1)+' dias). O número ATRASA.';
+  else if(r.enganaPorMusculo) t='PÉROLA (massa): produção baixa → creatinina '+fmt(r.pcrAtual,2)+' "normal" com TFG '+fmt(r.gfr,0)+'. A cistatina não cairia nessa.';
+  else if(r.superestimaPorSecrecao) t='PÉROLA (secreção): o clearance de creatinina ('+fmt(r.ccrMedido,0)+') supera a TFG verdadeira ('+fmt(r.gfr,0)+') — a inulina não.';
+  else t='No equilíbrio e com massa típica, Pcr = produção/TFG; aqui '+fmt(r.pcrAtual,2)+' mg/dL para TFG '+fmt(r.gfr,0)+'.';
+  p.textContent=t; ip.textContent=t; }
+function drawHiper(state){ var c=$('pcr-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
+  var L=pcrCurveLayout(state,c.width,c.height); ctx.clearRect(0,0,L.W,L.H);
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('creatinina (mg/dL)',8,L.padT+2); ctx.fillText('TFG (mL/min) →',L.W-150,L.baseY+24);
+  ctx.strokeStyle='#39c0c8'; ctx.lineWidth=2; ctx.beginPath();
+  for(var i=0;i<L.pts.length;i++){ var p=L.pts[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); } ctx.stroke();
+  var cu=L.current; ctx.strokeStyle='#e8a13a'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(cu.x,L.padT); ctx.lineTo(cu.x,L.baseY); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#e8a13a'; ctx.fillRect(cu.x-3,cu.y-3,6,6);
+  ctx.fillStyle='#e7eef4'; ctx.fillText('Pcr '+fmt(cu.pcr,2),cu.x+6,Math.max(cu.y-6,L.padT+10)); }
+['in-gfr','in-gfrprev','in-tempo','in-musculo','in-secr'].forEach(function(id){ $(id).addEventListener('input',refresh); });
+
+var PRESETS={
+  normal:{gfr:120,gfrprev:120,tempo:30,musculo:1,secr:0.1},
+  idoso:{gfr:40,gfrprev:40,tempo:30,musculo:0.4,secr:0.1},
+  lra:{gfr:15,gfrprev:120,tempo:1,musculo:1,secr:0.1},
+  atleta:{gfr:120,gfrprev:120,tempo:30,musculo:1.8,secr:0.1},
+  drc:{gfr:22,gfrprev:22,tempo:30,musculo:1,secr:0.1}
+};
+function applyPreset(p){ var d=PRESETS[p]; if(!d) return;
+  $('in-gfr').value=d.gfr; $('in-gfrprev').value=d.gfrprev; $('in-tempo').value=d.tempo; $('in-musculo').value=d.musculo; $('in-secr').value=d.secr; refresh(); }
+document.querySelector('.presets').addEventListener('click',function(e){ var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset')); });
+
+/* ILUSTRAÇÕES computadas + helper raster */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+function pcrMini(state,titulo){ var W=300,H=170,L=pcrCurveLayout(state,W,H),s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  var d=''; for(var i=0;i<L.pts.length;i++){ d+=(i===0?'M':'L')+f1(L.pts[i].x)+' '+f1(L.pts[i].y)+' '; }
+  s+='<path d="'+d+'" fill="none" stroke="#39c0c8" stroke-width="2"/>';
+  s+='<rect x="'+f1(L.current.x-3)+'" y="'+f1(L.current.y-3)+'" width="6" height="6" fill="#e8a13a"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'Pcr × TFG')+'</text>';
+  s+='<text x="'+(W-8)+'" y="'+(L.baseY+14)+'" fill="#9fb1c0" font-size="9" text-anchor="end">TFG →</text>';
+  return svgEl(W,H,s); }
+function kineticMini(state,titulo){ var W=300,H=170,padL=40,padB=28,baseY=H-padB,padT=20,s='';
+  var days=20, pxX=(W-padL-12)/days, pxY=(baseY-padT)/6;
+  s+='<line x1="'+padL+'" y1="'+padT+'" x2="'+padL+'" y2="'+baseY+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+padL+'" y1="'+baseY+'" x2="'+(W-12)+'" y2="'+baseY+'" stroke="#3a4a58"/>';
+  var d=''; for(var t=0;t<=days;t+=0.5){ var pc=clearance({gfr:state.gfr,gfrPrev:state.gfrPrev,tempoDias:t,muscleFactor:state.muscleFactor||1}).pcrAtual;
+    var x=padL+t*pxX, y=baseY-clampv(pc,0,6)*pxY; d+=(d===''?'M':'L')+f1(x)+' '+f1(y)+' '; }
+  s+='<path d="'+d+'" fill="none" stroke="#e0556b" stroke-width="2"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'creatinina × tempo')+'</text>';
+  s+='<text x="'+(W-8)+'" y="'+(baseY+14)+'" fill="#9fb1c0" font-size="9" text-anchor="end">dias →</text>';
+  return svgEl(W,H,s); }
+function markerBars(r){ var W=300,H=170,base=130,s='';
+  function bar(x,val,color,lab){ var h=clampv(val/150,0,1)*96; return '<rect x="'+x+'" y="'+f1(base-h)+'" width="56" height="'+f1(h)+'" fill="'+color+'" fill-opacity="0.65" stroke="'+color+'"/>'+
+    '<text x="'+(x+28)+'" y="'+(base+13)+'" fill="#9fb1c0" font-size="9" text-anchor="middle">'+lab+'</text>'+
+    '<text x="'+(x+28)+'" y="'+f1(base-h-4)+'" fill="#e7eef4" font-size="10" text-anchor="middle">'+fmt(val,0)+'</text>'; }
+  s+=bar(40,r.gfr,'#52c08a','TFG real'); s+=bar(122,r.eGFRcreatNaive,'#e0556b','eGFR creat'); s+=bar(204,r.eGFRcistatina,'#39c0c8','cistatina');
+  s+='<text x="150" y="150" fill="#9fb1c0" font-size="10" text-anchor="middle">erro creatinina '+(r.erroEgfr>=0?'+':'')+fmt(r.erroEgfr,0)+' mL/min</text>';
+  s+='<text x="150" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">a verdade × os marcadores</text>';
+  return svgEl(W,H,s); }
+function imgFig(slug,alt){ return '<img src="assets/m4/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+/* TUTOR */
+function R0(extra){ var o={}; if(extra) for(var k in extra) o[k]=extra[k]; return clearance(o); }
+var TUTOR_ILUSTRADO=[
+  {q:'Na hipérbole, cair a TFG de 120 para 60 faz a creatinina…',o:['dobrar para ~5','mal mudar (~0,8→1,5)','cair'],c:1,e:'A faixa cega: metade dos néfrons perdida com creatinina quase normal.',fig:function(){return pcrMini({gfr:60},'TFG 60 — faixa cega');}},
+  {q:'E cair de 30 para 15?',o:['quase não muda','dispara (~3→6)','cai'],c:1,e:'Em TFG baixa, o mesmo ΔTFG move muito a creatinina (ramo íngreme).',fig:function(){return pcrMini({gfr:15},'TFG 15 — ramo íngreme');}},
+  {q:'Após a TFG despencar (120→15), no dia 1 a creatinina…',o:['já está alta','ainda está quase normal (atrasa)','não muda nunca'],c:1,e:'A cinética: o número sobe ao longo de dias; no início subestima a lesão.',fig:function(){return kineticMini({gfr:15,gfrPrev:120},'LRA: creatinina atrasa');}},
+  {q:'Comparado à TFG real, o eGFR no idoso sarcopênico (massa baixa, sem corrigir)…',o:['subestima','superestima (parece melhor)','acerta'],c:1,e:'Pouca produção → creatinina baixa → eGFR naïve superestima a TFG.',fig:function(){return markerBars(R0({gfr:40,muscleFactor:0.4}));}},
+  {q:'A cistatina C, no mesmo idoso…',o:['também erra por massa','rastreia a TFG real','não existe'],c:1,e:'Independe de massa → fica próxima da TFG verdadeira.',fig:function(){return markerBars(R0({gfr:40,muscleFactor:0.4}));}},
+  {q:'Na fase aguda (fora de equilíbrio), o eGFR-creatinina…',o:['é confiável','superestima a TFG real','subestima'],c:1,e:'Como a creatinina atrasa, o eGFR calculado nela parece melhor que a TFG.',fig:function(){return markerBars(R0({gfr:15,gfrPrev:120,tempoDias:1}));}},
+  {q:'Na figura da secreção, por que o Ccr > TFG?',o:['coleta incompleta','a creatinina é secretada além de filtrada','a inulina some'],c:1,e:'Filtra + secreta → o clearance de creatinina supera a TFG verdadeira.',fig:function(){return imgFig('secrecao-tubular-creatinina.svg','secreção tubular');}},
+  {q:'Na figura da massa, a creatinina "normal" do idoso significa…',o:['rim saudável','TFG pode estar baixa (pouca produção)','erro de exame'],c:1,e:'Pouca massa mascara a TFG baixa — a mentira da massa.',fig:function(){return imgFig('massa-muscular-creatinina.svg','mentira da massa');}},
+  {q:'Na figura da cinética, o que sobe primeiro na LRA?',o:['a creatinina','o débito urinário cai antes','nada'],c:1,e:'A oligúria precede o número; a creatinina atrasa.',fig:function(){return imgFig('cinetica-creatinina-tempo.svg','cinética da creatinina');}},
+  {q:'Na figura dos estágios, TFG 50 corresponde a…',o:['G2','G3a','G4'],c:1,e:'G3a = 45–59 mL/min/1,73m².',fig:function(){return imgFig('ckd-estagios.svg','estágios KDIGO');}},
+  {q:'Na figura da LRA, qual critério pega a lesão mais cedo?',o:['creatinina','débito urinário','nenhum'],c:1,e:'O débito urinário cai em tempo real; a creatinina atrasa.',fig:function(){return imgFig('aki-criterios.svg','critérios de LRA');}},
+  {q:'Na figura dos marcadores, qual é a TFG verdadeira (impraticável)?',o:['creatinina','inulina','cistatina'],c:1,e:'A inulina é o padrão-ouro, mas exige infusão contínua.',fig:function(){return imgFig('marcadores-comparados.svg','marcadores comparados');}},
+  {q:'Reduzir a massa muscular (sem mudar a TFG) faz a creatinina…',o:['subir','cair','dobrar'],c:1,e:'Menos produção → menos creatinina, mesma TFG: o número engana.',fig:function(){return markerBars(R0({gfr:90,muscleFactor:0.4}));}}
+];
+var TUTOR_TEXTUAL=[
+  {q:'A fórmula do clearance é…',o:['C = P·V̇/U','C = U·V̇/P','C = U/P'],c:1,e:'C = U·V̇/P (concentração urinária × fluxo ÷ plasmática).'},
+  {q:'A inulina mede a TFG exata porque…',o:['é secretada','só é filtrada (não secreta/reabsorve)','é grande'],c:1,e:'O que filtra é o que sai → clearance = TFG.'},
+  {q:'No equilíbrio, a creatinina plasmática é…',o:['produção × TFG','produção / TFG','TFG / produção'],c:1,e:'produção = TFG·Pcr → Pcr = produção/TFG (hipérbole).'},
+  {q:'A "faixa cega" significa que…',o:['a creatinina some','metade da TFG pode ser perdida com creatinina ~normal','a TFG é sempre 120'],c:1,e:'A hipérbole é plana na TFG alta.'},
+  {q:'O clearance de creatinina superestima a TFG por…',o:['coleta incompleta','secreção tubular','massa muscular'],c:1,e:'A creatinina é secretada além de filtrada (Ccr = TFG + secreção).'},
+  {q:'Na LRA, a creatinina engana porque…',o:['é secretada','atrasa (cinética lenta)','depende do peso'],c:1,e:'Leva dias para refletir a queda; usa-se também o débito urinário.'},
+  {q:'A creatinina "normal" num idoso magro pode esconder…',o:['TFG alta','TFG baixa (pouca produção)','nada'],c:1,e:'A mentira da massa: pouca produção → Pcr baixa apesar de TFG reduzida.'},
+  {q:'A cistatina C é útil porque…',o:['vem do músculo','independe da massa muscular','mede sódio'],c:1,e:'Produzida por todas as células nucleadas; boa quando a massa engana.'},
+  {q:'O eGFR (CKD-EPI) corrige a creatinina por…',o:['peso e altura','idade e sexo','cor dos olhos'],c:1,e:'Idade/sexo são proxies da produção; a raça foi removida em 2021.'},
+  {q:'Um clearance de 24 h é inválido se…',o:['a coleta for incompleta ou fora de equilíbrio','o paciente beber água','a urina for amarela'],c:0,e:'Coleta incompleta subestima; fora de equilíbrio não vale.'},
+  {q:'TFG de 25 mL/min corresponde a que estágio KDIGO?',o:['G3a','G4','G5'],c:1,e:'G4 = 15–29 mL/min/1,73m².'},
+  {q:'Medir a função renal é, em essência…',o:['contar néfrons','estimar a capacidade de manter o meio interno','medir o sódio'],c:1,e:'A TFG é a medida-resumo da homeostasia renal; o número precisa do mecanismo.'}
+];
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL; window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+var BANKS={ilustrada:TUTOR_ILUSTRADO,textual:TUTOR_TEXTUAL}, curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+function renderTutor(){ var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():''; $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false; $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){ if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button'); btns[item.c].classList.add('ok'); if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block'; fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e; $('tutor-score').textContent=tScore; $('tutor-total').textContent=tTotal; });
+    box.appendChild(b); }); }
+$('banktabs').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor(); });
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+$('draw-clear').innerHTML = pcrMini({gfr:120},'Pcr × TFG (normal)');
+$('draw-hiper').innerHTML = pcrMini({gfr:60},'faixa cega (TFG 60)');
+$('draw-kinetica').innerHTML = kineticMini({gfr:15,gfrPrev:120},'LRA: creatinina atrasa');
+$('draw-marcadores').innerHTML = markerBars(clearance({gfr:40,muscleFactor:0.4}));
+$('fig-caso').innerHTML = pcrMini({gfr:40,muscleFactor:0.4},'TFG 40, creatinina "normal"') + markerBars(clearance({gfr:40,muscleFactor:0.4}));
+
+refresh(); renderTutor();
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Estágios da DRC (KDIGO) por eGFR</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">a TFG estável classifica; lembre que G1–G2 exigem dano (a creatinina ainda é normal)</text>
+
+  <g font-size="11">
+    <rect x="40" y="70" width="600" height="30" rx="4" fill="#1f5e3a" stroke="#52c08a"/><text x="52" y="90" fill="#cfeede">G1 · eGFR ≥ 90</text><text x="628" y="90" text-anchor="end" fill="#9fb1c0">normal/alto (precisa de dano p/ ser DRC)</text>
+    <rect x="40" y="104" width="540" height="30" rx="4" fill="#2a6a44" stroke="#52c08a"/><text x="52" y="124" fill="#cfeede">G2 · 60–89</text><text x="568" y="124" text-anchor="end" fill="#9fb1c0">levemente reduzida (faixa cega da creatinina)</text>
+    <rect x="40" y="138" width="470" height="30" rx="4" fill="#6a5a1f" stroke="#e8a13a"/><text x="52" y="158" fill="#f0e0b0">G3a · 45–59</text><text x="498" y="158" text-anchor="end" fill="#9fb1c0">leve-moderada</text>
+    <rect x="40" y="172" width="400" height="30" rx="4" fill="#7a5417" stroke="#e8a13a"/><text x="52" y="192" fill="#f0e0b0">G3b · 30–44</text><text x="428" y="192" text-anchor="end" fill="#9fb1c0">moderada-grave</text>
+    <rect x="40" y="206" width="320" height="30" rx="4" fill="#7a2330" stroke="#e0556b"/><text x="52" y="226" fill="#ffd0d6">G4 · 15–29</text><text x="348" y="226" text-anchor="end" fill="#9fb1c0">grave</text>
+    <rect x="40" y="240" width="230" height="30" rx="4" fill="#5a1820" stroke="#e0556b"/><text x="52" y="260" fill="#ffd0d6">G5 · &lt; 15</text><text x="258" y="260" text-anchor="end" fill="#9fb1c0">falência (TRS)</text>
+  </g>
+</svg>

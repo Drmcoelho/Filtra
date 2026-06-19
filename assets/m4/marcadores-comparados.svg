@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Três marcadores, três vieses</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">qual mede a TFG verdadeira, e como cada um erra</text>
+
+  <rect x="30" y="64" width="206" height="210" rx="8" fill="#10202c" stroke="#39c0c8"/>
+  <text x="133" y="88" text-anchor="middle" font-size="12" fill="#9fe3ec" font-weight="bold">Inulina</text>
+  <text x="133" y="116" text-anchor="middle" font-size="11" fill="#52c08a">= TFG exata</text>
+  <text x="133" y="146" text-anchor="middle" font-size="10" fill="#cdd9e3">só filtrada</text>
+  <text x="133" y="170" text-anchor="middle" font-size="10" fill="#9fb1c0">padrão-ouro</text>
+  <text x="133" y="200" text-anchor="middle" font-size="10" fill="#9fb1c0">infusão contínua,</text>
+  <text x="133" y="214" text-anchor="middle" font-size="10" fill="#9fb1c0">pouco prática</text>
+
+  <rect x="246" y="64" width="206" height="210" rx="8" fill="#10202c" stroke="#e0556b"/>
+  <text x="349" y="88" text-anchor="middle" font-size="12" fill="#e08a96" font-weight="bold">Creatinina</text>
+  <text x="349" y="116" text-anchor="middle" font-size="11" fill="#f0c078">erra por 3 vias</text>
+  <text x="349" y="146" text-anchor="middle" font-size="10" fill="#cdd9e3">↑ secreção → superestima</text>
+  <text x="349" y="166" text-anchor="middle" font-size="10" fill="#cdd9e3">cinética → atrasa (LRA)</text>
+  <text x="349" y="186" text-anchor="middle" font-size="10" fill="#cdd9e3">massa → engana no extremo</text>
+  <text x="349" y="214" text-anchor="middle" font-size="10" fill="#9fb1c0">barata, universal</text>
+
+  <rect x="462" y="64" width="188" height="210" rx="8" fill="#10202c" stroke="#52c08a"/>
+  <text x="556" y="88" text-anchor="middle" font-size="12" fill="#8fe0b0" font-weight="bold">Cistatina C</text>
+  <text x="556" y="116" text-anchor="middle" font-size="11" fill="#8fe0b0">≈ TFG</text>
+  <text x="556" y="146" text-anchor="middle" font-size="10" fill="#cdd9e3">independe de massa</text>
+  <text x="556" y="170" text-anchor="middle" font-size="10" fill="#9fb1c0">sofre c/ corticoide,</text>
+  <text x="556" y="184" text-anchor="middle" font-size="10" fill="#9fb1c0">tireoide</text>
+  <text x="556" y="214" text-anchor="middle" font-size="10" fill="#9fb1c0">bom no idoso</text>
+</svg>

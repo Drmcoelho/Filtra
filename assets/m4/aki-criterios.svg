@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">LRA (KDIGO): por que se usa Δ creatinina E débito urinário</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">como a creatinina atrasa, o débito urinário pega a lesão mais cedo</text>
+
+  <rect x="40" y="64" width="290" height="160" rx="8" fill="#10202c" stroke="#e0556b"/>
+  <text x="185" y="88" text-anchor="middle" font-size="12" fill="#e08a96" font-weight="bold">Critério de creatinina</text>
+  <text x="56" y="116" font-size="11" fill="#e7eef4">↑ ≥ 0,3 mg/dL em 48 h, ou</text>
+  <text x="56" y="140" font-size="11" fill="#e7eef4">↑ ≥ 1,5× em 7 dias</text>
+  <text x="56" y="172" font-size="10" fill="#f0c078">limitação: atrasa (cinética)</text>
+  <text x="56" y="192" font-size="10" fill="#9fb1c0">e depende da massa/equilíbrio</text>
+
+  <rect x="350" y="64" width="290" height="160" rx="8" fill="#10202c" stroke="#3a7bd5"/>
+  <text x="495" y="88" text-anchor="middle" font-size="12" fill="#9bbef0" font-weight="bold">Critério de débito urinário</text>
+  <text x="366" y="116" font-size="11" fill="#e7eef4">&lt; 0,5 mL/kg/h por 6–12 h</text>
+  <text x="366" y="148" font-size="10" fill="#8fe0b0">vantagem: tempo real</text>
+  <text x="366" y="168" font-size="10" fill="#9fb1c0">cai antes da creatinina subir</text>
+  <text x="366" y="192" font-size="10" fill="#9fb1c0">(a oligúria precede o número)</text>
+
+  <text x="340" y="252" text-anchor="middle" font-size="11" fill="#e7eef4">Os dois eixos juntos cobrem a fraqueza um do outro —</text>
+  <text x="340" y="272" text-anchor="middle" font-size="11" fill="#f0c078">a creatinina é tardia; o débito urinário é precoce.</text>
+</svg>

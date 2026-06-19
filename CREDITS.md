@@ -83,6 +83,26 @@ depois) — preencher fonte/autor/licença antes de considerar o módulo finaliz
 > Nota: 5 SVGs do M3 eram placeholders e foram **reescritos como figuras autorais**; 3 imagens reais
 > (endotélio, barreira, podócito) seguem com crédito pendente (depende de acesso ao Wikimedia, ver OnDemand.md).
 
+## M4 — Clearance (medir a função)
+| Arquivo | Descrição | Fonte (URL) | Autor | Licença |
+|---|---|---|---|---|
+| `assets/m4/clearance-conceito.png` | Conceito de clearance | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
+| `assets/m4/creatinina-tfg-curva.svg` | Hipérbole Pcr×TFG (faixa cega) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m4/secrecao-tubular-creatinina.svg` | Secreção tubular de creatinina | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m4/massa-muscular-creatinina.svg` | A mentira da massa muscular | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m4/cinetica-creatinina-tempo.svg` | Cinética (atraso na LRA) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m4/inulina-padrao-ouro.svg` | Inulina padrão-ouro · C=U·V̇/P | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m4/cistatina-c.svg` | Cistatina C × creatinina | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m4/formulas-egfr.svg` | Fórmulas de eGFR | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m4/marcadores-comparados.svg` | Inulina × creatinina × cistatina | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m4/coleta-24h.svg` | Coleta de 24 h e armadilhas | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m4/ckd-estagios.svg` | Estágios KDIGO da DRC | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m4/aki-criterios.svg` | Critérios de LRA (creat + débito) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m4/equilibrio-producao.svg` | Equilíbrio produção = excreção | — | Projeto FILTRA | FILTRA (autoral) |
+
+> Nota: 7 SVGs do M4 eram placeholders e foram **reescritos como figuras autorais**; `clearance-conceito.png`
+> (real) segue com crédito pendente (depende de acesso ao Wikimedia, ver OnDemand.md).
+
 ## Regras
 - Preferir **CC0 / domínio público**; **CC-BY / CC-BY-SA** aceitos **com atribuição** nesta tabela.
 - O caminho no `<img>` é sempre **relativo** (`assets/…`), nunca uma URL remota — o produto é offline.

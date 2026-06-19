@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M3 — O glomérulo: barreira de filtração, Kf, podócito, proteinúria</title>
+<style>
+  :root{
+    --bg:#0c1014; --panel:#141b22; --panel2:#1b242d; --line:#283642;
+    --ink:#e7eef4; --dim:#9fb1c0; --accent:#39c0c8; --warn:#e8a13a; --bad:#e0556b; --good:#52c08a;
+    --aff:#e0556b; --eff:#3a7bd5; --tuft:#39c0c8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none}
+  section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg,#barreira-svg svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px}
+  .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)}
+  .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)}
+  .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)}
+  .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+  code{background:#0a1016;border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:13px}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M3</div>
+  <h1>O glomérulo — barreira de filtração, Kf, podócito, proteinúria</h1>
+  <div class="sub">Proteinúria <b>não</b> é "rim falhando" — é um sinal com <b>mecanismo</b>. A barreira tem duas
+  camadas funcionais: <b>carga</b> (repele ânions como a albumina) e <b>tamanho</b> (exclui moléculas grandes como a IgG).
+  E o <b>Kf = Lp·S</b> é uma alavanca distinta da hemodinâmica (M1/M2): a contração mesangial derruba a filtração
+  <em>sem</em> tocar na pressão glomerular.</div>
+  <nav class="hex">
+    <a class="soon" title="em breve">RESPIRA</a>
+    <a class="soon" title="em breve">CHOCA</a>
+    <span class="ativo">FILTRA</span>
+    <a class="soon" title="em breve">ALIMENTA</a>
+    <a class="soon" title="em breve">METABOLIZA</a>
+    <a class="soon" title="em breve">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="filtra.html">&larr; índice do braço FILTRA</a>
+
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- ============================== CONCEITO ============================== -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — a barreira de filtração ilustrada</h3>
+
+      <h4>1. As três camadas da barreira</h4>
+      <p class="sub">A barreira de filtração glomerular tem três folhas em série: o <b>endotélio fenestrado</b>
+      (poros largos, mas com glicocálix carregado), a <b>membrana basal glomerular (MBG)</b> (malha de colágeno IV
+      e heparan-sulfato, a maior barreira de carga) e os <b>podócitos</b> com seus pedicelos e o <b>diafragma de
+      fenda</b> (nefrina/podocina — a barreira final de tamanho). O coeficiente <code>Kf = Lp · S</code> resume a
+      <em>condutância</em> dessa barreira: <b>Lp</b> (permeabilidade hidráulica) × <b>S</b> (área de superfície).</p>
+      <div class="frow">
+        <div class="concept" id="draw-barreira"></div>
+        <figure class="fviva"><img src="assets/m3/barreira-filtracao.svg" alt="As três camadas da barreira: endotélio fenestrado, membrana basal glomerular e pedicelos do podócito" loading="lazy">
+          <figcaption><b>Fig. 1 · As três folhas em série.</b> Da luz capilar à urina primária: <b>endotélio
+          fenestrado</b> (fenestras + glicocálix) → <b>MBG</b> (colágeno IV + heparan-sulfato, carga negativa) →
+          <b>diafragma de fenda</b> dos podócitos. Uma molécula só é filtrada se vencer as três — daí a peneira
+          combinar carga e tamanho.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m3/endotelio-fenestrado.png" alt="Micrografia do endotélio glomerular fenestrado, com poros (fenestras) na parede capilar" loading="lazy">
+          <figcaption><b>Fig. 2 · O endotélio fenestrado.</b> As <b>fenestras</b> (poros) deixam o plasma alcançar a
+          MBG, mas o <b>glicocálix</b> aniônico que as reveste já começa a repelir proteínas carregadas. É a
+          primeira das três barreiras de carga.</figcaption></figure>
+      </div>
+
+      <h4>2. Carga × tamanho — a peneira combinada (θ)</h4>
+      <p class="sub">O <b>coeficiente de sieving θ</b> (0 a 1) mede a fração de uma molécula que passa: θ=1 livre,
+      θ=0 totalmente excluída. Ele combina <b>tamanho</b> — <code>θ ≈ exp(-(r/c)^n)</code>, uma borda abrupta no
+      raio do poro — e <b>carga</b>: um ânion como a albumina (r=3,6 nm) seria parcialmente filtrado pelo tamanho,
+      mas a barreira de carga intacta o reduz a θ ≈ 0,0006. Perca a carga e a albumina dispara; perca o tamanho e
+      até a IgG (r=5,5 nm) passa.</p>
+      <div class="frow">
+        <div class="concept" id="draw-carga"></div>
+        <div class="concept" id="draw-tamanho"></div>
+        <figure class="fviva"><img src="assets/m3/barreira-carga-tamanho.svg" alt="Diagrama de carga × tamanho: ânions repelidos pela carga, moléculas grandes barradas pelo tamanho" loading="lazy">
+          <figcaption><b>Fig. 3 · As duas peneiras.</b> A <b>carga</b> (à esq.) repele os ânions — por isso a
+          albumina, mesmo menor que o poro, quase não passa. O <b>tamanho</b> (à dir.) é um corte abrupto perto de
+          ~4 nm. Doenças de <b>lesão mínima</b> apagam a carga (proteinúria seletiva); doenças que rompem a MBG/podócitos
+          abrem o tamanho (não-seletiva).</figcaption></figure>
+        <figure class="fviva"><img src="assets/m3/membrana-basal-glomerular.svg" alt="Membrana basal glomerular: malha de colágeno IV e heparan-sulfato com carga negativa" loading="lazy">
+          <figcaption><b>Fig. 4 · A membrana basal (MBG).</b> A malha de <b>colágeno IV</b> + <b>heparan-sulfato</b>
+          é o coração da barreira de carga: suas cargas negativas repelem a albumina aniônica. Na nefropatia
+          diabética e na membranosa, é essa malha que se altera primeiro.</figcaption></figure>
+      </div>
+
+      <h4>3. O podócito e o diafragma de fenda</h4>
+      <p class="sub">O <b>podócito</b> abraça o capilar com seus <b>pedicelos</b> (foot processes) interdigitados;
+      entre eles fica o <b>diafragma de fenda</b>, uma ziper molecular de <b>nefrina</b> e podocina. É a barreira
+      final de tamanho. Quando o podócito sofre (lesão mínima, FSGS), os pedicelos se <b>apagam</b> (effacement) e
+      o diafragma se desorganiza → a proteína escapa.</p>
+      <div class="frow">
+        <div class="concept" id="draw-podocito"></div>
+        <figure class="fviva"><img src="assets/m3/podocito-pedicelos.svg" alt="Podócito com corpo celular e pedicelos interdigitados envolvendo o capilar glomerular" loading="lazy">
+          <figcaption><b>Fig. 5 · O podócito e seus pedicelos.</b> Os <b>pedicelos</b> interdigitados (como dedos
+          entrelaçados) deixam apenas a fenda de filtração entre eles. O <b>apagamento</b> desses processos é a marca
+          ultraestrutural da síndrome nefrótica por lesão mínima.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m3/diafragma-fenda-nefrina.svg" alt="Diafragma de fenda entre dois pedicelos, formado por moléculas de nefrina entrelaçadas" loading="lazy">
+          <figcaption><b>Fig. 6 · O diafragma de fenda (nefrina).</b> O zíper molecular de <b>nefrina</b>/podocina é
+          a peneira de tamanho mais fina. Mutações da nefrina (síndrome nefrótica congênita) abrem o diafragma →
+          proteinúria maciça desde o nascimento — prova de que a barreira é estrutural, não só elétrica.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m3/glomerulo-mev.svg" alt="Visão de microscopia eletrônica de varredura do glomérulo com podócitos abraçando os capilares" loading="lazy">
+          <figcaption><b>Fig. 7 · O glomérulo ao MEV.</b> A vista de varredura mostra os podócitos abraçando o tufo
+          capilar — a arquitetura tridimensional que a Fig. 5 esquematiza. Cada alça capilar é envolvida por essa
+          rede de pedicelos.</figcaption></figure>
+      </div>
+
+      <h4>4. Glomerular × tubular — de onde vem a proteína</h4>
+      <p class="sub">Nem toda proteinúria é glomerular. O túbulo proximal <b>reabsorve</b> (via megalina/cubilina) a
+      pequena quantidade de proteína de baixo peso que é normalmente filtrada. Quando o <b>túbulo</b> falha (NTA,
+      nefrite intersticial), essas proteínas de baixo peso (β2-microglobulina) escapam — é a <b>proteinúria
+      tubular</b>, de padrão e prognóstico distintos da glomerular. Decompor a origem antes de interpretar o número.</p>
+      <div class="frow">
+        <div class="concept" id="draw-proteinuria"></div>
+        <figure class="fviva"><img src="assets/m3/proteinuria-mecanismo.svg" alt="Mecanismos de proteinúria: glomerular (barreira rompida) versus tubular (reabsorção falha)" loading="lazy">
+          <figcaption><b>Fig. 8 · Glomerular × tubular.</b> Dois mecanismos, um mesmo número: na <b>glomerular</b> a
+          barreira deixa passar albumina (carga e/ou tamanho); na <b>tubular</b> a barreira está íntegra, mas o
+          túbulo não reabsorve as proteínas de baixo peso que sempre são filtradas. A <b>seletividade</b> (SI =
+          θ_IgG/θ_alb) e o tipo de proteína separam as duas.</figcaption></figure>
+      </div>
+
+      <h4>5. Kf — a alavanca mesangial (distinta da pressão)</h4>
+      <p class="sub">A célula <b>mesangial</b> contrai e reduz a <b>área de filtração S</b> → o Kf cai → a TFG cai
+      <em>sem</em> que a pressão glomerular (P_GC, do M1) tenha mudado. Angiotensina II, endotelina e a hipertensão
+      glomerular crônica contraem o mesângio. É por isso que a TFG pode despencar com a P_GC normal: a peneira
+      encolheu, não a pressão. As Fig. 1–8 são referenciadas no Caso, na Trilha e na Avaliação.</p>
+    </div>
+  </section>
+
+  <!-- ============================== CASO (5 atos) ============================== -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — cinco atos, decida antes de revelar</h3>
+      <p class="sub">Dois pacientes, a mesma queixa "espuma na urina". <b>Criança</b>, 4 anos: edema periorbital,
+      proteinúria 6 g/dia, albumina sérica 1,8 g/dL, sem hematúria. <b>Adulto</b>, 58 anos, diabético de longa
+      data: proteinúria 4,5 g/dia, hematúria, creatinina em ascensão.</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step">
+        <b>Ato 1.</b> Na criança, qual barreira foi perdida — carga ou tamanho? Como saber?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1">Provavelmente a <b>carga</b> (lesão mínima). Pista: a proteinúria é
+        <b>seletiva</b> — albumina muito alta, mas IgG (molécula grande) ainda excluída. O índice de seletividade
+        SI = θ_IgG/θ_alb permanece <b>baixo</b> (&lt; 0,1): a peneira de <b>tamanho</b> está intacta, só a de
+        <b>carga</b> falhou. No engine: <code>cb→0, sb=1</code> → albuminúria nefrótica, mas seletividade preservada.</div>
+      </div>
+      <div class="step">
+        <b>Ato 2.</b> No adulto diabético, a proteinúria é seletiva ou não-seletiva? O que isso indica?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2"><b>Não-seletiva.</b> A presença de hematúria e a passagem de moléculas grandes
+        (IgG) indicam que a barreira de <b>tamanho</b> (MBG/podócitos) está rompida, não só a carga. SI sobe
+        (&gt; 0,5). No engine: <code>sb↓</code> → θ_IgG cresce → SI sobe → <b>não-seletiva</b>. Prognóstico pior:
+        é dano estrutural, não funcional.</div>
+      </div>
+      <div class="step">
+        <b>Ato 3.</b> Por que o podócito é o personagem central nas duas doenças?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3">Porque o <b>diafragma de fenda</b> (nefrina) é a barreira final e o podócito não
+        se divide — quando lesado, não se repõe. Na lesão mínima, o <b>apagamento dos pedicelos</b> é reversível
+        com corticoide; na FSGS/diabética, há perda de podócitos (podocitúria) e <b>esclerose</b>. A integridade do
+        podócito é o que separa proteinúria reversível de irreversível.</div>
+      </div>
+      <div class="step">
+        <b>Ato 4.</b> A creatinina do adulto sobe. É só a barreira ou há mais?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4">Há mais: a <b>contração mesangial</b> e a esclerose reduzem a <b>área S</b> →
+        <b>Kf cai</b> → TFG cai <em>sem</em> que a P_GC mude. É a alavanca do M3 distinta da hemodinâmica do M1/M2.
+        No engine: <code>S↓</code> → Kf↓ → regime <b>mesangial_Kf_baixo</b>, com θ (a peneira) inalterado. A queda
+        de função e a proteinúria têm causas parcialmente independentes.</div>
+      </div>
+      <div class="step">
+        <b>Ato 5.</b> Conduta e síntese.
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>Criança (lesão mínima, seletiva):</b> corticoide — costuma responder; a
+        carga se recompõe. <b>Adulto (diabético, não-seletivo):</b> bloqueio do RAAS (IECA/BRA) para reduzir a
+        pressão e a proteinúria intraglomerular, controle glicêmico e pressórico, e SGLT2i como
+        nefroproteção — os fármacos agem como alavanca, reduzindo a proteinúria por reduzir a hiperfiltração.
+        <br><b>Lição:</b> a proteinúria é a <em>sombra</em>; o mecanismo (carga × tamanho, glomerular × tubular,
+        peneira × Kf) é a fisiologia. Decompor antes de interpretar.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== TRILHA ============================== -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — dez passos que constroem o conceito</h3>
+      <details><summary>1. Quais são as três camadas da barreira de filtração?</summary>
+        <p><em>Pista: da luz para a urina.</em><br>
+        Endotélio fenestrado → membrana basal glomerular (MBG) → diafragma de fenda dos podócitos. Em série —
+        uma molécula precisa vencer as três para ser filtrada.</p></details>
+      <details><summary>2. O que o coeficiente de sieving θ mede?</summary>
+        <p><em>Pista: entre 0 e 1.</em><br>
+        A fração da molécula que atravessa a barreira: θ=1 passa livre (inulina), θ=0 totalmente excluída.
+        Combina os efeitos de tamanho e de carga.</p></details>
+      <details><summary>3. Por que a albumina (r=3,6 nm) quase não é filtrada, se o poro é maior?</summary>
+        <p><em>Pista: ela tem carga.</em><br>
+        A albumina é <b>aniônica</b> e a barreira de carga (glicocálix, heparan-sulfato da MBG) a repele.
+        Pelo tamanho sozinho ela passaria parcialmente; a carga a reduz a θ ≈ 0,0006.</p></details>
+      <details><summary>4. O que acontece com a albumina filtrada normalmente? Aparece na urina?</summary>
+        <p><em>Pista: o túbulo proximal.</em><br>
+        A pequena quantidade filtrada (~4 g/dia) é quase toda <b>reabsorvida</b> pelo túbulo proximal
+        (megalina/cubilina). A albuminúria normal fica &lt; 0,03 g/dia. A barreira NÃO é perfeita — o túbulo completa o trabalho.</p></details>
+      <details><summary>5. Na lesão mínima (perda de carga), por que a proteinúria é "seletiva"?</summary>
+        <p><em>Pista: a peneira de tamanho está intacta.</em><br>
+        Só a carga falhou → a albumina dispara, mas a IgG (grande) ainda é excluída pelo tamanho. O índice de
+        seletividade SI = θ_IgG/θ_alb permanece <b>baixo</b> (&lt; 0,1). Seletiva = só albumina.</p></details>
+      <details><summary>6. Quando a proteinúria vira "não-seletiva"? O que isso significa?</summary>
+        <p><em>Pista: a peneira de tamanho rompeu.</em><br>
+        Quando a barreira de <b>tamanho</b> (MBG/podócitos) se rompe → moléculas grandes (IgG) também passam →
+        SI sobe (&gt; 0,5). Indica dano estrutural, prognóstico pior.</p></details>
+      <details><summary>7. O que é o diafragma de fenda e qual sua proteína-chave?</summary>
+        <p><em>Pista: entre os pedicelos.</em><br>
+        É o "zíper" molecular entre os pedicelos dos podócitos, formado principalmente por <b>nefrina</b> e
+        podocina. É a barreira final de tamanho. Mutações da nefrina causam síndrome nefrótica congênita.</p></details>
+      <details><summary>8. O que é o "apagamento dos pedicelos" (effacement)?</summary>
+        <p><em>Pista: o podócito lesado.</em><br>
+        É a perda da arquitetura interdigitada dos pedicelos, vista ao microscópio eletrônico. Marca da lesão
+        mínima — na maioria das vezes reversível com corticoide.</p></details>
+      <details><summary>9. Como o Kf = Lp·S baixa a TFG sem mexer na pressão?</summary>
+        <p><em>Pista: a célula mesangial.</em><br>
+        A contração mesangial reduz a <b>área de superfície S</b> → o Kf cai → a TFG cai. A P_GC (pressão, do M1)
+        pode estar normal: a peneira encolheu, não a pressão. É uma alavanca distinta da hemodinâmica.</p></details>
+      <details><summary>10. Proteinúria glomerular × tubular: como distinguir?</summary>
+        <p><em>Pista: que proteína está na urina?</em><br>
+        Glomerular: <b>albumina</b> (e, se não-seletiva, IgG) — barreira rompida. Tubular: proteínas de <b>baixo
+        peso</b> (β2-microglobulina) que normalmente seriam reabsorvidas — barreira íntegra, túbulo falho. O tipo
+        de proteína e a seletividade separam as duas.</p></details>
+    </div>
+  </section>
+
+  <!-- ============================== INSTRUMENTO ============================== -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — a curva de sieving θ × raio molecular</h3>
+      <p class="sub">A linha <span style="color:#39c0c8">ciano</span> é θ de um <b>ânion</b> (com a barreira de
+      carga); a <span style="color:#e8a13a">laranja tracejada</span> é θ de uma molécula <b>neutra</b> (só tamanho).
+      Os marcadores são as sondas: inulina (passa), albumina (excluída pela carga), IgG (excluída pelo tamanho).
+      Mexa em <b>cb</b> (carga) e <b>sb</b> (tamanho) e veja a peneira mudar.</p>
+      <div class="grid" style="margin-bottom:10px">
+        <div>
+          <label>cb — integridade da barreira de CARGA (1=intacta): <span class="val" id="instr-lbl-cb">1.00</span></label>
+          <input type="range" id="instr-cb" min="0" max="1" step="0.05" value="1">
+          <label>sb — integridade da barreira de TAMANHO (1=intacta): <span class="val" id="instr-lbl-sb">1.00</span></label>
+          <input type="range" id="instr-sb" min="0" max="1" step="0.05" value="1">
+        </div>
+        <div>
+          <label>Sonda em destaque:</label>
+          <select id="instr-probe">
+            <option value="albumina">albumina (ânion, r=3,6 nm)</option>
+            <option value="inulina">inulina (neutra, r=1,4 nm)</option>
+            <option value="IgG">IgG (ânion, r=5,5 nm)</option>
+          </select>
+        </div>
+      </div>
+      <canvas id="sieving-canvas" width="900" height="320" aria-label="Curva de sieving θ por raio molecular"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+      <h4>Esquema da barreira (computado)</h4>
+      <div class="concept" id="barreira-svg"></div>
+    </div>
+  </section>
+
+  <!-- ============================== LAB ============================== -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — mova a barreira, leia a proteinúria por mecanismo</h3>
+      <div class="grid">
+        <div>
+          <label>Lp — permeabilidade hidráulica (rel.): <span class="val" id="lbl-lp">1.00</span></label>
+          <input type="range" id="in-lp" min="0.1" max="2" step="0.05" value="1">
+          <label>S — área de filtração / mesângio (rel.): <span class="val" id="lbl-s">1.00</span></label>
+          <input type="range" id="in-s" min="0.1" max="1.5" step="0.05" value="1">
+          <label>cb — barreira de CARGA (1=intacta): <span class="val" id="lbl-cb">1.00</span></label>
+          <input type="range" id="in-cb" min="0" max="1" step="0.05" value="1">
+          <label>sb — barreira de TAMANHO (1=intacta): <span class="val" id="lbl-sb">1.00</span></label>
+          <input type="range" id="in-sb" min="0" max="1" step="0.05" value="1">
+        </div>
+        <div>
+          <label>Lesão tubular (0=nenhuma, 1=grave): <span class="val" id="lbl-tub">0.00</span></label>
+          <input type="range" id="in-tub" min="0" max="1" step="0.05" value="0">
+          <label>P_alb — albumina plasmática (g/L): <span class="val" id="lbl-palb">40</span></label>
+          <input type="range" id="in-palb" min="5" max="60" step="1" value="40">
+          <label>TFG (mL/min): <span class="val" id="lbl-gfr">125</span></label>
+          <input type="range" id="in-gfr" min="5" max="160" step="5" value="125">
+          <label>Sonda:</label>
+          <select id="in-probe">
+            <option value="albumina">albumina</option>
+            <option value="inulina">inulina</option>
+            <option value="IgG">IgG</option>
+          </select>
+        </div>
+      </div>
+
+      <table>
+        <tr><th>Variável</th><th>Atual</th><th>Normal ≈</th></tr>
+        <tr><td>Kf — coef. de ultrafiltração (Lp·S)</td><td class="num" id="out-kf">—</td><td class="num">7.5</td></tr>
+        <tr><td>θ_alb — sieving da albumina</td><td class="num" id="out-talb">—</td><td class="num">~0.0006</td></tr>
+        <tr><td>θ_IgG — sieving da IgG</td><td class="num" id="out-tigg">—</td><td class="num">~0</td></tr>
+        <tr><td>SI — índice de seletividade (θ_IgG/θ_alb)</td><td class="num" id="out-si">—</td><td class="num">&lt;0.1</td></tr>
+        <tr><td>Seletividade</td><td class="num" id="out-selet">—</td><td class="num">seletiva</td></tr>
+        <tr><td>Albumina filtrada (g/dia)</td><td class="num" id="out-filt">—</td><td class="num">~4.1</td></tr>
+        <tr><td>Albuminúria (g/dia)</td><td class="num" id="out-alb">—</td><td class="num">&lt;0.03</td></tr>
+        <tr><td>Proteinúria tubular (g/dia)</td><td class="num" id="out-tub">—</td><td class="num">0</td></tr>
+        <tr><td>Banda</td><td class="num" id="out-banda">—</td><td class="num">normal</td></tr>
+        <tr><td>Padrão</td><td class="num" id="out-padrao">—</td><td class="num">glomerular</td></tr>
+        <tr><td>Regime</td><td class="num" id="out-regime">—</td><td class="num">normal</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- ============================== AVALIAÇÃO ============================== -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (15)</button>
+        <button data-bank="textual">Textual (10)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica e farmacológica</b>.
+    Os fármacos citados como alavanca da proteinúria (IECA/BRA reduzem a hiperfiltração e a pressão intraglomerular;
+    SGLT2i conferem nefroproteção; corticoide na lesão mínima) são apresentados com mecanismo como conteúdo
+    educacional. O modelo é uma simplificação didática e não substitui julgamento clínico individualizado. A decisão
+    e a responsabilidade finais são sempre do profissional de saúde.
+    <b>Nota de honestidade do modelo:</b> as constantes (R0_N, CK, PEXP, Tmax de reabsorção) são estimativas didáticas
+    calibradas para reproduzir as âncoras qualitativas da literatura (inulina ~0,99; albumina ~0,0006; IgG ~0);
+    variações individuais são substanciais e a curva de sieving real é mais complexa.
+  </div>
+
+  <footer>
+    CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira
+  </footer>
+</div>
+
+<script>
+/* =========================================================================
+ * ENGINE INLINE — espelho fiel de build/m3/model3.js (o motor manda no pixel)
+ * ========================================================================= */
+'use strict';
+
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a) n=a; if(n>b) n=b; return n; }
+function merge(a,b){ var o={},k; if(a) for(k in a) if(Object.prototype.hasOwnProperty.call(a,k)) o[k]=a[k]; if(b) for(k in b) if(Object.prototype.hasOwnProperty.call(b,k)) o[k]=b[k]; return o; }
+
+var R0_N=4.4, R0_SPAN=8.0, CK=2.75, PEXP=6.81, CHGMIN=0.30,
+    THETA_ALB_LOAD_MAX=0.0025, P_ALB_N=40, GFR_N=125,
+    TMAX_REAB=4.7, KM_REAB=1.72, KF_N=7.5,
+    R_INULINA=1.4, R_ALB=3.6, R_IGG=5.5,
+    Z_INULINA=0, Z_ALB=-1, Z_IGG=-1;
+
+function theta(r,z,cb,sb){
+  var rr=clampv(r,0,100), cbb=clampv(cb,0,1), sbb=clampv(sb,0,1);
+  var r0=R0_N+(1-sbb)*R0_SPAN;
+  var c=CK*(r0/R0_N);
+  var theta_size=Math.exp(-Math.pow(rr/c,PEXP));
+  var F;
+  if(z<0)      F=1-cbb*(1-CHGMIN);
+  else if(z>0) F=1+cbb*0.30;
+  else         F=1;
+  return clampv(theta_size*F,0,1);
+}
+
+function glomerulo(input){
+  var inp=input||{};
+  var Lp       =clampv(inp.Lp       !==undefined?inp.Lp       :1,    0.1,2);
+  var S        =clampv(inp.S        !==undefined?inp.S        :1,    0.1,1.5);
+  var cb       =clampv(inp.cb       !==undefined?inp.cb       :1,    0,1);
+  var sb       =clampv(inp.sb       !==undefined?inp.sb       :1,    0,1);
+  var tubInjury=clampv(inp.tubInjury!==undefined?inp.tubInjury:0,    0,1);
+  var P_alb    =clampv(inp.P_alb    !==undefined?inp.P_alb    :P_ALB_N, 5,70);
+  var GFR      =clampv(inp.GFR      !==undefined?inp.GFR      :GFR_N, 1,250);
+  var probe=(inp.probe==='inulina'||inp.probe==='IgG')?inp.probe:'albumina';
+
+  var Kf=Lp*S*KF_N; if(!isFinite(Kf)) Kf=0;
+  var tfgRel=Kf/KF_N;
+
+  var theta_inulina=theta(R_INULINA,Z_INULINA,cb,sb);
+  var theta_alb    =theta(R_ALB,    Z_ALB,    cb,sb);
+  var theta_igg    =theta(R_IGG,    Z_IGG,    cb,sb);
+  var theta_probe;
+  if(probe==='inulina')  theta_probe=theta_inulina;
+  else if(probe==='IgG') theta_probe=theta_igg;
+  else                   theta_probe=theta_alb;
+
+  var SI=theta_igg/Math.max(theta_alb,1e-9);
+  var seletividade;
+  if(SI<0.1)      seletividade='seletiva';
+  else if(SI<0.5) seletividade='intermediaria';
+  else            seletividade='nao_seletiva';
+
+  var theta_load=Math.min(theta_alb,THETA_ALB_LOAD_MAX);
+  var GFR_Lday=GFR*1440/1000;
+  var filteredAlb=GFR_Lday*P_alb*theta_load;
+  var Tmax=TMAX_REAB*(1-0.85*tubInjury);
+  var reab=Tmax*(1-Math.exp(-filteredAlb/KM_REAB));
+  if(!isFinite(reab)||reab<0) reab=0;
+  var albuminuria=Math.max(filteredAlb-reab,0);
+
+  var tubProt=tubInjury*1.5;
+  var protTotal=albuminuria+tubProt;
+
+  var banda;
+  if(albuminuria<0.03)     banda='normal';
+  else if(albuminuria<0.3) banda='microalbuminuria';
+  else if(albuminuria<3.5) banda='macroalbuminuria';
+  else                     banda='nefrotica';
+
+  var padrao=(tubProt>albuminuria)?'tubular':'glomerular';
+
+  var regime;
+  if(tfgRel<0.6)                                regime='mesangial_Kf_baixo';
+  else if(padrao==='tubular'&&tubProt>0.3)      regime='proteinuria_tubular';
+  else if(albuminuria>=0.03&&seletividade==='nao_seletiva') regime='proteinuria_nao_seletiva';
+  else if(albuminuria>=0.03)                    regime='proteinuria_seletiva';
+  else                                          regime='normal';
+
+  return {
+    Lp:Lp,S:S,cb:cb,sb:sb,tubInjury:tubInjury,P_alb:P_alb,GFR:GFR,probe:probe,
+    theta_inulina:theta_inulina,theta_alb:theta_alb,theta_igg:theta_igg,theta_probe:theta_probe,
+    SI:SI,seletividade:seletividade,
+    Kf:Kf,tfgRel:tfgRel,
+    theta_load:theta_load,GFR_Lday:GFR_Lday,
+    filteredAlb:filteredAlb,Tmax:Tmax,reab:reab,
+    albuminuria:albuminuria,tubProt:tubProt,protTotal:protTotal,
+    banda:banda,padrao:padrao,regime:regime
+  };
+}
+
+function sievingCurveLayout(state,W,H){
+  state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var cb=clampv(state.cb!==undefined?state.cb:1,0,1);
+  var sb=clampv(state.sb!==undefined?state.sb:1,0,1);
+  var padL=52,padR=16,padT=18,padB=38,baseY=H-padB;
+  var rMin=0.5,rMax=6.5,N=50;
+  var pxX=(W-padL-padR)/(rMax-rMin);
+  var pxY=(baseY-padT)/1.0;
+  var pts=[],i,rr;
+  for(i=0;i<=N;i++){
+    rr=rMin+(rMax-rMin)*i/N;
+    var ta=theta(rr,-1,cb,sb);
+    var tn=theta(rr,0,cb,sb);
+    pts.push({r:rr,thetaAnion:ta,thetaNeutral:tn,
+      x:padL+(rr-rMin)*pxX,
+      y_anion:baseY-clampv(ta,0,1)*pxY,
+      y_neutral:baseY-clampv(tn,0,1)*pxY});
+  }
+  function mk(name,r,z){
+    var t=theta(r,z,cb,sb);
+    return {name:name,r:r,theta:t,
+      x:padL+(clampv(r,rMin,rMax)-rMin)*pxX,
+      y:baseY-clampv(t,0,1)*pxY};
+  }
+  var markers=[mk('inulina',R_INULINA,Z_INULINA),mk('albumina',R_ALB,Z_ALB),mk('IgG',R_IGG,Z_IGG)];
+  var probe=(state.probe==='inulina'||state.probe==='IgG')?state.probe:'albumina';
+  var curR,curZ;
+  if(probe==='inulina'){curR=R_INULINA;curZ=Z_INULINA;}
+  else if(probe==='IgG'){curR=R_IGG;curZ=Z_IGG;}
+  else{curR=R_ALB;curZ=Z_ALB;}
+  var current=mk(probe,curR,curZ);
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,
+    rMin:rMin,rMax:rMax,pxX:pxX,pxY:pxY,cb:cb,sb:sb,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},
+    pts:pts,markers:markers,current:current};
+}
+
+function barreiraLayout(state,W,H){
+  state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var r=glomerulo(state);
+  var padL=14,padR=14,padT=22,padB=30;
+  var innerW=W-padL-padR;
+  var innerH=H-padT-padB;
+  var baseY=padT+innerH;
+  var maxQ=Math.max(r.filteredAlb,r.reab,r.albuminuria+r.tubProt,0.5);
+  var pxQ=innerH/(maxQ*1.1);
+  var colW=innerW/3-10;
+  function box(idx,q,color,label){
+    var x=padL+idx*(innerW/3)+5;
+    var h=clampv(q,0,maxQ*1.1)*pxQ;
+    return {x:x,y:baseY-h,w:colW,h:h,q:q,color:color,
+      label:{x:x+colW/2,y:baseY+14,text:label}};
+  }
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,
+    baseY:baseY,innerH:innerH,maxQ:maxQ,pxQ:pxQ,r:r,
+    filtered:box(0,r.filteredAlb,'#39c0c8','filtrada'),
+    reab:box(1,r.reab,'#3a7bd5','reabsorvida'),
+    excreted:box(2,r.albuminuria,'#e8a13a','albuminúria'),
+    tub:box(2,r.tubProt,'#e0556b','tubular')};
+}
+
+window.glomerulo=glomerulo;
+window.theta=theta;
+window.sievingCurveLayout=sievingCurveLayout;
+window.barreiraLayout=barreiraLayout;
+window.MODEL={glomerulo:glomerulo,theta:theta,sievingCurveLayout:sievingCurveLayout,
+  barreiraLayout:barreiraLayout,clampv:clampv,merge:merge,
+  CONST:{R0_N:R0_N,R0_SPAN:R0_SPAN,CK:CK,PEXP:PEXP,CHGMIN:CHGMIN,
+    THETA_ALB_LOAD_MAX:THETA_ALB_LOAD_MAX,P_ALB_N:P_ALB_N,GFR_N:GFR_N,
+    TMAX_REAB:TMAX_REAB,KM_REAB:KM_REAB,KF_N:KF_N,
+    R_INULINA:R_INULINA,R_ALB:R_ALB,R_IGG:R_IGG}};
+
+/* =========================================================================
+ * UI
+ * ========================================================================= */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=d||1; return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+function sci(x){ if(x>=0.001) return fmt(x,4); return x.toExponential(2); }
+
+var REGIME_TXT={
+  normal:'normal — barreira íntegra, albuminúria fisiológica',
+  proteinuria_seletiva:'proteinúria SELETIVA — perda de carga (lesão mínima); IgG ainda excluída',
+  proteinuria_nao_seletiva:'⚠ proteinúria NÃO-SELETIVA — barreira de tamanho rompida (IgG passa)',
+  proteinuria_tubular:'proteinúria TUBULAR — baixo peso (β2-microglobulina); barreira íntegra',
+  mesangial_Kf_baixo:'⚠ Kf baixo (contração mesangial) — TFG cai sem mexer na pressão'
+};
+var SELET_TXT={ seletiva:'seletiva', intermediaria:'intermediária', nao_seletiva:'não-seletiva' };
+
+// abas principais
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b) return;
+  var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on');
+  $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh();
+});
+
+// caso: prever-depois-revelar
+document.addEventListener('click',function(e){
+  var b=e.target.closest('button.act[data-rev]'); if(!b) return;
+  var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on');
+});
+
+function readLab(){
+  return {
+    Lp:+$('in-lp').value, S:+$('in-s').value,
+    cb:+$('in-cb').value, sb:+$('in-sb').value,
+    tubInjury:+$('in-tub').value, P_alb:+$('in-palb').value,
+    GFR:+$('in-gfr').value, probe:$('in-probe').value
+  };
+}
+
+function refresh(){
+  var inp=readLab();
+  $('lbl-lp').textContent=fmt(inp.Lp,2);
+  $('lbl-s').textContent=fmt(inp.S,2);
+  $('lbl-cb').textContent=fmt(inp.cb,2);
+  $('lbl-sb').textContent=fmt(inp.sb,2);
+  $('lbl-tub').textContent=fmt(inp.tubInjury,2);
+  $('lbl-palb').textContent=Math.round(inp.P_alb);
+  $('lbl-gfr').textContent=Math.round(inp.GFR);
+  var r=glomerulo(inp);
+  $('out-kf').textContent=fmt(r.Kf,2);
+  $('out-talb').textContent=sci(r.theta_alb);
+  $('out-tigg').textContent=sci(r.theta_igg);
+  $('out-si').textContent=fmt(r.SI,3);
+  $('out-selet').textContent=SELET_TXT[r.seletividade]||r.seletividade;
+  $('out-filt').textContent=fmt(r.filteredAlb,2);
+  $('out-alb').textContent=fmt(r.albuminuria,3);
+  $('out-tub').textContent=fmt(r.tubProt,2);
+  $('out-banda').textContent=r.banda;
+  $('out-padrao').textContent=r.padrao;
+  $('out-regime').textContent=REGIME_TXT[r.regime]||r.regime;
+  verdictLab(r); pearlLab(r,inp);
+  drawCanvas(inp);
+  $('barreira-svg').innerHTML=barreiraFig(inp,'albumina: filtrada → reabsorvida → excretada');
+  syncInstrToLab(inp);
+}
+
+function syncInstrToLab(inp){
+  if($('instr-cb')) $('instr-cb').value=inp.cb;
+  if($('instr-sb')) $('instr-sb').value=inp.sb;
+  if($('instr-probe')) $('instr-probe').value=inp.probe;
+  updateInstrLabels(inp);
+}
+
+function readInstr(){
+  return { cb:+$('instr-cb').value, sb:+$('instr-sb').value, probe:$('instr-probe').value };
+}
+function updateInstrLabels(inp){
+  if($('instr-lbl-cb')) $('instr-lbl-cb').textContent=fmt(inp.cb,2);
+  if($('instr-lbl-sb')) $('instr-lbl-sb').textContent=fmt(inp.sb,2);
+}
+function refreshInstr(){
+  var inp=readInstr();
+  updateInstrLabels(inp);
+  var r=glomerulo(inp);
+  pearlInstr(r,inp);
+  drawCanvas(inp);
+  $('barreira-svg').innerHTML=barreiraFig(inp,'albumina: filtrada → reabsorvida → excretada');
+}
+
+function pearlInstr(r,inp){
+  var ip=$('instr-pearl'); if(!ip) return;
+  var t;
+  if(inp.cb<0.4 && inp.sb>0.7){
+    t='PÉROLA carga: cb='+fmt(inp.cb,2)+' → a albumina dispara (θ_alb='+sci(r.theta_alb)+'), mas a IgG continua excluída pelo TAMANHO (θ_IgG='+sci(r.theta_igg)+'). SI='+fmt(r.SI,3)+' → '+(SELET_TXT[r.seletividade]||r.seletividade)+'. É a lesão mínima.';
+  } else if(inp.sb<0.5){
+    t='PÉROLA tamanho: sb='+fmt(inp.sb,2)+' → o poro abriu, a IgG agora passa (θ_IgG='+sci(r.theta_igg)+'). SI subiu para '+fmt(r.SI,3)+' → '+(SELET_TXT[r.seletividade]||r.seletividade)+'. Dano estrutural da MBG/podócito.';
+  } else {
+    t='Sonda: θ_inulina='+fmt(r.theta_inulina,3)+' (passa livre) · θ_alb='+sci(r.theta_alb)+' (carga exclui) · θ_IgG='+sci(r.theta_igg)+' (tamanho exclui). A peneira combina carga e tamanho.';
+  }
+  ip.textContent=t;
+}
+
+function verdictLab(r){
+  var v=$('veredito'); var cls='b-good', msg;
+  if(r.regime==='mesangial_Kf_baixo'){
+    cls='b-warn'; msg='Kf baixo (Lp·S = '+fmt(r.Kf,2)+'): a contração mesangial reduziu a área de filtração → TFG cai sem que a pressão glomerular mude. A peneira (θ) está inalterada.';
+  } else if(r.banda==='nefrotica'){
+    cls='b-bad'; msg='Faixa NEFRÓTICA: albuminúria '+fmt(r.albuminuria,2)+' g/dia ('+(SELET_TXT[r.seletividade]||r.seletividade)+'). '+(r.seletividade==='seletiva'?'Seletiva → perda de carga (lesão mínima), tamanho intacto.':'Não-seletiva → barreira de tamanho rompida.');
+  } else if(r.regime==='proteinuria_tubular'){
+    cls='b-warn'; msg='Proteinúria TUBULAR: '+fmt(r.tubProt,2)+' g/dia de baixo peso. A barreira glomerular está íntegra — o túbulo é que não reabsorve.';
+  } else if(r.banda==='macroalbuminuria'){
+    cls='b-warn'; msg='Macroalbuminúria: '+fmt(r.albuminuria,2)+' g/dia ('+(SELET_TXT[r.seletividade]||r.seletividade)+'). Proteinúria de origem glomerular.';
+  } else if(r.banda==='microalbuminuria'){
+    cls='b-warn'; msg='Microalbuminúria: '+fmt(r.albuminuria,3)+' g/dia. Sinal precoce de dano glomerular (ex.: diabético).';
+  } else {
+    cls='b-good'; msg='Normal: albuminúria '+fmt(r.albuminuria,3)+' g/dia, seletividade preservada, Kf '+fmt(r.Kf,2)+'. A barreira filtra a água e retém as proteínas.';
+  }
+  v.className='banner '+cls; v.textContent=msg;
+}
+
+function pearlLab(r,inp){
+  var p=$('lab-pearl'); if(!p) return;
+  var t;
+  if(inp.cb<0.4 && inp.sb>0.7){
+    t='PÉROLA carga: cb baixo derruba a albumina (banda '+r.banda+'), mas a seletividade segue '+(SELET_TXT[r.seletividade]||r.seletividade)+' — a IgG ainda é grande demais. Carga ≠ tamanho.';
+  } else if(inp.sb<0.5){
+    t='PÉROLA tamanho: sb baixo abre o poro → SI='+fmt(r.SI,3)+' ('+(SELET_TXT[r.seletividade]||r.seletividade)+'). Quando o tamanho rompe, até a IgG passa — prognóstico pior.';
+  } else if(inp.S<0.6){
+    t='PÉROLA mesangial: S baixo → Kf='+fmt(r.Kf,2)+' (tfgRel '+fmt(r.tfgRel,2)+'). A TFG cai porque a ÁREA encolheu, não a pressão. A peneira (θ_alb='+sci(r.theta_alb)+') não mudou.';
+  } else if(inp.tubInjury>0.4){
+    t='PÉROLA tubular: lesão tubular '+fmt(inp.tubInjury,2)+' → '+fmt(r.tubProt,2)+' g/dia de proteína de baixo peso E reabsorção de albumina reduzida. Padrão '+r.padrao+'.';
+  } else {
+    t='Normal: o glomérulo filtra ~'+fmt(r.filteredAlb,1)+' g/dia de albumina; o túbulo reabsorve quase tudo (reab '+fmt(r.reab,1)+' g/dia) → albuminúria '+fmt(r.albuminuria,3)+' g/dia. A barreira NÃO é perfeita; o túbulo completa.';
+  }
+  p.textContent=t;
+}
+
+function drawCanvas(state){
+  var c=$('sieving-canvas'); if(!c) return;
+  var ctx; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; }
+  if(!ctx||!ctx.clearRect) return;
+  var L=sievingCurveLayout(state,c.width,c.height);
+  ctx.clearRect(0,0,L.W,L.H);
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('θ',8,L.padT+4); ctx.fillText('raio (nm) →',L.W-110,L.baseY+24);
+  // gridlines θ=0.5 e θ=1
+  ctx.strokeStyle='#23303b'; ctx.setLineDash([3,3]);
+  var y05=L.baseY-0.5*L.pxY, y1=L.baseY-1.0*L.pxY;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,y05); ctx.lineTo(L.axis.xEnd,y05); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,y1); ctx.lineTo(L.axis.xEnd,y1); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle='#9fb1c0'; ctx.fillText('0.5',6,y05+4); ctx.fillText('1',12,y1+4);
+  // legenda
+  ctx.strokeStyle='#39c0c8'; ctx.lineWidth=2;
+  ctx.beginPath(); ctx.moveTo(L.padL+12,L.padT+8); ctx.lineTo(L.padL+32,L.padT+8); ctx.stroke();
+  ctx.fillStyle='#39c0c8'; ctx.fillText('θ ânion (com carga)',L.padL+35,L.padT+12);
+  ctx.strokeStyle='#e8a13a'; ctx.setLineDash([5,3]); ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.moveTo(L.padL+190,L.padT+8); ctx.lineTo(L.padL+210,L.padT+8); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle='#e8a13a'; ctx.fillText('θ neutra (só tamanho)',L.padL+213,L.padT+12);
+  // curva ânion (ciano) — a polilinha que o validador confere
+  ctx.strokeStyle='#39c0c8'; ctx.lineWidth=2; ctx.setLineDash([]); ctx.beginPath();
+  for(var i=0;i<L.pts.length;i++){ var p=L.pts[i]; if(i===0) ctx.moveTo(p.x,p.y_anion); else ctx.lineTo(p.x,p.y_anion); }
+  ctx.stroke();
+  // curva neutra (laranja tracejada)
+  ctx.strokeStyle='#e8a13a'; ctx.lineWidth=1.5; ctx.setLineDash([5,3]); ctx.beginPath();
+  for(var i=0;i<L.pts.length;i++){ var p=L.pts[i]; if(i===0) ctx.moveTo(p.x,p.y_neutral); else ctx.lineTo(p.x,p.y_neutral); }
+  ctx.stroke(); ctx.setLineDash([]);
+  // marcadores das sondas
+  var cols={inulina:'#52c08a',albumina:'#39c0c8',IgG:'#e0556b'};
+  L.markers.forEach(function(m){
+    ctx.fillStyle=cols[m.name]||'#e7eef4';
+    ctx.fillRect(m.x-3,m.y-3,6,6);
+    ctx.fillStyle='#e7eef4'; ctx.font='10px system-ui';
+    ctx.fillText(m.name+' ('+m.r+'nm)',m.x+6,m.y+(m.name==='inulina'?-6:14));
+  });
+  // sonda corrente: linha vertical
+  var cu=L.current;
+  ctx.strokeStyle='#e7eef4'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(cu.x,L.padT+20); ctx.lineTo(cu.x,L.baseY); ctx.stroke(); ctx.setLineDash([]);
+}
+
+['in-lp','in-s','in-cb','in-sb','in-tub','in-palb','in-gfr','in-probe'].forEach(function(id){
+  var el=$(id); if(el) el.addEventListener('input',refresh);
+});
+['instr-cb','instr-sb','instr-probe'].forEach(function(id){
+  var el=$(id); if(el) el.addEventListener('input',refreshInstr);
+});
+
+/* =========================================================================
+ * ILUSTRAÇÕES SVG — inline, computadas a partir do engine (física viva)
+ * ========================================================================= */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+
+// mini curva de sieving θ × raio (computada do engine)
+function sievingMini(state, titulo){
+  var W=300,H=170;
+  var L=sievingCurveLayout(state,W,H);
+  var s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  var d=''; for(var i=0;i<L.pts.length;i++){ d+=(i===0?'M':'L')+f1(L.pts[i].x)+' '+f1(L.pts[i].y_anion)+' '; }
+  s+='<path d="'+d+'" fill="none" stroke="#39c0c8" stroke-width="2"/>';
+  var d2=''; for(var i=0;i<L.pts.length;i++){ d2+=(i===0?'M':'L')+f1(L.pts[i].x)+' '+f1(L.pts[i].y_neutral)+' '; }
+  s+='<path d="'+d2+'" fill="none" stroke="#e8a13a" stroke-width="1.4" stroke-dasharray="4 2"/>';
+  var cols={inulina:'#52c08a',albumina:'#39c0c8',IgG:'#e0556b'};
+  L.markers.forEach(function(m){
+    s+='<rect x="'+f1(m.x-3)+'" y="'+f1(m.y-3)+'" width="6" height="6" fill="'+(cols[m.name]||'#fff')+'"/>';
+    s+='<text x="'+f1(m.x+5)+'" y="'+f1(m.y+(m.name==="inulina"?-5:12))+'" fill="#cdd9e3" font-size="8">'+m.name+'</text>';
+  });
+  s+='<text x="'+W/2+'" y="13" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'sieving θ × raio')+'</text>';
+  s+='<text x="'+(L.axis.x0+3)+'" y="'+L.padT+'" fill="#9fb1c0" font-size="9">θ</text>';
+  s+='<text x="'+(L.axis.xEnd-2)+'" y="'+(L.baseY+13)+'" fill="#9fb1c0" font-size="8" text-anchor="end">raio (nm)→</text>';
+  return svgEl(W,H,s);
+}
+
+// barras filtrada → reabsorvida → excretada (computado do engine)
+function barreiraFig(state, titulo){
+  var W=300,H=190;
+  var L=barreiraLayout(state,W,H);
+  var r=L.r;
+  var s='';
+  s+='<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="#0a1520"/>';
+  function drawBox(b,extraY){
+    var y=b.y-(extraY||0);
+    s+='<rect x="'+f1(b.x)+'" y="'+f1(y)+'" width="'+f1(b.w)+'" height="'+f1(b.h)+'" fill="'+b.color+'" fill-opacity="0.75" stroke="'+b.color+'"/>';
+    s+='<text x="'+f1(b.label.x)+'" y="'+f1(b.label.y)+'" fill="#9fb1c0" font-size="10" text-anchor="middle">'+b.label.text+'</text>';
+    s+='<text x="'+f1(b.x+b.w/2)+'" y="'+f1(y-4)+'" fill="#e7eef4" font-size="10" text-anchor="middle">'+fmt(b.q,2)+'</text>';
+  }
+  drawBox(L.filtered,0);
+  drawBox(L.reab,0);
+  // a barra "excretada" + "tubular" empilhada na 3ª coluna
+  drawBox(L.excreted,0);
+  if(L.tub.h>0.5){
+    s+='<rect x="'+f1(L.tub.x)+'" y="'+f1(L.excreted.y-L.tub.h)+'" width="'+f1(L.tub.w)+'" height="'+f1(L.tub.h)+'" fill="'+L.tub.color+'" fill-opacity="0.7" stroke="'+L.tub.color+'"/>';
+    s+='<text x="'+f1(L.tub.x+L.tub.w/2)+'" y="'+f1(L.excreted.y-L.tub.h-3)+'" fill="#e0556b" font-size="9" text-anchor="middle">+tub '+fmt(r.tubProt,2)+'</text>';
+  }
+  s+='<text x="'+W/2+'" y="13" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'albumina (g/dia)')+'</text>';
+  s+='<text x="'+W/2+'" y="'+(H-2)+'" fill="#9fb1c0" font-size="9" text-anchor="middle">banda: '+r.banda+' · '+r.padrao+'</text>';
+  return svgEl(W,H,s);
+}
+
+// esquema das três camadas da barreira (desenho, não gráfico) — destaca carga/tamanho conforme estado
+function barreiraDiagram(state, titulo){
+  var r=glomerulo(state||{});
+  var W=320,H=200,s='';
+  var cb=clampv(r.cb,0,1), sb=clampv(r.sb,0,1);
+  s+='<rect width="320" height="200" fill="#0a1520"/>';
+  // luz capilar
+  s+='<rect x="0" y="20" width="320" height="34" fill="#3a1520" fill-opacity="0.6"/>';
+  s+='<text x="8" y="40" fill="#e08a96" font-size="10">luz capilar (plasma)</text>';
+  // endotélio fenestrado
+  var endoColor=cb>0.5?'#39c0c8':'#7a8a96';
+  s+='<rect x="0" y="58" width="320" height="14" fill="'+endoColor+'" fill-opacity="0.5"/>';
+  for(var x=10;x<320;x+=22){ s+='<rect x="'+x+'" y="58" width="9" height="14" fill="#0a1520"/>'; }
+  s+='<text x="324" y="69" fill="#9fb1c0" font-size="9" text-anchor="end">endotélio fenestrado</text>';
+  // MBG (barreira de carga)
+  var mbgColor=cb>0.5?'#52c08a':'#7a8a96';
+  s+='<rect x="0" y="76" width="320" height="20" fill="'+mbgColor+'" fill-opacity="'+(0.3+0.4*cb)+'"/>';
+  s+='<text x="8" y="90" fill="#0c1014" font-size="10" font-weight="bold">MBG '+(cb>0.5?'(carga −)':'(carga perdida)')+'</text>';
+  // pedicelos do podócito (barreira de tamanho)
+  var podColor=sb>0.5?'#e8a13a':'#7a8a96';
+  var gap=8+ (1-sb)*16; // fenda alarga quando sb cai
+  for(var x=6;x<320;x+=(14+gap)){
+    s+='<rect x="'+f1(x)+'" y="100" width="10" height="22" rx="3" fill="'+podColor+'" fill-opacity="0.8"/>';
+  }
+  s+='<text x="324" y="116" fill="#9fb1c0" font-size="9" text-anchor="end">pedicelos / fenda '+(sb>0.5?'(estreita)':'(alargada)')+'</text>';
+  // urina primária
+  s+='<rect x="0" y="126" width="320" height="30" fill="#102a2a" fill-opacity="0.5"/>';
+  s+='<text x="8" y="146" fill="#52c08a" font-size="10">urina primária (espaço de Bowman)</text>';
+  // legenda de estado
+  s+='<text x="8" y="172" fill="#cdd9e3" font-size="10">θ_alb='+sci(r.theta_alb)+'  θ_IgG='+sci(r.theta_igg)+'  SI='+fmt(r.SI,3)+'</text>';
+  s+='<text x="8" y="188" fill="#9fb1c0" font-size="10">'+(SELET_TXT[r.seletividade]||r.seletividade)+' · banda '+r.banda+'</text>';
+  s+='<text x="'+W/2+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'as três camadas da barreira')+'</text>';
+  return svgEl(W,H,s);
+}
+
+// esquema do podócito com pedicelos e diafragma de fenda (desenho)
+function podocitoDiagram(state, titulo){
+  var r=glomerulo(state||{});
+  var sb=clampv(r.sb,0,1);
+  var W=300,H=180,s='';
+  s+='<rect width="300" height="180" fill="#0a1520"/>';
+  // capilar
+  s+='<rect x="20" y="120" width="260" height="40" rx="8" fill="#3a1520" fill-opacity="0.5" stroke="#e0556b" stroke-opacity="0.4"/>';
+  s+='<text x="150" y="155" fill="#e08a96" font-size="9" text-anchor="middle">capilar glomerular</text>';
+  // corpo do podócito
+  s+='<ellipse cx="150" cy="40" rx="60" ry="26" fill="#e8a13a" fill-opacity="0.35" stroke="#e8a13a"/>';
+  s+='<text x="150" y="44" fill="#e8a13a" font-size="10" text-anchor="middle" font-weight="bold">podócito</text>';
+  // pedicelos descendo até o capilar, com fenda variável
+  var n=7, gap=6+(1-sb)*10;
+  for(var i=0;i<n;i++){
+    var px=60+i*(180/(n-1));
+    s+='<path d="M'+(150+(px-150)*0.3)+',64 L'+f1(px)+',118" stroke="#e8a13a" stroke-width="3" fill="none"/>';
+    s+='<rect x="'+f1(px-4)+'" y="112" width="8" height="10" rx="2" fill="#e8a13a" fill-opacity="0.8"/>';
+  }
+  // diafragma de fenda (linha entre pedicelos)
+  s+='<line x1="56" y1="116" x2="244" y2="116" stroke="#39c0c8" stroke-width="1.5" stroke-dasharray="'+(sb>0.5?'2 '+f1(gap):'1 '+f1(gap*1.6))+'"/>';
+  s+='<text x="252" y="119" fill="#39c0c8" font-size="8">nefrina (fenda)</text>';
+  s+='<text x="8" y="100" fill="#9fb1c0" font-size="9">sb='+fmt(sb,2)+' → fenda '+(sb>0.5?'estreita':'alargada (effacement)')+'</text>';
+  s+='<text x="'+W/2+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'podócito e diafragma de fenda')+'</text>';
+  return svgEl(W,H,s);
+}
+
+// esquema glomerular × tubular (desenho)
+function origemDiagram(state, titulo){
+  var r=glomerulo(state||{});
+  var W=300,H=170,s='';
+  s+='<rect width="300" height="170" fill="#0a1520"/>';
+  // glomérulo
+  s+='<circle cx="70" cy="60" r="30" fill="#39c0c8" fill-opacity="0.25" stroke="#39c0c8"/>';
+  s+='<text x="70" y="64" fill="#39c0c8" font-size="10" text-anchor="middle" font-weight="bold">glomérulo</text>';
+  s+='<text x="70" y="102" fill="#9fb1c0" font-size="9" text-anchor="middle">albumina '+fmt(r.albuminuria,2)+' g/d</text>';
+  // túbulo
+  s+='<rect x="150" y="40" width="120" height="40" rx="20" fill="#e0556b" fill-opacity="0.25" stroke="#e0556b"/>';
+  s+='<text x="210" y="64" fill="#e0556b" font-size="10" text-anchor="middle" font-weight="bold">túbulo proximal</text>';
+  s+='<text x="210" y="102" fill="#9fb1c0" font-size="9" text-anchor="middle">tubular '+fmt(r.tubProt,2)+' g/d</text>';
+  // seta de fluxo
+  s+='<line x1="102" y1="60" x2="148" y2="60" stroke="#cdd9e3" stroke-width="2"/>';
+  // veredito de padrão
+  var domColor=r.padrao==='tubular'?'#e0556b':'#39c0c8';
+  s+='<rect x="40" y="120" width="220" height="30" rx="6" fill="'+domColor+'" fill-opacity="0.18" stroke="'+domColor+'"/>';
+  s+='<text x="150" y="139" fill="#e7eef4" font-size="11" text-anchor="middle">padrão: '+r.padrao+' · '+(SELET_TXT[r.seletividade]||r.seletividade)+'</text>';
+  s+='<text x="'+W/2+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'glomerular × tubular')+'</text>';
+  return svgEl(W,H,s);
+}
+
+/* =========================================================================
+ * TUTOR — DOIS blocos (ilustrado + textual)
+ * ========================================================================= */
+function G(extra){ return merge({},extra||{}); }
+// helper: figura raster real de assets/m3/ dentro do exercício (offline, caminho relativo)
+function imgFig(slug,alt){ return '<img src="assets/m3/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+var TUTOR_ILUSTRADO=[
+  {q:'Na curva de sieving, a inulina (r=1,4 nm, neutra) tem θ próximo de…',
+   o:['0','0,3','0,99 (passa quase livre)','exatamente 1,0 sempre'],
+   c:2,e:'A inulina é pequena e neutra → θ≈0,99. Por isso é o marcador de TFG: filtra livre, não é reabsorvida nem secretada.',
+   fig:function(){ return sievingMini({cb:1,sb:1},'normal — inulina passa, albumina não'); }},
+  {q:'Com a barreira de CARGA perdida (cb=0) e tamanho intacto, a albumina…',
+   o:['continua excluída','dispara para faixa nefrótica, mas a IgG ainda é excluída','some da urina','é reabsorvida totalmente'],
+   c:1,e:'Perda de carga → θ_alb sobe ~3×, albuminúria nefrótica. Mas o TAMANHO intacto ainda exclui a IgG → seletiva. É a lesão mínima.',
+   fig:function(){ return barreiraDiagram({cb:0,sb:1},'carga perdida — seletiva'); }},
+  {q:'Com a barreira de TAMANHO rompida (sb baixo), o índice de seletividade SI…',
+   o:['cai para zero','sobe → proteinúria não-seletiva (IgG passa)','não muda','fica negativo'],
+   c:1,e:'O poro abre → θ_IgG cresce → SI=θ_IgG/θ_alb sobe → não-seletiva. Indica dano estrutural da MBG/podócito.',
+   fig:function(){ return barreiraDiagram({sb:0.2},'tamanho rompido — não-seletiva'); }},
+  {q:'Na curva, comparando a linha do ânion (ciano) com a da molécula neutra (laranja)…',
+   o:['são idênticas','o ânion é mais excluído na faixa da albumina (carga)','a neutra é mais excluída','o ânion passa mais'],
+   c:1,e:'A barreira de carga puxa a curva aniônica para baixo na faixa de ~3–4 nm: a albumina aniônica é muito mais excluída que uma molécula neutra do mesmo tamanho.',
+   fig:function(){ return sievingMini({cb:1,sb:1},'ânion × neutra: o efeito da carga'); }},
+  {q:'A contração mesangial (S↓) reduz a TFG por qual mecanismo?',
+   o:['baixa a pressão glomerular','reduz a área de filtração → Kf↓ (sem mexer na pressão)','rompe a barreira de carga','aumenta a reabsorção'],
+   c:1,e:'Kf=Lp·S. S↓ → Kf↓ → TFG↓ com a P_GC normal. É a alavanca do M3, distinta da hemodinâmica do M1/M2.',
+   fig:function(){ return barreiraFig({S:0.4},'mesangial: Kf baixo, peneira intacta'); }},
+  {q:'No esquema do podócito, o "apagamento dos pedicelos" corresponde a…',
+   o:['fenda mais estreita','fenda alargada / desorganizada → proteinúria','mais reabsorção','barreira de carga intacta'],
+   c:1,e:'O effacement alarga e desorganiza o diafragma de fenda → a proteína escapa. É a marca ultraestrutural da lesão mínima.',
+   fig:function(){ return podocitoDiagram({sb:0.25},'effacement — pedicelos apagados'); }},
+  {q:'No diagrama de barras, no rim NORMAL a maior parte da albumina filtrada…',
+   o:['é excretada na urina','é reabsorvida pelo túbulo proximal','fica no glomérulo','vira IgG'],
+   c:1,e:'O glomérulo filtra ~4 g/dia; o túbulo (megalina/cubilina) reabsorve quase tudo → albuminúria <0,03 g/dia. A barreira não é perfeita; o túbulo completa.',
+   fig:function(){ return barreiraFig({cb:1,sb:1},'normal — túbulo reabsorve quase tudo'); }},
+  {q:'Proteinúria de baixo peso (β2-microglobulina) com barreira glomerular íntegra indica…',
+   o:['proteinúria glomerular seletiva','proteinúria glomerular não-seletiva','proteinúria TUBULAR (falha de reabsorção)','barreira de carga rompida'],
+   c:2,e:'Proteínas de baixo peso são normalmente filtradas E reabsorvidas. Se aparecem na urina com glomérulo íntegro → o túbulo falhou → proteinúria tubular.',
+   fig:function(){ return origemDiagram({tubInjury:0.7},'padrão tubular'); }},
+  {q:'Uma proteinúria SELETIVA (SI<0,1) aponta para…',
+   o:['perda só da carga (lesão mínima), tamanho intacto','ruptura da MBG','obstrução pós-renal','desidratação'],
+   c:0,e:'Seletiva = só albumina passa, IgG excluída → a peneira de tamanho está intacta, só a carga falhou. Típico da lesão mínima, responsiva a corticoide.',
+   fig:function(){ return origemDiagram({cb:0,sb:1},'seletiva — só carga'); }},
+  {q:'Na curva, em qual faixa de raio a peneira de tamanho faz o "corte" abrupto?',
+   o:['~1 nm','~4 nm (perto do raio do poro)','~10 nm','não há corte'],
+   c:1,e:'A curva exp(-(r/c)^n) cai abruptamente perto do raio efetivo do poro (~4 nm). Abaixo disso passa; acima, exclui. A albumina (3,6 nm) está na borda — por isso a carga é decisiva para ela.',
+   fig:function(){ return sievingMini({cb:1,sb:1},'o corte de tamanho ~4 nm'); }},
+  {q:'Na figura das três camadas, qual é a principal barreira de CARGA?',
+   o:['o endotélio só','a membrana basal glomerular (colágeno IV + heparan-sulfato)','o ureter','o túbulo'],
+   c:1,e:'A MBG, rica em heparan-sulfato aniônico, é a maior barreira de carga. Repele a albumina aniônica mesmo quando o tamanho a deixaria passar.',
+   fig:function(){ return imgFig('barreira-filtracao.svg','as três camadas da barreira'); }},
+  {q:'Na figura do diafragma de fenda, a proteína-chave do "zíper" é…',
+   o:['albumina','nefrina','creatinina','colágeno I'],
+   c:1,e:'A nefrina (com podocina) forma o diafragma de fenda — a barreira final de tamanho. Sua mutação causa síndrome nefrótica congênita.',
+   fig:function(){ return imgFig('diafragma-fenda-nefrina.svg','diafragma de fenda — nefrina'); }},
+  {q:'Na micrografia do endotélio fenestrado, as fenestras (poros)…',
+   o:['bloqueiam toda passagem','deixam o plasma alcançar a MBG, mas o glicocálix repele ânions','reabsorvem albumina','são feitas de nefrina'],
+   c:1,e:'As fenestras deixam o plasma passar para a MBG; o glicocálix aniônico que as reveste é a primeira barreira de carga.',
+   fig:function(){ return imgFig('endotelio-fenestrado.png','endotélio fenestrado'); }},
+  {q:'Na figura carga × tamanho, a lesão mínima atua predominantemente sobre…',
+   o:['o tamanho','a carga (proteinúria seletiva)','o túbulo','o ureter'],
+   c:1,e:'A lesão mínima apaga a carga (e os pedicelos) sem romper a peneira de tamanho → proteinúria seletiva de albumina.',
+   fig:function(){ return imgFig('barreira-carga-tamanho.svg','carga × tamanho'); }},
+  {q:'Na figura dos mecanismos de proteinúria, a via glomerular se distingue da tubular por…',
+   o:['a proteína predominante (albumina × baixo peso) e a seletividade','a cor da urina','o volume urinário','a pressão arterial'],
+   c:0,e:'Glomerular = albumina (± IgG se não-seletiva), barreira rompida. Tubular = proteínas de baixo peso, barreira íntegra mas reabsorção falha.',
+   fig:function(){ return imgFig('proteinuria-mecanismo.svg','glomerular × tubular'); }}
+];
+
+var TUTOR_TEXTUAL=[
+  {q:'O coeficiente de sieving θ de uma molécula totalmente filtrada (como a inulina) é…',
+   o:['0','~0,5','~1','negativo'],
+   c:2,e:'θ≈1: passa livre. θ=0 seria total exclusão. A inulina (pequena, neutra) tem θ≈0,99.'},
+  {q:'Por que a albumina é tão pouco filtrada apesar de menor que o poro?',
+   o:['é grande demais','é aniônica e a barreira de carga a repele','é reabsorvida antes','não existe no plasma'],
+   c:1,e:'A carga negativa da albumina é repelida pela barreira de carga (glicocálix, heparan-sulfato). Pelo tamanho sozinho ela passaria parcialmente.'},
+  {q:'Kf = Lp · S. A contração mesangial atua sobre…',
+   o:['Lp (permeabilidade)','S (área de superfície)','a pressão','a carga'],
+   c:1,e:'A célula mesangial reduz a área de filtração S → Kf cai → TFG cai sem mexer na pressão glomerular.'},
+  {q:'Proteinúria "seletiva" significa…',
+   o:['só albumina passa (IgG excluída) — tamanho intacto','todas as proteínas passam','nenhuma proteína passa','só IgG passa'],
+   c:0,e:'Seletiva: SI=θ_IgG/θ_alb baixo. Só a carga falhou; o tamanho ainda exclui a IgG. Típica da lesão mínima.'},
+  {q:'A albumina normalmente filtrada (~4 g/dia) acaba…',
+   o:['toda na urina','quase toda reabsorvida pelo túbulo proximal','convertida em creatinina','retida no glomérulo'],
+   c:1,e:'Megalina/cubilina reabsorvem quase toda a albumina filtrada → albuminúria normal <0,03 g/dia.'},
+  {q:'O diafragma de fenda fica entre…',
+   o:['as células endoteliais','os pedicelos dos podócitos','as alças de Henle','os ureteres'],
+   c:1,e:'É o "zíper" de nefrina/podocina entre os pedicelos interdigitados — a barreira final de tamanho.'},
+  {q:'Proteinúria de proteínas de BAIXO peso (β2-microglobulina) sugere…',
+   o:['lesão glomerular','lesão TUBULAR (falha de reabsorção)','obstrução','hipertensão'],
+   c:1,e:'Baixo peso é normalmente filtrado e reabsorvido. Se escapa com glomérulo íntegro → defeito tubular.'},
+  {q:'Quando a proteinúria vira NÃO-seletiva?',
+   o:['quando só a carga falha','quando a barreira de tamanho (MBG/podócito) se rompe → IgG passa','na desidratação','sempre que há albumina'],
+   c:1,e:'Tamanho rompido → moléculas grandes (IgG) passam → SI sobe. Dano estrutural, prognóstico pior.'},
+  {q:'O "apagamento dos pedicelos" (effacement) é a marca de…',
+   o:['nefrite intersticial','síndrome nefrótica por lesão mínima','obstrução ureteral','infecção urinária'],
+   c:1,e:'Effacement = perda da arquitetura dos pedicelos, visto ao microscópio eletrônico; clássico da lesão mínima, geralmente reversível com corticoide.'},
+  {q:'A TFG pode cair com a pressão glomerular NORMAL quando…',
+   o:['o Kf cai (contração mesangial / perda de área)','a PAM sobe','a carga aumenta','a inulina é reabsorvida'],
+   c:0,e:'TFG = Kf·(forças de Starling). Se o Kf cai (S↓), a TFG cai mesmo com a P_GC inalterada — a alavanca do M3, distinta da hemodinâmica.'}
+];
+
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO;
+window.TUTOR_TEXTUAL=TUTOR_TEXTUAL;
+window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+
+var BANKS={ilustrada:TUTOR_ILUSTRADO, textual:TUTOR_TEXTUAL};
+var curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+
+function renderTutor(){
+  var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():'';
+  $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false;
+  $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){
+    var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){
+      if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button');
+      btns[item.c].classList.add('ok');
+      if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block';
+      fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e;
+      $('tutor-score').textContent=tScore;
+      $('tutor-total').textContent=tTotal;
+    });
+    box.appendChild(b);
+  });
+}
+
+$('banktabs').addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor();
+});
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+/* =========================================================================
+ * ILUSTRAÇÕES DA ABA CONCEITO (populadas no boot)
+ * ========================================================================= */
+function populateConceito(){
+  var el;
+  el=$('draw-barreira'); if(el) el.innerHTML=barreiraDiagram({cb:1,sb:1},'as três camadas — barreira íntegra');
+  el=$('draw-carga');    if(el) el.innerHTML=barreiraDiagram({cb:0,sb:1},'barreira de CARGA perdida (seletiva)');
+  el=$('draw-tamanho');  if(el) el.innerHTML=barreiraDiagram({sb:0.2},'barreira de TAMANHO rompida (não-seletiva)');
+  el=$('draw-podocito'); if(el) el.innerHTML=podocitoDiagram({sb:1},'podócito íntegro × fenda estreita');
+  el=$('draw-proteinuria'); if(el) el.innerHTML=origemDiagram({cb:0,sb:1},'glomerular (seletiva) × tubular');
+  var elCaso=$('fig-caso'); if(elCaso) elCaso.innerHTML=sievingMini({cb:0,sb:1},'criança: carga perdida — seletiva');
+}
+
+/* =========================================================================
+ * BOOT
+ * ========================================================================= */
+refresh();
+renderTutor();
+populateConceito();
+</script>
+</body>
+</html>

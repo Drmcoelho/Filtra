@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M5 — TCP: Na/glicose (SGLT2), HCO₃/anidrase carbônica, Fanconi</title>
+<style>
+  :root{
+    --bg:#0c1014; --panel:#141b22; --panel2:#1b242d; --line:#283642;
+    --ink:#e7eef4; --dim:#9fb1c0; --accent:#39c0c8; --warn:#e8a13a; --bad:#e0556b; --good:#52c08a;
+    --aff:#e0556b; --eff:#3a7bd5; --tuft:#39c0c8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none}
+  section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg,#dose-svg svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px}
+  .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)}
+  .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)}
+  .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)}
+  .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+  code{background:#0a1016;border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:13px}
+  .dose{display:inline-block;background:#0a1016;border:1px solid var(--accent);border-radius:5px;padding:1px 6px;color:var(--accent);font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M5</div>
+  <h1>Túbulo proximal — Na/glicose (SGLT2), HCO₃/anidrase carbônica, Fanconi</h1>
+  <div class="sub">O proximal <b>não</b> "só reabsorve". Ele reabsorve <b>~65% do Na⁺</b> filtrado em massa e
+  isosmótica — por isso <b>a alça é prisioneira do proximal</b>: o que sobra aqui é a carga distal. É o alvo de
+  <b>três fármacos</b>, cada um a chave de um transportador: <b>acetazolamida</b> (anidrase carbônica → HCO₃),
+  <b>SGLT2i</b> (Na/glicose → glicosúria + nefroproteção) e <b>manitol</b> (osmótico). A curva de
+  <b>titulação da glicose</b> mostra o <b>Tm</b> e o <b>limiar</b>; o <b>Fanconi</b> derruba tudo com plasma normal.
+  Dose-resposta: <code>efeito = Emax · D / (EC50 + D)</code>.</div>
+  <nav class="hex">
+    <a class="soon" title="em breve">RESPIRA</a>
+    <a class="soon" title="em breve">CHOCA</a>
+    <span class="ativo">FILTRA</span>
+    <a class="soon" title="em breve">ALIMENTA</a>
+    <a class="soon" title="em breve">METABOLIZA</a>
+    <a class="soon" title="em breve">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="filtra.html">&larr; índice do braço FILTRA</a>
+
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- ============================== CONCEITO ============================== -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — o túbulo proximal, transportador a transportador</h3>
+
+      <h4>1. A reabsorção isosmótica em massa — 65% do Na⁺</h4>
+      <p class="sub">O TCP reabsorve <b>~65% do Na⁺</b> filtrado e a água o <b>segue</b> (isosmótica): o líquido
+      tubular sai do proximal quase com a mesma osmolalidade do plasma, só que em <b>menor volume</b>. O que
+      <em>sobra</em> aqui define a <b>carga distal</b> de Na⁺. Por isso a máxima do segmento: <b>a alça é
+      prisioneira do proximal</b> — inibir o proximal joga mais Na⁺ adiante, mas o distal recaptura a maior parte
+      (<b>braking</b>), e a eficácia diurética isolada tem <b>teto</b> (Fig. 1–2).</p>
+      <div class="frow">
+        <div class="concept" id="draw-na65"></div>
+        <figure class="fviva"><img src="assets/m5/proximal-65pct-na.png" alt="O túbulo proximal reabsorve cerca de 65% do sódio filtrado, definindo a carga que chega ao restante do néfron" loading="lazy">
+          <figcaption><b>Fig. 1 · 65% do Na⁺ saem aqui.</b> O proximal recupera a maior fatia do Na⁺ filtrado; a
+          água segue isosmótica. O resíduo é a <b>carga distal</b>. <b>A alça é prisioneira do proximal</b>: quem
+          governa o que chega à alça é este segmento.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m5/reabsorcao-isosmotica.svg" alt="Reabsorção isosmótica: a água segue o sódio, o volume cai mantendo a osmolalidade" loading="lazy">
+          <figcaption><b>Fig. 2 · Isosmótica.</b> Soluto e água saem na mesma proporção → o filtrado encolhe em
+          <b>volume</b> sem mudar a <b>osmolalidade</b>. Diferente da alça (que dilui) e do coletor (que concentra):
+          o proximal é o grande <b>recuperador em massa</b>.</figcaption></figure>
+      </div>
+
+      <h4>2. Na/glicose via SGLT2 — a curva de titulação (Tm e limiar)</h4>
+      <p class="sub">O SGLT2 apical <b>cotransporta Na⁺ e glicose</b>. A <b>filtrada</b> = TFG·glicemia; a
+      <b>reabsorvida</b> satura no <b>Tm</b> (~375 mg/min); a <b>excretada</b> = filtrada − reabsorvida aparece
+      acima do <b>limiar</b> (~180–200 mg/dL) com <b>splay</b> (a transição é suave, néfrons heterogêneos). O
+      <span class="dose">SGLT2i</span> (dapagliflozina 10 mg, empagliflozina 10–25 mg) <b>baixa o limiar/Tm</b> →
+      glicosúria já em <b>normoglicemia</b>, e restaura o <b>feedback tubuloglomerular</b> (nefroproteção — Fig. 3–4).</p>
+      <div class="frow">
+        <div class="concept" id="draw-sglt2"></div>
+        <figure class="fviva"><img src="assets/m5/sglt2-transportador.svg" alt="Transportador SGLT2 apical cotransportando sódio e glicose no túbulo proximal" loading="lazy">
+          <figcaption><b>Fig. 3 · SGLT2.</b> O cotransporte Na⁺/glicose na borda apical. Bloqueá-lo (gliflozinas)
+          baixa o limiar → glicosúria com glicemia normal → diurese osmótica, natriurese e <b>nefroproteção</b> pela
+          restauração do TGF (ponte com M2).</figcaption></figure>
+        <figure class="fviva"><img src="assets/m5/borda-escova-microvilosidades.svg" alt="Borda em escova do túbulo proximal: microvilosidades que ampliam a superfície de reabsorção" loading="lazy">
+          <figcaption><b>Fig. 4 · A borda em escova.</b> As microvilosidades ampliam enormemente a superfície
+          apical — onde moram SGLT2, NHE3 e a anidrase carbônica IV. A arquitetura do proximal é desenhada para
+          <b>reabsorver em massa</b>.</figcaption></figure>
+      </div>
+
+      <h4>3. HCO₃ e a anidrase carbônica — o NHE3 e o resgate do bicarbonato</h4>
+      <p class="sub">O <b>NHE3</b> secreta H⁺ na luz; a <b>anidrase carbônica</b> (CA IV apical + CA II citoplasmática)
+      converte H⁺+HCO₃⁻ ↔ CO₂+H₂O nas duas faces, regenerando o HCO₃⁻ no sangue → <b>~85%</b> do bicarbonato
+      filtrado é reabsorvido aqui. A <span class="dose">acetazolamida 250–500 mg</span> inibe a CA → bloqueia esse
+      resgate → <b>bicarbonatúria + acidose metabólica</b> + diurese leve; mas é <b>autolimitada</b> (escape proximal — Fig. 5–6).</p>
+      <div class="frow">
+        <div class="concept" id="draw-hco3"></div>
+        <figure class="fviva"><img src="assets/m5/nhe3-troca-na-h.svg" alt="Trocador NHE3 secretando H+ em troca de Na+ na luz tubular proximal" loading="lazy">
+          <figcaption><b>Fig. 5 · NHE3 (Na⁺/H⁺).</b> Secreta H⁺ na luz em troca de Na⁺. O H⁺ titula o HCO₃⁻
+          filtrado; a anidrase carbônica fecha o ciclo. É o motor do resgate do bicarbonato e de boa parte da
+          reabsorção de Na⁺ proximal.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m5/anidrase-carbonica-hco3.png" alt="Anidrase carbônica regenerando CO2 e HCO3 nas duas faces da célula proximal" loading="lazy">
+          <figcaption><b>Fig. 6 · A anidrase carbônica.</b> CA IV (apical) + CA II (citoplasmática) reciclam
+          CO₂/HCO₃⁻ nas duas faces. A <b>acetazolamida</b> as inibe → o HCO₃⁻ escapa na urina → acidose metabólica
+          <b>autolimitada</b>.</figcaption></figure>
+      </div>
+
+      <h4>4. Síndrome de Fanconi — a falência proximal generalizada</h4>
+      <p class="sub">Quando o proximal falha como um todo (<b>Fanconi</b>), perdem-se na urina <b>glicose,
+      aminoácidos, fosfato, bicarbonato e ácido úrico</b> — tudo o que o segmento normalmente recupera — <b>com o
+      plasma normal</b> (glicosúria com glicemia normal!). É a <b>ATR proximal tipo 2</b>. O contraste com a
+      glicosúria do diabético (hiperglicemia, limiar normal) é o cerne do diagnóstico (Fig. 7–8).</p>
+      <div class="frow">
+        <div class="concept" id="draw-fanconi"></div>
+        <figure class="fviva"><img src="assets/m5/sindrome-fanconi.svg" alt="Síndrome de Fanconi: perda urinária de glicose, aminoácidos, fosfato, bicarbonato e ácido úrico" loading="lazy">
+          <figcaption><b>Fig. 7 · Fanconi.</b> Disfunção proximal generalizada → espoliação simultânea de glicose,
+          aminoácidos, fosfato, HCO₃⁻ e ácido úrico, <b>com plasma normal</b>. O proximal "vaza" tudo o que deveria
+          recuperar — a assinatura é a <b>multiplicidade</b> das perdas.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m5/tubulo-proximal-histologia.svg" alt="Histologia do túbulo proximal com epitélio cúbico e borda em escova densa" loading="lazy">
+          <figcaption><b>Fig. 8 · Histologia do TCP.</b> Epitélio cúbico, borda em escova densa, muitas
+          mitocôndrias — a célula mais "trabalhadora" do néfron e, por isso, a mais vulnerável à isquemia e às
+          toxinas (a NTA nasce aqui). As Fig. 1–8 reaparecem no Caso, na Trilha e na Avaliação.</figcaption></figure>
+      </div>
+
+      <h4>5. A farmacologia do segmento — dose-resposta sigmoide</h4>
+      <p class="sub">Cada fármaco é a <b>chave</b> de um transportador, e seu efeito segue a curva
+      <code>efeito = Emax · D / (EC50 + D)</code>: há <b>teto</b> (Emax), <b>potência</b> (EC50) e <b>saturação</b>.
+      <span class="dose">acetazolamida 250–500 mg VO/IV</span> · <span class="dose">dapagliflozina 10 mg/dia VO</span> ·
+      <span class="dose">empagliflozina 10–25 mg/dia VO</span> · <span class="dose">manitol 0,25–1 g/kg IV</span>.
+      Dobrar a dose <b>não</b> dobra o efeito perto do teto — a curva ensina por que a acetazolamida é autolimitada.</p>
+      <div class="frow">
+        <div class="concept" id="draw-dose"></div>
+        <figure class="fviva"><img src="assets/m5/anidrase-carbonica-hco3.png" alt="Curva dose-resposta hiperbólica com teto Emax e meia-resposta em EC50" loading="lazy">
+          <figcaption><b>Fig. 9 · A dose-resposta.</b> <code>efeito = Emax·D/(EC50+D)</code>: cresce rápido,
+          desacelera e <b>plateia no Emax</b>. Em EC50, o efeito é metade do teto. É a forma que justifica o "teto" e o
+          "braking" da farmacologia diurética.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== CASO (5 atos) ============================== -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — cinco atos, decida antes de revelar</h3>
+      <p class="sub">Quatro pacientes, quatro urinas. <b>(A)</b> Jovem assintomático: glicosúria 3+ na urina, mas
+      glicemia 95 mg/dL. <b>(B)</b> Diabético: glicemia 320, glicosúria 4+. <b>(C)</b> Paciente em mal de
+      montanha recebe um diurético e fica acidótico. <b>(D)</b> Criança com raquitismo, glicosúria, fosfatúria e
+      HCO₃ baixo, com glicemia normal.</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step">
+        <b>Ato 1.</b> A glicosúria do jovem (A) com glicemia 95 significa diabetes?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>Não.</b> É <b>glicosúria renal</b>: o <b>limiar</b> de excreção está baixo
+        (mutação do SGLT2, ou um <b>SGLT2i</b>) → glicose escapa mesmo com glicemia normal. No engine:
+        <code>sglt2 10 mg, glicemia 100</code> → limiar cai a ~130 mg/dL → <b>glicosúria em normoglicemia</b>.
+        Benigno isoladamente; o que conta é a <b>glicemia</b>, não a fita urinária.</div>
+      </div>
+      <div class="step">
+        <b>Ato 2.</b> No diabético (B), por que a glicosúria só aparece em glicemia ~180–200?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2">Porque abaixo do <b>limiar</b> a <b>filtrada</b> ainda cabe no <b>Tm</b> e é toda
+        reabsorvida. Acima dele, a reabsorção <b>satura</b> e o excedente escapa. No engine: a curva de titulação
+        cruza o limiar e a <b>excretada</b> dispara. A glicosúria é um <b>marcador tardio</b> da hiperglicemia.</div>
+      </div>
+      <div class="step">
+        <b>Ato 3.</b> O diurético do montanhista (C) que causou acidose — qual é e por quê?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3"><b>Acetazolamida</b> (<span class="dose">250–500 mg</span>), usada no mal agudo
+        das montanhas. Inibe a <b>anidrase carbônica</b> → o proximal não resgata o HCO₃⁻ → <b>bicarbonatúria</b> e
+        <b>acidose metabólica</b> (que, de propósito, estimula a ventilação na altitude). No engine:
+        <code>acz 500</code> → bicarbonatúria↑, HCO₃ plasmático↓. É <b>autolimitada</b> (escape proximal).</div>
+      </div>
+      <div class="step">
+        <b>Ato 4.</b> A criança (D) com glicosúria + fosfatúria + HCO₃ baixo e glicemia normal — o diagnóstico?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>Síndrome de Fanconi</b> (ATR proximal tipo 2): disfunção proximal
+        <b>generalizada</b> → perda simultânea de <b>glicose, aminoácidos, fosfato, HCO₃⁻ e ácido úrico</b>, com
+        plasma normal. A fosfatúria explica o raquitismo. No engine: <code>fanconi true</code> → todas as perdas
+        acesas, glicosúria com glicemia 100. A <b>multiplicidade</b> é a assinatura.</div>
+      </div>
+      <div class="step">
+        <b>Ato 5.</b> Conduta e síntese.
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>(A)</b> glicosúria renal/SGLT2i: tranquilize, dose a <b>glicemia</b>, não a
+        urina; em diabético/ICC o SGLT2i é <em>desejado</em> (nefro e cardioproteção). <b>(B)</b> diabético: trate a
+        hiperglicemia; a glicosúria some quando a glicemia cai abaixo do limiar. <b>(C)</b> acetazolamida: efeito
+        <b>autolimitado</b>; útil na altitude e no glaucoma, fraca como diurético isolado. <b>(D)</b> Fanconi:
+        reponha fosfato/HCO₃/eletrólitos e cace a causa (tóxicos, mieloma, genético).
+        <br><b>Lição:</b> o proximal não "só reabsorve" — ele <b>governa</b> a carga distal, o equilíbrio
+        ácido-base e a glicosúria. Cada fármaco é a chave de um transportador; a dose-resposta é fisiologia.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== TRILHA ============================== -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — dez passos que constroem o conceito</h3>
+      <details><summary>1. Quanto do Na⁺ filtrado o túbulo proximal reabsorve?</summary>
+        <p><em>Pista: a maior fatia.</em><br>
+        ~<b>65%</b> do Na⁺ filtrado, em massa, e a água o segue isosmótica. O proximal é o grande recuperador; o
+        que sobra define a carga distal.</p></details>
+      <details><summary>2. Por que "a alça é prisioneira do proximal"?</summary>
+        <p><em>Pista: o que chega à alça?</em><br>
+        Porque a quantidade de Na⁺ (e volume) que chega à alça é exatamente <b>o que o proximal não reabsorveu</b>.
+        Mexer no proximal muda a carga distal — mas o distal recaptura a maior parte (braking).</p></details>
+      <details><summary>3. O que significa reabsorção "isosmótica"?</summary>
+        <p><em>Pista: soluto e água juntos.</em><br>
+        Na⁺ e água saem na mesma proporção → o filtrado <b>encolhe em volume</b> mantendo a osmolalidade. O proximal
+        não dilui nem concentra; ele recupera em massa.</p></details>
+      <details><summary>4. O que o SGLT2 faz e onde fica?</summary>
+        <p><em>Pista: cotransporte apical.</em><br>
+        Cotransporta <b>Na⁺ e glicose</b> na borda apical do proximal. Reabsorve a maior parte da glicose filtrada.
+        Bloqueá-lo (gliflozinas) gera glicosúria, natriurese e nefroproteção.</p></details>
+      <details><summary>5. O que são o Tm e o limiar na titulação da glicose?</summary>
+        <p><em>Pista: saturação e onset.</em><br>
+        O <b>Tm</b> (~375 mg/min) é o transporte máximo de reabsorção; o <b>limiar</b> (~180–200 mg/dL) é a glicemia
+        acima da qual a glicose escapa na urina. O <b>splay</b> torna a transição suave.</p></details>
+      <details><summary>6. Por que a glicosúria do SGLT2i ocorre com glicemia NORMAL?</summary>
+        <p><em>Pista: baixa o limiar.</em><br>
+        O SGLT2i <b>baixa o limiar/Tm</b> → mesmo com glicemia 100, a filtrada já excede a reabsorção → glicosúria.
+        Além da glicose, leva Na⁺ ao distal, restaura o <b>feedback tubuloglomerular</b> e protege o rim.</p></details>
+      <details><summary>7. Como a anidrase carbônica resgata o bicarbonato?</summary>
+        <p><em>Pista: NHE3 + CA nas duas faces.</em><br>
+        O NHE3 secreta H⁺; a CA IV (apical) e a CA II (citoplasmática) reciclam CO₂/HCO₃⁻ → ~<b>85%</b> do HCO₃⁻
+        filtrado é reabsorvido no proximal.</p></details>
+      <details><summary>8. Por que a acetazolamida causa acidose e é "autolimitada"?</summary>
+        <p><em>Pista: bloqueia a CA, mas há escape.</em><br>
+        Inibe a CA → o HCO₃⁻ escapa na urina → <b>acidose metabólica</b> + diurese leve. Mas tem <b>teto</b> (Emax) e
+        o distal/escape proximal limitam o efeito → fraca como diurético isolado.</p></details>
+      <details><summary>9. O que é a síndrome de Fanconi?</summary>
+        <p><em>Pista: tudo de uma vez, plasma normal.</em><br>
+        Disfunção proximal <b>generalizada</b> → perda urinária de glicose, aminoácidos, fosfato, HCO₃⁻ e ácido
+        úrico <b>com plasma normal</b>. É a ATR proximal tipo 2. A multiplicidade das perdas é a chave.</p></details>
+      <details><summary>10. Como a dose-resposta explica o "teto" dos diuréticos proximais?</summary>
+        <p><em>Pista: efeito = Emax·D/(EC50+D).</em><br>
+        A curva satura: perto do <b>Emax</b>, dobrar a dose rende cada vez menos. Some a isso o <b>braking</b> (o
+        distal recaptura o Na⁺ extra) e entende-se por que inibir só o proximal faz pouco xixi.</p></details>
+    </div>
+  </section>
+
+  <!-- ============================== INSTRUMENTO ============================== -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — a curva de titulação da glicose (filtrada · reabsorvida · excretada)</h3>
+      <p class="sub">A linha <span style="color:#39c0c8">ciano</span> é a glicose <b>filtrada</b> (= TFG·glicemia); a
+      <span style="color:#52c08a">verde</span> é a <b>reabsorvida</b> (satura no Tm); a <span style="color:#e0556b">vermelha</span>
+      é a <b>excretada</b> (glicosúria), que aparece acima do <b>limiar</b>. Suba a dose de <b>SGLT2i</b> e veja o
+      limiar e o Tm <b>despencarem</b> → glicosúria já em glicemia normal. Ligue o <b>Fanconi</b> e tudo cai.</p>
+      <div class="grid" style="margin-bottom:10px">
+        <div>
+          <label>Glicemia (mg/dL): <span class="val" id="instr-lbl-glic">100</span></label>
+          <input type="range" id="instr-glic" min="0" max="600" step="5" value="100">
+          <label>TFG (mL/min): <span class="val" id="instr-lbl-tfg">120</span></label>
+          <input type="range" id="instr-tfg" min="20" max="180" step="5" value="120">
+        </div>
+        <div>
+          <label>SGLT2i — dapagliflozina/empagliflozina (mg): <span class="val" id="instr-lbl-sglt2">0</span></label>
+          <input type="range" id="instr-sglt2" min="0" max="25" step="1" value="0">
+          <label>Síndrome de Fanconi:</label>
+          <select id="instr-fanconi">
+            <option value="0">desligada</option>
+            <option value="1">ligada</option>
+          </select>
+        </div>
+      </div>
+      <canvas id="titulacao-canvas" width="900" height="320" aria-label="Curva de titulação da glicose"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+      <h4>A dose-resposta do SGLT2i (computada): <code>efeito = Emax·D/(EC50+D)</code></h4>
+      <div class="concept" id="dose-svg"></div>
+    </div>
+  </section>
+
+  <!-- ============================== LAB ============================== -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — mova a fisiologia e a farmacologia, leia o proximal por mecanismo</h3>
+      <div class="grid">
+        <div>
+          <label>Glicemia (mg/dL): <span class="val" id="lbl-glic">100</span></label>
+          <input type="range" id="in-glic" min="0" max="600" step="5" value="100">
+          <label>TFG (mL/min): <span class="val" id="lbl-tfg">120</span></label>
+          <input type="range" id="in-tfg" min="20" max="180" step="5" value="120">
+          <label>Acetazolamida (mg VO/IV — inibe a anidrase carbônica): <span class="val" id="lbl-acz">0</span></label>
+          <input type="range" id="in-acz" min="0" max="1000" step="25" value="0">
+        </div>
+        <div>
+          <label>SGLT2i — dapa 10 / empa 10–25 mg/dia VO: <span class="val" id="lbl-sglt2">0</span></label>
+          <input type="range" id="in-sglt2" min="0" max="25" step="1" value="0">
+          <label>Manitol (g/kg IV — osmótico): <span class="val" id="lbl-manitol">0.00</span></label>
+          <input type="range" id="in-manitol" min="0" max="1" step="0.05" value="0">
+          <label>Síndrome de Fanconi:</label>
+          <select id="in-fanconi">
+            <option value="0">desligada</option>
+            <option value="1">ligada</option>
+          </select>
+        </div>
+      </div>
+
+      <table>
+        <tr><th>Variável</th><th>Atual</th><th>Normal ≈</th></tr>
+        <tr><td>Glicose filtrada (mg/min)</td><td class="num" id="out-filt">—</td><td class="num">~120</td></tr>
+        <tr><td>Glicose reabsorvida (mg/min, ≤ Tm)</td><td class="num" id="out-reab">—</td><td class="num">~120</td></tr>
+        <tr><td>Glicosúria — excretada (mg/min)</td><td class="num" id="out-glicuria">—</td><td class="num">0</td></tr>
+        <tr><td>Tm efetivo / limiar (mg/min · mg/dL)</td><td class="num" id="out-tmlim">—</td><td class="num">375 · 200</td></tr>
+        <tr><td>Fração do Na⁺ reabsorvida no TCP</td><td class="num" id="out-fracna">—</td><td class="num">~0.65</td></tr>
+        <tr><td>Carga distal de Na⁺ (fração filtrada)</td><td class="num" id="out-fracdist">—</td><td class="num">~0.35</td></tr>
+        <tr><td>Natriurese proximal final (mEq/min)</td><td class="num" id="out-natr">—</td><td class="num">~0</td></tr>
+        <tr><td>Braking (Na⁺ extra recapturado, %)</td><td class="num" id="out-braking">—</td><td class="num">—</td></tr>
+        <tr><td>Bicarbonatúria (fração do HCO₃ do TCP)</td><td class="num" id="out-bicarb">—</td><td class="num">0</td></tr>
+        <tr><td>HCO₃⁻ plasmático estimado (mEq/L)</td><td class="num" id="out-hco3">—</td><td class="num">24</td></tr>
+        <tr><td>Efeitos dose-resposta (ACZ · SGLT2i · manitol)</td><td class="num" id="out-efeitos">—</td><td class="num">0 · 0 · 0</td></tr>
+        <tr><td>Perdas de Fanconi</td><td class="num" id="out-fanconi">—</td><td class="num">nenhuma</td></tr>
+        <tr><td>Regime</td><td class="num" id="out-regime">—</td><td class="num">normal</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- ============================== AVALIAÇÃO ============================== -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (12)</button>
+        <button data-bank="textual">Textual (10)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica e farmacológica</b>.
+    A partir do M5 (decisão do autor, CLAUDE.md §8), a farmacologia entra como conteúdo de primeira classe: as
+    doses citadas — <b>acetazolamida 250–500 mg VO/IV</b>, <b>dapagliflozina 10 mg/dia VO</b>,
+    <b>empagliflozina 10–25 mg/dia VO</b>, <b>manitol 0,25–1 g/kg IV</b> — aparecem ancoradas ao <b>mecanismo</b>
+    do transportador que cada fármaco bloqueia, e o efeito é <b>computado pelo motor</b> (dose-resposta
+    <code>efeito = Emax·D/(EC50+D)</code>), nunca tabelado. A ferramenta é <b>educacional</b>, não está conectada a
+    nenhum paciente real nem é dispositivo médico certificado; a decisão e a responsabilidade finais são sempre do
+    prescritor.
+    <b>Nota de honestidade do modelo:</b> as constantes (Tm/limiar da glicose, splay, frações de Na⁺/HCO₃ do TCP,
+    e os EC50/Emax de cada fármaco) são estimativas <b>didáticas</b> calibradas para reproduzir a <b>forma</b> dos
+    fenômenos (65% do Na⁺; a titulação da glicose com Tm/limiar/splay; ~85% do HCO₃; o teto/braking; a glicosúria
+    renal). Os EC50 são ilustrativos: a curva ensina teto, potência e saturação, não a farmacocinética exata.
+  </div>
+
+  <footer>
+    CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira
+  </footer>
+</div>
+
+<script>
+/* =========================================================================
+ * ENGINE INLINE — espelho fiel de build/m5/model5.js (o motor manda no pixel)
+ * ========================================================================= */
+'use strict';
+
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a) n=a; if(n>b) n=b; return n; }
+function merge(a,b){ var o={},k; if(a) for(k in a) if(Object.prototype.hasOwnProperty.call(a,k)) o[k]=a[k]; if(b) for(k in b) if(Object.prototype.hasOwnProperty.call(b,k)) o[k]=b[k]; return o; }
+
+var TFG_N=120, GLIC_N=100, TM_GLI=375, LIMIAR_GLI=200, SPLAY=25,
+    FRAC_NA_TCP=0.65, FRAC_HCO3_TCP=0.85, NA_PLASMA=140,
+    ACZ_EC50=250, ACZ_EMAX=0.80, SGLT2_EC50=5, SGLT2_EMAX=0.55,
+    MAN_EC50=0.35, MAN_EMAX=1.00, PROX_DIUR_CAP=0.30;
+
+function doseResposta(D,EC50,Emax){
+  var d=clampv(D,0,1e9), ec=clampv(EC50,1e-9,1e9), em=clampv(Emax,0,1);
+  var e=em*d/(ec+d); if(!isFinite(e)||e<0) e=0; if(e>em) e=em; return e;
+}
+
+function tituloGlicose(glicemia,tfg,tmEff,limiar){
+  var g=clampv(glicemia,0,2000), t=clampv(tfg,1,200), tm=clampv(tmEff,0,TM_GLI), lim=clampv(limiar,0,2000);
+  var filtrada=t*g/100;
+  var sp=SPLAY>0?SPLAY:1;
+  var z=(g-lim)/sp;
+  var softpos=z>30?z:(z<-3?0:Math.log(1+Math.exp(z)));
+  var excAcimaLimiar=softpos*sp*(t/100);
+  var reabCap=Math.min(filtrada,tm);
+  var excPorTm=filtrada-reabCap;
+  var excretada=Math.max(excAcimaLimiar,excPorTm);
+  if(!isFinite(excretada)||excretada<0) excretada=0;
+  if(excretada>filtrada) excretada=filtrada;
+  var reab=filtrada-excretada;
+  if(reab>tm){ excretada+=(reab-tm); reab=tm; }
+  if(!isFinite(reab)||reab<0) reab=0;
+  if(excretada>filtrada) excretada=filtrada;
+  return { filtrada:filtrada, reabsorvida:reab, excretada:excretada };
+}
+
+function proximal(input){
+  var inp=input||{};
+  var glicemia=clampv(inp.glicemia!==undefined?inp.glicemia:GLIC_N,0,2000);
+  var TFG     =clampv(inp.TFG     !==undefined?inp.TFG     :TFG_N,1,200);
+  var acz     =clampv(inp.acz     !==undefined?inp.acz     :0,0,2000);
+  var sglt2   =clampv(inp.sglt2   !==undefined?inp.sglt2   :0,0,200);
+  var manitol =clampv(inp.manitol !==undefined?inp.manitol :0,0,5);
+  var fanconi=(inp.fanconi===true||inp.fanconi===1||inp.fanconi==='sim')?true:false;
+
+  var eAcz  =doseResposta(acz,ACZ_EC50,ACZ_EMAX);
+  var eSglt2=doseResposta(sglt2,SGLT2_EC50,SGLT2_EMAX);
+  var eMan  =doseResposta(manitol,MAN_EC50,MAN_EMAX);
+
+  var fanconiTmHit=fanconi?0.70:0;
+  var tmFrac=(1-eSglt2)*(1-fanconiTmHit); if(tmFrac<0) tmFrac=0;
+  var tmEff=TM_GLI*tmFrac;
+  var limiarEff=LIMIAR_GLI*(1-eSglt2)*(1-(fanconi?0.80:0));
+  if(!isFinite(limiarEff)||limiarEff<0) limiarEff=0;
+
+  var tit=tituloGlicose(glicemia,TFG,tmEff,limiarEff);
+  var glicosuria=tit.excretada;
+  var glicosuriaPos=glicosuria>0.5;
+
+  var naFiltrado=TFG*NA_PLASMA/1000;
+  var inibProx=1-(1-0.35*eAcz)*(1-0.25*eMan)*(1-0.20*eSglt2);
+  if(inibProx<0) inibProx=0; if(inibProx>1) inibProx=1;
+  var fracNaTcp=FRAC_NA_TCP*(1-inibProx);
+  if(fanconi) fracNaTcp*=0.7;
+  var naReabTcp=naFiltrado*fracNaTcp;
+  var cargaDistalNa=naFiltrado-naReabTcp;
+  var fracDistal=naFiltrado>0?cargaDistalNa/naFiltrado:0;
+
+  var natriureseProximalBruta=cargaDistalNa-(FRAC_NA_TCP<1?naFiltrado*(1-FRAC_NA_TCP):0);
+  if(natriureseProximalBruta<0) natriureseProximalBruta=0;
+  var fracEntregueDistal=inibProx;
+  var natriureseFinal=naFiltrado*(FRAC_NA_TCP)*fracEntregueDistal*PROX_DIUR_CAP+naFiltrado*0.02*eMan;
+  if(!isFinite(natriureseFinal)||natriureseFinal<0) natriureseFinal=0;
+
+  var fracHco3=FRAC_HCO3_TCP*(1-eAcz);
+  if(fanconi) fracHco3*=0.6;
+  if(fracHco3<0) fracHco3=0;
+  var hco3UrinarioFrac=(FRAC_HCO3_TCP-fracHco3); if(hco3UrinarioFrac<0) hco3UrinarioFrac=0;
+  var bicarbonaturia=FRAC_HCO3_TCP>0?hco3UrinarioFrac/FRAC_HCO3_TCP:0;
+  var deltaHco3=-6.0*bicarbonaturia;
+  var hco3Plasma=clampv(24+deltaHco3,8,30);
+
+  var fanconiPerdas={
+    glicose: fanconi||glicosuriaPos,
+    aminoacido: fanconi,
+    fosfato: fanconi,
+    bicarbonato: fanconi||bicarbonaturia>0.15,
+    acidoUrico: fanconi
+  };
+
+  var regime;
+  if(fanconi)                                          regime='fanconi';
+  else if(eSglt2>0.25&&glicosuriaPos&&glicemia<180)    regime='sglt2i_glicosuria_normo';
+  else if(eAcz>0.25&&bicarbonaturia>0.2)               regime='acetazolamida';
+  else if(eMan>0.3)                                    regime='manitol_osmotico';
+  else if(glicosuriaPos&&glicemia>=180)                regime='glicosuria_hiperglicemica';
+  else                                                 regime='normal';
+
+  var braking=natriureseProximalBruta>0?1-(natriureseFinal/(natriureseProximalBruta+1e-9)):0;
+  braking=clampv(braking,0,1);
+
+  return {
+    glicemia:glicemia,TFG:TFG,acz:acz,sglt2:sglt2,manitol:manitol,fanconi:fanconi,
+    eAcz:eAcz,eSglt2:eSglt2,eMan:eMan,
+    aczEC50:ACZ_EC50,aczEmax:ACZ_EMAX,sglt2EC50:SGLT2_EC50,sglt2Emax:SGLT2_EMAX,
+    manEC50:MAN_EC50,manEmax:MAN_EMAX,
+    glicoseFiltrada:tit.filtrada,glicoseReabsorvida:tit.reabsorvida,glicosuria:glicosuria,
+    glicosuriaPos:glicosuriaPos,tmEff:tmEff,limiarEff:limiarEff,tmBasal:TM_GLI,
+    naFiltrado:naFiltrado,fracNaTcp:fracNaTcp,naReabTcp:naReabTcp,
+    cargaDistalNa:cargaDistalNa,fracDistal:fracDistal,
+    natriureseFinal:natriureseFinal,braking:braking,inibProx:inibProx,
+    fracHco3:fracHco3,bicarbonaturia:bicarbonaturia,hco3Plasma:hco3Plasma,deltaHco3:deltaHco3,
+    fanconiPerdas:fanconiPerdas,
+    regime:regime
+  };
+}
+
+function glicoseTitulacaoLayout(state,W,H){
+  state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var r=proximal(state);
+  var tmEff=r.tmEff, limEff=r.limiarEff, tfg=r.TFG;
+  var padL=54,padR=16,padT=18,padB=38,baseY=H-padB;
+  var gMin=0,gMax=600,N=60;
+  var yMax=Math.max(tfg*gMax/100,TM_GLI)*1.05; if(!isFinite(yMax)||yMax<=0) yMax=800;
+  var pxX=(W-padL-padR)/(gMax-gMin);
+  var pxY=(baseY-padT)/yMax;
+  function X(g){ return padL+(clampv(g,gMin,gMax)-gMin)*pxX; }
+  function Y(v){ return baseY-clampv(v,0,yMax)*pxY; }
+  var filt=[],reab=[],exc=[],i,g,t;
+  for(i=0;i<=N;i++){ g=gMin+(gMax-gMin)*i/N; t=tituloGlicose(g,tfg,tmEff,limEff);
+    filt.push({g:g,v:t.filtrada,x:X(g),y:Y(t.filtrada)});
+    reab.push({g:g,v:t.reabsorvida,x:X(g),y:Y(t.reabsorvida)});
+    exc.push({g:g,v:t.excretada,x:X(g),y:Y(t.excretada)});
+  }
+  var limiarX=X(clampv(r.limiarEff,gMin,gMax));
+  var tmY=Y(tmEff);
+  var gCur=clampv(r.glicemia,gMin,gMax);
+  var tCur=tituloGlicose(gCur,tfg,tmEff,limEff);
+  var current={g:gCur,exc:tCur.excretada,x:X(gCur),y:Y(tCur.excretada)};
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,
+    gMin:gMin,gMax:gMax,yMax:yMax,pxX:pxX,pxY:pxY,
+    tmEff:tmEff,tfg:tfg,limiarEff:r.limiarEff,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},
+    filt:filt,reab:reab,exc:exc,limiarX:limiarX,tmY:tmY,current:current};
+}
+
+function doseRespostaLayout(EC50,Emax,dMax,W,H,curD){
+  W=clampv(W,160,100000); H=clampv(H,100,100000);
+  var ec=clampv(EC50,1e-6,1e9), em=clampv(Emax,0.01,1), dM=clampv(dMax,ec*2,1e9), cd=clampv(curD,0,dM);
+  var padL=40,padR=12,padT=14,padB=28,baseY=H-padB;
+  var N=50,yMax=em*1.08;
+  var pxX=(W-padL-padR)/dM;
+  var pxY=(baseY-padT)/yMax;
+  function X(d){ return padL+clampv(d,0,dM)*pxX; }
+  function Y(e){ return baseY-clampv(e,0,yMax)*pxY; }
+  var pts=[],i,d,e;
+  for(i=0;i<=N;i++){ d=dM*i/N; e=doseResposta(d,ec,em); pts.push({d:d,e:e,x:X(d),y:Y(e)}); }
+  var ec50X=X(ec), emaxY=Y(em);
+  var eCur=doseResposta(cd,ec,em);
+  var cur={d:cd,e:eCur,x:X(cd),y:Y(eCur)};
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,
+    EC50:ec,Emax:em,dMax:dM,yMax:yMax,pxX:pxX,pxY:pxY,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},
+    pts:pts,ec50X:ec50X,emaxY:emaxY,cur:cur};
+}
+
+window.proximal=proximal;
+window.doseResposta=doseResposta;
+window.tituloGlicose=tituloGlicose;
+window.glicoseTitulacaoLayout=glicoseTitulacaoLayout;
+window.doseRespostaLayout=doseRespostaLayout;
+window.MODEL={proximal:proximal,doseResposta:doseResposta,tituloGlicose:tituloGlicose,
+  glicoseTitulacaoLayout:glicoseTitulacaoLayout,doseRespostaLayout:doseRespostaLayout,clampv:clampv,merge:merge,
+  CONST:{TFG_N:TFG_N,GLIC_N:GLIC_N,TM_GLI:TM_GLI,LIMIAR_GLI:LIMIAR_GLI,SPLAY:SPLAY,
+    FRAC_NA_TCP:FRAC_NA_TCP,FRAC_HCO3_TCP:FRAC_HCO3_TCP,NA_PLASMA:NA_PLASMA,
+    ACZ_EC50:ACZ_EC50,ACZ_EMAX:ACZ_EMAX,SGLT2_EC50:SGLT2_EC50,SGLT2_EMAX:SGLT2_EMAX,
+    MAN_EC50:MAN_EC50,MAN_EMAX:MAN_EMAX,PROX_DIUR_CAP:PROX_DIUR_CAP}};
+
+/* =========================================================================
+ * UI
+ * ========================================================================= */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=d||1; return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+
+var REGIME_TXT={
+  normal:'normal — glicose toda reabsorvida; Na⁺ 65% no TCP',
+  glicosuria_hiperglicemica:'glicosúria hiperglicêmica — glicemia acima do limiar (diabético)',
+  sglt2i_glicosuria_normo:'SGLT2i — glicosúria em NORMOglicemia (limiar baixado; nefroproteção)',
+  acetazolamida:'acetazolamida — bicarbonatúria + acidose metabólica (autolimitada)',
+  manitol_osmotico:'manitol — diurese osmótica (água retida no túbulo)',
+  fanconi:'⚠ FANCONI — perdas múltiplas com plasma normal (ATR proximal tipo 2)'
+};
+
+// abas principais
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b) return;
+  var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on');
+  $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh();
+});
+
+// caso: prever-depois-revelar
+document.addEventListener('click',function(e){
+  var b=e.target.closest('button.act[data-rev]'); if(!b) return;
+  var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on');
+});
+
+function readLab(){
+  return {
+    glicemia:+$('in-glic').value, TFG:+$('in-tfg').value, acz:+$('in-acz').value,
+    sglt2:+$('in-sglt2').value, manitol:+$('in-manitol').value,
+    fanconi:$('in-fanconi').value==='1'
+  };
+}
+
+function refresh(){
+  var inp=readLab();
+  $('lbl-glic').textContent=Math.round(inp.glicemia);
+  $('lbl-tfg').textContent=Math.round(inp.TFG);
+  $('lbl-acz').textContent=Math.round(inp.acz);
+  $('lbl-sglt2').textContent=Math.round(inp.sglt2);
+  $('lbl-manitol').textContent=fmt(inp.manitol,2);
+  var r=proximal(inp);
+  $('out-filt').textContent=fmt(r.glicoseFiltrada,0);
+  $('out-reab').textContent=fmt(r.glicoseReabsorvida,0);
+  $('out-glicuria').textContent=fmt(r.glicosuria,1);
+  $('out-tmlim').textContent=fmt(r.tmEff,0)+' · '+fmt(r.limiarEff,0);
+  $('out-fracna').textContent=fmt(r.fracNaTcp,3);
+  $('out-fracdist').textContent=fmt(r.fracDistal,3);
+  $('out-natr').textContent=fmt(r.natriureseFinal,2);
+  $('out-braking').textContent=fmt(r.braking*100,0)+'%';
+  $('out-bicarb').textContent=fmt(r.bicarbonaturia,2);
+  $('out-hco3').textContent=fmt(r.hco3Plasma,1);
+  $('out-efeitos').textContent=fmt(r.eAcz,2)+' · '+fmt(r.eSglt2,2)+' · '+fmt(r.eMan,2);
+  $('out-fanconi').textContent=fanconiTxt(r);
+  $('out-regime').textContent=REGIME_TXT[r.regime]||r.regime;
+  verdictLab(r,inp); pearlLab(r,inp);
+  drawCanvas(inp);
+  $('dose-svg').innerHTML=doseFig(inp);
+  syncInstrToLab(inp);
+}
+
+function fanconiTxt(r){
+  var p=r.fanconiPerdas, l=[];
+  if(p.glicose) l.push('glicose'); if(p.aminoacido) l.push('aa'); if(p.fosfato) l.push('fosfato');
+  if(p.bicarbonato) l.push('HCO₃'); if(p.acidoUrico) l.push('ác.úrico');
+  return l.length?l.join(' · '):'nenhuma';
+}
+
+function syncInstrToLab(inp){
+  if($('instr-glic')) $('instr-glic').value=inp.glicemia;
+  if($('instr-tfg')) $('instr-tfg').value=inp.TFG;
+  if($('instr-sglt2')) $('instr-sglt2').value=inp.sglt2;
+  if($('instr-fanconi')) $('instr-fanconi').value=inp.fanconi?'1':'0';
+  updateInstrLabels(inp);
+}
+function readInstr(){
+  return { glicemia:+$('instr-glic').value, TFG:+$('instr-tfg').value,
+    sglt2:+$('instr-sglt2').value, fanconi:$('instr-fanconi').value==='1' };
+}
+function updateInstrLabels(inp){
+  if($('instr-lbl-glic')) $('instr-lbl-glic').textContent=Math.round(inp.glicemia);
+  if($('instr-lbl-tfg')) $('instr-lbl-tfg').textContent=Math.round(inp.TFG);
+  if($('instr-lbl-sglt2')) $('instr-lbl-sglt2').textContent=Math.round(inp.sglt2);
+}
+function refreshInstr(){
+  var inp=readInstr();
+  updateInstrLabels(inp);
+  var r=proximal(inp);
+  pearlInstr(r,inp);
+  drawCanvas(inp);
+  $('dose-svg').innerHTML=doseFig(inp);
+}
+
+function pearlInstr(r,inp){
+  var ip=$('instr-pearl'); if(!ip) return;
+  var t;
+  if(r.fanconi){
+    t='FANCONI: o limiar despencou a '+fmt(r.limiarEff,0)+' mg/dL e o Tm a '+fmt(r.tmEff,0)+' mg/min → glicosúria '+fmt(r.glicosuria,0)+' mg/min mesmo com glicemia '+Math.round(r.glicemia)+'. E não é só glicose: aminoácidos, fosfato, HCO₃ e ácido úrico escapam juntos. Plasma normal, urina rica.';
+  } else if(inp.sglt2>0){
+    t='SGLT2i '+Math.round(inp.sglt2)+' mg → limiar '+fmt(r.limiarEff,0)+' mg/dL (basal 200): a curva vermelha (excretada) "acordou" antes. Glicosúria '+fmt(r.glicosuria,0)+' mg/min com glicemia '+Math.round(r.glicemia)+'. Além da glicose, leva Na⁺ ao distal → restaura o TGF → NEFROPROTEÇÃO.';
+  } else if(r.glicemia>=200){
+    t='Glicemia '+Math.round(r.glicemia)+' acima do limiar ('+fmt(r.limiarEff,0)+') → a reabsorção saturou no Tm ('+fmt(r.tmEff,0)+' mg/min) e o excedente escapa: glicosúria '+fmt(r.glicosuria,0)+' mg/min. É a glicosúria do diabético — marcador TARDIO da hiperglicemia.';
+  } else {
+    t='Glicemia '+Math.round(r.glicemia)+' < limiar ('+fmt(r.limiarEff,0)+'): a filtrada ('+fmt(r.glicoseFiltrada,0)+') cabe toda no Tm → urina LIVRE de glicose. Abaixo do limiar, a reabsorção segue a diagonal; acima, a curva vermelha dispara.';
+  }
+  ip.textContent=t;
+}
+
+function verdictLab(r,inp){
+  var v=$('veredito'); var cls='b-good', msg;
+  if(r.regime==='fanconi'){
+    cls='b-bad'; msg='FANCONI (ATR proximal tipo 2): perdas MÚLTIPLAS — '+fanconiTxt(r)+' — com plasma normal. Glicosúria '+fmt(r.glicosuria,0)+' mg/min com glicemia '+Math.round(r.glicemia)+'. Reponha fosfato/HCO₃/eletrólitos e cace a causa (tóxicos, mieloma, genético).';
+  } else if(r.regime==='sglt2i_glicosuria_normo'){
+    cls='b-good'; msg='SGLT2i: glicosúria '+fmt(r.glicosuria,0)+' mg/min em NORMOglicemia ('+Math.round(r.glicemia)+') — limiar baixado a '+fmt(r.limiarEff,0)+'. Leva Na⁺ ao distal → restaura o feedback tubuloglomerular → NEFROPROTEÇÃO (e cardioproteção). Efeito desejado, não erro.';
+  } else if(r.regime==='acetazolamida'){
+    cls='b-warn'; msg='ACETAZOLAMIDA '+Math.round(inp.acz)+' mg: inibição da CA '+fmt(r.eAcz*100,0)+'% → bicarbonatúria '+fmt(r.bicarbonaturia*100,0)+'% → HCO₃ plasmático '+fmt(r.hco3Plasma,1)+' (acidose metabólica). Útil na altitude/glaucoma; AUTOLIMITADA como diurético (escape proximal).';
+  } else if(r.regime==='manitol_osmotico'){
+    cls='b-warn'; msg='MANITOL '+fmt(inp.manitol,2)+' g/kg: osmótico não-reabsorvido retém água no túbulo → diurese osmótica, mais Na⁺ ao distal (carga distal '+fmt(r.fracDistal,2)+'). Cuidado com a expansão volêmica inicial.';
+  } else if(r.regime==='glicosuria_hiperglicemica'){
+    cls='b-warn'; msg='Glicosúria HIPERGLICÊMICA: glicemia '+Math.round(r.glicemia)+' > limiar ('+fmt(r.limiarEff,0)+') → reabsorção saturada no Tm, excedente excretado ('+fmt(r.glicosuria,0)+' mg/min). A fita urinária confirma a hiperglicemia — trate a glicemia.';
+  } else {
+    cls='b-good'; msg='Proximal normal: glicose toda reabsorvida (urina livre), 65% do Na⁺ recuperado aqui, HCO₃ '+fmt(r.fracHco3*100,0)+'% resgatado. A carga distal é '+fmt(r.fracDistal*100,0)+'% do Na⁺ filtrado — a alça é prisioneira do proximal.';
+  }
+  v.className='banner '+cls; v.textContent=msg;
+}
+
+function pearlLab(r,inp){
+  var p=$('lab-pearl'); if(!p) return;
+  var t;
+  if(inp.acz>0||inp.manitol>0||inp.sglt2>0){
+    t='PÉROLA prisioneira/braking: a inibição proximal jogou a carga distal de Na⁺ para '+fmt(r.fracDistal*100,0)+'% (basal 35%), MAS o distal recaptura — natriurese final só '+fmt(r.natriureseFinal,2)+' mEq/min, braking '+fmt(r.braking*100,0)+'%. Inibir só o proximal faz POUCO xixi: é a fisiologia do teto.';
+  } else if(r.fanconi){
+    t='PÉROLA Fanconi: a multiplicidade É o diagnóstico. Glicosúria SEM hiperglicemia + fosfatúria + bicarbonatúria + aminoacidúria = falência proximal global, não uma doença de cada soluto.';
+  } else if(r.glicosuriaPos){
+    t='PÉROLA titulação: a glicosúria só nasce acima do limiar ('+fmt(r.limiarEff,0)+' mg/dL), quando a filtrada ('+fmt(r.glicoseFiltrada,0)+') excede a reabsorção saturada no Tm ('+fmt(r.tmEff,0)+' mg/min). O splay suaviza a transição.';
+  } else {
+    t='PÉROLA 65%: o proximal recupera '+fmt(r.fracNaTcp*100,0)+'% do Na⁺ filtrado em massa e isosmótica; a água segue. O resíduo ('+fmt(r.fracDistal*100,0)+'%) é tudo o que a alça e o distal verão — a alça é prisioneira do proximal.';
+  }
+  p.textContent=t;
+}
+
+function drawCanvas(state){
+  var c=$('titulacao-canvas'); if(!c) return;
+  var ctx; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; }
+  if(!ctx||!ctx.clearRect) return;
+  var L=glicoseTitulacaoLayout(state,c.width,c.height);
+  ctx.clearRect(0,0,L.W,L.H);
+  // eixos
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('glicose (mg/min)',6,L.padT-4);
+  ctx.fillText('glicemia (mg/dL) →',L.W-160,L.baseY+24);
+  // linha do Tm (horizontal) e do limiar (vertical)
+  ctx.strokeStyle='#23303b'; ctx.setLineDash([3,3]);
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.tmY); ctx.lineTo(L.axis.xEnd,L.tmY); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(L.limiarX,L.padT); ctx.lineTo(L.limiarX,L.baseY); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle='#9fb1c0'; ctx.font='11px system-ui';
+  ctx.fillText('Tm '+Math.round(L.tmEff),L.axis.xEnd-70,L.tmY-4);
+  ctx.fillText('limiar '+Math.round(L.limiarEff),L.limiarX+4,L.padT+12);
+  // filtrada (ciano)
+  ctx.strokeStyle='#39c0c8'; ctx.lineWidth=2; ctx.beginPath();
+  for(var i=0;i<L.filt.length;i++){ var p=L.filt[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); }
+  ctx.stroke();
+  // reabsorvida (verde)
+  ctx.strokeStyle='#52c08a'; ctx.beginPath();
+  for(i=0;i<L.reab.length;i++){ p=L.reab[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); }
+  ctx.stroke();
+  // excretada (vermelha) — a polilinha que o validador confere
+  ctx.strokeStyle='#e0556b'; ctx.beginPath();
+  for(i=0;i<L.exc.length;i++){ p=L.exc[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); }
+  ctx.stroke();
+  // legenda (marcadores fill)
+  ctx.fillStyle='#39c0c8'; ctx.fillRect(L.axis.x0+10,L.padT,8,8); ctx.fillStyle='#9fb1c0'; ctx.fillText('filtrada',L.axis.x0+22,L.padT+8);
+  ctx.fillStyle='#52c08a'; ctx.fillRect(L.axis.x0+90,L.padT,8,8); ctx.fillStyle='#9fb1c0'; ctx.fillText('reabsorvida',L.axis.x0+102,L.padT+8);
+  ctx.fillStyle='#e0556b'; ctx.fillRect(L.axis.x0+190,L.padT,8,8); ctx.fillStyle='#9fb1c0'; ctx.fillText('excretada',L.axis.x0+202,L.padT+8);
+  // ponto da glicemia atual sobre a curva de excreção (branco)
+  var cu=L.current;
+  ctx.strokeStyle='#e7eef4'; ctx.setLineDash([4,3]);
+  ctx.beginPath(); ctx.moveTo(cu.x,L.padT+18); ctx.lineTo(cu.x,L.baseY); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#e7eef4'; ctx.beginPath(); ctx.arc(cu.x,cu.y,5,0,2*Math.PI); ctx.fill();
+}
+
+['in-glic','in-tfg','in-acz','in-sglt2','in-manitol','in-fanconi'].forEach(function(id){
+  var el=$(id); if(el) el.addEventListener('input',refresh);
+});
+['instr-glic','instr-tfg','instr-sglt2','instr-fanconi'].forEach(function(id){
+  var el=$(id); if(el) el.addEventListener('input',refreshInstr);
+});
+
+/* =========================================================================
+ * ILUSTRAÇÕES SVG — inline, computadas a partir do engine (física viva)
+ * ========================================================================= */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+
+// mini curva de titulação da glicose (computada do engine)
+function titulacaoMini(state, titulo){
+  var W=300,H=180;
+  var L=glicoseTitulacaoLayout(state,W,H);
+  var s='';
+  s+='<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="#0a1520"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  // limiar vertical
+  s+='<line x1="'+f1(L.limiarX)+'" y1="'+L.padT+'" x2="'+f1(L.limiarX)+'" y2="'+L.baseY+'" stroke="#7a8a96" stroke-dasharray="4 3"/>';
+  function poly(arr,col){ var d=''; for(var i=0;i<arr.length;i++){ d+=(i===0?'M':'L')+f1(arr[i].x)+' '+f1(arr[i].y)+' '; } return '<path d="'+d+'" fill="none" stroke="'+col+'" stroke-width="2"/>'; }
+  s+=poly(L.filt,'#39c0c8');
+  s+=poly(L.reab,'#52c08a');
+  s+=poly(L.exc,'#e0556b');
+  s+='<text x="'+W/2+'" y="13" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'titulação da glicose')+'</text>';
+  s+='<text x="'+f1(L.limiarX+3)+'" y="'+(L.padT+10)+'" fill="#9fb1c0" font-size="8">limiar '+Math.round(L.limiarEff)+'</text>';
+  return svgEl(W,H,s);
+}
+
+// curva dose-resposta sigmoide (computada do engine)
+function doseFig(state, titulo){
+  var W=320,H=180;
+  var inp=state||{};
+  var dose=clampv(inp.sglt2!==undefined?inp.sglt2:0,0,25);
+  var L=doseRespostaLayout(SGLT2_EC50,SGLT2_EMAX,25,W,H,dose);
+  var s='';
+  s+='<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="#0a1520"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  // teto Emax
+  s+='<line x1="'+L.axis.x0+'" y1="'+f1(L.emaxY)+'" x2="'+L.axis.xEnd+'" y2="'+f1(L.emaxY)+'" stroke="#e8a13a" stroke-dasharray="5 3"/>';
+  s+='<text x="'+(L.axis.xEnd-2)+'" y="'+f1(L.emaxY-3)+'" fill="#e8a13a" font-size="8" text-anchor="end">Emax '+fmt(L.Emax,2)+'</text>';
+  // EC50 vertical
+  s+='<line x1="'+f1(L.ec50X)+'" y1="'+L.padT+'" x2="'+f1(L.ec50X)+'" y2="'+L.baseY+'" stroke="#7a8a96" stroke-dasharray="3 3"/>';
+  s+='<text x="'+f1(L.ec50X+3)+'" y="'+(L.baseY-4)+'" fill="#9fb1c0" font-size="8">EC50 '+fmt(L.EC50,0)+'mg</text>';
+  // a curva
+  var d=''; for(var i=0;i<L.pts.length;i++){ d+=(i===0?'M':'L')+f1(L.pts[i].x)+' '+f1(L.pts[i].y)+' '; }
+  s+='<path d="'+d+'" fill="none" stroke="#3a7bd5" stroke-width="2"/>';
+  // ponto da dose atual
+  s+='<circle cx="'+f1(L.cur.x)+'" cy="'+f1(L.cur.y)+'" r="4" fill="#e7eef4"/>';
+  s+='<text x="'+f1(L.cur.x)+'" y="'+f1(L.cur.y-7)+'" fill="#e7eef4" font-size="9" text-anchor="middle">'+Math.round(dose)+'mg → '+fmt(L.cur.e,2)+'</text>';
+  s+='<text x="'+W/2+'" y="13" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'SGLT2i: efeito = Emax·D/(EC50+D)')+'</text>';
+  return svgEl(W,H,s);
+}
+
+// esquema: 65% do Na no proximal (desenho)
+function na65Diagram(state, titulo){
+  var r=proximal(state||{});
+  var W=320,H=190,s='';
+  s+='<rect width="320" height="190" fill="#0a1520"/>';
+  // o túbulo proximal como uma barra; 65% reabsorvido
+  s+='<rect x="30" y="60" width="260" height="34" rx="16" fill="#1b242d" stroke="#3a4a58"/>';
+  var frac=clampv(r.fracNaTcp,0,1);
+  s+='<rect x="30" y="60" width="'+f1(260*frac)+'" height="34" rx="16" fill="#3a7bd5" fill-opacity="0.5"/>';
+  s+='<text x="'+f1(30+260*frac/2)+'" y="82" fill="#cdd9e3" font-size="10" text-anchor="middle">Na⁺ reabsorvido '+fmt(frac*100,0)+'%</text>';
+  // seta de reabsorção (para baixo, ao sangue)
+  s+='<line x1="100" y1="100" x2="100" y2="125" stroke="#52c08a" stroke-width="3"/>';
+  s+='<polygon points="100,127 96,119 104,119" fill="#52c08a"/>';
+  s+='<text x="110" y="123" fill="#52c08a" font-size="9">água segue (isosmótica)</text>';
+  // a carga distal que escapa
+  s+='<line x1="290" y1="77" x2="310" y2="77" stroke="#e8a13a" stroke-width="2"/>';
+  s+='<polygon points="310,77 302,73 302,81" fill="#e8a13a"/>';
+  // veredito
+  s+='<rect x="30" y="135" width="260" height="44" rx="6" fill="#10171e" stroke="#283642"/>';
+  s+='<text x="160" y="153" fill="#e7eef4" font-size="10" text-anchor="middle">carga distal de Na⁺ = '+fmt(r.fracDistal*100,0)+'% do filtrado</text>';
+  s+='<text x="160" y="170" fill="#9fb1c0" font-size="9" text-anchor="middle">a alça é prisioneira do proximal</text>';
+  s+='<text x="'+W/2+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'65% do Na⁺ no proximal')+'</text>';
+  return svgEl(W,H,s);
+}
+
+// esquema: HCO3 / anidrase carbônica (desenho)
+function hco3Diagram(state, titulo){
+  var r=proximal(state||{});
+  var W=320,H=190,s='';
+  s+='<rect width="320" height="190" fill="#0a1520"/>';
+  // luz tubular (cima) e célula
+  s+='<rect x="30" y="40" width="260" height="22" fill="#11202c" stroke="#3a4a58"/>';
+  s+='<text x="160" y="55" fill="#9fb1c0" font-size="9" text-anchor="middle">luz tubular</text>';
+  s+='<rect x="30" y="70" width="260" height="50" fill="#16222c" stroke="#3a4a58"/>';
+  s+='<text x="160" y="98" fill="#9fb1c0" font-size="9" text-anchor="middle">célula proximal (CA II)</text>';
+  // NHE3 secreta H+
+  s+='<line x1="90" y1="70" x2="90" y2="48" stroke="#e8a13a" stroke-width="3"/>';
+  s+='<polygon points="90,46 86,54 94,54" fill="#e8a13a"/>';
+  s+='<text x="96" y="48" fill="#e8a13a" font-size="8">NHE3: H⁺→luz</text>';
+  // CA IV apical
+  s+='<circle cx="200" cy="62" r="9" fill="#39c0c8" fill-opacity="0.4" stroke="#39c0c8"/>';
+  s+='<text x="200" y="65" fill="#39c0c8" font-size="7" text-anchor="middle">CA IV</text>';
+  // estado da reabsorção de HCO3 (afetado pela acetazolamida)
+  var col=r.bicarbonaturia>0.2?'#e0556b':'#52c08a';
+  s+='<rect x="30" y="130" width="260" height="48" rx="6" fill="#10171e" stroke="#283642"/>';
+  s+='<text x="160" y="148" fill="'+col+'" font-size="10" text-anchor="middle">HCO₃ reabsorvido '+fmt(r.fracHco3*100,0)+'% · bicarbonatúria '+fmt(r.bicarbonaturia*100,0)+'%</text>';
+  s+='<text x="160" y="166" fill="#9fb1c0" font-size="9" text-anchor="middle">'+(r.bicarbonaturia>0.2?'acetazolamida → acidose (HCO₃ '+fmt(r.hco3Plasma,1)+')':'CA intacta → HCO₃ resgatado')+'</text>';
+  s+='<text x="'+W/2+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'HCO₃ e a anidrase carbônica')+'</text>';
+  return svgEl(W,H,s);
+}
+
+// esquema: Fanconi (desenho)
+function fanconiDiagram(state, titulo){
+  var r=proximal(merge(state||{},{fanconi:true}));
+  var W=300,H=190,s='';
+  s+='<rect width="300" height="190" fill="#0a1520"/>';
+  s+='<rect x="40" y="40" width="220" height="30" rx="14" fill="#3a1520" fill-opacity="0.5" stroke="#e0556b" stroke-opacity="0.6"/>';
+  s+='<text x="150" y="59" fill="#e08a96" font-size="10" text-anchor="middle">proximal lesado (vaza tudo)</text>';
+  var perdas=['glicose','aminoácidos','fosfato','HCO₃','ác. úrico'];
+  perdas.forEach(function(nm,i){
+    var x=55+i*48;
+    s+='<line x1="'+x+'" y1="70" x2="'+x+'" y2="92" stroke="#e8a13a" stroke-width="2"/>';
+    s+='<polygon points="'+x+',94 '+(x-3)+',86 '+(x+3)+',86" fill="#e8a13a"/>';
+    s+='<text x="'+x+'" y="106" fill="#e8a13a" font-size="7" text-anchor="middle">'+nm+'</text>';
+  });
+  s+='<rect x="30" y="125" width="240" height="48" rx="6" fill="#10171e" stroke="#283642"/>';
+  s+='<text x="150" y="143" fill="#e7eef4" font-size="10" text-anchor="middle">glicosúria '+fmt(r.glicosuria,0)+' mg/min · glicemia '+Math.round(r.glicemia)+'</text>';
+  s+='<text x="150" y="161" fill="#9fb1c0" font-size="9" text-anchor="middle">perdas múltiplas, plasma normal (ATR proximal tipo 2)</text>';
+  s+='<text x="'+W/2+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'síndrome de Fanconi')+'</text>';
+  return svgEl(W,H,s);
+}
+
+/* =========================================================================
+ * TUTOR — DOIS blocos (ilustrado + textual)
+ * ========================================================================= */
+// helper: figura raster/SVG real de assets/m5/ dentro do exercício (offline, caminho relativo)
+function imgFig(slug,alt){ return '<img src="assets/m5/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+var TUTOR_ILUSTRADO=[
+  {q:'Que fração do Na⁺ filtrado o túbulo proximal reabsorve?',
+   o:['~10%','~35%','~65%','~95%'],
+   c:2,e:'~65% do Na⁺ filtrado, em massa e isosmótica (a água segue). O resíduo é a carga distal — a alça é prisioneira do proximal.',
+   fig:function(){ return na65Diagram({},'65% do Na⁺'); }},
+  {q:'Na curva de titulação, a glicosúria (excretada) aparece quando…',
+   o:['a glicemia cai','a glicemia ultrapassa o limiar e a reabsorção satura no Tm','o Na⁺ sobe','sempre'],
+   c:1,e:'Abaixo do limiar a filtrada cabe no Tm e é toda reabsorvida; acima, a reabsorção satura e o excedente escapa. O splay suaviza a transição.',
+   fig:function(){ return titulacaoMini({glicemia:300},'glicemia 300: glicosúria'); }},
+  {q:'Um SGLT2i (dapagliflozina 10 mg) com glicemia 100 mg/dL produz…',
+   o:['nada','glicosúria, porque baixa o limiar/Tm','hiperglicemia','acidose'],
+   c:1,e:'O SGLT2i baixa o limiar → glicosúria já em normoglicemia. Leva Na⁺ ao distal, restaura o feedback tubuloglomerular → nefroproteção.',
+   fig:function(){ return titulacaoMini({glicemia:100,sglt2:10},'SGLT2i: glicosúria normoglicêmica'); }},
+  {q:'A acetazolamida (250–500 mg) inibe a anidrase carbônica e causa…',
+   o:['alcalose','bicarbonatúria + acidose metabólica (autolimitada)','hiperglicemia','hipernatremia grave'],
+   c:1,e:'Bloqueia o resgate do HCO₃ no proximal → bicarbonatúria + acidose; mas é autolimitada (escape proximal). Fraca como diurético isolado.',
+   fig:function(){ return hco3Diagram({acz:500},'acetazolamida 500 mg: bicarbonatúria'); }},
+  {q:'A síndrome de Fanconi caracteriza-se por…',
+   o:['perda só de glicose','perdas múltiplas (glicose, aa, fosfato, HCO₃, ác. úrico) com plasma normal','hiperglicemia','alcalose'],
+   c:1,e:'Disfunção proximal generalizada (ATR proximal tipo 2): a multiplicidade das perdas com plasma normal é a assinatura.',
+   fig:function(){ return fanconiDiagram({},'Fanconi: perdas múltiplas'); }},
+  {q:'A dose-resposta efeito = Emax·D/(EC50+D) implica que, perto do Emax…',
+   o:['dobrar a dose dobra o efeito','dobrar a dose rende cada vez MENOS (teto)','o efeito é negativo','não há teto'],
+   c:1,e:'A curva satura no Emax. Em EC50 o efeito é metade do teto; acima dele, mais dose rende pouco. É por isso que a acetazolamida é autolimitada.',
+   fig:function(){ return doseFig({sglt2:10},'dose-resposta: teto Emax'); }},
+  {q:'Por que "a alça é prisioneira do proximal"?',
+   o:['a alça vem antes','o que chega à alça é o que o proximal NÃO reabsorveu','a alça não reabsorve Na','são independentes'],
+   c:1,e:'A carga (Na⁺ e volume) que chega à alça é exatamente o resíduo do proximal. Mexer no proximal muda a carga distal — mas o distal recaptura (braking).',
+   fig:function(){ return na65Diagram({acz:500},'inibição proximal ↑ carga distal'); }},
+  {q:'No diabético com glicemia 320, a glicosúria é um marcador…',
+   o:['precoce e sensível','tardio (só aparece acima do limiar ~180–200)','de hipoglicemia','de Fanconi'],
+   c:1,e:'A glicosúria só nasce quando a glicemia ultrapassa o limiar — é um marcador TARDIO da hiperglicemia. A fita confirma, não rastreia cedo.',
+   fig:function(){ return titulacaoMini({glicemia:320},'diabético: glicosúria tardia'); }},
+  {q:'O cotransportador Na/glicose do proximal apical é o…',
+   o:['NKCC2','NCC','SGLT2','ENaC'],
+   c:2,e:'O SGLT2 cotransporta Na⁺ e glicose na borda apical do proximal. O NKCC2 é da alça, o NCC do TCD, o ENaC do coletor.',
+   fig:function(){ return imgFig('sglt2-transportador.svg','transportador SGLT2 apical'); }},
+  {q:'O trocador que secreta H⁺ e move a reabsorção de HCO₃ no proximal é o…',
+   o:['NHE3 (Na⁺/H⁺)','ENaC','aquaporina','SGLT2'],
+   c:0,e:'O NHE3 secreta H⁺ em troca de Na⁺; com a anidrase carbônica, regenera ~85% do HCO₃ filtrado. A acetazolamida quebra esse ciclo.',
+   fig:function(){ return imgFig('nhe3-troca-na-h.svg','trocador NHE3 Na+/H+'); }},
+  {q:'A reabsorção "isosmótica" do proximal significa que…',
+   o:['a urina fica diluída','soluto e água saem juntos: o volume cai, a osmolalidade não','só sai água','só sai sódio'],
+   c:1,e:'Na⁺ e água saem na mesma proporção → o filtrado encolhe em volume mantendo a osmolalidade. O proximal recupera em massa.',
+   fig:function(){ return imgFig('reabsorcao-isosmotica.svg','reabsorção isosmótica'); }},
+  {q:'O manitol (0,25–1 g/kg IV) age como…',
+   o:['inibidor da CA','diurético osmótico não-reabsorvido (retém água no túbulo)','bloqueador do SGLT2','poupador de K'],
+   c:1,e:'O manitol filtrado e não-reabsorvido retém água na luz por osmose → diurese osmótica e mais Na⁺ ao distal.',
+   fig:function(){ return na65Diagram({manitol:1},'manitol: diurese osmótica'); }}
+];
+
+var TUTOR_TEXTUAL=[
+  {q:'O proximal reabsorve cerca de quanto do Na⁺ filtrado?',
+   o:['25%','45%','65%','85%'],
+   c:2,e:'~65%, em massa e isosmótica. Define a carga distal.'},
+  {q:'A glicose filtrada é igual a…',
+   o:['TFG / glicemia','TFG · glicemia','glicemia / Tm','Tm · TFG'],
+   c:1,e:'Filtrada = TFG · glicemia. A reabsorção satura no Tm; a excretada é o excedente acima do limiar.'},
+  {q:'O limiar renal de glicose no rim normal é cerca de…',
+   o:['80 mg/dL','120 mg/dL','180–200 mg/dL','400 mg/dL'],
+   c:2,e:'~180–200 mg/dL. Abaixo dele a urina é livre de glicose; acima, a glicosúria aparece (com splay).'},
+  {q:'Um SGLT2i causa glicosúria em normoglicemia porque…',
+   o:['aumenta a glicemia','baixa o limiar/Tm de glicose','lesa o glomérulo','aumenta a TFG'],
+   c:1,e:'Baixa o limiar → glicose escapa com glicemia normal. Além disso restaura o TGF → nefroproteção.'},
+  {q:'A acetazolamida produz que distúrbio ácido-base?',
+   o:['alcalose metabólica','acidose metabólica (bicarbonatúria)','acidose respiratória','alcalose respiratória'],
+   c:1,e:'Inibe a CA → o HCO₃ escapa → acidose metabólica, autolimitada (escape proximal).'},
+  {q:'A anidrase carbônica do proximal reabsorve cerca de quanto do HCO₃ filtrado?',
+   o:['~20%','~50%','~85%','~99%'],
+   c:2,e:'~85% no TCP (com a alça/distal completando). É o grande sítio de resgate do bicarbonato.'},
+  {q:'A síndrome de Fanconi é, em essência…',
+   o:['ATR distal tipo 1','ATR proximal tipo 2 com perdas múltiplas e plasma normal','diabetes','hipernatremia'],
+   c:1,e:'Disfunção proximal global: glicosúria + aminoacidúria + fosfatúria + bicarbonatúria + uricosúria, com plasma normal.'},
+  {q:'Por que inibir só o proximal faz pouca diurese?',
+   o:['não muda a carga distal','o distal recaptura o Na⁺ extra (braking) e o efeito tem teto','aumenta a TFG','bloqueia a alça'],
+   c:1,e:'A alça é prisioneira do proximal, mas o distal recaptura o Na⁺ que escapa (braking). Some-se o teto da dose-resposta.'},
+  {q:'Na curva dose-resposta efeito = Emax·D/(EC50+D), em D = EC50 o efeito é…',
+   o:['zero','Emax/2','Emax','2·Emax'],
+   c:1,e:'Por definição, em D=EC50 o efeito é metade do teto (Emax/2). É a potência do fármaco.'},
+  {q:'A glicosúria do diabético aparece quando…',
+   o:['a glicemia é normal','a glicemia ultrapassa o limiar (~180–200) e a reabsorção satura','sempre','nunca'],
+   c:1,e:'Só acima do limiar, quando a filtrada excede o Tm. É marcador tardio da hiperglicemia.'}
+];
+
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO;
+window.TUTOR_TEXTUAL=TUTOR_TEXTUAL;
+window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+
+var BANKS={ilustrada:TUTOR_ILUSTRADO, textual:TUTOR_TEXTUAL};
+var curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+
+function renderTutor(){
+  var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():'';
+  $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false;
+  $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){
+    var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){
+      if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button');
+      btns[item.c].classList.add('ok');
+      if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block';
+      fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e;
+      $('tutor-score').textContent=tScore;
+      $('tutor-total').textContent=tTotal;
+    });
+    box.appendChild(b);
+  });
+}
+
+$('banktabs').addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor();
+});
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+/* =========================================================================
+ * ILUSTRAÇÕES DA ABA CONCEITO (populadas no boot)
+ * ========================================================================= */
+function populateConceito(){
+  var el;
+  el=$('draw-na65');   if(el) el.innerHTML=na65Diagram({},'65% do Na⁺ no proximal');
+  el=$('draw-sglt2');  if(el) el.innerHTML=titulacaoMini({glicemia:300},'titulação da glicose (Tm/limiar)');
+  el=$('draw-hco3');   if(el) el.innerHTML=hco3Diagram({},'HCO₃ e a anidrase carbônica');
+  el=$('draw-fanconi');if(el) el.innerHTML=fanconiDiagram({},'síndrome de Fanconi');
+  el=$('draw-dose');   if(el) el.innerHTML=doseFig({sglt2:10},'dose-resposta do SGLT2i');
+  var elCaso=$('fig-caso'); if(elCaso) elCaso.innerHTML=titulacaoMini({glicemia:100,sglt2:10},'glicosúria renal: limiar baixo');
+}
+
+/* =========================================================================
+ * BOOT
+ * ========================================================================= */
+refresh();
+renderTutor();
+populateConceito();
+</script>
+</body>
+</html>

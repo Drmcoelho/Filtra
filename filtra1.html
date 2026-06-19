@@ -40,6 +40,9 @@
   canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
   #tutor-fig svg,.concept svg,#glom-svg svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
   .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  figure.photo{margin:10px 0;max-width:440px}
+  figure.photo img{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:8px;background:#10171e}
+  figure.photo figcaption{color:var(--dim);font-size:12px;margin-top:4px}
   h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
   .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
   .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
@@ -96,18 +99,34 @@
   <section class="tab on" id="tab-conceito">
     <div class="panel">
       <h3>Conceito — o néfron e a pressão que filtra (explicação ilustrada)</h3>
+      <figure class="photo">
+        <img src="assets/m1/rim-corte-sagital.png" alt="Corte sagital do rim — córtex, medula e pirâmides" loading="lazy">
+        <figcaption>Corte sagital: o córtex (onde moram os glomérulos) e a medula (onde a alça cria o gradiente). O néfron mergulha de um ao outro.</figcaption>
+      </figure>
 
       <h4>1. O néfron, segmento a segmento</h4>
       <p class="sub">O sangue chega pela <b>aferente</b>, é filtrado no <b>glomérulo</b> e o filtrado percorre
       o túbulo: <b>TCP</b> → <b>alça de Henle</b> (fina ↓ / espessa ↑, na medula) → <b>TCD</b> → <b>ducto
       coletor</b>. Cada segmento é uma alavanca diferente (e o alvo de uma classe de diurético).</p>
       <div class="concept" id="draw-nefron"></div>
+      <figure class="photo">
+        <img src="assets/m1/nefron-rotulado.png" alt="Néfron rotulado — glomérulo, TCP, alça de Henle, TCD e ducto coletor" loading="lazy">
+        <figcaption>O néfron rotulado segmento a segmento — cada trecho é a alavanca de uma classe de diurético (a farmacologia dosada entra no M2+).</figcaption>
+      </figure>
 
       <h4>2. O glomérulo entre duas resistências</h4>
       <p class="sub">A <b>P_GC</b> (pressão que empurra a filtração) mora entre a <b>aferente</b> (entrada) e a
       <b>eferente</b> (saída). Fechar a aferente despressuriza tudo; fechar a eferente represa e <b>sobe</b> a
       P_GC. O calibre dos vasos no desenho é ∝ 1/resistência.</p>
       <div class="concept" id="draw-glom"></div>
+      <figure class="photo">
+        <img src="assets/m1/glomerulo-aferente-eferente.jpg" alt="Glomérulo com arteríolas aferente e eferente" loading="lazy">
+        <figcaption>O tufo glomerular entre a aferente (entrada) e a eferente (saída) — as duas resistências que governam a P_GC.</figcaption>
+      </figure>
+      <figure class="photo">
+        <img src="assets/m1/corpusculo-renal-histologia.jpg" alt="Histologia do corpúsculo renal — glomérulo e cápsula de Bowman" loading="lazy">
+        <figcaption>O mesmo corpúsculo na histologia: o tufo capilar dentro da cápsula de Bowman, onde o plasma é filtrado.</figcaption>
+      </figure>
 
       <h4>3. As forças de Starling — quem empurra, quem resiste</h4>
       <p class="sub"><b>TFG = Kf · (P_GC − P_BC − π_GC).</b> Só a P_GC empurra; a pressão de Bowman (P_BC) e a

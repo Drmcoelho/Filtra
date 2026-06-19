@@ -40,6 +40,9 @@
   canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
   #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
   .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  figure.photo{margin:10px 0;max-width:440px}
+  figure.photo img{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:8px;background:#10171e}
+  figure.photo figcaption{color:var(--dim);font-size:12px;margin-top:4px}
   h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
   .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
   .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
@@ -95,6 +98,10 @@
   <section class="tab on" id="tab-conceito">
     <div class="panel">
       <h3>Conceito — a água, a célula e o mar (explicação ilustrada)</h3>
+      <figure class="photo">
+        <img src="assets/m0/rim-anatomia.png" alt="Anatomia macroscópica do rim — córtex, medula e pirâmides" loading="lazy">
+        <figcaption>O órgão por trás do meio interno: é o rim que defende os compartimentos abaixo. A anatomia detalhada abre o M1.</figcaption>
+      </figure>
 
       <h4>1. Quanta água tem o corpo? A fórmula da Água Corporal Total (ÁGT)</h4>
       <p class="sub"><b>ÁGT = peso × fração.</b> Homem ≈ 0,6 · mulher ≈ 0,5 · idoso ≈ 0,45–0,5 · lactente ≈ 0,7
@@ -102,6 +109,10 @@
       <b>60-40-20</b>: ~60% do peso é água; <b>40%</b> dela no ICF e <b>20%</b> no ECF — e o ECF se reparte em
       ~5% plasma e ~15% interstício.</p>
       <div class="concept" id="draw-tbw"></div>
+      <figure class="photo">
+        <img src="assets/m0/compartimentos-hidricos.png" alt="Compartimentos hídricos: ICF, ECF, plasma e interstício; a regra 60-40-20" loading="lazy">
+        <figcaption>Os compartimentos e a regra 60-40-20 — o mesmo que o diagrama vivo computa ao lado.</figcaption>
+      </figure>
 
       <h4>2. A banana no mar — por que a célula não estoura</h4>
       <p class="sub">O ICF é um saco cheio de <b>K⁺</b> (o cátion de dentro); o ECF é um <b>mar de Na⁺</b>. A
@@ -122,6 +133,10 @@
       por isso <b>corrigir o Na rápido demais o desidrata e desmieliniza</b> (mielinólise pontina — mata
       devagar). O cálculo da velocidade segura está no M10.</p>
       <div class="concept" id="draw-brain"></div>
+      <figure class="photo">
+        <img src="assets/m0/cerebro-edema.jpg" alt="Edema cerebral — o encéfalo na caixa rígida do crânio" loading="lazy">
+        <figcaption>O encéfalo edemaciado na caixa rígida do crânio: a hiponatremia aguda mata por aqui.</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -293,6 +308,10 @@
       </table>
       <div class="banner" id="bal-banner">—</div>
       <div class="concept" id="bal-fig"></div>
+      <figure class="photo">
+        <img src="assets/m0/fluidos-iv.jpg" alt="Bolsas de fluidos intravenosos" loading="lazy">
+        <figcaption>Os fluidos IV do balanço: para onde cada um vai (SF/Ringer/SG5%/NaCl3%/coloide) é o que o lab calcula.</figcaption>
+      </figure>
     </div>
   </section>
 

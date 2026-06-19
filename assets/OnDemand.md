@@ -106,6 +106,29 @@ ou computado do engine** elevaria a aula, o pedido vem marcado `svg` (desenho au
 
 ---
 
+## Lâminas-síntese autorais (Dr. Matheus M. Coelho, 2026-06) — obra própria, licença livre
+
+Oito **lâminas-síntese** no cromo FILTRA (autorais, fornecidas pelo autor; tratadas como obra própria — sem
+exigência de crédito). Cada uma é a aba Conceito inteira de um segmento desenhada como prancha-âncora. Convertidas
+de PNG (~2,5 MB) para **webp ~155–205 KB** (1448 px, `sharp`, q82) e integradas **inline** no topo da aba Conceito
+como `figure.fviva.lamina`, com legenda que orienta *o que olhar* e remete às `Fig. 1–13` decompostas (não
+substituem as figuras computadas/SVG). Caveat do autor: "imperfeitas" — entram como **mapa de visão geral**, não
+como figura de precisão de pixel; a decodificação fina segue nas figuras computadas de cada módulo.
+
+| slug | módulo | tema | status |
+|---|---|---|---|
+| m1/atlas-nefron-visual.webp | M1 | atlas do néfron (rim macro → néfron → segmentos) | INTEGRADO |
+| m3/glomerulo-barreira-sintese.webp | M3 | Starling (+10 mmHg) + barreira de 3 camadas | INTEGRADO |
+| m5/tcp-sintese.webp | M5 | TCP: NHE3/SGLT2/NaPi-IIa/AC + acetazolamida/SGLT2i/manitol | INTEGRADO |
+| m6/alca-henle-sintese.webp | M6 | alça: NKCC2, contracorrente, gradiente 300→1200 | INTEGRADO |
+| m8/ducto-coletor-sintese.webp | M8 | ducto: ENaC/aldo, ADH/AQP2, intercalares, poupadores/vaptano | INTEGRADO |
+| m7/tcd-sintese.webp | M7 | TCD: NCC, Ca²⁺, tiazídicos (paradoxo do Ca) | OBTIDO (aguarda M7) |
+| m14/endocrinologia-renal-sintese.webp | M14 | rim como glândula: RAAS, EPO, vit D, PG, autorregulação | OBTIDO (aguarda M14) |
+| m14/jga-raas-sintese.webp | M14 | aparelho justaglomerular + eixo renina-angiotensina-aldosterona | OBTIDO (aguarda M14) |
+
+> Ao construir **M7** e **M14**, integrar as lâminas `OBTIDO` acima como `figure.fviva.lamina` (a regra CSS já
+> existe nos módulos integrados — copiar de `filtra1/3/5/6/8.html`) e mudar o status para `INTEGRADO`.
+
 ## M3 — O glomérulo / barreira de filtração  [módulo construído]
 > Erro que corrige: "proteinúria = rim falhando"; verdade: glomerular × tubular; barreira de **carga** e **tamanho**.
 > Hoje as figuras são SVG + `endotelio-fenestrado.png`. Faltam os achados reais que provam a barreira quebrada.

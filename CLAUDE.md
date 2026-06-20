@@ -12,6 +12,24 @@
 
 ## 0. Como usar este arquivo
 
+### 0.1 Índice da documentação (qual arquivo serve para quê)
+
+> Para não se perder na papelada: o repositório tem **6 documentos** com papéis distintos. Comece aqui.
+
+| Arquivo | Papel | Quando ler |
+|---|---|---|
+| **CLAUDE.md** (este) | o **COMO** — mapa operacional: escada, rito, padrão de robustez, fronteira clínica | sempre, antes de construir |
+| **PLANO.md** | o **O QUÊ por módulo** — ficha de design de cada M0–M39 (tese, engine, pérolas, figuras) | antes de abrir `build/mN/` |
+| **FILTRA.md** | o **PORQUÊ** — constituição filosófica do braço | uma vez, para entender a intenção |
+| **README.md** | porta de entrada do repo (o quê + como rodar) | ao chegar no repo / publicar |
+| **curriculum.json** | manifesto **legível por máquina** (status de cada módulo) | para checar/atualizar status |
+| **assets/README.md** | guia **único** da pasta `assets/`: regras, pipeline de curadoria e backlog de imagens (§4) | ao mexer em imagens |
+| `CREDITS.md` | atribuição **opcional** de imagens (fonte · autor · licença) | ao creditar assets |
+
+Fonte de verdade do conteúdo clínico: `PLANO.md` (ficha) + `CLAUDE.md` (rito). O `npm run check` é o portão.
+
+### 0.2 Passos
+
 - **Antes de construir qualquer módulo**, leia §4 (a escada) e §5–§6 (o rito e o padrão de robustez).
 - **Ao construir**, espelhe o padrão dos braços já prontos (`Respira`, `Choca`): mesma estrutura de pastas,
   mesmo estilo de engine/teste/validador, mesmo cromo single-file.
@@ -273,7 +291,7 @@ FEITO  · M1  Néfron / forças de Starling — PADRÃO DE OURO (8 fotos inline 
              trilha 13, 6 botões de cenário no lab, 13+13). check verde: 168 engine · 86 validador.
 FEITO  · M2  Hemodinâmica renal (AINEs/IECA com dose) — 8 fotos inline integradas. check verde: 90211 · 99.
 HARNESS· package.json (test:0..2/validate:0..2/check) · .github/workflows/check.yml · curriculum.json ·
-             filtra.html (índice) · assets/ (320 imgs M0–M39 + manifest.json + OnDemand.md) · CREDITS.md
+             filtra.html (índice) · assets/ (manifest.json: 25/320 imgs baixadas + README.md guia único) · CREDITS.md
              (atribuição PENDENTE das imgs Wikimedia) · FILTRA.md · README.md · .gitignore
 A FAZER· M3 (glomérulo/barreira/Kf): build/m3/model3.js + test3.node.js → filtra3.html + validate3.js,
              JÁ no padrão de ouro (figura viva + expansão máxima). Seguir a escada §4.4.
@@ -291,7 +309,7 @@ Nota: `jsdom` é dependência só de validação; o produto publicado é offline
 2. build/mN/testN.node.js    bateria de robustez (ver §6) — 0 falhas
 3. filtraN.html              single-file: caso(≥8 atos) · trilha(≥13) · instrumento vivo · lab(+ presets) ·
                              ilustrações de conceito (SVG) + FOTOS open-source INLINE (figura viva, §6) ·
-                             Avaliação 2 blocos (ilustrado ≥13 + textual ≥13). Pedidos de img extra → OnDemand.md
+                             Avaliação 2 blocos (ilustrado ≥13 + textual ≥13). Pedidos de img extra → assets/README.md §4
 4. build/mN/validateN.js     portão jsdom: estrutura · engine≡UI · interativo · 2 bancos+ilustração · cromo ·
                              guarda farmacológica (dose↔unidade↔mecanismo) · guarda FIGURA VIVA (§6)
 5. package.json              adicionar test:N e validate:N (e ao agregado test/validate/check)
@@ -351,7 +369,7 @@ Critério: o teste é **determinístico entre execuções** (rode 3×, saída id
   número/legenda e painel; se o rótulo da imagem está em inglês ou em outra língua, **traduza na legenda**;
   nada de elemento sem explicação (o aluno não pode ficar com "o que são os números 1–4 desta figura?"). Em
   figuras computadas (SVG), prefira **legenda numerada própria** (①②③④) decodificada no texto. Quando faltar uma
-  imagem mais diversa/profunda para a aula ficar **excelente**, registre o pedido em `assets/OnDemand.md` (ciclo
+  imagem mais diversa/profunda para a aula ficar **excelente**, registre o pedido em `assets/README.md §4` (ciclo
   `PEDIDO → OBTIDO → INTEGRADO`) — não improvise nem deixe passar.
 - **Homeostasia é o conceito-fio (decisão do autor 2026-06):** ao falar de água e íons, ancore explicitamente na
   **homeostasia** (defender o meio interno — volume, eletrólitos, tonicidade, ácido-base — apesar de entradas e
@@ -478,7 +496,7 @@ case com a UI. A ausência de dose onde o módulo a promete passa a ser falha.
      (copie de `validate0/1/2.js`).
    - **Expansão máxima:** Caso ≥8 atos (com a fronteira/exceção do mecanismo), Trilha ≥13, Avaliação ≥13+13,
      Lab com presets de cenário. 1 figura ⇒ ≥1 parágrafo + ≥1 questão.
-   - **Faltou imagem mais diversa/profunda?** Registre em `assets/OnDemand.md` (`PEDIDO → OBTIDO → INTEGRADO`).
+   - **Faltou imagem mais diversa/profunda?** Registre em `assets/README.md §4` (`PEDIDO → OBTIDO → INTEGRADO`).
      Não improvise nem hotlink.
 3. A partir do M5, a farmacologia é **encadeada no segmento** (§8): a droga é a alavanca daquele túbulo, com
    dose↔unidade↔mecanismo computados pelo motor (a guarda farmacológica do validador é invertida).
@@ -502,7 +520,7 @@ Engine antes de UI.      Fórmula validada antes de gráfico.
 Física viva.             Gráficos e questões são COMPUTADOS, não imagens.
 Ilustração viva.         Conceitos ganham SVG inline; numérico → computado do engine. 2 blocos (ilustrado+textual).
 Figura viva.             Foto open-source INLINE na batida que ilustra (figure.fviva), legenda que ensina,
-                         referência Fig. N; nunca um mural. Falta de img diversa/profunda → assets/OnDemand.md.
+                         referência Fig. N; nunca um mural. Falta de img diversa/profunda → assets/README.md §4.
 Expansão máxima.         Acima dos mínimos: caso ≥8 atos · trilha ≥13 · avaliação ≥13+13 · lab com presets.
 Robustez inigualável.    clamp resiliente + determinismo + fuzzing ≥ 5000 (§6).
 Português do Brasil.     Prosa causal, seca, com setas.

@@ -61,7 +61,7 @@ depois) — preencher fonte/autor/licença antes de considerar o módulo finaliz
 
 > Nota: os 6 SVGs do M2 eram placeholders gerados automaticamente; foram **reescritos como figuras
 > didáticas autorais** (FILTRA) nesta revisão. A `cortex-medula.png` (Gray's) mostra o rim in situ e sua
-> inervação, **não** a histologia córtex×medula — uma imagem real desta está pedida em `assets/OnDemand.md`.
+> inervação, **não** a histologia córtex×medula — uma imagem real desta está pedida em `assets/README.md` (§4 backlog).
 
 ## M3 — O glomérulo (barreira de filtração)
 | Arquivo | Descrição | Fonte (URL) | Autor | Licença |
@@ -81,7 +81,7 @@ depois) — preencher fonte/autor/licença antes de considerar o módulo finaliz
 | `assets/m3/dano-tamanho-naoseletiva.svg` | Dano de tamanho → não-seletiva | — | Projeto FILTRA | FILTRA (autoral) |
 
 > Nota: 5 SVGs do M3 eram placeholders e foram **reescritos como figuras autorais**; 3 imagens reais
-> (endotélio, barreira, podócito) seguem com crédito pendente (depende de acesso ao Wikimedia, ver OnDemand.md).
+> (endotélio, barreira, podócito) seguem com crédito pendente (depende de acesso ao Wikimedia, ver assets/README.md §4).
 
 ## M4 — Clearance (medir a função)
 | Arquivo | Descrição | Fonte (URL) | Autor | Licença |
@@ -101,7 +101,7 @@ depois) — preencher fonte/autor/licença antes de considerar o módulo finaliz
 | `assets/m4/equilibrio-producao.svg` | Equilíbrio produção = excreção | — | Projeto FILTRA | FILTRA (autoral) |
 
 > Nota: 7 SVGs do M4 eram placeholders e foram **reescritos como figuras autorais**; `clearance-conceito.png`
-> (real) segue com crédito pendente (depende de acesso ao Wikimedia, ver OnDemand.md).
+> (real) segue com crédito pendente (depende de acesso ao Wikimedia, ver assets/README.md §4).
 
 ## M5 — TCP (SGLT2, anidrase carbônica, manitol)
 | Arquivo | Descrição | Fonte (URL) | Autor | Licença |

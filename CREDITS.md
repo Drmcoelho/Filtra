@@ -6,7 +6,10 @@ licença. Ilustrações **SVG autorais** (produção do projeto) ficam marcadas 
 depois) — preencher fonte/autor/licença antes de considerar o módulo finalizado.
 
 > ⚠️ Pendência: 13 imagens vieram do Wikimedia Commons (CC-BY/CC-BY-SA exigem atribuição). Completar as
-> colunas Fonte/Autor/Licença. As 3 marcadas "FILTRA (autoral)" são produção do projeto e não exigem crédito.
+> colunas Fonte/Autor/Licença. As linhas marcadas "FILTRA (autoral)" são produção do projeto e não exigem crédito.
+>
+> ➕ 2026-06: o autor forneceu 8 lâminas-síntese raster (webp, cromo FILTRA) — obra própria, "FILTRA (autoral)".
+> 5 integradas (M1·M3·M5·M6·M8) e 3 em disco aguardando o módulo (M7, M14×2). Listadas nas seções abaixo.
 
 ## M0 — Compartimentos + fluidoterapia
 | Arquivo | Descrição | Fonte (URL) | Autor | Licença |
@@ -41,6 +44,7 @@ depois) — preencher fonte/autor/licença antes de considerar o módulo finaliz
 | `assets/m1/obstrucao-posrenal.svg` | Obstrução pós-renal (P_BC↑) | — | Projeto FILTRA | FILTRA (autoral) |
 | `assets/m1/rim-unico-ieca.svg` | Rim único / estenose + IECA | — | Projeto FILTRA | FILTRA (autoral) |
 | `assets/m1/ff-eferente.svg` | Fração de filtração e o eferente | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m1/atlas-nefron-visual.webp` | Lâmina-síntese · atlas do néfron (rim macro → néfron → segmentos) | — | Dr. Matheus M. Coelho / FILTRA | FILTRA (autoral) |
 
 ## M2 — Hemodinâmica renal
 | Arquivo | Descrição | Fonte (URL) | Autor | Licença |
@@ -79,6 +83,7 @@ depois) — preencher fonte/autor/licença antes de considerar o módulo finaliz
 | `assets/m3/lesao-minima.svg` | Lesão mínima (perda de carga) | — | Projeto FILTRA | FILTRA (autoral) |
 | `assets/m3/nefrotico-vs-nefritico.svg` | Nefrótica × nefrítica | — | Projeto FILTRA | FILTRA (autoral) |
 | `assets/m3/dano-tamanho-naoseletiva.svg` | Dano de tamanho → não-seletiva | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m3/glomerulo-barreira-sintese.webp` | Lâmina-síntese · Starling (+10 mmHg) + barreira de 3 camadas | — | Dr. Matheus M. Coelho / FILTRA | FILTRA (autoral) |
 
 > Nota: 5 SVGs do M3 eram placeholders e foram **reescritos como figuras autorais**; 3 imagens reais
 > (endotélio, barreira, podócito) seguem com crédito pendente (depende de acesso ao Wikimedia, ver OnDemand.md).
@@ -119,6 +124,7 @@ depois) — preencher fonte/autor/licença antes de considerar o módulo finaliz
 | `assets/m5/acetazolamida-mecanismo.svg` | Acetazolamida (anidrase) | — | Projeto FILTRA | FILTRA (autoral) |
 | `assets/m5/manitol-osmotico.svg` | Manitol (diurese osmótica) | — | Projeto FILTRA | FILTRA (autoral) |
 | `assets/m5/dose-resposta-emax.svg` | Curva dose-resposta (Emax) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m5/tcp-sintese.webp` | Lâmina-síntese · TCP (NHE3/SGLT2/NaPi-IIa/AC; acetazolamida/SGLT2i/manitol) | — | Dr. Matheus M. Coelho / FILTRA | FILTRA (autoral) |
 
 > Nota: 6 SVGs do M5 eram placeholders e foram **reescritos como figuras autorais**; 2 PNGs reais
 > (proximal 65%, anidrase carbônica) seguem com crédito pendente (depende de acesso ao Wikimedia).
@@ -139,9 +145,17 @@ depois) — preencher fonte/autor/licença antes de considerar o módulo finaliz
 | `assets/m6/diuretico-alca-efeitos.svg` | Efeitos do diurético de alça | — | Projeto FILTRA | FILTRA (autoral) |
 | `assets/m6/congestao-icc.svg` | Uso na congestão (ICC) | — | Projeto FILTRA | FILTRA (autoral) |
 | `assets/m6/braking-resistencia.svg` | Braking e resistência | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m6/alca-henle-sintese.webp` | Lâmina-síntese · alça (NKCC2, contracorrente, gradiente 300→1200) | — | Dr. Matheus M. Coelho / FILTRA | FILTRA (autoral) |
 
 > Nota: 6 SVGs do M6 eram placeholders e foram **reescritos como autorais**; 1 SVG real (ramo fino) e 1 PNG
 > real (sítio dos diuréticos) seguem com crédito pendente (depende de acesso ao Wikimedia).
+
+## M7 — TCD (NCC, manejo de Ca, tiazídicos) — módulo não construído (lâmina em disco)
+| Arquivo | Descrição | Fonte (URL) | Autor | Licença |
+|---|---|---|---|---|
+| `assets/m7/tcd-sintese.webp` | Lâmina-síntese · TCD (NCC, Ca²⁺, tiazídicos — paradoxo do Ca) | — | Dr. Matheus M. Coelho / FILTRA | FILTRA (autoral) |
+
+> Demais arquivos de `assets/m7/` são placeholders SVG aguardando a construção do módulo (ver OnDemand.md).
 
 ## M8 — Ducto coletor (ENaC/aldosterona, ADH; poupadores de K, vaptanos)
 | Arquivo | Descrição | Fonte (URL) | Autor | Licença |
@@ -159,9 +173,18 @@ depois) — preencher fonte/autor/licença antes de considerar o módulo finaliz
 | `assets/m8/dose-resposta-emax.svg` | Dose-resposta (Emax) | — | Projeto FILTRA | FILTRA (autoral) |
 | `assets/m8/adh-dois-receptores.svg` | V1 × V2 da vasopressina | — | Projeto FILTRA | FILTRA (autoral) |
 | `assets/m8/liddle-pseudoaldo.svg` | Liddle × pseudo-hipoaldo | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m8/ducto-coletor-sintese.webp` | Lâmina-síntese · ducto (ENaC/aldo, ADH/AQP2, intercalares, poupadores/vaptano) | — | Dr. Matheus M. Coelho / FILTRA | FILTRA (autoral) |
 
 > Nota: 5 SVGs do M8 eram placeholders e foram **reescritos como autorais**; 1 SVG real (células do ducto) e
 > 2 PNGs reais (célula principal, sítio dos poupadores) seguem com crédito pendente (depende do Wikimedia).
+
+## M14 — RAAS e eixo endócrino renal — módulo não construído (lâminas em disco)
+| Arquivo | Descrição | Fonte (URL) | Autor | Licença |
+|---|---|---|---|---|
+| `assets/m14/endocrinologia-renal-sintese.webp` | Lâmina-síntese · rim como glândula (RAAS, EPO, vit D, PG, autorregulação) | — | Dr. Matheus M. Coelho / FILTRA | FILTRA (autoral) |
+| `assets/m14/jga-raas-sintese.webp` | Lâmina-síntese · aparelho justaglomerular + eixo renina-angiotensina-aldosterona | — | Dr. Matheus M. Coelho / FILTRA | FILTRA (autoral) |
+
+> Demais arquivos de `assets/m14/` são placeholders/figuras aguardando a construção do módulo (ver OnDemand.md).
 
 ## Regras
 - Preferir **CC0 / domínio público**; **CC-BY / CC-BY-SA** aceitos **com atribuição** nesta tabela.

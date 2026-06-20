@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M16 — A LRA por mecanismo: KDIGO, pré-renal / intrínseca / pós-renal</title>
+<style>
+  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--warn:#e8a13a;--bad:#e0556b;--good:#52c08a;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none} section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .presets{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px} .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)} .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)} .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)} .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M16</div>
+  <h1>A LRA por mecanismo — KDIGO; pré-renal / intrínseca / pós-renal</h1>
+  <div class="sub"><b>"LRA" não é um diagnóstico — é uma sombra.</b> A mesma creatinina e a mesma oligúria nascem
+  de três mecânicas opostas: <b>P_GC↓</b> (pré-renal), <b>parênquima lesado</b> (intrínseca: NTA·NIA·glomerular)
+  e <b>P_BC↑</b> (pós-renal/obstrução). O KDIGO estadia a gravidade (creatinina × débito); os índices da urina
+  revelam o mecanismo. <b>Decompor antes de interpretar</b> — porque a conduta de uma via é o veneno da outra
+  (volume salva o pré-renal e afoga o cardiorrenal). Capstone fisiológico que integra M1·M2·M3·M4·M15.</div>
+  <nav class="hex">
+    <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
+    <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="filtra.html">&larr; índice do braço FILTRA</a>
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- CONCEITO -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — a LRA decomposta nos três mecanismos, ilustrada</h3>
+      <p class="sub" style="margin-top:0"><b>A LRA é homeostasia que falhou.</b> O rim defende o meio interno;
+      quando a TFG despenca, volume, eletrólitos, ácido-base e escórias saem do controle. Mas o mesmo número
+      (creatinina, oligúria) projeta-se de mecânicas que não se parecem. As Fig. 1–8 voltam no Caso, na Trilha e
+      na Avaliação. A fórmula-fio: <b>FE_Na = (U_Na·P_Cr)/(P_Na·U_Cr)·100</b> — o índice que separa as vias.</p>
+
+      <h4>1. As três portas — o diagrama do mecanismo</h4>
+      <p class="sub">A TFG vem de Starling: <b>TFG = Kf·(P_GC − P_BC − π_GC)</b>. Três lesões a derrubam:
+      <b>aferente fechada</b> (P_GC↓, pré-renal, na entrada), <b>túbulo necrótico</b> (NTA, no meio) e
+      <b>ureter pinçado</b> (P_BC↑, pós-renal, na saída). A mesma TFG-sombra por três caminhos.</p>
+      <div class="frow">
+        <div class="concept" id="draw-portas"></div>
+        <figure class="fviva"><img src="assets/m16/pre-intrinseca-pos.svg" alt="Diagrama pré-renal versus intrínseca versus pós-renal" loading="lazy">
+          <figcaption><b>Fig. 1 · As três portas da LRA.</b> <b>Pré-renal</b> = a pressão de filtração caiu
+          (P_GC↓); <b>intrínseca</b> = o filtro/túbulo está quebrado (NTA·NIA·glomerular); <b>pós-renal</b> = a urina
+          não escoa e a contrapressão (P_BC↑) estrangula a filtração. Decodificando o diagrama: o rótulo separa as
+          três localizações do problema — antes, dentro e depois do glomérulo.</figcaption></figure>
+      </div>
+
+      <h4>2. O KDIGO — estadiar a gravidade (creatinina × débito urinário)</h4>
+      <p class="sub">O KDIGO mede <b>gravidade</b>, não mecanismo. Estágio 1: Cr ×1,5–1,9 (ou ↑0,3 mg/dL) ou débito
+      &lt;0,5 mL/kg/h; estágio 2: Cr ×2–2,9 ou &lt;0,5 por 12 h; estágio 3: Cr ×3 (ou ≥4,0) ou &lt;0,3 por 24 h ou
+      anúria. A <b>pior das duas</b> define.</p>
+      <div class="frow">
+        <div class="concept" id="draw-kdigo"></div>
+        <figure class="fviva"><img src="assets/m16/kdigo-estadios.svg" alt="Estágios KDIGO 1, 2 e 3 de lesão renal aguda" loading="lazy">
+          <figcaption><b>Fig. 2 · Os estágios KDIGO.</b> Dois eixos: <b>creatinina</b> (a magnitude do ↑ relativo
+          ou absoluto) e <b>débito urinário</b> (mL/kg/h sustentado). O número 1/2/3 é a pior das duas leituras —
+          o débito cai cedo, a creatinina atrasa. É semáforo de gravidade; o mecanismo vem dos índices (Fig. 3).</figcaption></figure>
+      </div>
+
+      <h4>3. Os índices da urina — FE_Na separa pré-renal de NTA</h4>
+      <p class="sub">No <b>pré-renal</b> o túbulo está íntegro e ávido: reabsorve Na com fúria → <b>FE_Na &lt;1%</b>,
+      U_osm &gt;500, BUN/Cr &gt;20. Na <b>NTA</b> o túbulo está quebrado e não reabsorve → <b>FE_Na &gt;2%</b>,
+      U_osm ~300 (isostenúria). A <b>FE_ureia</b> (&lt;35% no pré-renal) salva quando há diurético em uso.</p>
+      <div class="frow">
+        <div class="concept" id="draw-indices"></div>
+        <figure class="fviva"><img src="assets/m16/nta-cilindros-granulosos.svg" alt="Cilindros granulosos pigmentados na necrose tubular aguda" loading="lazy">
+          <figcaption><b>Fig. 3 · Cilindros granulosos pardos.</b> O sedimento da NTA: cilindros marrons "lama"
+          (muddy brown — em inglês na literatura) formados por células tubulares descamadas. Decodificando: cada
+          grânulo é debris epitelial; sua presença confirma <b>dano tubular</b> (intrínseca), não avidez pré-renal.
+          O sedimento limpo do pré-renal e o granuloso da NTA são a leitura visual da FE_Na.</figcaption></figure>
+      </div>
+
+      <h4>4. A NTA por dentro — a histologia da via intrínseca</h4>
+      <p class="sub">A necrose tubular aguda: isquemia (choque) ou nefrotoxina (contraste, aminoglicosídeo,
+      mioglobina) mata o epitélio tubular. A medula vive à beira da hipóxia (M2) — é a primeira a cair.</p>
+      <div class="frow">
+        <figure class="fviva"><img src="assets/m16/nta-histologia.svg" alt="Histologia da necrose tubular aguda" loading="lazy">
+          <figcaption><b>Fig. 4 · Histologia da NTA.</b> O túbulo perde a borda em escova, as células descamam e
+          obstruem a luz; o interstício edemacia. Decodificando: a parede tubular "nua" é por que a FE_Na sobe — sem
+          epitélio funcionante, o Na filtrado escapa. Recupera em 1–3 semanas se a agressão cessa.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m16/nefrite-intersticial.svg" alt="Nefrite intersticial aguda com infiltrado inflamatório" loading="lazy">
+          <figcaption><b>Fig. 5 · Nefrite intersticial aguda (NIA).</b> A via intrínseca <b>alérgica</b>: um fármaco
+          (AINE, IBP, antibiótico) desencadeia infiltrado inflamatório no interstício. Decodificando: o infiltrado
+          de células mononucleares/eosinófilos é a chave — a urina mostra <b>eosinofilúria</b>. Conduta: suspender o
+          fármaco culpado.</figcaption></figure>
+      </div>
+
+      <h4>5. A pós-renal — a obstrução e a hidronefrose</h4>
+      <p class="sub">Na obstrução (próstata, cálculo, tumor) a urina represa, a pressão sobe retrógrada até a
+      cápsula de Bowman (<b>P_BC↑</b>) e estrangula a filtração. O ultrassom mostra <b>hidronefrose</b>. Desobstruir
+      restaura a TFG.</p>
+      <div class="frow">
+        <div class="concept" id="draw-pos"></div>
+        <figure class="fviva"><img src="assets/m16/hidronefrose-us.svg" alt="Hidronefrose ao ultrassom: pelve renal dilatada" loading="lazy">
+          <figcaption><b>Fig. 6 · Hidronefrose ao ultrassom.</b> A pelve renal dilatada (anecoica/preta) em "pata de
+          urso" pela urina represada. Decodificando: a dilatação a montante prova obstrução a jusante — é a assinatura
+          da <b>pós-renal</b>. Como P_BC↑ é a causa, drenar (sonda/nefrostomia) e não soro restaura a filtração.</figcaption></figure>
+      </div>
+
+      <h4>6. As pontes — cardiorrenal e hepatorrenal (o rim como vítima)</h4>
+      <p class="sub">Duas armadilhas: o <b>cardiorrenal</b> (a FE_Na é baixa, mas o motor é congestão venosa — volume
+      PIORA) e o <b>hepatorrenal</b> (vasoconstrição funcional na cirrose; rim normal, FE_Na quase zero). Em ambos a
+      FE_Na baixa <b>não</b> autoriza volume.</p>
+      <div class="frow">
+        <div class="concept" id="draw-pontes"></div>
+        <figure class="fviva"><img src="assets/m16/cardiorrenal.svg" alt="Síndrome cardiorrenal: coração e rim na falência mútua" loading="lazy">
+          <figcaption><b>Fig. 7 · Síndrome cardiorrenal.</b> O coração que falha (baixo DC + congestão venosa) derruba
+          o rim. Decodificando: a pressão venosa renal alta (não a hipovolemia) estrangula a filtração; por isso a
+          FE_Na é baixa (RAAS ávido) mas dar volume <b>afoga</b>. Ponte com Choca M16 (cardiogênico). Conduta:
+          descongestionar.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m16/hepatorrenal.svg" alt="Síndrome hepatorrenal: vasodilatação esplâncnica e vasoconstrição renal" loading="lazy">
+          <figcaption><b>Fig. 8 · Síndrome hepatorrenal.</b> A cirrose dilata o leito esplâncnico → o volume
+          circulante efetivo cai → o RAAS fecha a aferente renal. Decodificando: rim histologicamente normal,
+          FE_Na &lt;0,1%, sedimento limpo — é vasoconstrição <b>funcional</b>, não dano. Conduta: vasoconstritor
+          esplâncnico + albumina (ponte Choca M20, distributivo).</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASO -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — cinco mecanismos, a mesma creatinina; decida antes de revelar</h3>
+      <p class="sub">Plantão de UTI. Cinco doentes, todos com creatinina ~2,5–3,0 e oligúria. O número é igual — o
+      mecanismo, não. (Use as Fig. 1, 3, 6, 7, 8 como âncoras.)</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step"><b>Ato 1.</b> Senhor desidratado, vômitos há 3 dias, PA baixa. Cr 1,0→2,5, débito &lt;0,5
+        mL/kg/h. FE_Na 0,12%, U_osm 650, BUN/Cr 22, sedimento limpo. Mecanismo? Dar volume?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>Pré-renal (Fig. 1, entrada).</b> Túbulo íntegro e ávido (FE_Na &lt;1%, U_osm
+          alta, BUN/Cr &gt;20) — a P_GC caiu por hipovolemia. <b>Volume restaura a TFG.</b> KDIGO 2 pelo débito.</div></div>
+
+      <div class="step"><b>Ato 2.</b> Mulher pós-choque séptico prolongado + contraste. Cr 1,0→3,2. FE_Na 3,4%,
+        U_osm 300, <b>cilindros granulosos pardos</b> (Fig. 3). Volume vai resolver?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2"><b>NTA (intrínseca).</b> Túbulo necrótico: não reabsorve Na (FE_Na &gt;2%),
+          isostenúria (U_osm ~300), sedimento sujo. <b>Volume NÃO restaura</b> — o filtro está quebrado. Suporte e
+          tempo (regenera em 1–3 sem). KDIGO 3.</div></div>
+
+      <div class="step"><b>Ato 3.</b> Homem idoso, próstata grande, anúria súbita. Cr 1,0→3,0. US: <b>hidronefrose
+        bilateral</b> (Fig. 6). O que fazer primeiro?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3"><b>Pós-renal (Fig. 1, saída).</b> A urina represada subiu a P_BC e estrangulou a
+          filtração. <b>Desobstruir</b> (sonda vesical / nefrostomia) — a TFG retorna ao cair a contrapressão. Nem
+          volume nem diurético resolvem. KDIGO 3 (anúria).</div></div>
+
+      <div class="step"><b>Ato 4.</b> Paciente em uso recente de antibiótico/AINE, febre, rash, Cr subindo. Urina:
+        <b>eosinofilúria</b>, leucócitos. Mecanismo e conduta?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>NIA — nefrite intersticial aguda (Fig. 5).</b> Reação alérgica do interstício
+          a um fármaco. A "dose" terapêutica é <b>suspender o fármaco culpado</b> (corticoide se necessário). É via
+          intrínseca, mas o gatilho é farmacológico e reversível.</div></div>
+
+      <div class="step"><b>Ato 5.</b> <i>A armadilha.</i> Mulher com ICC FE 25%, dispneica, edemaciada, oligúrica.
+        Cr 1,2→2,4. <b>FE_Na 0,3% (baixa!)</b>, pressão venosa↑. FE_Na baixa = pré-renal → dar volume?
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>Cardiorrenal (Fig. 7) — NÃO dê volume.</b> A FE_Na é baixa porque o RAAS está
+          ávido, mas o <b>motor é congestão venosa</b>, não depleção. Volume sobe a pressão venosa renal e <b>derruba
+          mais</b> a TFG. Conduta: <b>descongestionar</b> (diurético de alça em infusão / UF se refratário), otimizar
+          o DC. A FE_Na baixa não autoriza soro.</div></div>
+
+      <div class="step"><b>Ato 6.</b> <i>A outra armadilha.</i> Cirrótico com ascite, Cr 1,0→2,8 progressiva apesar de
+        expansão com albumina. FE_Na &lt;0,1%, sedimento limpo, rim normal ao US. O que é?
+        <div><button class="act" data-rev="r6">Revelar</button></div>
+        <div class="reveal" id="r6"><b>Hepatorrenal (Fig. 8).</b> Vasodilatação esplâncnica → VCE cai → RAAS fecha a
+          aferente. Rim estruturalmente normal (FE_Na ínfima). SF isolado não corrige; precisa <b>vasoconstritor
+          esplâncnico + albumina</b>. Diagnóstico de exclusão (afastar pré-renal e NTA primeiro).</div></div>
+
+      <div class="step"><b>Ato 7.</b> <i>O diurético confunde.</i> No Ato 1, se o senhor já tomava furosemida, a FE_Na
+        pode subir falsamente. Como confirmar pré-renal?
+        <div><button class="act" data-rev="r7">Revelar</button></div>
+        <div class="reveal" id="r7">Pela <b>FE_ureia</b>: o diurético força natriurese (FE_Na engana), mas a reabsorção
+          de ureia no proximal continua ávida → <b>FE_ureia &lt;35%</b> confirma pré-renal mesmo sob diurético. É a
+          "FE de resgate".</div></div>
+
+      <div class="step"><b>Ato 8.</b> <i>Síntese.</i> A lição de uma linha?
+        <div><button class="act" data-rev="r8">Revelar</button></div>
+        <div class="reveal" id="r8">A creatinina é uma <b>sombra</b>: o mesmo número vem de três mecânicas com condutas
+          <b>antagônicas</b>. O KDIGO diz <b>quão grave</b>; os índices da urina e o contexto dizem <b>por quê</b>.
+          Decomponha o mecanismo antes de interpretar — volume cura o pré-renal e afoga o cardiorrenal.</div></div>
+    </div>
+  </section>
+
+  <!-- TRILHA -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — treze perguntas que constroem a decomposição</h3>
+      <details><summary>1. "LRA" é um diagnóstico?</summary><p>Não — é uma <b>sombra</b>. A mesma creatinina/oligúria
+        nasce de três mecânicas: P_GC↓ (pré-renal), parênquima lesado (intrínseca) e P_BC↑ (pós-renal). O número não
+        distingue; os índices e o contexto, sim.</p></details>
+      <details><summary>2. De onde vem a TFG?</summary><p>Da física de Starling: <b>TFG = Kf·(P_GC − P_BC − π_GC)</b>
+        (M1). Cada termo é uma porta de falência: P_GC, P_BC e Kf/superfície tubular.</p></details>
+      <details><summary>3. O que o KDIGO mede?</summary><p><b>Gravidade</b>, não mecanismo. Dois eixos: creatinina
+        (×1,5–1,9 / ×2–2,9 / ×3 ou ≥4) e débito urinário (&lt;0,5 / &lt;0,5 por 12h / &lt;0,3 por 24h ou anúria). A
+        <b>pior das duas</b> define o estágio.</p></details>
+      <details><summary>4. Por que usar débito urinário além da creatinina?</summary><p>A creatinina <b>atrasa</b>
+        dias (cinética, M4); a oligúria cai em tempo real. Juntos cobrem a fraqueza um do outro.</p></details>
+      <details><summary>5. Como a FE_Na separa pré-renal de NTA?</summary><p><b>FE_Na = (U_Na·P_Cr)/(P_Na·U_Cr)·100.</b>
+        Pré-renal: túbulo íntegro e ávido → FE_Na &lt;1%. NTA: túbulo quebrado, Na escapa → FE_Na &gt;2%.</p></details>
+      <details><summary>6. E quando o paciente usa diurético?</summary><p>O diurético força natriurese e a FE_Na sobe
+        falsamente. Use a <b>FE_ureia</b> (&lt;35% no pré-renal): a reabsorção de ureia no proximal independe do
+        diurético de alça.</p></details>
+      <details><summary>7. Por que a U_osm distingue as vias?</summary><p>Pré-renal concentra (ADH + túbulo bom) →
+        U_osm &gt;500. NTA perdeu o gradiente medular → <b>isostenúria</b> (~300, igual ao plasma).</p></details>
+      <details><summary>8. O que são os cilindros granulosos pardos?</summary><p>Debris de células tubulares
+        descamadas — a assinatura visual da <b>NTA</b>. Sedimento limpo no pré-renal; granuloso na NTA; hemático na
+        glomerular; eosinófilos na NIA.</p></details>
+      <details><summary>9. Como reconhecer a pós-renal?</summary><p>P_BC↑ pela urina represada → <b>hidronefrose</b>
+        ao US. Desobstruir (sonda/nefrostomia) restaura a TFG; soro não resolve.</p></details>
+      <details><summary>10. Por que a NIA é uma armadilha farmacológica?</summary><p>É via intrínseca disparada por um
+        <b>fármaco</b> (AINE, IBP, antibiótico): infiltrado intersticial alérgico, eosinofilúria. A "dose" é
+        <b>suspender o fármaco</b>.</p></details>
+      <details><summary>11. Por que o cardiorrenal engana com FE_Na baixa?</summary><p>O RAAS está ávido (FE_Na &lt;1%),
+        mas o motor é <b>congestão venosa</b>, não depleção. Dar volume sobe a pressão venosa renal e piora a TFG. A
+        conduta é <b>descongestionar</b>.</p></details>
+      <details><summary>12. O que é o hepatorrenal?</summary><p>Vasoconstrição renal <b>funcional</b>: a vasodilatação
+        esplâncnica da cirrose derruba o VCE, o RAAS fecha a aferente. Rim normal, FE_Na &lt;0,1%. Trata-se com
+        vasoconstritor esplâncnico + albumina, não SF isolado.</p></details>
+      <details><summary>13. Em que sentido isto é homeostasia?</summary><p>A TFG é a guardiã do meio interno. Na LRA,
+        volume, eletrólitos, ácido-base e escórias saem do controle. Restaurar a homeostasia exige tratar o
+        <b>mecanismo</b> certo — a sombra (creatinina) só guia quem lê o que a produziu.</p></details>
+    </div>
+  </section>
+
+  <!-- INSTRUMENTO -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — o espaço de índices urinários (FE_Na × U_osm)</h3>
+      <p class="sub">Os controles do <b>Lab</b> movem o ponto laranja neste plano. À <b>esquerda e no alto</b>
+      (FE_Na &lt;1%, U_osm alta) mora o <b>pré-renal</b>; à <b>direita e embaixo</b> (FE_Na &gt;2%, U_osm ~300) a
+      <b>NTA</b>. A linha vertical é a fronteira diagnóstica FE_Na = 1%. A mesma creatinina-sombra cai em pontos
+      muito diferentes — eis a decomposição.</p>
+      <canvas id="lra-canvas" width="900" height="360" aria-label="Espaço de índices FE_Na por U_osm"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- LAB -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — mova a física e os índices; veja o mecanismo e a conduta mudarem</h3>
+      <div class="grid">
+        <div>
+          <label>P_GC — pressão glomerular (mmHg): <span class="val" id="lbl-pgc">55</span></label>
+          <input type="range" id="in-pgc" min="20" max="70" step="1" value="55">
+          <label>Integridade tubular (1=íntegro, baixo=NTA): <span class="val" id="lbl-tub">1.0</span></label>
+          <input type="range" id="in-tub" min="0.1" max="1" step="0.05" value="1">
+          <label>P_BC — obstrução (mmHg): <span class="val" id="lbl-pbc">15</span></label>
+          <input type="range" id="in-pbc" min="5" max="45" step="1" value="15">
+          <label>Pressão venosa renal (mmHg, congestão): <span class="val" id="lbl-pven">8</span></label>
+          <input type="range" id="in-pven" min="2" max="25" step="1" value="8">
+          <label>Vasodilatação esplâncnica (0–1, cirrose): <span class="val" id="lbl-vaso">0.0</span></label>
+          <input type="range" id="in-vaso" min="0" max="1" step="0.1" value="0">
+        </div>
+        <div>
+          <label>U_Na — sódio urinário (mEq/L): <span class="val" id="lbl-una">20</span></label>
+          <input type="range" id="in-una" min="2" max="120" step="1" value="20">
+          <label>U_Cr — creatinina urinária (mg/dL): <span class="val" id="lbl-ucr">100</span></label>
+          <input type="range" id="in-ucr" min="20" max="300" step="5" value="100">
+          <label>P_Cr — creatinina plasmática (mg/dL): <span class="val" id="lbl-pcr">2.5</span></label>
+          <input type="range" id="in-pcr" min="0.5" max="8" step="0.1" value="2.5">
+          <label>U_osm — osmolalidade urinária (mOsm/kg): <span class="val" id="lbl-uosm">600</span></label>
+          <input type="range" id="in-uosm" min="250" max="900" step="10" value="600">
+          <label>Creatinina basal → atual / débito (mL/kg/h):
+            <span class="val" id="lbl-cr">1.0→2.5</span> · <span class="val" id="lbl-deb">0.4</span></label>
+          <input type="range" id="in-cratual" min="0.8" max="6" step="0.1" value="2.5">
+          <input type="range" id="in-debito" min="0" max="1.5" step="0.05" value="0.4">
+        </div>
+      </div>
+      <label style="margin-top:10px">Sedimento urinário:</label>
+      <select id="in-sed">
+        <option value="limpo">limpo (pré-renal / hepatorrenal)</option>
+        <option value="granuloso">cilindros granulosos pardos (NTA)</option>
+        <option value="hematico">cilindros hemáticos (glomerular)</option>
+        <option value="eosinofilo">eosinofilúria (NIA)</option>
+      </select>
+
+      <div class="presets">
+        <button class="act" data-preset="prerenal">Pré-renal</button>
+        <button class="act" data-preset="nta">NTA pós-choque</button>
+        <button class="act" data-preset="posrenal">Pós-renal (obstrução)</button>
+        <button class="act" data-preset="nia">NIA por droga</button>
+        <button class="act" data-preset="cardio">Cardiorrenal</button>
+        <button class="act" data-preset="hepato">Hepatorrenal</button>
+      </div>
+
+      <table>
+        <tr><th>Variável</th><th>Atual</th><th>Comentário</th></tr>
+        <tr><td>TFG estimada (mL/min)</td><td class="num" id="out-tfg">—</td><td class="num">Kf·(P_GC−P_BC−π)</td></tr>
+        <tr><td>FE_Na (%)</td><td class="num" id="out-fena">—</td><td class="num">&lt;1 pré-renal · &gt;2 NTA</td></tr>
+        <tr><td>FE_ureia (%)</td><td class="num" id="out-feur">—</td><td class="num">&lt;35 pré-renal (sob diurético)</td></tr>
+        <tr><td>BUN/Cr</td><td class="num" id="out-buncr">—</td><td class="num">&gt;20 pré-renal</td></tr>
+        <tr><td>U_osm (mOsm/kg)</td><td class="num" id="out-uosm">—</td><td class="num">&gt;500 pré-renal · ~300 NTA</td></tr>
+        <tr><td>Estágio KDIGO</td><td class="num" id="out-kdigo">—</td><td class="num">pior de (Cr, débito)</td></tr>
+        <tr><td>Mecanismo provável</td><td class="num" id="out-mec">—</td><td class="num">a via dominante</td></tr>
+        <tr><td>Responde a volume?</td><td class="num" id="out-vol">—</td><td class="num">cura ou veneno</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÃO -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (12)</button>
+        <button data-bank="textual">Textual (12)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica</b>. Este módulo M16
+    trata da LRA por mecanismo; os índices (FE_Na, FE_ureia, KDIGO) e as condutas (descongestionar, desobstruir,
+    suspender nefrotóxicos) são apresentados como <b>mecanismo computado pelo motor</b>, não como prescrição para
+    um paciente real. <b>Nota de honestidade do modelo:</b> o classificador de mecanismo e a estadiagem são
+    simplificações didáticas calibradas, não um algoritmo diagnóstico validado. Não substitui julgamento clínico;
+    a decisão e a responsabilidade finais são sempre do profissional.
+  </div>
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+</div>
+
+<script>
+/* ENGINE INLINE — espelho fiel de build/m16/model16.js */
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
+function merge(def,inp){ var o={},k; for(k in def) o[k]=def[k]; if(inp) for(k in inp) if(inp[k]!==undefined) o[k]=inp[k]; return o; }
+var KF_STD=12.5, PIGC_STD=28, TFG_STD=100;
+function feNa(uNa,pCr,pNa,uCr){ uNa=clampv(uNa,0,300); pCr=clampv(pCr,0.05,60); pNa=clampv(pNa,100,180); uCr=clampv(uCr,1,600);
+  var f=(uNa*pCr)/(pNa*uCr)*100; return isFinite(f)&&f>=0?f:0; }
+function feUreia(uUr,pCr,pUr,uCr){ uUr=clampv(uUr,0,4000); pCr=clampv(pCr,0.05,60); pUr=clampv(pUr,1,400); uCr=clampv(uCr,1,600);
+  var f=(uUr*pCr)/(pUr*uCr)*100; return isFinite(f)&&f>=0?f:0; }
+function tfgStarling(pGC,pBC,kf,piGC){ pGC=clampv(pGC,0,120); pBC=clampv(pBC,0,90); kf=clampv(kf,0,30); piGC=clampv(piGC,0,45);
+  var puf=pGC-pBC-piGC, g=kf*(puf>0?puf:0); return clampv(g,0,250); }
+function kdigoCreat(crBasal,crAtual){ crBasal=clampv(crBasal,0.1,30); crAtual=clampv(crAtual,0.1,30); var ratio=crAtual/crBasal;
+  if(crAtual>=4.0||ratio>=3.0) return 3; if(ratio>=2.0) return 2; if(ratio>=1.5||(crAtual-crBasal)>=0.3) return 1; return 0; }
+function kdigoDebito(debito){ debito=clampv(debito,0,5); if(debito<0.3) return 3; if(debito<0.5) return 2; return 0; }
+function lra(input){
+  var def={ pArt:100,pGC:55,pBC:15,kf:KF_STD,integridadeTub:1,piGC:PIGC_STD,crBasal:1.0,crAtual:1.0,debitoUrinario:1.0,
+    uNa:20,pNa:140,uCr:100,pCr:1.0,uUr:400,pUr:40,uOsm:600,sedimento:'limpo',dc:5.0,pressaoVenosa:8,vasodilatacaoEsplancnica:0 };
+  var inp=merge(def,input);
+  var pArt=clampv(inp.pArt,20,200),pGC=clampv(inp.pGC,0,120),pBC=clampv(inp.pBC,0,90),kf=clampv(inp.kf,0,30),
+    integridadeTub=clampv(inp.integridadeTub,0,1),piGC=clampv(inp.piGC,0,45),crBasal=clampv(inp.crBasal,0.1,30),
+    crAtual=clampv(inp.crAtual,0.1,30),debito=clampv(inp.debitoUrinario,0,5),uNa=clampv(inp.uNa,0,300),pNa=clampv(inp.pNa,100,180),
+    uCr=clampv(inp.uCr,1,600),pCr=clampv(inp.pCr,0.05,60),uUr=clampv(inp.uUr,0,4000),pUr=clampv(inp.pUr,1,400),
+    uOsm=clampv(inp.uOsm,50,1400),dc=clampv(inp.dc,1,12),pVen=clampv(inp.pressaoVenosa,0,30),vasoEspl=clampv(inp.vasodilatacaoEsplancnica,0,1);
+  var sedimento=(inp.sedimento==='granuloso'||inp.sedimento==='hematico'||inp.sedimento==='eosinofilo'||inp.sedimento==='limpo')?inp.sedimento:'limpo';
+  var kfEff=kf*(0.3+0.7*integridadeTub), tfg=tfgStarling(pGC,pBC,kfEff,piGC);
+  var FENa=feNa(uNa,pCr,pNa,uCr), FEureia=feUreia(uUr,pCr,pUr,uCr), bunCr=(pUr*0.467)/pCr;
+  var kCreat=kdigoCreat(crBasal,crAtual), kDeb=kdigoDebito(debito), estagioKDIGO=Math.max(kCreat,kDeb);
+  var obstrucao=pBC>=25, congestao=pVen>=14, tubuloLesado=integridadeTub<0.6||FENa>2||(uOsm<380&&sedimento==='granuloso'),
+    preRenal=(FENa<1)&&(uOsm>450)&&(bunCr>20);
+  var mecanismo,reversibilidade,respondeVolume,conduta;
+  if(obstrucao){ mecanismo='pós-renal'; reversibilidade='alta (se desobstruir cedo)'; respondeVolume=false;
+    conduta='desobstruir: sondagem/nefrostomia/cateter — a TFG restaura quando P_BC cai. Volume não resolve.'; }
+  else if(vasoEspl>=0.5&&integridadeTub>=0.7&&FENa<0.2&&sedimento==='limpo'){ mecanismo='hepatorrenal'; reversibilidade='funcional (sem dano estrutural)'; respondeVolume=false;
+    conduta='vasoconstritor esplâncnico (terlipressina/noradrenalina) + albumina — restaura o VCE. SF isolado não corrige.'; }
+  else if(congestao&&integridadeTub>=0.7){ mecanismo='cardiorrenal'; reversibilidade='alta (com descongestão)'; respondeVolume=false;
+    conduta='DESCONGESTIONAR (diurético de alça em infusão / UF se refratário) + otimizar DC. Volume PIORA (sobe a pressão venosa renal).'; }
+  else if(sedimento==='eosinofilo'){ mecanismo='NIA'; reversibilidade='média (suspender o fármaco; corticoide se necessário)'; respondeVolume=false;
+    conduta='suspender o fármaco culpado (AINE, IBP, antibiótico) — nefrite intersticial alérgica; eosinofilúria.'; }
+  else if(sedimento==='hematico'){ mecanismo='glomerular'; reversibilidade='variável (depende da causa glomerular)'; respondeVolume=false;
+    conduta='investigar glomerulonefrite (cilindros hemáticos, proteinúria) — biópsia/imunossupressão conforme causa.'; }
+  else if(tubuloLesado){ mecanismo='NTA (intrínseca)'; reversibilidade='baixa (regenera em 1–3 semanas)'; respondeVolume=false;
+    conduta='suporte: suspender nefrotóxicos, evitar nova isquemia, manejar volume/eletrólitos. Volume NÃO restaura a TFG.'; }
+  else if(preRenal){ mecanismo='pré-renal'; reversibilidade='alta (reverte com volume/perfusão)'; respondeVolume=true;
+    conduta='restaurar a perfusão (volume se hipovolêmico) — o túbulo está íntegro e ávido; a TFG retorna com P_GC.'; }
+  else { if(pGC<45){ mecanismo='pré-renal'; reversibilidade='alta'; respondeVolume=true; conduta='restaurar a perfusão renal (P_GC↓ domina); reavaliar índices.'; }
+    else { mecanismo='NTA (intrínseca)'; reversibilidade='baixa'; respondeVolume=false; conduta='tratar como intrínseca enquanto os índices não definem; suspender nefrotóxicos.'; } }
+  var fenaBaixa=FENa<1, fenaBaixaMasNaoVolume=fenaBaixa&&(mecanismo==='cardiorrenal'||mecanismo==='hepatorrenal'),
+    isostenuria=Math.abs(uOsm-300)<60, temLRA=estagioKDIGO>=1;
+  return { pArt:pArt,pGC:pGC,pBC:pBC,kf:kf,kfEff:kfEff,integridadeTub:integridadeTub,piGC:piGC,tfg:tfg,
+    crBasal:crBasal,crAtual:crAtual,debitoUrinario:debito,FENa:FENa,FEureia:FEureia,bunCr:bunCr,uOsm:uOsm,sedimento:sedimento,
+    kCreat:kCreat,kDeb:kDeb,estagioKDIGO:estagioKDIGO,temLRA:temLRA,mecanismo:mecanismo,reversibilidade:reversibilidade,
+    respondeVolume:respondeVolume,conduta:conduta,dc:dc,pressaoVenosa:pVen,vasodilatacaoEsplancnica:vasoEspl,
+    obstrucao:obstrucao,congestao:congestao,fenaBaixa:fenaBaixa,fenaBaixaMasNaoVolume:fenaBaixaMasNaoVolume,isostenuria:isostenuria }; }
+function indexSpaceLayout(state,W,H){ state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=54,padR=16,padT=18,padB=38,baseY=H-padB, xMin=0,xMax=6,yMin=200,yMax=1000,N=48;
+  var pxX=(W-padL-padR)/(xMax-xMin), pxY=(baseY-padT)/(yMax-yMin);
+  function X(fe){ return padL+(clampv(fe,xMin,xMax)-xMin)*pxX; } function Y(osm){ return baseY-(clampv(osm,yMin,yMax)-yMin)*pxY; }
+  var pts=[],i,osm; for(i=0;i<=N;i++){ osm=yMin+(yMax-yMin)*i/N; pts.push({feNa:1,uOsm:osm,x:X(1),y:Y(osm)}); }
+  var r=lra(state);
+  return { W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,xMin:xMin,xMax:xMax,yMin:yMin,yMax:yMax,pxX:pxX,pxY:pxY,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY}, pts:pts, boundFENa1:X(1), boundOsm500:Y(500),
+    current:{x:X(r.FENa),y:Y(r.uOsm),feNa:r.FENa,uOsm:r.uOsm,mecanismo:r.mecanismo} }; }
+window.lra=lra; window.feNa=feNa; window.feUreia=feUreia; window.tfgStarling=tfgStarling;
+window.kdigoCreat=kdigoCreat; window.kdigoDebito=kdigoDebito; window.indexSpaceLayout=indexSpaceLayout;
+window.MODEL={lra:lra,feNa:feNa,feUreia:feUreia,tfgStarling:tfgStarling,kdigoCreat:kdigoCreat,kdigoDebito:kdigoDebito,
+  indexSpaceLayout:indexSpaceLayout,clampv:clampv,merge:merge,KF_STD:KF_STD,PIGC_STD:PIGC_STD,TFG_STD:TFG_STD};
+
+/* UI */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=(d===undefined?1:d); return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on'); b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on'); $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh(); });
+document.addEventListener('click',function(e){ var b=e.target.closest('button.act[data-rev]'); if(!b) return; var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on'); });
+
+function readInputs(){ return { pGC:+$('in-pgc').value, integridadeTub:+$('in-tub').value, pBC:+$('in-pbc').value,
+  pressaoVenosa:+$('in-pven').value, vasodilatacaoEsplancnica:+$('in-vaso').value,
+  uNa:+$('in-una').value, uCr:+$('in-ucr').value, pCr:+$('in-pcr').value, uOsm:+$('in-uosm').value,
+  crBasal:1.0, crAtual:+$('in-cratual').value, debitoUrinario:+$('in-debito').value, sedimento:$('in-sed').value,
+  uUr: 400 + (+$('in-uosm').value)*1.2, pUr: 40 + (+$('in-pcr').value)*16 }; }
+function refresh(){ var inp=readInputs();
+  $('lbl-pgc').textContent=inp.pGC; $('lbl-tub').textContent=fmt(inp.integridadeTub,2); $('lbl-pbc').textContent=inp.pBC;
+  $('lbl-pven').textContent=inp.pressaoVenosa; $('lbl-vaso').textContent=fmt(inp.vasodilatacaoEsplancnica,1);
+  $('lbl-una').textContent=inp.uNa; $('lbl-ucr').textContent=inp.uCr; $('lbl-pcr').textContent=fmt(inp.pCr,1);
+  $('lbl-uosm').textContent=inp.uOsm; $('lbl-cr').textContent='1.0→'+fmt(inp.crAtual,1); $('lbl-deb').textContent=fmt(inp.debitoUrinario,2);
+  var r=lra(inp);
+  $('out-tfg').textContent=fmt(r.tfg,0); $('out-fena').textContent=fmt(r.FENa,2); $('out-feur').textContent=fmt(r.FEureia,0);
+  $('out-buncr').textContent=fmt(r.bunCr,0); $('out-uosm').textContent=fmt(r.uOsm,0); $('out-kdigo').textContent=r.estagioKDIGO;
+  $('out-mec').textContent=r.mecanismo; $('out-vol').textContent=r.respondeVolume?'SIM (cura)':'NÃO (veneno se der)';
+  verdict(r); drawSpace(inp); pearl(r); }
+function verdict(r){ var v=$('veredito'), cls='b-good', msg;
+  if(r.fenaBaixaMasNaoVolume){ cls='b-bad'; msg='ARMADILHA: FE_Na '+fmt(r.FENa,2)+'% (baixa) mas o mecanismo é '+r.mecanismo+' — volume PIORA. '+r.conduta; }
+  else if(r.mecanismo==='pós-renal'){ cls='b-warn'; msg='PÓS-RENAL (P_BC '+fmt(r.pBC,0)+' mmHg): '+r.conduta; }
+  else if(r.mecanismo.indexOf('NTA')===0||r.mecanismo==='glomerular'||r.mecanismo==='NIA'){ cls='b-warn'; msg='INTRÍNSECA ('+r.mecanismo+'): FE_Na '+fmt(r.FENa,2)+'%, U_osm '+fmt(r.uOsm,0)+'. '+r.conduta; }
+  else if(r.respondeVolume){ cls='b-good'; msg='PRÉ-RENAL: FE_Na '+fmt(r.FENa,2)+'% (<1), BUN/Cr '+fmt(r.bunCr,0)+', U_osm '+fmt(r.uOsm,0)+'. Túbulo íntegro e ávido — '+r.conduta; }
+  else { cls='b-warn'; msg='Mecanismo '+r.mecanismo+' (KDIGO '+r.estagioKDIGO+'). '+r.conduta; }
+  v.className='banner '+cls; v.textContent=msg; }
+function pearl(r){ var p=$('lab-pearl'), ip=$('instr-pearl'), t;
+  if(r.fenaBaixaMasNaoVolume) t='PÉROLA: a FE_Na baixa ('+fmt(r.FENa,2)+'%) NÃO autoriza volume — em '+r.mecanismo+', o motor é congestão/vasoconstrição, não depleção. Volume afoga.';
+  else if(r.mecanismo==='pré-renal') t='PÉROLA: pré-renal — túbulo íntegro reabsorve Na com fúria (FE_Na '+fmt(r.FENa,2)+'%). A MESMA creatinina por NTA daria FE_Na >2%. O índice separa.';
+  else if(r.mecanismo.indexOf('NTA')===0) t='PÉROLA: NTA — túbulo quebrado, FE_Na '+fmt(r.FENa,2)+'% e isostenúria (U_osm '+fmt(r.uOsm,0)+'). Volume não restaura: o filtro é o problema.';
+  else if(r.mecanismo==='pós-renal') t='PÉROLA: a mesma creatinina alta vem da contrapressão (P_BC '+fmt(r.pBC,0)+'). Desobstruir, não soro — a TFG retorna ao cair P_BC.';
+  else t='PÉROLA: um número, várias fisiologias. KDIGO '+r.estagioKDIGO+' diz a gravidade; o mecanismo ('+r.mecanismo+') diz a conduta.';
+  p.textContent=t; ip.textContent=t; }
+function drawSpace(state){ var c=$('lra-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
+  var L=indexSpaceLayout(state,c.width,c.height); ctx.clearRect(0,0,L.W,L.H);
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('U_osm (mOsm/kg)',8,L.padT+2); ctx.fillText('FE_Na (%) →',L.W-130,L.baseY+24);
+  ctx.fillStyle='#6fae8a'; ctx.fillText('pré-renal (FE_Na<1, U_osm alta)',L.padL+8,L.padT+16);
+  ctx.fillStyle='#d08a6f'; ctx.fillText('NTA (FE_Na>2, isostenúria)',L.boundFENa1+90,L.baseY-12);
+  /* fronteira FE_Na = 1% (a polilinha que o validador confere ponto a ponto) */
+  ctx.strokeStyle='#39c0c8'; ctx.lineWidth=2; ctx.beginPath();
+  for(var i=0;i<L.pts.length;i++){ var p=L.pts[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); } ctx.stroke();
+  /* faixa de isostenúria U_osm 300 */
+  ctx.strokeStyle='#e8a13a'; ctx.setLineDash([4,3]); ctx.beginPath();
+  var yIso=L.baseY-(300-L.yMin)*L.pxY; ctx.moveTo(L.axis.x0,yIso); ctx.lineTo(L.axis.xEnd,yIso); ctx.stroke(); ctx.setLineDash([]);
+  /* ponto do caso */
+  var cu=L.current; ctx.fillStyle='#e0556b'; ctx.fillRect(cu.x-4,cu.y-4,8,8);
+  ctx.fillStyle='#e7eef4'; ctx.fillText(cu.mecanismo,Math.min(cu.x+8,L.W-120),Math.max(cu.y-6,L.padT+12)); }
+['in-pgc','in-tub','in-pbc','in-pven','in-vaso','in-una','in-ucr','in-pcr','in-uosm','in-cratual','in-debito'].forEach(function(id){ $(id).addEventListener('input',refresh); });
+$('in-sed').addEventListener('change',refresh);
+
+var PRESETS={
+  prerenal:{pgc:38,tub:1,pbc:15,pven:8,vaso:0,una:10,ucr:150,pcr:2.5,uosm:650,cratual:2.5,debito:0.4,sed:'limpo'},
+  nta:{pgc:55,tub:0.3,pbc:15,pven:8,vaso:0,una:65,ucr:40,pcr:3.2,uosm:300,cratual:3.2,debito:0.4,sed:'granuloso'},
+  posrenal:{pgc:55,tub:1,pbc:35,pven:8,vaso:0,una:40,ucr:50,pcr:3.0,uosm:350,cratual:3.0,debito:0.2,sed:'limpo'},
+  nia:{pgc:55,tub:0.8,pbc:15,pven:8,vaso:0,una:45,ucr:60,pcr:2.2,uosm:350,cratual:2.2,debito:0.6,sed:'eosinofilo'},
+  cardio:{pgc:50,tub:0.9,pbc:15,pven:18,vaso:0,una:8,ucr:120,pcr:2.4,uosm:600,cratual:2.4,debito:0.4,sed:'limpo'},
+  hepato:{pgc:50,tub:0.9,pbc:15,pven:8,vaso:0.8,una:5,ucr:200,pcr:2.8,uosm:550,cratual:2.8,debito:0.3,sed:'limpo'}
+};
+function applyPreset(p){ var d=PRESETS[p]; if(!d) return;
+  $('in-pgc').value=d.pgc; $('in-tub').value=d.tub; $('in-pbc').value=d.pbc; $('in-pven').value=d.pven; $('in-vaso').value=d.vaso;
+  $('in-una').value=d.una; $('in-ucr').value=d.ucr; $('in-pcr').value=d.pcr; $('in-uosm').value=d.uosm;
+  $('in-cratual').value=d.cratual; $('in-debito').value=d.debito; $('in-sed').value=d.sed; refresh(); }
+document.querySelector('.presets').addEventListener('click',function(e){ var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset')); });
+
+/* ILUSTRAÇÕES computadas + helper raster */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+function spaceMini(state,titulo){ var W=300,H=180,L=indexSpaceLayout(state,W,H),s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  var d=''; for(var i=0;i<L.pts.length;i++){ d+=(i===0?'M':'L')+f1(L.pts[i].x)+' '+f1(L.pts[i].y)+' '; }
+  s+='<path d="'+d+'" fill="none" stroke="#39c0c8" stroke-width="2"/>';
+  s+='<rect x="'+f1(L.current.x-4)+'" y="'+f1(L.current.y-4)+'" width="8" height="8" fill="#e0556b"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'FE_Na × U_osm')+'</text>';
+  s+='<text x="'+(W-8)+'" y="'+(L.baseY+14)+'" fill="#9fb1c0" font-size="9" text-anchor="end">FE_Na →</text>';
+  return svgEl(W,H,s); }
+function portasSVG(){ var W=320,H=180,s='';
+  // três portas: aferente fechada, túbulo escuro, ureter pinçado
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">as três portas da LRA</text>';
+  // glomérulo central
+  s+='<circle cx="160" cy="95" r="26" fill="#1b242d" stroke="#39c0c8" stroke-width="2"/><text x="160" y="99" fill="#9fb1c0" font-size="9" text-anchor="middle">glomérulo</text>';
+  // ① aferente (entrada) vermelha fechada
+  s+='<line x1="40" y1="95" x2="134" y2="95" stroke="#e0556b" stroke-width="6"/><circle cx="70" cy="95" r="7" fill="#e0556b"/><text x="60" y="80" fill="#e0556b" font-size="9">①P_GC↓ pré</text>';
+  // ② túbulo escuro (saída do glomérulo)
+  s+='<path d="M186 95 q40 0 50 30 q10 30 -10 45" fill="none" stroke="#7a5a3a" stroke-width="6"/><text x="232" y="120" fill="#e8a13a" font-size="9">②NTA</text>';
+  // ③ ureter pinçado (saída final)
+  s+='<line x1="226" y1="160" x2="226" y2="172" stroke="#9fb1c0" stroke-width="6"/><path d="M218 166 l16 0" stroke="#e0556b" stroke-width="3"/><text x="244" y="172" fill="#e0556b" font-size="9">③P_BC↑ pós</text>';
+  s+='<text x="160" y="172" fill="#9fb1c0" font-size="8" text-anchor="middle">mesma TFG-sombra, 3 caminhos</text>';
+  return svgEl(W,H,s); }
+function kdigoSVG(state){ var r=lra(state||{}), W=300,H=180,s='';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">KDIGO = pior de (Cr, débito)</text>';
+  var stages=[1,2,3], cols=['#52c08a','#e8a13a','#e0556b'];
+  for(var i=0;i<3;i++){ var x=40+i*80, on=(r.estagioKDIGO>=stages[i]);
+    s+='<rect x="'+x+'" y="60" width="64" height="70" rx="6" fill="'+(on?cols[i]:'#1b242d')+'" fill-opacity="'+(on?0.6:0.2)+'" stroke="'+cols[i]+'"/>';
+    s+='<text x="'+(x+32)+'" y="100" fill="#e7eef4" font-size="20" text-anchor="middle">'+stages[i]+'</text>'; }
+  s+='<text x="'+(W/2)+'" y="150" fill="#9fb1c0" font-size="10" text-anchor="middle">estágio atual: '+r.estagioKDIGO+' (Cr '+r.kCreat+' · débito '+r.kDeb+')</text>';
+  return svgEl(W,H,s); }
+function indicesSVG(state){ var r=lra(state||{}), W=300,H=180,base=130,s='';
+  function bar(x,val,max,color,lab){ var h=clampv(val/max,0,1)*86; return '<rect x="'+x+'" y="'+f1(base-h)+'" width="48" height="'+f1(h)+'" fill="'+color+'" fill-opacity="0.65" stroke="'+color+'"/>'+
+    '<text x="'+(x+24)+'" y="'+(base+13)+'" fill="#9fb1c0" font-size="8" text-anchor="middle">'+lab+'</text>'+
+    '<text x="'+(x+24)+'" y="'+f1(base-h-4)+'" fill="#e7eef4" font-size="9" text-anchor="middle">'+fmt(val,val<10?1:0)+'</text>'; }
+  s+=bar(40,r.FENa,6,'#39c0c8','FE_Na %'); s+=bar(110,r.FEureia,60,'#52c08a','FE_ur %'); s+=bar(180,r.bunCr,40,'#e8a13a','BUN/Cr'); s+=bar(250,r.uOsm/200,6,'#e0556b','U_osm/200');
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">índices · '+r.mecanismo+'</text>';
+  s+='<text x="'+(W/2)+'" y="150" fill="#9fb1c0" font-size="9" text-anchor="middle">FE_Na<1 pré-renal · >2 NTA</text>';
+  return svgEl(W,H,s); }
+function posSVG(){ var W=300,H=180,s='';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">pós-renal: P_BC↑ estrangula</text>';
+  s+='<path d="M150 40 q-50 0 -50 40 q0 30 25 40 l50 0 q25 -10 25 -40 q0 -40 -50 -40 z" fill="#1b242d" stroke="#39c0c8" stroke-width="2"/>';
+  s+='<ellipse cx="150" cy="95" rx="28" ry="22" fill="#0a1016" stroke="#e8a13a" stroke-width="2"/><text x="150" y="99" fill="#9fb1c0" font-size="8" text-anchor="middle">pelve dilatada</text>';
+  s+='<line x1="150" y1="120" x2="150" y2="160" stroke="#9fb1c0" stroke-width="6"/><path d="M142 150 l16 0" stroke="#e0556b" stroke-width="4"/><text x="165" y="155" fill="#e0556b" font-size="9">obstrução</text>';
+  s+='<text x="'+(W/2)+'" y="175" fill="#9fb1c0" font-size="8" text-anchor="middle">hidronefrose ao US (Fig. 6)</text>';
+  return svgEl(W,H,s); }
+function pontesSVG(){ var W=320,H=180,s='';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">a FE_Na baixa que ENGANA</text>';
+  // cardiorrenal: coração congesto → pressão venosa↑ → rim
+  s+='<rect x="20" y="40" width="60" height="46" rx="8" fill="#1b242d" stroke="#e0556b" stroke-width="2"/><text x="50" y="67" fill="#e0556b" font-size="9" text-anchor="middle">coração</text>';
+  s+='<text x="50" y="100" fill="#e8a13a" font-size="8" text-anchor="middle">P_venosa↑</text>';
+  s+='<line x1="80" y1="63" x2="120" y2="63" stroke="#e8a13a" stroke-width="3"/><path d="M114 58 l8 5 l-8 5" fill="#e8a13a"/>';
+  // hepatorrenal: fígado/esplâncnico dilatado → VCE↓ → RAAS
+  s+='<rect x="20" y="120" width="60" height="40" rx="8" fill="#1b242d" stroke="#52c08a" stroke-width="2"/><text x="50" y="144" fill="#52c08a" font-size="9" text-anchor="middle">fígado</text>';
+  s+='<text x="50" y="174" fill="#9fb1c0" font-size="7" text-anchor="middle">vasodilat. esplâncnica</text>';
+  s+='<line x1="80" y1="140" x2="120" y2="120" stroke="#52c08a" stroke-width="3"/><path d="M114 117 l8 3 l-6 7" fill="#52c08a"/>';
+  // rim comum
+  s+='<path d="M150 60 q-26 0 -26 30 q0 45 26 50 q26 -5 26 -50 q0 -30 -26 -30 z" fill="#1b242d" stroke="#39c0c8" stroke-width="2"/><text x="150" y="100" fill="#9fb1c0" font-size="9" text-anchor="middle">rim</text>';
+  s+='<text x="150" y="118" fill="#9fb1c0" font-size="7" text-anchor="middle">RAAS ávido</text>';
+  s+='<text x="240" y="80" fill="#e0556b" font-size="9" text-anchor="middle">FE_Na &lt;1%</text>';
+  s+='<text x="240" y="100" fill="#e7eef4" font-size="8" text-anchor="middle">mas NÃO é</text>';
+  s+='<text x="240" y="113" fill="#e7eef4" font-size="8" text-anchor="middle">depleção!</text>';
+  s+='<text x="240" y="140" fill="#e8a13a" font-size="8" text-anchor="middle">volume PIORA</text>';
+  return svgEl(W,H,s); }
+function imgFig(slug,alt){ return '<img src="assets/m16/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+/* TUTOR */
+function R0(extra){ return lra(extra||{}); }
+var PRE_S={pGC:38,crBasal:1,crAtual:2.5,debitoUrinario:0.4,uNa:10,uCr:150,pCr:2.5,uOsm:650,uUr:1200,pUr:120,sedimento:'limpo'};
+var NTA_S={pGC:55,integridadeTub:0.3,crBasal:1,crAtual:3.2,debitoUrinario:0.4,uNa:60,uCr:40,pCr:3.2,uOsm:300,uUr:300,pUr:60,sedimento:'granuloso'};
+var POS_S={pBC:35,crBasal:1,crAtual:3.0,debitoUrinario:0.3,uNa:40,uCr:50,pCr:3.0,uOsm:350,sedimento:'limpo'};
+var CR_S={pressaoVenosa:18,integridadeTub:0.9,pGC:50,crBasal:1.2,crAtual:2.4,debitoUrinario:0.4,uNa:8,uCr:120,pCr:2.4,uOsm:600,uUr:900,pUr:90,dc:3,sedimento:'limpo'};
+var TUTOR_ILUSTRADO=[
+  {q:'No espaço de índices, FE_Na 0,1% e U_osm 650 caem em que região?',o:['NTA','pré-renal','pós-renal'],c:1,e:'FE_Na<1% + urina concentrada = túbulo íntegro e ávido = pré-renal.',fig:function(){return spaceMini(PRE_S,'FE_Na 0,1% · U_osm 650');}},
+  {q:'E FE_Na 3,4% com U_osm 300 (isostenúria)?',o:['pré-renal','NTA','hepatorrenal'],c:1,e:'FE_Na>2% e isostenúria = túbulo quebrado = NTA.',fig:function(){return spaceMini(NTA_S,'FE_Na 3,4% · U_osm 300');}},
+  {q:'Na figura das três portas, a lesão ① (aferente) corresponde a…',o:['pós-renal','pré-renal (P_GC↓)','NTA'],c:1,e:'A entrada fechada derruba a P_GC: pré-renal.',fig:function(){return portasSVG();}},
+  {q:'Cr 1,0→3,2 e débito 0,4 mL/kg/h: qual estágio KDIGO?',o:['1','2','3'],c:2,e:'Cr ×3,2 (≥×3) → estágio 3; a pior das duas leituras define.',fig:function(){return kdigoSVG(NTA_S);}},
+  {q:'Os cilindros granulosos pardos da figura indicam…',o:['pré-renal','dano tubular (NTA)','obstrução'],c:1,e:'Debris epitelial descamado = necrose tubular aguda.',fig:function(){return imgFig('nta-cilindros-granulosos.svg','cilindros granulosos');}},
+  {q:'A hidronefrose ao US (figura) é assinatura de…',o:['NTA','pós-renal','hepatorrenal'],c:1,e:'Pelve dilatada = urina represada = obstrução = pós-renal.',fig:function(){return imgFig('hidronefrose-us.svg','hidronefrose');}},
+  {q:'No cardiorrenal (figura), a FE_Na baixa autoriza volume?',o:['sim, é pré-renal','não, o motor é congestão venosa','sim, sempre'],c:1,e:'FE_Na baixa por RAAS ávido, mas volume sobe a pressão venosa renal e piora. Descongestionar.',fig:function(){return imgFig('cardiorrenal.svg','síndrome cardiorrenal');}},
+  {q:'No hepatorrenal (figura), o mecanismo é…',o:['necrose tubular','vasoconstrição renal funcional','obstrução'],c:1,e:'Vasodilatação esplâncnica → VCE↓ → RAAS fecha a aferente. Rim normal, FE_Na quase zero.',fig:function(){return imgFig('hepatorrenal.svg','síndrome hepatorrenal');}},
+  {q:'A nefrite intersticial aguda (figura) é desencadeada por…',o:['hipovolemia','um fármaco (alérgica)','obstrução'],c:1,e:'AINE/IBP/antibiótico → infiltrado intersticial, eosinofilúria. Suspender o fármaco.',fig:function(){return imgFig('nefrite-intersticial.svg','nefrite intersticial');}},
+  {q:'Os índices computados (figura) com FE_Na <1, BUN/Cr >20, U_osm alta dizem…',o:['NTA','pré-renal','glomerular'],c:1,e:'Tríade clássica do pré-renal: túbulo ávido reabsorve Na, ureia e água.',fig:function(){return indicesSVG(PRE_S);}},
+  {q:'Na histologia da NTA (figura), por que a FE_Na sobe?',o:['o glomérulo fecha','o epitélio tubular descama e não reabsorve Na','a pressão venosa sobe'],c:1,e:'Sem epitélio funcionante, o Na filtrado escapa na urina → FE_Na >2%.',fig:function(){return imgFig('nta-histologia.svg','histologia da NTA');}},
+  {q:'No semáforo KDIGO (figura), débito <0,3 mL/kg/h sozinho dá…',o:['estágio 1','estágio 3','sem LRA'],c:1,e:'Anúria/débito <0,3 por 24h = estágio 3, mesmo se a creatinina ainda atrasa.',fig:function(){return kdigoSVG(POS_S);}}
+];
+var TUTOR_TEXTUAL=[
+  {q:'A fórmula da FE_Na é…',o:['(U_Na·U_Cr)/(P_Na·P_Cr)·100','(U_Na·P_Cr)/(P_Na·U_Cr)·100','U_Na/P_Na·100'],c:1,e:'FE_Na = (U_Na·P_Cr)/(P_Na·U_Cr)·100.'},
+  {q:'"LRA" é, fisiologicamente…',o:['um diagnóstico único','uma sombra de três mecanismos','sempre NTA'],c:1,e:'Mesma creatinina/oligúria por P_GC↓, parênquima lesado ou P_BC↑.'},
+  {q:'O KDIGO estadia a LRA por…',o:['só creatinina','creatinina E débito urinário (a pior)','só débito'],c:1,e:'Dois eixos; a pior das duas leituras define o estágio.'},
+  {q:'FE_Na <1% com BUN/Cr >20 e U_osm >500 sugere…',o:['NTA','pré-renal','pós-renal'],c:1,e:'Túbulo íntegro e ávido — pré-renal; responde a volume.'},
+  {q:'FE_Na >2% com isostenúria (U_osm ~300) sugere…',o:['pré-renal','NTA','hepatorrenal'],c:1,e:'Túbulo quebrado — não reabsorve Na nem concentra; NTA.'},
+  {q:'Sob diurético, o índice de resgate para confirmar pré-renal é…',o:['FE_Na','FE_ureia (<35%)','BUN só'],c:1,e:'O diurético eleva a FE_Na falsamente; a reabsorção de ureia segue ávida.'},
+  {q:'A pós-renal é reconhecida por…',o:['cilindros granulosos','hidronefrose (P_BC↑)','eosinofilúria'],c:1,e:'Urina represada dilata a pelve; desobstruir restaura a TFG.'},
+  {q:'A NIA (nefrite intersticial aguda) cursa com…',o:['cilindros hemáticos','eosinofilúria por fármaco','FE_Na <0,1%'],c:1,e:'Reação alérgica do interstício a AINE/IBP/antibiótico.'},
+  {q:'No cardiorrenal, dar volume…',o:['cura, é pré-renal','PIORA (sobe a pressão venosa renal)','não muda nada'],c:1,e:'O motor é congestão venosa, não depleção; descongestionar.'},
+  {q:'O hepatorrenal é…',o:['necrose tubular estrutural','vasoconstrição funcional na cirrose','obstrução'],c:1,e:'Vasodilatação esplâncnica → VCE↓ → RAAS fecha a aferente; rim normal.'},
+  {q:'Cilindros hemáticos no sedimento apontam para via…',o:['glomerular','pré-renal','pós-renal'],c:0,e:'Hematúria dismórfica + cilindros hemáticos = glomerulonefrite.'},
+  {q:'A inversão central deste módulo é…',o:['tratar o número da creatinina','decompor o mecanismo antes de interpretar','sempre dialisar'],c:1,e:'A conduta de um mecanismo é o veneno do outro; leia a sombra pelo que a produziu.'}
+];
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL; window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+var BANKS={ilustrada:TUTOR_ILUSTRADO,textual:TUTOR_TEXTUAL}, curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+function renderTutor(){ var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():''; $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false; $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){ if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button'); btns[item.c].classList.add('ok'); if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block'; fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e; $('tutor-score').textContent=tScore; $('tutor-total').textContent=tTotal; });
+    box.appendChild(b); }); }
+$('banktabs').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor(); });
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+$('draw-portas').innerHTML = portasSVG();
+$('draw-kdigo').innerHTML = kdigoSVG(NTA_S);
+$('draw-indices').innerHTML = indicesSVG(PRE_S);
+$('draw-pos').innerHTML = posSVG();
+$('draw-pontes').innerHTML = pontesSVG();
+$('fig-caso').innerHTML = spaceMini(PRE_S,'pré-renal') + spaceMini(NTA_S,'NTA') + indicesSVG(POS_S);
+
+refresh(); renderTutor();
+</script>
+</body>
+</html>

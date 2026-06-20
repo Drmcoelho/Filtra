@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M18 — Anti-HTN, RAAS e eixo endócrino-renal [capstone]</title>
+<style>
+  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--warn:#e8a13a;--bad:#e0556b;--good:#52c08a;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none} section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .presets{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  .dose{background:rgba(232,161,58,.10);border:1px solid var(--warn);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px} .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)} .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)} .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)} .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M18</div>
+  <h1>Anti-hipertensivos, RAAS e eixo endócrino-renal — o paradoxo da creatinina [capstone]</h1>
+  <div class="sub">Bloquear o RAAS <b>dilata a eferente</b> → P_GC↓ → TFG↓ → a creatinina sobe ~até <b>30%</b>,
+  e isso costuma ser o efeito <b>esperado</b> (nefroproteção, proteinúria↓). "Creatinina subiu, suspenda o IECA"
+  é o reflexo errado que este capstone desarma. Cada fármaco traz <b>dose↔unidade↔mecanismo</b> computados:
+  <b>enalapril</b> 5–40 mg/dia, <b>losartana</b> 50–100 mg/dia, <b>alisquireno</b> 150–300 mg/dia,
+  <b>espironolactona</b> 25–50 mg/dia, <b>sacubitril/valsartana</b> 24/26–97/103 mg 2×/dia,
+  <b>epoetina</b> 50–100 UI/kg 3×/sem, <b>sevelâmer</b> 800–1600 mg/refeição, <b>cinacalcete</b> 30–90 mg/dia.</div>
+  <nav class="hex">
+    <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
+    <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="filtra.html">&larr; índice do braço FILTRA</a>
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- CONCEITO -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — a farmacologia do RAAS e do eixo endócrino-renal, ilustrada</h3>
+      <figure class="fviva"><img src="assets/m18/hemodinamica-glomerular-ieca.svg" alt="IECA/BRA dilatam a arteríola eferente, reduzindo a pressão intraglomerular" loading="lazy">
+        <figcaption><b>Prancha-síntese (Fig. 1).</b> O glomérulo do M1 com as duas arteríolas: a <b>aferente</b> (entra) e a
+        <b>eferente</b> (sai). Os IECA/BRA cortam a AngII → a <b>eferente abre</b> (calibre↑, R_E↓) → a represa glomerular cai
+        → <b>P_GC↓</b> → TFG↓ e a creatinina sobe. O número ◎ marca o ponto que o motor computa: a queda esperada da pressão.</figcaption></figure>
+      <p class="sub" style="margin-top:0"><b>Bloquear o RAAS reescreve a hemodinâmica glomerular — homeostasia da pressão.</b>
+      Estes fármacos não tratam só "a pressão arterial": eles movem a <b>aferente × eferente</b> do M1 e o <b>eixo
+      endócrino-renal</b> do M14. As Fig. 1–8 voltam no Caso, na Trilha e na Avaliação (algumas reaparecem nos exercícios).
+      Atribuição em <code>CREDITS.md</code> (em curadoria).</p>
+
+      <h4>1. O bloqueio do RAAS na eferente — P_GC↓, Cr↑ esperado</h4>
+      <p class="sub">IECA (<b>enalapril 5–40 mg/dia</b>), BRA (<b>losartana 50–100 mg/dia</b>) e IDR (<b>alisquireno
+      150–300 mg/dia</b>) reduzem a AngII → a eferente dilata → P_GC↓ → TFG↓ → Cr↑ ~até 30% (esperado), com a
+      <b>FF↓</b> (fluxo plasmático preservado, o que o separa do dano tubular) e <b>proteinúria↓</b> (nefroproteção).</p>
+      <div class="frow">
+        <div class="concept" id="draw-glomerulo"></div>
+        <figure class="fviva"><img src="assets/m18/ieca-bra-mecanismo.svg" alt="Mecanismo de IECA versus BRA na cascata renina-angiotensina" loading="lazy">
+          <figcaption><b>Fig. 2 · IECA × BRA.</b> O IECA bloqueia a <b>enzima conversora</b> (ECA) e impede a formação de
+          AngII; o BRA bloqueia o <b>receptor AT₁</b> a jusante. Mesmo efeito glomerular (eferente abre), menos tosse com o BRA.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m18/inibidor-renina.svg" alt="Inibidor direto de renina age no topo da cascata renina-angiotensina" loading="lazy">
+          <figcaption><b>Fig. 3 · IDR (alisquireno).</b> Corta no <b>topo</b> da cascata, inibindo a própria renina
+          (150–300 mg/dia). Mesma família de efeito glomerular; <b>não combinar</b> com IECA/BRA (hipercalemia/LRA).</figcaption></figure>
+      </div>
+
+      <h4>2. A zona esperado (≤30%) × suspender (>30%) — e a estenose</h4>
+      <p class="sub">Uma alta de Cr de <b>até ~30%</b>, estável, sem hipercalemia, é hemodinâmica e <b>esperada</b> →
+      <b>manter</b> e monitorar. Suspende-se só se Cr↑ &gt;30%, hipercalemia perigosa, ou <b>estenose bilateral de artéria
+      renal</b> — ali a TFG <b>dependia</b> da constrição eferente da AngII, e removê-la vira <b>precipício</b>.</p>
+      <div class="frow">
+        <div class="concept" id="draw-zona"></div>
+        <figure class="fviva"><img src="assets/m18/sacubitril-valsartana.svg" alt="Sacubitril/valsartana: inibe a neprilisina e bloqueia o receptor AT1" loading="lazy">
+          <figcaption><b>Fig. 4 · ARNI (sacubitril/valsartana).</b> 24/26–97/103 mg 2×/dia: a metade <b>sacubitril</b>
+          inibe a <b>neprilisina</b> (↑peptídeos natriuréticos → vasodilatação + natriurese); a <b>valsartana</b> bloqueia
+          o AT₁. <b>Não combinar com IECA</b> (risco de angioedema).</figcaption></figure>
+        <figure class="fviva"><img src="assets/m18/arm-espironolactona.svg" alt="Espironolactona bloqueia o receptor de aldosterona no ducto coletor" loading="lazy">
+          <figcaption><b>Fig. 5 · ARM (espironolactona).</b> 25–50 mg/dia: bloqueia o receptor de <b>aldosterona</b> no
+          ducto coletor → natriurese leve e <b>K⁺↑</b> (poupador). É o que mais sobe o potássio — vigiar a hipercalemia,
+          sobretudo somado ao IECA/BRA.</figcaption></figure>
+      </div>
+
+      <h4>3. O eixo endócrino-renal — ESA, fósforo, PTH e vit D</h4>
+      <p class="sub">O rim é glândula (M14): na DRC, a <b>ESA</b> (epoetina 50–100 UI/kg 3×/sem) corrige a anemia
+      (Hb↑, alvo <b>conservador</b>, não normalizar); os <b>quelantes de P</b> (sevelâmer 800–1600 mg/refeição) baixam o
+      fosfato; os <b>calcimiméticos</b> (cinacalcete 30–90 mg/dia) e os <b>análogos de vit D</b> baixam o PTH (eco do M12).</p>
+      <div class="frow">
+        <div class="concept" id="draw-endo"></div>
+        <figure class="fviva"><img src="assets/m18/eritropoetina-esa.svg" alt="Eritropoetina exógena (ESA) estimula a eritropoese e corrige a anemia da DRC" loading="lazy">
+          <figcaption><b>Fig. 6 · EPO/ESA.</b> O rim doente produz pouca eritropoetina → anemia. A epoetina exógena
+          (50–100 UI/kg 3×/sem) estimula a medula → <b>Hb↑</b>. Alvo conservador (~10–11,5 g/dL): normalizar a Hb piora desfechos.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m18/quelantes-fosforo.svg" alt="Quelantes de fósforo capturam o fosfato no intestino, reduzindo a absorção" loading="lazy">
+          <figcaption><b>Fig. 7 · Quelantes de P.</b> O sevelâmer (800–1600 mg <b>à refeição</b>) liga o fosfato na luz
+          intestinal → menos absorção → <b>PO₄ sérico↓</b>. Controlar o fosfato controla o estímulo ao hiperPTH 2º.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m18/calcimimeticos.svg" alt="Calcimiméticos e análogos de vitamina D reduzem o paratormônio na DRC" loading="lazy">
+          <figcaption><b>Fig. 8 · Calcimiméticos e vit D.</b> O cinacalcete (30–90 mg/dia) sensibiliza o receptor de Ca²⁺
+          da paratireoide → <b>PTH↓</b> (e Ca↓, vigiar hipocalcemia); os análogos de vit D (paricalcitol) ↑Ca²⁺/↓PTH.
+          Fecham o triângulo Ca-PO₄-PTH do M12.</figcaption></figure>
+      </div>
+
+      <h4>4. Ajuste renal de dose — Vd, ligação, fração renal, clearance</h4>
+      <p class="sub">A dose certa depende do que o rim e a máquina removem: <b>dose ajustada = f(Vd, ligação proteica,
+      fração renal, clearance)</b>. Fármaco <b>hidrofílico</b>, pouco ligado a proteína e de fração renal alta acumula na
+      DRC (↓dose) e é <b>removido pela diálise</b> (re-dosar pós-sessão). Tudo obedece à curva <b>Emax</b>: efeito =
+      Emax·D/(EC50+D), com teto.</p>
+      <div class="frow">
+        <div class="concept" id="draw-ajuste"></div>
+        <div class="concept" id="draw-dose"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASO -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — oito atos, decida antes de revelar</h3>
+      <p class="sub">Diabético, DRC estágio 3, proteinúria. Iniciamos terapia que age no RAAS e no eixo endócrino-renal.</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step"><b>Ato 1.</b> Iniciamos <b>enalapril 20 mg/dia</b>. Em 1 semana, creatinina 1,4→1,7 (+21%),
+        K⁺ 4,9, sem oligúria. <i>Prever:</i> o rim piorou — suspender (Fig. 1)?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>Não.</b> Alta &lt;30%, estável, K⁺ tolerável: é a queda <b>esperada</b> da P_GC pela
+          dilatação eferente — a droga age no eixo certo (nefroproteção, antiproteinúrico). <b>Manter e monitorar.</b></div></div>
+
+      <div class="step"><b>Ato 2.</b> Por que a creatinina <b>sobe</b> se a droga "está funcionando"?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2">↓AngII → <b>eferente dilata</b> → a represa glomerular cai → P_GC↓ → TFG↓ → Cr↑. É
+          <b>hemodinâmico</b>; a <b>FF cai junto</b> (fluxo plasmático preservado), o que o separa do dano tubular (NTA).</div></div>
+
+      <div class="step"><b>Ato 3.</b> <i>Prever:</i> além de baixar a PA, por que o IECA <b>protege</b> o rim a longo prazo?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3">Ao baixar a P_GC, reduz a <b>hiperfiltração</b> e a <b>proteinúria</b> (Fig. 1) — menos
+          dano podocitário ao longo dos anos. A Cr que sobe um pouco hoje compra função preservada amanhã.</div></div>
+
+      <div class="step"><b>Ato 4.</b> <i>A exceção.</i> Outro paciente, sopro abdominal, inicia IECA; em 4 dias Cr sobe
+        <b>+50%</b> com oligúria. O que mudou (Fig. 1)?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>Estenose bilateral de artéria renal.</b> Ali a TFG <b>dependia</b> da constrição
+          eferente da AngII; o IECA a removeu → P_GC despencou (<b>precipício</b>). Conduta: <b>suspender</b>, restaurar a
+          função, investigar a estenose. A mesma droga: nefroprotetora na regra, perigosa na exceção.</div></div>
+
+      <div class="step"><b>Ato 5.</b> <i>Hipercalemia.</i> Somamos <b>espironolactona 50 mg/dia</b> ao IECA e o K⁺ vai a
+        5,7. Por quê, e o que fazer (Fig. 5)?
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5">Duplo bloqueio do RAAS → ↓↓aldosterona → menos secreção distal de K⁺ → <b>hipercalemia</b>.
+          Mesmo com ΔCr pequena, <b>K⁺ ≥5,5 manda recuar</b> (suspender/reduzir um dos dois, dieta, ajustar). O potássio decide.</div></div>
+
+      <div class="step"><b>Ato 6.</b> <i>Anemia.</i> Hb 8,0 na DRC. Conduta e alvo (Fig. 6)?
+        <div><button class="act" data-rev="r6">Revelar</button></div>
+        <div class="reveal" id="r6"><b>Epoetina 50–100 UI/kg 3×/sem</b> (após repor ferro): estimula a eritropoese → Hb↑.
+          Alvo <b>conservador</b> (~10–11,5 g/dL) — <b>não normalizar</b> a Hb (mais eventos cardiovasculares se ultrapassar).</div></div>
+
+      <div class="step"><b>Ato 7.</b> <i>Eixo mineral.</i> PO₄ 6,5 e PTH 700 (hiperPTH 2º). O que entra (Fig. 7–8)?
+        <div><button class="act" data-rev="r7">Revelar</button></div>
+        <div class="reveal" id="r7"><b>Sevelâmer 800–1600 mg/refeição</b> (baixa o fosfato) + <b>cinacalcete 30–90 mg/dia</b>
+          e/ou análogo de vit D (baixam o PTH). Controlar PO₄ e PTH protege osso e vasos — o triângulo Ca-PO₄-PTH (M12).</div></div>
+
+      <div class="step"><b>Ato 8.</b> <i>Síntese.</i> Qual a lição de uma linha?
+        <div><button class="act" data-rev="r8">Revelar</button></div>
+        <div class="reveal" id="r8">A creatinina que sobe ~20% após o IECA contou a P_GC caindo <b>de propósito</b> — recuar
+          seria abrir mão da nefroproteção. Só a estenose, a hipercalemia ou a alta &gt;30% trocam "manter" por "suspender".</div></div>
+    </div>
+  </section>
+
+  <!-- TRILHA -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — treze perguntas que constroem o conceito</h3>
+      <details><summary>1. Por que o IECA baixa a TFG e sobe a creatinina?</summary><p>↓AngII → a <b>eferente dilata</b>
+        (R_E↓) → a represa glomerular cai → P_GC↓ → TFG↓ → Cr↑. É hemodinâmico e <b>esperado</b> (Fig. 1).</p></details>
+      <details><summary>2. Que magnitude de alta de Cr autoriza manter o IECA?</summary><p>Até <b>~30%</b>, estável, sem
+        hipercalemia → manter e monitorar Cr/K⁺. É o efeito hemodinâmico esperado, não dano.</p></details>
+      <details><summary>3. O que separa essa alta esperada de uma NTA?</summary><p>A <b>FF cai</b> (fluxo plasmático
+        preservado) e o sedimento é limpo; na NTA a FF não cai e o sedimento suja. Hemodinâmico ≠ estrutural.</p></details>
+      <details><summary>4. Em quem a dilatação eferente vira catástrofe?</summary><p>Na <b>estenose bilateral de artéria
+        renal</b> (ou rim único estenótico): a TFG <b>dependia</b> da constrição eferente da AngII; remover a AngII derruba
+        a P_GC ao chão (precipício). A anatomia decide.</p></details>
+      <details><summary>5. IECA × BRA — qual a diferença de mecanismo?</summary><p>O IECA bloqueia a <b>enzima conversora</b>
+        (↓formação de AngII); o BRA bloqueia o <b>receptor AT₁</b>. Mesmo efeito glomerular; o BRA dá menos tosse (Fig. 2).</p></details>
+      <details><summary>6. O que faz o alisquireno (IDR)?</summary><p>Inibe a <b>renina</b> no topo da cascata (150–300
+        mg/dia). Não combinar com IECA/BRA — duplo/triplo bloqueio aumenta hipercalemia e LRA (Fig. 3).</p></details>
+      <details><summary>7. Por que o sacubitril/valsartana não vai com IECA?</summary><p>O sacubitril ↑peptídeos
+        natriuréticos inibindo a neprilisina; somado ao IECA, o risco de <b>angioedema</b> sobe. Usa-se a forma com BRA (ARNI).</p></details>
+      <details><summary>8. Qual classe mais sobe o potássio?</summary><p>O <b>ARM</b> (espironolactona 25–50 mg/dia): bloqueia
+        a aldosterona no coletor → menos secreção de K⁺ → hipercalemia, sobretudo com IECA/BRA (Fig. 5).</p></details>
+      <details><summary>9. Quando a hipercalemia manda suspender?</summary><p>K⁺ ≥ ~5,5 mmol/L perigoso → recuar mesmo
+        com ΔCr pequena. O potássio é o eletrólito que mata; tem prioridade sobre a creatinina.</p></details>
+      <details><summary>10. Qual o alvo da ESA na anemia da DRC?</summary><p>Hb ~10–11,5 g/dL — <b>conservador</b>. Normalizar
+        a Hb piora desfechos cardiovasculares. Epoetina 50–100 UI/kg 3×/sem após repor ferro (Fig. 6).</p></details>
+      <details><summary>11. Como se trata o hiperPTH 2º?</summary><p>Baixar PO₄ (<b>quelantes</b>, sevelâmer 800–1600 mg/refeição)
+        e baixar PTH (<b>calcimiméticos</b>, cinacalcete; <b>análogos de vit D</b>) — o triângulo Ca-PO₄-PTH (Fig. 7–8, M12).</p></details>
+      <details><summary>12. Quais parâmetros decidem o ajuste renal de dose?</summary><p><b>Vd</b>, <b>ligação proteica</b>,
+        <b>fração renal</b> de eliminação e <b>clearance</b>. Hidrofílico + pouco ligado + fração renal alta → acumula na
+        DRC (↓dose) e a diálise remove (re-dose pós-sessão).</p></details>
+      <details><summary>13. Em que sentido isto é homeostasia?</summary><p>Os fármacos defendem o meio interno reescrevendo
+        a hemodinâmica glomerular (pressão) e o eixo endócrino (anemia, mineral) que o rim doente já não mantém. A Cr que sobe
+        é o preço fisiológico da proteção.</p></details>
+    </div>
+  </section>
+
+  <!-- INSTRUMENTO -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — a curva ΔCr% × dose do bloqueio RAAS</h3>
+      <p class="sub">Os controles do <b>Lab</b> alimentam esta curva: o ΔCr% esperado sobe com a dose de IECA/BRA. A zona
+      <b>verde (≤30%)</b> é "manter"; a <b>vermelha (>30%)</b> é "suspender". Ligue a <b>estenose bilateral</b> e veja a
+      curva benigna virar <b>precipício</b>.</p>
+      <canvas id="cra-canvas" width="900" height="360" aria-label="Curva ΔCr% versus dose do bloqueio RAAS"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- LAB -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — RAAS, eixo endócrino e ajuste renal (dose computada)</h3>
+      <div class="grid">
+        <div>
+          <label>Fármaco (a alavanca)</label>
+          <select id="in-droga">
+            <option value="nenhum">— nenhum —</option>
+            <option value="enalapril" selected>Enalapril (IECA)</option>
+            <option value="losartana">Losartana (BRA)</option>
+            <option value="alisquireno">Alisquireno (IDR)</option>
+            <option value="espironolactona">Espironolactona (ARM)</option>
+            <option value="sacubitril">Sacubitril/valsartana (ARNI)</option>
+            <option value="epoetina">Epoetina (ESA)</option>
+            <option value="sevelamer">Sevelâmer (quelante de P)</option>
+            <option value="cinacalcete">Cinacalcete (calcimimético)</option>
+          </select>
+          <label>Dose: <span class="val" id="lbl-dose">20</span></label>
+          <input type="range" id="in-dose" min="0" max="80" step="1" value="20">
+          <label>TFG basal (mL/min): <span class="val" id="lbl-tfg">60</span></label>
+          <input type="range" id="in-tfg" min="10" max="120" step="1" value="60">
+          <label>K⁺ basal (mmol/L): <span class="val" id="lbl-k">4.5</span></label>
+          <input type="range" id="in-k" min="3.0" max="6.0" step="0.1" value="4.5">
+          <div style="display:flex;align-items:center;gap:8px;margin-top:12px"><input type="checkbox" id="in-estenose" style="width:auto"><label style="margin:0">Estenose bilateral de artéria renal</label></div>
+          <div class="dose" id="dose-box">Selecione um fármaco para ver dose, unidade e mecanismo (computados).</div>
+        </div>
+        <div>
+          <label>Cr basal (mg/dL): <span class="val" id="lbl-cr">1.4</span></label>
+          <input type="range" id="in-cr" min="0.6" max="4.0" step="0.1" value="1.4">
+          <label>Proteinúria basal (g/dia): <span class="val" id="lbl-prot">1.5</span></label>
+          <input type="range" id="in-prot" min="0" max="8" step="0.5" value="1.5">
+          <label>Hb basal (g/dL): <span class="val" id="lbl-hb">9.0</span></label>
+          <input type="range" id="in-hb" min="5" max="13" step="0.5" value="9.0">
+          <label>PTH basal (pg/mL): <span class="val" id="lbl-pth">600</span></label>
+          <input type="range" id="in-pth" min="100" max="1200" step="50" value="600">
+          <label>PO₄ basal (mg/dL): <span class="val" id="lbl-po4">6.0</span></label>
+          <input type="range" id="in-po4" min="3" max="9" step="0.5" value="6.0">
+          <h4 style="margin:14px 0 2px">Ajuste renal do fármaco</h4>
+          <label>Fração renal de eliminação: <span class="val" id="lbl-fr">0.5</span></label>
+          <input type="range" id="in-fr" min="0" max="1" step="0.05" value="0.5">
+          <label>Clearance do paciente (mL/min): <span class="val" id="lbl-clr">100</span></label>
+          <input type="range" id="in-clr" min="5" max="120" step="5" value="100">
+        </div>
+      </div>
+
+      <div class="presets">
+        <button class="act" data-preset="ieca_esperado">IECA — alta esperada (≤30%)</button>
+        <button class="act" data-preset="estenose">IECA + estenose bilateral</button>
+        <button class="act" data-preset="hiperk">IECA + ARM → hipercalemia</button>
+        <button class="act" data-preset="epo">Anemia DRC → EPO</button>
+        <button class="act" data-preset="mineral">HiperPTH 2º → sevelâmer/cinacalcete</button>
+        <button class="act" data-preset="ajuste">Fármaco dialisável (↓dose)</button>
+      </div>
+
+      <table>
+        <tr><th>Variável</th><th>Atual</th><th>Comentário</th></tr>
+        <tr><td>ΔP_GC (fração)</td><td class="num" id="out-pgc">—</td><td class="num">eferente dilata → P_GC↓</td></tr>
+        <tr><td>TFG resultante (mL/min)</td><td class="num" id="out-tfg">—</td><td class="num">cai com o bloqueio</td></tr>
+        <tr><td>ΔCr esperada (%)</td><td class="num" id="out-cr">—</td><td class="num">≤30% = esperado</td></tr>
+        <tr><td>Proteinúria resultante (g/dia)</td><td class="num" id="out-prot">—</td><td class="num">cai (nefroproteção)</td></tr>
+        <tr><td>K⁺ resultante (mmol/L)</td><td class="num" id="out-k">—</td><td class="num">≥5,5 = perigo</td></tr>
+        <tr><td>Hb resultante (g/dL)</td><td class="num" id="out-hb">—</td><td class="num">alvo ~10–11,5</td></tr>
+        <tr><td>PTH / PO₄ resultante</td><td class="num" id="out-mineral">—</td><td class="num">calcimimético/quelante</td></tr>
+        <tr><td>Dose renal ajustada</td><td class="num" id="out-ajuste">—</td><td class="num">Vd·ligação·fr·clearance</td></tr>
+        <tr><td>Conduta</td><td class="num" id="out-classe">—</td><td class="num">manter × suspender</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÃO -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (13)</button>
+        <button data-bank="textual">Textual (13)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica</b>. Este módulo M18 inclui
+    <b>farmacologia aplicada</b> (IECA/BRA/IDR/ARM/ARNI, EPO/ESA, quelantes de P, calcimiméticos, ajuste renal) com doses,
+    unidades e mecanismo — decisão de escopo do autor, válida só para este braço (§8). <b>Nota de honestidade do modelo:</b>
+    a dose-resposta (Emax), o ΔCr%, o ajuste renal e o eixo endócrino são simplificações didáticas calibradas para ensinar o
+    mecanismo, não para calcular prescrições reais. Não substitui julgamento clínico; a decisão e a responsabilidade finais são
+    sempre do profissional.
+  </div>
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+</div>
+
+<script>
+/* ENGINE INLINE — espelho fiel de build/m18/model18.js */
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
+function merge(base,extra){ var o={},k; for(k in base) o[k]=base[k]; if(extra) for(k in extra) o[k]=extra[k]; return o; }
+var FARMACOS={
+  nenhum:        { nome:'— nenhum —',                 unidade:'',        faixa:[0,0],     ec50:1,   eixo:'',     alvo:'',                                         efeito:'' },
+  enalapril:     { nome:'Enalapril (IECA)',           unidade:'mg/dia',  faixa:[5,40],    ec50:8,   eixo:'raas', alvo:'ECA → ↓AngII → eferente dilata (R_E↓)',     efeito:'P_GC↓ · TFG↓ · proteinúria↓ · K⁺↑' },
+  losartana:     { nome:'Losartana (BRA)',            unidade:'mg/dia',  faixa:[50,100],  ec50:50,  eixo:'raas', alvo:'receptor AT₁ (bloqueio) → eferente dilata', efeito:'P_GC↓ · TFG↓ · proteinúria↓ · K⁺↑ (menos tosse)' },
+  alisquireno:   { nome:'Alisquireno (IDR)',          unidade:'mg/dia',  faixa:[150,300], ec50:150, eixo:'raas', alvo:'renina (inibição direta, topo da cascata)', efeito:'P_GC↓ · TFG↓ · proteinúria↓ · K⁺↑' },
+  espironolactona:{ nome:'Espironolactona (ARM)',     unidade:'mg/dia',  faixa:[25,50],   ec50:25,  eixo:'raas', alvo:'receptor de aldosterona (coletor)',        efeito:'natriurese leve · K⁺↑ (poupador)' },
+  sacubitril:    { nome:'Sacubitril/valsartana (ARNI)', unidade:'mg 2×/dia', faixa:[24,97], ec50:30, eixo:'raas', alvo:'neprilisina↓ (↑PN) + AT₁↓ (valsartana)',  efeito:'vasodilatação + natriurese · P_GC↓ · K⁺↑' },
+  epoetina:      { nome:'Epoetina alfa (ESA)',        unidade:'UI/kg 3×/sem', faixa:[50,100], ec50:50, eixo:'endo', alvo:'receptor de EPO (eritropoese)',         efeito:'Hb↑ (alvo conservador, não normalizar)' },
+  sevelamer:     { nome:'Sevelâmer (quelante de P)',  unidade:'mg/refeição', faixa:[800,1600], ec50:800, eixo:'endo', alvo:'fosfato luminal (intestino)',          efeito:'absorção de PO₄↓ → fosfato sérico↓' },
+  cinacalcete:   { nome:'Cinacalcete (calcimimético)', unidade:'mg/dia', faixa:[30,90],   ec50:30,  eixo:'endo', alvo:'receptor sensível ao Ca²⁺ (paratireoide)', efeito:'PTH↓' }
+};
+function emaxModel(dose,ec50,emax){ dose=clampv(dose,0,1e6); ec50=clampv(ec50,1e-6,1e6); emax=clampv(emax,0,1); return clampv(emax*dose/(ec50+dose),0,1); }
+function ajusteRenal(p){ p=p||{};
+  var Vd=clampv(p.Vd!==undefined?p.Vd:0.7,0.05,20);
+  var ligacao=clampv(p.ligacaoProteica!==undefined?p.ligacaoProteica:50,0,100)/100;
+  var fracaoRenal=clampv(p.fracaoRenal!==undefined?p.fracaoRenal:0.5,0,1);
+  var clearance=clampv(p.clearance!==undefined?p.clearance:100,1,200);
+  var fatorClear=clearance/100;
+  var manter=1-fracaoRenal*(1-clampv(fatorClear,0,1)); manter=clampv(manter,0.1,1);
+  var indiceDialise=clampv((1-ligacao)*(1/(1+Vd))*(0.5+fracaoRenal),0,1), dialisavel=indiceDialise>0.25;
+  return {fracaoManter:manter,indiceDialise:indiceDialise,dialisavel:dialisavel,Vd:Vd,ligacao:ligacao*100,fracaoRenal:fracaoRenal,clearance:clearance}; }
+function rim(input){ var inp=input||{};
+  var droga=String(inp.droga==null?'nenhum':inp.droga).toLowerCase(); if(!FARMACOS.hasOwnProperty(droga)) droga='nenhum';
+  var meta=FARMACOS[droga], dose=clampv(inp.dose!==undefined?inp.dose:(meta.faixa[0]||0),0,5000);
+  var TFG=clampv(inp.TFG!==undefined?inp.TFG:60,3,160);
+  var Cr_basal=clampv(inp.Cr_basal!==undefined?inp.Cr_basal:1.4,0.3,12);
+  var K_basal=clampv(inp.K_basal!==undefined?inp.K_basal:4.5,2.5,7.5);
+  var proteinuria=clampv(inp.proteinuria!==undefined?inp.proteinuria:1.5,0,12);
+  var estenoseBilateral=inp.estenoseBilateral===true;
+  var Hb_basal=clampv(inp.Hb_basal!==undefined?inp.Hb_basal:9.0,4,18);
+  var PTH_basal=clampv(inp.PTH_basal!==undefined?inp.PTH_basal:600,50,2000);
+  var PO4_basal=clampv(inp.PO4_basal!==undefined?inp.PO4_basal:6.0,2,12);
+  var Ca_basal=clampv(inp.Ca_basal!==undefined?inp.Ca_basal:8.8,5,13);
+  var peso=clampv(inp.peso!==undefined?inp.peso:70,20,200);
+  var efeitoFarm=droga==='nenhum'?0:emaxModel(dose,meta.ec50,0.95);
+  var bloqueioRAAS=(meta.eixo==='raas')?efeitoFarm:0, potenciaEferente=1;
+  if(droga==='espironolactona') potenciaEferente=0.35;
+  if(droga==='sacubitril') potenciaEferente=0.6;
+  var bloqEf=bloqueioRAAS*potenciaEferente;
+  var dPGC_benigno=-0.22*bloqEf, dTFGfrac, dCrPct, flag, conduta;
+  if(estenoseBilateral&&bloqEf>0){ dTFGfrac=-(0.22*bloqEf+0.55*bloqEf); dPGC_benigno=-(0.22+0.55)*bloqEf; }
+  else { dTFGfrac=-0.22*bloqEf; }
+  dTFGfrac=clampv(dTFGfrac,-0.85,0);
+  var TFG_novo=clampv(TFG*(1+dTFGfrac),1,160);
+  dCrPct=(TFG_novo>0?(TFG/TFG_novo-1):0)*100; dCrPct=clampv(dCrPct,0,600);
+  var Cr_novo=clampv(Cr_basal*(1+dCrPct/100),0.3,20);
+  var dFFfrac=clampv(-0.18*bloqEf,-0.3,0);
+  var subaK=0; if(meta.eixo==='raas'){ subaK=(droga==='espironolactona')?0.9*efeitoFarm:0.5*efeitoFarm; }
+  var K_novo=clampv(K_basal+subaK,2.5,8), hipercalemia=K_novo>=5.5;
+  var dProtFrac=clampv(-0.45*bloqEf,-0.6,0), proteinuria_nova=clampv(proteinuria*(1+dProtFrac),0,12);
+  var Hb_novo=Hb_basal, PTH_novo=PTH_basal, PO4_novo=PO4_basal, Ca_novo=Ca_basal;
+  if(droga==='epoetina') Hb_novo=clampv(Hb_basal+3.0*efeitoFarm,4,12);
+  if(droga==='sevelamer') PO4_novo=clampv(PO4_basal*(1-0.45*efeitoFarm),2,12);
+  if(droga==='cinacalcete'){ PTH_novo=clampv(PTH_basal*(1-0.6*efeitoFarm),30,2000); Ca_novo=clampv(Ca_basal-0.6*efeitoFarm,5,13); }
+  var aj=ajusteRenal(inp), dose_renal_ajustada=clampv(dose*aj.fracaoManter,0,5000);
+  if(meta.eixo==='raas'&&bloqEf>0){
+    if(estenoseBilateral){ flag='estenose_precipicio'; conduta='suspender'; }
+    else if(hipercalemia){ flag='hipercalemia'; conduta='suspender'; }
+    else if(dCrPct>30){ flag='alta_perigosa'; conduta='suspender'; }
+    else { flag='alta_esperada'; conduta='manter'; }
+  } else if(droga==='epoetina'){ flag='esa'; conduta='titular_Hb'; }
+  else if(droga==='sevelamer'){ flag='quelante'; conduta='as_refeicoes'; }
+  else if(droga==='cinacalcete'){ flag='calcimimetico'; conduta='vigiar_Ca'; }
+  else { flag='basal'; conduta='observar'; }
+  return {droga:droga,dose:dose,unidade:meta.unidade,alvo:meta.alvo,faixa:meta.faixa,eixo:meta.eixo,
+    nomeFarmaco:meta.nome,efeitoFarm:efeitoFarm,bloqueioRAAS:bloqueioRAAS,bloqEf:bloqEf,estenoseBilateral:estenoseBilateral,
+    dPGCfrac:dPGC_benigno,dTFGfrac:dTFGfrac,dFFfrac:dFFfrac,TFG:TFG,TFG_novo:TFG_novo,Cr_basal:Cr_basal,Cr_novo:Cr_novo,dCrPct:dCrPct,
+    K_basal:K_basal,K_novo:K_novo,hipercalemia:hipercalemia,proteinuria:proteinuria,proteinuria_nova:proteinuria_nova,dProtFrac:dProtFrac,
+    Hb_basal:Hb_basal,Hb_novo:Hb_novo,PTH_basal:PTH_basal,PTH_novo:PTH_novo,PO4_basal:PO4_basal,PO4_novo:PO4_novo,Ca_basal:Ca_basal,Ca_novo:Ca_novo,
+    Vd:aj.Vd,ligacao:aj.ligacao,fracaoRenal:aj.fracaoRenal,clearance:aj.clearance,fracaoManter:aj.fracaoManter,dose_renal_ajustada:dose_renal_ajustada,
+    indiceDialise:aj.indiceDialise,dialisavel:aj.dialisavel,peso:peso,flag:flag,conduta:conduta}; }
+function craLayout(state,W,H){ state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=52,padR=16,padT=18,padB=38,baseY=H-padB;
+  var droga=String(state.droga==null?'enalapril':state.droga).toLowerCase();
+  if(!FARMACOS.hasOwnProperty(droga)||FARMACOS[droga].eixo!=='raas') droga='enalapril';
+  var meta=FARMACOS[droga], dMax=Math.max(meta.faixa[1]*2,meta.faixa[1]+1), N=60, crMax=60;
+  var estenose=state.estenoseBilateral===true, TFG=clampv(state.TFG!==undefined?state.TFG:60,3,160);
+  var pxX=(W-padL-padR)/dMax, pxY=(baseY-padT)/crMax, pts=[],i,dd;
+  for(i=0;i<=N;i++){ dd=dMax*i/N; var r=rim({droga:droga,dose:dd,TFG:TFG,estenoseBilateral:estenose});
+    var x=padL+dd*pxX, y=baseY-clampv(r.dCrPct,0,crMax)*pxY; pts.push({x:x,y:y}); }
+  var y30=baseY-30*pxY, doseAtual=clampv(state.dose!==undefined?state.dose:meta.faixa[1],0,dMax);
+  var rc=rim({droga:droga,dose:doseAtual,TFG:TFG,estenoseBilateral:estenose});
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,dMax:dMax,crMax:crMax,pxX:pxX,pxY:pxY,y30:y30,estenose:estenose,droga:droga,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},curva:pts,
+    current:{x:padL+doseAtual*pxX,dose:doseAtual,dCrPct:rc.dCrPct,conduta:rc.conduta}}; }
+window.rim=rim; window.emaxModel=emaxModel; window.ajusteRenal=ajusteRenal; window.craLayout=craLayout; window.merge=merge; window.FARMACOS=FARMACOS;
+window.MODEL={rim:rim,emaxModel:emaxModel,ajusteRenal:ajusteRenal,craLayout:craLayout,merge:merge,FARMACOS:FARMACOS,clampv:clampv};
+
+/* UI */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=(d===undefined?1:d); return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+var COND_TXT={manter:'MANTER e monitorar',suspender:'SUSPENDER / reavaliar',titular_Hb:'titular Hb ao alvo conservador',as_refeicoes:'dar às refeições',vigiar_Ca:'vigiar cálcio',observar:'observar'};
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on'); b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on'); $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh(); });
+document.addEventListener('click',function(e){ var b=e.target.closest('button.act[data-rev]'); if(!b) return; var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on'); });
+
+function readInputs(){ return { droga:$('in-droga').value, dose:+$('in-dose').value, TFG:+$('in-tfg').value, Cr_basal:+$('in-cr').value,
+  K_basal:+$('in-k').value, proteinuria:+$('in-prot').value, Hb_basal:+$('in-hb').value, PTH_basal:+$('in-pth').value, PO4_basal:+$('in-po4').value,
+  fracaoRenal:+$('in-fr').value, clearance:+$('in-clr').value, estenoseBilateral:$('in-estenose').checked }; }
+function refresh(){ var inp=readInputs();
+  $('lbl-dose').textContent=inp.dose; $('lbl-tfg').textContent=inp.TFG; $('lbl-k').textContent=fmt(inp.K_basal,1);
+  $('lbl-cr').textContent=fmt(inp.Cr_basal,1); $('lbl-prot').textContent=fmt(inp.proteinuria,1); $('lbl-hb').textContent=fmt(inp.Hb_basal,1);
+  $('lbl-pth').textContent=inp.PTH_basal; $('lbl-po4').textContent=fmt(inp.PO4_basal,1); $('lbl-fr').textContent=fmt(inp.fracaoRenal,2); $('lbl-clr').textContent=inp.clearance;
+  var meta=FARMACOS[inp.droga]||FARMACOS.nenhum;
+  var r=rim(inp);
+  $('out-pgc').textContent=fmt(r.dPGCfrac*100,0)+'%'; $('out-tfg').textContent=fmt(r.TFG_novo,0);
+  $('out-cr').textContent=fmt(r.dCrPct,0)+'%'; $('out-prot').textContent=fmt(r.proteinuria_nova,2);
+  $('out-k').textContent=fmt(r.K_novo,1); $('out-hb').textContent=fmt(r.Hb_novo,1);
+  $('out-mineral').textContent='PTH '+fmt(r.PTH_novo,0)+' · PO₄ '+fmt(r.PO4_novo,1);
+  $('out-ajuste').textContent=fmt(r.fracaoManter*100,0)+'% da dose'+(r.dialisavel?' · re-dose pós-diálise':'');
+  $('out-classe').textContent=COND_TXT[r.conduta]||r.conduta;
+  if(inp.droga==='nenhum'){ $('dose-box').textContent='Selecione um fármaco para ver dose, unidade e mecanismo (computados).'; }
+  else { $('dose-box').innerHTML='<b>'+meta.nome+'</b> — dose '+inp.dose+' '+meta.unidade+' (faixa '+meta.faixa[0]+'–'+meta.faixa[1]+' '+meta.unidade+') · alvo: '+meta.alvo+' · efeito '+(fmt(r.efeitoFarm*100,0))+'% do máximo (curva Emax) → '+meta.efeito+'.'; }
+  verdict(r,inp); drawCra(inp); pearl(r,inp); }
+function verdict(r,inp){ var v=$('veredito'), cls='b-good', msg;
+  if(r.flag==='estenose_precipicio'){ cls='b-bad'; msg='PRECIPÍCIO: estenose bilateral — a TFG dependia da AngII na eferente. ΔCr '+fmt(r.dCrPct,0)+'% (TFG '+fmt(r.TFG_novo,0)+'). SUSPENDER e investigar.'; }
+  else if(r.flag==='hipercalemia'){ cls='b-bad'; msg='Hipercalemia: K⁺ '+fmt(r.K_novo,1)+' (≥5,5) — recuar mesmo com ΔCr '+fmt(r.dCrPct,0)+'%. O potássio decide.'; }
+  else if(r.flag==='alta_perigosa'){ cls='b-warn'; msg='ΔCr '+fmt(r.dCrPct,0)+'% (>30%): acima do teto esperado — reavaliar (dose, volemia, estenose oculta).'; }
+  else if(r.flag==='alta_esperada'){ cls='b-good'; msg='Alta ESPERADA: ΔCr '+fmt(r.dCrPct,0)+'% (≤30%), K⁺ '+fmt(r.K_novo,1)+', proteinúria '+fmt(r.proteinuria_nova,2)+' g/dia (↓). MANTER e monitorar — a droga acertou.'; }
+  else if(r.flag==='esa'){ cls='b-warn'; msg='ESA: Hb sobe para '+fmt(r.Hb_novo,1)+' g/dL — titular ao alvo conservador (~10–11,5), não normalizar.'; }
+  else if(r.flag==='quelante'){ cls='b-warn'; msg='Quelante de P: PO₄ cai para '+fmt(r.PO4_novo,1)+' mg/dL — dar às refeições.'; }
+  else if(r.flag==='calcimimetico'){ cls='b-warn'; msg='Calcimimético: PTH cai para '+fmt(r.PTH_novo,0)+' pg/mL (Ca '+fmt(r.Ca_novo,1)+' — vigiar hipocalcemia).'; }
+  else { cls='b-good'; msg='Sem fármaco ativo no eixo: TFG '+fmt(r.TFG_novo,0)+', Cr estável, K⁺ '+fmt(r.K_novo,1)+'.'; }
+  v.className='banner '+cls; v.textContent=msg; }
+function pearl(r,inp){ var p=$('lab-pearl'), ip=$('instr-pearl'), t;
+  if(r.flag==='alta_esperada') t='PÉROLA: a creatinina subiu '+fmt(r.dCrPct,0)+'% PORQUE a droga acertou — eferente dilatou, P_GC caiu, FF↓ (fluxo preservado). Suspender seria abrir mão da nefroproteção.';
+  else if(r.flag==='estenose_precipicio') t='PÉROLA: a MESMA dose vira precipício na estenose bilateral — a TFG dependia da constrição eferente da AngII. A anatomia, não a dose, decide proteção × dano.';
+  else if(r.flag==='hipercalemia') t='PÉROLA: K⁺ '+fmt(r.K_novo,1)+' ≥5,5 manda recuar mesmo com ΔCr pequena. O duplo bloqueio do RAAS (IECA+ARM) é o cenário clássico de hipercalemia.';
+  else if(r.dialisavel) t='PÉROLA: fármaco hidrofílico, pouco ligado e de fração renal alta → manter só '+fmt(r.fracaoManter*100,0)+'% da dose na DRC, e a diálise o remove (re-dose pós-sessão).';
+  else if(r.flag==='esa') t='PÉROLA: na anemia da DRC, normalizar a Hb piora desfechos — alvo conservador. A EPO repõe o hormônio que o rim doente deixou de fazer (M14).';
+  else t='Bloqueio do RAAS: efeito = Emax·D/(EC50+D). A queda da TFG pela eferente é o efeito esperado — até ~30% de ΔCr, manter.';
+  p.textContent=t; ip.textContent=t; }
+function drawCra(state){ var c=$('cra-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
+  var L=craLayout(state,c.width,c.height); ctx.clearRect(0,0,L.W,L.H);
+  // zonas: verde ≤30%, vermelha >30%
+  ctx.globalAlpha=0.10; ctx.fillStyle='#52c08a'; ctx.fillRect(L.padL,L.y30,L.axis.xEnd-L.padL,L.baseY-L.y30);
+  ctx.fillStyle='#e0556b'; ctx.fillRect(L.padL,L.padT,L.axis.xEnd-L.padL,L.y30-L.padT); ctx.globalAlpha=1;
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  // linha do 30%
+  ctx.strokeStyle='#e8a13a'; ctx.setLineDash([5,4]); ctx.beginPath(); ctx.moveTo(L.padL,L.y30); ctx.lineTo(L.axis.xEnd,L.y30); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillText('ΔCr %',8,L.padT+2); ctx.fillText('dose ('+(FARMACOS[L.droga]||FARMACOS.enalapril).unidade+') →',L.W-200,L.baseY+24);
+  ctx.fillStyle='#8fe0b0'; ctx.fillText('zona esperado (≤30% · manter)',L.padL+8,L.baseY-10);
+  ctx.fillStyle='#e08a96'; ctx.fillText('zona suspender (>30%)',L.padL+8,L.padT+14);
+  // curva ΔCr%
+  ctx.strokeStyle=L.estenose?'#e0556b':'#39c0c8'; ctx.lineWidth=2; ctx.beginPath();
+  for(var i=0;i<L.curva.length;i++){ if(i===0) ctx.moveTo(L.curva[i].x,L.curva[i].y); else ctx.lineTo(L.curva[i].x,L.curva[i].y); } ctx.stroke();
+  var cx=L.current.x; ctx.strokeStyle='#e8a13a'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(cx,L.padT); ctx.lineTo(cx,L.baseY); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#e7eef4'; ctx.fillText('ΔCr esperada '+fmt(L.current.dCrPct,0)+'% · '+L.current.conduta,L.padL+8,L.padT+30); }
+
+function PRESET_RANGE(d){ var meta=FARMACOS[d]||FARMACOS.nenhum; if(d==='nenhum'){ return {max:80,val:0}; } return {max:Math.max(meta.faixa[1]*2,meta.faixa[1]+1),val:meta.faixa[1]}; }
+function syncDoseRange(){ var d=$('in-droga').value, rg=PRESET_RANGE(d); $('in-dose').max=rg.max; $('in-dose').value=rg.val; }
+['in-dose','in-tfg','in-k','in-cr','in-prot','in-hb','in-pth','in-po4','in-fr','in-clr'].forEach(function(id){ $(id).addEventListener('input',refresh); });
+$('in-droga').addEventListener('change',function(){ syncDoseRange(); refresh(); });
+$('in-estenose').addEventListener('change',refresh);
+
+var PRESETS={
+  ieca_esperado:{droga:'enalapril',dose:20,TFG:60,K_basal:4.5,Cr_basal:1.4,prot:1.5,estenose:false,fr:0.5,clr:60},
+  estenose:{droga:'enalapril',dose:40,TFG:60,K_basal:4.5,Cr_basal:1.4,prot:1.5,estenose:true,fr:0.5,clr:60},
+  hiperk:{droga:'espironolactona',dose:50,TFG:55,K_basal:5.1,Cr_basal:1.5,prot:1.0,estenose:false,fr:0.5,clr:55},
+  epo:{droga:'epoetina',dose:100,TFG:25,K_basal:4.6,Cr_basal:3.0,prot:2.0,estenose:false,fr:0.3,clr:25,hb:8.0},
+  mineral:{droga:'cinacalcete',dose:90,TFG:20,K_basal:4.8,Cr_basal:3.5,prot:1.5,estenose:false,fr:0.4,clr:20,pth:800,po4:6.5},
+  ajuste:{droga:'enalapril',dose:20,TFG:25,K_basal:4.7,Cr_basal:2.6,prot:1.5,estenose:false,fr:0.9,clr:20}
+};
+function applyPreset(p){ var d=PRESETS[p]; if(!d) return;
+  $('in-droga').value=d.droga; $('in-tfg').value=d.TFG; $('in-k').value=d.K_basal; $('in-cr').value=d.Cr_basal;
+  $('in-prot').value=d.prot; $('in-estenose').checked=d.estenose; $('in-fr').value=d.fr; $('in-clr').value=d.clr;
+  if(d.hb!==undefined) $('in-hb').value=d.hb; if(d.pth!==undefined) $('in-pth').value=d.pth; if(d.po4!==undefined) $('in-po4').value=d.po4;
+  syncDoseRange(); $('in-dose').value=d.dose; refresh(); }
+document.querySelector('.presets').addEventListener('click',function(e){ var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset')); });
+
+/* ILUSTRAÇÕES computadas + helper raster */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+// glomérulo esquemático: aferente × eferente; o IECA abre a eferente (calibre↑, P_GC↓)
+function glomeruloMini(state,titulo){ var W=300,H=180,s='', r=rim(state||{});
+  var abre=clampv(-r.dTFGfrac/0.22,0,3);                       // quanto a eferente "abriu"
+  var afW=14, efW=clampv(7+abre*7,7,22);                       // eferente alarga com o bloqueio
+  s+='<circle cx="150" cy="92" r="40" fill="#1b242d" stroke="#39c0c8" stroke-width="2"/>';
+  s+='<text x="150" y="96" fill="#9fb1c0" font-size="10" text-anchor="middle">glomérulo</text>';
+  s+='<rect x="36" y="'+(92-afW/2)+'" width="74" height="'+afW+'" fill="#3a7bd5" rx="3"/>';
+  s+='<text x="56" y="'+(92-afW/2-4)+'" fill="#9bbef0" font-size="9">aferente</text>';
+  s+='<rect x="190" y="'+(92-efW/2)+'" width="74" height="'+efW+'" fill="#e8a13a" rx="3"/>';
+  s+='<text x="232" y="'+(92-efW/2-4)+'" fill="#e8c98a" font-size="9" text-anchor="middle">eferente</text>';
+  s+='<text x="150" y="150" fill="'+(r.conduta==='suspender'?'#e08a96':'#8fe0b0')+'" font-size="11" text-anchor="middle">ΔCr '+fmt(r.dCrPct,0)+'% · '+r.conduta+'</text>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'glomérulo farmacológico')+'</text>';
+  return svgEl(W,H,s); }
+// curva ΔCr% × dose (mini), com a linha de 30% e a zona
+function craMini(state,titulo){ var W=300,H=170,L=craLayout(state,W,H),s='';
+  s+='<rect x="'+L.padL+'" y="'+f1(L.y30)+'" width="'+(L.axis.xEnd-L.padL)+'" height="'+f1(L.baseY-L.y30)+'" fill="#52c08a" fill-opacity="0.12"/>';
+  s+='<rect x="'+L.padL+'" y="'+L.padT+'" width="'+(L.axis.xEnd-L.padL)+'" height="'+f1(L.y30-L.padT)+'" fill="#e0556b" fill-opacity="0.12"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.padL+'" y1="'+f1(L.y30)+'" x2="'+L.axis.xEnd+'" y2="'+f1(L.y30)+'" stroke="#e8a13a" stroke-dasharray="4 3"/>';
+  var d=''; for(var i=0;i<L.curva.length;i++){ d+=(i===0?'M':'L')+f1(L.curva[i].x)+' '+f1(L.curva[i].y)+' '; }
+  s+='<path d="'+d+'" fill="none" stroke="'+(L.estenose?'#e0556b':'#39c0c8')+'" stroke-width="2"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'ΔCr% × dose (30% = teto)')+'</text>';
+  return svgEl(W,H,s); }
+function doseMini(droga,titulo){ var W=300,H=170,padL=40,padB=28,baseY=H-padB,padT=20,s='';
+  var ec50=(FARMACOS[droga]||FARMACOS.enalapril).ec50, dmax=ec50*12, pxX=(W-padL-12)/dmax, pxY=(baseY-padT)/1;
+  s+='<line x1="'+padL+'" y1="'+padT+'" x2="'+padL+'" y2="'+baseY+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+padL+'" y1="'+baseY+'" x2="'+(W-12)+'" y2="'+baseY+'" stroke="#3a4a58"/>';
+  var d=''; for(var dd=0;dd<=dmax;dd+=dmax/40){ var e=emaxModel(dd,ec50,0.95); var x=padL+dd*pxX, y=baseY-e*pxY; d+=(d===''?'M':'L')+f1(x)+' '+f1(y)+' '; }
+  s+='<path d="'+d+'" fill="none" stroke="#39c0c8" stroke-width="2"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'dose-resposta (Emax)')+'</text>';
+  s+='<text x="'+(W-8)+'" y="'+(baseY+14)+'" fill="#9fb1c0" font-size="9" text-anchor="end">dose →</text>';
+  return svgEl(W,H,s); }
+// eixo endócrino: Hb, PTH, PO4 como barras movidas pelo fármaco
+function endoBars(r){ var W=300,H=170,base=130,s='';
+  function bar(x,val,max,color,lab){ var h=clampv(val/max,0,1)*96; return '<rect x="'+x+'" y="'+f1(base-h)+'" width="48" height="'+f1(h)+'" fill="'+color+'" fill-opacity="0.65" stroke="'+color+'"/>'+
+    '<text x="'+(x+24)+'" y="'+(base+13)+'" fill="#9fb1c0" font-size="9" text-anchor="middle">'+lab+'</text>'+
+    '<text x="'+(x+24)+'" y="'+f1(base-h-4)+'" fill="#e7eef4" font-size="9" text-anchor="middle">'+fmt(val,0)+'</text>'; }
+  s+=bar(56,r.Hb_novo,15,'#e0556b','Hb'); s+=bar(130,r.PTH_novo/100,12,'#39c0c8','PTH/100'); s+=bar(204,r.PO4_novo,12,'#e8a13a','PO₄');
+  s+='<text x="150" y="150" fill="#9fb1c0" font-size="10" text-anchor="middle">ESA↑Hb · calcimimético↓PTH · quelante↓PO₄</text>';
+  s+='<text x="150" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">eixo endócrino-renal</text>';
+  return svgEl(W,H,s); }
+// ajuste renal: Vd e fração renal como blocos proporcionais
+function ajusteMini(r,titulo){ var W=300,H=170,s='';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'ajuste renal de dose')+'</text>';
+  function blk(x,frac,color,lab,val){ var h=clampv(frac,0,1)*90; return '<rect x="'+x+'" y="'+f1(120-h)+'" width="50" height="'+f1(h)+'" fill="'+color+'" fill-opacity="0.6" stroke="'+color+'"/>'+
+    '<text x="'+(x+25)+'" y="135" fill="#9fb1c0" font-size="9" text-anchor="middle">'+lab+'</text>'+
+    '<text x="'+(x+25)+'" y="'+f1(120-h-4)+'" fill="#e7eef4" font-size="9" text-anchor="middle">'+val+'</text>'; }
+  s+=blk(40,r.fracaoRenal,'#3a7bd5','fr',fmt(r.fracaoRenal,2));
+  s+=blk(110,r.fracaoManter,'#52c08a','manter',fmt(r.fracaoManter*100,0)+'%');
+  s+=blk(180,r.indiceDialise,'#e0556b','diálise',r.dialisavel?'sim':'não');
+  s+='<text x="150" y="152" fill="#9fb1c0" font-size="9" text-anchor="middle">dose = f(Vd, ligação, fração renal, clearance)</text>';
+  return svgEl(W,H,s); }
+function imgFig(slug,alt){ return '<img src="assets/m18/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+/* TUTOR */
+function R0(extra){ return rim(extra||{}); }
+var TUTOR_ILUSTRADO=[
+  {q:'IECA 20 mg, Cr↑ ~18% sem hipercalemia. A conduta é…',o:['suspender já','manter e monitorar','dialisar'],c:1,e:'Alta ≤30%, estável → efeito hemodinâmico esperado. Manter.',fig:function(){return craMini({droga:'enalapril',dose:20},'IECA 20 mg — ≤30%');}},
+  {q:'Ligando a estenose bilateral, a curva de ΔCr%…',o:['some','vira precipício (>30%)','não muda'],c:1,e:'A TFG dependia da AngII na eferente; removê-la derruba a P_GC.',fig:function(){return craMini({droga:'enalapril',dose:40,estenoseBilateral:true},'estenose — precipício');}},
+  {q:'No glomérulo, o IECA atua na arteríola…',o:['aferente (contrai)','eferente (dilata)','nenhuma'],c:1,e:'↓AngII → eferente dilata → P_GC↓ → TFG↓.',fig:function(){return glomeruloMini({droga:'enalapril',dose:20},'IECA — eferente abre');}},
+  {q:'A creatinina sobe porque…',o:['a droga falhou (dano)','a P_GC caiu de propósito (FF↓)','desidratou'],c:1,e:'É hemodinâmico; a FF cai junto (fluxo preservado), separando da NTA.',fig:function(){return glomeruloMini({droga:'enalapril',dose:40},'P_GC↓ esperado');}},
+  {q:'A curva dose-resposta do IECA…',o:['é linear','satura num teto (Emax)','desce'],c:1,e:'Efeito = Emax·D/(EC50+D): há teto.',fig:function(){return doseMini('enalapril','IECA — Emax');}},
+  {q:'Somando ARM ao IECA, o K⁺…',o:['cai','sobe (risco de hipercalemia)','não muda'],c:1,e:'Duplo bloqueio do RAAS → ↓aldosterona → K⁺↑.',fig:function(){return endoBars(R0({droga:'espironolactona',dose:50,K_basal:5.0}));}},
+  {q:'A EPO/ESA move qual barra do eixo endócrino?',o:['o PTH','a Hb (↑)','o PO₄'],c:1,e:'Epoetina → eritropoese → Hb↑ (alvo conservador).',fig:function(){return endoBars(R0({droga:'epoetina',dose:100,Hb_basal:8}));}},
+  {q:'O cinacalcete move qual barra?',o:['Hb','PTH (↓)','TFG'],c:1,e:'Calcimimético → ↓PTH (e Ca↓, vigiar).',fig:function(){return endoBars(R0({droga:'cinacalcete',dose:90,PTH_basal:800}));}},
+  {q:'Fármaco hidrofílico, pouco ligado, fração renal alta na DRC…',o:['mantém dose plena','reduz dose e é dialisável','dobra a dose'],c:1,e:'Acumula na DRC (↓dose) e a diálise o remove (re-dose pós-sessão).',fig:function(){return ajusteMini(R0({droga:'enalapril',dose:20,Vd:0.2,ligacaoProteica:10,fracaoRenal:0.9,clearance:20}),'dialisável');}},
+  {q:'Fármaco muito ligado a proteína, Vd grande…',o:['precisa muito ajuste','muda pouco a dose / não dialisável','some'],c:1,e:'Pouco filtrado/dialisável → ajuste mínimo.',fig:function(){return ajusteMini(R0({droga:'losartana',dose:100,Vd:8,ligacaoProteica:98,fracaoRenal:0.1,clearance:30}),'não dialisável');}},
+  {q:'Na figura, o sevelâmer baixa o fosfato porque…',o:['filtra mais','liga o PO₄ no intestino','aumenta a EPO'],c:1,e:'Quelante luminal → menos absorção de fosfato.',fig:function(){return imgFig('quelantes-fosforo.svg','quelantes de fósforo');}},
+  {q:'Na figura, o ARNI sacubitril/valsartana…',o:['só baixa K','inibe neprilisina + bloqueia AT₁','é um quelante'],c:1,e:'↑peptídeos natriuréticos + bloqueio AT₁; não com IECA (angioedema).',fig:function(){return imgFig('sacubitril-valsartana.svg','sacubitril/valsartana');}},
+  {q:'Na figura, IECA × BRA diferem em…',o:['o efeito glomerular','o ponto da cascata (enzima × receptor)','a via de excreção'],c:1,e:'IECA bloqueia a ECA; BRA bloqueia o AT₁. Mesmo efeito glomerular.',fig:function(){return imgFig('ieca-bra-mecanismo.svg','IECA × BRA');}}
+];
+var TUTOR_TEXTUAL=[
+  {q:'Que magnitude de alta de Cr após IECA autoriza MANTER a droga?',o:['qualquer alta','até ~30%, estável, sem hipercalemia','até 60%'],c:1,e:'É o efeito hemodinâmico esperado pela dilatação eferente.'},
+  {q:'O IECA dilata qual arteríola?',o:['aferente','eferente','arqueada'],c:1,e:'↓AngII → eferente dilata → P_GC↓.'},
+  {q:'O que separa a alta esperada de uma NTA?',o:['a Cr sobe igual','a FF cai (fluxo preservado) e o sedimento é limpo','nada'],c:1,e:'Hemodinâmico: FF↓; estrutural (NTA): FF não cai, sedimento sujo.'},
+  {q:'Em quem a dilatação eferente vira precipício?',o:['idoso','estenose bilateral de artéria renal','hipertenso leve'],c:1,e:'A TFG dependia da constrição eferente da AngII.'},
+  {q:'O enalapril (IECA) usa-se em…',o:['5–40 mg/dia','1–2 g/dia','5 UI'],c:0,e:'5–40 mg/dia; alvo ECA → ↓AngII.'},
+  {q:'A losartana (BRA) usa-se em…',o:['50–100 mg/dia','1 g/dia','10 mcg'],c:0,e:'50–100 mg/dia; bloqueio AT₁.'},
+  {q:'Qual classe mais sobe o potássio?',o:['IDR','ARM (espironolactona 25–50 mg/dia)','ARNI'],c:1,e:'Bloqueia a aldosterona no coletor → K⁺↑.'},
+  {q:'O sacubitril/valsartana NÃO se combina com…',o:['BRA','IECA (angioedema)','quelante'],c:1,e:'Inibe a neprilisina; somado ao IECA, risco de angioedema.'},
+  {q:'O alvo de Hb com ESA na DRC é…',o:['normalizar (>13)','conservador (~10–11,5)','irrelevante'],c:1,e:'Normalizar a Hb piora desfechos cardiovasculares.'},
+  {q:'O sevelâmer (quelante de P) dá-se…',o:['em jejum','às refeições, 800–1600 mg','1×/semana'],c:1,e:'Liga o fosfato luminal durante a refeição.'},
+  {q:'O cinacalcete (calcimimético) baixa o…',o:['fosfato','PTH (30–90 mg/dia)','sódio'],c:1,e:'Sensibiliza o receptor de Ca²⁺ da paratireoide → PTH↓.'},
+  {q:'Quais parâmetros decidem o ajuste renal de dose?',o:['só o peso','Vd, ligação proteica, fração renal, clearance','só a idade'],c:1,e:'E o que a diálise remove (re-dose pós-sessão).'},
+  {q:'A creatinina que sobe ~20% após o IECA significa…',o:['o rim piorou estruturalmente','a P_GC caiu de propósito (nefroproteção)','sempre estenose'],c:1,e:'Manter — é o efeito esperado; só recuar se >30%, hipercalemia ou estenose.'}
+];
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL; window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+var BANKS={ilustrada:TUTOR_ILUSTRADO,textual:TUTOR_TEXTUAL}, curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+function renderTutor(){ var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():''; $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false; $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){ if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button'); btns[item.c].classList.add('ok'); if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block'; fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e; $('tutor-score').textContent=tScore; $('tutor-total').textContent=tTotal; });
+    box.appendChild(b); }); }
+$('banktabs').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor(); });
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+$('draw-glomerulo').innerHTML = glomeruloMini({droga:'enalapril',dose:20},'IECA 20 mg — eferente abre');
+$('draw-zona').innerHTML = craMini({droga:'enalapril',dose:20},'ΔCr% × dose (zona ≤30%)');
+$('draw-endo').innerHTML = endoBars(rim({droga:'epoetina',dose:100,Hb_basal:8}));
+$('draw-ajuste').innerHTML = ajusteMini(rim({droga:'enalapril',dose:20,Vd:0.2,ligacaoProteica:10,fracaoRenal:0.9,clearance:20}),'ajuste renal de dose');
+$('draw-dose').innerHTML = doseMini('enalapril','dose-resposta (IECA)');
+$('fig-caso').innerHTML = glomeruloMini({droga:'enalapril',dose:20},'IECA 20 mg — Cr↑ esperado') + craMini({droga:'enalapril',dose:40,estenoseBilateral:true},'estenose — precipício');
+
+syncDoseRange(); $('in-dose').value=20; refresh(); renderTutor();
+</script>
+</body>
+</html>

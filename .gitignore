@@ -3,3 +3,6 @@ package-lock.json
 npm-debug.log*
 .DS_Store
 *.log
+
+# Worktrees e estado local de agentes (efêmero)
+.claude/

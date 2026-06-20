@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M14 — RAAS e o eixo endócrino renal: o rim como glândula</title>
+<style>
+  :root{
+    --bg:#0c1014; --panel:#141b22; --panel2:#1b242d; --line:#283642;
+    --ink:#e7eef4; --dim:#9fb1c0; --accent:#39c0c8; --warn:#e8a13a; --bad:#e0556b; --good:#52c08a;
+    --aff:#e0556b; --eff:#3a7bd5; --tuft:#39c0c8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none}
+  section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg,#resposta-svg svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px}
+  .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)}
+  .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)}
+  .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)}
+  .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+  code{background:#0a1016;border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:13px}
+  .preset{background:#10202a;border:1px solid var(--accent);color:var(--accent);border-radius:6px;padding:6px 10px;cursor:pointer;margin:4px 6px 4px 0;font-size:13px}
+  .preset:hover{background:#163039}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M14</div>
+  <h1>RAAS e o eixo endócrino renal — o rim como glândula</h1>
+  <div class="sub">O rim <b>não</b> "só filtra". Ele é uma <b>glândula</b>: <em>sente</em> pressão, Na⁺ e O₂ e
+  <em>responde</em> com hormônios que defendem o <b>volume circulante efetivo</b> e o meio interno. A
+  <b>renina</b> (aparelho justaglomerular) dispara por três sinais — ↓pressão aferente, ↓Na⁺ na mácula densa,
+  ↑simpático — e abre a cascata <code>angiotensinogênio → Ang I → Ang II → aldosterona</code>. Em paralelo:
+  <b>ADH</b> (água), <b>EPO</b> (hemácias) e a <b>vitamina D</b> ativa (cálcio). Eixo-mãe:
+  <code>renina = baro · mácula · simp · feedback(volume)</code>.</div>
+  <nav class="hex">
+    <a class="soon" title="em breve">RESPIRA</a>
+    <a class="soon" title="em breve">CHOCA</a>
+    <span class="ativo">FILTRA</span>
+    <a class="soon" title="em breve">ALIMENTA</a>
+    <a class="soon" title="em breve">METABOLIZA</a>
+    <a class="soon" title="em breve">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="filtra.html">&larr; índice do braço FILTRA</a>
+
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- ============================== CONCEITO ============================== -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — o rim que sente e secreta</h3>
+
+      <h4>1. O aparelho justaglomerular e os TRÊS sinais da renina</h4>
+      <p class="sub">No <b>aparelho justaglomerular</b> (JGA) moram as células granulares (que estocam renina) e a
+      <b>mácula densa</b> (que prova o Na⁺ do túbulo). A <b>renina</b> é o gatilho do eixo e é liberada por
+      <b>três sinais</b>: (1) <b>↓pressão</b> na arteríola aferente — um barorreceptor; (2) <b>↓Na⁺</b> chegando
+      à mácula densa — o feedback tubuloglomerular; (3) <b>↑tônus simpático</b> (receptor β1). O <b>volume
+      circulante efetivo</b> é o sinal que o eixo defende: quando o volume sobe, a renina é freada
+      (<b>feedback</b>). É a definição operacional do rim como <b>glândula</b> (Fig. 1, Fig. 2).</p>
+      <div class="frow">
+        <div class="concept" id="draw-jga"></div>
+        <figure class="fviva"><img src="assets/m14/aparelho-justaglomerular.svg" alt="Histologia do aparelho justaglomerular: mácula densa, células granulares produtoras de renina e arteríola aferente" loading="lazy">
+          <figcaption><b>Fig. 1 · O aparelho justaglomerular.</b> A <b>mácula densa</b> (túbulo distal) prova o Na⁺;
+          as <b>células granulares</b> da arteríola <b>aferente</b> estocam e liberam a <b>renina</b>. É o sensor
+          e a glândula no mesmo ponto — onde o rim <em>sente</em> pressão e Na⁺ e <em>decide</em> secretar.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m14/renina-liberacao.svg" alt="Esquema dos três sinais que liberam renina: queda de pressão aferente, queda de Na na mácula densa e tônus simpático" loading="lazy">
+          <figcaption><b>Fig. 2 · Os três gatilhos da renina.</b> ① <b>↓pressão</b> aferente (barorreceptor) · ②
+          <b>↓Na⁺</b> na mácula densa (feedback TG) · ③ <b>↑simpático</b> (β1). Qualquer um sozinho já sobe a
+          renina; juntos, multiplicam-se. O <b>volume↑</b> freia o conjunto.</figcaption></figure>
+      </div>
+
+      <h4>2. A cascata: angiotensinogênio → Ang I → Ang II</h4>
+      <p class="sub">A renina cliva o <b>angiotensinogênio</b> (substrato hepático) em <b>angiotensina I</b>. No
+      pulmão, a <b>ECA</b> converte Ang I em <b>angiotensina II</b> — o efetor. Como <code>AngII = renina ·
+      angiotensinogênio</code>, o substrato importa: dobrar o angiotensinogênio dobra a Ang II para a mesma
+      renina (Fig. 3).</p>
+      <div class="frow">
+        <div class="concept" id="draw-cascata"></div>
+        <figure class="fviva"><img src="assets/m14/raas-esquema.svg" alt="Esquema da cascata renina-angiotensina-aldosterona do angiotensinogênio à Ang II e aldosterona" loading="lazy">
+          <figcaption><b>Fig. 3 · A cascata RAAS.</b> <b>Angiotensinogênio</b> →(renina)→ <b>Ang I</b> →(ECA,
+          pulmão)→ <b>Ang II</b> → <b>aldosterona</b> (suprarrenal). Cada seta é um passo amplificador; a Ang II
+          é o nó que vasoconstringe, retém Na⁺ e dispara a aldosterona.</figcaption></figure>
+      </div>
+
+      <h4>3. A Ang II na eferente + a aldosterona no ducto coletor</h4>
+      <p class="sub">A <b>Ang II</b> faz muito: constringe preferencialmente a arteríola <b>eferente</b> (sobe a
+      pressão glomerular e <b>preserva a TFG</b> quando a perfusão cai — <b>ponte M2</b>), estimula a sede e o
+      ADH, aumenta a reabsorção proximal de Na⁺ e dispara a <b>aldosterona</b> na suprarrenal. A aldosterona
+      ativa o <b>ENaC</b> na célula principal do ducto coletor: <b>retém Na⁺</b> e <b>secreta K⁺/H⁺</b> —
+      por isso o hiperaldosteronismo cursa com hipocalemia e alcalose (<b>ponte M8</b>) (Fig. 4, Fig. 5).</p>
+      <div class="frow">
+        <div class="concept" id="draw-angeff"></div>
+        <figure class="fviva"><img src="assets/m14/angiotensina-ii-acoes.svg" alt="Ações da angiotensina II: vasoconstrição eferente, sede, ADH, reabsorção proximal de sódio e estímulo da aldosterona" loading="lazy">
+          <figcaption><b>Fig. 4 · As ações da Ang II.</b> Constrição <b>eferente</b> (preserva a TFG — M2), sede,
+          ↑ADH, ↑Na⁺ proximal e ↑aldosterona. É o efetor que converte "pouco volume" em "retém tudo": defende
+          o <b>volume circulante efetivo</b>.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m14/aldosterona-sintese.svg" alt="Aldosterona agindo no ducto coletor: ENaC retém sódio e secreta potássio e hidrogênio" loading="lazy">
+          <figcaption><b>Fig. 5 · A aldosterona no ducto.</b> Ativa o <b>ENaC</b> na célula principal: <b>retém
+          Na⁺</b>, <b>secreta K⁺ e H⁺</b> (M8). Estimulada por Ang II <b>e</b> diretamente pela hipercalemia.
+          Daí a tríade do hiperaldo: Na/volume↑, K⁺↓, alcalose.</figcaption></figure>
+      </div>
+
+      <h4>4. O ADH / vasopressina — osmótico × não-osmótico</h4>
+      <p class="sub">O <b>ADH</b> (vasopressina) abre aquaporinas no ducto coletor e retém <b>água livre</b>
+      (<b>ponte M10</b>). Tem <b>dois estímulos</b>: o <b>osmótico</b> (tonicidade↑ → ADH↑, sensível a poucos
+      mOsm/kg) e o <b>não-osmótico</b> (volume↓↓ → ADH↑, um <em>override</em> hemodinâmico). Quando o volume
+      despenca, o corpo aceita ficar hiponatrêmico para preservar volume — o ADH dispara mesmo com tonicidade
+      baixa (Fig. 6).</p>
+      <div class="frow">
+        <div class="concept" id="draw-adh"></div>
+        <figure class="fviva"><img src="assets/m14/adh-vasopressina.svg" alt="ADH vasopressina: estímulo osmótico pela tonicidade e estímulo não-osmótico pela queda de volume, abrindo aquaporinas" loading="lazy">
+          <figcaption><b>Fig. 6 · O ADH e seus dois eixos.</b> <b>Osmótico</b> (tonicidade) — fino e contínuo —
+          e <b>não-osmótico</b> (volume↓↓) — um override que sobrepõe a osmolalidade. Abre <b>aquaporinas</b> no
+          ducto coletor → reabsorve água livre. O SIADH é ADH alto <em>sem</em> nenhum dos dois estímulos.</figcaption></figure>
+      </div>
+
+      <h4>5. EPO e vitamina D — o rim além do RAAS</h4>
+      <p class="sub">A <b>eritropoetina</b> nasce de fibroblastos peritubulares que <b>sentem O₂</b> (via HIF):
+      O₂↓ → EPO↑ → mais hemácias. Na <b>DRC</b>, a massa renal cai e a <em>fábrica</em> de EPO morre → a EPO
+      despenca apesar da anemia → <b>anemia da DRC</b>. A <b>vitamina D</b> só vira <b>calcitriol</b> ativo
+      pela <b>1α-hidroxilase renal</b> (<b>ponte M12</b>); na DRC ela também cai. O rim, então, é glândula
+      tripla: hemodinâmica (RAAS/ADH), hematológica (EPO) e mineral (vit D). As Fig. 1–8 reaparecem no Caso,
+      na Trilha e na Avaliação.</p>
+      <div class="frow">
+        <div class="concept" id="draw-epo"></div>
+        <figure class="fviva"><img src="assets/m14/eritropoetina-rim.svg" alt="Eritropoetina produzida por fibroblastos peritubulares que sentem oxigênio via HIF, estimulando a medula óssea" loading="lazy">
+          <figcaption><b>Fig. 7 · A eritropoetina.</b> Fibroblastos peritubulares sentem O₂ pelo <b>HIF</b>:
+          hipóxia → EPO↑ → medula faz hemácias. Na <b>DRC</b> a fábrica é destruída → EPO cai mesmo com anemia.
+          Por isso a anemia da DRC responde a EPO exógena, não a ferro só.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m14/vitamina-d-ativacao-renal.svg" alt="Ativação renal da vitamina D pela 1-alfa-hidroxilase gerando calcitriol que aumenta a absorção de cálcio" loading="lazy">
+          <figcaption><b>Fig. 8 · A vitamina D ativada.</b> A <b>1α-hidroxilase</b> renal converte o 25-OH-D em
+          <b>calcitriol</b> (1,25-OH₂-D), que absorve cálcio (M12). Na DRC essa enzima falha → hipocalcemia →
+          hiperparatireoidismo secundário. O rim fecha o eixo ósseo-mineral.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== CASO (5 atos) ============================== -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — cinco atos, decida antes de revelar</h3>
+      <p class="sub">Cinco encontros com o rim-glândula. <b>(A)</b> Jovem com hemorragia, PA 80/50, taquicárdico.
+      <b>(B)</b> Homem 45a, HAS resistente, sopro abdominal. <b>(C)</b> Mulher 38a, HAS + hipocalemia, sem
+      edema. <b>(D)</b> Paciente com DRC G4, Hb 8,5, ferro normal. <b>(E)</b> Idoso com pneumonia, Na⁺ 122,
+      euvolêmico.</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step">
+        <b>Ato 1 · (A) hemorragia.</b> Por que a renina, a Ang II e a aldosterona disparam todas juntas?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>É o RAAS apropriado.</b> A queda de pressão (barorreceptor aferente), o
+        baixo Na⁺ na mácula densa e o simpático <em>alto</em> são os <b>três sinais</b> (Fig. 2) → renina↑↑ →
+        AngII↑↑ → aldosterona↑↑. A Ang II constringe a <b>eferente</b> e <b>preserva a TFG</b> (Fig. 4, ponte M2);
+        a aldosterona retém Na⁺/volume. No engine: <code>pressure 65, volume 65, naMacula 70, symp 1.8</code> →
+        regime <b>hipovolemia</b>. O eixo está fazendo seu trabalho.</div>
+      </div>
+      <div class="step">
+        <b>Ato 2 · (B) HAS renovascular.</b> A estenose da artéria renal causa HAS por qual mecanismo?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2"><b>O rim "vê" hipotensão local.</b> A estenose reduz a pressão de perfusão
+        <em>distal</em> à placa → o barorreceptor aferente e a mácula densa pensam que há hipovolemia → renina↑
+        (Fig. 1) → AngII↑ → vasoconstrição + aldosterona → <b>HAS sistêmica</b>. No engine: <code>pressure 68,
+        naMacula 72</code> → renina e AngII elevadas. É HAS dependente de RAAS — daí IECA/BRA funcionarem (e
+        cuidado: na estenose bilateral eles podem derrubar a TFG, pois a eferente é que segura o glomérulo).</div>
+      </div>
+      <div class="step">
+        <b>Ato 3 · (C) hiperaldosteronismo primário (Conn).</b> HAS + K⁺ baixo sem edema. Renina alta ou baixa?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3"><b>Renina BAIXA.</b> Um adenoma secreta aldosterona de forma <b>autônoma</b>
+        (Fig. 5) → retém Na⁺/volume → o volume alto <b>suprime</b> a renina pelo feedback do JGA. O achado é
+        aldosterona <b>alta</b> com renina <b>baixa</b> → a razão <b>aldo/renina (ARR) alta</b> é a assinatura.
+        A aldo troca Na⁺ por K⁺/H⁺ no ducto (Fig. 5, ponte M8) → <b>hipocalemia + alcalose</b>. No engine:
+        <code>aldoAuto 8, kplus 3.0</code> → aldo ↑, renina ↓, regime <b>hiperaldo_primario</b>. Contraste com
+        o Ato 1: lá a aldo é alta mas a renina <em>também</em> (ARR normal).</div>
+      </div>
+      <div class="step">
+        <b>Ato 4 · (D) anemia da DRC.</b> Hb 8,5 com ferro normal num DRC G4. Por quê?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>Falta EPO.</b> A massa renal destruída <b>não produz eritropoetina</b>
+        suficiente (Fig. 7) → a medula não recebe o sinal → anemia normocítica, mesmo com ferro normal e mesmo
+        com a hipóxia que <em>deveria</em> estimular a EPO. No engine: <code>GFR 18, o2 80</code> → EPO <b>abaixo
+        do basal</b> apesar da hipóxia. É a falência da glândula. Trata-se com <b>EPO exógena</b> (após repor
+        ferro). O mesmo rim destruído também não ativa a vitamina D (Fig. 8) → hipocalcemia, PTH↑.</div>
+      </div>
+      <div class="step">
+        <b>Ato 5 · (E) SIADH × ativação apropriada do ADH.</b> Na⁺ 122, euvolêmico, na pneumonia. Síntese.
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>SIADH.</b> ADH <b>inapropriadamente alto</b> (estímulo pulmonar/SNC) <em>sem</em>
+        os gatilhos fisiológicos: a tonicidade está <b>baixa</b> e o volume está <b>normal</b> — nenhum dos dois
+        deveria pedir ADH (Fig. 6). Retém água livre → hiponatremia <b>euvolêmica</b>. No engine:
+        <code>tonicity 268, volume 100, adhDrive 5</code> → ADH alto, regime <b>siadh</b>. Contraste: na
+        hemorragia (Ato 1) o ADH também sobe — mas ali é <b>apropriado</b> (volume↓↓, override não-osmótico).
+        <br><b>Lição:</b> o rim é uma <em>glândula</em> que sente pressão, Na⁺ e O₂ e responde com renina/AngII/
+        aldo, ADH, EPO e vit D. Decompor o sinal antes de interpretar o hormônio.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== TRILHA ============================== -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — dez passos que constroem o eixo</h3>
+      <details><summary>1. Onde mora o sensor que dispara a renina?</summary>
+        <p><em>Pista: dois tipos de célula no mesmo ponto.</em><br>
+        No <b>aparelho justaglomerular</b>: as células granulares da arteríola aferente (estocam renina) e a
+        <b>mácula densa</b> do túbulo distal (prova o Na⁺). Sensor e glândula juntos (Fig. 1).</p></details>
+      <details><summary>2. Quais são os TRÊS sinais que liberam renina?</summary>
+        <p><em>Pista: pressão, sal, nervo.</em><br>
+        ① ↓pressão na aferente (barorreceptor); ② ↓Na⁺ na mácula densa (feedback tubuloglomerular);
+        ③ ↑tônus simpático (β1). Qualquer um sobe a renina; o <b>volume↑</b> a freia (Fig. 2).</p></details>
+      <details><summary>3. Por que AngII = renina · angiotensinogênio?</summary>
+        <p><em>Pista: enzima × substrato.</em><br>
+        A renina é a <b>enzima</b> limitante; o angiotensinogênio é o <b>substrato</b>. O produto da cascata
+        escala com os dois — por isso o substrato hepático também importa (Fig. 3).</p></details>
+      <details><summary>4. Como a Ang II preserva a TFG na hipoperfusão? (ponte M2)</summary>
+        <p><em>Pista: a arteríola de saída.</em><br>
+        Ang II constringe preferencialmente a <b>eferente</b> → sobe a pressão dentro do glomérulo → mantém a
+        TFG mesmo com perfusão baixa. Por isso IECA/BRA podem baixar a TFG na estenose bilateral (Fig. 4).</p></details>
+      <details><summary>5. O que a aldosterona faz no ducto coletor? (ponte M8)</summary>
+        <p><em>Pista: troca iônica.</em><br>
+        Ativa o <b>ENaC</b> na célula principal: <b>retém Na⁺</b> e <b>secreta K⁺/H⁺</b>. Daí o hiperaldo dar
+        hipocalemia e alcalose. Estimulada por Ang II e pela hipercalemia direta (Fig. 5).</p></details>
+      <details><summary>6. No hiperaldosteronismo primário, a renina está alta ou baixa?</summary>
+        <p><em>Pista: o feedback do volume.</em><br>
+        <b>Baixa.</b> A aldosterona autônoma retém volume → o volume alto suprime a renina. Aldo alta + renina
+        baixa → <b>ARR alto</b> é a assinatura. No RAAS secundário (hipovolemia) ambas sobem juntas.</p></details>
+      <details><summary>7. Quais os dois estímulos do ADH e qual domina na crise?</summary>
+        <p><em>Pista: osmolalidade × volume.</em><br>
+        O <b>osmótico</b> (tonicidade) é fino; o <b>não-osmótico</b> (volume↓↓) é um <em>override</em>: na
+        hipovolemia grave o ADH dispara mesmo com tonicidade baixa — o corpo prioriza volume (Fig. 6).</p></details>
+      <details><summary>8. O que define o SIADH?</summary>
+        <p><em>Pista: ADH sem motivo.</em><br>
+        ADH alto <b>sem</b> estímulo osmótico (tonicidade baixa) nem de volume (euvolemia). Retém água livre →
+        hiponatremia euvolêmica. Diferente da hipovolemia, onde o ADH alto é apropriado (Fig. 6).</p></details>
+      <details><summary>9. Por que a anemia da DRC ocorre apesar da hipóxia?</summary>
+        <p><em>Pista: a fábrica morreu.</em><br>
+        Os fibroblastos peritubulares que produzem <b>EPO</b> são destruídos na DRC → mesmo com hipóxia, a EPO
+        não sobe → anemia. Trata-se com EPO exógena, não só ferro (Fig. 7).</p></details>
+      <details><summary>10. Onde a vitamina D vira ativa, e o que falha na DRC? (ponte M12)</summary>
+        <p><em>Pista: a hidroxilação final.</em><br>
+        A <b>1α-hidroxilase renal</b> converte 25-OH-D em <b>calcitriol</b>. Na DRC essa enzima falha →
+        hipocalcemia → hiperparatireoidismo secundário. O rim é também glândula do eixo ósseo-mineral (Fig. 8).</p></details>
+    </div>
+  </section>
+
+  <!-- ============================== INSTRUMENTO ============================== -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — a cascata RAAS × o volume (a alça de feedback)</h3>
+      <p class="sub">As três curvas — <span style="color:#e0556b">renina</span>,
+      <span style="color:#e8a13a">Ang II</span> e <span style="color:#52c08a">aldosterona</span> — caem da
+      esquerda (volume baixo) para a direita (volume alto). É a <b>alça de feedback</b>: <b>volume↑ → renina↓</b>.
+      O ponto branco é o seu volume atual. Mexa nos outros sinais (pressão, Na da mácula, simpático) e veja a
+      cascata inteira subir ou descer.</p>
+      <div class="grid" style="margin-bottom:10px">
+        <div>
+          <label>Volume circulante efetivo (%): <span class="val" id="instr-lbl-vol">100</span></label>
+          <input type="range" id="instr-vol" min="50" max="130" step="1" value="100">
+          <label>Pressão na aferente (mmHg): <span class="val" id="instr-lbl-press">95</span></label>
+          <input type="range" id="instr-press" min="40" max="180" step="1" value="95">
+        </div>
+        <div>
+          <label>Na⁺ na mácula densa (%): <span class="val" id="instr-lbl-na">100</span></label>
+          <input type="range" id="instr-na" min="30" max="160" step="1" value="100">
+          <label>Tônus simpático (0–2): <span class="val" id="instr-lbl-symp">1.00</span></label>
+          <input type="range" id="instr-symp" min="0" max="2" step="0.05" value="1">
+        </div>
+      </div>
+      <canvas id="cascata-canvas" width="900" height="320" aria-label="Cascata RAAS por volume"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+      <h4>A resposta de cada hormônio ao estímulo (computado)</h4>
+      <div class="concept" id="resposta-svg"></div>
+    </div>
+  </section>
+
+  <!-- ============================== LAB ============================== -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — mova os sinais, leia o eixo endócrino por mecanismo</h3>
+      <div style="margin-bottom:6px">
+        <button class="preset" data-preset="euvolemia">Euvolemia basal</button>
+        <button class="preset" data-preset="hipovolemia">Hipovolemia (hemorragia)</button>
+        <button class="preset" data-preset="estenose">Estenose renal (HAS)</button>
+        <button class="preset" data-preset="conn">Hiperaldo 1º (Conn)</button>
+        <button class="preset" data-preset="drc">Anemia da DRC</button>
+        <button class="preset" data-preset="siadh">SIADH</button>
+      </div>
+      <div class="grid">
+        <div>
+          <label>Pressão na aferente / PAM (mmHg): <span class="val" id="lbl-press">95</span></label>
+          <input type="range" id="in-press" min="40" max="180" step="1" value="95">
+          <label>Volume circulante efetivo (%): <span class="val" id="lbl-vol">100</span></label>
+          <input type="range" id="in-vol" min="50" max="130" step="1" value="100">
+          <label>Na⁺ na mácula densa (%): <span class="val" id="lbl-na">100</span></label>
+          <input type="range" id="in-na" min="30" max="160" step="1" value="100">
+          <label>Tônus simpático (0–2): <span class="val" id="lbl-symp">1.00</span></label>
+          <input type="range" id="in-symp" min="0" max="2" step="0.05" value="1">
+          <label>Aldosterona autônoma — adenoma (rel.): <span class="val" id="lbl-aldoauto">0.0</span></label>
+          <input type="range" id="in-aldoauto" min="0" max="15" step="0.5" value="0">
+        </div>
+        <div>
+          <label>K⁺ sérico (mEq/L): <span class="val" id="lbl-k">4.0</span></label>
+          <input type="range" id="in-k" min="2" max="8" step="0.1" value="4">
+          <label>Tonicidade efetiva (mOsm/kg): <span class="val" id="lbl-ton">290</span></label>
+          <input type="range" id="in-ton" min="250" max="340" step="1" value="290">
+          <label>ADH inapropriado — SIADH (rel.): <span class="val" id="lbl-adhdrive">0.0</span></label>
+          <input type="range" id="in-adhdrive" min="0" max="10" step="0.5" value="0">
+          <label>O₂ / Hb renal (%): <span class="val" id="lbl-o2">100</span></label>
+          <input type="range" id="in-o2" min="40" max="110" step="1" value="100">
+          <label>TFG / massa renal (mL/min): <span class="val" id="lbl-gfr">100</span></label>
+          <input type="range" id="in-gfr" min="5" max="130" step="1" value="100">
+        </div>
+      </div>
+
+      <table>
+        <tr><th>Hormônio / sinal</th><th>Atual (rel.)</th><th>Basal ≈</th></tr>
+        <tr><td>Renina (gatilho do eixo)</td><td class="num" id="out-renina">—</td><td class="num">~1.7</td></tr>
+        <tr><td>Angiotensina II (efetor)</td><td class="num" id="out-angii">—</td><td class="num">~1.7</td></tr>
+        <tr><td>Aldosterona (retém Na, secreta K/H)</td><td class="num" id="out-aldo">—</td><td class="num">~1.7</td></tr>
+        <tr><td>↳ razão aldo/renina (ARR)</td><td class="num" id="out-arr">—</td><td class="num">~1</td></tr>
+        <tr><td>ADH / vasopressina (água livre)</td><td class="num" id="out-adh">—</td><td class="num">~1.6</td></tr>
+        <tr><td>↳ componente não-osmótico (volume)</td><td class="num" id="out-adhvol">—</td><td class="num">0</td></tr>
+        <tr><td>Eritropoetina (hemácias)</td><td class="num" id="out-epo">—</td><td class="num">~1.0</td></tr>
+        <tr><td>Calcitriol — vit D ativa (cálcio)</td><td class="num" id="out-calc">—</td><td class="num">~1.0</td></tr>
+        <tr><td>Regime do eixo</td><td class="num" id="out-regime">—</td><td class="num">basal</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- ============================== AVALIAÇÃO ============================== -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (12)</button>
+        <button data-bank="textual">Textual (10)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica e farmacológica</b>.
+    Este módulo (M14) descreve a <b>fisiologia</b> do eixo endócrino renal (RAAS, ADH, EPO, vitamina D) — os
+    fármacos que agem sobre o RAAS (IECA/BRA, antagonistas da aldosterona, vaptanos) e o ajuste de doses são o
+    conteúdo do capstone <b>M18</b>; aqui aparecem apenas como <b>mecanismo</b>. O modelo não substitui
+    julgamento clínico individualizado; a decisão e a responsabilidade finais são sempre do profissional de
+    saúde. <b>Nota de honestidade do modelo:</b> os hormônios são normalizados a 1 = basal e as constantes
+    (ganhos do barorreceptor, da mácula densa, do simpático, do feedback de volume, da hipóxia/EPO e da massa
+    renal) são estimativas didáticas calibradas para reproduzir as âncoras qualitativas (RAAS↑ na hipovolemia;
+    renina BAIXA com aldo ALTA no Conn; EPO↓ na DRC; ADH alto no SIADH). Não são níveis séricos reais.
+  </div>
+
+  <footer>
+    CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira
+  </footer>
+</div>
+
+<script>
+/* =========================================================================
+ * ENGINE INLINE — espelho fiel de build/m14/model14.js (o motor manda no pixel)
+ * ========================================================================= */
+'use strict';
+
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a) n=a; if(n>b) n=b; return n; }
+function merge(a,b){ var o={},k; if(a) for(k in a) if(Object.prototype.hasOwnProperty.call(a,k)) o[k]=a[k]; if(b) for(k in b) if(Object.prototype.hasOwnProperty.call(b,k)) o[k]=b[k]; return o; }
+
+var P_N=95, P_LO=50, P_HI=140, BARO_MAX=3.0,
+    NA_N=100, MAC_MAX=2.4, SYMP_N=1.0, SYMP_MAX=2.0, SYMP_GAIN=0.8,
+    VOL_N=100, VOL_FB=0.020, AGT_N=1.0, KPLUS_N=4.0, ALDO_K=0.35,
+    TONIC_N=290, ADH_OSM=0.06, ADH_THR=280, ADH_VOL=0.045, ADH_VOLTHR=92,
+    O2_N=100, EPO_HYP=0.060, GFR_N=100, GFR_DRC=30, CALC_N=1.0;
+
+function baro(pressure){
+  var p=clampv(pressure,20,220);
+  var frac=(P_HI-p)/(P_HI-P_LO); frac=clampv(frac,0,1);
+  return 0.4+(BARO_MAX-0.4)*frac;
+}
+function macula(naMacula){
+  var na=clampv(naMacula,10,200);
+  var frac=(NA_N-na)/NA_N; frac=clampv(frac,-0.6,1);
+  return clampv(1+MAC_MAX*frac,0.4,MAC_MAX+1);
+}
+function simpatico(symp){
+  var s=clampv(symp,0,SYMP_MAX);
+  return clampv(1+SYMP_GAIN*(s-SYMP_N),0.3,1+SYMP_GAIN*(SYMP_MAX-SYMP_N));
+}
+function feedbackVolume(volume){
+  var v=clampv(volume,40,200);
+  var f=1-VOL_FB*(v-VOL_N);
+  return clampv(f,0.05,2.5);
+}
+
+function eixo(input){
+  var inp=input||{};
+  var pressure=clampv(inp.pressure!==undefined?inp.pressure:P_N,20,220);
+  var volume  =clampv(inp.volume  !==undefined?inp.volume  :VOL_N,40,200);
+  var naMacula=clampv(inp.naMacula!==undefined?inp.naMacula:NA_N,10,200);
+  var symp    =clampv(inp.symp    !==undefined?inp.symp    :SYMP_N,0,SYMP_MAX);
+  var agt     =clampv(inp.agt     !==undefined?inp.agt     :AGT_N,0.2,4);
+  var kplus   =clampv(inp.kplus   !==undefined?inp.kplus   :KPLUS_N,1.5,9);
+  var aldoAuto=clampv(inp.aldoAuto!==undefined?inp.aldoAuto:0,0,30);
+  var tonicity=clampv(inp.tonicity!==undefined?inp.tonicity:TONIC_N,240,360);
+  var adhDrive=clampv(inp.adhDrive!==undefined?inp.adhDrive:0,0,20);
+  var o2      =clampv(inp.o2      !==undefined?inp.o2      :O2_N,20,130);
+  var GFR     =clampv(inp.GFR!==undefined?inp.GFR:(inp.gfr!==undefined?inp.gfr:GFR_N),2,160);
+
+  var sBaro=baro(pressure), sMac=macula(naMacula), sSymp=simpatico(symp), fVol=feedbackVolume(volume);
+  var supAuto=1/(1+0.35*aldoAuto);
+  var renina=sBaro*sMac*sSymp*fVol*supAuto; if(!isFinite(renina)) renina=0; renina=clampv(renina,0,30);
+
+  var angII=renina*agt; if(!isFinite(angII)) angII=0; angII=clampv(angII,0,60);
+
+  var fatorK=1+ALDO_K*(kplus-KPLUS_N); fatorK=clampv(fatorK,0.2,4);
+  var aldoRAAS=angII*fatorK;
+  var aldo=aldoRAAS+aldoAuto; if(!isFinite(aldo)) aldo=0; aldo=clampv(aldo,0,120);
+
+  var adhOsm=1+ADH_OSM*(tonicity-ADH_THR); if(adhOsm<0) adhOsm=0;
+  var deficit=ADH_VOLTHR-volume;
+  var adhVol=deficit>0?ADH_VOL*deficit*deficit/10:0;
+  var adh=adhOsm+adhVol+adhDrive; if(!isFinite(adh)) adh=0; adh=clampv(adh,0,40);
+
+  var hyp=1+EPO_HYP*(O2_N-o2); if(hyp<0) hyp=0;
+  var massaRenal=GFR>=GFR_N?1:(GFR<=2?0:GFR/GFR_N); massaRenal=clampv(massaRenal,0,1);
+  var epoMassa=GFR>=GFR_DRC?massaRenal:(GFR<=2?0:Math.pow(GFR/GFR_DRC,2)*(GFR_DRC/GFR_N)); epoMassa=clampv(epoMassa,0,1);
+  var epo=hyp*epoMassa; if(!isFinite(epo)) epo=0; epo=clampv(epo,0,30);
+
+  var calcitriol=CALC_N*massaRenal; if(!isFinite(calcitriol)) calcitriol=0; calcitriol=clampv(calcitriol,0,2);
+
+  var arr=aldo/(renina+1e-6);
+
+  var regime;
+  if(aldo>4&&renina<0.9&&arr>6)                                 regime='hiperaldo_primario';
+  else if(GFR<GFR_DRC)                                          regime='drc_endocrina';
+  else if(volume<80||pressure<75)                              regime='hipovolemia';
+  else if(adhDrive>2&&tonicity<=TONIC_N&&volume>=ADH_VOLTHR)   regime='siadh';
+  else if(renina>2.2)                                          regime='raas_ativado';
+  else                                                         regime='basal';
+
+  return {
+    pressure:pressure,volume:volume,naMacula:naMacula,symp:symp,
+    agt:agt,kplus:kplus,aldoAuto:aldoAuto,tonicity:tonicity,adhDrive:adhDrive,o2:o2,GFR:GFR,
+    sBaro:sBaro,sMac:sMac,sSymp:sSymp,fVol:fVol,supAuto:supAuto,
+    renina:renina,angII:angII,fatorK:fatorK,aldoRAAS:aldoRAAS,aldo:aldo,arr:arr,
+    adh:adh,adhOsm:adhOsm,adhVol:adhVol,
+    epo:epo,hyp:hyp,massaRenal:massaRenal,epoMassa:epoMassa,calcitriol:calcitriol,
+    regime:regime
+  };
+}
+
+function cascataLayout(state,W,H){
+  state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=50,padR=16,padT=18,padB=38,baseY=H-padB;
+  var vMin=50,vMax=130,N=64,yMin=0,yMax=12;
+  var pxX=(W-padL-padR)/(vMax-vMin);
+  var pxY=(baseY-padT)/(yMax-yMin);
+  function X(v){ return padL+(clampv(v,vMin,vMax)-vMin)*pxX; }
+  function Y(y){ return baseY-clampv(y,yMin,yMax)*pxY; }
+  var renP=[],angP=[],aldP=[],i,v,r;
+  for(i=0;i<=N;i++){
+    v=vMin+(vMax-vMin)*i/N; r=eixo(merge(state,{volume:v}));
+    renP.push({vol:v,val:r.renina,x:X(v),y:Y(r.renina)});
+    angP.push({vol:v,val:r.angII,x:X(v),y:Y(r.angII)});
+    aldP.push({vol:v,val:r.aldo,x:X(v),y:Y(r.aldo)});
+  }
+  var vCur=clampv(state.volume!==undefined?state.volume:VOL_N,vMin,vMax);
+  var rCur=eixo(merge(state,{volume:vCur}));
+  var current={vol:vCur,val:rCur.renina,x:X(vCur),y:Y(rCur.renina)};
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,
+    vMin:vMin,vMax:vMax,yMin:yMin,yMax:yMax,pxX:pxX,pxY:pxY,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},
+    renP:renP,angP:angP,aldP:aldP,current:current};
+}
+
+function respostaLayout(state,W,H){
+  state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=36,padR=14,padT=18,padB=36,baseY=H-padB;
+  var r=eixo(state);
+  var defs=[
+    {key:'renina',label:'renina',val:r.renina,cap:8,col:'#e0556b'},
+    {key:'angII',label:'Ang II',val:r.angII,cap:8,col:'#e8a13a'},
+    {key:'aldo',label:'aldo',val:r.aldo,cap:12,col:'#52c08a'},
+    {key:'adh',label:'ADH',val:r.adh,cap:8,col:'#3a7bd5'},
+    {key:'epo',label:'EPO',val:r.epo,cap:4,col:'#39c0c8'}
+  ];
+  var n=defs.length, slot=(W-padL-padR)/n, bw=slot*0.56, bars=[];
+  for(var i=0;i<n;i++){
+    var frac=clampv(defs[i].val/defs[i].cap,0,1);
+    var h=frac*(baseY-padT);
+    var x=padL+slot*i+(slot-bw)/2;
+    bars.push({key:defs[i].key,label:defs[i].label,col:defs[i].col,val:defs[i].val,frac:frac,
+      x:x,w:bw,y:baseY-h,h:h,cx:x+bw/2});
+  }
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},bars:bars};
+}
+
+window.eixo=eixo;
+window.baro=baro;
+window.macula=macula;
+window.simpatico=simpatico;
+window.feedbackVolume=feedbackVolume;
+window.cascataLayout=cascataLayout;
+window.respostaLayout=respostaLayout;
+window.MODEL={eixo:eixo,baro:baro,macula:macula,simpatico:simpatico,feedbackVolume:feedbackVolume,
+  cascataLayout:cascataLayout,respostaLayout:respostaLayout,clampv:clampv,merge:merge,
+  CONST:{P_N:P_N,P_LO:P_LO,P_HI:P_HI,BARO_MAX:BARO_MAX,NA_N:NA_N,MAC_MAX:MAC_MAX,
+    SYMP_N:SYMP_N,SYMP_MAX:SYMP_MAX,SYMP_GAIN:SYMP_GAIN,VOL_N:VOL_N,VOL_FB:VOL_FB,
+    AGT_N:AGT_N,KPLUS_N:KPLUS_N,ALDO_K:ALDO_K,TONIC_N:TONIC_N,ADH_OSM:ADH_OSM,
+    ADH_THR:ADH_THR,ADH_VOL:ADH_VOL,ADH_VOLTHR:ADH_VOLTHR,O2_N:O2_N,EPO_HYP:EPO_HYP,
+    GFR_N:GFR_N,GFR_DRC:GFR_DRC,CALC_N:CALC_N}};
+
+/* =========================================================================
+ * UI
+ * ========================================================================= */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=d||1; return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+
+var REGIME_TXT={
+  basal:'basal — eixo em repouso, RAAS moderado',
+  raas_ativado:'RAAS ativado — renina/AngII/aldo elevadas',
+  hipovolemia:'⚠ HIPOVOLEMIA — RAAS ativado apropriadamente (defende o volume)',
+  hiperaldo_primario:'⚠ HIPERALDO 1º (Conn) — aldo ALTA com renina BAIXA (ARR↑)',
+  siadh:'⚠ SIADH — ADH alto SEM estímulo osmótico nem de volume',
+  drc_endocrina:'⚠ DRC endócrina — a glândula falha: EPO↓ e calcitriol↓'
+};
+
+// abas principais
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b) return;
+  var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on');
+  $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh();
+});
+
+// caso: prever-depois-revelar
+document.addEventListener('click',function(e){
+  var b=e.target.closest('button.act[data-rev]'); if(!b) return;
+  var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on');
+});
+
+function readLab(){
+  return {
+    pressure:+$('in-press').value, volume:+$('in-vol').value, naMacula:+$('in-na').value,
+    symp:+$('in-symp').value, aldoAuto:+$('in-aldoauto').value, kplus:+$('in-k').value,
+    tonicity:+$('in-ton').value, adhDrive:+$('in-adhdrive').value, o2:+$('in-o2').value, GFR:+$('in-gfr').value
+  };
+}
+
+function refresh(){
+  var inp=readLab();
+  $('lbl-press').textContent=Math.round(inp.pressure);
+  $('lbl-vol').textContent=Math.round(inp.volume);
+  $('lbl-na').textContent=Math.round(inp.naMacula);
+  $('lbl-symp').textContent=fmt(inp.symp,2);
+  $('lbl-aldoauto').textContent=fmt(inp.aldoAuto,1);
+  $('lbl-k').textContent=fmt(inp.kplus,1);
+  $('lbl-ton').textContent=Math.round(inp.tonicity);
+  $('lbl-adhdrive').textContent=fmt(inp.adhDrive,1);
+  $('lbl-o2').textContent=Math.round(inp.o2);
+  $('lbl-gfr').textContent=Math.round(inp.GFR);
+  var r=eixo(inp);
+  $('out-renina').textContent=fmt(r.renina,2);
+  $('out-angii').textContent=fmt(r.angII,2);
+  $('out-aldo').textContent=fmt(r.aldo,2);
+  $('out-arr').textContent=fmt(r.arr,1);
+  $('out-adh').textContent=fmt(r.adh,2);
+  $('out-adhvol').textContent=fmt(r.adhVol,2);
+  $('out-epo').textContent=fmt(r.epo,2);
+  $('out-calc').textContent=fmt(r.calcitriol,2);
+  $('out-regime').textContent=REGIME_TXT[r.regime]||r.regime;
+  verdictLab(r,inp); pearlLab(r,inp);
+  drawCanvas(inp);
+  $('resposta-svg').innerHTML=respostaFig(inp);
+  syncInstrToLab(inp);
+}
+
+function syncInstrToLab(inp){
+  if($('instr-vol')) $('instr-vol').value=inp.volume;
+  if($('instr-press')) $('instr-press').value=inp.pressure;
+  if($('instr-na')) $('instr-na').value=inp.naMacula;
+  if($('instr-symp')) $('instr-symp').value=inp.symp;
+  updateInstrLabels(inp);
+}
+function readInstr(){
+  return { volume:+$('instr-vol').value, pressure:+$('instr-press').value,
+    naMacula:+$('instr-na').value, symp:+$('instr-symp').value };
+}
+function updateInstrLabels(inp){
+  if($('instr-lbl-vol')) $('instr-lbl-vol').textContent=Math.round(inp.volume);
+  if($('instr-lbl-press')) $('instr-lbl-press').textContent=Math.round(inp.pressure);
+  if($('instr-lbl-na')) $('instr-lbl-na').textContent=Math.round(inp.naMacula);
+  if($('instr-lbl-symp')) $('instr-lbl-symp').textContent=fmt(inp.symp,2);
+}
+function refreshInstr(){
+  var inp=readInstr();
+  updateInstrLabels(inp);
+  var r=eixo(inp);
+  pearlInstr(r,inp);
+  drawCanvas(inp);
+  $('resposta-svg').innerHTML=respostaFig(inp);
+}
+
+function pearlInstr(r,inp){
+  var ip=$('instr-pearl'); if(!ip) return;
+  var t;
+  if(inp.volume<=75){
+    t='VOLUME BAIXO ('+Math.round(inp.volume)+'%): o feedback solta o freio → renina '+fmt(r.renina,2)+', AngII '+fmt(r.angII,2)+', aldo '+fmt(r.aldo,2)+'. O eixo retém Na/volume. A Ang II constringe a eferente e salva a TFG (M2).';
+  } else if(inp.volume>=115){
+    t='VOLUME ALTO ('+Math.round(inp.volume)+'%): o feedback FREIA o eixo → renina cai a '+fmt(r.renina,2)+'. Volume↑ → renina↓: a alça de feedback que mantém o meio interno. Se a aldo estivesse alta AQUI com renina baixa, seria Conn.';
+  } else {
+    t='Os outros sinais movem a cascata inteira: pressão '+Math.round(inp.pressure)+', Na mácula '+Math.round(inp.naMacula)+', simp '+fmt(inp.symp,2)+' → renina '+fmt(r.renina,2)+'. Três gatilhos independentes, um produto.';
+  }
+  ip.textContent=t;
+}
+
+function verdictLab(r,inp){
+  var v=$('veredito'); var cls='b-good', msg;
+  if(r.regime==='hiperaldo_primario'){
+    cls='b-bad'; msg='HIPERALDO 1º (Conn): aldosterona '+fmt(r.aldo,2)+' ALTA com renina '+fmt(r.renina,2)+' BAIXA → ARR '+fmt(r.arr,1)+' (a assinatura). A aldo autônoma retém Na/volume e suprime a renina; troca Na por K/H (M8) → hipocalemia/alcalose.';
+  } else if(r.regime==='drc_endocrina'){
+    cls='b-bad'; msg='DRC ENDÓCRINA: TFG '+Math.round(r.GFR)+' → a glândula falha. EPO '+fmt(r.epo,2)+' (abaixo do basal apesar da hipóxia) → anemia; calcitriol '+fmt(r.calcitriol,2)+' → hipocalcemia/PTH↑. O rim destruído deixa de secretar.';
+  } else if(r.regime==='hipovolemia'){
+    cls='b-warn'; msg='HIPOVOLEMIA: pressão '+Math.round(r.pressure)+', volume '+Math.round(r.volume)+'% → RAAS ativado APROPRIADAMENTE. Renina '+fmt(r.renina,2)+', AngII '+fmt(r.angII,2)+', aldo '+fmt(r.aldo,2)+'. O eixo defende o volume circulante efetivo.';
+  } else if(r.regime==='siadh'){
+    cls='b-warn'; msg='SIADH: ADH '+fmt(r.adh,2)+' alto SEM estímulo — tonicidade '+Math.round(r.tonicity)+' baixa e volume '+Math.round(r.volume)+'% normal. Retém água livre → hiponatremia euvolêmica. ADH inapropriado, não fisiológico.';
+  } else if(r.regime==='raas_ativado'){
+    cls='b-warn'; msg='RAAS ATIVADO: renina '+fmt(r.renina,2)+' elevada (algum dos três sinais disparou). AngII '+fmt(r.angII,2)+', aldo '+fmt(r.aldo,2)+'. ARR '+fmt(r.arr,1)+' normal — renina e aldo sobem JUNTAS (≠ Conn).';
+  } else {
+    cls='b-good'; msg='EIXO BASAL: renina '+fmt(r.renina,2)+', AngII '+fmt(r.angII,2)+', aldo '+fmt(r.aldo,2)+'. ADH '+fmt(r.adh,2)+', EPO '+fmt(r.epo,2)+', calcitriol '+fmt(r.calcitriol,2)+'. O rim-glândula em repouso, defendendo o meio interno.';
+  }
+  v.className='banner '+cls; v.textContent=msg;
+}
+
+function pearlLab(r,inp){
+  var p=$('lab-pearl'); if(!p) return;
+  var t;
+  if(r.regime==='hiperaldo_primario'){
+    t='PÉROLA aldo: o que separa Conn da hipovolemia é a RENINA. Aqui aldo alta + renina BAIXA (ARR '+fmt(r.arr,1)+'). Na hipovolemia, ambas sobem (ARR ~normal). A renina é o juiz.';
+  } else if(r.GFR<GFR_DRC){
+    t='PÉROLA EPO: na DRC a hipóxia ('+Math.round(inp.o2)+'% O₂) NÃO resgata a EPO ('+fmt(r.epo,2)+') — a fábrica morreu. Por isso a anemia da DRC pede EPO exógena, não só ferro. A vit D ativa ('+fmt(r.calcitriol,2)+') também caiu.';
+  } else if(r.adhVol>1){
+    t='PÉROLA ADH: volume '+Math.round(inp.volume)+'% → o componente NÃO-osmótico domina ('+fmt(r.adhVol,2)+'). O corpo aceita hiponatremia para salvar volume — o override hemodinâmico do ADH (M10).';
+  } else if(r.renina>2.2){
+    t='PÉROLA glândula: a renina '+fmt(r.renina,2)+' é o PRODUTO dos três sinais (baro '+fmt(r.sBaro,2)+' × mácula '+fmt(r.sMac,2)+' × simp '+fmt(r.sSymp,2)+') freado pelo volume ('+fmt(r.fVol,2)+'). O rim sente e secreta.';
+  } else {
+    t='PÉROLA eferente (M2): a Ang II ('+fmt(r.angII,2)+') constringe a arteríola EFERENTE → preserva a TFG na hipoperfusão. É por isso que IECA/BRA podem baixar a TFG na estenose bilateral (capstone M18).';
+  }
+  p.textContent=t;
+}
+
+function drawCanvas(state){
+  var c=$('cascata-canvas'); if(!c) return;
+  var ctx; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; }
+  if(!ctx||!ctx.clearRect) return;
+  var L=cascataLayout(state,c.width,c.height);
+  ctx.clearRect(0,0,L.W,L.H);
+  // eixos
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('nível (rel.)',6,L.padT-4);
+  ctx.fillText('volume (%) →',L.W-130,L.baseY+24);
+  // gridlines
+  ctx.strokeStyle='#23303b'; ctx.setLineDash([3,3]);
+  [2,4,8].forEach(function(yv){
+    var y=L.baseY-yv*L.pxY;
+    ctx.beginPath(); ctx.moveTo(L.axis.x0,y); ctx.lineTo(L.axis.xEnd,y); ctx.stroke();
+    ctx.fillStyle='#9fb1c0'; ctx.fillText(String(yv),6,y+4);
+  });
+  ctx.setLineDash([]);
+  // a CASCATA — três polilinhas (renina conferida pelo validador é a 1ª)
+  function poly(pts,col,w){
+    ctx.strokeStyle=col; ctx.lineWidth=w; ctx.beginPath();
+    for(var i=0;i<pts.length;i++){ var p=pts[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); }
+    ctx.stroke();
+  }
+  poly(L.renP,'#e0556b',2);
+  poly(L.angP,'#e8a13a',2);
+  poly(L.aldP,'#52c08a',2);
+  // legenda
+  ctx.font='11px system-ui';
+  ctx.fillStyle='#e0556b'; ctx.fillText('renina',L.axis.xEnd-70,L.padT+14);
+  ctx.fillStyle='#e8a13a'; ctx.fillText('Ang II',L.axis.xEnd-70,L.padT+30);
+  ctx.fillStyle='#52c08a'; ctx.fillText('aldo',L.axis.xEnd-70,L.padT+46);
+  // marcador do volume atual + rótulos dos eixos
+  var cu=L.current;
+  ctx.strokeStyle='#e7eef4'; ctx.setLineDash([4,3]);
+  ctx.beginPath(); ctx.moveTo(cu.x,L.padT+18); ctx.lineTo(cu.x,L.baseY); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#e7eef4'; ctx.beginPath(); ctx.arc(cu.x,cu.y,5,0,2*Math.PI); ctx.fill();
+  ctx.fillStyle='#cdd9e3'; ctx.font='10px system-ui';
+  ctx.fillText('volume ↓ → renina ↑ (feedback)',L.axis.x0+8,L.baseY-6);
+}
+
+['in-press','in-vol','in-na','in-symp','in-aldoauto','in-k','in-ton','in-adhdrive','in-o2','in-gfr'].forEach(function(id){
+  var el=$(id); if(el) el.addEventListener('input',refresh);
+});
+['instr-vol','instr-press','instr-na','instr-symp'].forEach(function(id){
+  var el=$(id); if(el) el.addEventListener('input',refreshInstr);
+});
+
+// presets de cenário
+var PRESETS={
+  euvolemia:   {pressure:95,volume:100,naMacula:100,symp:1,aldoAuto:0,kplus:4,tonicity:290,adhDrive:0,o2:100,GFR:100},
+  hipovolemia: {pressure:65,volume:65,naMacula:70,symp:1.8,aldoAuto:0,kplus:4.2,tonicity:295,adhDrive:0,o2:100,GFR:100},
+  estenose:    {pressure:68,volume:100,naMacula:72,symp:1.2,aldoAuto:0,kplus:3.6,tonicity:290,adhDrive:0,o2:100,GFR:90},
+  conn:        {pressure:120,volume:115,naMacula:115,symp:0.9,aldoAuto:8,kplus:3.0,tonicity:292,adhDrive:0,o2:100,GFR:100},
+  drc:         {pressure:95,volume:100,naMacula:100,symp:1,aldoAuto:0,kplus:5.2,tonicity:295,adhDrive:0,o2:80,GFR:18},
+  siadh:       {pressure:95,volume:100,naMacula:100,symp:1,aldoAuto:0,kplus:4,tonicity:268,adhDrive:5,o2:100,GFR:100}
+};
+function applyPreset(p){
+  var s=PRESETS[p]; if(!s) return;
+  $('in-press').value=s.pressure; $('in-vol').value=s.volume; $('in-na').value=s.naMacula;
+  $('in-symp').value=s.symp; $('in-aldoauto').value=s.aldoAuto; $('in-k').value=s.kplus;
+  $('in-ton').value=s.tonicity; $('in-adhdrive').value=s.adhDrive; $('in-o2').value=s.o2; $('in-gfr').value=s.GFR;
+  refresh();
+}
+var presetBar=document.querySelector('[data-preset]') ? document.querySelectorAll('.preset') : [];
+Array.prototype.forEach.call(document.querySelectorAll('.preset'),function(b){
+  b.addEventListener('click',function(){ applyPreset(b.getAttribute('data-preset')); });
+});
+
+/* =========================================================================
+ * ILUSTRAÇÕES SVG — inline, computadas a partir do engine (física viva)
+ * ========================================================================= */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+
+// mini cascata renina×volume (computada do engine)
+function cascataMini(state, titulo){
+  var W=300,H=170;
+  var L=cascataLayout(state,W,H);
+  var s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  function path(pts,col){ var d=''; for(var i=0;i<pts.length;i++){ d+=(i===0?'M':'L')+f1(pts[i].x)+' '+f1(pts[i].y)+' '; } return '<path d="'+d+'" fill="none" stroke="'+col+'" stroke-width="2"/>'; }
+  s+=path(L.renP,'#e0556b'); s+=path(L.angP,'#e8a13a'); s+=path(L.aldP,'#52c08a');
+  var cu=L.current; s+='<circle cx="'+f1(cu.x)+'" cy="'+f1(cu.y)+'" r="4" fill="#e7eef4"/>';
+  s+='<text x="'+W/2+'" y="13" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'cascata × volume')+'</text>';
+  s+='<text x="'+(L.axis.x0+3)+'" y="'+L.padT+'" fill="#9fb1c0" font-size="8">nível</text>';
+  s+='<text x="'+(L.axis.xEnd-2)+'" y="'+(L.baseY+12)+'" fill="#9fb1c0" font-size="8" text-anchor="end">volume→</text>';
+  return svgEl(W,H,s);
+}
+
+// barras de resposta dos cinco hormônios (computadas do engine)
+function respostaFig(state, titulo){
+  var W=300,H=180;
+  var L=respostaLayout(state,W,H);
+  var s='';
+  s+='<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="#0a1520"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  L.bars.forEach(function(b){
+    s+='<rect x="'+f1(b.x)+'" y="'+f1(b.y)+'" width="'+f1(b.w)+'" height="'+f1(b.h)+'" fill="'+b.col+'" fill-opacity="0.8"/>';
+    s+='<text x="'+f1(b.cx)+'" y="'+(L.baseY+12)+'" fill="#9fb1c0" font-size="8" text-anchor="middle">'+b.label+'</text>';
+    s+='<text x="'+f1(b.cx)+'" y="'+f1(b.y-3)+'" fill="#cdd9e3" font-size="8" text-anchor="middle">'+fmt(b.val,1)+'</text>';
+  });
+  s+='<text x="'+W/2+'" y="13" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'resposta hormonal ao estímulo')+'</text>';
+  return svgEl(W,H,s);
+}
+
+// esquema do JGA e os três sinais da renina (desenho, não gráfico)
+function jgaDiagram(state, titulo){
+  var W=320,H=190,s='';
+  s+='<rect width="320" height="190" fill="#0a1520"/>';
+  // arteríola aferente
+  s+='<rect x="30" y="70" width="130" height="20" rx="10" fill="#e0556b" fill-opacity="0.25" stroke="#e0556b"/>';
+  s+='<text x="95" y="84" fill="#e08a96" font-size="9" text-anchor="middle">aferente</text>';
+  // glomérulo
+  s+='<circle cx="185" cy="80" r="22" fill="#39c0c8" fill-opacity="0.22" stroke="#39c0c8"/>';
+  s+='<text x="185" y="83" fill="#39c0c8" font-size="8" text-anchor="middle">glomérulo</text>';
+  // mácula densa
+  s+='<rect x="120" y="110" width="60" height="16" rx="6" fill="#e8a13a" fill-opacity="0.25" stroke="#e8a13a"/>';
+  s+='<text x="150" y="122" fill="#e8a13a" font-size="8" text-anchor="middle">mácula densa</text>';
+  // célula granular (renina)
+  s+='<circle cx="120" cy="80" r="9" fill="#52c08a" fill-opacity="0.5" stroke="#52c08a"/>';
+  s+='<text x="120" y="60" fill="#52c08a" font-size="8" text-anchor="middle">renina</text>';
+  // três sinais
+  s+='<text x="20" y="150" fill="#e0556b" font-size="9">① ↓pressão</text>';
+  s+='<text x="120" y="150" fill="#e8a13a" font-size="9">② ↓Na mácula</text>';
+  s+='<text x="235" y="150" fill="#3a7bd5" font-size="9">③ ↑simpático</text>';
+  s+='<text x="160" y="172" fill="#9fb1c0" font-size="9" text-anchor="middle">volume↑ → renina↓ (feedback)</text>';
+  s+='<text x="'+W/2+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'o aparelho justaglomerular')+'</text>';
+  return svgEl(W,H,s);
+}
+
+// esquema da cascata RAAS (desenho)
+function cascataDiagram(state, titulo){
+  var r=eixo(state||{});
+  var W=320,H=180,s='';
+  s+='<rect width="320" height="180" fill="#0a1520"/>';
+  function box(x,y,w,col,lab){ return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="26" rx="6" fill="'+col+'" fill-opacity="0.2" stroke="'+col+'"/><text x="'+(x+w/2)+'" y="'+(y+17)+'" fill="'+col+'" font-size="8" text-anchor="middle">'+lab+'</text>'; }
+  s+=box(20,40,80,'#9fb1c0','angiotensinog.');
+  s+='<text x="108" y="57" fill="#52c08a" font-size="8">renina</text>';
+  s+=box(120,40,60,'#39c0c8','Ang I');
+  s+='<text x="186" y="57" fill="#e8a13a" font-size="8">ECA</text>';
+  s+=box(210,40,90,'#e8a13a','Ang II');
+  s+='<line x1="100" y1="53" x2="120" y2="53" stroke="#cdd9e3"/><line x1="180" y1="53" x2="210" y2="53" stroke="#cdd9e3"/>';
+  // Ang II → aldosterona
+  s+='<line x1="255" y1="66" x2="255" y2="92" stroke="#cdd9e3"/>';
+  s+=box(210,92,90,'#52c08a','aldosterona');
+  // veredito
+  s+='<rect x="20" y="128" width="280" height="40" rx="6" fill="#10171e" stroke="#283642"/>';
+  s+='<text x="160" y="145" fill="#e7eef4" font-size="10" text-anchor="middle">renina '+fmt(r.renina,2)+' → AngII '+fmt(r.angII,2)+' → aldo '+fmt(r.aldo,2)+'</text>';
+  s+='<text x="160" y="161" fill="#9fb1c0" font-size="9" text-anchor="middle">AngII = renina · angiotensinogênio</text>';
+  s+='<text x="'+W/2+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'a cascata RAAS')+'</text>';
+  return svgEl(W,H,s);
+}
+
+// esquema da Ang II na eferente + aldosterona no ducto (desenho)
+function angEffDiagram(state, titulo){
+  var r=eixo(state||{});
+  var W=300,H=180,s='';
+  s+='<rect width="300" height="180" fill="#0a1520"/>';
+  // glomérulo
+  s+='<circle cx="80" cy="70" r="24" fill="#39c0c8" fill-opacity="0.22" stroke="#39c0c8"/>';
+  s+='<text x="80" y="73" fill="#39c0c8" font-size="8" text-anchor="middle">glomérulo</text>';
+  // eferente constrita
+  var ec=clampv(r.angII,0,12);
+  var ew=Math.max(6,16-ec); // mais Ang II → mais estreita
+  s+='<rect x="104" y="'+(70-ew/2)+'" width="70" height="'+ew+'" rx="'+(ew/2)+'" fill="#3a7bd5" fill-opacity="0.3" stroke="#3a7bd5"/>';
+  s+='<text x="139" y="50" fill="#7aa8e8" font-size="8" text-anchor="middle">eferente (constrita)</text>';
+  s+='<text x="139" y="92" fill="#9fb1c0" font-size="8" text-anchor="middle">preserva a TFG (M2)</text>';
+  // aldosterona no ducto
+  s+='<rect x="200" y="55" width="80" height="30" rx="6" fill="#52c08a" fill-opacity="0.2" stroke="#52c08a"/>';
+  s+='<text x="240" y="68" fill="#52c08a" font-size="8" text-anchor="middle">ducto: ENaC</text>';
+  s+='<text x="240" y="80" fill="#9fb1c0" font-size="7" text-anchor="middle">Na↑ K↓ H↓</text>';
+  // veredito
+  s+='<rect x="20" y="120" width="260" height="44" rx="6" fill="#10171e" stroke="#283642"/>';
+  s+='<text x="150" y="138" fill="#e7eef4" font-size="10" text-anchor="middle">AngII '+fmt(r.angII,2)+' → aldo '+fmt(r.aldo,2)+' (ENaC, M8)</text>';
+  s+='<text x="150" y="155" fill="#9fb1c0" font-size="9" text-anchor="middle">retém Na/volume, secreta K e H</text>';
+  s+='<text x="'+W/2+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'Ang II na eferente + aldosterona')+'</text>';
+  return svgEl(W,H,s);
+}
+
+// esquema do ADH osmótico × volume (desenho)
+function adhDiagram(state, titulo){
+  var r=eixo(state||{});
+  var W=300,H=180,s='';
+  s+='<rect width="300" height="180" fill="#0a1520"/>';
+  // eixo osmótico
+  s+='<text x="80" y="40" fill="#39c0c8" font-size="9" text-anchor="middle">osmótico</text>';
+  var ho=Math.min(60,r.adhOsm*14);
+  s+='<rect x="60" y="'+(110-ho)+'" width="40" height="'+ho+'" fill="#39c0c8" fill-opacity="0.5"/>';
+  s+='<text x="80" y="124" fill="#9fb1c0" font-size="8" text-anchor="middle">tonicidade</text>';
+  // eixo não-osmótico
+  s+='<text x="210" y="40" fill="#e0556b" font-size="9" text-anchor="middle">não-osmótico</text>';
+  var hv=Math.min(60,r.adhVol*14+2);
+  s+='<rect x="190" y="'+(110-hv)+'" width="40" height="'+hv+'" fill="#e0556b" fill-opacity="0.5"/>';
+  s+='<text x="210" y="124" fill="#9fb1c0" font-size="8" text-anchor="middle">volume↓↓</text>';
+  // veredito
+  s+='<rect x="20" y="138" width="260" height="32" rx="6" fill="#10171e" stroke="#283642"/>';
+  s+='<text x="150" y="158" fill="#e7eef4" font-size="10" text-anchor="middle">ADH '+fmt(r.adh,2)+' (osm '+fmt(r.adhOsm,1)+' + vol '+fmt(r.adhVol,1)+')</text>';
+  s+='<text x="'+W/2+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'ADH: dois estímulos')+'</text>';
+  return svgEl(W,H,s);
+}
+
+// esquema EPO/HIF × massa renal (desenho)
+function epoDiagram(state, titulo){
+  var r=eixo(state||{});
+  var W=300,H=180,s='';
+  s+='<rect width="300" height="180" fill="#0a1520"/>';
+  // rim (massa)
+  var rad=Math.max(8,r.massaRenal*26);
+  s+='<ellipse cx="80" cy="75" rx="'+f1(rad)+'" ry="'+f1(rad*0.7)+'" fill="#39c0c8" fill-opacity="0.25" stroke="#39c0c8"/>';
+  s+='<text x="80" y="78" fill="#39c0c8" font-size="8" text-anchor="middle">rim (massa)</text>';
+  // sensor HIF
+  s+='<text x="80" y="40" fill="#e8a13a" font-size="9" text-anchor="middle">HIF: O₂↓ → EPO↑</text>';
+  // seta para medula
+  s+='<line x1="116" y1="75" x2="180" y2="75" stroke="#cdd9e3" stroke-width="2"/>';
+  s+='<polygon points="180,75 172,71 172,79" fill="#cdd9e3"/>';
+  s+='<rect x="184" y="58" width="90" height="34" rx="6" fill="#e0556b" fill-opacity="0.2" stroke="#e0556b"/>';
+  s+='<text x="229" y="79" fill="#e08a96" font-size="9" text-anchor="middle">medula óssea</text>';
+  // veredito
+  s+='<rect x="20" y="120" width="260" height="44" rx="6" fill="#10171e" stroke="#283642"/>';
+  s+='<text x="150" y="138" fill="#e7eef4" font-size="10" text-anchor="middle">EPO '+fmt(r.epo,2)+' (TFG '+Math.round(r.GFR)+', O₂ '+Math.round(r.o2)+'%)</text>';
+  s+='<text x="150" y="155" fill="#9fb1c0" font-size="9" text-anchor="middle">'+(r.GFR<GFR_DRC?'⚠ DRC: fábrica morta → anemia':'fábrica íntegra')+'</text>';
+  s+='<text x="'+W/2+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'eritropoetina e a massa renal')+'</text>';
+  return svgEl(W,H,s);
+}
+
+/* =========================================================================
+ * TUTOR — DOIS blocos (ilustrado + textual)
+ * ========================================================================= */
+// helper: figura raster/SVG real de assets/m14/ dentro do exercício (offline, caminho relativo)
+function imgFig(slug,alt){ return '<img src="assets/m14/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+var TUTOR_ILUSTRADO=[
+  {q:'O aparelho justaglomerular libera renina. Quais são os TRÊS sinais que a disparam?',
+   o:['só a pressão','↓pressão aferente, ↓Na na mácula densa, ↑simpático','só o potássio','só a osmolalidade'],
+   c:1,e:'Três gatilhos independentes: barorreceptor (↓pressão), feedback tubuloglomerular (↓Na mácula densa) e β1 (↑simpático). O volume↑ freia o conjunto.',
+   fig:function(){ return jgaDiagram({},'os três sinais da renina'); }},
+  {q:'Na cascata, por que AngII = renina · angiotensinogênio?',
+   o:['são independentes','enzima (renina) × substrato (angiotensinogênio)','a ECA é que decide','o pulmão não participa'],
+   c:1,e:'A renina é a enzima limitante e o angiotensinogênio é o substrato; o produto escala com os dois. A ECA pulmonar converte Ang I → Ang II.',
+   fig:function(){ return cascataDiagram({pressure:75},'renina × angiotensinogênio'); }},
+  {q:'A Ang II "preserva a TFG" na hipoperfusão porque…',
+   o:['dilata a aferente','constringe a EFERENTE (sobe a pressão glomerular)','para o coração','bloqueia a aldosterona'],
+   c:1,e:'Constrição preferencial da eferente → sobe a pressão dentro do glomérulo → mantém a TFG mesmo com perfusão baixa (ponte M2). Daí IECA/BRA caírem a TFG na estenose bilateral.',
+   fig:function(){ return angEffDiagram({pressure:65,volume:70},'Ang II na eferente'); }},
+  {q:'A aldosterona age no ducto coletor (ENaC) e…',
+   o:['secreta Na','retém Na, secreta K e H','retém K','não muda nada'],
+   c:1,e:'Ativa o ENaC na célula principal: retém Na/volume e secreta K⁺/H⁺ (ponte M8). Daí o hiperaldo cursar com hipocalemia e alcalose.',
+   fig:function(){ return imgFig('aldosterona-sintese.svg','aldosterona no ducto coletor'); }},
+  {q:'No hiperaldosteronismo primário (Conn), a RENINA está…',
+   o:['alta','BAIXA (a aldo autônoma retém volume e suprime a renina)','normal','indetectável só após sal'],
+   c:1,e:'A aldo autônoma do adenoma retém volume → o volume alto suprime a renina → aldo ALTA + renina BAIXA → ARR alto (a assinatura).',
+   fig:function(){ return cascataMini({aldoAuto:8,kplus:3},'Conn: renina suprimida'); }},
+  {q:'O que diferencia o RAAS da hipovolemia do hiperaldo primário?',
+   o:['a aldosterona','a RENINA: alta na hipovolemia, baixa no Conn (ARR)','o potássio só','nada'],
+   c:1,e:'Na hipovolemia, renina E aldo sobem juntas (ARR normal). No Conn, aldo alta com renina BAIXA (ARR alto). A renina é o juiz.',
+   fig:function(){ return respostaFig({pressure:65,volume:65,naMacula:70},'hipovolemia: tudo sobe junto'); }},
+  {q:'O ADH (vasopressina) tem dois estímulos. Qual é o "override" na crise?',
+   o:['o osmótico','o NÃO-osmótico (volume↓↓ dispara ADH mesmo com tonicidade baixa)','nenhum','a glicemia'],
+   c:1,e:'O não-osmótico (volume↓↓) sobrepõe a osmolalidade: na hipovolemia grave o corpo aceita hiponatremia para salvar volume (ponte M10).',
+   fig:function(){ return adhDiagram({volume:68},'ADH: o override do volume'); }},
+  {q:'No SIADH, o ADH está alto. Por quê é "inapropriado"?',
+   o:['o volume está baixo','não há estímulo: tonicidade baixa E volume normal','a osmolalidade está alta','é normal'],
+   c:1,e:'ADH alto SEM nenhum dos gatilhos fisiológicos (tonicidade baixa, euvolemia) → retém água livre → hiponatremia euvolêmica.',
+   fig:function(){ return imgFig('adh-vasopressina.svg','ADH osmótico e não-osmótico'); }},
+  {q:'A anemia da DRC ocorre porque…',
+   o:['falta ferro só','a massa renal destruída não produz EPO (apesar da hipóxia)','há excesso de EPO','a medula falha sozinha'],
+   c:1,e:'Os fibroblastos peritubulares que fazem EPO são destruídos → mesmo com hipóxia a EPO não sobe → anemia. Trata-se com EPO exógena (após ferro).',
+   fig:function(){ return epoDiagram({GFR:15,o2:80},'EPO↓ na DRC'); }},
+  {q:'A vitamina D só vira calcitriol ativo pela 1α-hidroxilase RENAL. Na DRC, isso causa…',
+   o:['hipercalcemia','hipocalcemia → hiperparatireoidismo secundário','nada','excesso de vit D'],
+   c:1,e:'A enzima renal falha → menos calcitriol → menos absorção de Ca²⁺ → hipocalcemia → PTH↑ (ponte M12). O rim fecha o eixo ósseo-mineral.',
+   fig:function(){ return imgFig('vitamina-d-ativacao-renal.svg','ativação renal da vitamina D'); }},
+  {q:'Na figura do JGA (Fig. 1), onde a renina é estocada e liberada?',
+   o:['na mácula densa','nas células granulares da arteríola aferente','no glomérulo','no ducto coletor'],
+   c:1,e:'As células granulares (justaglomerulares) da arteríola aferente estocam e liberam renina; a mácula densa é o sensor de Na que as comanda.',
+   fig:function(){ return imgFig('aparelho-justaglomerular.svg','aparelho justaglomerular'); }},
+  {q:'Na figura das ações da Ang II (Fig. 4), além da eferente, a Ang II também…',
+   o:['só vasoconstringe','estimula sede, ADH, Na proximal e aldosterona','dilata vasos','reduz a aldosterona'],
+   c:1,e:'A Ang II é multiefetora: eferente (TFG), sede, ↑ADH, ↑reabsorção proximal de Na e ↑aldosterona. Tudo para defender o volume circulante efetivo.',
+   fig:function(){ return imgFig('angiotensina-ii-acoes.svg','as ações da angiotensina II'); }}
+];
+
+var TUTOR_TEXTUAL=[
+  {q:'O gatilho do eixo RAAS é…',
+   o:['a aldosterona','a renina (aparelho justaglomerular)','o ADH','a EPO'],
+   c:1,e:'A renina, liberada pelo JGA, inicia a cascata. É a enzima limitante.'},
+  {q:'O sinal que o eixo RAAS, em última análise, DEFENDE é…',
+   o:['a concentração de Na','o volume circulante efetivo','o pH','a glicemia'],
+   c:1,e:'O rim defende o volume circulante efetivo; o Na é proxy de água/volume.'},
+  {q:'A enzima que converte Ang I em Ang II é a…',
+   o:['renina','ECA (no pulmão)','aldosterona sintase','1α-hidroxilase'],
+   c:1,e:'A ECA (enzima conversora de angiotensina), predominantemente pulmonar, gera Ang II.'},
+  {q:'A aldosterona é estimulada por Ang II E diretamente por…',
+   o:['hipocalemia','hipercalemia (K⁺ alto)','hiponatremia','hipoglicemia'],
+   c:1,e:'A hipercalemia estimula a aldosterona diretamente — um eixo de proteção contra o K alto.'},
+  {q:'Aldo ALTA com renina BAIXA (ARR alto) sugere…',
+   o:['hipovolemia','hiperaldosteronismo primário (Conn)','SIADH','DRC'],
+   c:1,e:'No Conn a aldo é autônoma e suprime a renina → ARR alto é a assinatura diagnóstica.'},
+  {q:'O componente NÃO-osmótico do ADH é disparado por…',
+   o:['tonicidade alta','queda grande de volume (override)','hipercalemia','hipóxia'],
+   c:1,e:'Volume↓↓ dispara ADH mesmo com tonicidade baixa — o corpo prioriza volume.'},
+  {q:'O SIADH causa hiponatremia que é tipicamente…',
+   o:['hipovolêmica','euvolêmica','hipervolêmica com edema','hipernatrêmica'],
+   c:1,e:'ADH inapropriado retém água livre com volume normal → hiponatremia euvolêmica.'},
+  {q:'A eritropoetina é produzida por células renais que sentem…',
+   o:['o sódio','o oxigênio (via HIF)','o cálcio','a pressão'],
+   c:1,e:'Fibroblastos peritubulares sentem O₂ pelo HIF: hipóxia → EPO↑.'},
+  {q:'A anemia da DRC responde melhor a…',
+   o:['só ferro','EPO exógena (após repor ferro)','transfusão sempre','vitamina D'],
+   c:1,e:'A falha é de produção de EPO; trata-se com EPO exógena, garantindo ferro adequado.'},
+  {q:'A vitamina D é ativada (calcitriol) pela 1α-hidroxilase localizada no…',
+   o:['fígado','rim','intestino','osso'],
+   c:1,e:'A hidroxilação final (1α) é renal; na DRC falha → hipocalcemia e hiperparatireoidismo secundário.'}
+];
+
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO;
+window.TUTOR_TEXTUAL=TUTOR_TEXTUAL;
+window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+
+var BANKS={ilustrada:TUTOR_ILUSTRADO, textual:TUTOR_TEXTUAL};
+var curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+
+function renderTutor(){
+  var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():'';
+  $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false;
+  $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){
+    var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){
+      if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button');
+      btns[item.c].classList.add('ok');
+      if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block';
+      fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e;
+      $('tutor-score').textContent=tScore;
+      $('tutor-total').textContent=tTotal;
+    });
+    box.appendChild(b);
+  });
+}
+
+$('banktabs').addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor();
+});
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+/* =========================================================================
+ * ILUSTRAÇÕES DA ABA CONCEITO (populadas no boot)
+ * ========================================================================= */
+function populateConceito(){
+  var el;
+  el=$('draw-jga');     if(el) el.innerHTML=jgaDiagram({},'o aparelho justaglomerular e os 3 sinais');
+  el=$('draw-cascata'); if(el) el.innerHTML=cascataDiagram({},'a cascata RAAS');
+  el=$('draw-angeff');  if(el) el.innerHTML=angEffDiagram({pressure:65,volume:70},'Ang II na eferente + aldo');
+  el=$('draw-adh');     if(el) el.innerHTML=adhDiagram({volume:70},'ADH: osmótico × volume');
+  el=$('draw-epo');     if(el) el.innerHTML=epoDiagram({GFR:15,o2:80},'EPO e a massa renal (DRC)');
+  var elCaso=$('fig-caso'); if(elCaso) elCaso.innerHTML=cascataMini({pressure:65,volume:65,naMacula:70},'hipovolemia: o RAAS ativado');
+}
+
+/* =========================================================================
+ * BOOT
+ * ========================================================================= */
+refresh();
+renderTutor();
+populateConceito();
+</script>
+</body>
+</html>

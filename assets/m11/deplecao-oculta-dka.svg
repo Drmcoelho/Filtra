@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">A armadilha da CAD — caliemia normal, estoque vazio</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">acidose + falta de insulina jogam K⁺ para fora; a diurese osmótica o perde na urina</text>
+
+  <!-- barras: plasma vs estoque -->
+  <g text-anchor="middle">
+    <text x="200" y="78" font-size="11" fill="#9fb1c0">à admissão</text>
+    <rect x="150" y="110" width="44" height="80" fill="#e0556b" fill-opacity="0.5" stroke="#e0556b"/><text x="172" y="204" font-size="9" fill="#e08a96">K plasma 5,2</text><text x="172" y="218" font-size="8" fill="#9fb1c0">"normal/alto"</text>
+    <rect x="206" y="150" width="44" height="40" fill="#e8a13a" fill-opacity="0.5" stroke="#e8a13a"/><text x="228" y="204" font-size="9" fill="#f0c078">estoque ↓↓</text><text x="228" y="218" font-size="8" fill="#9fb1c0">já depletado</text>
+
+    <text x="490" y="78" font-size="11" fill="#9fb1c0">após insulina + volume</text>
+    <rect x="440" y="160" width="44" height="30" fill="#3a7bd5" fill-opacity="0.6" stroke="#3a7bd5"/><text x="462" y="204" font-size="9" fill="#9bbef0">K plasma 2,8</text><text x="462" y="218" font-size="8" fill="#9fb1c0">DESPENCA</text>
+    <rect x="496" y="168" width="44" height="22" fill="#e8a13a" fill-opacity="0.5" stroke="#e8a13a"/><text x="518" y="204" font-size="9" fill="#f0c078">estoque ↓↓</text>
+  </g>
+
+  <text x="340" y="248" text-anchor="middle" font-size="11" fill="#e8a13a">a insulina manda o K⁺ de volta para a célula → expõe a depleção real → hipocalemia perigosa</text>
+  <text x="340" y="272" text-anchor="middle" font-size="10" fill="#9fb1c0">conduta: repor K⁺ ANTES/junto da insulina se já estiver ≤ 5,2 — e monitorar de perto</text>
+</svg>

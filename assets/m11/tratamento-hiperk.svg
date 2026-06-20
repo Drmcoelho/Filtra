@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Tratar a hipercalemia — três alvos, três tempos</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">cada passo ataca um mecanismo distinto; só o último de fato TIRA K⁺ do corpo</text>
+
+  <rect x="40" y="66" width="600" height="56" rx="8" fill="#10202c" stroke="#e0556b"/>
+  <text x="56" y="88" font-size="12" fill="#e08a96" font-weight="bold">1 · ESTABILIZAR a membrana (segundos)</text>
+  <text x="56" y="108" font-size="11" fill="#cdd9e3">gluconato de cálcio IV — antagoniza o efeito no miocárdio; NÃO baixa o K (ganha tempo no ECG)</text>
+
+  <rect x="40" y="128" width="600" height="56" rx="8" fill="#10202c" stroke="#3a7bd5"/>
+  <text x="56" y="150" font-size="12" fill="#9bbef0" font-weight="bold">2 · DESLOCAR para dentro (minutos)</text>
+  <text x="56" y="170" font-size="11" fill="#cdd9e3">insulina + glicose · β₂-agonista · (bicarbonato se acidose) — shift transcelular; efeito temporário</text>
+
+  <rect x="40" y="190" width="600" height="56" rx="8" fill="#10202c" stroke="#52c08a"/>
+  <text x="56" y="212" font-size="12" fill="#9fe3ec" font-weight="bold">3 · REMOVER do corpo (a única definitiva)</text>
+  <text x="56" y="232" font-size="11" fill="#cdd9e3">diurético + volume · resinas/quelantes intestinais · DIÁLISE (M33/M35) se grave/refratária ou anúria</text>
+
+  <text x="340" y="270" text-anchor="middle" font-size="10" fill="#e8a13a">erro clássico: fazer só insulina/β e achar resolvido — o K volta quando o shift passa</text>
+  <text x="340" y="288" text-anchor="middle" font-size="9" fill="#9fb1c0">o estoque corporal só cai com a etapa 3</text>
+</svg>

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M11 — Potássio: o gradiente, o estoque e o eletrólito que mata</title>
+<style>
+  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--warn:#e8a13a;--bad:#e0556b;--good:#52c08a;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none} section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .presets{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px} .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)} .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)} .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)} .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M11</div>
+  <h1>Potássio — o gradiente transcelular, o estoque e o eletrólito que mata</h1>
+  <div class="sub">98% do K⁺ é <b>intracelular</b>: a caliemia é a ponta do iceberg. Dois balanços a defendem —
+  o <b>interno</b> (shift transcelular: insulina, β, pH — minuto a minuto) e o <b>externo</b> (secreção distal:
+  aldosterona × aporte de Na⁺ — horas). O K⁺ plasmático fixa o <b>potencial de repouso</b> (Nernst): por isso
+  <b>tanto a hiper quanto a hipocalemia matam</b>, com ECGs opostos.</div>
+  <nav class="hex">
+    <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
+    <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="filtra.html">&larr; índice do braço FILTRA</a>
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- CONCEITO -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — o potássio em dois balanços</h3>
+      <p class="sub" style="margin-top:0"><b>Homeostasia do K⁺.</b> O corpo mantém a caliemia numa janela estreita
+      (3,5–5,0) defendendo o gradiente transcelular e ajustando a excreção renal. As Fig. 1–13 voltam no Caso,
+      na Trilha e na Avaliação. Atribuição em <code>CREDITS.md</code> (em curadoria).</p>
+
+      <h4>1. 98% do K⁺ é intracelular — o plasma é a ponta do iceberg</h4>
+      <p class="sub">A caliemia mede só os ~2% extracelulares. O estoque pode estar depletado com plasma normal:
+      o shift mascara.</p>
+      <div class="frow">
+        <div class="concept" id="draw-estoque"></div>
+        <figure class="fviva"><img src="assets/m11/estoque-vs-gradiente-k.svg" alt="98% do potássio é intracelular; o plasma é uma fração mínima" loading="lazy">
+          <figcaption><b>Fig. 1 · Estoque × plasma.</b> ~140 mEq/L dentro da célula (98%) contra ~4 fora. Dosamos
+          só o que está fora — e é o que mexe no coração.</figcaption></figure>
+      </div>
+
+      <h4>2. O balanço INTERNO — o shift transcelular (minuto a minuto)</h4>
+      <p class="sub">Insulina, β-agonista e alcalose empurram K⁺ <b>para dentro</b> (↓ plasma); acidose, lise
+      celular e déficit de insulina o empurram <b>para fora</b> (↑ plasma) — sem mudar o estoque.</p>
+      <div class="frow">
+        <div class="concept" id="draw-shift"></div>
+        <figure class="fviva"><img src="assets/m11/shift-transcelular-k.svg" alt="Shift transcelular do potássio: o que empurra para dentro e para fora" loading="lazy">
+          <figcaption><b>Fig. 2 · O shift.</b> Move K⁺ entre dentro/fora sem tocar no estoque — a defesa rápida e a
+          alavanca de emergência (insulina/β baixam o plasma em minutos).</figcaption></figure>
+        <figure class="fviva"><img src="assets/m11/insulina-beta-k.svg" alt="Insulina e beta-agonista ativam a bomba Na/K-ATPase" loading="lazy">
+          <figcaption><b>Fig. 3 · Insulina/β.</b> Ativam a Na⁺/K⁺-ATPase (3 Na out / 2 K in) → K⁺ entra. É o
+          mecanismo da terapia de shift (insulina + glicose; salbutamol).</figcaption></figure>
+        <figure class="fviva"><img src="assets/m11/ph-potassio.svg" alt="O pH troca H+ por K+ na membrana celular" loading="lazy">
+          <figcaption><b>Fig. 4 · pH ⇄ K.</b> Acidose: H⁺ entra, K⁺ sai (↑ plasma ~0,4/0,1 pH); alcalose, o
+          oposto. Explica a caliemia "normal" na CAD com estoque vazio.</figcaption></figure>
+      </div>
+
+      <h4>3. O balanço EXTERNO — a secreção distal (horas a dias)</h4>
+      <p class="sub">O rim ajusta o estoque secretando K⁺ na célula principal do ducto coletor (M8): precisa de
+      <b>aldosterona</b> E de <b>aporte distal de Na⁺/fluxo</b> — multiplicativo.</p>
+      <div class="frow">
+        <figure class="fviva"><img src="assets/m11/secrecao-distal-k.png" alt="Secreção distal de potássio na célula principal do néfron" loading="lazy">
+          <figcaption><b>Fig. 5 · Secreção distal.</b> A reabsorção de Na⁺ (ENaC) deixa o lúmen negativo → empurra
+          K⁺ pelo ROMK para a urina. A figura mostra o segmento e os transportadores envolvidos.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m11/aldosterona-k.svg" alt="Aldosterona aumenta a secreção distal de potássio" loading="lazy">
+          <figcaption><b>Fig. 6 · Aldosterona.</b> Abre o ENaC → mais voltagem → secreta mais K⁺. Hiperaldo →
+          hipoK; o ARM (espironolactona) poupa K⁺.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m11/secrecao-dois-fatores.svg" alt="A secreção de potássio precisa de aldosterona e de aporte distal" loading="lazy">
+          <figcaption><b>Fig. 7 · Os dois fatores.</b> Secreção ≈ aldo × aporte distal. Falte um (ex.: oligúria) e
+          ela despenca → hipercalemia mesmo com aldo alta. É o que o engine computa.</figcaption></figure>
+      </div>
+
+      <h4>4. Por que o K⁺ mata — o potencial de membrana (Nernst)</h4>
+      <p class="sub">A caliemia <b>fora</b> da célula fixa o potencial de repouso: Em ≈ −61·log(K_in/K_out). Fora da
+      janela 3,5–5,0, a excitabilidade do miocárdio falha.</p>
+      <div class="frow">
+        <div class="concept" id="draw-nernst"></div>
+        <figure class="fviva"><img src="assets/m11/potencial-membrana-k.svg" alt="O potássio define o potencial de repouso pela equação de Nernst" loading="lazy">
+          <figcaption><b>Fig. 8 · Nernst.</b> K⁺↑ despolariza (Em menos negativo → inexcitável); K⁺↓ hiperpolariza.
+          É a mesma curva do Instrumento, computada pelo engine.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m11/nernst-curva.svg" alt="A janela segura estreita do potássio entre 3,5 e 5,0" loading="lazy">
+          <figcaption><b>Fig. 9 · A janela estreita.</b> Faixa segura 3,5–5,0; abaixo de 2,5 ou acima de 6,0, risco
+          de arritmia/parada. Os dois extremos são fatais.</figcaption></figure>
+      </div>
+
+      <h4>5. O ECG como mecanismo — os dois retratos</h4>
+      <div class="frow">
+        <figure class="fviva"><img src="assets/m11/ecg-hipercalemia.svg" alt="Progressão do ECG na hipercalemia: T apiculada, QRS largo, onda sinusoidal" loading="lazy">
+          <figcaption><b>Fig. 10 · HiperK no ECG.</b> T apiculada → QRS alargado → onda sinusoidal → parada. O
+          cálcio IV estabiliza a membrana (não baixa o K).</figcaption></figure>
+        <figure class="fviva"><img src="assets/m11/ecg-hipocalemia.svg" alt="ECG na hipocalemia: onda T achatada e onda U proeminente" loading="lazy">
+          <figcaption><b>Fig. 11 · HipoK no ECG.</b> T achatada, onda U, QT/U longo → TV/torsades. Corrigir K⁺ <b>e</b>
+          magnésio (a hipomagnesemia perpetua a perda).</figcaption></figure>
+      </div>
+
+      <h4>6. As armadilhas e a conduta</h4>
+      <div class="frow">
+        <figure class="fviva"><img src="assets/m11/deplecao-oculta-dka.svg" alt="Cetoacidose diabética: caliemia normal com estoque depletado" loading="lazy">
+          <figcaption><b>Fig. 12 · A armadilha da CAD.</b> Plasma normal/alto com estoque vazio; a insulina expõe a
+          depleção → hipocalemia perigosa. Repor K⁺ junto da insulina se K ≤ 5,2.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m11/tratamento-hiperk.svg" alt="Tratamento da hipercalemia: estabilizar, deslocar e remover" loading="lazy">
+          <figcaption><b>Fig. 13 · Tratar a hiperK.</b> Estabilizar (cálcio) → deslocar (insulina/β) → REMOVER
+          (diurético, resina, diálise). Só o passo 3 tira K⁺ do corpo.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASO -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — oito atos, decida antes de revelar</h3>
+      <p class="sub">Paciente diabético, mal-estar, fraqueza. K⁺ inicial 5,4 mEq/L, pH 7,12, glicemia altíssima.</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step"><b>Ato 1.</b> O K⁺ está 5,4 (alto). Então há excesso de K⁺ no corpo (Fig. 1)?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>Não necessariamente.</b> 98% do K⁺ é intracelular. A caliemia mede só os 2%
+          de fora — e a acidose + falta de insulina jogaram K⁺ para fora. O estoque pode estar até baixo.</div></div>
+
+      <div class="step"><b>Ato 2.</b> Por que a acidose subiu a caliemia (Fig. 4)?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2">A célula tampona o H⁺ entrando e, para manter a carga, <b>expele K⁺</b>. Soma-se a
+          <b>falta de insulina</b> (a bomba Na/K não é ativada) → K⁺ se acumula fora.</div></div>
+
+      <div class="step"><b>Ato 3.</b> A diurese osmótica da hiperglicemia vinha há dias. O que fez ao estoque (Fig. 12)?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3"><b>Depletou.</b> A poliúria arrastou K⁺ na urina. Resultado: plasma alto com
+          <b>estoque corporal vazio</b> — a armadilha clássica da CAD.</div></div>
+
+      <div class="step"><b>Ato 4.</b> <i>Conduta inicial.</i> Vamos dar insulina para a CAD. O que acontece com o K⁺ (Fig. 3)?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4">A insulina ativa a Na/K-ATPase → K⁺ <b>entra na célula</b> → a caliemia
+          <b>despenca</b>, expondo a depleção real. Risco de hipocalemia grave.</div></div>
+
+      <div class="step"><b>Ato 5.</b> Como evitar a queda perigosa?
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>Repor K⁺</b> junto/antes da insulina quando a caliemia já estiver ≤ 5,2, e
+          <b>monitorar</b> de perto. Tratar o estoque, não só o número.</div></div>
+
+      <div class="step"><b>Ato 6.</b> <i>Outro doente:</i> anúrico por IRA, K⁺ 6,8, T apiculada no ECG. Por que retém K⁺ (Fig. 7)?
+        <div><button class="act" data-rev="r6">Revelar</button></div>
+        <div class="reveal" id="r6">A secreção distal precisa de <b>aporte distal de Na⁺/fluxo</b>; sem urina, não há
+          como secretar — hipercalemia mesmo com aldosterona alta. Os dois fatores são necessários.</div></div>
+
+      <div class="step"><b>Ato 7.</b> <i>Emergência.</i> Qual a primeira medida com K⁺ 6,8 e ECG alterado (Fig. 13)?
+        <div><button class="act" data-rev="r7">Revelar</button></div>
+        <div class="reveal" id="r7"><b>Gluconato de cálcio IV</b> — estabiliza a membrana (não baixa o K). Depois
+          <b>shift</b> (insulina+glicose, β) e <b>remoção</b> (diálise, já que está anúrico).</div></div>
+
+      <div class="step"><b>Ato 8.</b> <i>Síntese.</i> Lição de uma linha?
+        <div><button class="act" data-rev="r8">Revelar</button></div>
+        <div class="reveal" id="r8">A caliemia ≠ estoque: o shift (pH/insulina) e a excreção (aldo × fluxo) a movem.
+          Trate o <b>mecanismo</b> e o <b>estoque</b>, não apenas o número — e lembre que os dois extremos matam.</div></div>
+    </div>
+  </section>
+
+  <!-- TRILHA -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — treze perguntas que constroem o conceito</h3>
+      <details><summary>1. Que fração do K⁺ é intracelular?</summary><p>~98%. A caliemia mede só os ~2%
+        extracelulares — a ponta do iceberg.</p></details>
+      <details><summary>2. O que é o balanço INTERNO?</summary><p>O shift transcelular: move K⁺ entre dentro/fora
+        em minutos, sem mudar o estoque total.</p></details>
+      <details><summary>3. O que empurra K⁺ para DENTRO?</summary><p>Insulina, β-agonista e alcalose (ativam a
+        Na/K-ATPase ou trocam por H⁺) → ↓ caliemia.</p></details>
+      <details><summary>4. O que empurra K⁺ para FORA?</summary><p>Acidose, déficit de insulina e lise celular
+        (rabdomiólise, hemólise) → ↑ caliemia.</p></details>
+      <details><summary>5. Quanto a acidose muda o K⁺?</summary><p>Cerca de 0,4 mEq/L por 0,1 de queda no pH (mais
+        na acidose mineral que na orgânica/respiratória).</p></details>
+      <details><summary>6. O que é o balanço EXTERNO?</summary><p>A excreção renal: secreção distal de K⁺ na célula
+        principal do ducto coletor (ROMK), em horas/dias.</p></details>
+      <details><summary>7. De que a secreção distal precisa?</summary><p>De aldosterona E de aporte distal de
+        Na⁺/fluxo — é multiplicativa; falte um, ela despenca.</p></details>
+      <details><summary>8. Por que a oligúria dá hipercalemia?</summary><p>Sem fluxo/aporte distal, não há como
+        secretar K⁺ — mesmo com aldosterona alta.</p></details>
+      <details><summary>9. Por que o K⁺ mata?</summary><p>Define o potencial de repouso (Nernst): muda a
+        excitabilidade do miocárdio. Os dois extremos são fatais.</p></details>
+      <details><summary>10. HiperK no ECG?</summary><p>T apiculada → PR longo/P alargada → QRS largo → onda
+        sinusoidal → parada.</p></details>
+      <details><summary>11. HipoK no ECG?</summary><p>T achatada, onda U, QT/U longo → TV/torsades. Corrigir K⁺
+        e magnésio.</p></details>
+      <details><summary>12. A armadilha da CAD?</summary><p>Caliemia normal/alta com estoque depletado; a insulina
+        expõe a hipocalemia. Repor K⁺ se ≤ 5,2.</p></details>
+      <details><summary>13. A escada de tratamento da hiperK?</summary><p>Estabilizar (cálcio) → deslocar
+        (insulina/β) → REMOVER (diurético, resina, diálise). Só o último tira K⁺ do corpo.</p></details>
+    </div>
+  </section>
+
+  <!-- INSTRUMENTO -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — o potencial de repouso × a caliemia (Nernst)</h3>
+      <p class="sub">Os controles do <b>Lab</b> definem a caliemia; aqui vê-se o Em (mV) resultante. Fora da janela
+      3,5–5,0, o miocárdio falha — a marca mostra o ponto atual e o achado de ECG.</p>
+      <canvas id="k-canvas" width="900" height="360" aria-label="Potencial de membrana por caliemia"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- LAB -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — estoque, shift e excreção</h3>
+      <div class="grid">
+        <div>
+          <label>Estoque corporal de K⁺ (1 = normal): <span class="val" id="lbl-kt">1.0</span></label>
+          <input type="range" id="in-kt" min="0" max="2" step="0.05" value="1">
+          <label>pH arterial: <span class="val" id="lbl-ph">7.40</span></label>
+          <input type="range" id="in-ph" min="6.9" max="7.7" step="0.01" value="7.40">
+          <label>Insulina (1 = normal): <span class="val" id="lbl-ins">1.0</span></label>
+          <input type="range" id="in-ins" min="0" max="2" step="0.05" value="1">
+        </div>
+        <div>
+          <label>β-adrenérgico (1 = normal): <span class="val" id="lbl-beta">1.0</span></label>
+          <input type="range" id="in-beta" min="0" max="2" step="0.05" value="1">
+          <label>Aldosterona (1 = normal): <span class="val" id="lbl-aldo">1.0</span></label>
+          <input type="range" id="in-aldo" min="0" max="2" step="0.05" value="1">
+          <label>Aporte distal de Na⁺/fluxo (1 = normal): <span class="val" id="lbl-dna">1.0</span></label>
+          <input type="range" id="in-dna" min="0" max="2" step="0.05" value="1">
+        </div>
+      </div>
+
+      <div class="presets">
+        <button class="act" data-preset="normal">Normal</button>
+        <button class="act" data-preset="ira">HiperK (IRA anúrica)</button>
+        <button class="act" data-preset="diuretico">HipoK (diurético)</button>
+        <button class="act" data-preset="cad">CAD (acidose + depleção)</button>
+        <button class="act" data-preset="hiperaldo">Hiperaldosteronismo</button>
+      </div>
+
+      <table>
+        <tr><th>Variável</th><th>Atual</th><th>Comentário</th></tr>
+        <tr><td>K⁺ plasmático (mEq/L)</td><td class="num" id="out-k">—</td><td class="num">janela 3,5–5,0</td></tr>
+        <tr><td>Potencial de repouso Em (mV)</td><td class="num" id="out-em">—</td><td class="num">Nernst</td></tr>
+        <tr><td>Shift transcelular (mEq/L)</td><td class="num" id="out-shift">—</td><td class="num">pH+insulina+β</td></tr>
+        <tr><td>Secreção distal (relativa)</td><td class="num" id="out-sec">—</td><td class="num">aldo × aporte</td></tr>
+        <tr><td>ECG</td><td class="num" id="out-ecg">—</td><td class="num">por mecanismo</td></tr>
+        <tr><td>Classe</td><td class="num" id="out-classe">—</td><td class="num">—</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÃO -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (13)</button>
+        <button data-bank="textual">Textual (12)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica</b>. Este módulo M11 é
+    fisiologia do potássio; condutas (cálcio, insulina/β, diálise) aparecem como <b>mecanismo</b> — não como
+    prescrição com doses, que dependem do contexto e do prescritor. O modelo de caliemia, Nernst e secreção é
+    uma simplificação didática calibrada. Não substitui julgamento clínico; a decisão final é sempre do profissional.
+  </div>
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+</div>
+
+<script>
+/* ENGINE INLINE — espelho fiel de build/m11/model11.js */
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
+function emFrom(plasmaK){ plasmaK=clampv(plasmaK,1,12); return -61.5*(Math.log(140/plasmaK)/Math.LN10); }
+function ecgFrom(plasmaK){ plasmaK=clampv(plasmaK,0,20);
+  if(plasmaK>=7.5) return 'onda sinusoidal — risco de parada';
+  if(plasmaK>=6.5) return 'QRS alargado, P alargada';
+  if(plasmaK>=5.5) return 'onda T apiculada';
+  if(plasmaK>=3.5) return 'ECG normal';
+  if(plasmaK>=3.0) return 'T achatada, onda U incipiente';
+  if(plasmaK>=2.5) return 'ondas U, T achatada, extrassístoles';
+  return 'arritmia — risco de TV/torsades'; }
+function classeFrom(plasmaK){
+  if(plasmaK>=6.0) return 'hipercalemia grave';
+  if(plasmaK>5.0) return 'hipercalemia';
+  if(plasmaK>=3.5) return 'normocalemia';
+  if(plasmaK>=2.5) return 'hipocalemia';
+  return 'hipocalemia grave'; }
+function potassium(input){ var inp=input||{};
+  var kTotal=clampv(inp.kTotal!==undefined?inp.kTotal:1,0,2), pH=clampv(inp.pH!==undefined?inp.pH:7.4,6.8,7.8),
+    insulin=clampv(inp.insulin!==undefined?inp.insulin:1,0,2), beta=clampv(inp.beta!==undefined?inp.beta:1,0,2),
+    aldo=clampv(inp.aldo!==undefined?inp.aldo:1,0,2), distalNa=clampv(inp.distalNa!==undefined?inp.distalNa:1,0,2);
+  var base=2.5+kTotal*1.7, shiftPh=(7.4-pH)*4, shiftInsulin=-(insulin-1)*0.6, shiftBeta=-(beta-1)*0.5,
+    shiftExcr=-((aldo-1)*0.4+(distalNa-1)*0.3);
+  var plasmaK=clampv(base+shiftPh+shiftInsulin+shiftBeta+shiftExcr,1.5,9);
+  var kSecretion=clampv(aldo*distalNa,0,4), Em=emFrom(plasmaK), ecg=ecgFrom(plasmaK), classe=classeFrom(plasmaK);
+  var deplecaoOculta=kTotal<0.7&&plasmaK>=3.5, shiftTotal=shiftPh+shiftInsulin+shiftBeta;
+  return {kTotal:kTotal,pH:pH,insulin:insulin,beta:beta,aldo:aldo,distalNa:distalNa,base:base,shiftPh:shiftPh,
+    shiftInsulin:shiftInsulin,shiftBeta:shiftBeta,shiftExcr:shiftExcr,shiftTotal:shiftTotal,plasmaK:plasmaK,
+    kSecretion:kSecretion,Em:Em,ecg:ecg,classe:classe,deplecaoOculta:deplecaoOculta}; }
+function potassiumLayout(state,W,H){ state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=54,padR=16,padT=18,padB=38,baseY=H-padB, kMin=1.5,kMax=9,N=60, emMin=-120,emMax=-70;
+  var pxX=(W-padL-padR)/(kMax-kMin), pxY=(baseY-padT)/(emMax-emMin), pts=[],i,k,em,yv;
+  for(i=0;i<=N;i++){ k=kMin+(kMax-kMin)*i/N; em=clampv(emFrom(k),emMin,emMax); yv=baseY-(em-emMin)*pxY;
+    pts.push({k:k,Em:em,x:padL+(k-kMin)*pxX,y:yv}); }
+  var kc=clampv(state.plasmaK!==undefined?state.plasmaK:(potassium(state).plasmaK),kMin,kMax), emc=clampv(emFrom(kc),emMin,emMax);
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,kMin:kMin,kMax:kMax,emMin:emMin,emMax:emMax,pxX:pxX,pxY:pxY,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},pts:pts,current:{x:padL+(kc-kMin)*pxX,y:baseY-(emc-emMin)*pxY,k:kc,Em:emc}}; }
+window.potassium=potassium; window.emFrom=emFrom; window.ecgFrom=ecgFrom; window.classeFrom=classeFrom; window.potassiumLayout=potassiumLayout;
+window.MODEL={potassium:potassium,emFrom:emFrom,ecgFrom:ecgFrom,classeFrom:classeFrom,potassiumLayout:potassiumLayout,clampv:clampv};
+
+/* UI */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=(d===undefined?1:d); return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on'); b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on'); $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh(); });
+document.addEventListener('click',function(e){ var b=e.target.closest('button.act[data-rev]'); if(!b) return; var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on'); });
+
+function readInputs(){ return { kTotal:+$('in-kt').value, pH:+$('in-ph').value, insulin:+$('in-ins').value, beta:+$('in-beta').value, aldo:+$('in-aldo').value, distalNa:+$('in-dna').value }; }
+function refresh(){ var inp=readInputs();
+  $('lbl-kt').textContent=fmt(inp.kTotal,2); $('lbl-ph').textContent=fmt(inp.pH,2); $('lbl-ins').textContent=fmt(inp.insulin,2);
+  $('lbl-beta').textContent=fmt(inp.beta,2); $('lbl-aldo').textContent=fmt(inp.aldo,2); $('lbl-dna').textContent=fmt(inp.distalNa,2);
+  var r=potassium(inp);
+  $('out-k').textContent=fmt(r.plasmaK,2); $('out-em').textContent=fmt(r.Em,1); $('out-shift').textContent=(r.shiftTotal>=0?'+':'')+fmt(r.shiftTotal,2);
+  $('out-sec').textContent=fmt(r.kSecretion,2); $('out-ecg').textContent=r.ecg; $('out-classe').textContent=r.classe;
+  verdict(r); drawNernst(inp); pearl(r); }
+function verdict(r){ var v=$('veredito'), cls='b-good', msg;
+  if(r.classe==='hipercalemia grave'){ cls='b-bad'; msg='Hipercalemia grave (K '+fmt(r.plasmaK,2)+'): '+r.ecg+'. Estabilizar (cálcio) → shift (insulina/β) → remover (diálise se anúrico).'; }
+  else if(r.classe==='hipercalemia'){ cls='b-warn'; msg='Hipercalemia (K '+fmt(r.plasmaK,2)+'): '+r.ecg+'. Investigar excreção (aldo × aporte) e shift.'; }
+  else if(r.classe==='hipocalemia grave'){ cls='b-bad'; msg='Hipocalemia grave (K '+fmt(r.plasmaK,2)+'): '+r.ecg+'. Repor K⁺ e magnésio; risco de arritmia.'; }
+  else if(r.classe==='hipocalemia'){ cls='b-warn'; msg='Hipocalemia (K '+fmt(r.plasmaK,2)+'): '+r.ecg+'. Lembrar do estoque e do magnésio.'; }
+  else { cls='b-good'; msg='Normocalemia (K '+fmt(r.plasmaK,2)+'): Em '+fmt(r.Em,1)+' mV, '+r.ecg+'.'; }
+  if(r.deplecaoOculta) msg+=' ⚠ Estoque depletado mascarado pelo shift (cuidado ao corrigir o pH/dar insulina).';
+  v.className='banner '+cls; v.textContent=msg; }
+function pearl(r){ var p=$('lab-pearl'), ip=$('instr-pearl'), t;
+  if(r.deplecaoOculta) t='PÉROLA: depleção oculta — estoque baixo com K plasma '+fmt(r.plasmaK,2)+'. A insulina/correção do pH vai expor a hipocalemia.';
+  else if(r.kSecretion<0.6 && r.plasmaK>5) t='PÉROLA: secreção '+fmt(r.kSecretion,2)+' (aldo × aporte) — sem fluxo distal não se secreta K⁺ → hipercalemia mesmo com aldo alta.';
+  else if(Math.abs(r.shiftTotal)>0.6) t='PÉROLA: o shift mudou a caliemia em '+(r.shiftTotal>=0?'+':'')+fmt(r.shiftTotal,2)+' mEq/L SEM mexer no estoque corporal.';
+  else t='K '+fmt(r.plasmaK,2)+' → Em '+fmt(r.Em,1)+' mV. A caliemia fora da célula fixa o potencial de repouso.';
+  p.textContent=t; ip.textContent=t; }
+function drawNernst(state){ var c=$('k-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
+  var L=potassiumLayout(state,c.width,c.height); ctx.clearRect(0,0,L.W,L.H);
+  // faixa segura 3,5-5,0
+  var xs=L.padL+(3.5-L.kMin)*L.pxX, xe=L.padL+(5.0-L.kMin)*L.pxX;
+  ctx.fillStyle='rgba(82,192,138,.12)'; ctx.fillRect(xs,L.padT,xe-xs,L.baseY-L.padT);
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('Em (mV)',8,L.padT+2); ctx.fillText('K⁺ plasmático (mEq/L) →',L.W-220,L.baseY+24);
+  ctx.strokeStyle='#39c0c8'; ctx.lineWidth=2; ctx.beginPath();
+  for(var i=0;i<L.pts.length;i++){ var p=L.pts[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); } ctx.stroke();
+  var cu=L.current; ctx.strokeStyle='#e8a13a'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(cu.x,L.padT); ctx.lineTo(cu.x,L.baseY); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#e8a13a'; ctx.fillRect(cu.x-3,cu.y-3,6,6);
+  ctx.fillStyle='#e7eef4'; ctx.fillText('K '+fmt(cu.k,2)+' · Em '+fmt(cu.Em,1)+' mV',Math.min(cu.x+6,L.W-150),Math.max(cu.y-6,L.padT+10)); }
+['in-kt','in-ph','in-ins','in-beta','in-aldo','in-dna'].forEach(function(id){ $(id).addEventListener('input',refresh); });
+
+var PRESETS={
+  normal:{kt:1,ph:7.40,ins:1,beta:1,aldo:1,dna:1},
+  ira:{kt:1.4,ph:7.30,ins:1,beta:1,aldo:1,dna:0.15},
+  diuretico:{kt:0.55,ph:7.48,ins:1,beta:1,aldo:1.5,dna:1.7},
+  cad:{kt:0.5,ph:7.12,ins:0.2,beta:1.2,aldo:1.1,dna:1.3},
+  hiperaldo:{kt:0.6,ph:7.47,ins:1,beta:1,aldo:1.9,dna:1.3}
+};
+function applyPreset(p){ var d=PRESETS[p]; if(!d) return; $('in-kt').value=d.kt; $('in-ph').value=d.ph; $('in-ins').value=d.ins; $('in-beta').value=d.beta; $('in-aldo').value=d.aldo; $('in-dna').value=d.dna; refresh(); }
+document.querySelector('.presets').addEventListener('click',function(e){ var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset')); });
+
+/* ILUSTRAÇÕES computadas + helper raster */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+function nernstMini(state,titulo){ var W=300,H=170,L=potassiumLayout(state,W,H),s='';
+  var xs=L.padL+(3.5-L.kMin)*L.pxX, xe=L.padL+(5.0-L.kMin)*L.pxX;
+  s+='<rect x="'+f1(xs)+'" y="'+L.padT+'" width="'+f1(xe-xs)+'" height="'+f1(L.baseY-L.padT)+'" fill="#52c08a" fill-opacity="0.12"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  var d=''; for(var i=0;i<L.pts.length;i++){ d+=(i===0?'M':'L')+f1(L.pts[i].x)+' '+f1(L.pts[i].y)+' '; }
+  s+='<path d="'+d+'" fill="none" stroke="#39c0c8" stroke-width="2"/>';
+  s+='<rect x="'+f1(L.current.x-3)+'" y="'+f1(L.current.y-3)+'" width="6" height="6" fill="#e8a13a"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'Em × K⁺')+'</text>';
+  s+='<text x="'+(W-8)+'" y="'+(L.baseY+14)+'" fill="#9fb1c0" font-size="9" text-anchor="end">K⁺ →</text>';
+  return svgEl(W,H,s); }
+function estoqueBars(r){ var W=300,H=170,base=140,s='';
+  function bar(x,frac,color,lab,val){ var h=clampv(frac,0,1)*104; return '<rect x="'+x+'" y="'+f1(base-h)+'" width="60" height="'+f1(h)+'" fill="'+color+'" fill-opacity="0.6" stroke="'+color+'"/>'+
+    '<text x="'+(x+30)+'" y="'+(base+14)+'" fill="#9fb1c0" font-size="9" text-anchor="middle">'+lab+'</text>'+
+    '<text x="'+(x+30)+'" y="'+f1(base-h-4)+'" fill="#e7eef4" font-size="10" text-anchor="middle">'+val+'</text>'; }
+  s+=bar(70,r.kTotal/2,'#39c0c8','estoque','×'+fmt(r.kTotal,2));
+  s+=bar(180,(r.plasmaK-1.5)/7.5,'#e0556b','plasma',fmt(r.plasmaK,2));
+  s+='<text x="150" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">estoque (intracelular) × plasma</text>';
+  if(r.deplecaoOculta) s+='<text x="150" y="160" fill="#e8a13a" font-size="9" text-anchor="middle">depleção oculta!</text>';
+  return svgEl(W,H,s); }
+function shiftBars(r){ var W=320,H=170,mid=92,s='', x=58, scale=22;
+  function seg(val,color,lab){ var w=Math.abs(val)*scale; var xx=val>=0?(160):(160-w); var ww=Math.max(w,1);
+    var o='<rect x="'+f1(xx)+'" y="'+(x-12)+'" width="'+f1(ww)+'" height="16" fill="'+color+'" fill-opacity="0.6" stroke="'+color+'"/>'+
+      '<text x="6" y="'+x+'" fill="#cdd9e3" font-size="9">'+lab+'</text>'+
+      '<text x="270" y="'+x+'" fill="#e7eef4" font-size="9">'+(val>=0?'+':'')+fmt(val,2)+'</text>'; x+=22; return o; }
+  s+='<text x="160" y="20" fill="#9fb1c0" font-size="11" text-anchor="middle">deslocamentos da caliemia (mEq/L)</text>';
+  s+='<line x1="160" y1="32" x2="160" y2="150" stroke="#5a6b78" stroke-dasharray="2 2"/>';
+  s+=seg(r.shiftPh,'#e0556b','pH'); s+=seg(r.shiftInsulin,'#3a7bd5','insulina'); s+=seg(r.shiftBeta,'#9bbef0','β'); s+=seg(r.shiftExcr,'#52c08a','excreção');
+  s+='<text x="160" y="164" fill="#e8a13a" font-size="10" text-anchor="middle">K plasma = '+fmt(r.plasmaK,2)+' (base '+fmt(r.base,1)+')</text>';
+  return svgEl(W,H,s); }
+function imgFig(slug,alt){ return '<img src="assets/m11/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+/* TUTOR */
+function R0(extra){ var o={}; if(extra) for(var k in extra) o[k]=extra[k]; return potassium(o); }
+var TUTOR_ILUSTRADO=[
+  {q:'Na curva de Nernst, K⁺ alto leva o Em a…',o:['mais negativo','menos negativo (despolariza)','não muda'],c:1,e:'K⁺↑ despolariza → inexcitável.',fig:function(){return nernstMini({kTotal:2,pH:7.1},'K alto');}},
+  {q:'Na curva, K⁺ baixo leva o Em a…',o:['menos negativo','mais negativo (hiperpolariza)','zero'],c:1,e:'K⁺↓ hiperpolariza.',fig:function(){return nernstMini({kTotal:0.2,insulin:1.6},'K baixo');}},
+  {q:'A faixa verde da curva representa…',o:['perigo','a janela segura 3,5–5,0','hipoK'],c:1,e:'Fora dela, o miocárdio falha.',fig:function(){return nernstMini({},'janela');}},
+  {q:'Nas barras, o estoque pode estar baixo com plasma normal?',o:['não','sim (depleção oculta)','só na hiperK'],c:1,e:'O shift mascara o estoque.',fig:function(){return estoqueBars(R0({kTotal:0.4,pH:7.15}));}},
+  {q:'Na CAD, qual deslocamento SOBE a caliemia?',o:['insulina','o pH (acidose)','a excreção'],c:1,e:'Acidose → K⁺ sai → plasma↑.',fig:function(){return shiftBars(R0({kTotal:0.5,pH:7.1,insulin:0.3}));}},
+  {q:'Dar insulina faz o shift…',o:['subir o K','baixar o K (entra na célula)','nada'],c:1,e:'Insulina ativa a Na/K-ATPase.',fig:function(){return shiftBars(R0({insulin:1.9}));}},
+  {q:'Na figura, que fração do K⁺ é intracelular?',o:['~50%','~98%','~2%'],c:1,e:'Quase todo o K⁺ está dentro da célula.',fig:function(){return imgFig('estoque-vs-gradiente-k.svg','estoque');}},
+  {q:'Na figura real do néfron, o K⁺ é secretado pelo…',o:['ENaC','ROMK (lúmen negativo)','NKCC2'],c:1,e:'A reabsorção de Na cria a voltagem que secreta K pelo ROMK.',fig:function(){return imgFig('secrecao-distal-k.png','secreção distal');}},
+  {q:'Na figura dos dois fatores, falta de fluxo distal causa…',o:['hipoK','hiperK (não secreta)','nada'],c:1,e:'Sem aporte distal, a secreção despenca.',fig:function(){return imgFig('secrecao-dois-fatores.svg','dois fatores');}},
+  {q:'Na figura, insulina/β agem na…',o:['ROMK','Na⁺/K⁺-ATPase','ENaC'],c:1,e:'Ativam a bomba → K⁺ entra.',fig:function(){return imgFig('insulina-beta-k.svg','bomba');}},
+  {q:'Na figura do ECG, a hipercalemia começa com…',o:['onda U','T apiculada','T achatada'],c:1,e:'T apiculada → QRS largo → sinusoidal.',fig:function(){return imgFig('ecg-hipercalemia.svg','ECG hiperK');}},
+  {q:'Na figura do ECG, a hipocalemia mostra…',o:['T apiculada','onda U / T achatada','QRS largo'],c:1,e:'U proeminente, QT/U longo.',fig:function(){return imgFig('ecg-hipocalemia.svg','ECG hipoK');}},
+  {q:'Na escada da hiperK, o que ESTABILIZA a membrana?',o:['insulina','cálcio IV','diálise'],c:1,e:'Cálcio antagoniza o efeito no miocárdio; não baixa o K.',fig:function(){return imgFig('tratamento-hiperk.svg','tratamento');}}
+];
+var TUTOR_TEXTUAL=[
+  {q:'Que fração do K⁺ corporal é intracelular?',o:['~50%','~98%','~10%'],c:1,e:'A caliemia mede só ~2%.'},
+  {q:'O balanço interno do K⁺ é…',o:['a excreção renal','o shift transcelular','a ingesta'],c:1,e:'Move K em minutos sem mudar o estoque.'},
+  {q:'Empurram K⁺ para DENTRO da célula:',o:['acidose e lise','insulina, β e alcalose','déficit de insulina'],c:1,e:'↓ caliemia.'},
+  {q:'A acidose faz a caliemia…',o:['cair','subir','não muda'],c:1,e:'H⁺ entra, K⁺ sai (~0,4/0,1 pH).'},
+  {q:'O balanço externo do K⁺ é…',o:['o shift','a secreção distal renal','a sudorese'],c:1,e:'Na célula principal (ROMK), em horas.'},
+  {q:'A secreção distal de K⁺ precisa de…',o:['só aldosterona','aldosterona E aporte distal de Na','só fluxo'],c:1,e:'É multiplicativa.'},
+  {q:'A oligúria/anúria tende a causar…',o:['hipoK','hiperK','normoK'],c:1,e:'Sem fluxo distal, não secreta K.'},
+  {q:'O K⁺ mata porque…',o:['muda o pH','fixa o potencial de repouso (Nernst)','altera o Na'],c:1,e:'Muda a excitabilidade; os dois extremos são fatais.'},
+  {q:'Na hipercalemia, a primeira medida com ECG alterado é…',o:['insulina','cálcio IV (estabiliza)','furosemida'],c:1,e:'Estabiliza a membrana; não baixa o K.'},
+  {q:'Insulina/β na hiperK fazem…',o:['remover K do corpo','shift (temporário)','estabilizar a membrana'],c:1,e:'Deslocam K para dentro; o K volta depois.'},
+  {q:'O que de fato REMOVE K⁺ do corpo?',o:['cálcio','insulina','diurético/resina/diálise'],c:2,e:'Só a etapa 3 reduz o estoque.'},
+  {q:'Na CAD, a insulina pode causar…',o:['hipercalemia','hipocalemia (expõe a depleção)','nada'],c:1,e:'Repor K se ≤ 5,2 e monitorar.'}
+];
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL; window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+var BANKS={ilustrada:TUTOR_ILUSTRADO,textual:TUTOR_TEXTUAL}, curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+function renderTutor(){ var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():''; $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false; $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){ if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button'); btns[item.c].classList.add('ok'); if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block'; fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e; $('tutor-score').textContent=tScore; $('tutor-total').textContent=tTotal; });
+    box.appendChild(b); }); }
+$('banktabs').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor(); });
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+$('draw-estoque').innerHTML = estoqueBars(potassium({}));
+$('draw-shift').innerHTML = shiftBars(potassium({kTotal:0.5,pH:7.15,insulin:0.3}));
+$('draw-nernst').innerHTML = nernstMini({},'Em × K⁺ (Nernst)');
+$('fig-caso').innerHTML = estoqueBars(potassium({kTotal:0.5,pH:7.12,insulin:0.2})) + nernstMini({kTotal:1.5,pH:7.12},'CAD: K plasma alto');
+
+refresh(); renderTutor();
+</script>
+</body>
+</html>

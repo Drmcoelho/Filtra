@@ -203,6 +203,26 @@ depois) — preencher fonte/autor/licença antes de considerar o módulo finaliz
 > Nota: os 8 SVGs do M9 eram placeholders e foram **reescritos como autorais** + 5 novos; o M9 não usa
 > imagens raster importadas (todas as 13 figuras são autorais FILTRA).
 
+## M11 — Potássio (shift, secreção distal, ECG)
+| Arquivo | Descrição | Fonte (URL) | Autor | Licença |
+|---|---|---|---|---|
+| `assets/m11/secrecao-distal-k.png` | Secreção distal de K⁺ (néfron) | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
+| `assets/m11/estoque-vs-gradiente-k.svg` | Estoque (98% intracelular) × plasma | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m11/shift-transcelular-k.svg` | Shift transcelular (interno) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m11/insulina-beta-k.svg` | Insulina/β → Na⁺/K⁺-ATPase | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m11/ph-potassio.svg` | pH ⇄ K⁺ na membrana | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m11/aldosterona-k.svg` | Aldosterona e secreção distal | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m11/secrecao-dois-fatores.svg` | Secreção = aldo × aporte distal | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m11/potencial-membrana-k.svg` | Nernst e potencial de repouso | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m11/nernst-curva.svg` | A janela segura estreita | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m11/ecg-hipercalemia.svg` | ECG da hipercalemia | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m11/ecg-hipocalemia.svg` | ECG da hipocalemia | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m11/deplecao-oculta-dka.svg` | Depleção oculta na CAD | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m11/tratamento-hiperk.svg` | Escada de tratamento da hiperK | — | Projeto FILTRA | FILTRA (autoral) |
+
+> Nota: o M11 **integra a imagem raster real** `secrecao-distal-k.png` (crédito Wikimedia pendente); as
+> outras 12 figuras são SVG autorais FILTRA (7 placeholders reescritos + 5 novos).
+
 ## Regras
 - Preferir **CC0 / domínio público**; **CC-BY / CC-BY-SA** aceitos **com atribuição** nesta tabela.
 - O caminho no `<img>` é sempre **relativo** (`assets/…`), nunca uma URL remota — o produto é offline.

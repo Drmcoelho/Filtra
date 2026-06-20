@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Secretar K⁺ exige DOIS fatores (é multiplicativo)</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">secreção ≈ aldosterona × aporte distal de Na⁺/fluxo — falte um, e ela despenca</text>
+
+  <!-- quadrantes -->
+  <g font-size="10">
+    <rect x="120" y="70" width="200" height="90" rx="8" fill="#10202c" stroke="#e0556b"/>
+    <text x="220" y="98" text-anchor="middle" fill="#e08a96" font-weight="bold">aldo ALTA · aporte BAIXO</text>
+    <text x="220" y="120" text-anchor="middle" fill="#cdd9e3">oligúria, IRA, depleção</text>
+    <text x="220" y="142" text-anchor="middle" fill="#f0c078">secreta POUCO → hiperK</text>
+
+    <rect x="360" y="70" width="200" height="90" rx="8" fill="#10202c" stroke="#52c08a"/>
+    <text x="460" y="98" text-anchor="middle" fill="#9fe3ec" font-weight="bold">aldo ALTA · aporte ALTO</text>
+    <text x="460" y="120" text-anchor="middle" fill="#cdd9e3">hiperaldo, diurético de alça</text>
+    <text x="460" y="142" text-anchor="middle" fill="#52c08a">secreta MUITO → hipoK</text>
+
+    <rect x="120" y="170" width="200" height="90" rx="8" fill="#10202c" stroke="#3a4a58"/>
+    <text x="220" y="198" text-anchor="middle" fill="#9bbef0" font-weight="bold">aldo BAIXA · aporte BAIXO</text>
+    <text x="220" y="220" text-anchor="middle" fill="#cdd9e3">hipoaldosteronismo + oligúria</text>
+    <text x="220" y="242" text-anchor="middle" fill="#f0c078">secreta POUCO → hiperK</text>
+
+    <rect x="360" y="170" width="200" height="90" rx="8" fill="#10202c" stroke="#e8a13a"/>
+    <text x="460" y="198" text-anchor="middle" fill="#f0c078" font-weight="bold">aldo BAIXA · aporte ALTO</text>
+    <text x="460" y="220" text-anchor="middle" fill="#cdd9e3">ATR tipo IV, ARM, IECA</text>
+    <text x="460" y="242" text-anchor="middle" fill="#f0c078">secreta POUCO → hiperK</text>
+  </g>
+  <text x="340" y="284" text-anchor="middle" font-size="10" fill="#e8a13a">só o quadrante com OS DOIS altos secreta bem — é o que o engine computa (aldo × aporte)</text>
+</svg>

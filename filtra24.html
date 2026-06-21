@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M24 — Hipotensão intradialítica: UF &gt; refilling, stunning miocárdico</title>
+<style>
+  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--warn:#e8a13a;--bad:#e0556b;--good:#52c08a;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none} section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .presets{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px} .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)} .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)} .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)} .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M24</div>
+  <h1>Hipotensão intradialítica — UF &gt; refilling, o stunning miocárdico</h1>
+  <div class="sub">A hipotensão na diálise <b>não</b> é "pouco volume corporal". É a <b>velocidade</b>: a
+  ultrafiltração (UF) tira volume do <b>plasma</b>; o interstício o reabastece a uma <b>taxa de refilling</b>.
+  Enquanto <b>UF rate ≤ refilling</b>, o plasma se mantém. Quando <b>UF rate &gt; refilling</b>, o intravascular
+  cai → pré-carga↓ → DC↓ → <b>hipotensão</b>. A homeostasia do volume circulante depende do equilíbrio entre
+  duas velocidades — e o <b>stunning miocárdico</b> é o custo cumulativo silencioso da UF agressiva.</div>
+  <nav class="hex">
+    <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
+    <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="dialisa.html">&larr; índice do antebraço DIALISA</a>
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- CONCEITO -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — duas velocidades: a UF que tira e o refilling que repõe</h3>
+      <p class="sub" style="margin-top:0"><b>Manter o volume circulante é homeostasia.</b> Na diálise, a UF retira
+      volume só do plasma; o interstício precisa devolver na mesma velocidade. A relação central é
+      <b>UF rate × refilling rate</b>: enquanto a UF não supera o refilling, o volume plasmático se mantém; quando
+      <b>UF rate &gt; refilling</b>, o plasma esvazia → hipotensão. As Fig. 1–8 voltam no Caso, na Trilha e na
+      Avaliação. Atribuição em <code>CREDITS.md</code> (em curadoria).</p>
+
+      <h4>1. A UF tira do plasma — o interstício precisa repor (refilling)</h4>
+      <p class="sub">A bomba de UF aplica pressão transmembrana e <b>retira água do compartimento plasmático</b>. O
+      plasma só não esvazia porque o interstício o reabastece — o <b>plasma refilling</b>. É um equilíbrio entre
+      uma saída (UF) e uma reposição (refilling).</p>
+      <div class="frow">
+        <div class="concept" id="draw-mech"></div>
+        <figure class="fviva"><img src="assets/m24/uf-maior-refilling.svg" alt="A ultrafiltração retira do plasma; o interstício repõe pelo refilling" loading="lazy">
+          <figcaption><b>Fig. 1 · UF tira do plasma, o refilling repõe.</b> A UF (seta para fora) só esvazia o
+          intravascular se for <b>mais rápida</b> que o refilling (seta do interstício para o capilar). O símbolo
+          ◎ marca o ponto de operação: <b>UF rate × refilling</b> é a balança a vigiar.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m24/hipotensao-mecanismo.svg" alt="Cascata: UF maior que refilling reduz pré-carga, débito cardíaco e pressão" loading="lazy">
+          <figcaption><b>Fig. 2 · A cascata da hipotensão.</b> UF &gt; refilling → volume plasmático↓ → pré-carga↓
+          → débito cardíaco↓ → <b>hipotensão intradialítica</b>. Não é "pouco volume corporal" — é a velocidade da
+          UF superando a reposição.</figcaption></figure>
+      </div>
+
+      <h4>2. UF rate × refilling — a desigualdade que decide</h4>
+      <p class="sub">A taxa de UF (mL/kg/h) = (peso atual − peso seco) / tempo, normalizada pelo peso. Enquanto
+      <b>UF rate ≤ refilling</b>, o plasma fica em platô; quando <b>UF rate &gt; refilling</b>, o plasma despenca —
+      o ponto de <b>crash</b>. A mesma UF total em mais tempo baixa a UF rate e cabe dentro do refilling.</p>
+      <div class="frow">
+        <div class="concept" id="draw-curva"></div>
+        <figure class="fviva"><img src="assets/m24/tolerancia-hemodinamica.svg" alt="Tolerância hemodinâmica: UF dentro do refilling mantém a curva estável" loading="lazy">
+          <figcaption><b>Fig. 3 · Tolerância hemodinâmica.</b> Dois pacientes, a <b>mesma UF total</b>: o que tem
+          refilling alto (ou mais tempo) mantém o platô; o que tem UF rate acima do refilling cruza o limiar e
+          <b>crasha</b>. A tolerância é a margem refilling − UF rate.</figcaption></figure>
+      </div>
+
+      <h4>3. O refilling cai: hipoalbuminemia e proximidade do peso seco</h4>
+      <p class="sub">O refilling depende do <b>gradiente oncótico</b> (albumina puxa água de volta ao capilar) e da
+      <b>reserva intersticial</b>. Hipoalbuminemia → refilling baixo. Ao aproximar do <b>peso seco</b>, o
+      interstício tem pouco a doar → o refilling despenca. Comer na diálise desvia sangue para o esplâncnico e
+      piora.</p>
+      <div class="frow">
+        <div class="concept" id="draw-refill"></div>
+        <figure class="fviva"><img src="assets/m24/sodio-dialisato.svg" alt="Sódio do dialisato e o gradiente que ajuda o refilling" loading="lazy">
+          <figcaption><b>Fig. 4 · O sódio do dialisato.</b> Um dialisato com sódio levemente mais alto cria
+          gradiente osmótico que <b>retém água no plasma</b> e ajuda o refilling — manobra contra a hipotensão (ao
+          custo de sede/sobrecarga se exagerado).</figcaption></figure>
+        <figure class="fviva"><img src="assets/m24/temperatura-dialisato.svg" alt="Dialisato mais frio melhora o tônus vascular e a tolerância" loading="lazy">
+          <figcaption><b>Fig. 5 · O dialisato mais frio.</b> Resfriar o dialisato (~35,5 °C) aumenta o <b>tônus
+          venoso</b> e a resistência → sustenta a pré-carga e a pressão quando o refilling não acompanha. Manobra
+          simples e barata contra a hipotensão.</figcaption></figure>
+      </div>
+
+      <h4>4. O stunning miocárdico — o custo cumulativo silencioso</h4>
+      <p class="sub">A queda do volume e da pressão a cada sessão causa <b>hipoperfusão</b> repetida do miocárdio →
+      isquemia regional → disfunção transitória (<b>stunning</b>). Repetida 3×/semana, vira lesão estrutural. A
+      UF agressiva cobra um preço que não aparece na pressão de hoje.</p>
+      <div class="frow">
+        <div class="concept" id="draw-stun"></div>
+        <figure class="fviva"><img src="assets/m24/stunning-miocardico.svg" alt="Stunning miocárdico: hipoperfusão repetida causa disfunção cumulativa" loading="lazy">
+          <figcaption><b>Fig. 6 · Stunning miocárdico.</b> Cada sessão com UF agressiva → hipoperfusão → isquemia
+          → disfunção segmentar transitória. <b>Cumulativo</b>: ao longo de meses, fibrose e queda da função. O
+          custo silencioso da pressa.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m24/isquemia-orgaos.svg" alt="Isquemia de múltiplos órgãos pela hipoperfusão repetida" loading="lazy">
+          <figcaption><b>Fig. 7 · Não só o coração.</b> A hipoperfusão repetida também atinge cérebro, intestino e
+          o rim residual. O stunning é a face cardíaca de um dano isquêmico <b>multiorgânico</b> da UF rápida
+          demais.</figcaption></figure>
+      </div>
+
+      <h4>5. O manejo — baixar a TAXA, não desistir do volume</h4>
+      <p class="sub">A prevenção é <b>reduzir a UF rate</b>: mais tempo de sessão, sessões mais frequentes, peso seco
+      realista, dialisato frio, sódio do dialisato. Tirar o mesmo volume <b>devagar</b> cabe no refilling. A
+      conduta na crise: Trendelenburg, parar/reduzir a UF, bólus de salina.</p>
+      <div class="frow">
+        <div class="concept" id="draw-manejo"></div>
+        <figure class="fviva"><img src="assets/m24/manejo-hipotensao.svg" alt="Manejo da hipotensão intradialítica: reduzir a taxa de UF, frio, sódio, tempo" loading="lazy">
+          <figcaption><b>Fig. 8 · O manejo por mecanismo.</b> Prevenir = baixar a <b>UF rate</b> (mais tempo /
+          mais frequência / peso seco realista) + dialisato frio + sódio do dialisato. Na crise: posição,
+          reduzir a UF, salina. Tudo ataca a desigualdade UF &gt; refilling.</figcaption></figure>
+      </div>
+
+      <p class="sub" style="margin-top:14px"><b>A pérola (Fig. 1–3):</b> a hipotensão intradialítica é
+      <b>UF &gt; refilling</b>, não "volume baixo". Baixar a <b>taxa</b> de UF (mais tempo, ou UF menor) previne —
+      e o stunning (Fig. 6) é o custo cumulativo silencioso da UF agressiva.</p>
+    </div>
+  </section>
+
+  <!-- CASO -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — oito atos, decida antes de revelar</h3>
+      <p class="sub">Homem de 64 anos em hemodiálise 3×/semana, 75 kg pré, peso seco 70 kg, sessão de 3 h.
+      "Ganhou muito peso, vamos tirar tudo rápido." Será?</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step"><b>Ato 1.</b> 5 kg para tirar em 3 h. Qual a taxa de UF normalizada — e ela cabe no refilling
+        (volte à Fig. 1 e Fig. 3)?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>UF rate ≈ 22 mL/kg/h</b> — muito acima de um refilling típico (~12 mL/kg/h).
+          A UF supera o refilling: o plasma vai esvaziar. É <b>UF &gt; refilling</b>, não falta de volume — ele tem
+          5 kg de excesso.</div></div>
+
+      <div class="step"><b>Ato 2.</b> Na 2ª hora ele fica pálido, sudoreico, PA 80×50. O que aconteceu (Fig. 2)?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2">A cascata: volume plasmático↓ → pré-carga↓ → débito cardíaco↓ →
+          <b>hipotensão intradialítica</b>. O intravascular crashou porque a UF foi mais rápida que a reposição —
+          embora o corpo ainda tenha líquido de sobra no interstício.</div></div>
+
+      <div class="step"><b>Ato 3.</b> <i>A conduta imediata.</i> O que fazer agora?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3">Trendelenburg, <b>reduzir/parar a UF</b> e <b>bólus de salina</b> (~200 mL).
+          Dá tempo de o refilling reabastecer o plasma. Resolve a crise — mas o problema foi a <b>taxa</b>.</div></div>
+
+      <div class="step"><b>Ato 4.</b> <i>A prevenção certa.</i> Mesmo 5 kg, como tirar sem crashar (Fig. 8)?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>Baixar a UF rate</b>: estender a sessão (5 kg em 5–6 h → ~9 mL/kg/h, dentro do
+          refilling), ou diálise mais frequente. A MESMA UF total, mais devagar, <b>cabe</b>. Some dialisato frio e
+          ajuste de sódio.</div></div>
+
+      <div class="step"><b>Ato 5.</b> <i>Outro doente.</i> Cirrótica, albumina 2,2, só 3 kg para tirar em 4 h
+        (~10 mL/kg/h). Por que ela também crasha (Fig. 4)?
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>Refilling baixo.</b> A hipoalbuminemia derruba o gradiente oncótico → o
+          refilling cai para ~6 mL/kg/h. Uma UF rate "moderada" agora supera o refilling. A desigualdade é
+          relativa: o que importa é a margem refilling − UF rate.</div></div>
+
+      <div class="step"><b>Ato 6.</b> <i>Comer na diálise.</i> Ele costuma almoçar durante a sessão. Por que piora?
+        <div><button class="act" data-rev="r6">Revelar</button></div>
+        <div class="reveal" id="r6">A refeição desvia sangue para o leito <b>esplâncnico</b> (vasodilatação
+          pós-prandial) → menos volume efetivo e menos refilling disponível para o plasma central → mais
+          hipotensão. Evitar comer na sessão.</div></div>
+
+      <div class="step"><b>Ato 7.</b> <i>Perto do peso seco.</i> Já na última meia-hora, mesmo com UF baixa, ele
+        hipotende. Por quê?
+        <div><button class="act" data-rev="r7">Revelar</button></div>
+        <div class="reveal" id="r7">Ao se <b>aproximar do peso seco</b>, o interstício tem pouco a doar → o refilling
+          despenca. A mesma UF rate que cabia no início agora supera o refilling esgotado. O peso seco realista
+          evita essa fase (ponte M23).</div></div>
+
+      <div class="step"><b>Ato 8.</b> <i>O custo invisível.</i> Ele tolerou várias sessões agressivas "sem grandes
+        sintomas". Sem custo?
+        <div><button class="act" data-rev="r8">Revelar</button></div>
+        <div class="reveal" id="r8"><b>Stunning miocárdico</b> (Fig. 6): a hipoperfusão repetida lesa o miocárdio
+          de forma <b>cumulativa</b>, mesmo sem crise franca. A UF agressiva cobra um preço silencioso — daí a
+          regra: tire devagar, dentro do refilling.</div></div>
+    </div>
+  </section>
+
+  <!-- TRILHA -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — treze perguntas que constroem o conceito</h3>
+      <details><summary>1. De qual compartimento a UF retira volume?</summary><p>Diretamente do <b>plasma</b>
+        (intravascular). O resto do corpo só perde água indiretamente, pelo refilling do interstício para o
+        plasma.</p></details>
+      <details><summary>2. O que é o plasma refilling?</summary><p>A taxa (mL/kg/h) com que o interstício
+        reabastece o plasma, devolvendo o volume que a UF tirou. É o que impede o intravascular de esvaziar.</p></details>
+      <details><summary>3. Qual a desigualdade central?</summary><p><b>UF rate × refilling rate.</b> Se UF ≤
+        refilling, o volume plasmático se mantém; se UF &gt; refilling, o plasma cai → hipotensão.</p></details>
+      <details><summary>4. A hipotensão intradialítica é "volume baixo"?</summary><p>Não. O paciente costuma ter
+        <b>excesso</b> de volume total. A hipotensão é a <b>velocidade</b> da UF superando o refilling — um
+        problema de fluxo, não de estoque.</p></details>
+      <details><summary>5. Como se calcula a UF rate?</summary><p>UF total = (peso atual − peso seco); UF rate =
+        UF total / tempo, normalizada pelo peso (mL/kg/h). Taxa alta (&gt;10–13 mL/kg/h) → risco.</p></details>
+      <details><summary>6. Por que mais tempo previne?</summary><p>A <b>mesma UF total</b> em mais tempo dá uma UF
+        rate menor, que cabe dentro do refilling. Tirar devagar = tirar dentro da reposição.</p></details>
+      <details><summary>7. Por que a hipoalbuminemia piora?</summary><p>A albumina gera o gradiente <b>oncótico</b>
+        que puxa água do interstício de volta ao capilar. Albumina baixa → refilling baixo → crash com UF
+        moderada.</p></details>
+      <details><summary>8. O que acontece perto do peso seco?</summary><p>O interstício tem pouco a doar → o
+        refilling <b>despenca</b>. A mesma UF rate que cabia no início passa a superar o refilling esgotado.</p></details>
+      <details><summary>9. Por que comer na diálise piora?</summary><p>A refeição desvia sangue para o
+        <b>esplâncnico</b> (vasodilatação pós-prandial), reduzindo o volume efetivo e o refilling central.</p></details>
+      <details><summary>10. O que é o stunning miocárdico?</summary><p>Disfunção miocárdica transitória por
+        <b>hipoperfusão</b> repetida a cada sessão. Cumulativa: ao longo do tempo, lesão estrutural.</p></details>
+      <details><summary>11. Por que o dialisato frio ajuda?</summary><p>Resfriar o dialisato aumenta o <b>tônus
+        venoso</b> e a resistência → sustenta pré-carga e pressão quando o refilling não acompanha.</p></details>
+      <details><summary>12. E o sódio do dialisato?</summary><p>Sódio levemente mais alto cria gradiente que
+        <b>retém água no plasma</b> e ajuda o refilling (ao custo de sede/sobrecarga se exagerado).</p></details>
+      <details><summary>13. Em que sentido isto é homeostasia?</summary><p>O rim defende o volume circulante; a
+        máquina o desafia. Tirar volume <b>sem</b> derrubar o intravascular é manter a homeostasia hemodinâmica —
+        equilibrando duas velocidades.</p></details>
+    </div>
+  </section>
+
+  <!-- INSTRUMENTO -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — o volume plasmático ao longo da sessão</h3>
+      <p class="sub">Os controles do <b>Lab</b> alimentam esta curva. A linha <b>ciano</b> é o estado atual; a
+      <b>verde</b> é a mesma UF total em <b>tempo maior</b> (UF gentil, que mantém o platô). A linha tracejada
+      laranja é o limiar de hipotensão (queda de 18% do volume plasmático); o ponto laranja marca o
+      <b>crash</b>.</p>
+      <canvas id="pv-canvas" width="900" height="360" aria-label="Volume plasmático ao longo do tempo"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- LAB -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — mova o peso, o tempo, o refilling e a albumina; veja a UF crashar (ou não)</h3>
+      <div class="grid">
+        <div>
+          <label>Peso atual (kg): <span class="val" id="lbl-pesoatual">75</span></label>
+          <input type="range" id="in-pesoatual" min="50" max="120" step="0.5" value="75">
+          <label>Peso seco alvo (kg): <span class="val" id="lbl-pesoseco">70</span></label>
+          <input type="range" id="in-pesoseco" min="45" max="115" step="0.5" value="70">
+          <label>Tempo de sessão (h): <span class="val" id="lbl-tempo">3</span></label>
+          <input type="range" id="in-tempo" min="2" max="8" step="0.25" value="3">
+        </div>
+        <div>
+          <label>Refilling máximo (mL/kg/h): <span class="val" id="lbl-refill">12</span></label>
+          <input type="range" id="in-refill" min="4" max="22" step="0.5" value="12">
+          <label>Albumina (g/dL): <span class="val" id="lbl-alb">4.0</span></label>
+          <input type="range" id="in-alb" min="1.5" max="5" step="0.1" value="4">
+        </div>
+      </div>
+
+      <div class="presets">
+        <button class="act" data-preset="gentil">UF gentil</button>
+        <button class="act" data-preset="agressiva">UF agressiva (crash)</button>
+        <button class="act" data-preset="hipoalb">Hipoalbuminemia</button>
+        <button class="act" data-preset="maistempo">Mais tempo (previne)</button>
+        <button class="act" data-preset="pesoSeco">Perto do peso seco</button>
+      </div>
+
+      <table>
+        <tr><th>Variável</th><th>Atual</th><th>Comentário</th></tr>
+        <tr><td>UF total (mL)</td><td class="num" id="out-uftotal">—</td><td class="num">(peso atual − peso seco)</td></tr>
+        <tr><td>UF rate (mL/h)</td><td class="num" id="out-ufmlh">—</td><td class="num">UF total / tempo</td></tr>
+        <tr><td>UF rate (mL/kg/h)</td><td class="num" id="out-ufkgh">—</td><td class="num">&gt;13 = alta</td></tr>
+        <tr><td>Refilling máx (mL/kg/h)</td><td class="num" id="out-refmax">—</td><td class="num">a reposição disponível</td></tr>
+        <tr><td>Margem (refilling − UF rate)</td><td class="num" id="out-margem">—</td><td class="num">&lt;0 = crash</td></tr>
+        <tr><td>Queda do volume plasmático</td><td class="num" id="out-queda">—</td><td class="num">% do PV inicial</td></tr>
+        <tr><td>Risco de hipotensão</td><td class="num" id="out-risco">—</td><td class="num">0 a 100%</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÃO -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (12)</button>
+        <button data-bank="textual">Textual (12)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica</b>. Este módulo M24
+    trata da hipotensão intradialítica; as taxas de UF (mL/kg/h, mL/h), o tempo e o peso seco são apresentados
+    como <b>mecanismo</b>, computados por um modelo didático simplificado. Não substitui a prescrição de diálise
+    nem o julgamento clínico; a decisão e a responsabilidade finais são sempre do profissional.
+  </div>
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+</div>
+
+<script>
+/* ENGINE INLINE — espelho fiel de build/m24/model24.js */
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
+function merge(input){ var inp=input||{};
+  return {
+    pesoAtual:clampv(inp.pesoAtual!==undefined?inp.pesoAtual:73,30,200),
+    pesoSeco:clampv(inp.pesoSeco!==undefined?inp.pesoSeco:70,25,200),
+    tempoHoras:clampv(inp.tempoHoras!==undefined?inp.tempoHoras:4,1,12),
+    refillBase:clampv(inp.refillBase!==undefined?inp.refillBase:12,2,25),
+    albumina:clampv(inp.albumina!==undefined?inp.albumina:4,1.5,6)
+  }; }
+var REF_ALB=4, LLIM_KGH=13, PV_BASE_FRAC=0.045;
+function fatorAlbumina(alb){ alb=clampv(alb,1.5,6); return clampv(alb/REF_ALB,0.3,1.3); }
+function refillEfetivo(refillBase,alb,esgotamento){ refillBase=clampv(refillBase,2,25); esgotamento=clampv(esgotamento,0,1);
+  var fAlb=fatorAlbumina(alb), fReserva=clampv(1-esgotamento*esgotamento,0,1);
+  return clampv(refillBase*fAlb*fReserva,0,40); }
+function ufSession(input){ var s=merge(input);
+  var ufTotalMl=clampv((s.pesoAtual-s.pesoSeco)*1000,0,200000);
+  var ufRateMlh=ufTotalMl/s.tempoHoras, ufRateKgh=ufRateMlh/s.pesoAtual;
+  var pvInicial=PV_BASE_FRAC*s.pesoSeco*1000;
+  var refMax=refillEfetivo(s.refillBase,s.albumina,0)*s.pesoAtual, refMaxKgh=refillEfetivo(s.refillBase,s.albumina,0);
+  var Nsteps=240, dt=s.tempoHoras/Nsteps, pv=pvInicial, pvMin=pvInicial, tMin=0, removidoTotal=0, crashTime=-1, traj=[];
+  for(var i=0;i<=Nsteps;i++){ var t=i*dt;
+    var reservatorio=clampv((s.pesoAtual-s.pesoSeco)*1000,1e-6,200000);
+    var esg=clampv(removidoTotal/reservatorio,0,1);
+    var refKgh=refillEfetivo(s.refillBase,s.albumina,esg), refMlh=refKgh*s.pesoAtual, netMlh=refMlh-ufRateMlh;
+    traj.push({t:t,pv:pv,ufRate:ufRateMlh,refill:refMlh,net:netMlh,esg:esg});
+    if(pv<pvMin){ pvMin=pv; tMin=t; }
+    if(pv<pvInicial*0.82 && crashTime<0) crashTime=t;
+    if(i<Nsteps){ pv+=netMlh*dt; pv=clampv(pv,pvInicial*0.35,pvInicial*1.05); removidoTotal+=ufRateMlh*dt; } }
+  var quedaPVfrac=(pvInicial-pvMin)/pvInicial, pvFinal=pv;
+  var margemKgh=refMaxKgh-ufRateKgh;
+  var riscoQueda=clampv(quedaPVfrac/0.25,0,1), riscoTaxa=clampv((ufRateKgh-8)/(LLIM_KGH-8),0,1.3);
+  var risco=clampv(0.62*riscoQueda+0.38*clampv(riscoTaxa,0,1),0,1);
+  var ufExcedeRefilling=ufRateKgh>refMaxKgh, taxaAlta=ufRateKgh>LLIM_KGH, hipotensao=risco>0.5;
+  var stunning=quedaPVfrac>0.15||ufRateKgh>LLIM_KGH, hipoalbumin=s.albumina<3;
+  return { pesoAtual:s.pesoAtual,pesoSeco:s.pesoSeco,tempoHoras:s.tempoHoras,refillBase:s.refillBase,albumina:s.albumina,
+    ufTotalMl:ufTotalMl,ufRateMlh:ufRateMlh,ufRateKgh:ufRateKgh,refMaxMlh:refMax,refMaxKgh:refMaxKgh,margemKgh:margemKgh,
+    pvInicial:pvInicial,pvMin:pvMin,pvFinal:pvFinal,tMin:tMin,quedaPVfrac:quedaPVfrac,crashTime:crashTime,traj:traj,
+    risco:risco,ufExcedeRefilling:ufExcedeRefilling,taxaAlta:taxaAlta,hipotensao:hipotensao,stunning:stunning,hipoalbumin:hipoalbumin }; }
+function pvCurveLayout(state,W,H){ state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=54,padR=16,padT=18,padB=38,baseY=H-padB, s=merge(state), r=ufSession(s), tMax=s.tempoHoras, yLo=60,yHi=105;
+  var pxX=(W-padL-padR)/Math.max(tMax,1e-6), pxY=(baseY-padT)/(yHi-yLo);
+  function ptY(pvFrac){ var pct=clampv(pvFrac*100,yLo,yHi); return baseY-(pct-yLo)*pxY; }
+  var pts=[],i;
+  for(i=0;i<r.traj.length;i++){ var tr=r.traj[i]; pts.push({t:tr.t,pvFrac:tr.pv/r.pvInicial,x:padL+tr.t*pxX,y:ptY(tr.pv/r.pvInicial)}); }
+  var gentle=ufSession({pesoAtual:s.pesoAtual,pesoSeco:s.pesoSeco,tempoHoras:clampv(s.tempoHoras*2,1,12),refillBase:s.refillBase,albumina:s.albumina});
+  var ptsGentle=[];
+  for(i=0;i<gentle.traj.length;i++){ var tg=gentle.traj[i]; var tx=(tg.t/Math.max(gentle.tempoHoras,1e-6))*tMax;
+    ptsGentle.push({t:tx,pvFrac:tg.pv/gentle.pvInicial,x:padL+tx*pxX,y:ptY(tg.pv/gentle.pvInicial)}); }
+  var crash=null; if(r.crashTime>=0) crash={x:padL+r.crashTime*pxX,y:ptY(0.82),t:r.crashTime};
+  var thresholdY=ptY(0.82);
+  return { W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,tMax:tMax,yLo:yLo,yHi:yHi,pxX:pxX,pxY:pxY,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY}, pts:pts,ptsGentle:ptsGentle,crash:crash,thresholdY:thresholdY,
+    risco:r.risco,ufRateKgh:r.ufRateKgh,refMaxKgh:r.refMaxKgh }; }
+window.ufSession=ufSession; window.refillEfetivo=refillEfetivo; window.fatorAlbumina=fatorAlbumina; window.pvCurveLayout=pvCurveLayout; window.merge=merge;
+window.MODEL={ufSession:ufSession,refillEfetivo:refillEfetivo,fatorAlbumina:fatorAlbumina,pvCurveLayout:pvCurveLayout,merge:merge,clampv:clampv,REF_ALB:REF_ALB,LLIM_KGH:LLIM_KGH,PV_BASE_FRAC:PV_BASE_FRAC};
+
+/* UI */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=(d===undefined?1:d); return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on'); b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on'); $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh(); });
+document.addEventListener('click',function(e){ var b=e.target.closest('button.act[data-rev]'); if(!b) return; var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on'); });
+
+function readInputs(){ return { pesoAtual:+$('in-pesoatual').value, pesoSeco:+$('in-pesoseco').value, tempoHoras:+$('in-tempo').value, refillBase:+$('in-refill').value, albumina:+$('in-alb').value }; }
+function refresh(){ var inp=readInputs();
+  $('lbl-pesoatual').textContent=fmt(inp.pesoAtual,1); $('lbl-pesoseco').textContent=fmt(inp.pesoSeco,1); $('lbl-tempo').textContent=fmt(inp.tempoHoras,2);
+  $('lbl-refill').textContent=fmt(inp.refillBase,1); $('lbl-alb').textContent=fmt(inp.albumina,1);
+  var r=ufSession(inp);
+  $('out-uftotal').textContent=fmt(r.ufTotalMl,0); $('out-ufmlh').textContent=fmt(r.ufRateMlh,0); $('out-ufkgh').textContent=fmt(r.ufRateKgh,1);
+  $('out-refmax').textContent=fmt(r.refMaxKgh,1); $('out-margem').textContent=(r.margemKgh>=0?'+':'')+fmt(r.margemKgh,1);
+  $('out-queda').textContent=fmt(r.quedaPVfrac*100,0)+'%'; $('out-risco').textContent=fmt(r.risco*100,0)+'%';
+  verdict(r); drawPV(inp); pearl(r); }
+function verdict(r){ var v=$('veredito'), cls='b-good', msg;
+  if(r.ufExcedeRefilling){ cls='b-bad'; msg='CRASH: UF rate '+fmt(r.ufRateKgh,1)+' mL/kg/h SUPERA o refilling ('+fmt(r.refMaxKgh,1)+'). O volume plasmático cai '+fmt(r.quedaPVfrac*100,0)+'% → hipotensão. Risco '+fmt(r.risco*100,0)+'%.'; }
+  else if(r.hipotensao){ cls='b-bad'; msg='ALTO RISCO: UF rate '+fmt(r.ufRateKgh,1)+' mL/kg/h perto do refilling ('+fmt(r.refMaxKgh,1)+'); queda de '+fmt(r.quedaPVfrac*100,0)+'% do PV. Estenda o tempo.'; }
+  else if(r.risco>0.3||r.taxaAlta){ cls='b-warn'; msg='MARGEM ESTREITA: UF rate '+fmt(r.ufRateKgh,1)+' vs refilling '+fmt(r.refMaxKgh,1)+' mL/kg/h (margem '+(r.margemKgh>=0?'+':'')+fmt(r.margemKgh,1)+'). Vigie a pressão; considere mais tempo/dialisato frio.'; }
+  else { cls='b-good'; msg='TOLERA: UF rate '+fmt(r.ufRateKgh,1)+' mL/kg/h dentro do refilling ('+fmt(r.refMaxKgh,1)+'), margem +'+fmt(r.margemKgh,1)+'. Volume plasmático em platô.'; }
+  v.className='banner '+cls; v.textContent=msg; }
+function pearl(r){ var p=$('lab-pearl'), ip=$('instr-pearl'), t;
+  if(r.ufExcedeRefilling) t='PÉROLA: NÃO é "volume baixo" — ele tem '+fmt(r.ufTotalMl/1000,1)+' kg de excesso. É a VELOCIDADE: UF rate '+fmt(r.ufRateKgh,1)+' > refilling '+fmt(r.refMaxKgh,1)+' mL/kg/h. Baixe a TAXA (mais tempo).';
+  else if(r.hipoalbumin) t='PÉROLA (oncótico): albumina '+fmt(r.albumina,1)+' g/dL derruba o refilling para '+fmt(r.refMaxKgh,1)+' mL/kg/h — uma UF "moderada" já crasha.';
+  else if(r.stunning) t='PÉROLA (cumulativo): queda de '+fmt(r.quedaPVfrac*100,0)+'% do PV — hipoperfusão repetida → STUNNING miocárdico, o custo silencioso da UF agressiva.';
+  else t='UF rate '+fmt(r.ufRateKgh,1)+' mL/kg/h cabe no refilling '+fmt(r.refMaxKgh,1)+' (margem +'+fmt(r.margemKgh,1)+'): o volume plasmático se mantém. Tirar devagar = tirar dentro da reposição.';
+  p.textContent=t; ip.textContent=t; }
+function drawPV(state){ var c=$('pv-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
+  var L=pvCurveLayout(state,c.width,c.height); ctx.clearRect(0,0,L.W,L.H);
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('volume plasmático (% inicial)',8,L.padT+2); ctx.fillText('tempo (h) →',L.W-110,L.baseY+24);
+  // limiar de hipotensão (82%)
+  ctx.strokeStyle='#e8a13a'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(L.axis.x0,L.thresholdY); ctx.lineTo(L.axis.xEnd,L.thresholdY); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#e8a13a'; ctx.fillText('limiar de hipotensão (−18%)',L.axis.x0+6,L.thresholdY-4);
+  // curva gentil (verde, referência)
+  ctx.strokeStyle='#52c08a'; ctx.lineWidth=2; ctx.setLineDash([6,4]); ctx.beginPath();
+  for(var k=0;k<L.ptsGentle.length;k++){ var pg=L.ptsGentle[k]; if(k===0) ctx.moveTo(pg.x,pg.y); else ctx.lineTo(pg.x,pg.y); } ctx.stroke(); ctx.setLineDash([]);
+  // curva atual (ciano)
+  ctx.strokeStyle='#39c0c8'; ctx.lineWidth=2; ctx.beginPath();
+  for(var i=0;i<L.pts.length;i++){ var p=L.pts[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); } ctx.stroke();
+  // ponto de crash
+  if(L.crash){ ctx.fillStyle='#e0556b'; ctx.fillRect(L.crash.x-4,L.crash.y-4,8,8); ctx.fillStyle='#e7eef4'; ctx.fillText('crash',L.crash.x+7,L.crash.y-6); }
+  // legenda
+  ctx.fillStyle='#39c0c8'; ctx.fillText('atual',L.W-160,L.padT+12); ctx.fillStyle='#52c08a'; ctx.fillText('UF gentil (2× tempo)',L.W-160,L.padT+28); }
+['in-pesoatual','in-pesoseco','in-tempo','in-refill','in-alb'].forEach(function(id){ $(id).addEventListener('input',refresh); });
+
+var PRESETS={
+  gentil:{pesoatual:72,pesoseco:70,tempo:4,refill:12,alb:4},
+  agressiva:{pesoatual:75,pesoseco:70,tempo:3,refill:12,alb:4},
+  hipoalb:{pesoatual:73,pesoseco:70,tempo:4,refill:12,alb:2},
+  maistempo:{pesoatual:75,pesoseco:70,tempo:6,refill:12,alb:4},
+  pesoSeco:{pesoatual:71,pesoseco:70,tempo:4,refill:12,alb:4}
+};
+function applyPreset(p){ var d=PRESETS[p]; if(!d) return;
+  $('in-pesoatual').value=d.pesoatual; $('in-pesoseco').value=d.pesoseco; $('in-tempo').value=d.tempo; $('in-refill').value=d.refill; $('in-alb').value=d.alb; refresh(); }
+document.querySelector('.presets').addEventListener('click',function(e){ var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset')); });
+
+/* ILUSTRAÇÕES computadas + helper raster */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+// mini volume plasmático × tempo
+function pvMini(state,titulo){ var W=300,H=170,L=pvCurveLayout(state,W,H),s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+f1(L.thresholdY)+'" x2="'+L.axis.xEnd+'" y2="'+f1(L.thresholdY)+'" stroke="#e8a13a" stroke-dasharray="4 3"/>';
+  var dg=''; for(var k=0;k<L.ptsGentle.length;k++){ dg+=(k===0?'M':'L')+f1(L.ptsGentle[k].x)+' '+f1(L.ptsGentle[k].y)+' '; }
+  s+='<path d="'+dg+'" fill="none" stroke="#52c08a" stroke-width="1.6" stroke-dasharray="5 3"/>';
+  var d=''; for(var i=0;i<L.pts.length;i++){ d+=(i===0?'M':'L')+f1(L.pts[i].x)+' '+f1(L.pts[i].y)+' '; }
+  s+='<path d="'+d+'" fill="none" stroke="#39c0c8" stroke-width="2"/>';
+  if(L.crash) s+='<rect x="'+f1(L.crash.x-3)+'" y="'+f1(L.crash.y-3)+'" width="6" height="6" fill="#e0556b"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'PV × tempo')+'</text>';
+  s+='<text x="'+(W-8)+'" y="'+(L.baseY+14)+'" fill="#9fb1c0" font-size="9" text-anchor="end">tempo →</text>';
+  return svgEl(W,H,s); }
+// barras UF rate × refilling
+function balanceBars(r,titulo){ var W=300,H=170,base=132,s='';
+  function bar(x,val,color,lab){ var h=clampv(val/26,0,1)*92; return '<rect x="'+x+'" y="'+f1(base-h)+'" width="62" height="'+f1(h)+'" fill="'+color+'" fill-opacity="0.6" stroke="'+color+'"/>'+
+    '<text x="'+(x+31)+'" y="'+(base+13)+'" fill="#9fb1c0" font-size="9" text-anchor="middle">'+lab+'</text>'+
+    '<text x="'+(x+31)+'" y="'+f1(base-h-4)+'" fill="#e7eef4" font-size="10" text-anchor="middle">'+fmt(val,1)+'</text>'; }
+  s+=bar(56,r.ufRateKgh,(r.ufExcedeRefilling?'#e0556b':'#e8a13a'),'UF rate'); s+=bar(176,r.refMaxKgh,'#52c08a','refilling');
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'UF rate × refilling (mL/kg/h)')+'</text>';
+  s+='<text x="150" y="152" fill="'+(r.margemKgh>=0?'#52c08a':'#e0556b')+'" font-size="10" text-anchor="middle">margem '+(r.margemKgh>=0?'+':'')+fmt(r.margemKgh,1)+' mL/kg/h</text>';
+  return svgEl(W,H,s); }
+// desenho esquemático: UF tira do plasma, interstício repõe
+function mechDraw(){ var W=300,H=170,s='';
+  s+='<rect x="40" y="50" width="90" height="70" rx="8" fill="#1b242d" stroke="#39c0c8"/>';
+  s+='<text x="85" y="44" fill="#39c0c8" font-size="10" text-anchor="middle">plasma</text>';
+  s+='<rect x="180" y="50" width="90" height="70" rx="8" fill="#1b242d" stroke="#9fb1c0"/>';
+  s+='<text x="225" y="44" fill="#9fb1c0" font-size="10" text-anchor="middle">interstício</text>';
+  // UF para fora do plasma
+  s+='<line x1="40" y1="85" x2="10" y2="85" stroke="#e0556b" stroke-width="3" marker-end="url(#a)"/>';
+  s+='<text x="22" y="105" fill="#e0556b" font-size="9" text-anchor="middle">UF</text>';
+  // refilling interstício→plasma
+  s+='<line x1="180" y1="100" x2="130" y2="100" stroke="#52c08a" stroke-width="3" marker-end="url(#a)"/>';
+  s+='<text x="155" y="118" fill="#52c08a" font-size="9" text-anchor="middle">refilling</text>';
+  s+='<defs><marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="#888"/></marker></defs>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">a UF tira, o refilling repõe</text>';
+  s+='<text x="'+(W/2)+'" y="150" fill="#e8a13a" font-size="10" text-anchor="middle">UF &gt; refilling → plasma↓</text>';
+  return svgEl(W,H,s); }
+// desenho: refilling cai com albumina e perto do peso seco
+function refillDraw(){ var W=300,H=170,s='',base=130,x0=44;
+  s+='<line x1="'+x0+'" y1="20" x2="'+x0+'" y2="'+base+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+x0+'" y1="'+base+'" x2="'+(W-12)+'" y2="'+base+'" stroke="#3a4a58"/>';
+  // curva refilling vs esgotamento (cai quadrático)
+  var d=''; for(var e=0;e<=1.001;e+=0.05){ var rf=refillEfetivo(12,4,e); var x=x0+e*(W-12-x0); var y=base-(rf/12)*(base-24); d+=(d===''?'M':'L')+f1(x)+' '+f1(y)+' '; }
+  s+='<path d="'+d+'" fill="none" stroke="#39c0c8" stroke-width="2"/>';
+  // curva hipoalbuminemia (alb 2)
+  var d2=''; for(var e2=0;e2<=1.001;e2+=0.05){ var rf2=refillEfetivo(12,2,e2); var x2=x0+e2*(W-12-x0); var y2=base-(rf2/12)*(base-24); d2+=(d2===''?'M':'L')+f1(x2)+' '+f1(y2)+' '; }
+  s+='<path d="'+d2+'" fill="none" stroke="#e0556b" stroke-width="2" stroke-dasharray="5 3"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">refilling cai (alb↓, perto do peso seco)</text>';
+  s+='<text x="'+(W-12)+'" y="'+(base+13)+'" fill="#9fb1c0" font-size="9" text-anchor="end">→ peso seco</text>';
+  s+='<text x="'+(x0+10)+'" y="30" fill="#39c0c8" font-size="9">alb 4</text>';
+  s+='<text x="'+(x0+10)+'" y="92" fill="#e0556b" font-size="9">alb 2</text>';
+  return svgEl(W,H,s); }
+// desenho: stunning cumulativo (função degraus)
+function stunDraw(){ var W=300,H=170,s='',base=130,x0=40;
+  s+='<line x1="'+x0+'" y1="20" x2="'+x0+'" y2="'+base+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+x0+'" y1="'+base+'" x2="'+(W-12)+'" y2="'+base+'" stroke="#3a4a58"/>';
+  // função renal residual cai em degraus a cada sessão
+  var y=30, d='M'+x0+' '+y+' ';
+  for(var k=0;k<6;k++){ var x=x0+(k+1)*((W-12-x0)/6); d+='L'+f1(x-6)+' '+f1(y)+' '; y+=12; d+='L'+f1(x-6)+' '+f1(y)+' L'+f1(x)+' '+f1(y)+' '; }
+  s+='<path d="'+d+'" fill="none" stroke="#e0556b" stroke-width="2"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">stunning: dano cumulativo por sessão</text>';
+  s+='<text x="'+(W-12)+'" y="'+(base+13)+'" fill="#9fb1c0" font-size="9" text-anchor="end">sessões →</text>';
+  s+='<text x="'+(x0+4)+'" y="28" fill="#9fb1c0" font-size="9">função</text>';
+  return svgEl(W,H,s); }
+function imgFig(slug,alt){ return '<img src="assets/m24/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+/* TUTOR */
+function U(extra){ var o={}; if(extra) for(var k in extra) o[k]=extra[k]; return ufSession(o); }
+var TUTOR_ILUSTRADO=[
+  {q:'De qual compartimento a UF retira volume diretamente?',o:['do interstício','do plasma (intravascular)','das células'],c:1,e:'A UF tira do plasma; o resto repõe pelo refilling.',fig:function(){return mechDraw();}},
+  {q:'5 kg em 3 h (75 kg): a UF rate cabe no refilling típico (~12 mL/kg/h)?',o:['cabe, sobra','não — ~22 mL/kg/h, crasha','dá exatamente igual'],c:1,e:'UF rate ~22 mL/kg/h > refilling 12 → o plasma esvazia.',fig:function(){return balanceBars(U({pesoAtual:75,pesoSeco:70,tempoHoras:3}),'5 kg em 3 h');}},
+  {q:'Na curva, o que a UF agressiva faz com o volume plasmático?',o:['mantém o platô','despenca e cruza o limiar','sobe'],c:1,e:'UF > refilling → o PV cai abaixo do limiar de hipotensão (crash).',fig:function(){return pvMini({pesoAtual:75,pesoSeco:70,tempoHoras:3},'UF agressiva — crash');}},
+  {q:'A mesma 5 kg, agora em 6 h. O que muda?',o:['piora','UF rate cai e o PV fica em platô','não muda'],c:1,e:'Mais tempo (mesma UF total) → UF rate menor, dentro do refilling.',fig:function(){return pvMini({pesoAtual:75,pesoSeco:70,tempoHoras:6},'UF gentil — platô');}},
+  {q:'Albumina 2,2 g/dL faz o refilling…',o:['subir','cair (gradiente oncótico↓)','não mexe'],c:1,e:'A albumina puxa água ao capilar; pouca albumina → refilling baixo.',fig:function(){return balanceBars(U({pesoAtual:73,pesoSeco:70,tempoHoras:4,albumina:2}),'hipoalbuminemia');}},
+  {q:'Com refilling baixo (alb 2), uma UF "moderada" (~10 mL/kg/h)…',o:['é segura','pode crashar (margem<0)','é impossível'],c:1,e:'A desigualdade é relativa: refilling baixo → margem negativa.',fig:function(){return pvMini({pesoAtual:73,pesoSeco:70,tempoHoras:4,albumina:2},'alb 2 — crasha');}},
+  {q:'Perto do peso seco, o refilling…',o:['aumenta','despenca (pouca reserva intersticial)','é constante'],c:1,e:'O interstício tem pouco a doar → o refilling cai (curva quadrática).',fig:function(){return refillDraw();}},
+  {q:'O stunning miocárdico é…',o:['um efeito agudo isolado','dano cumulativo por hipoperfusão repetida','sem relação com a UF'],c:1,e:'Hipoperfusão a cada sessão → isquemia → lesão que se acumula.',fig:function(){return stunDraw();}},
+  {q:'Na figura do mecanismo, a hipotensão é causada por…',o:['pouco volume corporal','volume plasmático↓ → pré-carga↓ → DC↓','excesso de sódio'],c:1,e:'A cascata: UF>refilling esvazia o plasma e derruba o DC.',fig:function(){return imgFig('hipotensao-mecanismo.svg','cascata da hipotensão');}},
+  {q:'Na figura, resfriar o dialisato ajuda porque…',o:['acelera a UF','aumenta o tônus venoso e a pré-carga','remove mais ureia'],c:1,e:'O frio aumenta a resistência/tônus → sustenta a pressão.',fig:function(){return imgFig('temperatura-dialisato.svg','dialisato frio');}},
+  {q:'Na figura, o sódio do dialisato mais alto…',o:['esvazia o plasma','retém água no plasma e ajuda o refilling','não tem efeito'],c:1,e:'O gradiente osmótico segura água no intravascular.',fig:function(){return imgFig('sodio-dialisato.svg','sódio do dialisato');}},
+  {q:'Na figura do manejo, a prevenção principal é…',o:['tirar menos volume total','baixar a TAXA de UF (mais tempo)','dar mais diurético'],c:1,e:'Mesma UF total, mais devagar, cabe no refilling.',fig:function(){return imgFig('manejo-hipotensao.svg','manejo da hipotensão');}}
+];
+var TUTOR_TEXTUAL=[
+  {q:'A hipotensão intradialítica é, em essência…',o:['pouco volume corporal','UF rate > refilling rate','excesso de potássio'],c:1,e:'É a velocidade da UF superando a reposição plasmática, não o estoque.'},
+  {q:'A UF rate normalizada calcula-se por…',o:['(peso atual − peso seco)/tempo ÷ peso','peso seco × tempo','albumina × tempo'],c:0,e:'UF total = (peso atual − peso seco); UF rate (mL/kg/h) = UF total/tempo ÷ peso.'},
+  {q:'Uma taxa de UF de risco costuma ser…',o:['<5 mL/kg/h','>10–13 mL/kg/h','negativa'],c:1,e:'Acima de ~13 mL/kg/h o risco de hipotensão e stunning sobe.'},
+  {q:'Manter a UF rate ≤ refilling resulta em…',o:['volume plasmático em platô','crash imediato','hipernatremia'],c:0,e:'O interstício repõe na mesma velocidade → o plasma não esvazia.'},
+  {q:'Por que mais tempo de sessão previne a hipotensão?',o:['tira menos volume','a mesma UF total dá UF rate menor','aumenta o potássio'],c:1,e:'Tirar devagar é tirar dentro do refilling.'},
+  {q:'A hipoalbuminemia piora a tolerância porque…',o:['aumenta a UF','reduz o gradiente oncótico → refilling↓','retém sódio'],c:1,e:'A albumina puxa água ao capilar; pouca albumina → refilling baixo.'},
+  {q:'Aproximar-se do peso seco faz o refilling…',o:['subir','despencar (pouca reserva intersticial)','não mudar'],c:1,e:'Sem líquido intersticial para doar, o refilling cai.'},
+  {q:'Comer durante a diálise piora a hipotensão porque…',o:['eleva a glicose','desvia sangue para o esplâncnico','aumenta a UF'],c:1,e:'A vasodilatação pós-prandial reduz o volume efetivo e o refilling central.'},
+  {q:'O stunning miocárdico é…',o:['arritmia aguda','disfunção por hipoperfusão repetida, cumulativa','infecção do acesso'],c:1,e:'Isquemia regional a cada sessão → dano que se acumula.'},
+  {q:'Na crise hipotensiva, a conduta inclui…',o:['acelerar a UF','Trendelenburg, reduzir a UF, bólus de salina','aumentar a temperatura do dialisato'],c:1,e:'Dar tempo de o refilling reabastecer o plasma.'},
+  {q:'O dialisato frio ajuda por…',o:['remover mais soluto','aumentar o tônus venoso/resistência','reduzir o sódio'],c:1,e:'Sustenta a pré-carga e a pressão quando o refilling não acompanha.'},
+  {q:'A pérola central deste módulo é…',o:['hipotensão = volume baixo','hipotensão = UF > refilling; baixar a TAXA previne','sempre tirar tudo rápido'],c:1,e:'É a velocidade, não o estoque; o stunning é o custo cumulativo da pressa.'}
+];
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL; window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+var BANKS={ilustrada:TUTOR_ILUSTRADO,textual:TUTOR_TEXTUAL}, curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+function renderTutor(){ var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():''; $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false; $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){ if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button'); btns[item.c].classList.add('ok'); if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block'; fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e; $('tutor-score').textContent=tScore; $('tutor-total').textContent=tTotal; });
+    box.appendChild(b); }); }
+$('banktabs').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor(); });
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+$('draw-mech').innerHTML = mechDraw();
+$('draw-curva').innerHTML = pvMini({pesoAtual:75,pesoSeco:70,tempoHoras:3},'UF agressiva × gentil');
+$('draw-refill').innerHTML = refillDraw();
+$('draw-stun').innerHTML = stunDraw();
+$('draw-manejo').innerHTML = pvMini({pesoAtual:75,pesoSeco:70,tempoHoras:6},'mesma UF, 2× tempo — platô');
+$('fig-caso').innerHTML = pvMini({pesoAtual:75,pesoSeco:70,tempoHoras:3},'5 kg em 3 h — crash') + balanceBars(ufSession({pesoAtual:75,pesoSeco:70,tempoHoras:3}),'UF rate × refilling');
+
+refresh(); renderTutor();
+</script>
+</body>
+</html>

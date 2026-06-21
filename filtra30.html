@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M30 — Diálise peritoneal: o peritônio como membrana, UF osmótica e o PET</title>
+<style>
+  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--warn:#e8a13a;--bad:#e0556b;--good:#52c08a;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none} section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .presets{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px} .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)} .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)} .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)} .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M30</div>
+  <h1>Diálise peritoneal — o peritônio como membrana, a UF osmótica e o PET</h1>
+  <div class="sub">Na DP o <b>peritônio é a membrana</b>: um dialisato com glicose hipertônica fica no abdome (o
+  <b>dwell</b>) e a ultrafiltração é <b>osmótica</b> — puxada pelo gradiente de glicose. Mas a glicose é
+  <b>absorvida</b>: o gradiente cai, a UF atinge um pico e depois <b>reverte</b>. O <b>PET</b> classifica o tipo de
+  transportador; o <b>alto</b> é um paradoxo — depura bem, ultrafiltra mal. É homeostasia por uma membrana viva.</div>
+  <nav class="hex">
+    <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
+    <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="dialisa.html">&larr; índice do antebraço DIALISA</a> · <a href="filtra.html">índice FILTRA</a>
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- CONCEITO -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — a diálise peritoneal, ilustrada</h3>
+      <p class="sub" style="margin-top:0"><b>A DP usa o próprio corpo como dialisador.</b> As Fig. 1–8 voltam no
+      Caso, na Trilha e na Avaliação. A relação central: <b>UF osmótica = LUF·(gradiente de glicose) − reabsorção</b>;
+      como o gradiente decai ao longo do <b>dwell</b>, a UF cresce, atinge um pico e depois cai. Defender o meio
+      interno (volume e escórias) com uma membrana que se desgasta a cada hora é o desafio da homeostasia na DP.</p>
+
+      <h4>1. O peritônio é a membrana — o capilar e o dwell</h4>
+      <p class="sub">O dialisato entra pelo cateter e fica no abdome (o <b>dwell</b>). O soluto difunde do sangue, pelo
+      <b>capilar peritoneal</b>, para o líquido; a água segue a osmose da glicose. A membrana é o próprio peritônio.</p>
+      <div class="frow">
+        <div class="concept" id="draw-membrana"></div>
+        <figure class="fviva"><img src="assets/m30/peritonio-membrana.svg" alt="O peritônio como membrana de diálise, com o capilar peritoneal e o dialisato no abdome" loading="lazy">
+          <figcaption><b>Fig. 1 · O peritônio como membrana.</b> O dialisato (azul) banha a cavidade; o sangue corre no
+          <b>capilar peritoneal</b>. Soluto e água atravessam o peritônio — não há máquina externa, a membrana é
+          viva.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m30/cateter-tenckhoff.svg" alt="Cateter de Tenckhoff implantado para infundir e drenar o dialisato peritoneal" loading="lazy">
+          <figcaption><b>Fig. 2 · O acesso (cateter de Tenckhoff).</b> Um cateter tunelizado infunde (<b>infusão</b>) e
+          drena (<b>drenagem</b>) o dialisato. O volume infundido típico é ~2000 mL por troca.</figcaption></figure>
+      </div>
+
+      <h4>2. A UF é OSMÓTICA — puxada pela glicose</h4>
+      <p class="sub">A glicose hipertônica (1.5 / 2.5 / 4.25% de dextrose) cria o gradiente osmótico que <b>puxa
+      água</b> do capilar para o dialisato. Mais dextrose → mais gradiente → mais UF. A reabsorção linfática puxa
+      de volta o tempo todo.</p>
+      <div class="frow">
+        <div class="concept" id="draw-osmose"></div>
+        <figure class="fviva"><img src="assets/m30/uf-osmotica-glicose.svg" alt="Ultrafiltração osmótica puxada pelo gradiente de glicose do dialisato" loading="lazy">
+          <figcaption><b>Fig. 3 · A UF osmótica.</b> A glicose do dialisato (g/dL) puxa a água por osmose. Quanto maior
+          a dextrose (1.5 → 2.5 → 4.25%), maior o gradiente e a UF. A drenagem final = infundido + UF.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m30/dialise-peritoneal.svg" alt="Esquema geral da diálise peritoneal: infusão, dwell e drenagem" loading="lazy">
+          <figcaption><b>Fig. 4 · O ciclo da DP.</b> ① infunde o dialisato → ② <b>dwell</b> (a troca acontece) → ③ drena.
+          Repetir o ciclo várias vezes ao dia depura escórias e remove volume.</figcaption></figure>
+      </div>
+
+      <h4>3. A glicose é ABSORVIDA → a UF cai e reverte</h4>
+      <p class="sub">Durante o dwell a glicose <b>difunde para o sangue</b>: o gradiente decai exponencialmente. A UF
+      sobe, atinge um <b>pico</b> e, num dwell longo, <b>reverte</b> — a reabsorção linfática vence e o paciente
+      reabsorve líquido. Por isso há um tempo ótimo de dwell.</p>
+      <div class="frow">
+        <div class="concept" id="draw-pico"></div>
+        <div class="concept" id="draw-uf2"></div>
+        <figure class="fviva"><img src="assets/m30/transporte-peritoneal-tipos.svg" alt="Curvas de transporte peritoneal mostrando a glicose absorvida e a UF ao longo do dwell" loading="lazy">
+          <figcaption><b>Fig. 5 · A glicose absorvida e o pico de UF.</b> A glicose cai durante o dwell; a UF cresce até
+          o <b>pico</b> (taxa = 0) e depois reverte. Dwell longo demais = reabsorção. O gráfico computado ao lado
+          mostra a UF × tempo.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m30/capd-apd.svg" alt="CAPD manual versus APD automatizada com diferentes esquemas de dwell" loading="lazy">
+          <figcaption><b>Fig. 6 · CAPD × APD.</b> <b>CAPD</b> (manual, dwells longos diurnos) e <b>APD</b> (cicladora
+          noturna, dwells curtos). O esquema é ditado pelo tipo de transportador — dwells curtos no alto
+          transportador.</figcaption></figure>
+      </div>
+
+      <h4>4. O PET e o paradoxo do alto transportador</h4>
+      <p class="sub">O <b>PET</b> (teste de equilíbrio peritoneal) mede o <b>D/P de creatinina às 4 h</b>. <b>Alto
+      transportador</b>: equilibra o soluto rápido (bom clearance) MAS absorve a glicose cedo (UF ruim) — o
+      <b>paradoxo</b>. <b>Baixo</b>: mantém a UF, clearance lento. A <b>icodextrina</b> (polímero não absorvido)
+      sustenta a UF no dwell longo.</p>
+      <div class="frow">
+        <div class="concept" id="draw-pet"></div>
+        <figure class="fviva"><img src="assets/m30/pet-teste.svg" alt="Teste de equilíbrio peritoneal PET classificando o tipo de transportador pelo D sobre P de creatinina" loading="lazy">
+          <figcaption><b>Fig. 7 · O PET.</b> A razão <b>D/P de creatinina às 4 h</b> classifica: alto (≈0,8–1,0) ·
+          médio · baixo (&lt;0,5). Alto = difunde rápido (bom soluto, má UF); baixo = o oposto. Define a
+          prescrição.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m30/peritonite-dp.svg" alt="Peritonite na diálise peritoneal: dialisato turvo e perda de função da membrana" loading="lazy">
+          <figcaption><b>Fig. 8 · A complicação (peritonite).</b> Dialisato turvo = peritonite — a principal complicação
+          da DP. A inflamação aumenta o transporte (mais absorção de glicose) e piora a UF. Lembrete de que a
+          membrana é viva.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASO -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — cinco atos, decida antes de revelar</h3>
+      <p class="sub">Homem de 58 anos em DP automatizada (APD). Vinha bem, agora "está inchado" apesar da diálise.
+      Vamos decompor a UF pelo mecanismo (volte às Fig. 5 e 7).</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step"><b>Ato 1.</b> O PET dá <b>D/P creatinina 4 h = 0,85</b> (alto transportador). A creatinina
+        equilibra ótimo — o clearance é bom. Então por que ele está hipervolêmico?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>O paradoxo do alto transportador.</b> Quem equilibra o soluto rápido também
+          <b>absorve a glicose cedo</b> → o gradiente osmótico some e a <b>UF despenca</b>. Bom de difusão, ruim de
+          UF (Fig. 5/7). A retenção é de <b>volume</b>, não de escória.</div></div>
+
+      <div class="step"><b>Ato 2.</b> Ele usa dwells longos de 6 h com dextrose a 2,5%. O que isso faz num alto
+        transportador?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2"><b>Reabsorve líquido.</b> No alto transportador o pico de UF vem cedo (~2 h);
+          deixar 6 h faz a UF passar do pico e <b>reverter</b> — drena menos do que infunde. O dwell longo é o erro
+          aqui.</div></div>
+
+      <div class="step"><b>Ato 3.</b> <i>Vira a chave.</i> Para o dwell DIURNO longo (que ele precisa manter por horas),
+        qual a solução por mecanismo?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3"><b>Icodextrina.</b> É um polímero de glicose <b>não absorvido</b> por difusão →
+          mantém o gradiente oncótico/osmótico por todo o dwell longo, sem o colapso da glicose. A UF se sustenta em
+          8–12 h (Fig. 5).</div></div>
+
+      <div class="step"><b>Ato 4.</b> <i>E os dwells NOTURNOS curtos da cicladora?</i> Como melhorar a UF deles sem
+        icodextrina?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>Dwells curtos + dextrose maior.</b> Trocas rápidas (a cicladora faz 2–3 h)
+          "pegam" a UF antes de a glicose ser absorvida; subir para <b>4,25%</b> num ciclo aumenta o gradiente e a
+          UF. Ajustar a prescrição ao transportador alto.</div></div>
+
+      <div class="step"><b>Ato 5.</b> <i>Síntese.</i> Resuma a lógica da prescrição na DP em uma frase.
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5">A UF é osmótica e o gradiente se esgota: <b>case o tempo de dwell e a dextrose ao
+          tipo de transportador</b> (PET). Alto transportador → dwells curtos, mais dextrose, icodextrina no dwell
+          longo. A membrana viva manda na receita.</div></div>
+    </div>
+  </section>
+
+  <!-- TRILHA -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — as perguntas que constroem a DP</h3>
+      <details><summary>1. Qual é a membrana na diálise peritoneal?</summary><p>O próprio <b>peritônio</b>. O dialisato
+        fica no abdome (dwell) e o soluto/água atravessam o peritônio pelo capilar peritoneal — sem dialisador
+        externo.</p></details>
+      <details><summary>2. O que puxa a água (UF) na DP?</summary><p>O <b>gradiente osmótico da glicose</b> hipertônica
+        do dialisato. A UF é OSMÓTICA — não é pressão transmembrana mecânica como na HD.</p></details>
+      <details><summary>3. Por que mais dextrose dá mais UF?</summary><p>Mais glicose (1.5 → 2.5 → 4.25%) → maior
+        gradiente osmótico → mais água puxada do capilar para o dialisato.</p></details>
+      <details><summary>4. O que acontece com a glicose durante o dwell?</summary><p>Ela é <b>absorvida</b> (difunde
+        para o sangue). O gradiente decai exponencialmente → a UF desacelera.</p></details>
+      <details><summary>5. Por que a UF tem um pico e depois reverte?</summary><p>Enquanto LUF·gradiente &gt; reabsorção,
+        a UF sobe; quando a glicose cai e o gradiente fica pequeno, a reabsorção linfática vence → a UF <b>reverte</b>
+        (reabsorve líquido).</p></details>
+      <details><summary>6. O que o PET mede?</summary><p>O <b>D/P de creatinina às 4 h</b> (razão dialisato/plasma).
+        Classifica o tipo de transportador da membrana.</p></details>
+      <details><summary>7. O que é o alto transportador?</summary><p>Uma membrana de transporte rápido: equilibra o
+        soluto cedo (D/P alto, ~0,8–1,0) → <b>bom clearance</b>. Mas absorve a glicose cedo → <b>UF ruim</b>.</p></details>
+      <details><summary>8. Por que isso é um paradoxo?</summary><p>O "bom de difusão" é o "ruim de UF": a mesma
+        permeabilidade que depura solutos esvazia o gradiente de glicose. Bom clearance e má ultrafiltração andam
+        juntos.</p></details>
+      <details><summary>9. Como prescrever para o alto transportador?</summary><p><b>Dwells curtos</b> (pega a UF antes
+        de a glicose sumir), maior dextrose nos ciclos, e <b>icodextrina</b> no dwell longo.</p></details>
+      <details><summary>10. O que é o baixo transportador?</summary><p>Membrana lenta: <b>mantém a UF</b> (gradiente
+        dura) mas o clearance de soluto é lento → precisa de dwells mais longos para depurar.</p></details>
+      <details><summary>11. Por que a icodextrina resolve o dwell longo?</summary><p>É um <b>polímero de glicose não
+        absorvido</b> por difusão → mantém o gradiente oncótico por 8–12 h, sustentando a UF sem o colapso da
+        glicose.</p></details>
+      <details><summary>12. CAPD × APD?</summary><p>CAPD é manual (dwells longos diurnos); APD usa cicladora noturna
+        (dwells curtos). O esquema segue o tipo de transportador.</p></details>
+      <details><summary>13. Em que sentido a DP é homeostasia?</summary><p>Substitui parcialmente o rim para defender o
+        <b>volume</b> e depurar escórias — por uma membrana viva que se desgasta a cada hora de dwell. O número (UF
+        drenada) só faz sentido lido pelo mecanismo osmótico.</p></details>
+    </div>
+  </section>
+
+  <!-- INSTRUMENTO -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — a UF (drenado − infundido) × tempo de dwell</h3>
+      <p class="sub">Os controles do <b>Lab</b> alimentam esta curva. A linha ciano é o seu transportador; a tracejada
+      vermelha é o <b>alto transportador</b> de referência (pico precoce, reverte cedo). O marcador laranja é o ponto
+      de dwell atual; a linha do zero separa UF (acima) de reabsorção (abaixo).</p>
+      <canvas id="uf-canvas" width="900" height="360" aria-label="Ultrafiltração por tempo de dwell"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- LAB -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — prescreva a troca; veja a UF, a glicose absorvida e o D/P</h3>
+      <div class="grid">
+        <div>
+          <label>Dextrose (g/dL): <span class="val" id="lbl-dextrose">2.5</span></label>
+          <input type="range" id="in-dextrose" min="1.5" max="4.25" step="0.05" value="2.5">
+          <label>Tempo de dwell (h): <span class="val" id="lbl-dwell">4</span></label>
+          <input type="range" id="in-dwell" min="0" max="12" step="0.25" value="4">
+          <label>Volume infundido (mL): <span class="val" id="lbl-vinf">2000</span></label>
+          <input type="range" id="in-vinf" min="1000" max="3000" step="100" value="2000">
+        </div>
+        <div>
+          <label>Tipo de transportador (PET / D-P): <span class="val" id="lbl-tipo">médio (0.5)</span></label>
+          <input type="range" id="in-tipo" min="0" max="1" step="0.05" value="0.5">
+          <label style="margin-top:16px"><input type="checkbox" id="in-ico"> Icodextrina (polímero não absorvido)</label>
+        </div>
+      </div>
+
+      <div class="presets">
+        <button class="act" data-preset="medio">Médio · 2,5% · 4 h</button>
+        <button class="act" data-preset="alto">Alto transportador</button>
+        <button class="act" data-preset="baixo">Baixo transportador</button>
+        <button class="act" data-preset="forte">Dextrose 4,25%</button>
+        <button class="act" data-preset="longo">Dwell longo 8 h</button>
+        <button class="act" data-preset="ico">Icodextrina (dwell longo)</button>
+      </div>
+
+      <table>
+        <tr><th>Variável</th><th>Atual</th><th>Comentário</th></tr>
+        <tr><td>UF líquida (mL)</td><td class="num" id="out-uf">—</td><td class="num">drenado − infundido</td></tr>
+        <tr><td>Volume drenado (mL)</td><td class="num" id="out-drenado">—</td><td class="num">infundido + UF</td></tr>
+        <tr><td>Glicose absorvida (g)</td><td class="num" id="out-gli">—</td><td class="num">some o gradiente</td></tr>
+        <tr><td>D/P creatinina (atual)</td><td class="num" id="out-dp">—</td><td class="num">equilíbrio de soluto</td></tr>
+        <tr><td>D/P creatinina às 4 h (PET)</td><td class="num" id="out-dp4">—</td><td class="num">classifica</td></tr>
+        <tr><td>Clearance de soluto (L)</td><td class="num" id="out-clr">—</td><td class="num">D/P × drenado</td></tr>
+        <tr><td>Tempo de pico de UF (h)</td><td class="num" id="out-tpico">—</td><td class="num">taxa = 0</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÃO -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (12)</button>
+        <button data-bank="textual">Textual (12)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica</b>. Este módulo M30 trata
+    da diálise peritoneal; volumes em mL, dextrose em g/dL (%) e tempos em horas são apresentados como
+    <b>mecanismo</b> e como prescrição computada pelo motor. O modelo de UF osmótica e absorção de glicose é uma
+    simplificação didática calibrada. Não substitui julgamento clínico; a decisão e a responsabilidade finais são
+    sempre do profissional.
+  </div>
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+</div>
+
+<script>
+/* ENGINE INLINE — espelho fiel de build/m30/model30.js */
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
+var KG_BASE=0.34, KT_BASE=0.55, LUF=400, LABS=68, VINF_STD=2000, ICO_KG=0.04;
+function merge(input){ var inp=input||{};
+  return { dextrose:clampv(inp.dextrose!==undefined?inp.dextrose:2.5,1.5,4.25),
+    dwellH:clampv(inp.dwellH!==undefined?inp.dwellH:4,0,16),
+    tipoTransp:clampv(inp.tipoTransp!==undefined?inp.tipoTransp:0.5,0,1),
+    vInf:clampv(inp.vInf!==undefined?inp.vInf:VINF_STD,500,3000),
+    icodextrina:inp.icodextrina?1:0 }; }
+function g0Osm(dextrose){ dextrose=clampv(dextrose,1.5,4.25); var f=(dextrose-1.5)/(4.25-1.5); return 0.45+0.55*f; }
+function kGlicose(tipoTransp,icodextrina){ tipoTransp=clampv(tipoTransp,0,1); if(icodextrina) return ICO_KG; return KG_BASE*(0.55+1.30*tipoTransp); }
+function kTransporte(tipoTransp){ tipoTransp=clampv(tipoTransp,0,1); return KT_BASE*(0.309+0.545*tipoTransp); }
+function gradienteOsm(t,dextrose,kG){ t=clampv(t,0,16); dextrose=clampv(dextrose,1.5,4.25); kG=clampv(kG,0,5); return clampv(g0Osm(dextrose)*Math.exp(-kG*t),0,1); }
+function ufTaxa(t,dextrose,kG){ return LUF*gradienteOsm(t,dextrose,kG)-LABS; }
+function ufAcumulada(dwellH,dextrose,kG){ dwellH=clampv(dwellH,0,16); dextrose=clampv(dextrose,1.5,4.25); kG=clampv(kG,0,5);
+  if(dwellH<=0) return 0; var n=240,dt=dwellH/n,uf=0,t,i; for(i=0;i<n;i++){ t=(i+0.5)*dt; uf+=ufTaxa(t,dextrose,kG)*dt; } return uf; }
+function tempoPicoUF(dextrose,kG){ dextrose=clampv(dextrose,1.5,4.25); kG=clampv(kG,1e-6,5);
+  var razao=LUF*g0Osm(dextrose)/LABS; if(razao<=1) return 0; return clampv(Math.log(razao)/kG,0,16); }
+function glicoseAbsorvida(dwellH,dextrose,kG,vInf){ dwellH=clampv(dwellH,0,16); dextrose=clampv(dextrose,1.5,4.25); kG=clampv(kG,0,5); vInf=clampv(vInf,500,3000);
+  var gFrac=1-Math.exp(-kG*dwellH), gramasIniciais=dextrose*(vInf/100); return clampv(gFrac*gramasIniciais,0,1e5); }
+function dpExchange(input){ var p=merge(input);
+  var kG=kGlicose(p.tipoTransp,p.icodextrina), kT=kTransporte(p.tipoTransp);
+  var uf=ufAcumulada(p.dwellH,p.dextrose,kG), drenado=p.vInf+uf;
+  var tPico=tempoPicoUF(p.dextrose,kG), ufPico=ufAcumulada(tPico,p.dextrose,kG);
+  var dpCr=clampv(1-Math.exp(-kT*p.dwellH),0,1), dpCr4h=clampv(1-Math.exp(-kT*4),0,1);
+  var gliAbs=glicoseAbsorvida(p.dwellH,p.dextrose,kG,p.vInf), gradFinal=gradienteOsm(p.dwellH,p.dextrose,kG);
+  var reabsorve=uf<0, revertido=p.dwellH>tPico&&tPico>0, clearanceL=dpCr*(drenado/1000);
+  var classe=dpCr4h>=0.81?'alto':dpCr4h>=0.65?'médio-alto':dpCr4h>=0.50?'médio-baixo':'baixo';
+  var paradoxoAlto=p.tipoTransp>=0.75&&uf<350&&dpCr4h>=0.75;
+  return { dextrose:p.dextrose,dwellH:p.dwellH,tipoTransp:p.tipoTransp,vInf:p.vInf,icodextrina:p.icodextrina,
+    kG:kG,kT:kT,uf:uf,drenado:drenado,tPico:tPico,ufPico:ufPico,dpCr:dpCr,dpCr4h:dpCr4h,gliAbs:gliAbs,
+    gradFinal:gradFinal,clearanceL:clearanceL,reabsorve:reabsorve,revertido:revertido,classe:classe,paradoxoAlto:paradoxoAlto }; }
+function ufCurveLayout(state,W,H){ state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000); var p=merge(state);
+  var padL=54,padR=16,padT=18,padB=38,baseY=H-padB, tMax=12,N=60, ufMax=1000,ufMin=-400;
+  var kGcur=kGlicose(p.tipoTransp,p.icodextrina), kGalto=kGlicose(1,0);
+  var pxX=(W-padL-padR)/tMax, span=ufMax-ufMin, pxY=(baseY-padT)/span;
+  function yOf(uf){ return baseY-(clampv(uf,ufMin,ufMax)-ufMin)*pxY; }
+  var zeroY=yOf(0), pts=[],ptsAlto=[],i,t,uf,ufa;
+  for(i=0;i<=N;i++){ t=tMax*i/N; uf=ufAcumulada(t,p.dextrose,kGcur); ufa=ufAcumulada(t,p.dextrose,kGalto);
+    pts.push({t:t,uf:uf,x:padL+t*pxX,y:yOf(uf)}); ptsAlto.push({t:t,uf:ufa,x:padL+t*pxX,y:yOf(ufa)}); }
+  var tc=clampv(p.dwellH,0,tMax), ufc=ufAcumulada(tc,p.dextrose,kGcur);
+  return { W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,tMax:tMax,ufMax:ufMax,ufMin:ufMin,pxX:pxX,pxY:pxY,zeroY:zeroY,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY}, pts:pts,ptsAlto:ptsAlto,
+    current:{x:padL+tc*pxX,y:yOf(ufc),t:tc,uf:ufc} }; }
+window.clampv=clampv; window.merge=merge; window.g0Osm=g0Osm; window.kGlicose=kGlicose; window.kTransporte=kTransporte;
+window.gradienteOsm=gradienteOsm; window.ufTaxa=ufTaxa; window.ufAcumulada=ufAcumulada; window.tempoPicoUF=tempoPicoUF;
+window.glicoseAbsorvida=glicoseAbsorvida; window.dpExchange=dpExchange; window.ufCurveLayout=ufCurveLayout;
+window.MODEL={dpExchange:dpExchange,ufCurveLayout:ufCurveLayout,ufAcumulada:ufAcumulada,gradienteOsm:gradienteOsm,
+  glicoseAbsorvida:glicoseAbsorvida,kGlicose:kGlicose,kTransporte:kTransporte,tempoPicoUF:tempoPicoUF,clampv:clampv,
+  KG_BASE:KG_BASE,KT_BASE:KT_BASE,LUF:LUF,LABS:LABS,VINF_STD:VINF_STD,ICO_KG:ICO_KG};
+
+/* UI */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=(d===undefined?1:d); return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+function tipoLabel(tp){ return tp>=0.81?'alto ('+fmt(tp,2)+')':tp>=0.65?'médio-alto ('+fmt(tp,2)+')':tp>=0.50?'médio ('+fmt(tp,2)+')':tp>=0.30?'médio-baixo ('+fmt(tp,2)+')':'baixo ('+fmt(tp,2)+')'; }
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on'); b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on'); $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh(); });
+document.addEventListener('click',function(e){ var b=e.target.closest('button.act[data-rev]'); if(!b) return; var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on'); });
+
+function readInputs(){ return { dextrose:+$('in-dextrose').value, dwellH:+$('in-dwell').value, vInf:+$('in-vinf').value, tipoTransp:+$('in-tipo').value, icodextrina:$('in-ico').checked }; }
+function refresh(){ var inp=readInputs();
+  $('lbl-dextrose').textContent=fmt(inp.dextrose,2); $('lbl-dwell').textContent=fmt(inp.dwellH,2);
+  $('lbl-vinf').textContent=fmt(inp.vInf,0); $('lbl-tipo').textContent=tipoLabel(inp.tipoTransp);
+  var r=dpExchange(inp);
+  $('out-uf').textContent=(r.uf>=0?'+':'')+fmt(r.uf,0); $('out-drenado').textContent=fmt(r.drenado,0);
+  $('out-gli').textContent=fmt(r.gliAbs,1); $('out-dp').textContent=fmt(r.dpCr,2);
+  $('out-dp4').textContent=fmt(r.dpCr4h,2)+' ('+r.classe+')'; $('out-clr').textContent=fmt(r.clearanceL,2);
+  $('out-tpico').textContent=fmt(r.tPico,1);
+  verdict(r); drawUF(inp); pearl(r); }
+function verdict(r){ var v=$('veredito'), cls='b-good', msg;
+  if(r.reabsorve){ cls='b-bad'; msg='REABSORVE: UF '+fmt(r.uf,0)+' mL (negativa) — o dwell passou do pico ('+fmt(r.tPico,1)+' h) e a reabsorção venceu. Encurte o dwell ou use icodextrina.'; }
+  else if(r.paradoxoAlto){ cls='b-warn'; msg='PARADOXO DO ALTO TRANSPORTADOR: clearance bom (D/P '+fmt(r.dpCr4h,2)+'), mas UF só '+fmt(r.uf,0)+' mL — a glicose ('+fmt(r.gliAbs,0)+' g) some cedo. Dwell curto / mais dextrose / icodextrina.'; }
+  else if(r.uf<250){ cls='b-warn'; msg='UF baixa ('+fmt(r.uf,0)+' mL): suba a dextrose, encurte o dwell ou troque para icodextrina no dwell longo.'; }
+  else { cls='b-good'; msg='UF adequada: '+fmt(r.uf,0)+' mL drenados a mais (total '+fmt(r.drenado,0)+' mL), D/P 4 h '+fmt(r.dpCr4h,2)+' ('+r.classe+'). Prescrição equilibrada.'; }
+  v.className='banner '+cls; v.textContent=msg; }
+function pearl(r){ var p=$('lab-pearl'), ip=$('instr-pearl'), t;
+  if(r.icodextrina) t='PÉROLA (icodextrina): polímero não absorvido → glicose absorvida só '+fmt(r.gliAbs,0)+' g; a UF se mantém ('+fmt(r.uf,0)+' mL) mesmo no dwell longo de '+fmt(r.dwellH,1)+' h.';
+  else if(r.paradoxoAlto) t='PÉROLA (paradoxo): o alto transportador depura ótimo (D/P '+fmt(r.dpCr4h,2)+') mas ultrafiltra mal ('+fmt(r.uf,0)+' mL) — o bom de difusão é o ruim de UF.';
+  else if(r.reabsorve) t='PÉROLA (reversão): passou do pico de UF ('+fmt(r.tPico,1)+' h); agora a reabsorção domina e a UF é '+fmt(r.uf,0)+' mL (reabsorve).';
+  else t='UF osmótica = drenado − infundido; aqui '+(r.uf>=0?'+':'')+fmt(r.uf,0)+' mL com '+fmt(r.gliAbs,0)+' g de glicose absorvidos no dwell de '+fmt(r.dwellH,1)+' h.';
+  p.textContent=t; ip.textContent=t; }
+function drawUF(state){ var c=$('uf-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
+  var L=ufCurveLayout(state,c.width,c.height); ctx.clearRect(0,0,L.W,L.H);
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  /* linha do zero (UF=0) */
+  ctx.strokeStyle='#46586a'; ctx.setLineDash([2,3]); ctx.beginPath(); ctx.moveTo(L.axis.x0,L.zeroY); ctx.lineTo(L.axis.xEnd,L.zeroY); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillText('UF (mL)',8,L.padT+2); ctx.fillText('dwell (h) →',L.W-110,L.baseY+24); ctx.fillText('0',L.padL-22,L.zeroY+4);
+  /* curva do alto transportador (referência) */
+  ctx.strokeStyle='#e0556b'; ctx.lineWidth=1.5; ctx.setLineDash([5,3]); ctx.beginPath();
+  for(var k=0;k<L.ptsAlto.length;k++){ var pa=L.ptsAlto[k]; if(k===0) ctx.moveTo(pa.x,pa.y); else ctx.lineTo(pa.x,pa.y); } ctx.stroke(); ctx.setLineDash([]);
+  /* curva do transportador atual */
+  ctx.strokeStyle='#39c0c8'; ctx.lineWidth=2; ctx.beginPath();
+  for(var i=0;i<L.pts.length;i++){ var p=L.pts[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); } ctx.stroke();
+  /* marcador de dwell atual */
+  var cu=L.current; ctx.strokeStyle='#e8a13a'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(cu.x,L.padT); ctx.lineTo(cu.x,L.baseY); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#e8a13a'; ctx.fillRect(cu.x-3,cu.y-3,6,6);
+  ctx.fillStyle='#e7eef4'; ctx.fillText('UF '+(cu.uf>=0?'+':'')+fmt(cu.uf,0),cu.x+6,Math.max(cu.y-6,L.padT+10)); }
+['in-dextrose','in-dwell','in-vinf','in-tipo'].forEach(function(id){ $(id).addEventListener('input',refresh); });
+$('in-ico').addEventListener('change',refresh);
+
+var PRESETS={
+  medio:{dextrose:2.5,dwell:4,vinf:2000,tipo:0.5,ico:false},
+  alto:{dextrose:2.5,dwell:4,vinf:2000,tipo:1,ico:false},
+  baixo:{dextrose:2.5,dwell:4,vinf:2000,tipo:0,ico:false},
+  forte:{dextrose:4.25,dwell:4,vinf:2000,tipo:0.5,ico:false},
+  longo:{dextrose:2.5,dwell:8,vinf:2000,tipo:0.5,ico:false},
+  ico:{dextrose:2.5,dwell:8,vinf:2000,tipo:1,ico:true}
+};
+function applyPreset(p){ var d=PRESETS[p]; if(!d) return;
+  $('in-dextrose').value=d.dextrose; $('in-dwell').value=d.dwell; $('in-vinf').value=d.vinf; $('in-tipo').value=d.tipo; $('in-ico').checked=d.ico; refresh(); }
+document.querySelector('.presets').addEventListener('click',function(e){ var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset')); });
+
+/* ILUSTRAÇÕES computadas + helper raster */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+function ufMini(state,titulo){ var W=300,H=170,L=ufCurveLayout(state,W,H),s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+f1(L.zeroY)+'" x2="'+L.axis.xEnd+'" y2="'+f1(L.zeroY)+'" stroke="#46586a" stroke-dasharray="2 3"/>';
+  var da=''; for(var k=0;k<L.ptsAlto.length;k++){ da+=(k===0?'M':'L')+f1(L.ptsAlto[k].x)+' '+f1(L.ptsAlto[k].y)+' '; }
+  s+='<path d="'+da+'" fill="none" stroke="#e0556b" stroke-width="1.4" stroke-dasharray="5 3"/>';
+  var d=''; for(var i=0;i<L.pts.length;i++){ d+=(i===0?'M':'L')+f1(L.pts[i].x)+' '+f1(L.pts[i].y)+' '; }
+  s+='<path d="'+d+'" fill="none" stroke="#39c0c8" stroke-width="2"/>';
+  s+='<rect x="'+f1(L.current.x-3)+'" y="'+f1(L.current.y-3)+'" width="6" height="6" fill="#e8a13a"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'UF × dwell')+'</text>';
+  s+='<text x="'+(W-8)+'" y="'+(L.baseY+14)+'" fill="#9fb1c0" font-size="9" text-anchor="end">dwell (h) →</text>';
+  return svgEl(W,H,s); }
+function gliMini(state,titulo){ var W=300,H=170,padL=40,padB=28,baseY=H-padB,padT=20,s='';
+  var p=merge(state), kG=kGlicose(p.tipoTransp,p.icodextrina), tMax=12, pxX=(W-padL-12)/tMax, pxY=(baseY-padT)/1;
+  s+='<line x1="'+padL+'" y1="'+padT+'" x2="'+padL+'" y2="'+baseY+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+padL+'" y1="'+baseY+'" x2="'+(W-12)+'" y2="'+baseY+'" stroke="#3a4a58"/>';
+  var d=''; for(var t=0;t<=tMax;t+=0.5){ var g=gradienteOsm(t,p.dextrose,kG); var x=padL+t*pxX, y=baseY-clampv(g,0,1)*pxY; d+=(d===''?'M':'L')+f1(x)+' '+f1(y)+' '; }
+  s+='<path d="'+d+'" fill="none" stroke="#e8a13a" stroke-width="2"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'gradiente de glicose × tempo')+'</text>';
+  s+='<text x="'+(W-8)+'" y="'+(baseY+14)+'" fill="#9fb1c0" font-size="9" text-anchor="end">dwell (h) →</text>';
+  return svgEl(W,H,s); }
+function petBars(){ var W=300,H=170,base=128,s='';
+  function bar(x,tp,lab){ var r=dpExchange({tipoTransp:tp,dwellH:4}); var hC=clampv(r.dpCr4h,0,1)*92, hU=clampv((r.uf+200)/700,0,1)*92;
+    return '<rect x="'+x+'" y="'+f1(base-hC)+'" width="22" height="'+f1(hC)+'" fill="#39c0c8" fill-opacity="0.7"/>'+
+      '<rect x="'+(x+26)+'" y="'+f1(base-hU)+'" width="22" height="'+f1(hU)+'" fill="#52c08a" fill-opacity="0.7"/>'+
+      '<text x="'+(x+24)+'" y="'+(base+13)+'" fill="#9fb1c0" font-size="9" text-anchor="middle">'+lab+'</text>'; }
+  s+=bar(36,1,'alto'); s+=bar(126,0.5,'médio'); s+=bar(216,0,'baixo');
+  s+='<text x="150" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">D/P (ciano) × UF (verde)</text>';
+  s+='<text x="150" y="150" fill="#9fb1c0" font-size="9" text-anchor="middle">alto = bom D/P, má UF · baixo = o oposto</text>';
+  return svgEl(W,H,s); }
+function membranaDraw(){ var W=300,H=170,s='';
+  s+='<rect x="20" y="40" width="120" height="90" rx="8" fill="#16323a" stroke="#39c0c8"/>';
+  s+='<text x="80" y="36" fill="#9fb1c0" font-size="10" text-anchor="middle">dialisato (dwell)</text>';
+  s+='<text x="80" y="90" fill="#e8a13a" font-size="11" text-anchor="middle">glicose ↑</text>';
+  s+='<rect x="160" y="40" width="120" height="90" rx="8" fill="#3a1622" stroke="#e0556b"/>';
+  s+='<text x="220" y="36" fill="#9fb1c0" font-size="10" text-anchor="middle">capilar (sangue)</text>';
+  s+='<line x1="140" y1="50" x2="160" y2="50" stroke="#52c08a" stroke-width="2" marker-end="url(#a)"/>';
+  s+='<text x="150" y="64" fill="#52c08a" font-size="9" text-anchor="middle">água (UF)</text>';
+  s+='<line x1="160" y1="110" x2="140" y2="110" stroke="#e8a13a" stroke-width="2"/>';
+  s+='<text x="150" y="124" fill="#e8a13a" font-size="8" text-anchor="middle">soluto →</text>';
+  s+='<rect x="138" y="40" width="6" height="90" fill="#9fb1c0" fill-opacity="0.5"/>';
+  s+='<text x="150" y="150" fill="#9fb1c0" font-size="9" text-anchor="middle">o peritônio é a membrana</text>';
+  s+='<defs><marker id="a" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0 0L6 3L0 6Z" fill="#52c08a"/></marker></defs>';
+  return svgEl(W,H,s); }
+function imgFig(slug,alt){ return '<img src="assets/m30/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+/* TUTOR */
+function R0(extra){ var o={}; if(extra) for(var k in extra) o[k]=extra[k]; return dpExchange(o); }
+var TUTOR_ILUSTRADO=[
+  {q:'Na curva UF × dwell (médio, 2,5%), a UF…',o:['só sobe para sempre','sobe até um pico e depois reverte','é sempre negativa'],c:1,e:'A glicose é absorvida → o gradiente cai → a UF atinge um pico e reverte.',fig:function(){return ufMini({tipoTransp:0.5},'UF × dwell (médio)');}},
+  {q:'Comparado ao médio, o ALTO transportador (vermelho tracejado)…',o:['ultrafiltra mais','tem UF menor e reverte mais cedo','não muda'],c:1,e:'O alto absorve a glicose cedo → perde o gradiente → UF pior e mais precoce.',fig:function(){return ufMini({tipoTransp:1},'UF: alto transportador');}},
+  {q:'O gradiente de glicose ao longo do dwell…',o:['cresce','decai (a glicose é absorvida)','fica constante'],c:1,e:'A glicose difunde para o sangue → o gradiente osmótico cai exponencialmente.',fig:function(){return gliMini({tipoTransp:0.5},'gradiente de glicose');}},
+  {q:'No alto transportador, o gradiente de glicose…',o:['dura mais','some mais rápido','some na mesma velocidade'],c:1,e:'Transporte rápido → absorve a glicose mais cedo → gradiente colapsa antes.',fig:function(){return gliMini({tipoTransp:1},'glicose: alto transportador');}},
+  {q:'No PET, o alto transportador tem…',o:['bom D/P e má UF (paradoxo)','má D/P e boa UF','tudo ruim'],c:0,e:'O paradoxo: ótima depuração de soluto, péssima ultrafiltração.',fig:function(){return petBars();}},
+  {q:'Um dwell de 8 h num médio transportador faz a UF…',o:['crescer','cair (passou do pico)','dobrar'],c:1,e:'Em 8 h a glicose já caiu; a UF passou do pico e declina.',fig:function(){return ufMini({tipoTransp:0.5,dwellH:8},'dwell longo 8 h');}},
+  {q:'A icodextrina no dwell longo (alto transportador) faz a UF…',o:['piorar','manter-se alta (polímero não absorvido)','zerar'],c:1,e:'O polímero não difunde → o gradiente persiste → a UF se sustenta.',fig:function(){return ufMini({tipoTransp:1,icodextrina:true},'icodextrina');}},
+  {q:'Na figura do peritônio, o que atravessa para o dialisato?',o:['só sangue','água (UF) e soluto pelo capilar','nada'],c:1,e:'A água segue a osmose da glicose; o soluto difunde — pela membrana peritoneal.',fig:function(){return imgFig('peritonio-membrana.svg','peritônio como membrana');}},
+  {q:'Na figura da UF osmótica, mais dextrose…',o:['reduz a UF','aumenta o gradiente e a UF','não muda'],c:1,e:'Mais glicose (4,25% > 2,5% > 1,5%) → maior gradiente osmótico → mais UF.',fig:function(){return imgFig('uf-osmotica-glicose.svg','UF osmótica pela glicose');}},
+  {q:'Na figura do PET, o que classifica o transportador?',o:['o peso','o D/P de creatinina às 4 h','a cor do dialisato'],c:1,e:'A razão dialisato/plasma de creatinina às 4 h define alto/médio/baixo.',fig:function(){return imgFig('pet-teste.svg','teste PET');}},
+  {q:'Na figura CAPD × APD, o alto transportador prefere…',o:['dwells longos','dwells curtos (cicladora)','sem diálise'],c:1,e:'Dwells curtos pegam a UF antes de a glicose ser absorvida.',fig:function(){return imgFig('capd-apd.svg','CAPD versus APD');}},
+  {q:'Subir a dextrose de 2,5% para 4,25% (médio, 4 h) faz a UF…',o:['cair','subir','sumir'],c:1,e:'Maior gradiente osmótico inicial → mais água ultrafiltrada.',fig:function(){return ufMini({dextrose:4.25},'dextrose 4,25%');}}
+];
+var TUTOR_TEXTUAL=[
+  {q:'Na diálise peritoneal, a membrana é…',o:['uma fibra sintética','o peritônio (capilar peritoneal)','o rim'],c:1,e:'O próprio peritônio; o dialisato fica no abdome durante o dwell.'},
+  {q:'A ultrafiltração na DP é…',o:['mecânica (pressão)','osmótica (gradiente de glicose)','elétrica'],c:1,e:'A glicose hipertônica puxa a água por osmose — UF osmótica.'},
+  {q:'Durante o dwell, a glicose do dialisato…',o:['é produzida','é absorvida para o sangue','não muda'],c:1,e:'Difunde para o sangue → o gradiente cai → a UF desacelera.'},
+  {q:'Por que a UF tem um pico e depois reverte?',o:['a bomba para','o gradiente cai e a reabsorção vence','o cateter entope'],c:1,e:'Quando LUF·gradiente < reabsorção, a UF fica negativa (reabsorve).'},
+  {q:'O PET (teste de equilíbrio peritoneal) mede…',o:['a pressão arterial','o D/P de creatinina às 4 h','o sódio urinário'],c:1,e:'A razão dialisato/plasma de creatinina classifica o transportador.'},
+  {q:'O alto transportador tem…',o:['clearance ruim','clearance bom mas UF ruim','UF ótima'],c:1,e:'Equilibra o soluto rápido (bom clearance) mas perde a glicose cedo (má UF).'},
+  {q:'O paradoxo do alto transportador é que…',o:['depura mal e ultrafiltra bem','depura bem e ultrafiltra mal','não existe'],c:1,e:'O "bom de difusão" é o "ruim de UF".'},
+  {q:'Para o alto transportador, a prescrição ideal é…',o:['dwells longos','dwells curtos / mais dextrose / icodextrina','parar a diálise'],c:1,e:'Pega a UF antes de a glicose sumir; icodextrina no dwell longo.'},
+  {q:'A icodextrina funciona porque…',o:['é mais doce','é um polímero não absorvido','tem sódio'],c:1,e:'Não difunde para o sangue → mantém o gradiente por 8–12 h.'},
+  {q:'O baixo transportador…',o:['mantém a UF, clearance lento','perde a UF rápido','não dialisa'],c:0,e:'O gradiente dura (boa UF) mas o soluto equilibra devagar (clearance lento).'},
+  {q:'Mais dextrose (4,25% vs 2,5%) gera…',o:['menos UF','mais UF (gradiente maior)','mesma UF'],c:1,e:'Maior gradiente osmótico inicial → mais água puxada.'},
+  {q:'A diálise peritoneal, como homeostasia, defende…',o:['só a creatinina','o volume e a depuração de escórias','a glicemia'],c:1,e:'Substitui parte da função renal — volume e escórias — por uma membrana viva.'}
+];
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL; window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+var BANKS={ilustrada:TUTOR_ILUSTRADO,textual:TUTOR_TEXTUAL}, curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+function renderTutor(){ var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():''; $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false; $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){ if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button'); btns[item.c].classList.add('ok'); if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block'; fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e; $('tutor-score').textContent=tScore; $('tutor-total').textContent=tTotal; });
+    box.appendChild(b); }); }
+$('banktabs').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor(); });
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+$('draw-membrana').innerHTML = membranaDraw();
+$('draw-osmose').innerHTML = ufMini({dextrose:2.5,tipoTransp:0.5},'UF × dwell (2,5% médio)');
+$('draw-pico').innerHTML = gliMini({tipoTransp:0.5},'gradiente de glicose × dwell');
+$('draw-uf2').innerHTML = ufMini({tipoTransp:0.5},'UF × dwell: pico e reversão');
+$('draw-pet').innerHTML = petBars();
+$('fig-caso').innerHTML = ufMini({tipoTransp:1,dwellH:6},'alto transportador, dwell 6 h') + petBars();
+
+refresh(); renderTutor();
+</script>
+</body>
+</html>

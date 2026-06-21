@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M26 — Cinética da ureia: compartimento único × duplo e o rebote</title>
+<style>
+  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--warn:#e8a13a;--bad:#e0556b;--good:#52c08a;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none} section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .presets{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px} .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)} .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)} .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)} .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+  code{background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:13px}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M26</div>
+  <h1>Cinética da ureia — compartimento único × duplo, e o rebote pós-diálise</h1>
+  <div class="sub">A leitura ingênua trata o corpo como <b>um tanque</b>: <code>C(t)=C₀·exp(−Kt/V)</code>. Mas a
+  ureia mora em <b>dois compartimentos</b> — o sangue (extracelular, rápido) e os tecidos (intracelular, lento).
+  A máquina esvazia o sangue mais rápido do que os tecidos repõem; ao fim, o sangue está <b>artificialmente
+  baixo</b>. Em 30–60 min ele <b>rebota</b>. Logo o <b>eKt/V (pós-rebote) &lt; spKt/V (pool único)</b> — e
+  <b>quanto mais rápida a sessão, maior a mentira</b>.</div>
+  <nav class="hex">
+    <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
+    <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="filtra.html">&larr; índice do braço FILTRA</a> · <a href="dialisa.html">antebraço DIALISA</a>
+
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- CONCEITO -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — a ureia em dois tanques, e por que o número do fim mente</h3>
+      <p class="sub" style="margin-top:0"><b>Dose de diálise é homeostasia restaurada por máquina.</b> Mas medir a
+      dose é traiçoeiro: a ureia não é um líquido único — é dois. As Fig. 1–8 voltam no Caso, na Trilha e na
+      Avaliação. Atribuição em <code>CREDITS.md</code> (em curadoria).</p>
+
+      <h4>1. Pool único — a curva ingênua C(t) = C₀·exp(−Kt/V)</h4>
+      <p class="sub">Se o corpo fosse um tanque bem-misturado, a ureia cairia em exponencial simples (revisão do M22):
+      <code>C(t)=C₀·exp(−Kt/V)</code>. A "dose" é o <b>Kt/V</b> = clearance × tempo ÷ volume (K em mL/min, t em h,
+      V em L). A redução é a <b>URR = 1−exp(−Kt/V)</b>. É uma boa primeira aproximação — mas mente quando a remoção
+      é rápida.</p>
+      <div class="frow">
+        <div class="concept" id="draw-single"></div>
+        <figure class="fviva"><img src="assets/m26/modelo-cinetico-ureia.svg" alt="Modelo cinético de pool único da ureia: exponencial simples" loading="lazy">
+          <figcaption><b>Fig. 1 · O modelo de pool único.</b> Um tanque, uma exponencial: <code>C=C₀·e^(−Kt/V)</code>.
+          O sangue é a água do tanque inteiro. Funciona quando a troca tecidual é rápida; subestima o nadir quando
+          a sessão é curta e eficiente.</figcaption></figure>
+      </div>
+
+      <h4>2. Dois compartimentos — o intracelular lento e o extracelular rápido</h4>
+      <p class="sub">A ureia se distribui na <b>água corporal total</b>, mas em dois espaços: o <b>extracelular</b>
+      (≈⅓, é o que o sangue mede) e o <b>intracelular</b> (≈⅔, lento). A diálise tira do extracelular; o
+      intracelular repõe pela <b>transferência intercompartimental</b> (Kc, mL/min). Se Kc é finito, o sangue cai
+      mais rápido que o pool real.</p>
+      <div class="frow">
+        <div class="concept" id="draw-twocomp"></div>
+        <figure class="fviva"><img src="assets/m26/compartimento-unico-duplo.svg" alt="Comparação compartimento único versus duplo da ureia" loading="lazy">
+          <figcaption><b>Fig. 2 · Único × duplo.</b> À esquerda, um tanque (ingênuo). À direita, dois: extracelular
+          (sangue, rápido) ligado ao intracelular (tecidos, lento) por uma válvula estreita (Kc). A máquina só
+          alcança o sangue diretamente.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m26/distribuicao-ureia-tbw.svg" alt="Distribuição da ureia na água corporal total: intra e extracelular" loading="lazy">
+          <figcaption><b>Fig. 3 · A ureia na ÁGT.</b> ⅓ extracelular (sangue/interstício) + ⅔ intracelular. O
+          volume de distribuição V ≈ ÁGT (~50–60% do peso). O sangue só "vê" o compartimento extracelular em tempo
+          real.</figcaption></figure>
+      </div>
+
+      <h4>3. A queda do sangue e o REBOTE pós-fim</h4>
+      <p class="sub">Durante a sessão o <b>sangue</b> (extracelular) despenca abaixo do pool verdadeiro. Ao desligar a
+      máquina, a ureia tecidual <b>reequilibra</b> e o sangue <b>sobe</b> (rebote ~10–20%) até o platô comum
+      <b>C<sub>eq</sub></b>, em 30–60 min. <code>rebote% = (C_eq − C_fim)/C_fim · 100</code>.</p>
+      <div class="frow">
+        <div class="concept" id="draw-rebote"></div>
+        <figure class="fviva"><img src="assets/m26/rebote-ureia.svg" alt="Rebote pós-diálise da ureia: o sangue sobe após o fim" loading="lazy">
+          <figcaption><b>Fig. 4 · O rebote.</b> No fim da sessão (◎) o sangue está no nadir artificial; em 30–60 min
+          a ureia dos tecidos volta e o sangue sobe até o equilíbrio. O nadir do fim NÃO é a dose real.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m26/equilibrio-pos-dialise.svg" alt="Equilíbrio pós-diálise: o platô comum entre os compartimentos" loading="lazy">
+          <figcaption><b>Fig. 5 · O equilíbrio pós-diálise.</b> Os dois compartimentos convergem ao platô comum
+          C<sub>eq</sub> por conservação de massa. A amostra de 30–60 min mede a dose verdadeira; a do fim mede a
+          ilusão.</figcaption></figure>
+      </div>
+
+      <h4>4. Daugirdas — eKt/V a partir do spKt/V e do tempo</h4>
+      <p class="sub">Em vez de esperar a amostra tardia, a <b>equação de taxa de Daugirdas</b> estima o eKt/V
+      direto: <code>eKt/V = spKt/V − 0,6·(spKt/V / t) + 0,03</code> (t em <b>horas</b>, acesso venoso). O termo
+      <code>0,6·(spKt/V/t)</code> é o "imposto do rebote": cresce quando t é pequeno (sessão rápida). Daí
+      <b>eKt/V ≤ spKt/V</b> sempre.</p>
+      <div class="frow">
+        <div class="concept" id="draw-daugirdas"></div>
+        <figure class="fviva"><img src="assets/m26/amostragem-ureia-tempo.svg" alt="Amostragem da ureia no tempo: pré, fim e pós-rebote" loading="lazy">
+          <figcaption><b>Fig. 6 · Quando amostrar.</b> Pré (basal), fim (nadir, mente) e 30–60 min (verdade). O
+          spKt/V usa pré+fim; o eKt/V usa pré+pós-rebote, ou a fórmula de Daugirdas a partir do spKt/V e do tempo
+          t.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m26/geracao-ureia.svg" alt="Geração contínua de ureia entre as sessões" loading="lazy">
+          <figcaption><b>Fig. 7 · A geração entre sessões.</b> A ureia é gerada o tempo todo pelo catabolismo; entre
+          diálises ela sobe de novo. A cinética da sessão (spKt/V, eKt/V) é só o pedaço da remoção — o platô
+          interdialítico é outra história.</figcaption></figure>
+      </div>
+
+      <h4>5. O tempo importa — rápido × gentil para a MESMA dose geométrica</h4>
+      <p class="sub">Duas sessões com o <b>mesmo spKt/V</b> não entregam a mesma dose real. A <b>rápida</b> (K alto, t
+      curto) abre um gradiente intercompartimental grande → rebote maior → eKt/V cai mais. A <b>gentil</b> (K menor,
+      t longo) deixa os tecidos acompanharem → rebote pequeno → eKt/V ≈ spKt/V. O tempo é dose.</p>
+      <div class="frow">
+        <div class="concept" id="draw-rapidogentil"></div>
+        <figure class="fviva"><img src="assets/m26/pos-diluicao-rebote.svg" alt="Rápido versus gentil: o rebote depende da velocidade" loading="lazy">
+          <figcaption><b>Fig. 8 · Rápido × gentil.</b> Mesmo spKt/V, rebotes diferentes: a curva rápida mergulha
+          fundo e rebota muito (mente muito); a gentil acompanha o pool e quase não rebota. A velocidade decide a
+          mentira.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASO -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — seis atos, decida antes de revelar</h3>
+      <p class="sub">Homem de 60 anos, 70 kg, em HDI. O nefrologista quer "encaixar mais um paciente" e encurtar a
+      sessão. O que muda na DOSE real?</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step"><b>Ato 1.</b> Sessão padrão de <b>4 h</b> com clearance ~210 mL/min. A ureia do fim cai para
+        ~25% do basal. O spKt/V medido é ~1,4. Está adequado?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>No papel, sim</b> (alvo spKt/V ≥ 1,2–1,4). Mas o spKt/V usa o sangue do
+          <b>fim</b> (volte à Fig. 4) — que está artificialmente baixo. A dose REAL é o eKt/V pós-rebote, ~1,2.</div></div>
+
+      <div class="step"><b>Ato 2.</b> Para liberar a máquina, encurtam para <b>2 h</b> e dobram o clearance (~420
+        mL/min). O spKt/V medido continua ~1,4. Mesma dose?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2"><b>Não.</b> Mesma dose geométrica, dose real MENOR. A remoção rápida abre um
+          gradiente grande entre sangue e tecidos (Fig. 8) → rebote ~25% → o eKt/V despenca para ~1,0. A
+          <b>subdiálise mascarada</b>.</div></div>
+
+      <div class="step"><b>Ato 3.</b> <i>Por quê?</i> O que a velocidade faz ao gradiente intercompartimental?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3">Quanto mais rápido o sangue é depurado, mais ele se afasta do intracelular (a
+          válvula Kc não acompanha, Fig. 2–3). Esse desnível é o que rebota depois. Sessão lenta = tecidos
+          acompanham = pouco rebote.</div></div>
+
+      <div class="step"><b>Ato 4.</b> <i>A amostra que engana.</i> A enfermagem colhe a ureia <b>logo ao desligar</b> e
+        calcula um Kt/V "ótimo". Confiável?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>Não — mente</b> (Fig. 6). O sangue do fim é o nadir artificial. A amostra
+          correta para o eKt/V é a de <b>30–60 min</b> pós-fim (pós-rebote), ou usa-se a fórmula de Daugirdas a
+          partir do spKt/V e do tempo.</div></div>
+
+      <div class="step"><b>Ato 5.</b> <i>O paciente "adequado" no papel.</i> O laudo mensal mostra spKt/V 1,4 estável,
+        mas o paciente está urêmico, anorético, fraco. Como reconciliar?
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5">O laudo usa o spKt/V do fim. Se as sessões são <b>curtas e eficientes</b>, o
+          eKt/V real está ~1,0 — subdiálise crônica mascarada. Recalcule com Daugirdas (cai 0,6·sp/t) e considere
+          <b>alongar o tempo</b>, não só subir o clearance.</div></div>
+
+      <div class="step"><b>Ato 6.</b> <i>A fronteira.</i> Uma sessão <b>gentil</b> de 6 h com clearance menor entrega
+        spKt/V 1,5. Aqui o spKt/V mente menos?
+        <div><button class="act" data-rev="r6">Revelar</button></div>
+        <div class="reveal" id="r6"><b>Sim</b> (Fig. 8). Com t longo, os tecidos acompanham o sangue → rebote ~8–10%
+          → eKt/V ~1,4, quase igual ao spKt/V. A lição: <b>o tempo é dose</b>; alongar a sessão estreita a mentira
+          e melhora a tolerância.</div></div>
+    </div>
+  </section>
+
+  <!-- TRILHA -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — nove perguntas que constroem a cinética</h3>
+      <details><summary>1. O que diz o modelo de pool único?</summary><p>Que o corpo é um tanque bem-misturado e a
+        ureia cai em exponencial: <code>C(t)=C₀·exp(−Kt/V)</code>. Simples, mas ignora a estrutura de dois
+        compartimentos.</p></details>
+      <details><summary>2. O que é o Kt/V?</summary><p>A dose adimensional: clearance (K) × tempo (t) ÷ volume de
+        distribuição (V). É quantas "vezes o volume de ureia" o dialisador depurou na sessão.</p></details>
+      <details><summary>3. Onde mora a ureia no corpo?</summary><p>Na água corporal total: ≈⅓ extracelular (o sangue
+        mede isto) e ≈⅔ intracelular (lento). A máquina só alcança o extracelular diretamente.</p></details>
+      <details><summary>4. Por que o sangue cai mais rápido que o pool real?</summary><p>Porque a diálise esvazia o
+        extracelular antes do intracelular conseguir repor (transferência Kc finita). O sangue fica
+        "artificialmente baixo" ao fim.</p></details>
+      <details><summary>5. O que é o rebote pós-diálise?</summary><p>A subida da ureia no sangue 30–60 min após
+        desligar a máquina, quando os tecidos reequilibram. Tipicamente 10–20% acima do nadir do fim.</p></details>
+      <details><summary>6. Por que eKt/V &lt; spKt/V?</summary><p>Porque o rebote sobe a ureia → a redução real é
+        menor que a calculada pelo nadir do fim. A dose efetiva (equilibrada) é sempre ≤ a de pool único.</p></details>
+      <details><summary>7. Qual é a equação de Daugirdas?</summary><p><code>eKt/V = spKt/V − 0,6·(spKt/V/t) + 0,03</code>
+        (t em horas). O termo do meio é o imposto do rebote, maior quando t é curto.</p></details>
+      <details><summary>8. Por que a sessão rápida mente mais?</summary><p>Remoção rápida abre um gradiente
+        intercompartimental maior → rebote maior → o eKt/V cai mais abaixo do spKt/V. À mesma dose geométrica, a
+        rápida entrega menos.</p></details>
+      <details><summary>9. Qual é a moral clínica?</summary><p>O tempo é dose. Para entregar a mesma dose real,
+        prefira sessões mais longas/gentis; e meça o eKt/V (Daugirdas ou amostra pós-rebote), não o número
+        enganoso do fim.</p></details>
+    </div>
+  </section>
+
+  <!-- INSTRUMENTO -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — a ureia × tempo: queda, fim e rebote</h3>
+      <p class="sub">Os controles do <b>Lab</b> alimentam esta curva. Em ciano: o <b>sangue</b> (dois compartimentos)
+      mergulhando durante a sessão. Em cinza tracejado: a leitura <b>pool único</b> (ingênua). No fim (◎ laranja) o
+      sangue está no nadir; depois ele <b>rebota</b> (verde) até o platô de equilíbrio (◎ verde). A distância
+      fim→equilíbrio é a diferença spKt/V × eKt/V.</p>
+      <canvas id="urea-canvas" width="900" height="360" aria-label="Curva da ureia por tempo com rebote"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- LAB -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — mova o clearance, o tempo e a transferência; veja a mentira</h3>
+      <div class="grid">
+        <div>
+          <label>Ureia inicial C₀ (fração do basal): <span class="val" id="lbl-c0">1.0</span></label>
+          <input type="range" id="in-c0" min="0.5" max="1.5" step="0.05" value="1">
+          <label>Clearance do dialisador K (mL/min): <span class="val" id="lbl-k">210</span></label>
+          <input type="range" id="in-k" min="80" max="500" step="5" value="210">
+          <label>Volume de distribuição V (L): <span class="val" id="lbl-v">35</span></label>
+          <input type="range" id="in-v" min="15" max="60" step="1" value="35">
+        </div>
+        <div>
+          <label>Tempo de sessão t (h): <span class="val" id="lbl-t">4.0</span></label>
+          <input type="range" id="in-t" min="1" max="8" step="0.25" value="4">
+          <label>Transferência intercompartimental Kc (mL/min): <span class="val" id="lbl-kc">800</span></label>
+          <input type="range" id="in-kc" min="100" max="2500" step="50" value="800">
+        </div>
+      </div>
+
+      <div class="presets">
+        <button class="act" data-preset="padrao">4 h padrão</button>
+        <button class="act" data-preset="rapido">2 h rápido (mascara)</button>
+        <button class="act" data-preset="gentil">6 h gentil</button>
+        <button class="act" data-preset="transferbaixo">Transferência baixa</button>
+        <button class="act" data-preset="grande">Paciente grande (V alto)</button>
+      </div>
+
+      <table>
+        <tr><th>Variável</th><th>Atual</th><th>Comentário</th></tr>
+        <tr><td>spKt/V (pool único, do fim)</td><td class="num" id="out-sp">—</td><td class="num">a leitura ingênua</td></tr>
+        <tr><td>eKt/V (Daugirdas, pós-rebote)</td><td class="num" id="out-e">—</td><td class="num">a dose REAL</td></tr>
+        <tr><td>Ureia ao fim (fração)</td><td class="num" id="out-cfim">—</td><td class="num">nadir artificial</td></tr>
+        <tr><td>Ureia no equilíbrio (fração)</td><td class="num" id="out-ceq">—</td><td class="num">após o rebote</td></tr>
+        <tr><td>Rebote (%)</td><td class="num" id="out-rebote">—</td><td class="num">(C_eq−C_fim)/C_fim</td></tr>
+        <tr><td>URR equilibrada (%)</td><td class="num" id="out-urr">—</td><td class="num">redução real</td></tr>
+        <tr><td>Mentira spKt/V − eKt/V</td><td class="num" id="out-mentira">—</td><td class="num">o quanto o fim engana</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÃO -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (11)</button>
+        <button data-bank="textual">Textual (11)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica</b>. Este módulo M26 trata
+    da cinética da ureia (spKt/V, eKt/V, rebote) como <b>mecanismo</b>; os alvos de dose (Kt/V) e o tempo de sessão
+    são apresentados para ensinar a leitura, não como prescrição individual. O modelo de dois compartimentos é uma
+    simplificação didática calibrada (integração numérica, biexponencial). Não substitui julgamento clínico; a
+    decisão e a responsabilidade finais são sempre do profissional.
+  </div>
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+</div>
+
+<script>
+/* ENGINE INLINE — espelho fiel de build/m26/model26.js */
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
+function merge(def,inp){ var o={},k; for(k in def) o[k]=def[k]; if(inp) for(k in def) if(inp[k]!==undefined) o[k]=inp[k]; return o; }
+var DEFAULTS={C0:1.0,K:210,V:35,t:4.0,fEC:1/3,Kc:800};
+function spKtV(K,V,t){ K=clampv(K,1,1000); V=clampv(V,5,80); t=clampv(t,0.1,12); return (K/1000*60*t)/V; }
+function urrFrom(ktv){ ktv=clampv(ktv,0,12); return 1-Math.exp(-ktv); }
+function eKtVdaugirdas(sp,t){ sp=clampv(sp,0,12); t=clampv(t,0.1,12); var e=sp-0.6*(sp/t)+0.03; return clampv(e,0,12); }
+function cSingle(C0,ktv){ C0=clampv(C0,0,5); ktv=clampv(ktv,0,12); return C0*Math.exp(-ktv); }
+function twoComp(C0,K,V,t,fEC,Kc){
+  C0=clampv(C0,0,5); K=clampv(K,1,1000); V=clampv(V,5,80); t=clampv(t,0.1,12); fEC=clampv(fEC,0.1,0.6); Kc=clampv(Kc,10,4000);
+  var Vec=V*fEC, Vic=V*(1-fEC), kK=K*0.06, kC=Kc*0.06, Ce=C0, Ci=C0, steps=2400, dt=t/steps, i;
+  for(i=0;i<steps;i++){ var fluxDial=kK*Ce/Vec, fluxInter=kC*(Ce-Ci);
+    Ce=Ce+(-fluxDial-fluxInter/Vec)*dt; Ci=Ci+(fluxInter/Vic)*dt; if(Ce<0)Ce=0; if(Ci<0)Ci=0; }
+  var Cfim=Ce, Ceq=(Vec*Ce+Vic*Ci)/V; if(Ceq<Cfim)Ceq=Cfim;
+  var rebotePct=Cfim>1e-9?(Ceq-Cfim)/Cfim*100:0;
+  return {Cfim:Cfim,Ceq:Ceq,Ci:Ci,Ce:Ce,Vec:Vec,Vic:Vic,rebotePct:rebotePct}; }
+function ureaKinetics(input){ var s=merge(DEFAULTS,input);
+  var C0=clampv(s.C0,0,5), K=clampv(s.K,1,1000), V=clampv(s.V,5,80), t=clampv(s.t,0.1,12), fEC=clampv(s.fEC,0.1,0.6), Kc=clampv(s.Kc,10,4000);
+  var sp=spKtV(K,V,t), urrSp=urrFrom(sp), cFimSingle=cSingle(C0,sp);
+  var two=twoComp(C0,K,V,t,fEC,Kc), Cfim=two.Cfim, Ceq=two.Ceq, rebotePct=two.rebotePct;
+  var spMedido=C0>1e-9&&Cfim>1e-9?-Math.log(Cfim/C0):sp; spMedido=clampv(spMedido,0,12);
+  var eMedido=C0>1e-9&&Ceq>1e-9?-Math.log(Ceq/C0):sp; eMedido=clampv(eMedido,0,12);
+  var eKtV=Math.min(eKtVdaugirdas(spMedido,t),spMedido), urrEq=urrFrom(eKtV);
+  var mentira=spMedido-eKtV, quedaPct=spMedido>1e-9?mentira/spMedido*100:0;
+  var rapida=t<3.0, reboteGrande=rebotePct>12, subdialise=eKtV<1.2, mascarada=spMedido>=1.2&&eKtV<1.2;
+  return {C0:C0,K:K,V:V,t:t,fEC:fEC,Kc:Kc,Vec:two.Vec,Vic:two.Vic,
+    spKtV:sp,spMedido:spMedido,eKtV:eKtV,eMedido:eMedido,urrSp:urrSp,urrEq:urrEq,
+    cFimSingle:cFimSingle,Cfim:Cfim,Ceq:Ceq,Ci:two.Ci,rebotePct:rebotePct,mentira:mentira,quedaPct:quedaPct,
+    rapida:rapida,reboteGrande:reboteGrande,subdialise:subdialise,mascarada:mascarada}; }
+function ureaCurveLayout(state,W,H){ state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=52,padR=16,padT=18,padB=38,baseY=H-padB;
+  var C0=clampv(state.C0!==undefined?state.C0:1,0,5), K=clampv(state.K!==undefined?state.K:210,1,1000),
+      V=clampv(state.V!==undefined?state.V:35,5,80), t=clampv(state.t!==undefined?state.t:4,0.1,12),
+      fEC=clampv(state.fEC!==undefined?state.fEC:1/3,0.1,0.6), Kc=clampv(state.Kc!==undefined?state.Kc:800,10,4000);
+  var reboteDur=0.75, tMax=t+reboteDur, yMax=Math.max(C0*1.05,0.2), pxX=(W-padL-padR)/tMax, pxY=(baseY-padT)/yMax;
+  function X(tt){ return padL+tt*pxX; } function Y(cc){ return baseY-clampv(cc,0,yMax)*pxY; }
+  var Vec=V*fEC, Vic=V*(1-fEC), kK=K*0.06, kC=Kc*0.06, N=60, i, Ce=C0, Ci=C0, dt=t/(N*4);
+  var bloodPts=[{tt:0,c:C0,x:X(0),y:Y(C0)}], sampleEvery=4, count=0;
+  for(i=0;i<N*4;i++){ var fluxDial=kK*Ce/Vec, fluxInter=kC*(Ce-Ci);
+    Ce=Ce+(-fluxDial-fluxInter/Vec)*dt; Ci=Ci+(fluxInter/Vic)*dt; if(Ce<0)Ce=0; if(Ci<0)Ci=0;
+    count++; if(count%sampleEvery===0){ var tt=(i+1)*dt; bloodPts.push({tt:tt,c:Ce,x:X(tt),y:Y(Ce)}); } }
+  var Cfim=Ce, Ceq=(Vec*Ce+Vic*Ci)/V; if(Ceq<Cfim)Ceq=Cfim;
+  var reboteTau=Vec/Math.max(kC,1e-6)*(1+Vec/Vic), reboteTau2=clampv(reboteTau,0.05,0.6);
+  var Mr=24, reboutePts=[{tt:t,c:Cfim,x:X(t),y:Y(Cfim)}];
+  for(i=1;i<=Mr;i++){ var tr=i/Mr*reboteDur, c=Ceq-(Ceq-Cfim)*Math.exp(-tr/reboteTau2); reboutePts.push({tt:t+tr,c:c,x:X(t+tr),y:Y(c)}); }
+  var sp=spKtV(K,V,t), singlePts=[];
+  for(i=0;i<=N;i++){ var ts=i/N*t, cs=C0*Math.exp(-sp*ts/t); singlePts.push({tt:ts,c:cs,x:X(ts),y:Y(cs)}); }
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,tMax:tMax,yMax:yMax,pxX:pxX,pxY:pxY,C0:C0,t:t,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},bloodPts:bloodPts,reboutePts:reboutePts,singlePts:singlePts,
+    Cfim:Cfim,Ceq:Ceq,fimMark:{x:X(t),y:Y(Cfim),c:Cfim},eqMark:{x:X(tMax),y:Y(Ceq),c:Ceq}}; }
+window.clampv=clampv; window.merge=merge; window.spKtV=spKtV; window.urrFrom=urrFrom; window.eKtVdaugirdas=eKtVdaugirdas;
+window.cSingle=cSingle; window.twoComp=twoComp; window.ureaKinetics=ureaKinetics; window.ureaCurveLayout=ureaCurveLayout;
+window.MODEL={ureaKinetics:ureaKinetics,ureaCurveLayout:ureaCurveLayout,spKtV:spKtV,urrFrom:urrFrom,eKtVdaugirdas:eKtVdaugirdas,twoComp:twoComp,clampv:clampv,DEFAULTS:DEFAULTS};
+
+/* UI */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=(d===undefined?1:d); return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on'); b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on'); $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh(); });
+document.addEventListener('click',function(e){ var b=e.target.closest('button.act[data-rev]'); if(!b) return; var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on'); });
+
+function readInputs(){ return { C0:+$('in-c0').value, K:+$('in-k').value, V:+$('in-v').value, t:+$('in-t').value, Kc:+$('in-kc').value }; }
+function refresh(){ var inp=readInputs();
+  $('lbl-c0').textContent=fmt(inp.C0,2); $('lbl-k').textContent=inp.K; $('lbl-v').textContent=inp.V;
+  $('lbl-t').textContent=fmt(inp.t,2); $('lbl-kc').textContent=inp.Kc;
+  var r=ureaKinetics(inp);
+  $('out-sp').textContent=fmt(r.spMedido,2); $('out-e').textContent=fmt(r.eKtV,2);
+  $('out-cfim').textContent=fmt(r.Cfim,3); $('out-ceq').textContent=fmt(r.Ceq,3);
+  $('out-rebote').textContent=fmt(r.rebotePct,1); $('out-urr').textContent=fmt(r.urrEq*100,1);
+  $('out-mentira').textContent=fmt(r.mentira,3);
+  verdict(r); drawUrea(inp); pearl(r,inp); }
+function verdict(r){ var v=$('veredito'), cls='b-good', msg;
+  if(r.mascarada){ cls='b-bad'; msg='SUBDIÁLISE MASCARADA: o spKt/V '+fmt(r.spMedido,2)+' parece adequado, mas o eKt/V real é só '+fmt(r.eKtV,2)+' (rebote '+fmt(r.rebotePct,0)+'%). Alongue o tempo.'; }
+  else if(r.reboteGrande){ cls='b-warn'; msg='REBOTE GRANDE ('+fmt(r.rebotePct,0)+'%): o sangue do fim mente; o eKt/V cai de '+fmt(r.spMedido,2)+' para '+fmt(r.eKtV,2)+'. Meça o eKt/V (Daugirdas/pós-rebote).'; }
+  else if(r.eKtV<1.2){ cls='b-warn'; msg='DOSE BAIXA: o eKt/V real é '+fmt(r.eKtV,2)+' (alvo ≥1,2). Suba o clearance ou alongue o tempo.'; }
+  else { cls='b-good'; msg='DOSE ADEQUADA E HONESTA: eKt/V '+fmt(r.eKtV,2)+', rebote pequeno ('+fmt(r.rebotePct,0)+'%). O spKt/V ('+fmt(r.spMedido,2)+') quase não mente aqui.'; }
+  v.className='banner '+cls; v.textContent=msg; }
+function pearl(r,inp){ var p=$('lab-pearl'), ip=$('instr-pearl'), t;
+  if(r.mascarada) t='PÉROLA (máscara): mesma dose no papel (spKt/V '+fmt(r.spMedido,2)+'), dose real '+fmt(r.eKtV,2)+'. A sessão curta entrega MENOS apesar do número idêntico.';
+  else if(r.reboteGrande) t='PÉROLA (rebote): o sangue do fim ('+fmt(r.Cfim,3)+') sobe para '+fmt(r.Ceq,3)+' em ~30–60 min. O número do fim subestima a ureia verdadeira em '+fmt(r.rebotePct,0)+'%.';
+  else if(r.rapida) t='PÉROLA (tempo): sessão rápida (t '+fmt(inp.t,1)+' h) → gradiente maior → mais mentira (queda '+fmt(r.quedaPct,0)+'% do spKt/V para o eKt/V).';
+  else t='No equilíbrio, eKt/V '+fmt(r.eKtV,2)+' (≈ spKt/V '+fmt(r.spMedido,2)+'). Sessão gentil: o rebote é pequeno e o número do fim é quase honesto.';
+  p.textContent=t; ip.textContent=t; }
+function drawUrea(state){ var c=$('urea-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
+  var L=ureaCurveLayout(state,c.width,c.height); ctx.clearRect(0,0,L.W,L.H);
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('ureia (fração de C₀)',8,L.padT+2); ctx.fillText('tempo (h) →',L.W-110,L.baseY+24);
+  /* pool único (cinza tracejado) */
+  ctx.strokeStyle='#7a8a98'; ctx.lineWidth=1.5; ctx.setLineDash([5,4]); ctx.beginPath();
+  for(var s=0;s<L.singlePts.length;s++){ var ps=L.singlePts[s]; if(s===0) ctx.moveTo(ps.x,ps.y); else ctx.lineTo(ps.x,ps.y); } ctx.stroke(); ctx.setLineDash([]);
+  /* sangue 2 compartimentos (ciano) */
+  ctx.strokeStyle='#39c0c8'; ctx.lineWidth=2; ctx.beginPath();
+  for(var i=0;i<L.bloodPts.length;i++){ var p=L.bloodPts[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); } ctx.stroke();
+  /* rebote (verde) */
+  ctx.strokeStyle='#52c08a'; ctx.lineWidth=2; ctx.beginPath();
+  for(var k=0;k<L.reboutePts.length;k++){ var pr=L.reboutePts[k]; if(k===0) ctx.moveTo(pr.x,pr.y); else ctx.lineTo(pr.x,pr.y); } ctx.stroke();
+  /* marca de fim da sessão (linha vertical laranja) */
+  ctx.strokeStyle='#e8a13a'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(L.fimMark.x,L.padT); ctx.lineTo(L.fimMark.x,L.baseY); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#e8a13a'; ctx.fillRect(L.fimMark.x-3,L.fimMark.y-3,6,6);
+  ctx.fillStyle='#52c08a'; ctx.fillRect(L.eqMark.x-3,L.eqMark.y-3,6,6);
+  ctx.fillStyle='#e7eef4'; ctx.fillText('fim '+fmt(L.Cfim,2),L.fimMark.x+6,Math.min(L.fimMark.y+14,L.baseY-4));
+  ctx.fillText('eq '+fmt(L.Ceq,2),L.eqMark.x-58,Math.max(L.eqMark.y-6,L.padT+12)); }
+['in-c0','in-k','in-v','in-t','in-kc'].forEach(function(id){ $(id).addEventListener('input',refresh); });
+
+var PRESETS={
+  padrao:{c0:1,k:210,v:35,t:4,kc:800},
+  rapido:{c0:1,k:420,v:35,t:2,kc:800},
+  gentil:{c0:1,k:200,v:35,t:6,kc:800},
+  transferbaixo:{c0:1,k:210,v:35,t:4,kc:250},
+  grande:{c0:1,k:210,v:55,t:4,kc:800}
+};
+function applyPreset(p){ var d=PRESETS[p]; if(!d) return;
+  $('in-c0').value=d.c0; $('in-k').value=d.k; $('in-v').value=d.v; $('in-t').value=d.t; $('in-kc').value=d.kc; refresh(); }
+document.querySelector('.presets').addEventListener('click',function(e){ var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset')); });
+
+/* ILUSTRAÇÕES computadas + helper raster */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+/* mini curva ureia×tempo computada do engine (queda + rebote) */
+function ureaMini(state,titulo){ var W=300,H=170,L=ureaCurveLayout(state,W,H),s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  var ds=''; for(var j=0;j<L.singlePts.length;j++){ ds+=(j===0?'M':'L')+f1(L.singlePts[j].x)+' '+f1(L.singlePts[j].y)+' '; }
+  s+='<path d="'+ds+'" fill="none" stroke="#7a8a98" stroke-width="1.3" stroke-dasharray="4 3"/>';
+  var db=''; for(var i=0;i<L.bloodPts.length;i++){ db+=(i===0?'M':'L')+f1(L.bloodPts[i].x)+' '+f1(L.bloodPts[i].y)+' '; }
+  s+='<path d="'+db+'" fill="none" stroke="#39c0c8" stroke-width="2"/>';
+  var dr=''; for(var k=0;k<L.reboutePts.length;k++){ dr+=(k===0?'M':'L')+f1(L.reboutePts[k].x)+' '+f1(L.reboutePts[k].y)+' '; }
+  s+='<path d="'+dr+'" fill="none" stroke="#52c08a" stroke-width="2"/>';
+  s+='<rect x="'+f1(L.fimMark.x-3)+'" y="'+f1(L.fimMark.y-3)+'" width="6" height="6" fill="#e8a13a"/>';
+  s+='<rect x="'+f1(L.eqMark.x-3)+'" y="'+f1(L.eqMark.y-3)+'" width="6" height="6" fill="#52c08a"/>';
+  s+='<text x="'+(W/2)+'" y="13" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'ureia × tempo')+'</text>';
+  s+='<text x="'+(W-8)+'" y="'+(L.baseY+14)+'" fill="#9fb1c0" font-size="9" text-anchor="end">tempo →</text>';
+  return svgEl(W,H,s); }
+/* barras spKt/V × eKt/V computadas do engine */
+function ktvBars(r){ var W=300,H=170,base=132,s='';
+  function bar(x,val,color,lab){ var h=clampv(val/2.2,0,1)*98; return '<rect x="'+x+'" y="'+f1(base-h)+'" width="70" height="'+f1(h)+'" fill="'+color+'" fill-opacity="0.6" stroke="'+color+'"/>'+
+    '<text x="'+(x+35)+'" y="'+(base+13)+'" fill="#9fb1c0" font-size="9" text-anchor="middle">'+lab+'</text>'+
+    '<text x="'+(x+35)+'" y="'+f1(base-h-4)+'" fill="#e7eef4" font-size="10" text-anchor="middle">'+fmt(val,2)+'</text>'; }
+  s+=bar(56,r.spMedido,'#e8a13a','spKt/V (fim)'); s+=bar(168,r.eKtV,'#52c08a','eKt/V (real)');
+  s+='<line x1="40" y1="'+(base-clampv(1.2/2.2,0,1)*98)+'" x2="270" y2="'+(base-clampv(1.2/2.2,0,1)*98)+'" stroke="#e0556b" stroke-dasharray="3 3"/>';
+  s+='<text x="270" y="'+(base-clampv(1.2/2.2,0,1)*98-3)+'" fill="#e0556b" font-size="8" text-anchor="end">alvo 1,2</text>';
+  s+='<text x="150" y="152" fill="#9fb1c0" font-size="9" text-anchor="middle">mentira = '+fmt(r.mentira,2)+'  ·  rebote '+fmt(r.rebotePct,0)+'%</text>';
+  s+='<text x="150" y="13" fill="#9fb1c0" font-size="11" text-anchor="middle">a dose no papel × a dose real</text>';
+  return svgEl(W,H,s); }
+/* desenho esquemático dos dois compartimentos */
+function twoCompDraw(){ var W=300,H=170,s='';
+  s+='<text x="150" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">dois compartimentos da ureia</text>';
+  s+='<rect x="30" y="40" width="90" height="100" rx="8" fill="#1b242d" stroke="#52c08a"/>';
+  s+='<text x="75" y="92" fill="#52c08a" font-size="11" text-anchor="middle">intra-</text>';
+  s+='<text x="75" y="106" fill="#52c08a" font-size="11" text-anchor="middle">celular ⅔</text>';
+  s+='<text x="75" y="124" fill="#9fb1c0" font-size="8" text-anchor="middle">lento</text>';
+  s+='<rect x="180" y="55" width="70" height="70" rx="8" fill="#1b242d" stroke="#39c0c8"/>';
+  s+='<text x="215" y="86" fill="#39c0c8" font-size="11" text-anchor="middle">extra- ⅓</text>';
+  s+='<text x="215" y="100" fill="#9fb1c0" font-size="8" text-anchor="middle">sangue (rápido)</text>';
+  s+='<line x1="120" y1="90" x2="180" y2="90" stroke="#e8a13a" stroke-width="2"/>';
+  s+='<text x="150" y="82" fill="#e8a13a" font-size="9" text-anchor="middle">Kc</text>';
+  s+='<path d="M250 90 L285 90" stroke="#e0556b" stroke-width="2" marker-end="url(#a26)"/>';
+  s+='<text x="268" y="82" fill="#e0556b" font-size="8" text-anchor="middle">K (máquina)</text>';
+  s+='<defs><marker id="a26" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="#e0556b"/></marker></defs>';
+  return svgEl(W,H,s); }
+function imgFig(slug,alt){ return '<img src="assets/m26/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+/* TUTOR */
+function R0(extra){ var o={}; if(extra) for(var k in extra) o[k]=extra[k]; return ureaKinetics(o); }
+var TUTOR_ILUSTRADO=[
+  {q:'No modelo de pool único, a ureia cai como…',o:['linha reta','C₀·exp(−Kt/V)','degrau'],c:1,e:'Exponencial simples: um tanque bem-misturado depurado a clearance constante.',fig:function(){return ureaMini({K:210,t:4},'pool único × 2 comp.');}},
+  {q:'Comparado ao pool real, o sangue (extracelular) durante a sessão…',o:['fica acima','cai MAIS fundo','não muda'],c:1,e:'A máquina esvazia o sangue antes do intracelular repor → nadir artificial.',fig:function(){return ureaMini({K:210,t:4},'o sangue mergulha');}},
+  {q:'Após desligar a máquina, a ureia do sangue…',o:['continua caindo','rebota para cima','some'],c:1,e:'O rebote: os tecidos reequilibram e o sangue sobe ao platô em 30–60 min.',fig:function(){return ureaMini({K:210,t:4},'o rebote');}},
+  {q:'Na sessão padrão (4 h), o eKt/V comparado ao spKt/V…',o:['é maior','é menor','é igual'],c:1,e:'O rebote baixa a dose efetiva: eKt/V < spKt/V sempre.',fig:function(){return ktvBars(R0({}));}},
+  {q:'À MESMA dose geométrica, a sessão de 2 h (rápida) tem…',o:['rebote menor','rebote MAIOR e eKt/V menor','sem rebote'],c:1,e:'Remoção rápida → gradiente maior → rebote maior → mais mentira.',fig:function(){return ktvBars(R0({t:2,K:420}));}},
+  {q:'A sessão gentil de 6 h, em relação à mentira…',o:['mente mais','mente menos (eKt/V≈spKt/V)','não dialisa'],c:1,e:'Tecidos acompanham o sangue → rebote pequeno → o número do fim é quase honesto.',fig:function(){return ktvBars(R0({t:6,K:200}));}},
+  {q:'Na figura dos dois compartimentos, quem o sangue mede em tempo real?',o:['o intracelular','o extracelular','os dois iguais'],c:1,e:'O sangue é o extracelular; o intracelular só chega pela transferência Kc.',fig:function(){return twoCompDraw();}},
+  {q:'Reduzir a transferência intercompartimental Kc faz o rebote…',o:['cair','aumentar','sumir'],c:1,e:'Válvula mais estreita → maior desnível ao fim → rebote maior.',fig:function(){return ureaMini({K:210,t:4,Kc:250},'Kc baixo → rebote↑');}},
+  {q:'Na figura da amostragem, qual amostra dá a dose REAL?',o:['logo ao desligar','30–60 min pós-fim','antes da diálise'],c:1,e:'A amostra pós-rebote mede o equilíbrio; o fim é o nadir enganoso.',fig:function(){return imgFig('amostragem-ureia-tempo.svg','amostragem da ureia');}},
+  {q:'Na figura do rebote, o ponto ◎ do fim representa…',o:['a dose verdadeira','um nadir artificial','o basal'],c:1,e:'O sangue do fim está artificialmente baixo; a verdade é o platô pós-rebote.',fig:function(){return imgFig('rebote-ureia.svg','rebote da ureia');}},
+  {q:'Aumentar o volume V (paciente grande) à mesma K e t…',o:['sobe o spKt/V','baixa o spKt/V','não muda'],c:1,e:'spKt/V = Kt/V; mais volume dilui a dose → spKt/V e eKt/V caem.',fig:function(){return ktvBars(R0({V:55}));}}
+];
+var TUTOR_TEXTUAL=[
+  {q:'A fórmula do modelo de pool único é…',o:['C(t)=C₀·Kt/V','C(t)=C₀·exp(−Kt/V)','C(t)=C₀+Kt/V'],c:1,e:'Exponencial: C(t)=C₀·exp(−Kt/V) — um tanque, clearance constante.'},
+  {q:'No Kt/V, o que é V?',o:['o volume de urina','o volume de distribuição da ureia (≈ÁGT)','a vazão de sangue'],c:1,e:'V ≈ água corporal total (~50–60% do peso), onde a ureia se distribui.'},
+  {q:'A ureia se distribui majoritariamente no…',o:['plasma só','intracelular (≈⅔ da ÁGT)','osso'],c:1,e:'≈⅔ intracelular + ≈⅓ extracelular; o sangue mede o extracelular.'},
+  {q:'O rebote pós-diálise existe porque…',o:['o rim volta','os tecidos reequilibram a ureia para o sangue','a máquina falha'],c:1,e:'O intracelular devolve ureia ao extracelular após parar a remoção.'},
+  {q:'Tipicamente o rebote eleva a ureia do fim em…',o:['1–2%','10–20%','80%'],c:1,e:'Cerca de 10–20%, maior nas sessões rápidas/eficientes.'},
+  {q:'Por isso, em geral…',o:['eKt/V > spKt/V','eKt/V < spKt/V','eKt/V = spKt/V'],c:1,e:'O rebote baixa a dose efetiva; o eKt/V (equilibrado) é ≤ o spKt/V.'},
+  {q:'A equação de Daugirdas é…',o:['eKt/V = spKt/V + 0,6·t','eKt/V = spKt/V − 0,6·(spKt/V/t) + 0,03','eKt/V = spKt/V × t'],c:1,e:'eKt/V = spKt/V − 0,6·(spKt/V/t) + 0,03, com t em horas (acesso venoso).'},
+  {q:'No termo 0,6·(spKt/V/t), quando t é pequeno o desconto…',o:['some','fica maior','fica negativo'],c:1,e:'Sessão curta → desconto maior → eKt/V cai mais abaixo do spKt/V.'},
+  {q:'Duas sessões com o MESMO spKt/V mas tempos diferentes entregam…',o:['a mesma dose real','doses reais diferentes (a curta entrega menos)','sempre subdiálise'],c:1,e:'O tempo é dose: a rápida rebota mais e entrega menos.'},
+  {q:'A "subdiálise mascarada" é…',o:['spKt/V baixo e eKt/V alto','spKt/V adequado mas eKt/V abaixo do alvo','sem diálise'],c:1,e:'O laudo (spKt/V do fim) parece bom, mas a dose real (eKt/V) é insuficiente.'},
+  {q:'Para entregar a mesma dose real com menos mentira, deve-se…',o:['encurtar a sessão','alongar/gentilizar a sessão','subir só o clearance'],c:1,e:'Sessão mais longa → rebote menor → eKt/V ≈ spKt/V; o tempo é dose.'}
+];
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL; window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+var BANKS={ilustrada:TUTOR_ILUSTRADO,textual:TUTOR_TEXTUAL}, curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+function renderTutor(){ var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():''; $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false; $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){ if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button'); btns[item.c].classList.add('ok'); if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block'; fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e; $('tutor-score').textContent=tScore; $('tutor-total').textContent=tTotal; });
+    box.appendChild(b); }); }
+$('banktabs').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor(); });
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+$('draw-single').innerHTML = ureaMini({K:210,t:4},'pool único (cinza) × 2 comp. (ciano)');
+$('draw-twocomp').innerHTML = twoCompDraw();
+$('draw-rebote').innerHTML = ureaMini({K:210,t:4},'queda + rebote');
+$('draw-daugirdas').innerHTML = ktvBars(ureaKinetics({}));
+$('draw-rapidogentil').innerHTML = ureaMini({K:420,t:2},'sessão rápida → rebote grande');
+$('fig-caso').innerHTML = ureaMini({K:420,t:2},'2 h rápido') + ktvBars(ureaKinetics({t:2,K:420}));
+
+refresh(); renderTutor();
+</script>
+</body>
+</html>

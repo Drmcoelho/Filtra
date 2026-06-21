@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M28 — Dose e fluidos na TRRC: efluente mL/kg/h, pré × pós-diluição</title>
+<style>
+  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--warn:#e8a13a;--bad:#e0556b;--good:#52c08a;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none} section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .presets{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px} .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)} .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)} .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)} .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+  code{background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:13px}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M28</div>
+  <h1>Dose e fluidos na TRRC — efluente mL/kg/h, pré × pós-diluição</h1>
+  <div class="sub">Na terapia de substituição renal <b>contínua</b> (CVVH/CVVHD/CVVHDF), a <b>dose é o
+  efluente</b>: <code>dose = Q_efluente ÷ peso</code> em <b>mL/kg/h</b> (alvo prescrito <b>25 mL/kg/h</b>). O
+  líquido de reposição entra <b>antes</b> do filtro (pré → protege, mas custa clearance) ou <b>depois</b>
+  (pós → clearance cheio, mas <b>fração de filtração</b> alta → coágulo). E a dose <b>entregue é menor que a
+  prescrita</b> por interrupções (downtime). É homeostasia por máquina, escrita em mililitros.</div>
+  <nav class="hex">
+    <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
+    <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="dialisa.html">&larr; índice do antebraço DIALISA</a>
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- CONCEITO -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — prescrever a dose contínua, ilustrado</h3>
+      <p class="sub" style="margin-top:0"><b>A TRRC é diálise lenta e ininterrupta.</b> Onde a HDI (M25) mede
+      dose por Kt/V, a TRRC mede por <b>efluente normalizado ao peso</b>. As Fig. 1–8 voltam no Caso, na
+      Trilha e na Avaliação. A fórmula da dose: <code>dose (mL/kg/h) = Q_efluente (mL/h) ÷ peso (kg)</code>;
+      o fator de pré-diluição: <code>fator = Q_plasma ÷ (Q_plasma + Q_pré)</code>. Atribuição em
+      <code>CREDITS.md</code> (em curadoria). Esta é homeostasia por máquina — defender o meio interno
+      apesar da LRA, em fluxo contínuo.</p>
+
+      <h4>1. A dose É o efluente (mL/kg/h)</h4>
+      <p class="sub">Tudo o que sai do filtro como <b>efluente</b> (reposição + dialisato + UF líquida) é o que
+      "depura". A dose é esse volume por hora dividido pelo peso. Alvo prescrito <b>25 mL/kg/h</b> (RENAL/ATN):
+      mais não melhora desfecho, só dá mais perdas e custo.</p>
+      <div class="frow">
+        <div class="concept" id="draw-efluente"></div>
+        <figure class="fviva"><img src="assets/m28/efluente-ml-kg-h.svg" alt="A dose de TRRC é a taxa de efluente normalizada ao peso, em mL/kg/h" loading="lazy">
+          <figcaption><b>Fig. 1 · Efluente = dose.</b> ① o efluente é o líquido que deixa o filtro; ② divide-se
+          pelo peso → <b>mL/kg/h</b>; ③ alvo prescrito <b>25 mL/kg/h</b>. Subir além de 25 não melhora
+          mortalidade (estudos RENAL/ATN) — só aumenta perda de eletrólitos, fosfato e fármacos.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m28/dose-crrt-alvo.svg" alt="Dose-alvo de 25 mL/kg/h: prescrita maior que a entregue" loading="lazy">
+          <figcaption><b>Fig. 2 · O alvo de 25 mL/kg/h.</b> Prescreve-se ~25 para <b>entregar</b> ~20–25. O platô:
+          acima de 25 mL/kg/h a curva de benefício achata. Por isso o alvo é um piso de entrega, não um teto de
+          prescrição.</figcaption></figure>
+      </div>
+
+      <h4>2. Prescrita × entregue — a dose que o downtime come</h4>
+      <p class="sub">O circuito para: trocas de bolsa, coágulo, exames, transporte. Cada parada é tempo sem
+      depurar. <b>Dose entregue = prescrita × (1 − downtime)</b>. Prescrever 25 com 20% de parada entrega 20.</p>
+      <div class="frow">
+        <div class="concept" id="draw-downtime"></div>
+        <figure class="fviva"><img src="assets/m28/prescricao-efluente.svg" alt="A dose entregue é menor que a prescrita por causa do downtime" loading="lazy">
+          <figcaption><b>Fig. 3 · Prescrita &gt; entregue.</b> ① barra cheia = prescrita (25); ② recortes = horas
+          paradas (downtime); ③ barra restante = entregue (20). A <b>pérola</b>: prescreva acima do alvo
+          (≈25–30 mL/kg/h) para que a entrega real bata os 20–25.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m28/balanco-crrt.svg" alt="Balanço de volume na TRRC: entradas, saídas e UF líquida" loading="lazy">
+          <figcaption><b>Fig. 4 · O balanço de volume.</b> ① reposição/dialisato entram; ② efluente sai; ③ a
+          <b>UF líquida</b> = saída − entrada é a remoção real de volume do paciente. O efluente (dose) e a UF
+          líquida (volume) são prescrições <b>separadas</b>.</figcaption></figure>
+      </div>
+
+      <h4>3. Pré × pós-diluição — onde entra a reposição</h4>
+      <p class="sub">Na convecção (CVVH), a reposição entra <b>antes</b> do filtro (pré) → dilui o sangue →
+      <b>clearance efetivo menor</b> (fator = plasma/(plasma+pré)), mas protege o filtro; ou <b>depois</b>
+      (pós) → clearance cheio, mas a fração de filtração sobe.</p>
+      <div class="frow">
+        <div class="concept" id="draw-prepos"></div>
+        <figure class="fviva"><img src="assets/m28/pre-pos-diluicao.svg" alt="Reposição pré-filtro versus pós-filtro no circuito de CVVH" loading="lazy">
+          <figcaption><b>Fig. 5 · Pré × pós no circuito.</b> ① <b>PRÉ</b>: reposição antes do filtro → sangue
+          diluído → menos coágulo, mas o soluto a depurar também diluiu (clearance ↓ pelo fator
+          plasma/(plasma+pré)); ② <b>PÓS</b>: reposição depois → soluto concentrado entra no filtro → clearance
+          cheio, mas hemoconcentração ↑.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m28/fluido-reposicao.svg" alt="O fluido de reposição na hemofiltração contínua" loading="lazy">
+          <figcaption><b>Fig. 6 · O fluido de reposição.</b> Na convecção, todo o ultrafiltrado removido precisa
+          ser <b>reposto</b> com solução estéril tamponada (bicarbonato). Onde ele é injetado (pré ou pós) define
+          o trade-off clearance × coágulo.</figcaption></figure>
+      </div>
+
+      <h4>4. Fração de filtração — o limite do coágulo</h4>
+      <p class="sub"><b>FF = Q_uf ÷ Q_plasma</b>. Em pós-diluição, FF alta concentra o sangue no fim do filtro
+      → hemoconcentração → coágulo. Manter <b>FF &lt; ~20–25%</b>. A pré-diluição soma volume ao plasma →
+      derruba a FF.</p>
+      <div class="frow">
+        <div class="concept" id="draw-ff"></div>
+        <figure class="fviva"><img src="assets/m28/fracao-filtracao.svg" alt="Fração de filtração: ultrafiltrado sobre fluxo de plasma, limite de 25%" loading="lazy">
+          <figcaption><b>Fig. 7 · Fração de filtração.</b> ① Q_plasma = Qb·(1−Hct) — só o plasma filtra; ② Q_uf =
+          o que cruza a membrana; ③ FF = Q_uf/Q_plasma. Acima de <b>~25%</b> (zona vermelha) o sangue
+          hemoconcentra → coágulo do filtro. Pré-diluição ou ↑Qb baixam a FF.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m28/dialisato-crrt.svg" alt="Dialisato em contracorrente na CVVHD: clearance por difusão" loading="lazy">
+          <figcaption><b>Fig. 8 · Difusão na CVVHD.</b> O dialisato corre em contracorrente do outro lado da
+          membrana; o soluto se move por <b>gradiente de concentração</b> (não há fração de filtração de risco).
+          Por isso CVVHD não exige reposição — o clearance ≈ efluente sem a penalidade da pré-diluição.</figcaption></figure>
+      </div>
+
+      <h4>5. Clearance ≈ efluente, corrigido pela pré-diluição</h4>
+      <p class="sub">Na TRRC os solutos pequenos têm peneiramento ~1: o <b>clearance ≈ a taxa de efluente</b>.
+      A pós entrega clearance cheio; a pré fica abaixo, penalizada pelo fator. Compense subindo o efluente.</p>
+      <div class="frow">
+        <div class="concept" id="draw-clear"></div>
+        <figure class="fviva"><img src="assets/m28/dose-crrt-alvo.svg" alt="Curva de benefício da dose de TRRC com platô acima de 25 mL/kg/h" loading="lazy">
+          <figcaption><b>Fig. 9 · O platô da dose.</b> O clearance sobe com o efluente, mas o benefício clínico
+          satura acima de <b>25 mL/kg/h</b> entregues. Prescrever 40 não cura mais — só perde fosfato, magnésio
+          e antibiótico. A meta é entregar 20–25, não maximizar.</figcaption></figure>
+      </div>
+
+      <p class="sub" style="margin-top:14px"><b>Síntese:</b> a dose é o efluente (mL/kg/h); prescreva acima do
+      alvo porque o downtime cobra; em CVVH escolha pré (protege, custa clearance) × pós (clearance, arrisca
+      coágulo) pela fração de filtração. <b>O clearance ≈ a taxa de efluente</b>, corrigido pela pré-diluição.</p>
+    </div>
+  </section>
+
+  <!-- CASO -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — cinco atos, decida antes de revelar</h3>
+      <p class="sub">Homem de 70 kg, choque séptico com LRA KDIGO 3, anúrico. Indica-se TRRC (CVVH). Você
+      prescreve a dose.</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step"><b>Ato 1.</b> Você quer entregar 25 mL/kg/h. Para 70 kg, quanto de efluente prescrever
+        (volte à Fig. 1)?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>25 × 70 = 1750 mL/h</b> de efluente. A dose é o efluente normalizado ao
+          peso: <code>dose = Q_efluente ÷ peso</code>. Mas esse é o alvo de <i>entrega</i> — guarde a Fig. 3.</div></div>
+
+      <div class="step"><b>Ato 2.</b> No dia seguinte o circuito coagulou duas vezes e parou para exames: 20%
+        de downtime. Qual a dose <b>entregue</b>?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2"><b>20 mL/kg/h</b> (25 × 0,8). A dose <b>entregue &lt; prescrita</b> (Fig. 3):
+          a parada come a dose. <b>Conduta:</b> prescrever ≈25–30 mL/kg/h para que a entrega real bata os 20–25.</div></div>
+
+      <div class="step"><b>Ato 3.</b> A enfermagem montou tudo em <b>pós-diluição</b> com efluente alto e Qb 100
+        mL/min; o filtro coagula em 6 h. Por quê (Fig. 7)?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3"><b>Fração de filtração alta.</b> FF = Q_uf/Q_plasma; com pós-diluição e Qb
+          baixo o plasma que entra é pouco → FF &gt; 25% → hemoconcentração no fim do filtro → <b>coágulo</b>.
+          Corrija: subir o Qb e/ou mover parte para <b>pré</b>-diluição.</div></div>
+
+      <div class="step"><b>Ato 4.</b> Você muda para <b>pré-diluição</b>. O filtro dura, mas o controle observa
+        que a ureia cai mais devagar. O que aconteceu (Fig. 5)?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4">A pré-diluição <b>protege o filtro mas custa clearance</b>: o soluto diluído
+          antes do filtro reduz o clearance efetivo pelo fator <code>plasma/(plasma+pré)</code>. <b>Conduta:</b>
+          subir o efluente prescrito para <b>compensar</b> a penalidade e manter a entrega.</div></div>
+
+      <div class="step"><b>Ato 5.</b> <i>Vira a chave — a fronteira.</i> Chega um paciente de <b>110 kg</b>. A
+        equipe mantém os mesmos 1750 mL/h de efluente. Está bom?
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>Não — subdose.</b> 1750 ÷ 110 = <b>16 mL/kg/h</b>, abaixo do alvo. A dose
+          é por <b>quilo</b>: o paciente grande exige mais efluente (≈2750 mL/h para 25 mL/kg/h). O número
+          absoluto engana; normalize sempre ao peso.</div></div>
+
+      <div class="step"><b>Ato 6.</b> <i>Síntese.</i> A lição de uma linha?
+        <div><button class="act" data-rev="r6">Revelar</button></div>
+        <div class="reveal" id="r6">A dose de TRRC é o <b>efluente por quilo</b>; prescreva acima do alvo porque o
+          downtime cobra, e na CVVH equilibre pré (protege) × pós (clearance) pela <b>fração de filtração</b>.</div></div>
+    </div>
+  </section>
+
+  <!-- TRILHA -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — dez perguntas que constroem o conceito</h3>
+      <details><summary>1. O que é "dose" na TRRC?</summary><p>A taxa de <b>efluente</b> normalizada ao peso:
+        <code>dose = Q_efluente ÷ peso</code>, em <b>mL/kg/h</b>. Não é o Kt/V da HDI.</p></details>
+      <details><summary>2. Qual o alvo de dose?</summary><p><b>25 mL/kg/h</b> prescritos (entregar ~20–25).
+        Acima disso o benefício achata (RENAL/ATN) e as perdas sobem.</p></details>
+      <details><summary>3. Por que a dose entregue é menor que a prescrita?</summary><p>O circuito <b>para</b>
+        (trocas, coágulo, exames, transporte): <code>entregue = prescrita × (1 − downtime)</code>.</p></details>
+      <details><summary>4. Como compensar o downtime?</summary><p>Prescrevendo <b>acima</b> do alvo (≈25–30
+        mL/kg/h) para que a entrega real alcance os 20–25.</p></details>
+      <details><summary>5. O que é pré-diluição?</summary><p>A reposição entra <b>antes</b> do filtro → dilui o
+        sangue → menos coágulo, mas o soluto também dilui → <b>clearance efetivo menor</b>.</p></details>
+      <details><summary>6. E pós-diluição?</summary><p>A reposição entra <b>depois</b> do filtro → o soluto
+        chega concentrado → <b>clearance cheio</b>, mas a fração de filtração e a hemoconcentração sobem.</p></details>
+      <details><summary>7. Qual o fator de pré-diluição?</summary><p><code>fator = Q_plasma ÷ (Q_plasma +
+        Q_pré)</code>. O clearance efetivo = (efluente) × esse fator (&lt;1).</p></details>
+      <details><summary>8. O que é fração de filtração (FF)?</summary><p><b>FF = Q_uf ÷ Q_plasma</b>; Q_plasma =
+        Qb·(1−Hct). Manter <b>&lt; ~20–25%</b> (pós) para não coagular.</p></details>
+      <details><summary>9. Como baixar a FF?</summary><p>Aumentar o <b>Qb</b> (mais plasma), reduzir o
+        ultrafiltrado, ou mover reposição para <b>pré</b>-diluição (soma volume ao plasma efetivo).</p></details>
+      <details><summary>10. Em que sentido isto é homeostasia?</summary><p>A TRRC <b>substitui</b> o rim em
+        fluxo contínuo: depura escória e ajusta volume/eletrólitos. A dose (efluente) é o quanto dessa
+        homeostasia a máquina entrega por hora.</p></details>
+    </div>
+  </section>
+
+  <!-- INSTRUMENTO -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — clearance efetivo × taxa de efluente</h3>
+      <p class="sub">Os controles do <b>Lab</b> alimentam estas curvas. A linha cheia (verde) é a
+      <b>pós-diluição</b> (clearance ≈ efluente cheio); a tracejada (azul) é a <b>pré-diluição</b>, penalizada
+      pelo fator plasma/(plasma+pré). O marcador laranja é o ponto de operação. Veja a pré ficar sempre abaixo
+      da pós — o custo de clearance da proteção do filtro.</p>
+      <canvas id="clear-canvas" width="900" height="360" aria-label="Clearance efetivo por taxa de efluente"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- LAB -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — prescreva a dose; veja entregue, clearance e o coágulo</h3>
+      <div class="grid">
+        <div>
+          <label>Peso (kg): <span class="val" id="lbl-peso">70</span></label>
+          <input type="range" id="in-peso" min="30" max="150" step="1" value="70">
+          <label>Efluente Q_efluente (mL/h): <span class="val" id="lbl-qeff">1750</span></label>
+          <input type="range" id="in-qeff" min="0" max="6000" step="50" value="1750">
+          <label>Reposição PRÉ-filtro Q_pré (mL/h): <span class="val" id="lbl-qpre">1000</span></label>
+          <input type="range" id="in-qpre" min="0" max="4000" step="50" value="1000">
+        </div>
+        <div>
+          <label>Reposição PÓS-filtro Q_pós (mL/h): <span class="val" id="lbl-qpos">0</span></label>
+          <input type="range" id="in-qpos" min="0" max="4000" step="50" value="0">
+          <label>Fluxo de sangue Qb (mL/min): <span class="val" id="lbl-qb">150</span></label>
+          <input type="range" id="in-qb" min="50" max="350" step="10" value="150">
+          <label>Downtime (% do tempo parado): <span class="val" id="lbl-down">20</span></label>
+          <input type="range" id="in-down" min="0" max="60" step="1" value="20">
+        </div>
+      </div>
+
+      <div class="presets">
+        <button class="act" data-preset="alvo">Alvo 25 mL/kg/h</button>
+        <button class="act" data-preset="pos">Pós-diluição (FF alta)</button>
+        <button class="act" data-preset="pre">Pré-diluição (clearance ↓)</button>
+        <button class="act" data-preset="grande">Paciente grande</button>
+        <button class="act" data-preset="down">Downtime 20%</button>
+      </div>
+
+      <table>
+        <tr><th>Variável</th><th>Atual</th><th>Comentário</th></tr>
+        <tr><td>Dose PRESCRITA (mL/kg/h)</td><td class="num" id="out-presc">—</td><td class="num">efluente ÷ peso</td></tr>
+        <tr><td>Dose ENTREGUE (mL/kg/h)</td><td class="num" id="out-entr">—</td><td class="num">após o downtime</td></tr>
+        <tr><td>Fluxo de plasma (mL/min)</td><td class="num" id="out-plasma">—</td><td class="num">Qb·(1−Hct)</td></tr>
+        <tr><td>Fração de filtração FF (%)</td><td class="num" id="out-ff">—</td><td class="num">&lt; 25% = seguro</td></tr>
+        <tr><td>Fator de pré-diluição</td><td class="num" id="out-fpre">—</td><td class="num">plasma/(plasma+pré)</td></tr>
+        <tr><td>Clearance efetivo (mL/min)</td><td class="num" id="out-clear">—</td><td class="num">≈ efluente × fator</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÃO -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (12)</button>
+        <button data-bank="textual">Textual (11)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica</b>. Este módulo M28
+    trata da prescrição de dose e fluidos na TRRC; as doses (efluente em mL/kg/h, alvo de 25 mL/kg/h, fluxos
+    em mL/h) são apresentadas como <b>mecanismo</b> computado pelo motor, com unidade explícita, não como
+    protocolo de beira-leito. O modelo de clearance, fração de filtração e downtime é uma simplificação
+    didática calibrada. Não substitui julgamento clínico; a decisão e a responsabilidade finais são sempre do
+    profissional prescritor.
+  </div>
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+</div>
+
+<script>
+/* ENGINE INLINE — espelho fiel de build/m28/model28.js */
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
+function merge(def,inp){ var o={},k; for(k in def){ o[k]=def[k]; } if(inp){ for(k in def){ if(inp[k]!==undefined) o[k]=inp[k]; } } return o; }
+var DOSE_ALVO=25, FF_LIMITE=0.25, HCT_STD=0.30;
+var DEFAULTS={ peso:70, qEfluente:1750, qPre:1000, qPos:0, qb:150, hct:HCT_STD, downtime:20 };
+function fluxoPlasma(qb,hct){ qb=clampv(qb,1,600); hct=clampv(hct,0,0.7); return qb*(1-hct); }
+function fatorPreDiluicao(qbP,qPreMin){ qbP=clampv(qbP,1e-6,1e6); qPreMin=clampv(qPreMin,0,1e6); return qbP/(qbP+qPreMin); }
+function trrc(input){ var inp=merge(DEFAULTS,input);
+  var peso=clampv(inp.peso,1,300), qEfluente=clampv(inp.qEfluente,0,12000), qPre=clampv(inp.qPre,0,12000),
+    qPos=clampv(inp.qPos,0,12000), qb=clampv(inp.qb,10,600), hct=clampv(inp.hct,0,0.7), downtime=clampv(inp.downtime,0,95);
+  var dosePrescrita=qEfluente/peso, fracAtiva=1-downtime/100, doseEntregue=dosePrescrita*fracAtiva;
+  var qPlasma=fluxoPlasma(qb,hct), qPlasmaH=qPlasma*60, qUf=qEfluente, qPlasmaEfetivo=qPlasmaH+qPre;
+  var ff=clampv(qUf/Math.max(qPlasmaEfetivo,1e-6),0,2);
+  var qPreMlMin=qPre/60, fatorPre=fatorPreDiluicao(qPlasma,qPreMlMin);
+  var clearanceMlMin=(qEfluente/60)*fatorPre, clearanceEfluenteMlMin=qEfluente/60;
+  var coagulo=ff>FF_LIMITE, subdose=doseEntregue<20, entregueMenorPrescrita=doseEntregue<dosePrescrita-1e-9, prePenaliza=qPre>0&&fatorPre<0.999;
+  return { peso:peso,qEfluente:qEfluente,qPre:qPre,qPos:qPos,qb:qb,hct:hct,downtime:downtime,
+    dosePrescrita:dosePrescrita,doseEntregue:doseEntregue,fracAtiva:fracAtiva,
+    qPlasma:qPlasma,qPlasmaH:qPlasmaH,qUf:qUf,qPlasmaEfetivo:qPlasmaEfetivo,
+    ff:ff,fatorPre:fatorPre,clearanceMlMin:clearanceMlMin,clearanceEfluenteMlMin:clearanceEfluenteMlMin,
+    coagulo:coagulo,subdose:subdose,entregueMenorPrescrita:entregueMenorPrescrita,prePenaliza:prePenaliza }; }
+function efluenteParaDose(doseAlvo,peso){ doseAlvo=clampv(doseAlvo,0,100); peso=clampv(peso,1,300); return doseAlvo*peso; }
+function clearanceCurveLayout(state,W,H){ state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=54,padR=16,padT=18,padB=38,baseY=H-padB;
+  var qb=clampv(state.qb!==undefined?state.qb:150,10,600), hct=clampv(state.hct!==undefined?state.hct:HCT_STD,0,0.7);
+  var qPre=clampv(state.qPre!==undefined?state.qPre:1000,0,12000), qPlasma=fluxoPlasma(qb,hct);
+  var effMin=0,effMax=4000,N=60, yMax=70, pxX=(W-padL-padR)/(effMax-effMin), pxY=(baseY-padT)/yMax;
+  var fatorPre=fatorPreDiluicao(qPlasma,qPre/60), ptsPre=[],ptsPos=[],i,eff,cPre,cPos;
+  for(i=0;i<=N;i++){ eff=effMin+(effMax-effMin)*i/N; cPos=clampv(eff/60,0,yMax); cPre=clampv((eff/60)*fatorPre,0,yMax);
+    ptsPos.push({eff:eff,c:cPos,x:padL+(eff-effMin)*pxX,y:baseY-cPos*pxY});
+    ptsPre.push({eff:eff,c:cPre,x:padL+(eff-effMin)*pxX,y:baseY-cPre*pxY}); }
+  var effc=clampv(state.qEfluente!==undefined?state.qEfluente:1750,effMin,effMax), cc=clampv((effc/60)*fatorPre,0,yMax);
+  return { W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,effMin:effMin,effMax:effMax,yMax:yMax,pxX:pxX,pxY:pxY,fatorPre:fatorPre,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY}, ptsPre:ptsPre, ptsPos:ptsPos,
+    current:{x:padL+(effc-effMin)*pxX,y:baseY-cc*pxY,eff:effc,c:cc} }; }
+window.trrc=trrc; window.efluenteParaDose=efluenteParaDose; window.fluxoPlasma=fluxoPlasma; window.fatorPreDiluicao=fatorPreDiluicao; window.clearanceCurveLayout=clearanceCurveLayout;
+window.MODEL={trrc:trrc,efluenteParaDose:efluenteParaDose,fluxoPlasma:fluxoPlasma,fatorPreDiluicao:fatorPreDiluicao,clearanceCurveLayout:clearanceCurveLayout,clampv:clampv,DOSE_ALVO:DOSE_ALVO,FF_LIMITE:FF_LIMITE,HCT_STD:HCT_STD,DEFAULTS:DEFAULTS};
+
+/* UI */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=(d===undefined?1:d); return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on'); b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on'); $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh(); });
+document.addEventListener('click',function(e){ var b=e.target.closest('button.act[data-rev]'); if(!b) return; var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on'); });
+
+function readInputs(){ return { peso:+$('in-peso').value, qEfluente:+$('in-qeff').value, qPre:+$('in-qpre').value, qPos:+$('in-qpos').value, qb:+$('in-qb').value, downtime:+$('in-down').value }; }
+function refresh(){ var inp=readInputs();
+  $('lbl-peso').textContent=inp.peso; $('lbl-qeff').textContent=inp.qEfluente; $('lbl-qpre').textContent=inp.qPre;
+  $('lbl-qpos').textContent=inp.qPos; $('lbl-qb').textContent=inp.qb; $('lbl-down').textContent=inp.downtime;
+  var r=trrc(inp);
+  $('out-presc').textContent=fmt(r.dosePrescrita,1); $('out-entr').textContent=fmt(r.doseEntregue,1);
+  $('out-plasma').textContent=fmt(r.qPlasma,0); $('out-ff').textContent=fmt(r.ff*100,1);
+  $('out-fpre').textContent=fmt(r.fatorPre,3); $('out-clear').textContent=fmt(r.clearanceMlMin,1);
+  verdict(r); drawClear(inp); pearl(r,inp); }
+function verdict(r){ var v=$('veredito'), cls='b-good', msg;
+  if(r.coagulo){ cls='b-bad'; msg='COÁGULO IMINENTE: fração de filtração '+fmt(r.ff*100,0)+'% (>25%). Hemoconcentração no filtro. Suba o Qb ('+fmt(r.qb,0)+' mL/min) ou mova reposição para pré-diluição.'; }
+  else if(r.doseEntregue<20){ cls='b-warn'; msg='SUBDOSE: entregue '+fmt(r.doseEntregue,1)+' mL/kg/h (<20). Prescrita '+fmt(r.dosePrescrita,1)+'. Suba o efluente para compensar o downtime de '+fmt(r.downtime,0)+'%.'; }
+  else if(r.prePenaliza){ cls='b-warn'; msg='PRÉ-DILUIÇÃO ATIVA: protege o filtro (FF '+fmt(r.ff*100,0)+'%) mas custa clearance (fator '+fmt(r.fatorPre,2)+'). Clearance efetivo '+fmt(r.clearanceMlMin,1)+' mL/min; suba o efluente se quiser mais.'; }
+  else { cls='b-good'; msg='Prescrição equilibrada: '+fmt(r.dosePrescrita,1)+' prescrita → '+fmt(r.doseEntregue,1)+' mL/kg/h entregue; FF '+fmt(r.ff*100,0)+'% (seguro); clearance '+fmt(r.clearanceMlMin,1)+' mL/min.'; }
+  v.className='banner '+cls; v.textContent=msg; }
+function pearl(r,inp){ var p=$('lab-pearl'), ip=$('instr-pearl'), t;
+  if(r.coagulo) t='PÉROLA (coágulo): a pós-diluição com FF '+fmt(r.ff*100,0)+'% concentra o sangue no fim do filtro. A pré-diluição soma volume ao plasma e derruba a FF.';
+  else if(r.entregueMenorPrescrita) t='PÉROLA (prescrita > entregue): você prescreveu '+fmt(r.dosePrescrita,1)+' mas o downtime de '+fmt(r.downtime,0)+'% entrega só '+fmt(r.doseEntregue,1)+' mL/kg/h. Prescreva acima do alvo.';
+  else if(r.prePenaliza) t='PÉROLA (pré custa clearance): a pré-diluição reduz o clearance pelo fator '+fmt(r.fatorPre,2)+'. Para o mesmo soluto removido, prescreva mais efluente.';
+  else t='No alvo: dose = efluente ÷ peso = '+fmt(r.dosePrescrita,1)+' mL/kg/h; clearance ≈ '+fmt(r.clearanceMlMin,1)+' mL/min (≈ efluente, corrigido pela pré).';
+  p.textContent=t; ip.textContent=t; }
+function drawClear(state){ var c=$('clear-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
+  var L=clearanceCurveLayout(state,c.width,c.height); ctx.clearRect(0,0,L.W,L.H);
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('clearance (mL/min)',8,L.padT+2); ctx.fillText('efluente (mL/h) →',L.W-160,L.baseY+24);
+  // pós (verde, cheio)
+  ctx.strokeStyle='#52c08a'; ctx.lineWidth=2; ctx.beginPath();
+  for(var i=0;i<L.ptsPos.length;i++){ var p=L.ptsPos[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); } ctx.stroke();
+  // pré (azul, tracejado, penalizado)
+  ctx.strokeStyle='#39c0c8'; ctx.lineWidth=2; ctx.setLineDash([5,4]); ctx.beginPath();
+  for(var k=0;k<L.ptsPre.length;k++){ var q=L.ptsPre[k]; if(k===0) ctx.moveTo(q.x,q.y); else ctx.lineTo(q.x,q.y); } ctx.stroke(); ctx.setLineDash([]);
+  var cu=L.current; ctx.strokeStyle='#e8a13a'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(cu.x,L.padT); ctx.lineTo(cu.x,L.baseY); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#e8a13a'; ctx.fillRect(cu.x-3,cu.y-3,6,6);
+  ctx.fillStyle='#52c08a'; ctx.fillText('pós',L.W-60,L.padT+24); ctx.fillStyle='#39c0c8'; ctx.fillText('pré',L.W-60,L.padT+42);
+  ctx.fillStyle='#e7eef4'; ctx.fillText(fmt(cu.c,0)+' mL/min',cu.x+6,Math.max(cu.y-6,L.padT+10)); }
+['in-peso','in-qeff','in-qpre','in-qpos','in-qb','in-down'].forEach(function(id){ $(id).addEventListener('input',refresh); });
+
+var PRESETS={
+  alvo:{peso:70,qeff:1750,qpre:1000,qpos:0,qb:150,down:0},
+  pos:{peso:70,qeff:4000,qpre:0,qpos:2000,qb:100,down:0},
+  pre:{peso:70,qeff:2000,qpre:2000,qpos:0,qb:150,down:0},
+  grande:{peso:110,qeff:1750,qpre:1000,qpos:0,qb:150,down:0},
+  down:{peso:70,qeff:1750,qpre:1000,qpos:0,qb:150,down:20}
+};
+function applyPreset(p){ var d=PRESETS[p]; if(!d) return;
+  $('in-peso').value=d.peso; $('in-qeff').value=d.qeff; $('in-qpre').value=d.qpre; $('in-qpos').value=d.qpos; $('in-qb').value=d.qb; $('in-down').value=d.down; refresh(); }
+document.querySelector('.presets').addEventListener('click',function(e){ var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset')); });
+
+/* ILUSTRAÇÕES computadas + helper raster */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+function clearMini(state,titulo){ var W=300,H=170,L=clearanceCurveLayout(state,W,H),s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  var dpos=''; for(var i=0;i<L.ptsPos.length;i++){ dpos+=(i===0?'M':'L')+f1(L.ptsPos[i].x)+' '+f1(L.ptsPos[i].y)+' '; }
+  s+='<path d="'+dpos+'" fill="none" stroke="#52c08a" stroke-width="2"/>';
+  var dpre=''; for(var k=0;k<L.ptsPre.length;k++){ dpre+=(k===0?'M':'L')+f1(L.ptsPre[k].x)+' '+f1(L.ptsPre[k].y)+' '; }
+  s+='<path d="'+dpre+'" fill="none" stroke="#39c0c8" stroke-width="2" stroke-dasharray="5 4"/>';
+  s+='<rect x="'+f1(L.current.x-3)+'" y="'+f1(L.current.y-3)+'" width="6" height="6" fill="#e8a13a"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'clearance × efluente')+'</text>';
+  s+='<text x="'+(W-8)+'" y="'+(L.baseY+14)+'" fill="#9fb1c0" font-size="9" text-anchor="end">efluente →</text>';
+  return svgEl(W,H,s); }
+function doseBars(r,titulo){ var W=300,H=170,base=132,s='';
+  function bar(x,val,color,lab){ var h=clampv(val/40,0,1)*100; return '<rect x="'+x+'" y="'+f1(base-h)+'" width="56" height="'+f1(h)+'" fill="'+color+'" fill-opacity="0.65" stroke="'+color+'"/>'+
+    '<text x="'+(x+28)+'" y="'+(base+13)+'" fill="#9fb1c0" font-size="9" text-anchor="middle">'+lab+'</text>'+
+    '<text x="'+(x+28)+'" y="'+f1(base-h-4)+'" fill="#e7eef4" font-size="10" text-anchor="middle">'+fmt(val,1)+'</text>'; }
+  s+=bar(55,r.dosePrescrita,'#39c0c8','prescrita'); s+=bar(165,r.doseEntregue,'#e8a13a','entregue');
+  s+='<line x1="40" y1="'+f1(base-25/40*100)+'" x2="260" y2="'+f1(base-25/40*100)+'" stroke="#52c08a" stroke-dasharray="4 3"/>';
+  s+='<text x="252" y="'+f1(base-25/40*100-3)+'" fill="#52c08a" font-size="9" text-anchor="end">alvo 25</text>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'dose mL/kg/h')+'</text>';
+  return svgEl(W,H,s); }
+function ffBar(r,titulo){ var W=300,H=170,s='', cx=150, top=40, h=clampv(r.ff/0.5,0,1)*90;
+  s+='<rect x="100" y="40" width="100" height="90" fill="#1b242d" stroke="#3a4a58"/>';
+  var limY=130-0.25/0.5*90; s+='<rect x="100" y="40" width="100" height="'+f1(130-limY)+'" fill="#e0556b" fill-opacity="0.10"/>';
+  s+='<rect x="100" y="'+f1(130-h)+'" width="100" height="'+f1(h)+'" fill="'+(r.ff>0.25?'#e0556b':'#52c08a')+'" fill-opacity="0.6"/>';
+  s+='<line x1="90" y1="'+f1(limY)+'" x2="210" y2="'+f1(limY)+'" stroke="#e0556b" stroke-dasharray="4 3"/>';
+  s+='<text x="214" y="'+f1(limY+3)+'" fill="#e0556b" font-size="9">25%</text>';
+  s+='<text x="'+cx+'" y="148" fill="#e7eef4" font-size="11" text-anchor="middle">FF '+fmt(r.ff*100,0)+'%</text>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'fração de filtração')+'</text>';
+  return svgEl(W,H,s); }
+function circuitMini(titulo){ var W=300,H=170,s='';
+  s+='<rect x="120" y="40" width="60" height="90" rx="6" fill="#1b242d" stroke="#39c0c8"/>';
+  s+='<text x="150" y="90" fill="#9fb1c0" font-size="9" text-anchor="middle">filtro</text>';
+  s+='<line x1="20" y1="60" x2="120" y2="60" stroke="#e0556b" stroke-width="2"/><text x="22" y="54" fill="#e0556b" font-size="9">sangue Qb</text>';
+  s+='<line x1="180" y1="60" x2="280" y2="60" stroke="#e0556b" stroke-width="2"/>';
+  s+='<line x1="70" y1="60" x2="70" y2="35" stroke="#39c0c8" stroke-width="2"/><text x="40" y="30" fill="#39c0c8" font-size="9">PRÉ</text>';
+  s+='<line x1="230" y1="60" x2="230" y2="35" stroke="#52c08a" stroke-width="2"/><text x="232" y="30" fill="#52c08a" font-size="9">PÓS</text>';
+  s+='<line x1="150" y1="130" x2="150" y2="155" stroke="#e8a13a" stroke-width="2"/><text x="156" y="152" fill="#e8a13a" font-size="9">efluente</text>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'pré × pós no circuito')+'</text>';
+  return svgEl(W,H,s); }
+function imgFig(slug,alt){ return '<img src="assets/m28/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+/* TUTOR */
+function R0(extra){ return trrc(extra||{}); }
+var TUTOR_ILUSTRADO=[
+  {q:'A dose de TRRC é definida como…',o:['Kt/V por sessão','efluente ÷ peso (mL/kg/h)','o fluxo de sangue'],c:1,e:'A dose contínua é a taxa de efluente normalizada ao peso, em mL/kg/h.',fig:function(){return doseBars(R0({qEfluente:1750,downtime:0}),'dose = 1750/70');}},
+  {q:'Para entregar 25 mL/kg/h num paciente de 70 kg, o efluente é…',o:['700 mL/h','1750 mL/h','7000 mL/h'],c:1,e:'25 × 70 = 1750 mL/h de efluente.',fig:function(){return doseBars(R0({qEfluente:1750,downtime:0}),'25 mL/kg/h · 70 kg');}},
+  {q:'Com 20% de downtime, prescrever 25 entrega…',o:['25','20','30'],c:1,e:'entregue = 25 × (1 − 0,20) = 20 mL/kg/h. A dose entregue < prescrita.',fig:function(){return doseBars(R0({qEfluente:1750,downtime:20}),'downtime 20%');}},
+  {q:'No paciente de 110 kg com 1750 mL/h de efluente, a dose…',o:['continua 25','cai para ~16 (subdose)','sobe'],c:1,e:'1750 ÷ 110 ≈ 16 mL/kg/h — subdose. A dose é por quilo.',fig:function(){return doseBars(R0({peso:110,qEfluente:1750,downtime:0}),'110 kg, 1750 mL/h');}},
+  {q:'Pós-diluição com efluente alto e Qb baixo faz a fração de filtração…',o:['cair','subir (>25% → coágulo)','não mudar'],c:1,e:'Pouco plasma + muito ultrafiltrado → FF alta → hemoconcentração → coágulo.',fig:function(){return ffBar(R0({qEfluente:4000,qPre:0,qb:100}),'pós: FF alta');}},
+  {q:'Mover a reposição para pré-diluição faz a fração de filtração…',o:['subir','cair (protege o filtro)','dobrar'],c:1,e:'A pré-diluição soma volume ao plasma efetivo → FF menor.',fig:function(){return ffBar(R0({qEfluente:2000,qPre:2000,qb:150}),'pré: FF baixa');}},
+  {q:'O custo da pré-diluição é…',o:['mais coágulo','menos clearance efetivo','nada'],c:1,e:'Diluir o soluto antes do filtro reduz o clearance pelo fator plasma/(plasma+pré).',fig:function(){return clearMini({qEfluente:2000,qPre:2000,qb:150},'pré penaliza o clearance');}},
+  {q:'No instrumento, a curva PÓS (verde, cheia) fica…',o:['abaixo da pré','acima da pré (clearance cheio)','igual'],c:1,e:'A pós entrega clearance ≈ efluente; a pré (azul, tracejada) é penalizada.',fig:function(){return clearMini({qEfluente:2000,qPre:1000,qb:150},'pós > pré');}},
+  {q:'Na Fig. 7, aumentar o Qb (mesmo efluente) faz a FF…',o:['subir','cair (mais plasma)','não mudar'],c:1,e:'Q_plasma = Qb·(1−Hct); mais plasma → FF = Q_uf/Q_plasma menor.',fig:function(){return imgFig('fracao-filtracao.svg','fração de filtração');}},
+  {q:'Na Fig. 3, a parte recortada da barra representa…',o:['o efluente extra','o downtime (dose perdida)','a UF líquida'],c:1,e:'O downtime: horas paradas que reduzem a dose entregue.',fig:function(){return imgFig('prescricao-efluente.svg','prescrita versus entregue');}},
+  {q:'Na Fig. 5, a vantagem da pré-diluição é…',o:['mais clearance','menos coágulo do filtro','menos reposição'],c:1,e:'O sangue diluído antes do filtro hemoconcentra menos → filtro dura mais.',fig:function(){return imgFig('pre-pos-diluicao.svg','pré versus pós');}},
+  {q:'Na Fig. 8 (CVVHD), o clearance ocorre por…',o:['convecção','difusão (gradiente no dialisato)','adsorção'],c:1,e:'O dialisato em contracorrente depura por difusão; não há FF de risco.',fig:function(){return imgFig('dialisato-crrt.svg','difusão na CVVHD');}}
+];
+var TUTOR_TEXTUAL=[
+  {q:'A fórmula da dose contínua é…',o:['peso ÷ efluente','Q_efluente ÷ peso','Qb × tempo'],c:1,e:'dose (mL/kg/h) = Q_efluente (mL/h) ÷ peso (kg).'},
+  {q:'O alvo de dose prescrita na TRRC é…',o:['10 mL/kg/h','25 mL/kg/h','60 mL/kg/h'],c:1,e:'≈25 mL/kg/h prescritos para entregar 20–25; acima disso o benefício achata.'},
+  {q:'A dose entregue é menor que a prescrita por…',o:['erro de cálculo','downtime (paradas do circuito)','excesso de peso'],c:1,e:'entregue = prescrita × (1 − downtime); trocas/coágulo/exames param o circuito.'},
+  {q:'Para compensar 20% de downtime, deve-se…',o:['baixar o efluente','prescrever acima do alvo','reduzir o Qb'],c:1,e:'Prescrever ≈25–30 mL/kg/h para que a entrega real bata os 20–25.'},
+  {q:'A pré-diluição entra…',o:['depois do filtro','antes do filtro','no acesso venoso'],c:1,e:'Antes do filtro → dilui o sangue → protege, mas custa clearance.'},
+  {q:'O fator de pré-diluição é…',o:['plasma/(plasma+pré)','pré/plasma','Qb/efluente'],c:0,e:'fator = Q_plasma/(Q_plasma + Q_pré); o clearance efetivo = efluente × esse fator.'},
+  {q:'A fração de filtração é…',o:['Q_plasma/Q_uf','Q_uf/Q_plasma','efluente/peso'],c:1,e:'FF = Q_uf/Q_plasma; manter <~20–25% (pós) para não coagular.'},
+  {q:'O fluxo de plasma vale…',o:['Qb','Qb·(1−Hct)','Qb·Hct'],c:1,e:'Só o plasma filtra; as hemácias não. Q_plasma = Qb·(1−hematócrito).'},
+  {q:'A pós-diluição arrisca…',o:['subdose','hemoconcentração e coágulo','perda de filtro por baixa FF'],c:1,e:'O soluto concentrado e a FF alta hemoconcentram o sangue → coágulo.'},
+  {q:'Na CVVHD o clearance se dá por…',o:['convecção','difusão','ultrafiltração'],c:1,e:'Dialisato em contracorrente → difusão por gradiente; sem reposição.'},
+  {q:'A dose de TRRC e a UF líquida (remoção de volume) são…',o:['a mesma coisa','prescrições separadas','sempre iguais'],c:1,e:'A dose é o efluente (depuração); a UF líquida é o balanço de volume removido.'}
+];
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL; window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+var BANKS={ilustrada:TUTOR_ILUSTRADO,textual:TUTOR_TEXTUAL}, curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+function renderTutor(){ var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():''; $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false; $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){ if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button'); btns[item.c].classList.add('ok'); if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block'; fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e; $('tutor-score').textContent=tScore; $('tutor-total').textContent=tTotal; });
+    box.appendChild(b); }); }
+$('banktabs').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor(); });
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+$('draw-efluente').innerHTML = doseBars(trrc({qEfluente:1750,downtime:0}),'dose = efluente ÷ peso');
+$('draw-downtime').innerHTML = doseBars(trrc({qEfluente:1750,downtime:20}),'prescrita × entregue');
+$('draw-prepos').innerHTML = circuitMini('pré × pós no circuito');
+$('draw-ff').innerHTML = ffBar(trrc({qEfluente:4000,qPre:0,qb:100}),'fração de filtração');
+$('draw-clear').innerHTML = clearMini({qEfluente:1750,qPre:1000,qb:150},'clearance: pós × pré');
+$('fig-caso').innerHTML = clearMini({qEfluente:1750,qPre:1000,qb:150},'clearance pós × pré') + doseBars(trrc({qEfluente:1750,downtime:20}),'25 prescrita → 20 entregue');
+
+refresh(); renderTutor();
+</script>
+</body>
+</html>

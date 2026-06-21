@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M20 — O circuito extracorpóreo: acesso, bomba, dialisador, fluxos, TMP</title>
+<style>
+  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--warn:#e8a13a;--bad:#e0556b;--good:#52c08a;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none} section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .presets{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px} .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)} .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)} .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)} .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M20</div>
+  <h1>O circuito extracorpóreo — acesso, bomba, dialisador, fluxos (Qb, Qd) e pressões (TMP)</h1>
+  <div class="sub">A diálise é um <b>circuito de pressões</b>, não uma caixa-preta. O sangue sai por um
+  <b>acesso</b>, a <b>bomba</b> o empurra (Qb), atravessa o <b>dialisador</b> contra o dialisato (Qd, em
+  <b>contracorrente</b>) e volta. O <b>acesso limita tudo</b>: Qb_efetivo = min(pedido, o que o acesso entrega).
+  O clearance é <b>blood-flow-limited</b> (satura com Qb). E a remoção de volume é pura pressão:
+  <b>UF = Kuf · TMP</b>. É homeostasia por máquina — substituir, por física, o que o rim regulava.</div>
+  <nav class="hex">
+    <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
+    <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="filtra.html">&larr; índice do braço FILTRA</a>
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- CONCEITO -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — o circuito extracorpóreo, ilustrado</h3>
+      <p class="sub" style="margin-top:0"><b>A máquina não substitui o rim — substitui, por física, algumas
+      funções.</b> Difusão e convecção tiram soluto; a ultrafiltração tira volume. As Fig. 1–8 voltam no Caso, na
+      Trilha e na Avaliação (algumas reaparecem nos exercícios). Atribuição em <code>CREDITS.md</code> (em
+      curadoria).</p>
+
+      <h4>1. O circuito inteiro — acesso → bomba → dialisador → retorno</h4>
+      <p class="sub">O sangue sai do paciente pelo ramo <b>arterial</b> (pré-bomba, pressão <b>negativa</b>), a
+      bomba o empurra com fluxo <b>Qb</b>, ele cruza o dialisador contra o dialisato (<b>Qd</b>, em
+      contracorrente) e volta pelo ramo <b>venoso</b> (pressão <b>positiva</b>). Cada manômetro relata um segmento.</p>
+      <div class="frow">
+        <div class="concept" id="draw-circuito"></div>
+        <figure class="fviva"><img src="assets/m20/circuito-hemodialise.svg" alt="Esquema do circuito de hemodiálise: paciente, linha arterial, bomba, dialisador, linha venosa" loading="lazy">
+          <figcaption><b>Fig. 1 · O circuito completo.</b> Paciente → linha arterial (◎ = ponto de pressão
+          pré-bomba, negativa) → bomba → dialisador → linha venosa (pressão de retorno, positiva) → paciente. Ler a
+          pressão de cada ponto é diagnosticar o segmento.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m20/fluxos-qb-qd.svg" alt="Fluxos de sangue Qb e de dialisato Qd em contracorrente" loading="lazy">
+          <figcaption><b>Fig. 2 · Qb × Qd em contracorrente.</b> Qb (sangue) 200–450 mL/min; Qd (dialisato)
+          500–800 mL/min, correndo <b>ao contrário</b> do sangue para manter o gradiente máximo ao longo de toda a
+          membrana.</figcaption></figure>
+      </div>
+
+      <h4>2. O acesso — o gargalo que limita tudo</h4>
+      <p class="sub">O acesso decide quanto sangue a bomba consegue puxar. <b>Fístula AV</b> (madura) entrega
+      fluxo alto; <b>prótese</b> AV, intermediário; <b>cateter</b> (temporário/permanente) costuma limitar. Se a
+      bomba pede mais do que o acesso dá, a <b>P_art</b> mergulha (sucção) — e o Qb_efetivo não sobe.</p>
+      <div class="frow">
+        <div class="concept" id="draw-acesso"></div>
+        <figure class="fviva"><img src="assets/m20/acessos-vasculares.svg" alt="Tipos de acesso vascular: cateter, fístula arteriovenosa, prótese" loading="lazy">
+          <figcaption><b>Fig. 3 · Os três acessos.</b> Cateter (rápido, mas limita o Qb e infecta) · fístula AV (o
+          padrão-ouro, precisa amadurecer ~6 semanas) · prótese AV (sintética, intermediária). O acesso fixa o teto
+          de Qb_efetivo.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m20/cateter-duplo-lumen.svg" alt="Cateter de duplo lúmen: lúmen arterial puxa, lúmen venoso devolve" loading="lazy">
+          <figcaption><b>Fig. 4 · Cateter de duplo lúmen.</b> Um lúmen <b>puxa</b> (arterial), o outro
+          <b>devolve</b> (venoso). Mal posicionado ou contra a parede → sucção → P_art muito negativa, alarme, e o
+          Qb_efetivo trava.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m20/fistula-arteriovenosa.svg" alt="Fístula arteriovenosa madura, com a veia arterializada" loading="lazy">
+          <figcaption><b>Fig. 5 · A fístula madura.</b> A anastomose artéria-veia arterializa a veia (fluxo e
+          parede grossa) → entrega Qb alto com durabilidade. Por isso é o acesso preferido — mas leva semanas para
+          amadurecer.</figcaption></figure>
+      </div>
+
+      <h4>3. A bomba e o dialisador — onde o clearance acontece</h4>
+      <p class="sub">A <b>bomba de roletes</b> ocluí o tubo e empurra um volume fixo por rotação (Qb 200–450
+      mL/min). No <b>dialisador</b>, milhares de capilares oferecem área de troca; a <b>KoA</b> é a "potência" da
+      membrana. O clearance é <b>blood-flow-limited</b>: K ≈ função crescente e <b>saturante</b> de Qb (equação de
+      Michaels) — limitada pelo fluxo de sangue.</p>
+      <div class="frow">
+        <div class="concept" id="draw-clearance"></div>
+        <figure class="fviva"><img src="assets/m20/bomba-roletes.svg" alt="Bomba de roletes que ocluí o tubo e empurra o sangue" loading="lazy">
+          <figcaption><b>Fig. 6 · A bomba de roletes.</b> Os roletes comprimem o segmento de tubo e empurram um
+          volume fixo por rotação → Qb (mL/min) ∝ rotação. Mais rotação só ajuda se o acesso entregar — senão,
+          suga.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m20/dialisador-capilar.svg" alt="Dialisador de fibras capilares: sangue dentro, dialisato fora, em contracorrente" loading="lazy">
+          <figcaption><b>Fig. 7 · O dialisador capilar.</b> Sangue por dentro das fibras, dialisato por fora (em
+          contracorrente). Área de superfície × permeabilidade = <b>KoA</b>. A fórmula do clearance:
+          K = Qb·(e^z−1)/(e^z−Qb/Qd), com z = KoA·(1−Qb/Qd)/Qb — satura com Qb.</figcaption></figure>
+      </div>
+
+      <h4>4. As pressões e a ultrafiltração (TMP)</h4>
+      <p class="sub">A <b>P_art</b> (pré-bomba, negativa) mede a capacidade do acesso de <b>entregar</b>; a
+      <b>P_ven</b> (positiva) mede a resistência ao <b>retorno</b> (agulha, dobra, coágulo). A <b>TMP</b>
+      (transmembrana = lado sangue − lado dialisato) <b>impulsiona a ultrafiltração</b> do volume:
+      <b>Q_uf = Kuf · TMP</b> — para tirar mais água na mesma membrana, é preciso mais pressão (há teto).</p>
+      <div class="frow">
+        <div class="concept" id="draw-tmp"></div>
+        <figure class="fviva"><img src="assets/m20/pressoes-circuito-tmp.svg" alt="Pressões do circuito: arterial negativa, venosa positiva, transmembrana TMP" loading="lazy">
+          <figcaption><b>Fig. 8 · As três pressões.</b> P_art (negativa, capacidade do acesso) · P_ven (positiva,
+          resistência ao retorno) · TMP (gradiente sangue−dialisato que tira o volume). UF prescrita em mL/h → o
+          motor devolve a TMP necessária em mmHg.</figcaption></figure>
+      </div>
+      <p class="sub">A <b>recirculação</b> (agulhas muito próximas, num acesso) devolve sangue <b>já dialisado</b>
+      à entrada arterial → o dialisador trabalha sobre sangue limpo e o <b>clearance efetivo no corpo despenca</b>,
+      mesmo com Qb/Qd ótimos no display. Afastar as agulhas restaura a dose. O circuito também <b>coagula</b> e
+      precisa de anticoagulação (citrato/heparina — detalhe do M29).</p>
+      <p class="sub">Tudo isto é <b>homeostasia por máquina</b>: a diálise substitui, por física
+      (difusão/convecção/ultrafiltração), a regulação que o rim fazia do meio interno — volume, eletrólitos,
+      ácido-base, escórias. Ler as pressões e os fluxos é ler essa homeostasia sendo mantida por fora do corpo.</p>
+    </div>
+  </section>
+
+  <!-- CASO -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — oito atos, decida antes de revelar</h3>
+      <p class="sub">Paciente em hemodiálise; a máquina alarma repetidamente. A equipe quer "trocar o cateter".
+      Será que o problema é o acesso?</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step"><b>Ato 1.</b> A sessão alarma "<b>pressão venosa alta</b>" várias vezes. A equipe conclui:
+        trombose do acesso, trocar tudo. Concorda (volte à Fig. 8)?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>Não tão rápido.</b> A P_ven mede a resistência ao <b>retorno</b> — agulha
+          estreita, tubo dobrado, coágulo no cata-bolhas, posição. Não é, por si, o ramo arterial do acesso. Leia a
+          P_art antes de condenar o acesso.</div></div>
+
+      <div class="step"><b>Ato 2.</b> Checam a <b>P_art</b> pré-bomba: está normal (~−120 mmHg). E há uma
+        <b>dobra</b> visível no ramo venoso, distal ao cata-bolhas. O que isso diz?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2">P_art normal = o acesso <b>entrega</b> o Qb pedido (sucção ausente). A P_ven
+          alta vem da <b>dobra</b> — resistência mecânica ao retorno (Fig. 8). O acesso arterial está bem.</div></div>
+
+      <div class="step"><b>Ato 3.</b> Conduta?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3"><b>Desfazer a dobra / reposicionar a linha venosa.</b> A P_ven cai e o alarme
+          some. Só investigar o acesso se a <b>P_art</b> (sucção) for o sinal — cada manômetro nomeia um
+          segmento.</div></div>
+
+      <div class="step"><b>Ato 4.</b> <i>Outro doente.</i> Cateter de duplo lúmen recém-posto; pedem
+        Qb 350 mL/min, mas a <b>P_art</b> mergulha para −280 e alarma. Subir mais o Qb resolve?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>Piora.</b> O cateter não <b>entrega</b> 350: a bomba "suga a parede" (Fig. 4).
+          Subir o pedido só torna a P_art mais negativa (mais sucção, hemólise) — o <b>Qb_efetivo não sobe</b>.
+          Reduzir o Qb ou recolocar o cateter.</div></div>
+
+      <div class="step"><b>Ato 5.</b> <i>A dose decepciona.</i> Em outra fístula, com Qb 400 e Qd 800 "perfeitos",
+        o Kt/V vem <b>baixo</b>. As agulhas foram postas a 2 cm uma da outra. Por quê?
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>Recirculação.</b> Sangue recém-dialisado volta pela agulha arterial → o
+          dialisador trabalha sobre sangue já limpo → o <b>clearance efetivo no corpo despenca</b> apesar dos fluxos
+          ótimos no display. Afastar as agulhas restaura a dose.</div></div>
+
+      <div class="step"><b>Ato 6.</b> <i>A água não sai.</i> Prescrevem remover 3 L em 3 h (UF 1000 mL/h) num
+        dialisador de Kuf baixo (15 mL/h/mmHg). O que o motor exige?
+        <div><button class="act" data-rev="r6">Revelar</button></div>
+        <div class="reveal" id="r6">TMP = Q_uf/Kuf = 1000/15 ≈ <b>67 mmHg</b>. Querer tirar muito volume em pouco
+          tempo exige <b>TMP alta</b>; a membrana tem <b>teto</b> — passar dele não tira mais água, só arrisca a
+          integridade. UF é prescrição de pressão.</div></div>
+
+      <div class="step"><b>Ato 7.</b> <i>O dialisador coagula.</i> No meio da sessão a P_ven sobe progressivamente e
+        o cata-bolhas escurece. Mecanismo?
+        <div><button class="act" data-rev="r7">Revelar</button></div>
+        <div class="reveal" id="r7"><b>Coagulação do circuito.</b> O sangue em contato com o material trombosa → a
+          resistência ao retorno sobe (P_ven↑). Precisa de <b>anticoagulação</b> (citrato regional ou heparina — o
+          detalhe é do M29). O circuito é trombogênico por natureza.</div></div>
+
+      <div class="step"><b>Ato 8.</b> <i>Síntese.</i> Qual a lição de uma linha?
+        <div><button class="act" data-rev="r8">Revelar</button></div>
+        <div class="reveal" id="r8">O alarme não é defeito do aparelho: é o <b>circuito relatando física</b>. P_art
+          = entrega do acesso; P_ven = resistência ao retorno; TMP = a conta da UF; recirculação = dose roubada.
+          Decomponha o circuito antes de trocar tudo.</div></div>
+    </div>
+  </section>
+
+  <!-- TRILHA -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — treze perguntas que constroem o circuito</h3>
+      <details><summary>1. O que a máquina de diálise é, em essência?</summary><p>Um <b>circuito de pressões</b>:
+        acesso → bomba (Qb) → dialisador (contra Qd) → retorno. Cada pressão relata a física de um segmento (Fig. 1).</p></details>
+      <details><summary>2. Por que o dialisato corre em contracorrente?</summary><p>Para manter o <b>gradiente</b>
+        de concentração máximo ao longo de toda a membrana — o sangue "sujo" encontra dialisato "limpo" em cada
+        ponto (Fig. 2).</p></details>
+      <details><summary>3. O que define o teto de Qb que se consegue puxar?</summary><p>O <b>acesso</b>: fístula
+        madura entrega muito; cateter mal posto, pouco. Qb_efetivo = min(Qb_pedido, entrega do acesso) (Fig. 3).</p></details>
+      <details><summary>4. O que a P_art (pré-bomba) significa?</summary><p>A capacidade do acesso de
+        <b>entregar</b> sangue. É <b>negativa</b>; muito negativa = sucção (acesso pobre, parede) — o Qb_efetivo
+        não sobe por mais que se peça (Fig. 4).</p></details>
+      <details><summary>5. E a P_ven?</summary><p>A resistência ao <b>retorno</b>: agulha estreita, tubo dobrado,
+        coágulo, posição. É <b>positiva</b>; alta = obstrução do ramo venoso (Fig. 8).</p></details>
+      <details><summary>6. Por que a fístula é preferida ao cateter?</summary><p>Entrega Qb alto com durabilidade e
+        menos infecção. Custo: precisa amadurecer ~6 semanas (Fig. 5).</p></details>
+      <details><summary>7. Como a bomba gera o Qb?</summary><p>A bomba de roletes ocluí o tubo e empurra um volume
+        fixo por rotação → Qb ∝ rotação (Fig. 6). Mas só ajuda se o acesso entregar.</p></details>
+      <details><summary>8. O que é a KoA do dialisador?</summary><p>Área × permeabilidade — a "potência" da
+        membrana para um soluto. Entra na equação do clearance (Fig. 7).</p></details>
+      <details><summary>9. Por que o clearance "satura" com Qb?</summary><p>É <b>blood-flow-limited</b>: para
+        soluto pequeno, K cresce com Qb mas com ganho marginal decrescente (equação de Michaels). Acima de certo Qb,
+        rende pouco.</p></details>
+      <details><summary>10. Como se tira o volume (água)?</summary><p>Por <b>ultrafiltração</b>: Q_uf = Kuf · TMP.
+        A TMP (gradiente sangue−dialisato) impulsiona o solvente através da membrana (Fig. 8).</p></details>
+      <details><summary>11. Querer tirar mais água exige o quê?</summary><p>Mais <b>TMP</b>. Mas a membrana tem
+        teto — passar dele não tira mais volume, só arrisca a integridade. UF é prescrição de pressão.</p></details>
+      <details><summary>12. O que é recirculação e por que importa?</summary><p>Agulhas muito próximas devolvem
+        sangue <b>já dialisado</b> à entrada → o clearance <b>efetivo</b> no corpo despenca, mesmo com fluxos
+        ótimos. Afastar as agulhas restaura a dose.</p></details>
+      <details><summary>13. Em que sentido isto é homeostasia?</summary><p>A máquina substitui, por <b>física</b>
+        (difusão/convecção/ultrafiltração), a regulação que o rim fazia do meio interno. Ler as pressões é ler essa
+        substituição funcionando.</p></details>
+    </div>
+  </section>
+
+  <!-- INSTRUMENTO -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — a curva clearance × Qb (saturante)</h3>
+      <p class="sub">Os controles do <b>Lab</b> alimentam esta curva. O marcador laranja é o ponto de operação.
+      Veja o <b>joelho</b>: o clearance é blood-flow-limited — em Qb alto a curva achata (ganho marginal cai). O
+      acesso fixa um teto vertical à direita; a recirculação rebaixa toda a curva.</p>
+      <canvas id="clr-canvas" width="900" height="360" aria-label="Clearance por Qb (curva saturante)"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- LAB -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — mova os fluxos, o acesso e a TMP; leia o circuito</h3>
+      <div class="grid">
+        <div>
+          <label>Qb pedido (mL/min): <span class="val" id="lbl-qb">300</span></label>
+          <input type="range" id="in-qb" min="100" max="500" step="10" value="300">
+          <label>Qd dialisato (mL/min): <span class="val" id="lbl-qd">500</span></label>
+          <input type="range" id="in-qd" min="300" max="800" step="50" value="500">
+          <label>KoA da membrana (mL/min): <span class="val" id="lbl-koa">600</span></label>
+          <input type="range" id="in-koa" min="300" max="1200" step="50" value="600">
+          <label>Acesso (capacidade relativa): <span class="val" id="lbl-acesso">1.0</span></label>
+          <input type="range" id="in-acesso" min="0.2" max="1.2" step="0.05" value="1">
+        </div>
+        <div>
+          <label>UF prescrita Q_uf (mL/h): <span class="val" id="lbl-quf">800</span></label>
+          <input type="range" id="in-quf" min="0" max="3000" step="100" value="800">
+          <label>Kuf do dialisador (mL/h/mmHg): <span class="val" id="lbl-kuf">30</span></label>
+          <input type="range" id="in-kuf" min="5" max="60" step="1" value="30">
+          <label>Distância das agulhas (1 = separadas): <span class="val" id="lbl-dist">1.0</span></label>
+          <input type="range" id="in-dist" min="0" max="1" step="0.1" value="1">
+        </div>
+      </div>
+
+      <div class="presets">
+        <button class="act" data-preset="fistula">Fístula madura</button>
+        <button class="act" data-preset="cateter">Cateter limitante</button>
+        <button class="act" data-preset="recirc">Agulhas próximas</button>
+        <button class="act" data-preset="ufalta">UF agressiva</button>
+        <button class="act" data-preset="highflux">High-flux (KoA/Qd alto)</button>
+      </div>
+
+      <table>
+        <tr><th>Variável</th><th>Atual</th><th>Comentário</th></tr>
+        <tr><td>Qb efetivo (mL/min)</td><td class="num" id="out-qbe">—</td><td class="num">min(pedido, acesso)</td></tr>
+        <tr><td>Teto do acesso (mL/min)</td><td class="num" id="out-teto">—</td><td class="num">o que o acesso entrega</td></tr>
+        <tr><td>Clearance do dialisador (mL/min)</td><td class="num" id="out-kdial">—</td><td class="num">satura com Qb</td></tr>
+        <tr><td>Clearance efetivo no corpo (mL/min)</td><td class="num" id="out-kef">—</td><td class="num">descontada a recirculação</td></tr>
+        <tr><td>Recirculação (%)</td><td class="num" id="out-recirc">—</td><td class="num">agulhas próximas</td></tr>
+        <tr><td>P_art pré-bomba (mmHg)</td><td class="num" id="out-part">—</td><td class="num">negativa; sucção se muito −</td></tr>
+        <tr><td>P_ven retorno (mmHg)</td><td class="num" id="out-pven">—</td><td class="num">positiva; alta = obstrução</td></tr>
+        <tr><td>TMP necessária (mmHg)</td><td class="num" id="out-tmp">—</td><td class="num">= Q_uf / Kuf</td></tr>
+        <tr><td>UF efetiva (mL/h)</td><td class="num" id="out-uf">—</td><td class="num">Kuf · TMP</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÃO -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (13)</button>
+        <button data-bank="textual">Textual (12)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica</b>. Este módulo M20
+    trata da física do circuito extracorpóreo; os fluxos (Qb, Qd em mL/min), as pressões (mmHg) e a UF (mL/h) são
+    apresentados como <b>mecanismo</b>, não como prescrição para um paciente real. O modelo (equação de Michaels,
+    teto do acesso, recirculação) é uma simplificação didática calibrada. Não substitui julgamento clínico; a
+    decisão e a responsabilidade finais são sempre do profissional.
+  </div>
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+</div>
+
+<script>
+/* ENGINE INLINE — espelho fiel de build/m20/model20.js */
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
+function mergeDefaults(input,defs){ var o={},k; for(k in defs){ if(Object.prototype.hasOwnProperty.call(defs,k)) o[k]=defs[k]; }
+  if(input){ for(k in input){ if(Object.prototype.hasOwnProperty.call(input,k)&&input[k]!==undefined) o[k]=input[k]; } } return o; }
+var KOA_STD=600, KUF_STD=30, P_DIAL=-40;
+var DEFAULTS={ Qb:300, Qd:500, KoA:KOA_STD, Kuf:KUF_STD, Quf:800, acesso:1, distAgulhas:1 };
+function qbDoAcesso(acesso){ acesso=clampv(acesso,0.05,1.5); return clampv(60+acesso*360,60,600); }
+function pArterial(Qb,acesso){ Qb=clampv(Qb,0,600); var teto=qbDoAcesso(acesso); var base=-0.4*Qb;
+  var sobra=Math.max(0,Qb-teto), succao=-0.9*sobra; return clampv(base+succao,-350,0); }
+function pVenosa(Qb,Qd,Kuf,Quf,acesso){ var Qbe=qbEfetivo(Qb,acesso);
+  var Rrel=clampv(2-clampv(acesso,0.05,1.5),0.5,1.95); return clampv(20+0.30*Qbe*Rrel,0,350); }
+function qbEfetivo(Qb,acesso){ Qb=clampv(Qb,0,600); return clampv(Math.min(Qb,qbDoAcesso(acesso)),0,600); }
+function tmpNecessaria(Quf,Kuf){ Quf=clampv(Quf,0,6000); Kuf=clampv(Kuf,0.5,300); return clampv(Quf/Kuf,0,600); }
+function ufDeTMP(tmp,Kuf){ tmp=clampv(tmp,0,600); Kuf=clampv(Kuf,0.5,300); return clampv(Kuf*tmp,0,6000); }
+function clearanceDialisador(Qbe,Qd,KoA){ Qbe=clampv(Qbe,1,600); Qd=clampv(Qd,1,1200); KoA=clampv(KoA,1,3000);
+  var ratio=Qbe/Qd, K;
+  if(Math.abs(1-ratio)<1e-4){ K=Qbe*KoA/(Qbe+KoA); }
+  else { var z=KoA*(1-ratio)/Qbe; z=clampv(z,-50,50); var ez=Math.exp(z), denom=ez-ratio;
+    if(Math.abs(denom)<1e-9){ K=Qbe*KoA/(Qbe+KoA); } else { K=Qbe*(ez-1)/denom; } }
+  if(!isFinite(K)||K<0) K=0; return clampv(K,0,Math.min(Qbe,Qd)); }
+function recirculacaoPct(distAgulhas){ var d=clampv(distAgulhas,0,1); return clampv(40*(1-d),0,40); }
+function circuito(input){ var s=mergeDefaults(input,DEFAULTS);
+  var Qb=clampv(s.Qb,0,600), Qd=clampv(s.Qd,0,1200), KoA=clampv(s.KoA,1,3000), Kuf=clampv(s.Kuf,0.5,300),
+      Quf=clampv(s.Quf,0,6000), acesso=clampv(s.acesso,0.05,1.5), distAgulhas=clampv(s.distAgulhas,0,1);
+  var qbTeto=qbDoAcesso(acesso), Qbe=qbEfetivo(Qb,acesso), Part=pArterial(Qb,acesso),
+      Pven=pVenosa(Qb,Qd,Kuf,Quf,acesso), TMP=tmpNecessaria(Quf,Kuf), ufEfetiva=ufDeTMP(TMP,Kuf),
+      Kdial=clearanceDialisador(Qbe,clampv(Qd,1,1200),KoA), recirc=recirculacaoPct(distAgulhas),
+      Kefetivo=clampv(Kdial*(1-recirc/100),0,600);
+  var succaoArterial=Part<-250||Qb>qbTeto+5, acessoLimita=Qb>qbTeto+5, retornoObstruido=Pven>200,
+      tmpExcessiva=TMP>350, recircRoubaDose=recirc>10;
+  return { Qb:Qb,Qd:Qd,KoA:KoA,Kuf:Kuf,Quf:Quf,acesso:acesso,distAgulhas:distAgulhas,
+    qbTeto:qbTeto,Qbe:Qbe,Part:Part,Pven:Pven,TMP:TMP,ufEfetiva:ufEfetiva,Kdial:Kdial,recirc:recirc,Kefetivo:Kefetivo,
+    succaoArterial:succaoArterial,acessoLimita:acessoLimita,retornoObstruido:retornoObstruido,
+    tmpExcessiva:tmpExcessiva,recircRoubaDose:recircRoubaDose }; }
+function clearanceCurveLayout(state,W,H){ state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=54,padR=16,padT=18,padB=38,baseY=H-padB, qbMin=50,qbMax=500,N=58;
+  var Qd=clampv(state.Qd!==undefined?state.Qd:DEFAULTS.Qd,1,1200), KoA=clampv(state.KoA!==undefined?state.KoA:DEFAULTS.KoA,1,3000),
+      acesso=clampv(state.acesso!==undefined?state.acesso:DEFAULTS.acesso,0.05,1.5),
+      distAgulhas=clampv(state.distAgulhas!==undefined?state.distAgulhas:DEFAULTS.distAgulhas,0,1), recirc=recirculacaoPct(distAgulhas);
+  var yMax=400, pxX=(W-padL-padR)/(qbMax-qbMin), pxY=(baseY-padT)/yMax, pts=[],i,qb,k;
+  for(i=0;i<=N;i++){ qb=qbMin+(qbMax-qbMin)*i/N; var qbe=qbEfetivo(qb,acesso); k=clearanceDialisador(qbe,Qd,KoA)*(1-recirc/100);
+    pts.push({qb:qb,k:k,x:padL+(qb-qbMin)*pxX,y:baseY-clampv(k,0,yMax)*pxY}); }
+  var qc=clampv(state.Qb!==undefined?state.Qb:DEFAULTS.Qb,qbMin,qbMax), qce=qbEfetivo(qc,acesso),
+      kc=clearanceDialisador(qce,Qd,KoA)*(1-recirc/100);
+  return { W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,qbMin:qbMin,qbMax:qbMax,yMax:yMax,pxX:pxX,pxY:pxY,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},pts:pts,
+    current:{x:padL+(qc-qbMin)*pxX,y:baseY-clampv(kc,0,yMax)*pxY,qb:qc,k:kc} }; }
+window.circuito=circuito; window.clearanceDialisador=clearanceDialisador; window.qbEfetivo=qbEfetivo;
+window.tmpNecessaria=tmpNecessaria; window.ufDeTMP=ufDeTMP; window.recirculacaoPct=recirculacaoPct;
+window.qbDoAcesso=qbDoAcesso; window.clearanceCurveLayout=clearanceCurveLayout;
+window.MODEL={circuito:circuito,clearanceDialisador:clearanceDialisador,qbEfetivo:qbEfetivo,tmpNecessaria:tmpNecessaria,
+  ufDeTMP:ufDeTMP,recirculacaoPct:recirculacaoPct,qbDoAcesso:qbDoAcesso,clearanceCurveLayout:clearanceCurveLayout,
+  clampv:clampv,KOA_STD:KOA_STD,KUF_STD:KUF_STD,P_DIAL:P_DIAL,DEFAULTS:DEFAULTS};
+
+/* UI */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=(d===undefined?1:d); return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on'); b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on'); $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh(); });
+document.addEventListener('click',function(e){ var b=e.target.closest('button.act[data-rev]'); if(!b) return; var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on'); });
+
+function readInputs(){ return { Qb:+$('in-qb').value, Qd:+$('in-qd').value, KoA:+$('in-koa').value, Kuf:+$('in-kuf').value,
+  Quf:+$('in-quf').value, acesso:+$('in-acesso').value, distAgulhas:+$('in-dist').value }; }
+function refresh(){ var inp=readInputs();
+  $('lbl-qb').textContent=inp.Qb; $('lbl-qd').textContent=inp.Qd; $('lbl-koa').textContent=inp.KoA;
+  $('lbl-acesso').textContent=fmt(inp.acesso,2); $('lbl-quf').textContent=inp.Quf; $('lbl-kuf').textContent=inp.Kuf;
+  $('lbl-dist').textContent=fmt(inp.distAgulhas,1);
+  var r=circuito(inp);
+  $('out-qbe').textContent=fmt(r.Qbe,0); $('out-teto').textContent=fmt(r.qbTeto,0);
+  $('out-kdial').textContent=fmt(r.Kdial,0); $('out-kef').textContent=fmt(r.Kefetivo,0);
+  $('out-recirc').textContent=fmt(r.recirc,0); $('out-part').textContent=fmt(r.Part,0);
+  $('out-pven').textContent=fmt(r.Pven,0); $('out-tmp').textContent=fmt(r.TMP,0); $('out-uf').textContent=fmt(r.ufEfetiva,0);
+  verdict(r); drawClearance(inp); pearl(r); }
+function verdict(r){ var v=$('veredito'), cls='b-good', msg;
+  if(r.succaoArterial){ cls='b-bad'; msg='SUCÇÃO ARTERIAL: o acesso não entrega o Qb pedido ('+fmt(r.Qb,0)+'); teto ~'+fmt(r.qbTeto,0)+' mL/min. P_art '+fmt(r.Part,0)+' mmHg (sucção). Qb efetivo travado em '+fmt(r.Qbe,0)+'. Reduza o Qb ou corrija o acesso.'; }
+  else if(r.recircRoubaDose){ cls='b-bad'; msg='RECIRCULAÇÃO '+fmt(r.recirc,0)+'%: o clearance efetivo ('+fmt(r.Kefetivo,0)+') caiu abaixo do dialisador ('+fmt(r.Kdial,0)+') — sangue já limpo volta à entrada. Afaste as agulhas.'; }
+  else if(r.retornoObstruido){ cls='b-warn'; msg='RETORNO OBSTRUÍDO: P_ven '+fmt(r.Pven,0)+' mmHg alta — resistência ao retorno (agulha/dobra/coágulo). Verifique a linha venosa.'; }
+  else if(r.tmpExcessiva){ cls='b-warn'; msg='TMP EXCESSIVA ('+fmt(r.TMP,0)+' mmHg) para Q_uf '+fmt(r.Quf,0)+' mL/h num Kuf '+fmt(r.Kuf,0)+'. Perto do teto da membrana — reduza a UF ou estenda o tempo.'; }
+  else { cls='b-good'; msg='Circuito coerente: Qb efetivo '+fmt(r.Qbe,0)+' mL/min, clearance '+fmt(r.Kdial,0)+' mL/min; P_art '+fmt(r.Part,0)+' / P_ven '+fmt(r.Pven,0)+' mmHg; TMP '+fmt(r.TMP,0)+' mmHg tira '+fmt(r.ufEfetiva,0)+' mL/h.'; }
+  v.className='banner '+cls; v.textContent=msg; }
+function pearl(r){ var p=$('lab-pearl'), ip=$('instr-pearl'), t;
+  if(r.acessoLimita) t='PÉROLA (o acesso limita tudo): pedir Qb '+fmt(r.Qb,0)+' num acesso de teto '+fmt(r.qbTeto,0)+' não acelera nada — só torna a P_art mais negativa ('+fmt(r.Part,0)+' mmHg). O Qb efetivo é '+fmt(r.Qbe,0)+'.';
+  else if(r.recircRoubaDose) t='PÉROLA (recirculação rouba a dose): com '+fmt(r.recirc,0)+'% de recirculação, o clearance efetivo ('+fmt(r.Kefetivo,0)+') fica abaixo do dialisador ('+fmt(r.Kdial,0)+') apesar dos fluxos no display.';
+  else if(r.tmpExcessiva) t='PÉROLA (TMP é a conta da UF): tirar '+fmt(r.Quf,0)+' mL/h exige TMP '+fmt(r.TMP,0)+' mmHg (=Q_uf/Kuf). A membrana tem teto — UF é prescrição de pressão.';
+  else t='Clearance blood-flow-limited: aqui Qb efetivo '+fmt(r.Qbe,0)+' → clearance '+fmt(r.Kdial,0)+' mL/min. Subir o Qb rende cada vez menos (a curva satura).';
+  p.textContent=t; ip.textContent=t; }
+function drawClearance(state){ var c=$('clr-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
+  var L=clearanceCurveLayout(state,c.width,c.height); ctx.clearRect(0,0,L.W,L.H);
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('clearance (mL/min)',8,L.padT+2); ctx.fillText('Qb (mL/min) →',L.W-150,L.baseY+24);
+  ctx.strokeStyle='#39c0c8'; ctx.lineWidth=2; ctx.beginPath();
+  for(var i=0;i<L.pts.length;i++){ var p=L.pts[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); } ctx.stroke();
+  var cu=L.current; ctx.strokeStyle='#e8a13a'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(cu.x,L.padT); ctx.lineTo(cu.x,L.baseY); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#e8a13a'; ctx.fillRect(cu.x-3,cu.y-3,6,6);
+  ctx.fillStyle='#e7eef4'; ctx.fillText('K '+fmt(cu.k,0),cu.x+6,Math.max(cu.y-6,L.padT+10)); }
+['in-qb','in-qd','in-koa','in-acesso','in-quf','in-kuf','in-dist'].forEach(function(id){ $(id).addEventListener('input',refresh); });
+
+var PRESETS={
+  fistula:{qb:400,qd:600,koa:700,acesso:1.1,quf:800,kuf:35,dist:1},
+  cateter:{qb:350,qd:500,koa:600,acesso:0.35,quf:800,kuf:25,dist:1},
+  recirc:{qb:400,qd:800,koa:1000,acesso:1,quf:800,kuf:30,dist:0.1},
+  ufalta:{qb:300,qd:500,koa:600,acesso:1,quf:2500,kuf:15,dist:1},
+  highflux:{qb:400,qd:800,koa:1100,acesso:1.1,quf:1000,kuf:50,dist:1}
+};
+function applyPreset(p){ var d=PRESETS[p]; if(!d) return;
+  $('in-qb').value=d.qb; $('in-qd').value=d.qd; $('in-koa').value=d.koa; $('in-acesso').value=d.acesso;
+  $('in-quf').value=d.quf; $('in-kuf').value=d.kuf; $('in-dist').value=d.dist; refresh(); }
+document.querySelector('.presets').addEventListener('click',function(e){ var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset')); });
+
+/* ILUSTRAÇÕES computadas + helper raster */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+function clrMini(state,titulo){ var W=300,H=170,L=clearanceCurveLayout(state,W,H),s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  var d=''; for(var i=0;i<L.pts.length;i++){ d+=(i===0?'M':'L')+f1(L.pts[i].x)+' '+f1(L.pts[i].y)+' '; }
+  s+='<path d="'+d+'" fill="none" stroke="#39c0c8" stroke-width="2"/>';
+  s+='<rect x="'+f1(L.current.x-3)+'" y="'+f1(L.current.y-3)+'" width="6" height="6" fill="#e8a13a"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'clearance × Qb')+'</text>';
+  s+='<text x="'+(W-8)+'" y="'+(L.baseY+14)+'" fill="#9fb1c0" font-size="9" text-anchor="end">Qb →</text>';
+  return svgEl(W,H,s); }
+function circuitoMini(state){ var W=300,H=170,s='',r=circuito(state);
+  // tubo arterial (azul, esquerda) → bomba → dialisador → tubo venoso (vermelho, direita)
+  s+='<rect x="20" y="70" width="40" height="30" rx="4" fill="none" stroke="#9fb1c0"/><text x="40" y="60" fill="#9fb1c0" font-size="9" text-anchor="middle">paciente</text>';
+  s+='<line x1="60" y1="78" x2="110" y2="78" stroke="#3aa0e0" stroke-width="3"/><text x="85" y="72" fill="#3aa0e0" font-size="8" text-anchor="middle">art −</text>';
+  s+='<circle cx="125" cy="78" r="13" fill="none" stroke="#e8a13a" stroke-width="2"/><text x="125" y="81" fill="#e8a13a" font-size="8" text-anchor="middle">Qb</text>';
+  s+='<rect x="150" y="55" width="34" height="60" rx="4" fill="#1b242d" stroke="#39c0c8"/><text x="167" y="50" fill="#39c0c8" font-size="8" text-anchor="middle">dialis.</text>';
+  // contracorrente: dialisato setas para cima
+  s+='<line x1="167" y1="120" x2="167" y2="60" stroke="#52c08a" stroke-width="1.5" marker-end="url(#a)"/>';
+  s+='<defs><marker id="a" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0 0L6 3L0 6Z" fill="#52c08a"/></marker></defs>';
+  s+='<text x="200" y="88" fill="#52c08a" font-size="8">Qd ↑</text>';
+  s+='<line x1="184" y1="100" x2="240" y2="100" stroke="#e0556b" stroke-width="3"/><text x="212" y="116" fill="#e0556b" font-size="8" text-anchor="middle">ven +</text>';
+  // manômetros computados
+  s+='<text x="150" y="150" fill="#9fb1c0" font-size="9">P_art '+fmt(r.Part,0)+'  P_ven '+fmt(r.Pven,0)+'  TMP '+fmt(r.TMP,0)+'</text>';
+  s+='<text x="150" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">o circuito de pressões</text>';
+  return svgEl(W,H,s); }
+function pressureBars(state){ var W=300,H=170,base=120,s='',r=circuito(state);
+  function bar(x,val,color,lab,scale){ var h=clampv(Math.abs(val)/scale,0,1)*80; var up=val>=0;
+    var y=up?(base-h):base; return '<rect x="'+x+'" y="'+f1(y)+'" width="50" height="'+f1(h)+'" fill="'+color+'" fill-opacity="0.6" stroke="'+color+'"/>'+
+    '<text x="'+(x+25)+'" y="'+(base+30)+'" fill="#9fb1c0" font-size="9" text-anchor="middle">'+lab+'</text>'+
+    '<text x="'+(x+25)+'" y="'+(up?f1(y-4):f1(y+h+12))+'" fill="#e7eef4" font-size="10" text-anchor="middle">'+fmt(val,0)+'</text>'; }
+  s+='<line x1="30" y1="'+base+'" x2="280" y2="'+base+'" stroke="#3a4a58"/>';
+  s+=bar(40,r.Part,'#3aa0e0','P_art',350); s+=bar(120,r.Pven,'#e0556b','P_ven',350); s+=bar(200,r.TMP,'#39c0c8','TMP',600);
+  s+='<text x="150" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">três pressões (mmHg)</text>';
+  return svgEl(W,H,s); }
+function imgFig(slug,alt){ return '<img src="assets/m20/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+/* TUTOR */
+function R0(extra){ var o={}; if(extra) for(var k in extra) o[k]=extra[k]; return circuito(o); }
+var TUTOR_ILUSTRADO=[
+  {q:'Na curva clearance × Qb, subir o Qb de 200 para 300…',o:['dobra o clearance','aumenta, mas com ganho decrescente (satura)','reduz o clearance'],c:1,e:'O clearance é blood-flow-limited: cresce com Qb, mas o ganho marginal cai (equação de Michaels).',fig:function(){return clrMini({Qb:300},'Qb 300 — joelho da curva');}},
+  {q:'E subir de 400 para 500?',o:['o mesmo ganho que de 200→300','quase nada a mais (curva achatada)','dispara'],c:1,e:'No ramo achatado, o mesmo ΔQb rende muito menos — a saturação.',fig:function(){return clrMini({Qb:450},'Qb alto — curva achata');}},
+  {q:'Com um cateter limitante (acesso baixo), pedir Qb 400…',o:['entrega 400','trava o Qb efetivo no teto do acesso','aumenta o clearance livremente'],c:1,e:'Qb efetivo = min(pedido, entrega do acesso). O acesso limita tudo.',fig:function(){return clrMini({Qb:400,acesso:0.35},'acesso pobre limita');}},
+  {q:'No mesmo cateter, a P_art pré-bomba…',o:['fica normal','mergulha (sucção)','fica positiva'],c:1,e:'Pedir Qb que o acesso não dá → sucção de parede → P_art muito negativa.',fig:function(){return pressureBars({Qb:400,acesso:0.35});}},
+  {q:'Aumentar o Qd (dialisato) de 500 para 800 faz o clearance…',o:['cair','subir (mais gradiente, contracorrente)','não muda'],c:1,e:'Qd alto mantém o gradiente máximo ao longo da membrana — mais clearance (até o teto do Qb).',fig:function(){return clrMini({Qb:300,Qd:800},'Qd alto');}},
+  {q:'Com as agulhas a 2 cm (recirculação), o clearance efetivo no corpo…',o:['é igual ao do dialisador','despenca abaixo do dialisador','sobe'],c:1,e:'Sangue já limpo volta à entrada → o dialisador trabalha em vão → dose efetiva cai.',fig:function(){return clrMini({Qb:400,Qd:800,KoA:1000,distAgulhas:0.1},'recirculação rebaixa');}},
+  {q:'Na figura do circuito, qual ponto tem pressão NEGATIVA?',o:['o ramo venoso de retorno','o ramo arterial pré-bomba','o dialisato'],c:1,e:'O ramo arterial pré-bomba é sugado pela bomba → pressão negativa.',fig:function(){return imgFig('circuito-hemodialise.svg','circuito de hemodiálise');}},
+  {q:'Na figura dos acessos, qual entrega o maior Qb com durabilidade?',o:['o cateter temporário','a fístula AV madura','nenhum'],c:1,e:'A fístula AV madura é o padrão-ouro; o cateter limita o Qb e infecta.',fig:function(){return imgFig('acessos-vasculares.svg','tipos de acesso');}},
+  {q:'Na figura do cateter de duplo lúmen, o lúmen arterial…',o:['devolve o sangue','puxa o sangue do paciente','mede a TMP'],c:1,e:'Um lúmen puxa (arterial), o outro devolve (venoso).',fig:function(){return imgFig('cateter-duplo-lumen.svg','cateter duplo lúmen');}},
+  {q:'Na figura do dialisador, o dialisato corre…',o:['na mesma direção do sangue','em contracorrente ao sangue','parado'],c:1,e:'Contracorrente mantém o gradiente máximo ao longo de toda a membrana.',fig:function(){return imgFig('dialisador-capilar.svg','dialisador capilar');}},
+  {q:'Na figura das pressões, a TMP serve para…',o:['empurrar o soluto','impulsionar a ultrafiltração do volume','medir o Qd'],c:1,e:'TMP é o gradiente sangue−dialisato que tira a água: Q_uf = Kuf · TMP.',fig:function(){return imgFig('pressoes-circuito-tmp.svg','pressões e TMP');}},
+  {q:'Para tirar 1500 mL/h num Kuf de 30, a TMP necessária é…',o:['~15 mmHg','~50 mmHg','~5 mmHg'],c:1,e:'TMP = Q_uf/Kuf = 1500/30 = 50 mmHg. Mais UF exige mais pressão.',fig:function(){return pressureBars({Quf:1500,Kuf:30});}},
+  {q:'Na figura da fístula, por que ela precisa "amadurecer"?',o:['para a veia arterializar (parede/fluxo)','para infeccionar','não precisa'],c:0,e:'A anastomose arterializa a veia ao longo de ~6 semanas, dando fluxo e parede grossa.',fig:function(){return imgFig('fistula-arteriovenosa.svg','fístula AV madura');}}
+];
+var TUTOR_TEXTUAL=[
+  {q:'A diálise, em essência, é…',o:['uma caixa-preta','um circuito de pressões com física legível','um filtro passivo'],c:1,e:'Acesso → bomba (Qb) → dialisador (Qd) → retorno; cada pressão relata um segmento.'},
+  {q:'Qb_efetivo é igual a…',o:['o Qb pedido sempre','min(Qb pedido, o que o acesso entrega)','o Qd'],c:1,e:'O acesso fixa o teto; pedir mais não acelera, só suga.'},
+  {q:'A P_art pré-bomba muito negativa indica…',o:['retorno obstruído','o acesso não entrega o Qb (sucção)','UF alta'],c:1,e:'Sucção de parede: o acesso é o gargalo. Reduzir o Qb ou corrigir o acesso.'},
+  {q:'A P_ven de retorno alta indica…',o:['sucção arterial','resistência ao retorno (agulha/dobra/coágulo)','Qd baixo'],c:1,e:'Positiva e alta = obstrução do ramo venoso.'},
+  {q:'O clearance de pequenos solutos é…',o:['ilimitado','blood-flow-limited (satura com Qb)','independente do Qb'],c:1,e:'Equação de Michaels: cresce com Qb, mas com ganho marginal decrescente.'},
+  {q:'O dialisato corre em contracorrente para…',o:['economizar água','manter o gradiente máximo na membrana','aquecer o sangue'],c:1,e:'O sangue sujo encontra dialisato limpo em cada ponto.'},
+  {q:'A KoA do dialisador representa…',o:['o fluxo de sangue','a "potência" (área × permeabilidade) da membrana','a pressão venosa'],c:1,e:'Entra na equação do clearance; high-flux tem KoA maior.'},
+  {q:'A remoção de VOLUME se dá por…',o:['difusão','ultrafiltração: Q_uf = Kuf · TMP','adsorção'],c:1,e:'A TMP impulsiona o solvente através da membrana.'},
+  {q:'Para tirar mais água na mesma membrana, é preciso…',o:['mais Qd','mais TMP (há teto)','menos Qb'],c:1,e:'UF é prescrição de pressão; passar do teto da membrana não tira mais água.'},
+  {q:'A recirculação (agulhas próximas) faz…',o:['o clearance efetivo cair','o Qb subir','a TMP cair'],c:0,e:'Sangue já dialisado volta à entrada → o clearance efetivo no corpo despenca.'},
+  {q:'Um Qb típico de HDI é da ordem de…',o:['20–50 mL/min','200–450 mL/min','2000 mL/min'],c:1,e:'Qb 200–450 mL/min; Qd ~500–800 mL/min.'},
+  {q:'O alarme do circuito é, em geral…',o:['um defeito do aparelho','o circuito relatando física (ler antes de silenciar)','irrelevante'],c:1,e:'Cada pressão nomeia um segmento — decompor antes de trocar tudo.'}
+];
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL; window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+var BANKS={ilustrada:TUTOR_ILUSTRADO,textual:TUTOR_TEXTUAL}, curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+function renderTutor(){ var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():''; $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false; $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){ if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button'); btns[item.c].classList.add('ok'); if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block'; fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e; $('tutor-score').textContent=tScore; $('tutor-total').textContent=tTotal; });
+    box.appendChild(b); }); }
+$('banktabs').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor(); });
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+$('draw-circuito').innerHTML = circuitoMini({Qb:300});
+$('draw-acesso').innerHTML = pressureBars({Qb:350,acesso:0.35}) + clrMini({Qb:350,acesso:0.35},'acesso pobre');
+$('draw-clearance').innerHTML = clrMini({Qb:300},'clearance × Qb (satura)');
+$('draw-tmp').innerHTML = pressureBars({Quf:800,Kuf:30});
+$('fig-caso').innerHTML = circuitoMini({Qb:300}) + pressureBars({Qb:300});
+
+refresh(); renderTutor();
+</script>
+</body>
+</html>

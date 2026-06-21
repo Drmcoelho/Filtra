@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 320" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="320" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="316" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Acidose metabólica: o AG separa as causas</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">AG alto = adiciona ácido fixo; AG normal = perde HCO₃⁻ (e o Cl⁻ sobe no lugar)</text>
+
+  <rect x="30" y="62" width="310" height="220" rx="10" fill="#10202c" stroke="#e0556b"/>
+  <text x="185" y="86" text-anchor="middle" font-size="12" fill="#e08a96" font-weight="bold">AG ALTO (ácido adicionado)</text>
+  <g font-size="11" fill="#e7eef4">
+    <text x="48" y="114">• lactato (choque, hipóxia — ponte Choca)</text>
+    <text x="48" y="138">• cetoácidos (CAD, jejum, álcool)</text>
+    <text x="48" y="162">• uremia (ânions de sulfato/fosfato)</text>
+    <text x="48" y="186">• toxinas: metanol, etilenoglicol,</text>
+    <text x="64" y="204" fill="#cdd9e3" font-size="10">salicilato (→ M33 dialisáveis)</text>
+    <text x="48" y="232">• D-lactato</text>
+  </g>
+  <text x="185" y="266" text-anchor="middle" font-size="9" fill="#9fb1c0">checar gap osmolar nos álcoois tóxicos</text>
+
+  <rect x="350" y="62" width="300" height="220" rx="10" fill="#10202c" stroke="#3a7bd5"/>
+  <text x="500" y="86" text-anchor="middle" font-size="12" fill="#9bbef0" font-weight="bold">AG NORMAL (perde HCO₃⁻)</text>
+  <g font-size="11" fill="#e7eef4">
+    <text x="368" y="114">• diarreia (perda GI de HCO₃⁻)</text>
+    <text x="368" y="138">• ATR tipo I (distal)</text>
+    <text x="368" y="162">• ATR tipo II (proximal)</text>
+    <text x="368" y="186">• ATR tipo IV (hipoaldo, hiperK)</text>
+    <text x="368" y="210">• acetazolamida (M5)</text>
+    <text x="368" y="234">• SF 0,9% em volume (hiperclorêmica)</text>
+  </g>
+  <text x="500" y="266" text-anchor="middle" font-size="9" fill="#9fb1c0">gap urinário separa GI (negativo) de renal (positivo)</text>
+
+  <text x="340" y="302" text-anchor="middle" font-size="10" fill="#e8a13a">o engine classifica AG alto × normal e (no AG alto) calcula o delta-delta</text>
+</svg>

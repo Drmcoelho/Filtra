@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">A albumina baixa MASCARA o ânion gap</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">a albumina é o maior ânion "invisível"; se ela cai, o AG medido cai — corrija: +2,5 por g/dL abaixo de 4</text>
+
+  <!-- albumina normal -->
+  <text x="180" y="70" text-anchor="middle" font-size="11" fill="#9fe3ec">albumina 4,0 (normal)</text>
+  <rect x="120" y="80" width="120" height="40" fill="#a06ad0" fill-opacity="0.5" stroke="#a06ad0"/>
+  <text x="180" y="105" text-anchor="middle" font-size="10" fill="#d7baf0">albumina (ânion)</text>
+  <rect x="120" y="124" width="120" height="36" fill="#e8a13a" fill-opacity="0.6" stroke="#e8a13a"/>
+  <text x="180" y="146" text-anchor="middle" font-size="10" fill="#f0c078">AG medido ~12</text>
+  <text x="180" y="182" text-anchor="middle" font-size="10" fill="#9fb1c0">AG real = medido</text>
+
+  <!-- albumina baixa -->
+  <text x="500" y="70" text-anchor="middle" font-size="11" fill="#e08a96">albumina 2,0 (baixa)</text>
+  <rect x="440" y="100" width="120" height="20" fill="#a06ad0" fill-opacity="0.5" stroke="#a06ad0"/>
+  <text x="500" y="114" text-anchor="middle" font-size="9" fill="#d7baf0">albumina ↓</text>
+  <rect x="440" y="124" width="120" height="20" fill="#e8a13a" fill-opacity="0.6" stroke="#e8a13a"/>
+  <text x="500" y="138" text-anchor="middle" font-size="9" fill="#f0c078">AG medido ~7 (!)</text>
+  <rect x="440" y="124" width="120" height="44" fill="none" stroke="#e0556b" stroke-dasharray="4 3"/>
+  <text x="500" y="182" text-anchor="middle" font-size="10" fill="#e0556b">AGcorr = 7 + 2,5·2 = 12+</text>
+
+  <text x="340" y="222" text-anchor="middle" font-size="11" fill="#e7eef4">AGcorr = AG + 2,5 · (4 − albumina)</text>
+  <text x="340" y="252" text-anchor="middle" font-size="11" fill="#e8a13a">no doente crítico (albumina baixa), um AG "normal" pode esconder uma acidose de AG alto</text>
+  <text x="340" y="276" text-anchor="middle" font-size="9" fill="#9fb1c0">sempre corrija o AG pela albumina antes de concluir — é o que o engine faz</text>
+</svg>

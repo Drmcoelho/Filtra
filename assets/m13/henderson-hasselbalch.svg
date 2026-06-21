@@ -1,22 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M13</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">Ácido-base renal</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">henderson-hasselbalch</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">Equação de Henderson-Hasselbalch</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Henderson–Hasselbalch — o pH é uma RAZÃO</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">o que importa não é o HCO₃⁻ nem o PaCO₂ sozinhos, mas a relação entre eles</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <text x="340" y="96" text-anchor="middle" font-size="20" fill="#e7eef4">pH = 6,1 + log₁₀ ( HCO₃⁻ / (0,03 · PaCO₂) )</text>
+
+  <rect x="80" y="130" width="240" height="100" rx="10" fill="#10202c" stroke="#52c08a"/>
+  <text x="200" y="156" text-anchor="middle" font-size="12" fill="#9fe3ec" font-weight="bold">HCO₃⁻ — o numerador</text>
+  <text x="200" y="180" text-anchor="middle" font-size="11" fill="#cdd9e3">regulado pelo RIM (lento)</text>
+  <text x="200" y="202" text-anchor="middle" font-size="11" fill="#cdd9e3">↑ HCO₃ → pH↑ (alcalose)</text>
+  <text x="200" y="220" text-anchor="middle" font-size="10" fill="#9fb1c0">componente metabólico</text>
+
+  <rect x="360" y="130" width="240" height="100" rx="10" fill="#10202c" stroke="#3a7bd5"/>
+  <text x="480" y="156" text-anchor="middle" font-size="12" fill="#9bbef0" font-weight="bold">PaCO₂ — o denominador</text>
+  <text x="480" y="180" text-anchor="middle" font-size="11" fill="#cdd9e3">regulado pelo PULMÃO (rápido)</text>
+  <text x="480" y="202" text-anchor="middle" font-size="11" fill="#cdd9e3">↑ PaCO₂ → pH↓ (acidose)</text>
+  <text x="480" y="220" text-anchor="middle" font-size="10" fill="#9fb1c0">componente respiratório</text>
+
+  <text x="340" y="262" text-anchor="middle" font-size="11" fill="#e8a13a">compensar = mover o outro termo na mesma direção para devolver a RAZÃO ao normal</text>
+  <text x="340" y="282" text-anchor="middle" font-size="9" fill="#9fb1c0">por isso pH normal NÃO exclui distúrbio: dois erros opostos mantêm a razão</text>
 </svg>

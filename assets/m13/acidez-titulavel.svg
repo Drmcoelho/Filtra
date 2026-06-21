@@ -1,22 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M13</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">Ácido-base renal</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">acidez-titulavel</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">Acidez titulável</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">As duas formas de excretar H⁺ na urina</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">a urina não fica ácida o bastante para carregar H⁺ livre — é preciso tampão</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <rect x="40" y="68" width="290" height="200" rx="10" fill="#10202c" stroke="#3a7bd5"/>
+  <text x="185" y="92" text-anchor="middle" font-size="12" fill="#9bbef0" font-weight="bold">Acidez titulável (fosfato)</text>
+  <text x="56" y="118" font-size="11" fill="#e7eef4">H⁺ + HPO₄²⁻ → H₂PO₄⁻</text>
+  <text x="56" y="142" font-size="11" fill="#cdd9e3">tampão FIXO: depende da dieta</text>
+  <text x="56" y="162" font-size="11" fill="#cdd9e3">(quanto fosfato é filtrado)</text>
+  <text x="56" y="190" font-size="10" fill="#9fb1c0">não pode ser muito aumentado</text>
+  <text x="56" y="210" font-size="10" fill="#9fb1c0">na demanda de acidose</text>
+  <text x="56" y="240" font-size="10" fill="#e8a13a">≈ 1/3 da excreção de H⁺</text>
+
+  <rect x="350" y="68" width="290" height="200" rx="10" fill="#0c2a30" stroke="#39c0c8"/>
+  <text x="495" y="92" text-anchor="middle" font-size="12" fill="#9fe3ec" font-weight="bold">Amônio (NH₄⁺)</text>
+  <text x="366" y="118" font-size="11" fill="#e7eef4">H⁺ + NH₃ → NH₄⁺</text>
+  <text x="366" y="142" font-size="11" fill="#cdd9e3">tampão AJUSTÁVEL: sobe muito</text>
+  <text x="366" y="162" font-size="11" fill="#cdd9e3">na acidose (amoniogênese)</text>
+  <text x="366" y="190" font-size="10" fill="#9fb1c0">é a principal via para AUMENTAR</text>
+  <text x="366" y="210" font-size="10" fill="#9fb1c0">a excreção de ácido</text>
+  <text x="366" y="240" font-size="10" fill="#e8a13a">≈ 2/3 e cresce na demanda</text>
+
+  <text x="340" y="288" text-anchor="middle" font-size="10" fill="#e8a13a">cada H⁺ tamponado e excretado regenera 1 HCO₃⁻ — a base nova</text>
 </svg>

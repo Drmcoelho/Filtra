@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M13 — Ácido-base renal: HCO₃, NH₄⁺, ânion gap e delta-delta</title>
+<style>
+  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--warn:#e8a13a;--bad:#e0556b;--good:#52c08a;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none} section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .presets{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px} .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)} .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)} .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)} .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M13</div>
+  <h1>Ácido-base renal — HCO₃⁻, NH₄⁺, ânion gap e delta-delta</h1>
+  <div class="sub">O pulmão ajusta o <b>PaCO₂</b> (rápido); o <b>rim</b> regula o <b>HCO₃⁻</b> (lento) — reabsorve o
+  filtrado e <b>regenera</b> base excretando H⁺ como acidez titulável e <b>NH₄⁺</b> (o tampão ajustável). O
+  <b>ânion gap</b> revela a natureza da acidose; a <b>albumina</b> baixa o mascara; o <b>delta-delta</b>
+  desmascara o distúrbio misto; as <b>ATRs</b> são defeitos por segmento.</div>
+  <nav class="hex">
+    <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
+    <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="filtra.html">&larr; índice do braço FILTRA</a>
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- CONCEITO -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — como o rim defende o pH</h3>
+      <p class="sub" style="margin-top:0"><b>Homeostasia ácido-base.</b> O organismo mantém o pH ~7,40
+      defendendo a razão HCO₃⁻/PaCO₂. As Fig. 1–13 voltam no Caso, na Trilha e na Avaliação. Atribuição em
+      <code>CREDITS.md</code> (em curadoria).</p>
+
+      <h4>1. Dois reguladores, uma razão</h4>
+      <p class="sub">CO₂ + H₂O ⇌ H⁺ + HCO₃⁻. O pulmão move o PaCO₂ em minutos; o rim, o HCO₃⁻ em dias. O pH é a
+      <b>razão</b> entre eles.</p>
+      <div class="frow">
+        <figure class="fviva"><img src="assets/m13/rim-pulmao-tampao.svg" alt="Pulmão regula o CO2 rápido, rim regula o bicarbonato lento" loading="lazy">
+          <figcaption><b>Fig. 1 · Os dois reguladores.</b> Pulmão (PaCO₂, minutos) × rim (HCO₃⁻, dias). A
+          compensação nunca corrige por completo — se corrigiu demais/de menos, é misto.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m13/henderson-hasselbalch.svg" alt="Equação de Henderson-Hasselbalch: o pH é uma razão" loading="lazy">
+          <figcaption><b>Fig. 2 · Henderson–Hasselbalch.</b> pH = 6,1 + log(HCO₃/(0,03·PaCO₂)). Por isso pH
+          normal não exclui distúrbio: dois erros opostos mantêm a razão.</figcaption></figure>
+      </div>
+
+      <h4>2. O trabalho do rim — reabsorver e REGENERAR</h4>
+      <p class="sub">Reabsorver o HCO₃⁻ filtrado não cria base; regenerar (excretando H⁺ tamponado) repõe o que os
+      ácidos consumiram. O NH₄⁺ é o tampão que o rim ajusta.</p>
+      <div class="frow">
+        <div class="concept" id="draw-gap"></div>
+        <figure class="fviva"><img src="assets/m13/reabsorcao-hco3-nh4.svg" alt="O rim reabsorve e regenera bicarbonato" loading="lazy">
+          <figcaption><b>Fig. 3 · Reabsorver × regenerar.</b> TCP recupera o filtrado (falha = ATR II); o distal
+          gera base nova excretando H⁺ (falha = ATR I). Cada H⁺ excretado = 1 HCO₃⁻ novo.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m13/amoniogenese.svg" alt="Amoniogênese: glutamina vira amônio e bicarbonato novo" loading="lazy">
+          <figcaption><b>Fig. 4 · Amoniogênese.</b> Glutamina → NH₄⁺ (excretado) + HCO₃⁻ novo. Sobe muito na
+          acidose crônica — é o tampão urinário regulável.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m13/acidez-titulavel.svg" alt="Acidez titulável (fosfato) versus amônio" loading="lazy">
+          <figcaption><b>Fig. 5 · As duas vias de H⁺.</b> Acidez titulável (fosfato, fixa pela dieta) × NH₄⁺
+          (ajustável). O NH₄⁺ é a principal via para aumentar a excreção de ácido.</figcaption></figure>
+      </div>
+
+      <h4>3. O ânion gap — e a armadilha da albumina</h4>
+      <p class="sub">AG = Na⁺ − (Cl⁻ + HCO₃⁻) ≈ 12. Sobe quando um ácido fixo deixa seu ânion; a albumina baixa o
+      mascara (corrigir).</p>
+      <div class="frow">
+        <figure class="fviva"><img src="assets/m13/anion-gap.svg" alt="O ânion gap e os ânions invisíveis" loading="lazy">
+          <figcaption><b>Fig. 6 · O ânion gap.</b> O ácido gasta HCO₃⁻ e seu ânion ocupa o "gap". AG normal
+          (hiperclorêmica): perde HCO₃⁻ e o Cl⁻ sobe no lugar.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m13/ag-albumina.svg" alt="A albumina baixa mascara o ânion gap" loading="lazy">
+          <figcaption><b>Fig. 7 · A correção da albumina.</b> AGcorr = AG + 2,5·(4 − albumina). No crítico
+          hipoalbuminêmico, um AG "normal" pode esconder uma acidose de AG alto.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m13/acidose-causas.svg" alt="Causas de acidose de AG alto e de AG normal" loading="lazy">
+          <figcaption><b>Fig. 8 · As causas.</b> AG alto (lactato, cetonas, uremia, toxinas) × AG normal
+          (diarreia, ATRs, acetazolamida, SF). O gap urinário separa GI de renal.</figcaption></figure>
+      </div>
+
+      <h4>4. Distúrbios mistos — Winter e delta-delta</h4>
+      <p class="sub">A compensação tem valor esperado; desvios revelam um segundo distúrbio.</p>
+      <div class="frow">
+        <div class="concept" id="draw-delta"></div>
+        <figure class="fviva"><img src="assets/m13/compensacao-winter.svg" alt="Fórmula de Winter: PaCO2 esperado na acidose metabólica" loading="lazy">
+          <figcaption><b>Fig. 9 · Winter.</b> PaCO₂ esperado = 1,5·HCO₃ + 8 (±2). Acima → acidose respiratória
+          somada; abaixo → alcalose respiratória somada (ex.: sepse).</figcaption></figure>
+        <figure class="fviva"><img src="assets/m13/delta-delta.svg" alt="Delta-delta desmascara distúrbios mistos" loading="lazy">
+          <figcaption><b>Fig. 10 · Delta-delta.</b> (AG−12)/(24−HCO₃). &lt;1 = AG normal somada; 1–2 = HAGMA pura;
+          &gt;2 = alcalose metabólica somada.</figcaption></figure>
+      </div>
+
+      <h4>5. As acidoses tubulares renais</h4>
+      <div class="frow">
+        <figure class="fviva"><img src="assets/m13/atr-tipos.svg" alt="Os tipos de acidose tubular renal" loading="lazy">
+          <figcaption><b>Fig. 11 · As ATRs.</b> Todas dão AG normal. O K⁺ separa: I (distal) e II (proximal) com
+          hipoK; IV (hipoaldo) com hiperK. pH urinário e gap urinário ajudam.</figcaption></figure>
+      </div>
+
+      <h4>6. O instrumento e a leitura em 5 passos</h4>
+      <div class="frow">
+        <div class="concept" id="draw-davenport"></div>
+        <figure class="fviva"><img src="assets/m13/davenport-diagrama.svg" alt="Diagrama de Davenport: pH versus bicarbonato com isóbaras de PCO2" loading="lazy">
+          <figcaption><b>Fig. 12 · Davenport.</b> pH × HCO₃⁻ com isóbaras de PCO₂; cada distúrbio move o ponto numa
+          direção. O Instrumento o computa do engine e marca o ponto atual.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m13/abordagem-passo-a-passo.svg" alt="A abordagem em 5 passos do distúrbio ácido-base" loading="lazy">
+          <figcaption><b>Fig. 13 · Os 5 passos.</b> pH → primário → compensação (Winter) → ânion gap (corrigido) →
+          delta-delta. O Lab executa exatamente essa sequência.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASO -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — oito atos, decida antes de revelar</h3>
+      <p class="sub">Mulher séptica, taquipneica. Gasometria: pH 7,30 · PaCO₂ 24 · HCO₃ 11 · Na 138 · Cl 100 ·
+      albumina 2,5. Vamos decompor.</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step"><b>Ato 1.</b> O pH 7,30 indica (Fig. 13, passo 1)…
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>Acidemia</b> (pH &lt; 7,35). O processo dominante puxa para o ácido.</div></div>
+
+      <div class="step"><b>Ato 2.</b> Qual o distúrbio primário (passo 2)?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2"><b>Acidose metabólica</b>: HCO₃ 11 (baixo) acompanha a acidemia. O PaCO₂ baixo
+          não causaria acidemia (seria alcalose) → é compensatório/extra.</div></div>
+
+      <div class="step"><b>Ato 3.</b> A compensação respiratória é adequada (Winter, Fig. 9)?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3">Esperado = 1,5·11 + 8 = <b>24,5 (±2)</b>. O PaCO₂ medido é 24 → <b>dentro do
+          esperado</b>. Compensação respiratória apropriada (ainda não é misto por aqui).</div></div>
+
+      <div class="step"><b>Ato 4.</b> O ânion gap (passo 4)? AG = 138 − (100 + 11) = 27.
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>AG alto</b> (27). Há um ácido fixo adicionado — na sepse, suspeite de
+          <b>lactato</b> (ponte com o Choca: má perfusão).</div></div>
+
+      <div class="step"><b>Ato 5.</b> A albumina é 2,5. Isso muda algo (Fig. 7)?
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5">AGcorr = 27 + 2,5·(4 − 2,5) = <b>30,75</b>. A hipoalbuminemia estava
+          <b>subestimando</b> o gap — ele é ainda mais alto.</div></div>
+
+      <div class="step"><b>Ato 6.</b> O delta-delta (passo 5, Fig. 10)? (AGcorr−12)/(24−HCO₃) = (30,75−12)/(24−11).
+        <div><button class="act" data-rev="r6">Revelar</button></div>
+        <div class="reveal" id="r6">≈ 18,75/13 ≈ <b>1,4</b> → faixa 1–2: acidose de AG alto <b>pura</b> (sem segundo
+          distúrbio metabólico). Tudo se explica pelo lactato.</div></div>
+
+      <div class="step"><b>Ato 7.</b> <i>Vira o jogo:</i> e se o HCO₃ fosse 20 (em vez de 11), mantido o resto?
+        <div><button class="act" data-rev="r7">Revelar</button></div>
+        <div class="reveal" id="r7">Δ-Δ = (30,75−12)/(24−20) ≈ 18,75/4 ≈ <b>4,7</b> (&gt;2) → haveria também uma
+          <b>alcalose metabólica</b> escondida (ex.: vômitos). O gap subiu muito sem o HCO₃ cair na mesma medida.</div></div>
+
+      <div class="step"><b>Ato 8.</b> <i>Síntese.</i> Lição de uma linha?
+        <div><button class="act" data-rev="r8">Revelar</button></div>
+        <div class="reveal" id="r8">Siga os 5 passos sempre: pH → primário → Winter → AG corrigido → delta-delta. O
+          número (pH) é a sombra; os termos (HCO₃, PaCO₂, AG, albumina) contam a história.</div></div>
+    </div>
+  </section>
+
+  <!-- TRILHA -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — treze perguntas que constroem o conceito</h3>
+      <details><summary>1. Quem regula o PaCO₂ e quem regula o HCO₃⁻?</summary><p>O pulmão regula o PaCO₂ (rápido);
+        o rim regula o HCO₃⁻ (lento). O pH é a razão entre eles.</p></details>
+      <details><summary>2. O que diz Henderson–Hasselbalch?</summary><p>pH = 6,1 + log(HCO₃/(0,03·PaCO₂)). O pH
+        depende da RAZÃO, não dos valores isolados.</p></details>
+      <details><summary>3. Reabsorver HCO₃⁻ cria base nova?</summary><p>Não — só recupera o filtrado. Gerar base
+        nova exige REGENERAR, excretando H⁺ tamponado.</p></details>
+      <details><summary>4. Quais os tampões urinários de H⁺?</summary><p>Acidez titulável (fosfato, fixa) e NH₄⁺
+        (amoniogênese, ajustável). Cada H⁺ excretado = 1 HCO₃⁻ novo.</p></details>
+      <details><summary>5. Qual o tampão que o rim AJUSTA na acidose?</summary><p>O NH₄⁺: a amoniogênese sobe muito
+        na acidose crônica (glutamina → NH₄⁺ + HCO₃⁻ novo).</p></details>
+      <details><summary>6. Como se calcula o ânion gap?</summary><p>AG = Na⁺ − (Cl⁻ + HCO₃⁻) ≈ 12. Mede os ânions
+        não medidos.</p></details>
+      <details><summary>7. Por que corrigir o AG pela albumina?</summary><p>A albumina é o maior ânion invisível;
+        se cai, o AG cai. AGcorr = AG + 2,5·(4 − albumina).</p></details>
+      <details><summary>8. AG alto × AG normal: o que muda?</summary><p>AG alto = ácido fixo adicionado (lactato,
+        cetona…). AG normal = perda de HCO₃⁻ com Cl⁻ subindo (diarreia, ATR).</p></details>
+      <details><summary>9. Para que serve a fórmula de Winter?</summary><p>Dá o PaCO₂ esperado na acidose metabólica
+        (1,5·HCO₃ + 8 ± 2); desvios revelam componente respiratório somado.</p></details>
+      <details><summary>10. O que o delta-delta detecta?</summary><p>Distúrbio metabólico misto: &lt;1 = AG normal
+        somada; 1–2 = HAGMA pura; &gt;2 = alcalose metabólica somada.</p></details>
+      <details><summary>11. O que as ATRs têm em comum?</summary><p>Todas dão acidose de AG NORMAL
+        (hiperclorêmica). Diferem no defeito e no potássio.</p></details>
+      <details><summary>12. Como o K⁺ separa as ATRs?</summary><p>Tipos I (distal) e II (proximal): hipoK. Tipo IV
+        (hipoaldo): hiperK.</p></details>
+      <details><summary>13. Qual a ordem da leitura?</summary><p>pH → primário → compensação (Winter) → ânion gap
+        (corrigido) → delta-delta. Decompor antes de interpretar.</p></details>
+    </div>
+  </section>
+
+  <!-- INSTRUMENTO -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — o diagrama de Davenport (pH × HCO₃⁻)</h3>
+      <p class="sub">Os controles do <b>Lab</b> definem o gás e os eletrólitos; aqui o ponto (pH, HCO₃) se move
+      sobre as isóbaras de PCO₂. A caixa verde é a zona normal.</p>
+      <canvas id="ab-canvas" width="900" height="380" aria-label="Diagrama de Davenport"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- LAB -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — a gasometria em 5 passos</h3>
+      <div class="grid">
+        <div>
+          <label>Na⁺ (mEq/L): <span class="val" id="lbl-na">140</span></label>
+          <input type="range" id="in-na" min="120" max="160" step="1" value="140">
+          <label>Cl⁻ (mEq/L): <span class="val" id="lbl-cl">104</span></label>
+          <input type="range" id="in-cl" min="80" max="130" step="1" value="104">
+          <label>HCO₃⁻ (mEq/L): <span class="val" id="lbl-hco3">24</span></label>
+          <input type="range" id="in-hco3" min="4" max="44" step="1" value="24">
+        </div>
+        <div>
+          <label>PaCO₂ (mmHg): <span class="val" id="lbl-paco2">40</span></label>
+          <input type="range" id="in-paco2" min="10" max="90" step="1" value="40">
+          <label>Albumina (g/dL): <span class="val" id="lbl-alb">4.0</span></label>
+          <input type="range" id="in-alb" min="1" max="5.5" step="0.1" value="4.0">
+        </div>
+      </div>
+
+      <div class="presets">
+        <button class="act" data-preset="normal">Normal</button>
+        <button class="act" data-preset="cad">CAD (AG alto)</button>
+        <button class="act" data-preset="diarreia">Diarreia (AG normal)</button>
+        <button class="act" data-preset="dpoc">DPOC (resp.)</button>
+        <button class="act" data-preset="mista">HAGMA + alcalose</button>
+        <button class="act" data-preset="sepse">Sepse (lactato + taquipneia)</button>
+      </div>
+
+      <table>
+        <tr><th>Variável</th><th>Atual</th><th>Comentário</th></tr>
+        <tr><td>pH</td><td class="num" id="out-ph">—</td><td class="num">7,35–7,45</td></tr>
+        <tr><td>Ânion gap</td><td class="num" id="out-ag">—</td><td class="num">~12</td></tr>
+        <tr><td>AG corrigido (albumina)</td><td class="num" id="out-agc">—</td><td class="num">+2,5/g abaixo de 4</td></tr>
+        <tr><td>PaCO₂ esperado (Winter)</td><td class="num" id="out-winter">—</td><td class="num">se ac. metabólica</td></tr>
+        <tr><td>Delta-delta</td><td class="num" id="out-dd">—</td><td class="num">se AG alto</td></tr>
+        <tr><td>Diagnóstico</td><td class="num" id="out-dx">—</td><td class="num">5 passos</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÃO -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (13)</button>
+        <button data-bank="textual">Textual (12)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica</b>. Este módulo M13 é
+    fisiologia ácido-base; o classificador é uma simplificação didática (faixas e fórmulas clássicas — Winter,
+    delta-delta) e não substitui a interpretação clínica completa do caso. A decisão final é sempre do profissional.
+  </div>
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+</div>
+
+<script>
+/* ENGINE INLINE — espelho fiel de build/m13/model13.js */
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
+function phFrom(hco3,paco2){ hco3=clampv(hco3,1,60); paco2=clampv(paco2,5,150); return 6.1+(Math.log(hco3/(0.03*paco2))/Math.LN10); }
+function hco3FromPhPco2(pH,paco2){ pH=clampv(pH,6.5,8); paco2=clampv(paco2,5,150); return 0.03*paco2*Math.pow(10,pH-6.1); }
+function acidbase(input){ var inp=input||{};
+  var Na=clampv(inp.Na!==undefined?inp.Na:140,100,180), Cl=clampv(inp.Cl!==undefined?inp.Cl:104,60,140),
+    HCO3=clampv(inp.HCO3!==undefined?inp.HCO3:24,1,60), PaCO2=clampv(inp.PaCO2!==undefined?inp.PaCO2:40,5,150),
+    albumin=clampv(inp.albumin!==undefined?inp.albumin:4.0,0.5,6);
+  var pH=phFrom(HCO3,PaCO2), AG=Na-(Cl+HCO3), AGcorr=AG+2.5*(4.0-albumin), highAG=AGcorr>12;
+  var acidemia=pH<7.35, alkalemia=pH>7.45, metabAcid=HCO3<22, metabAlk=HCO3>26, respAcid=PaCO2>45, respAlk=PaCO2<35;
+  var winterExp=1.5*HCO3+8;
+  var deltaRatio=null; if(HCO3<24&&AGcorr>12) deltaRatio=(AGcorr-12)/(24-HCO3);
+  var primario;
+  if(acidemia) primario=metabAcid?'acidose metabólica':(respAcid?'acidose respiratória':'acidemia (misto)');
+  else if(alkalemia) primario=metabAlk?'alcalose metabólica':(respAlk?'alcalose respiratória':'alcalemia (misto)');
+  else { if(metabAcid||respAcid||metabAlk||respAlk) primario='compensado / misto'; else primario='normal'; }
+  var subtipo=''; if(metabAcid) subtipo=highAG?'ânion gap alto':'ânion gap normal (hiperclorêmica)';
+  var misto=[];
+  if(metabAcid){ if(PaCO2>winterExp+3) misto.push('+ acidose respiratória (PaCO₂ acima do esperado)'); else if(PaCO2<winterExp-3) misto.push('+ alcalose respiratória (PaCO₂ abaixo do esperado)'); }
+  if(deltaRatio!==null){ if(deltaRatio<0.9) misto.push('+ acidose de AG normal concomitante (Δ-Δ < 1)'); else if(deltaRatio>2.0) misto.push('+ alcalose metabólica concomitante (Δ-Δ > 2)'); }
+  return {Na:Na,Cl:Cl,HCO3:HCO3,PaCO2:PaCO2,albumin:albumin,pH:pH,AG:AG,AGcorr:AGcorr,highAG:highAG,winterExp:winterExp,
+    deltaRatio:deltaRatio,acidemia:acidemia,alkalemia:alkalemia,metabAcid:metabAcid,metabAlk:metabAlk,respAcid:respAcid,respAlk:respAlk,
+    primario:primario,subtipo:subtipo,misto:misto}; }
+function acidbaseLayout(state,W,H){ state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=54,padR=16,padT=18,padB=38,baseY=H-padB, phMin=7.0,phMax=7.7,hMin=0,hMax=44,N=48;
+  var pxX=(W-padL-padR)/(phMax-phMin), pxY=(baseY-padT)/(hMax-hMin);
+  function X(ph){ return padL+(clampv(ph,phMin,phMax)-phMin)*pxX; } function Y(h){ return baseY-(clampv(h,hMin,hMax)-hMin)*pxY; }
+  var isobars=[20,40,60,80], lines=[], i,j,ph,h;
+  for(i=0;i<isobars.length;i++){ var pts=[]; for(j=0;j<=N;j++){ ph=phMin+(phMax-phMin)*j/N; h=hco3FromPhPco2(ph,isobars[i]); if(h<=hMax+4) pts.push({pH:ph,hco3:h,x:X(ph),y:Y(h)}); } lines.push({pco2:isobars[i],pts:pts}); }
+  var r=acidbase(state);
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,phMin:phMin,phMax:phMax,hMin:hMin,hMax:hMax,pxX:pxX,pxY:pxY,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},normalBox:{x1:X(7.35),x2:X(7.45),y1:Y(26),y2:Y(22)},isobars:lines,
+    current:{x:X(r.pH),y:Y(r.HCO3),pH:r.pH,hco3:r.HCO3}}; }
+window.acidbase=acidbase; window.phFrom=phFrom; window.hco3FromPhPco2=hco3FromPhPco2; window.acidbaseLayout=acidbaseLayout;
+window.MODEL={acidbase:acidbase,phFrom:phFrom,hco3FromPhPco2:hco3FromPhPco2,acidbaseLayout:acidbaseLayout,clampv:clampv};
+
+/* UI */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=(d===undefined?1:d); return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on'); b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on'); $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh(); });
+document.addEventListener('click',function(e){ var b=e.target.closest('button.act[data-rev]'); if(!b) return; var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on'); });
+
+function readInputs(){ return { Na:+$('in-na').value, Cl:+$('in-cl').value, HCO3:+$('in-hco3').value, PaCO2:+$('in-paco2').value, albumin:+$('in-alb').value }; }
+function dxText(r){ var s=r.primario; if(r.subtipo) s+=' ('+r.subtipo+')'; if(r.misto.length) s+=' '+r.misto.join('; '); return s; }
+function refresh(){ var inp=readInputs();
+  $('lbl-na').textContent=inp.Na; $('lbl-cl').textContent=inp.Cl; $('lbl-hco3').textContent=inp.HCO3; $('lbl-paco2').textContent=inp.PaCO2; $('lbl-alb').textContent=fmt(inp.albumin,1);
+  var r=acidbase(inp);
+  $('out-ph').textContent=fmt(r.pH,2); $('out-ag').textContent=fmt(r.AG,1); $('out-agc').textContent=fmt(r.AGcorr,1);
+  $('out-winter').textContent=r.metabAcid?(fmt(r.winterExp,0)+' (±2)'):'n/a (não ac. metab.)';
+  $('out-dd').textContent=(r.deltaRatio===null?'n/a':fmt(r.deltaRatio,2)); $('out-dx').textContent=dxText(r);
+  verdict(r); drawDavenport(inp); pearl(r); }
+function verdict(r){ var v=$('veredito'), cls='b-good';
+  if(r.misto.length) cls='b-bad'; else if(r.primario!=='normal') cls='b-warn';
+  v.className='banner '+cls; v.textContent='Diagnóstico: '+dxText(r)+' — pH '+fmt(r.pH,2)+', HCO₃ '+r.HCO3+', PaCO₂ '+r.PaCO2+', AGcorr '+fmt(r.AGcorr,1)+'.'; }
+function pearl(r){ var p=$('lab-pearl'), ip=$('instr-pearl'), t;
+  if(r.misto.length) t='PÉROLA: distúrbio MISTO — '+r.misto.join('; ')+'. O número (pH) escondia mais de um processo.';
+  else if(r.highAG && (r.AGcorr-r.AG)>2.5) t='PÉROLA: a albumina baixa mascarava o gap — AG medido '+fmt(r.AG,1)+', corrigido '+fmt(r.AGcorr,1)+'.';
+  else if(r.metabAcid && r.subtipo) t='Acidose metabólica de '+r.subtipo+'. Winter esperado PaCO₂ '+fmt(r.winterExp,0)+' (medido '+r.PaCO2+').';
+  else t='pH '+fmt(r.pH,2)+' · razão HCO₃/PaCO₂. Siga os 5 passos para classificar.';
+  p.textContent=t; ip.textContent=t; }
+function drawDavenport(state){ var c=$('ab-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
+  var L=acidbaseLayout(state,c.width,c.height); ctx.clearRect(0,0,L.W,L.H);
+  // normal box
+  var nb=L.normalBox; ctx.fillStyle='rgba(82,192,138,.14)'; ctx.fillRect(nb.x1,nb.y1,nb.x2-nb.x1,nb.y2-nb.y1);
+  // axes
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('HCO₃⁻ (mEq/L)',8,L.padT+2); ctx.fillText('pH →',L.W-60,L.baseY+24);
+  // isobars
+  var cols=['#52c08a','#39c0c8','#3a7bd5','#9bbef0'];
+  for(var i=0;i<L.isobars.length;i++){ var iso=L.isobars[i]; ctx.strokeStyle=cols[i%cols.length]; ctx.lineWidth=(iso.pco2===40?2:1.3); ctx.beginPath();
+    for(var k=0;k<iso.pts.length;k++){ var p=iso.pts[k]; if(k===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); } ctx.stroke();
+    if(iso.pts.length){ var last=iso.pts[iso.pts.length-1]; ctx.fillStyle=cols[i%cols.length]; ctx.fillText('PCO₂ '+iso.pco2,Math.min(last.x+4,L.W-60),last.y); } }
+  // current marker
+  var cu=L.current; ctx.fillStyle='#e8a13a'; ctx.beginPath(); ctx.arc(cu.x,cu.y,5,0,2*Math.PI); ctx.fill();
+  ctx.fillStyle='#e7eef4'; ctx.fillText('pH '+fmt(cu.pH,2)+' · HCO₃ '+fmt(cu.hco3,0),Math.min(cu.x+8,L.W-150),Math.max(cu.y-8,L.padT+10)); }
+['in-na','in-cl','in-hco3','in-paco2','in-alb'].forEach(function(id){ $(id).addEventListener('input',refresh); });
+
+var PRESETS={
+  normal:{na:140,cl:104,hco3:24,paco2:40,alb:4.0},
+  cad:{na:140,cl:100,hco3:8,paco2:20,alb:4.0},
+  diarreia:{na:138,cl:115,hco3:14,paco2:30,alb:4.0},
+  dpoc:{na:140,cl:96,hco3:34,paco2:65,alb:4.0},
+  mista:{na:145,cl:85,hco3:20,paco2:34,alb:4.0},
+  sepse:{na:138,cl:100,hco3:11,paco2:24,alb:2.5}
+};
+function applyPreset(p){ var d=PRESETS[p]; if(!d) return; $('in-na').value=d.na; $('in-cl').value=d.cl; $('in-hco3').value=d.hco3; $('in-paco2').value=d.paco2; $('in-alb').value=d.alb; refresh(); }
+document.querySelector('.presets').addEventListener('click',function(e){ var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset')); });
+
+/* ILUSTRAÇÕES computadas + helper raster */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+function davenportMini(state,titulo){ var W=300,H=180,L=acidbaseLayout(state,W,H),s='';
+  var nb=L.normalBox; s+='<rect x="'+f1(nb.x1)+'" y="'+f1(nb.y1)+'" width="'+f1(nb.x2-nb.x1)+'" height="'+f1(nb.y2-nb.y1)+'" fill="#52c08a" fill-opacity="0.14"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  var cols=['#52c08a','#39c0c8','#3a7bd5','#9bbef0'];
+  for(var i=0;i<L.isobars.length;i++){ var iso=L.isobars[i],d=''; for(var k=0;k<iso.pts.length;k++){ d+=(k===0?'M':'L')+f1(iso.pts[k].x)+' '+f1(iso.pts[k].y)+' '; } s+='<path d="'+d+'" fill="none" stroke="'+cols[i%cols.length]+'" stroke-width="'+(iso.pco2===40?2:1.2)+'"/>'; }
+  var cu=L.current; s+='<circle cx="'+f1(cu.x)+'" cy="'+f1(cu.y)+'" r="5" fill="#e8a13a"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'Davenport')+'</text>';
+  s+='<text x="'+(W-8)+'" y="'+(L.baseY+14)+'" fill="#9fb1c0" font-size="9" text-anchor="end">pH →</text>';
+  return svgEl(W,H,s); }
+function gapBars(r){ var W=300,H=180,base=150,s='', scale=0.8;
+  function col(x,segs,lab){ var y=base; for(var i=0;i<segs.length;i++){ var h=segs[i].v*scale; y-=h; s+='<rect x="'+x+'" y="'+f1(y)+'" width="56" height="'+f1(h)+'" fill="'+segs[i].c+'" fill-opacity="0.55" stroke="'+segs[i].c+'"/>'; }
+    s+='<text x="'+(x+28)+'" y="'+(base+14)+'" fill="#9fb1c0" font-size="9" text-anchor="middle">'+lab+'</text>'; }
+  col(80,[{v:r.Na,c:'#3a7bd5'}],'Na⁺ '+fmt(r.Na,0));
+  col(170,[{v:r.Cl,c:'#39c0c8'},{v:r.HCO3,c:'#52c08a'},{v:Math.max(r.AG,0),c:'#e0556b'}],'Cl+HCO₃+AG');
+  s+='<text x="150" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">ânion gap = Na − (Cl+HCO₃)</text>';
+  s+='<text x="150" y="168" fill="#e8a13a" font-size="10" text-anchor="middle">AG '+fmt(r.AG,1)+' · corrigido '+fmt(r.AGcorr,1)+'</text>';
+  return svgEl(W,H,s); }
+function deltaGauge(r){ var W=300,H=180,s='';
+  s+='<text x="150" y="16" fill="#9fb1c0" font-size="11" text-anchor="middle">delta-delta</text>';
+  s+='<rect x="40" y="60" width="73" height="60" fill="#3a7bd5" fill-opacity="0.25" stroke="#3a7bd5"/><text x="76" y="94" fill="#9bbef0" font-size="10" text-anchor="middle">&lt;1</text>';
+  s+='<rect x="113" y="60" width="73" height="60" fill="#52c08a" fill-opacity="0.25" stroke="#52c08a"/><text x="149" y="94" fill="#9fe3ec" font-size="10" text-anchor="middle">1–2</text>';
+  s+='<rect x="186" y="60" width="73" height="60" fill="#e8a13a" fill-opacity="0.25" stroke="#e8a13a"/><text x="222" y="94" fill="#f0c078" font-size="10" text-anchor="middle">&gt;2</text>';
+  if(r.deltaRatio!==null){ var dr=Math.max(0,Math.min(3,r.deltaRatio)); var x=40+ (dr/3)*219; s+='<line x1="'+f1(x)+'" y1="50" x2="'+f1(x)+'" y2="130" stroke="#e7eef4" stroke-width="2"/>'; s+='<text x="150" y="152" fill="#e8a13a" font-size="11" text-anchor="middle">Δ-Δ = '+fmt(r.deltaRatio,2)+'</text>'; }
+  else s+='<text x="150" y="152" fill="#9fb1c0" font-size="10" text-anchor="middle">n/a (não é acidose de AG alto)</text>';
+  return svgEl(W,H,s); }
+function imgFig(slug,alt){ return '<img src="assets/m13/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+/* TUTOR */
+function R0(extra){ var o={}; if(extra) for(var k in extra) o[k]=extra[k]; return acidbase(o); }
+var TUTOR_ILUSTRADO=[
+  {q:'No Davenport, baixar o HCO₃ move o ponto para…',o:['cima/direita','baixo/esquerda (acidose metab.)','não move'],c:1,e:'HCO₃↓ → pH↓ → canto inferior esquerdo.',fig:function(){return davenportMini({HCO3:10,PaCO2:24},'HCO₃ baixo');}},
+  {q:'No Davenport, subir o PaCO₂ leva a…',o:['alcalose','acidose respiratória','nada'],c:1,e:'PaCO₂↑ → pH↓.',fig:function(){return davenportMini({HCO3:28,PaCO2:65},'PaCO₂ alto');}},
+  {q:'O ponto na caixa verde indica…',o:['acidose','normal','alcalose'],c:1,e:'Zona normal de pH/HCO₃.',fig:function(){return davenportMini({},'normal');}},
+  {q:'Nas barras, AG alto significa…',o:['Cl ocupou o gap','um ânion não medido subiu','HCO₃ subiu'],c:1,e:'Ácido fixo deixou seu ânion.',fig:function(){return gapBars(R0({Na:140,Cl:100,HCO3:8}));}},
+  {q:'Com albumina 2 e AG 12, o AGcorr…',o:['continua 12','sobe (~17)','cai'],c:1,e:'+2,5 por g/dL abaixo de 4.',fig:function(){return gapBars(R0({Na:140,Cl:110,HCO3:18,albumin:2}));}},
+  {q:'Delta-delta > 2 sugere…',o:['AG normal somada','HAGMA pura','alcalose metabólica somada'],c:2,e:'O HCO₃ está "preservado" demais.',fig:function(){return deltaGauge(R0({Na:145,Cl:85,HCO3:20}));}},
+  {q:'Na figura, quem regula o HCO₃⁻?',o:['o pulmão','o rim','o fígado'],c:1,e:'Rim (lento); pulmão regula o PaCO₂.',fig:function(){return imgFig('rim-pulmao-tampao.svg','reguladores');}},
+  {q:'Na figura, o tampão urinário AJUSTÁVEL é…',o:['fosfato (acidez titulável)','NH₄⁺ (amoniogênese)','o cloro'],c:1,e:'A amoniogênese sobe na acidose.',fig:function(){return imgFig('amoniogenese.svg','amoniogênese');}},
+  {q:'Na figura, a ATR tipo IV tem potássio…',o:['baixo','alto (hiperK)','normal'],c:1,e:'Hipoaldo → hiperK; I e II têm hipoK.',fig:function(){return imgFig('atr-tipos.svg','ATR');}},
+  {q:'Na figura de causas, lactato dá acidose de…',o:['AG normal','AG alto','alcalose'],c:1,e:'Ácido fixo → AG alto (ponte Choca).',fig:function(){return imgFig('acidose-causas.svg','causas');}},
+  {q:'Na figura de Winter, PaCO₂ acima do esperado =',o:['alcalose resp. somada','acidose resp. somada','normal'],c:1,e:'Não baixou o CO₂ o quanto devia.',fig:function(){return imgFig('compensacao-winter.svg','Winter');}},
+  {q:'Na figura, reabsorver HCO₃⁻ (TCP)…',o:['cria base nova','recupera o filtrado','excreta H⁺'],c:1,e:'Regenerar (distal) é que gera base nova.',fig:function(){return imgFig('reabsorcao-hco3-nh4.svg','reabsorção');}},
+  {q:'Na abordagem, o último passo é…',o:['o pH','o ânion gap','o delta-delta'],c:2,e:'pH→primário→Winter→AG→Δ-Δ.',fig:function(){return imgFig('abordagem-passo-a-passo.svg','5 passos');}}
+];
+var TUTOR_TEXTUAL=[
+  {q:'O pH depende…',o:['só do HCO₃','só do PaCO₂','da razão HCO₃/PaCO₂'],c:2,e:'Henderson–Hasselbalch.'},
+  {q:'Quem regula o PaCO₂?',o:['o rim','o pulmão','o fígado'],c:1,e:'Rápido (minutos).'},
+  {q:'Gerar base nova exige…',o:['reabsorver HCO₃','regenerar (excretar H⁺)','beber bicarbonato'],c:1,e:'Acidez titulável + NH₄⁺.'},
+  {q:'O tampão urinário ajustável é…',o:['fosfato','NH₄⁺','sulfato'],c:1,e:'Amoniogênese sobe na acidose.'},
+  {q:'Ânion gap =',o:['Na − Cl','Na − (Cl + HCO₃)','Cl + HCO₃'],c:1,e:'≈ 12 normal.'},
+  {q:'A correção do AG pela albumina é…',o:['+2,5 por g/dL abaixo de 4','−2,5','não existe'],c:0,e:'Albumina baixa mascara o gap.'},
+  {q:'Acidose de AG normal ocorre em…',o:['cetoacidose','diarreia/ATR','intoxicação por metanol'],c:1,e:'Perde HCO₃, Cl sobe.'},
+  {q:'A fórmula de Winter prevê…',o:['o HCO₃','o PaCO₂ esperado','o AG'],c:1,e:'1,5·HCO₃ + 8 (±2).'},
+  {q:'Delta-delta < 1 indica…',o:['HAGMA pura','AG normal somada','alcalose somada'],c:1,e:'HCO₃ caiu mais que o AG subiu.'},
+  {q:'As ATRs causam acidose de…',o:['AG alto','AG normal','alcalose'],c:1,e:'Hiperclorêmica.'},
+  {q:'A ATR com hipercalemia é a…',o:['tipo I','tipo II','tipo IV'],c:2,e:'Hipoaldosteronismo.'},
+  {q:'A ordem da leitura é…',o:['AG → pH → Winter','pH → primário → Winter → AG → Δ-Δ','Δ-Δ primeiro'],c:1,e:'Decompor antes de interpretar.'}
+];
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL; window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+var BANKS={ilustrada:TUTOR_ILUSTRADO,textual:TUTOR_TEXTUAL}, curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+function renderTutor(){ var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():''; $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false; $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){ if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button'); btns[item.c].classList.add('ok'); if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block'; fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e; $('tutor-score').textContent=tScore; $('tutor-total').textContent=tTotal; });
+    box.appendChild(b); }); }
+$('banktabs').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor(); });
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+$('draw-gap').innerHTML = gapBars(acidbase({Na:140,Cl:100,HCO3:8}));
+$('draw-delta').innerHTML = deltaGauge(acidbase({Na:140,Cl:100,HCO3:8}));
+$('draw-davenport').innerHTML = davenportMini({},'Davenport (normal)');
+$('fig-caso').innerHTML = davenportMini({Na:138,Cl:100,HCO3:11,PaCO2:24,albumin:2.5},'sepse: ac. metab. AG alto') + gapBars(acidbase({Na:138,Cl:100,HCO3:11,albumin:2.5}));
+
+refresh(); renderTutor();
+</script>
+</body>
+</html>

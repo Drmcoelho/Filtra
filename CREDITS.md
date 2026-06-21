@@ -223,6 +223,26 @@ depois) — preencher fonte/autor/licença antes de considerar o módulo finaliz
 > Nota: o M11 **integra a imagem raster real** `secrecao-distal-k.png` (crédito Wikimedia pendente); as
 > outras 12 figuras são SVG autorais FILTRA (7 placeholders reescritos + 5 novos).
 
+## M13 — Ácido-base renal (AG, delta-delta, ATRs)
+| Arquivo | Descrição | Fonte (URL) | Autor | Licença |
+|---|---|---|---|---|
+| `assets/m13/rim-pulmao-tampao.svg` | Pulmão × rim (tampão HCO₃) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m13/henderson-hasselbalch.svg` | Henderson–Hasselbalch | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m13/reabsorcao-hco3-nh4.svg` | Reabsorção × regeneração | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m13/amoniogenese.svg` | Amoniogênese (NH₄⁺) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m13/acidez-titulavel.svg` | Acidez titulável × NH₄⁺ | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m13/anion-gap.svg` | O ânion gap | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m13/ag-albumina.svg` | Correção do AG pela albumina | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m13/acidose-causas.svg` | Causas AG alto × normal | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m13/compensacao-winter.svg` | Fórmula de Winter | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m13/delta-delta.svg` | Delta-delta (mistos) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m13/atr-tipos.svg` | Tipos de ATR | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m13/davenport-diagrama.svg` | Diagrama de Davenport | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m13/abordagem-passo-a-passo.svg` | A leitura em 5 passos | — | Projeto FILTRA | FILTRA (autoral) |
+
+> Nota: os 8 SVGs do M13 eram placeholders e foram **reescritos como autorais** + 5 novos; o M13 não usa
+> imagens raster importadas (todas as 13 figuras são autorais FILTRA).
+
 ## Regras
 - Preferir **CC0 / domínio público**; **CC-BY / CC-BY-SA** aceitos **com atribuição** nesta tabela.
 - O caminho no `<img>` é sempre **relativo** (`assets/…`), nunca uma URL remota — o produto é offline.

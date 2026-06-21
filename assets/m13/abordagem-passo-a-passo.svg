@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 320" font-family="system-ui,Arial,sans-serif">
+  <defs><marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#39c0c8"/></marker></defs>
+  <rect width="680" height="320" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="316" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">A leitura em 5 passos — sempre na mesma ordem</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">decompor antes de interpretar: cada passo só faz sentido depois do anterior</text>
+
+  <g font-size="12">
+    <rect x="40" y="60" width="600" height="38" rx="6" fill="#10202c" stroke="#39c0c8"/>
+    <text x="56" y="84" fill="#9fe3ec" font-weight="bold">1.</text><text x="84" y="84" fill="#e7eef4">o pH: acidemia (&lt;7,35) ou alcalemia (&gt;7,45)?</text>
+    <line x1="340" y1="98" x2="340" y2="106" stroke="#39c0c8" stroke-width="2" marker-end="url(#a)"/>
+
+    <rect x="40" y="108" width="600" height="38" rx="6" fill="#10202c" stroke="#39c0c8"/>
+    <text x="56" y="132" fill="#9fe3ec" font-weight="bold">2.</text><text x="84" y="132" fill="#e7eef4">o distúrbio PRIMÁRIO: metabólico (HCO₃) ou respiratório (PaCO₂)?</text>
+    <line x1="340" y1="146" x2="340" y2="154" stroke="#39c0c8" stroke-width="2" marker-end="url(#a)"/>
+
+    <rect x="40" y="156" width="600" height="38" rx="6" fill="#10202c" stroke="#39c0c8"/>
+    <text x="56" y="180" fill="#9fe3ec" font-weight="bold">3.</text><text x="84" y="180" fill="#e7eef4">a COMPENSAÇÃO é adequada? (Winter, se acidose metabólica)</text>
+    <line x1="340" y1="194" x2="340" y2="202" stroke="#39c0c8" stroke-width="2" marker-end="url(#a)"/>
+
+    <rect x="40" y="204" width="600" height="38" rx="6" fill="#10202c" stroke="#39c0c8"/>
+    <text x="56" y="228" fill="#9fe3ec" font-weight="bold">4.</text><text x="84" y="228" fill="#e7eef4">o ÂNION GAP (corrigido pela albumina): alto ou normal?</text>
+    <line x1="340" y1="242" x2="340" y2="250" stroke="#39c0c8" stroke-width="2" marker-end="url(#a)"/>
+
+    <rect x="40" y="252" width="600" height="38" rx="6" fill="#10202c" stroke="#39c0c8"/>
+    <text x="56" y="276" fill="#9fe3ec" font-weight="bold">5.</text><text x="84" y="276" fill="#e7eef4">o DELTA-DELTA (se AG alto): há um segundo distúrbio metabólico?</text>
+  </g>
+  <text x="340" y="308" text-anchor="middle" font-size="10" fill="#e8a13a">o Lab deste módulo executa exatamente esses cinco passos a partir do gás e dos eletrólitos</text>
+</svg>

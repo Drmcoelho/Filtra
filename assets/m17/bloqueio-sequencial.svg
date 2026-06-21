@@ -1,22 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M17</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">Farmacologia diurética integrada</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">bloqueio-sequencial</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">Bloqueio sequencial do néfron</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <defs><marker id="a" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#39c0c8"/></marker></defs>
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Bloqueio sequencial — o néfron é uma cascata</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">bloquear a alça joga Na adiante; sem o tiazídico, o TCD reabsorve esse excedente (compensa)</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <!-- cano com segmentos -->
+  <rect x="40" y="120" width="600" height="40" rx="20" fill="#0c2330" stroke="#39c0c8"/>
+  <text x="110" y="110" text-anchor="middle" font-size="10" fill="#9fb1c0">TCP</text>
+  <text x="280" y="110" text-anchor="middle" font-size="10" fill="#9fb1c0">alça (NKCC2)</text>
+  <text x="450" y="110" text-anchor="middle" font-size="10" fill="#9fb1c0">TCD (NCC)</text>
+  <text x="590" y="110" text-anchor="middle" font-size="10" fill="#9fb1c0">ducto</text>
+  <line x1="40" y1="140" x2="620" y2="140" stroke="#39c0c8" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- bloqueio alça -->
+  <line x1="280" y1="116" x2="280" y2="164" stroke="#e0556b" stroke-width="4"/>
+  <text x="280" y="184" text-anchor="middle" font-size="10" fill="#e08a96">furosemida</text>
+  <!-- excedente desce -->
+  <text x="360" y="134" font-size="10" fill="#f0c078">Na↑ entregue ao TCD</text>
+
+  <!-- cenário 1: sem tiazídico -->
+  <text x="450" y="200" text-anchor="middle" font-size="10" fill="#e8a13a">sem tiazídico: o TCD reabsorve o excedente → efeito menor (braking)</text>
+  <!-- bloqueio TCD -->
+  <line x1="450" y1="210" x2="450" y2="230" stroke="#52c08a" stroke-width="4"/>
+  <text x="450" y="250" text-anchor="middle" font-size="10" fill="#9fe3ec">+ tiazídico bloqueia o TCD → o Na escapa → sinergia</text>
+
+  <text x="340" y="284" text-anchor="middle" font-size="9" fill="#9fb1c0">bloquear DOIS segmentos em série impede a compensação do segmento de baixo</text>
 </svg>

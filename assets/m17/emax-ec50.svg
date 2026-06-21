@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">O motor da dose: Emax e EC50</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">bloqueio = Emax · dose / (EC50 + dose) — o engine calcula, a UI só pinta</text>
+
+  <text x="340" y="80" text-anchor="middle" font-size="16" fill="#e7eef4">bloqueio = Emax · D / (EC50 + D)</text>
+
+  <line x1="80" y1="250" x2="380" y2="250" stroke="#3a4a58"/>
+  <line x1="80" y1="100" x2="80" y2="250" stroke="#3a4a58"/>
+  <path d="M80,250 C140,180 200,140 260,124 C320,112 360,110 380,109" fill="none" stroke="#39c0c8" stroke-width="3"/>
+  <line x1="80" y1="109" x2="380" y2="109" stroke="#52c08a" stroke-dasharray="4 3" stroke-opacity="0.6"/>
+  <text x="300" y="104" font-size="9" fill="#9fe3ec">Emax (teto)</text>
+  <line x1="150" y1="100" x2="150" y2="250" stroke="#e8a13a" stroke-dasharray="3 3" stroke-opacity="0.6"/>
+  <text x="156" y="200" font-size="9" fill="#f0c078">EC50</text>
+  <circle cx="150" cy="180" r="4" fill="#e8a13a"/>
+  <text x="230" y="266" text-anchor="middle" font-size="10" fill="#9fb1c0">dose →</text>
+
+  <g font-size="11" fill="#e7eef4">
+    <text x="410" y="120">• EC50 = dose que dá METADE do Emax</text>
+    <text x="410" y="146">• Emax = teto do efeito (não passa disso)</text>
+    <text x="410" y="172">• potência = EC50 menor (bumetanida ≈ 40×)</text>
+    <text x="410" y="198">• eficácia = Emax maior (alça &gt; tiazídico)</text>
+    <text x="410" y="226" fill="#e8a13a">a resistência desloca a curva à direita</text>
+    <text x="410" y="246" fill="#9fb1c0">(precisa de mais dose para o mesmo efeito)</text>
+  </g>
+</svg>

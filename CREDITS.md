@@ -263,6 +263,26 @@ depois) — preencher fonte/autor/licença antes de considerar o módulo finaliz
 > Nota: os 8 SVGs do M15 eram placeholders e foram **reescritos como autorais** + 5 novos; o M15 não usa
 > imagens raster importadas (todas as 13 figuras são autorais FILTRA).
 
+## M17 — Farmacologia diurética integrada (capstone 1)
+| Arquivo | Descrição | Fonte (URL) | Autor | Licença |
+|---|---|---|---|---|
+| `assets/m17/sitios-diureticos-nefron.png` | Sítios de ação dos diuréticos no néfron | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
+| `assets/m17/nefron-alvos-diureticos.svg` | Alvos por segmento com doses | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m17/classe-doses-mecanismo.svg` | Dose ↔ alvo ↔ teto | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m17/curva-dose-resposta-diuretico.svg` | Curva dose-resposta sigmoide | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m17/emax-ec50.svg` | Emax e EC50 | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m17/teto-diuretico.svg` | Teto alto × teto baixo | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m17/cascata-compensacao.svg` | Cascata e compensação | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m17/bloqueio-sequencial.svg` | Bloqueio sequencial | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m17/sinergia-diureticos.svg` | Sinergia supra-aditiva | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m17/braking-fenomeno.svg` | Fenômeno do braking | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m17/resistencia-diuretico.svg` | Resistência (entrega luminal) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m17/resgate-resistencia.svg` | Escada de resgate | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m17/furosemida-estrutura.svg` | Potências/equivalências da alça | — | Projeto FILTRA | FILTRA (autoral) |
+
+> Nota: o M17 **integra a imagem raster real** `sitios-diureticos-nefron.png` (crédito Wikimedia pendente); as
+> outras 12 figuras são SVG autorais FILTRA (7 placeholders reescritos + 5 novos).
+
 ## Regras
 - Preferir **CC0 / domínio público**; **CC-BY / CC-BY-SA** aceitos **com atribuição** nesta tabela.
 - O caminho no `<img>` é sempre **relativo** (`assets/…`), nunca uma URL remota — o produto é offline.

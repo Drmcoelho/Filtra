@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Escada de resgate na resistência ao diurético</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">cada degrau ataca uma causa de falha de entrega ou de compensação — por mecanismo</text>
+
+  <g font-size="11" fill="#e7eef4">
+    <rect x="40" y="62" width="600" height="34" rx="6" fill="#10202c" stroke="#39c0c8"/>
+    <text x="56" y="84">1 · confirmar adesão e RESTRINGIR sódio (senão o rebote pós-dose anula tudo)</text>
+    <rect x="40" y="102" width="600" height="34" rx="6" fill="#10202c" stroke="#3a7bd5"/>
+    <text x="56" y="124">2 · garantir ENTREGA: via IV; subir a dose até o TETO da alça</text>
+    <rect x="40" y="142" width="600" height="34" rx="6" fill="#10202c" stroke="#52c08a"/>
+    <text x="56" y="164">3 · manter nível luminal: infusão CONTÍNUA ou doses mais frequentes</text>
+    <rect x="40" y="182" width="600" height="34" rx="6" fill="#10202c" stroke="#e8a13a"/>
+    <text x="56" y="204">4 · BLOQUEIO SEQUENCIAL: somar tiazídico (vence o braking, dá sinergia)</text>
+    <rect x="40" y="222" width="600" height="34" rx="6" fill="#10202c" stroke="#e0556b"/>
+    <text x="56" y="244">5 · refratário verdadeiro → ultrafiltração / TRS (ponte M37/M35, DIALISA)</text>
+  </g>
+  <text x="340" y="282" text-anchor="middle" font-size="9" fill="#e8a13a">subir a dose só ajuda até o teto; depois, o ganho vem de ATACAR outro segmento ou outra causa</text>
+</svg>

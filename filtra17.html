@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M17 — Farmacologia diurética integrada (capstone)</title>
+<style>
+  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--warn:#e8a13a;--bad:#e0556b;--good:#52c08a;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none} section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .presets{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  .dosebox{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:13px}
+  .dosebox b{color:var(--accent)}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px} .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)} .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)} .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)} .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M17 · capstone farmacológico 1</div>
+  <h1>Farmacologia diurética integrada — o néfron inteiro como alvo</h1>
+  <div class="sub">Cada diurético é uma <b>chave numa fechadura de um segmento</b>; a curva <b>dose-resposta</b>
+  (Emax) tem <b>teto</b>. O néfron é uma <b>cascata</b>: bloquear um segmento joga Na adiante e o de baixo
+  <b>compensa</b> — daí o <b>braking</b> e a <b>sinergia</b> do bloqueio sequencial. A <b>resistência</b> é,
+  sobretudo, falha de <b>entrega luminal</b>. Toda dose vem em <b>mg</b> ancorada ao seu transportador,
+  computada pelo motor.</div>
+  <nav class="hex">
+    <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
+    <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="filtra.html">&larr; índice do braço FILTRA</a>
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- CONCEITO -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — o néfron inteiro como alvo farmacológico</h3>
+      <p class="sub" style="margin-top:0"><b>Capstone da farmacologia diurética.</b> Integra os segmentos do M5
+      ao M8: a homeostasia do volume manipulada por fármaco, com dose-resposta computada. As Fig. 1–13 voltam no
+      Caso, na Trilha e na Avaliação. Atribuição em <code>CREDITS.md</code> (em curadoria).</p>
+
+      <h4>1. Uma chave para cada fechadura — os alvos no néfron</h4>
+      <p class="sub">Acetazolamida (TCP/anidrase carbônica), alça (NKCC2), tiazídico (NCC), poupador de K
+      (ENaC/aldosterona) — cada classe num segmento, com sua dose em mg.</p>
+      <div class="frow">
+        <figure class="fviva"><img src="assets/m17/sitios-diureticos-nefron.png" alt="Sítios de ação dos diuréticos ao longo do néfron" loading="lazy">
+          <figcaption><b>Fig. 1 · Os sítios (foto real).</b> O mapa anatômico dos diuréticos no néfron: cada classe
+          ataca um transportador de um segmento. É a espinha do capstone.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m17/nefron-alvos-diureticos.svg" alt="Alvos dos diuréticos por segmento com doses" loading="lazy">
+          <figcaption><b>Fig. 2 · Alvos e doses.</b> Acetazolamida 250–500 mg (anidrase carbônica) · furosemida
+          20–80 mg (NKCC2) · HCTZ 12,5–50 mg (NCC) · amilorida 5–10 mg (ENaC).</figcaption></figure>
+        <figure class="fviva"><img src="assets/m17/classe-doses-mecanismo.svg" alt="Tabela dose, alvo e teto de cada classe" loading="lazy">
+          <figcaption><b>Fig. 3 · Dose ↔ alvo ↔ teto.</b> Cada dose (mg) ancorada ao transportador e ao efeito
+          máximo — a guarda do §8 em forma de mapa.</figcaption></figure>
+      </div>
+
+      <h4>2. A dose-resposta é fisiologia — com teto</h4>
+      <p class="sub">bloqueio = Emax·dose/(EC50+dose). Há limiar e há teto; dobrar a dose nem sempre faz mais xixi.</p>
+      <div class="frow">
+        <div class="concept" id="draw-curve"></div>
+        <figure class="fviva"><img src="assets/m17/curva-dose-resposta-diuretico.svg" alt="Curva dose-resposta sigmoide do diurético" loading="lazy">
+          <figcaption><b>Fig. 4 · A curva.</b> Sigmoide com limiar e teto. Abaixo do limiar, nada sai; acima do
+          teto, mais dose não acrescenta. É a curva do Instrumento.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m17/emax-ec50.svg" alt="Emax e EC50 da dose-resposta" loading="lazy">
+          <figcaption><b>Fig. 5 · Emax e EC50.</b> EC50 = dose de meio-efeito (potência); Emax = teto (eficácia). A
+          resistência desloca a curva à direita.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m17/teto-diuretico.svg" alt="Teto alto da alça versus teto baixo do tiazídico" loading="lazy">
+          <figcaption><b>Fig. 6 · Teto alto × baixo.</b> A alça bloqueia ~25% do Na filtrado (teto alto); o
+          tiazídico ~5% (teto baixo). Eficácias máximas diferentes.</figcaption></figure>
+      </div>
+
+      <h4>3. A cascata e a sinergia do bloqueio sequencial</h4>
+      <p class="sub">Bloquear um segmento aumenta a entrega ao próximo, que compensa. Bloquear DOIS em série
+      impede a compensação → sinergia.</p>
+      <div class="frow">
+        <div class="concept" id="draw-segments"></div>
+        <figure class="fviva"><img src="assets/m17/cascata-compensacao.svg" alt="A cascata do néfron e a compensação distal" loading="lazy">
+          <figcaption><b>Fig. 7 · Cascata e compensação.</b> A alça bloqueada entrega muito Na ao TCD, que
+          reabsorve mais → o diurético isolado "decepciona". É fisiologia, não má adesão.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m17/bloqueio-sequencial.svg" alt="Bloqueio sequencial de dois segmentos" loading="lazy">
+          <figcaption><b>Fig. 8 · Bloqueio sequencial.</b> Alça + tiazídico bloqueiam dois segmentos em série; o TCD
+          não compensa → o Na escapa.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m17/sinergia-diureticos.svg" alt="Sinergia: o todo maior que a soma" loading="lazy">
+          <figcaption><b>Fig. 9 · Sinergia.</b> Alça + tiazídico &gt; soma dos efeitos isolados (supra-aditivo). O
+          engine prova: o Δ do tiazídico é maior quando a alça já está agindo.</figcaption></figure>
+      </div>
+
+      <h4>4. Braking, resistência e o resgate</h4>
+      <p class="sub">O uso crônico cria tolerância; a resistência é falha de entrega. Há uma escada para vencer.</p>
+      <div class="frow">
+        <figure class="fviva"><img src="assets/m17/braking-fenomeno.svg" alt="Fenômeno do braking: tolerância ao diurético" loading="lazy">
+          <figcaption><b>Fig. 10 · Braking.</b> O uso crônico hipertrofia o néfron distal + ativa o RAAS → a curva
+          desce e desloca à direita. Restrição de sal e tiazídico o vencem.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m17/resistencia-diuretico.svg" alt="Causas de resistência ao diurético" loading="lazy">
+          <figcaption><b>Fig. 11 · Resistência = entrega.</b> O diurético age do lúmen; TFG↓, hipoalbuminemia,
+          proteinúria e AINE reduzem a entrega luminal.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m17/resgate-resistencia.svg" alt="Escada de resgate na resistência ao diurético" loading="lazy">
+          <figcaption><b>Fig. 12 · O resgate.</b> Restringir Na → IV/dose ao teto → infusão contínua → bloqueio
+          sequencial → ultrafiltração/TRS (M37/M35).</figcaption></figure>
+      </div>
+
+      <h4>5. Potências e equivalências</h4>
+      <div class="frow">
+        <figure class="fviva"><img src="assets/m17/furosemida-estrutura.svg" alt="Equivalências de dose dos diuréticos de alça" loading="lazy">
+          <figcaption><b>Fig. 13 · Potências da alça.</b> furosemida 20–80 mg (1×) · bumetanida 0,5–2 mg (≈40×) ·
+          torasemida 10–20 mg (≈2–4×, meia-vida longa). Mesmo alvo (NKCC2), PK distinta.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASO -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — oito atos, decida antes de revelar</h3>
+      <p class="sub">ICC descompensada, congesta. Já recebe furosemida 40 mg VO/dia há meses e "não faz mais
+      efeito". Edema importante, albumina baixa.</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step"><b>Ato 1.</b> "A furosemida não faz mais efeito." Trocar por outra alça resolve (Fig. 13)?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>Raramente.</b> Bumetanida e torasemida têm o mesmo alvo (NKCC2). Trocar muda
+          PK/biodisponibilidade, mas não vence braking nem falha de entrega. Entender a curva resolve.</div></div>
+
+      <div class="step"><b>Ato 2.</b> Por que 40 mg VO rende pouco aqui (Fig. 11)?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2"><b>Entrega.</b> Na ICC há edema de alça intestinal (absorção VO errática) e
+          baixa perfusão renal. A biodisponibilidade VO da furosemida já é ~50% e variável.</div></div>
+
+      <div class="step"><b>Ato 3.</b> Primeiro ajuste racional (Fig. 6/12)?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3"><b>Garantir entrega e atingir o teto</b>: passar a <b>furosemida IV</b> (40 mg VO
+          ≈ 20 mg IV) e subir a dose até a faixa eficaz. No Lab, suba a dose de alça e veja a curva.</div></div>
+
+      <div class="step"><b>Ato 4.</b> Mesmo IV no teto, a natriurese é modesta — há meses de uso (Fig. 10).
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>Braking.</b> O néfron distal hipertrofiou; a curva desceu. Estourar a dose da
+          alça além do teto não ajuda. No Lab, suba o "braking" e veja a resposta cair.</div></div>
+
+      <div class="step"><b>Ato 5.</b> A jogada do capstone (Fig. 8/9)?
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>Bloqueio sequencial</b>: somar um <b>tiazídico</b> (HCTZ 25 mg ou metolazona)
+          → bloqueia o TCD hipertrofiado que compensava → <b>sinergia</b> supra-aditiva. No Lab, ligue o tiazídico.</div></div>
+
+      <div class="step"><b>Ato 6.</b> Que cuidado a sinergia exige?
+        <div><button class="act" data-rev="r6">Revelar</button></div>
+        <div class="reveal" id="r6"><b>Vigiar eletrólitos e volume</b>: a natriurese forte pode dar hipocalemia (M11),
+          hiponatremia e hipovolemia. Sinergia potente pede monitorização.</div></div>
+
+      <div class="step"><b>Ato 7.</b> <i>Fronteira:</i> nada funciona, anúria progressiva e congestão refratária (Fig. 12).
+        <div><button class="act" data-rev="r7">Revelar</button></div>
+        <div class="reveal" id="r7">Resistência verdadeira → <b>ultrafiltração / TRS</b> (ponte M37/M35, DIALISA): a
+          máquina remove o volume que o néfron não consegue mais. É o degrau final da escada.</div></div>
+
+      <div class="step"><b>Ato 8.</b> <i>Síntese.</i> Lição de uma linha?
+        <div><button class="act" data-rev="r8">Revelar</button></div>
+        <div class="reveal" id="r8">Diurético é dose-resposta numa cascata: garanta a entrega, atinja o teto, e
+          quando a compensação vencer, bloqueie o próximo segmento — não estoure a mesma classe.</div></div>
+    </div>
+  </section>
+
+  <!-- TRILHA -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — treze perguntas que constroem o conceito</h3>
+      <details><summary>1. O que governa o efeito de um diurético?</summary><p>A curva dose-resposta (Emax):
+        bloqueio = Emax·dose/(EC50+dose). Tem limiar e teto.</p></details>
+      <details><summary>2. O que é o EC50?</summary><p>A dose que produz metade do efeito máximo — mede potência
+        (bumetanida tem EC50 menor: ≈40× a furosemida).</p></details>
+      <details><summary>3. E o Emax?</summary><p>O teto do efeito — mede eficácia. A alça tem Emax alto (NKCC2,
+        ~25% do Na); o tiazídico, baixo (NCC, ~5%).</p></details>
+      <details><summary>4. Por que dobrar a dose nem sempre faz mais xixi?</summary><p>Abaixo do limiar não há efeito;
+        acima do teto, mais dose não acrescenta. É preciso mover na curva certa.</p></details>
+      <details><summary>5. Por que o diurético isolado "decepciona"?</summary><p>A cascata: o segmento de baixo
+        compensa a carga extra de Na entregue. Fisiologia, não má adesão.</p></details>
+      <details><summary>6. O que é o braking?</summary><p>Tolerância no uso crônico: hipertrofia do néfron distal +
+        RAAS → a mesma dose rende menos (curva desce/desloca).</p></details>
+      <details><summary>7. Como vencer o braking?</summary><p>Restrição de sal, dose mais frequente/contínua e
+        bloqueio sequencial (somar tiazídico).</p></details>
+      <details><summary>8. O que é bloqueio sequencial?</summary><p>Bloquear dois segmentos em série (alça +
+        tiazídico) → o de baixo não compensa → sinergia supra-aditiva.</p></details>
+      <details><summary>9. Por que a sinergia é supra-aditiva?</summary><p>O efeito do tiazídico é maior quando a alça
+        já entregou muito Na ao TCD — o Δ depende do que chega.</p></details>
+      <details><summary>10. O que é resistência ao diurético?</summary><p>Sobretudo falha de ENTREGA luminal: o
+        fármaco age do lado de dentro do túbulo.</p></details>
+      <details><summary>11. Quais causas de baixa entrega?</summary><p>TFG baixa, hipoalbuminemia, proteinúria
+        (sequestra o fármaco) e AINE (inibe a secreção tubular).</p></details>
+      <details><summary>12. Qual a escada de resgate?</summary><p>Restringir Na → IV/teto → infusão contínua →
+        bloqueio sequencial → ultrafiltração/TRS.</p></details>
+      <details><summary>13. Trocar furosemida por outra alça resolve resistência?</summary><p>Raramente — mesmo alvo
+        (NKCC2). Muda PK, não vence braking nem entrega.</p></details>
+    </div>
+  </section>
+
+  <!-- INSTRUMENTO -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — a curva dose-resposta da alça (natriurese × dose)</h3>
+      <p class="sub">Os controles do <b>Lab</b> definem o regime. A curva mostra a natriurese × dose de alça (mg);
+      ligue o tiazídico e veja a curva subir (sinergia); aumente o braking e ela cai; reduza a entrega e ela
+      desloca à direita.</p>
+      <canvas id="diu-canvas" width="900" height="380" aria-label="Curva dose-resposta do diurético de alça"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- LAB -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — monte o regime e veja a natriurese computada</h3>
+      <div class="grid">
+        <div>
+          <label>Acetazolamida (anidrase carbônica, TCP): <span class="val" id="lbl-ca">0</span> mg</label>
+          <input type="range" id="in-ca" min="0" max="500" step="25" value="0">
+          <label>Alça — furosemida (NKCC2): <span class="val" id="lbl-loop">40</span> mg</label>
+          <input type="range" id="in-loop" min="0" max="160" step="5" value="40">
+          <label>Tiazídico — HCTZ (NCC): <span class="val" id="lbl-thz">0</span> mg</label>
+          <input type="range" id="in-thz" min="0" max="50" step="5" value="0">
+        </div>
+        <div>
+          <label>Poupador de K — amilorida (ENaC): <span class="val" id="lbl-ksp">0</span> mg</label>
+          <input type="range" id="in-ksp" min="0" max="10" step="1" value="0">
+          <label>Braking (uso crônico): <span class="val" id="lbl-brk">0.0</span></label>
+          <input type="range" id="in-brk" min="0" max="1" step="0.05" value="0">
+          <label>Entrega luminal (1 = normal · baixa = resistência): <span class="val" id="lbl-del">1.0</span></label>
+          <input type="range" id="in-del" min="0.1" max="1" step="0.05" value="1">
+        </div>
+      </div>
+
+      <div class="presets">
+        <button class="act" data-preset="mono">Furosemida só</button>
+        <button class="act" data-preset="sinergia">Alça + tiazídico (sinergia)</button>
+        <button class="act" data-preset="braking">Crônico (braking)</button>
+        <button class="act" data-preset="resist">Resistência (nefrótico)</button>
+        <button class="act" data-preset="total">Bloqueio dos 4 segmentos</button>
+      </div>
+
+      <table>
+        <tr><th>Componente (dose · alvo)</th><th>Bloqueio</th></tr>
+        <tr><td>Acetazolamida (mg · anidrase carbônica)</td><td class="num" id="out-bca">—</td></tr>
+        <tr><td>Furosemida (mg · NKCC2)</td><td class="num" id="out-bloop">—</td></tr>
+        <tr><td>Tiazídico (mg · NCC)</td><td class="num" id="out-bthz">—</td></tr>
+        <tr><td>Amilorida (mg · ENaC)</td><td class="num" id="out-bksp">—</td></tr>
+        <tr><td><b>Natriurese (FENa)</b></td><td class="num" id="out-fena">—</td></tr>
+        <tr><td>Acréscimo sobre o basal (ΔFENa)</td><td class="num" id="out-delta">—</td></tr>
+      </table>
+
+      <div class="dosebox" id="dose-box">—</div>
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÃO -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (13)</button>
+        <button data-bank="textual">Textual (12)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica e farmacológica
+    aplicada</b> (escopo aberto, CLAUDE.md §8). As doses (mg) servem para ancorar o <b>mecanismo</b> e a curva
+    dose-resposta; <b>não são prescrição</b>. <b>Nota de honestidade do modelo:</b> a natriurese é uma
+    simplificação didática calibrada (cascata de frações + Emax) — reproduz as direções e as relações (teto,
+    braking, sinergia, resistência), não números clínicos exatos. A decisão e a responsabilidade finais são
+    sempre do prescritor.
+  </div>
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+</div>
+
+<script>
+/* ENGINE INLINE — espelho fiel de build/m17/model17.js */
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
+function emaxModel(dose,ec50,emax){ dose=clampv(dose,0,1e6); ec50=clampv(ec50,1e-6,1e6); emax=clampv(emax,0,1); return emax*dose/(ec50+dose); }
+var DRUGS={
+  acetazolamida:{seg:'TCP',alvo:'anidrase carbônica',unidade:'mg',faixa:'250–500 mg',ec50:250,emax:0.45},
+  furosemida:{seg:'alça',alvo:'NKCC2',unidade:'mg',faixa:'20–80 mg',ec50:18,emax:0.88},
+  tiazida:{seg:'TCD',alvo:'NCC',unidade:'mg',faixa:'12,5–50 mg',ec50:12,emax:0.55},
+  poupadorK:{seg:'ducto',alvo:'ENaC / receptor de aldosterona',unidade:'mg',faixa:'5–10 mg (amilorida)',ec50:5,emax:0.45}
+};
+function diuretics(input){ var inp=input||{};
+  var ca=clampv(inp.ca!==undefined?inp.ca:0,0,1000), loop=clampv(inp.loop!==undefined?inp.loop:0,0,400),
+    thz=clampv(inp.thz!==undefined?inp.thz:0,0,100), ksp=clampv(inp.ksp!==undefined?inp.ksp:0,0,40),
+    braking=clampv(inp.braking!==undefined?inp.braking:0,0,1), delivery=clampv(inp.delivery!==undefined?inp.delivery:1,0.05,1);
+  var blockCA=emaxModel(ca*delivery,DRUGS.acetazolamida.ec50,DRUGS.acetazolamida.emax),
+    blockLoop=emaxModel(loop*delivery,DRUGS.furosemida.ec50,DRUGS.furosemida.emax),
+    blockThz=emaxModel(thz*delivery,DRUGS.tiazida.ec50,DRUGS.tiazida.emax),
+    blockKsp=emaxModel(ksp*delivery,DRUGS.poupadorK.ec50,DRUGS.poupadorK.emax);
+  var fTCP=0.67,fTAL=0.80,fTCD=0.55,fCD=0.70;
+  var fTCDb=fTCD+(1-fTCD)*braking*0.55, fCDb=fCD+(1-fCD)*braking*0.55;
+  var filt=100;
+  var rTCP=filt*fTCP*(1-blockCA), dTAL=filt-rTCP;
+  var rTAL=dTAL*fTAL*(1-blockLoop), dTCD=dTAL-rTAL;
+  var rTCD=dTCD*fTCDb*(1-blockThz), dCD=dTCD-rTCD;
+  var rCD=dCD*fCDb*(1-blockKsp), escaped=dCD-rCD;
+  var FENa=clampv(escaped,0,100);
+  function escapeNoDrug(){ var a=filt*fTCP,b=(filt-a),c=b*fTAL,d=(b-c),e=d*fTCDb,f=(d-e),g=f*fCDb; return (f-g); }
+  var FENaBasal=clampv(escapeNoDrug(),0,100), deltaFENa=FENa-FENaBasal;
+  var segments=[
+    {name:'TCP',alvo:'anidrase carbônica',delivered:filt,reabsorbed:rTCP,block:blockCA},
+    {name:'alça',alvo:'NKCC2',delivered:dTAL,reabsorbed:rTAL,block:blockLoop},
+    {name:'TCD',alvo:'NCC',delivered:dTCD,reabsorbed:rTCD,block:blockThz},
+    {name:'ducto',alvo:'ENaC/MR',delivered:dCD,reabsorbed:rCD,block:blockKsp}
+  ];
+  var usados=[]; if(ca>0)usados.push('acetazolamida'); if(loop>0)usados.push('alça (furosemida)'); if(thz>0)usados.push('tiazídico'); if(ksp>0)usados.push('poupador de K');
+  var sinergia=loop>0&&thz>0, brakingAtivo=braking>0.3, resistencia=delivery<0.7;
+  return {ca:ca,loop:loop,thz:thz,ksp:ksp,braking:braking,delivery:delivery,blockCA:blockCA,blockLoop:blockLoop,blockThz:blockThz,blockKsp:blockKsp,
+    FENa:FENa,FENaBasal:FENaBasal,deltaFENa:deltaFENa,segments:segments,usados:usados,sinergia:sinergia,brakingAtivo:brakingAtivo,resistencia:resistencia}; }
+function diureticsLayout(state,W,H){ state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=54,padR=16,padT=18,padB=38,baseY=H-padB, dMin=0,dMax=160,N=56,yMax=12;
+  var pxX=(W-padL-padR)/(dMax-dMin), pxY=(baseY-padT)/yMax;
+  var base={ca:clampv(state.ca||0,0,1000),thz:clampv(state.thz||0,0,100),ksp:clampv(state.ksp||0,0,40),braking:clampv(state.braking||0,0,1),delivery:clampv(state.delivery!==undefined?state.delivery:1,0.05,1)};
+  var pts=[],i,dose,r;
+  for(i=0;i<=N;i++){ dose=dMin+(dMax-dMin)*i/N; r=diuretics({ca:base.ca,loop:dose,thz:base.thz,ksp:base.ksp,braking:base.braking,delivery:base.delivery});
+    pts.push({dose:dose,FENa:r.FENa,x:padL+(dose-dMin)*pxX,y:baseY-clampv(r.FENa,0,yMax)*pxY}); }
+  var dc=clampv(state.loop!==undefined?state.loop:40,dMin,dMax), rc=diuretics({ca:base.ca,loop:dc,thz:base.thz,ksp:base.ksp,braking:base.braking,delivery:base.delivery});
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,dMin:dMin,dMax:dMax,yMax:yMax,pxX:pxX,pxY:pxY,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},pts:pts,current:{x:padL+(dc-dMin)*pxX,y:baseY-clampv(rc.FENa,0,yMax)*pxY,dose:dc,FENa:rc.FENa}}; }
+window.emaxModel=emaxModel; window.diuretics=diuretics; window.diureticsLayout=diureticsLayout; window.DRUGS=DRUGS;
+window.MODEL={emaxModel:emaxModel,diuretics:diuretics,diureticsLayout:diureticsLayout,DRUGS:DRUGS,clampv:clampv};
+
+/* UI */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=(d===undefined?1:d); return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+function pct(x){ return fmt(x*100,0)+'%'; }
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on'); b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on'); $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh(); });
+document.addEventListener('click',function(e){ var b=e.target.closest('button.act[data-rev]'); if(!b) return; var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on'); });
+
+function readInputs(){ return { ca:+$('in-ca').value, loop:+$('in-loop').value, thz:+$('in-thz').value, ksp:+$('in-ksp').value, braking:+$('in-brk').value, delivery:+$('in-del').value }; }
+function refresh(){ var inp=readInputs();
+  $('lbl-ca').textContent=inp.ca; $('lbl-loop').textContent=inp.loop; $('lbl-thz').textContent=inp.thz; $('lbl-ksp').textContent=inp.ksp;
+  $('lbl-brk').textContent=fmt(inp.braking,2); $('lbl-del').textContent=fmt(inp.delivery,2);
+  var r=diuretics(inp);
+  $('out-bca').textContent=pct(r.blockCA); $('out-bloop').textContent=pct(r.blockLoop); $('out-bthz').textContent=pct(r.blockThz); $('out-bksp').textContent=pct(r.blockKsp);
+  $('out-fena').textContent=fmt(r.FENa,2)+'%'; $('out-delta').textContent='+'+fmt(r.deltaFENa,2)+'%';
+  doseBox(inp,r); verdict(r); drawCurve(inp); drawSegs(r); pearl(r); }
+function doseBox(inp,r){ var parts=[];
+  if(inp.ca>0) parts.push('acetazolamida <b>'+inp.ca+' mg</b> (anidrase carbônica)');
+  if(inp.loop>0) parts.push('furosemida <b>'+inp.loop+' mg</b> (NKCC2)');
+  if(inp.thz>0) parts.push('HCTZ <b>'+inp.thz+' mg</b> (NCC)');
+  if(inp.ksp>0) parts.push('amilorida <b>'+inp.ksp+' mg</b> (ENaC)');
+  $('dose-box').innerHTML = parts.length? ('Regime: '+parts.join(' + ')+'.') : 'Sem fármaco — natriurese basal.'; }
+function verdict(r){ var v=$('veredito'), cls='b-good', flags=[];
+  if(r.sinergia){ cls='b-good'; flags.push('SINERGIA (alça+tiazídico, supra-aditivo)'); }
+  if(r.brakingAtivo){ cls='b-warn'; flags.push('braking ativo (tolerância)'); }
+  if(r.resistencia){ cls='b-bad'; flags.push('resistência: entrega luminal '+pct(r.delivery)); }
+  if(!flags.length) flags.push('regime simples — natriurese conforme a curva');
+  v.className='banner '+cls; v.textContent='FENa '+fmt(r.FENa,2)+'% (Δ +'+fmt(r.deltaFENa,2)+'%). '+flags.join(' · ')+'.'; }
+function pearl(r){ var p=$('lab-pearl'), ip=$('instr-pearl'), t;
+  if(r.sinergia) t='PÉROLA: bloqueio sequencial — o tiazídico impede o TCD de compensar a carga da alça → natriurese supra-aditiva (FENa '+fmt(r.FENa,2)+'%).';
+  else if(r.brakingAtivo && r.loop>0) t='PÉROLA: braking — a mesma dose de alça rende menos (curva desceu); somar tiazídico resgata.';
+  else if(r.resistencia && r.loop>0) t='PÉROLA: resistência é entrega — a dose chega menos ao lúmen ('+pct(r.delivery)+'); IV, teto e infusão ajudam.';
+  else if(r.loop>=120) t='PÉROLA: além do teto, mais dose de alça não acrescenta — é hora de bloquear OUTRO segmento.';
+  else t='Natriurese FENa '+fmt(r.FENa,2)+'% pela curva Emax. Ajuste o regime e observe a cascata.';
+  p.textContent=t; ip.textContent=t; }
+function drawCurve(state){ var c=$('diu-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
+  var L=diureticsLayout(state,c.width,c.height); ctx.clearRect(0,0,L.W,L.H);
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('natriurese (FENa %)',8,L.padT+2); ctx.fillText('dose de alça — furosemida (mg) →',L.W-260,L.baseY+24);
+  // curva de referência (sem tiazídico) p/ ilustrar sinergia, se houver tiazídico
+  if((state.thz||0)>0){ var ref=diureticsLayout({ca:state.ca,thz:0,ksp:state.ksp,braking:state.braking,delivery:state.delivery},c.width,c.height);
+    ctx.strokeStyle='#5a6b78'; ctx.setLineDash([5,4]); ctx.beginPath();
+    for(var k=0;k<ref.pts.length;k++){ var q=ref.pts[k]; if(k===0) ctx.moveTo(q.x,q.y); else ctx.lineTo(q.x,q.y); } ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle='#5a6b78'; ctx.fillText('sem tiazídico',L.W-130,L.padT+40); }
+  ctx.strokeStyle='#39c0c8'; ctx.lineWidth=2; ctx.beginPath();
+  for(var i=0;i<L.pts.length;i++){ var p=L.pts[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); } ctx.stroke();
+  var cu=L.current; ctx.strokeStyle='#e8a13a'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(cu.x,L.padT); ctx.lineTo(cu.x,L.baseY); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#e8a13a'; ctx.beginPath(); ctx.arc(cu.x,cu.y,5,0,2*Math.PI); ctx.fill();
+  ctx.fillStyle='#e7eef4'; ctx.fillText('furosemida '+fmt(cu.dose,0)+' mg · FENa '+fmt(cu.FENa,2)+'%',Math.min(cu.x+8,L.W-220),Math.max(cu.y-8,L.padT+12)); }
+function drawSegs(r){ var el=$('draw-segments'); if(el) el.innerHTML=segMini(r,'cascata: entregue × reabsorvido'); }
+['in-ca','in-loop','in-thz','in-ksp','in-brk','in-del'].forEach(function(id){ $(id).addEventListener('input',refresh); });
+
+var PRESETS={
+  mono:{ca:0,loop:80,thz:0,ksp:0,brk:0,del:1},
+  sinergia:{ca:0,loop:80,thz:25,ksp:0,brk:0,del:1},
+  braking:{ca:0,loop:80,thz:0,ksp:0,brk:0.8,del:1},
+  resist:{ca:0,loop:80,thz:0,ksp:0,brk:0.3,del:0.3},
+  total:{ca:500,loop:120,thz:50,ksp:10,brk:0,del:1}
+};
+function applyPreset(p){ var d=PRESETS[p]; if(!d) return; $('in-ca').value=d.ca; $('in-loop').value=d.loop; $('in-thz').value=d.thz; $('in-ksp').value=d.ksp; $('in-brk').value=d.brk; $('in-del').value=d.del; refresh(); }
+document.querySelector('.presets').addEventListener('click',function(e){ var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset')); });
+
+/* ILUSTRAÇÕES computadas + helper raster */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+function curveMini(state,titulo){ var W=300,H=180,L=diureticsLayout(state,W,H),s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  var d=''; for(var i=0;i<L.pts.length;i++){ d+=(i===0?'M':'L')+f1(L.pts[i].x)+' '+f1(L.pts[i].y)+' '; }
+  s+='<path d="'+d+'" fill="none" stroke="#39c0c8" stroke-width="2"/>';
+  s+='<circle cx="'+f1(L.current.x)+'" cy="'+f1(L.current.y)+'" r="4" fill="#e8a13a"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'FENa × dose')+'</text>';
+  s+='<text x="'+(W-8)+'" y="'+(L.baseY+14)+'" fill="#9fb1c0" font-size="9" text-anchor="end">dose alça →</text>';
+  return svgEl(W,H,s); }
+function segMini(r,titulo){ var W=300,H=180,base=150,s='', x0=40, bw=56, gap=8, scale=1.1;
+  for(var i=0;i<r.segments.length;i++){ var sg=r.segments[i]; var x=x0+i*(bw+gap);
+    var hd=clampv(sg.delivered,0,100)*scale*0.0 ; // delivered as faint backdrop scaled to 100→110px
+    var hDel=clampv(sg.delivered/100,0,1)*110, hRe=clampv(sg.reabsorbed/100,0,1)*110;
+    s+='<rect x="'+x+'" y="'+f1(base-hDel)+'" width="'+bw+'" height="'+f1(hDel)+'" fill="#1b242d" stroke="#3a4a58"/>';
+    s+='<rect x="'+x+'" y="'+f1(base-hRe)+'" width="'+bw+'" height="'+f1(hRe)+'" fill="#39c0c8" fill-opacity="0.55" stroke="#39c0c8"/>';
+    s+='<text x="'+(x+bw/2)+'" y="'+(base+13)+'" fill="#9fb1c0" font-size="8.5" text-anchor="middle">'+sg.name+'</text>';
+    if(sg.block>0.02) s+='<text x="'+(x+bw/2)+'" y="'+f1(base-hDel-4)+'" fill="#e8a13a" font-size="8" text-anchor="middle">−'+fmt(sg.block*100,0)+'%</text>'; }
+  s+='<text x="150" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'cascata: entregue × reabsorvido')+'</text>';
+  s+='<text x="150" y="172" fill="#e8a13a" font-size="9" text-anchor="middle">FENa '+fmt(r.FENa,2)+'%</text>';
+  return svgEl(W,H,s); }
+function imgFig(slug,alt){ return '<img src="assets/m17/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+/* TUTOR */
+function R0(extra){ var o={}; if(extra) for(var k in extra) o[k]=extra[k]; return diuretics(o); }
+var TUTOR_ILUSTRADO=[
+  {q:'Na curva, dobrar a dose no platô…',o:['dobra o efeito','acrescenta pouco (teto)','zera'],c:1,e:'Acima do teto, mais dose não rende.',fig:function(){return curveMini({loop:80},'no platô');}},
+  {q:'Ligar o tiazídico (25 mg) faz a curva da alça…',o:['descer','subir (sinergia)','sumir'],c:1,e:'Bloqueio sequencial = supra-aditivo.',fig:function(){return curveMini({loop:80,thz:25},'+ tiazídico');}},
+  {q:'Com braking alto, a mesma dose…',o:['rende mais','rende menos','igual'],c:1,e:'Tolerância: curva desce.',fig:function(){return curveMini({loop:80,braking:0.8},'braking');}},
+  {q:'Baixar a entrega (resistência) faz…',o:['curva subir','curva deslocar à direita/baixar','nada'],c:1,e:'Menos fármaco no lúmen.',fig:function(){return curveMini({loop:80,delivery:0.3},'entrega baixa');}},
+  {q:'Na cascata, bloquear só a alça…',o:['o TCD compensa','exclui o Na todo','para o rim'],c:0,e:'O segmento de baixo reabsorve o excedente.',fig:function(){return segMini(R0({loop:80}),'só alça');}},
+  {q:'Bloquear alça + TCD na cascata…',o:['compensa igual','o Na escapa (sinergia)','reduz FENa'],c:1,e:'Sem compensação distal.',fig:function(){return segMini(R0({loop:80,thz:25}),'alça+tiazídico');}},
+  {q:'Na figura real, cada classe age…',o:['no mesmo ponto','num segmento/transportador','fora do rim'],c:1,e:'Uma chave por fechadura.',fig:function(){return imgFig('sitios-diureticos-nefron.png','sítios');}},
+  {q:'Na figura, a alça atua no…',o:['NCC','NKCC2','ENaC'],c:1,e:'Ramo espesso, teto alto.',fig:function(){return imgFig('nefron-alvos-diureticos.svg','alvos');}},
+  {q:'Na figura, EC50 é…',o:['o teto','a dose de meio-efeito','a potência máxima'],c:1,e:'Menor EC50 = mais potente.',fig:function(){return imgFig('emax-ec50.svg','emax');}},
+  {q:'Na figura, a sinergia é…',o:['igual à soma','maior que a soma','menor'],c:1,e:'Supra-aditiva.',fig:function(){return imgFig('sinergia-diureticos.svg','sinergia');}},
+  {q:'Na figura, resistência é principalmente…',o:['falha de entrega luminal','alergia','overdose'],c:0,e:'O fármaco age do lúmen.',fig:function(){return imgFig('resistencia-diuretico.svg','resistência');}},
+  {q:'Na figura, bumetanida 1 mg ≈ furosemida…',o:['1 mg','40 mg','0,5 mg'],c:1,e:'≈40× mais potente.',fig:function(){return imgFig('furosemida-estrutura.svg','potências');}},
+  {q:'Na escada de resgate, o degrau final é…',o:['trocar de alça','ultrafiltração/TRS','dobrar a dose'],c:1,e:'Quando o néfron não responde mais.',fig:function(){return imgFig('resgate-resistencia.svg','resgate');}}
+];
+var TUTOR_TEXTUAL=[
+  {q:'O efeito do diurético segue…',o:['uma reta','uma curva Emax (teto)','o acaso'],c:1,e:'bloqueio = Emax·D/(EC50+D).'},
+  {q:'EC50 mede…',o:['eficácia','potência','toxicidade'],c:1,e:'Dose de meio-efeito.'},
+  {q:'Emax mede…',o:['potência','eficácia (teto)','meia-vida'],c:1,e:'Efeito máximo.'},
+  {q:'A alça tem teto…',o:['baixo','alto','nenhum'],c:1,e:'NKCC2, ~25% do Na.'},
+  {q:'O diurético isolado decepciona porque…',o:['má adesão sempre','o segmento de baixo compensa','é fraco'],c:1,e:'Cascata do néfron.'},
+  {q:'Braking é…',o:['alergia','tolerância no uso crônico','overdose'],c:1,e:'Hipertrofia distal + RAAS.'},
+  {q:'Bloqueio sequencial =',o:['duas alças','alça + tiazídico','dobrar dose'],c:1,e:'Dois segmentos em série.'},
+  {q:'A sinergia é…',o:['aditiva','supra-aditiva','subtrativa'],c:1,e:'Maior que a soma.'},
+  {q:'Resistência é sobretudo…',o:['falha de entrega luminal','imunidade','genética'],c:0,e:'TFG↓, albumina↓, proteinúria, AINE.'},
+  {q:'Furosemida VO tem biodisponibilidade ~',o:['100%','~50% e variável','5%'],c:1,e:'Por isso IV na resistência.'},
+  {q:'Bumetanida 0,5–2 mg equivale a furosemida…',o:['~20–80 mg','~1 mg','~500 mg'],c:0,e:'≈40× mais potente.'},
+  {q:'O degrau final do resgate é…',o:['outra alça','ultrafiltração/TRS','soro'],c:1,e:'Ponte M37/M35.'}
+];
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL; window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+var BANKS={ilustrada:TUTOR_ILUSTRADO,textual:TUTOR_TEXTUAL}, curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+function renderTutor(){ var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():''; $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false; $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){ if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button'); btns[item.c].classList.add('ok'); if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block'; fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e; $('tutor-score').textContent=tScore; $('tutor-total').textContent=tTotal; });
+    box.appendChild(b); }); }
+$('banktabs').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor(); });
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+$('draw-curve').innerHTML = curveMini({loop:40},'FENa × dose de alça');
+$('draw-segments').innerHTML = segMini(diuretics({loop:80}),'cascata (só alça)');
+$('fig-caso').innerHTML = curveMini({loop:80,thz:25,braking:0.6},'ICC: alça+tiazídico') + segMini(diuretics({loop:80,thz:25,braking:0.6}),'bloqueio sequencial');
+
+refresh(); renderTutor();
+</script>
+</body>
+</html>

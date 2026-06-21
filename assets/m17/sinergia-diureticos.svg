@@ -1,22 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M17</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">Farmacologia diurética integrada</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">sinergia-diureticos</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">Sinergia entre diuréticos</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Sinergia — o todo é maior que a soma</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">alça + tiazídico produzem mais natriurese que a soma dos efeitos isolados (supra-aditivo)</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <!-- barras -->
+  <g text-anchor="middle">
+    <rect x="90" y="180" width="80" height="60" fill="#39c0c8" fill-opacity="0.5" stroke="#39c0c8"/>
+    <text x="130" y="258" font-size="10" fill="#9fe3ec">só alça</text><text x="130" y="172" font-size="10" fill="#cdd9e3">+Δ</text>
+    <rect x="210" y="200" width="80" height="40" fill="#e8a13a" fill-opacity="0.5" stroke="#e8a13a"/>
+    <text x="250" y="258" font-size="10" fill="#f0c078">só tiazídico</text><text x="250" y="192" font-size="10" fill="#cdd9e3">+δ</text>
+    <rect x="330" y="160" width="80" height="80" fill="#5a6b78" fill-opacity="0.3" stroke="#5a6b78" stroke-dasharray="4 3"/>
+    <text x="370" y="258" font-size="10" fill="#9fb1c0">soma esperada</text>
+    <rect x="450" y="96" width="80" height="144" fill="#52c08a" fill-opacity="0.55" stroke="#52c08a"/>
+    <text x="490" y="258" font-size="10" fill="#9fe3ec" font-weight="bold">alça + tiazídico</text><text x="490" y="88" font-size="11" fill="#9fe3ec">&gt; soma!</text>
+  </g>
+
+  <text x="340" y="288" text-anchor="middle" font-size="10" fill="#e8a13a">o tiazídico bloqueia o TCD que IRIA compensar a carga extra entregue pela alça → a sinergia mora na sequência</text>
 </svg>

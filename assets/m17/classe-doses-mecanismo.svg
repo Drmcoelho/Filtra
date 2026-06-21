@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 320" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="320" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="316" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="24" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Dose ↔ alvo ↔ teto — o mapa farmacológico do néfron</text>
+  <text x="340" y="42" text-anchor="middle" font-size="11" fill="#9fb1c0">toda dose com unidade (mg) ancorada ao transportador e ao efeito máximo</text>
+
+  <g font-size="10.5">
+    <rect x="20" y="56" width="640" height="28" fill="#10202c" stroke="#283642"/>
+    <text x="32" y="75" fill="#9fb1c0">Classe</text><text x="200" y="75" fill="#9fb1c0">Alvo</text><text x="350" y="75" fill="#9fb1c0">Dose</text><text x="500" y="75" fill="#9fb1c0">Teto/efeito</text>
+
+    <rect x="20" y="84" width="640" height="40" fill="#0c2330"/>
+    <text x="32" y="100" fill="#9fe3ec" font-weight="bold">Acetazolamida</text><text x="32" y="116" fill="#9fb1c0" font-size="9">TCP</text>
+    <text x="200" y="108" fill="#e7eef4">anidrase carbônica</text><text x="350" y="108" fill="#e7eef4">250–500 mg</text><text x="500" y="108" fill="#e7eef4">fraco · acidose</text>
+
+    <rect x="20" y="124" width="640" height="40" fill="#10202c"/>
+    <text x="32" y="140" fill="#9fe3ec" font-weight="bold">Alça (furosemida)</text><text x="32" y="156" fill="#9fb1c0" font-size="9">ramo espesso</text>
+    <text x="200" y="148" fill="#e7eef4">NKCC2</text><text x="350" y="148" fill="#e7eef4">20–80 mg (IV/VO)</text><text x="500" y="148" fill="#e7eef4">TETO ALTO</text>
+
+    <rect x="20" y="164" width="640" height="40" fill="#0c2330"/>
+    <text x="32" y="180" fill="#9fe3ec" font-weight="bold">Tiazídico (HCTZ)</text><text x="32" y="196" fill="#9fb1c0" font-size="9">TCD</text>
+    <text x="200" y="188" fill="#e7eef4">NCC</text><text x="350" y="188" fill="#e7eef4">12,5–50 mg</text><text x="500" y="188" fill="#e7eef4">teto baixo · sinergia</text>
+
+    <rect x="20" y="204" width="640" height="40" fill="#10202c"/>
+    <text x="32" y="220" fill="#9fe3ec" font-weight="bold">Poupador de K</text><text x="32" y="236" fill="#9fb1c0" font-size="9">ducto coletor</text>
+    <text x="200" y="228" fill="#e7eef4">ENaC / aldosterona</text><text x="350" y="228" fill="#e7eef4">amilorida 5–10 mg</text><text x="500" y="228" fill="#e7eef4">fraco · poupa K⁺</text>
+
+    <rect x="20" y="244" width="640" height="40" fill="#0c2330"/>
+    <text x="32" y="260" fill="#9fe3ec" font-weight="bold">Osmótico / SGLT2i</text><text x="32" y="276" fill="#9fb1c0" font-size="9">TCP/alça</text>
+    <text x="200" y="268" fill="#e7eef4">manitol · SGLT2</text><text x="350" y="268" fill="#e7eef4">empagliflozina 10–25 mg</text><text x="500" y="268" fill="#e7eef4">natriurese leve</text>
+  </g>
+  <text x="340" y="304" text-anchor="middle" font-size="9" fill="#e8a13a">o engine usa a curva Emax de cada classe; aqui estão as âncoras dose↔unidade↔mecanismo (§8)</text>
+</svg>

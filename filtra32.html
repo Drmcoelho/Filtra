@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M32 — Depuração de drogas na diálise: PM, ligação proteica, Vd</title>
+<style>
+  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--warn:#e8a13a;--bad:#e0556b;--good:#52c08a;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none} section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .presets{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  .dose{background:rgba(232,161,58,.10);border:1px solid var(--warn);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px} .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)} .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)} .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)} .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M32</div>
+  <h1>Depuração de drogas na diálise — peso molecular, ligação proteica e Vd</h1>
+  <div class="sub">Três propriedades decidem se a diálise <b>remove</b> o fármaco: <b>peso molecular</b>
+  (pequeno passa), <b>ligação proteica</b> (só a <b>fração livre</b> = 1−ligação é dialisável) e o
+  <b>Vd</b> (Vd alto = a droga mora nos TECIDOS, não no sangue → <b>blindada</b>). A fração removida
+  por sessão é computada: <code>1 − exp(−K_dial·f_livre·fpm·t / (Vd·peso))</code>. Drogas removidas pedem
+  <b>dose suplementar pós-HD</b>: vancomicina <b>15–20 mg/kg</b>, gentamicina <b>1–1,7 mg/kg</b>. É
+  homeostasia por máquina — repor o que a diálise levou.</div>
+  <nav class="hex">
+    <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
+    <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="filtra.html">&larr; índice do braço FILTRA</a>
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- CONCEITO -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — o que a diálise tira do sangue (e o que ela não alcança)</h3>
+      <figure class="fviva"><img src="assets/m32/droga-dialisavel-criterios.svg" alt="Critérios que tornam uma droga dialisável: peso molecular, ligação proteica e Vd" loading="lazy">
+        <figcaption><b>Prancha-síntese (autoral).</b> Os <b>três critérios</b> de dialisabilidade — peso molecular baixo,
+        ligação proteica baixa e Vd baixo. As Fig. 1–8 voltam no Caso, na Trilha e na Avaliação. Atribuição em
+        <code>CREDITS.md</code> (em curadoria).</figcaption></figure>
+      <p class="sub" style="margin-top:0"><b>A diálise não vê a droga inteira.</b> Ela só remove a fração que está
+      <b>livre no sangue</b> e que <b>cabe na membrana</b>. Por isso clearance alto do filtro pode não significar nada:
+      o que importa é <i>onde a droga está</i> (Vd) e <i>quanto está livre</i> (1−ligação). A fórmula viva do módulo é
+      <code>fração removida = 1 − exp(−K_efetivo·t / V)</code>, com <code>K_efetivo = K_dial·f_livre·fpm(PM)</code> e
+      <code>V = Vd·peso</code> (Fig. 1–8).</p>
+
+      <h4>1. As três propriedades — peso molecular, ligação, Vd</h4>
+      <p class="sub">PM <b>baixo</b> (&lt;~500 Da) atravessa fácil em low-flux; high-flux remove médios. Ligação
+      <b>baixa</b> = mais droga livre. Vd <b>baixo</b> = droga no sangue, ao alcance do filtro.</p>
+      <div class="frow">
+        <div class="concept" id="draw-vd"></div>
+        <figure class="fviva"><img src="assets/m32/peso-molecular-ligacao.svg" alt="Peso molecular e ligação proteica como filtros da remoção dialítica" loading="lazy">
+          <figcaption><b>Fig. 1 · PM × ligação.</b> Dois filtros em série: a membrana barra o que é <b>grande</b>; as
+          proteínas plasmáticas sequestram o que é <b>muito ligado</b>. Só o que é pequeno E livre sai.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m32/volume-distribuicao-droga.svg" alt="Volume de distribuição: a droga no plasma versus nos tecidos" loading="lazy">
+          <figcaption><b>Fig. 2 · O Vd.</b> Vd = quanto a droga se espalha. Vd <b>baixo</b> (~0,2–0,7 L/kg): mora no
+          plasma/ECF → dialisável. Vd <b>alto</b> (&gt;3 L/kg): mora nos tecidos → blindada.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m32/clearance-droga-dialise.svg" alt="Clearance de uma droga pelo dialisador" loading="lazy">
+          <figcaption><b>Fig. 3 · Clearance da droga.</b> O dialisador tem um clearance (mL/min), mas o
+          <b>efetivo</b> da droga = K_dial × <b>f_livre</b> × <b>fpm(PM)</b>. Os dois fatores derrubam o número.</figcaption></figure>
+      </div>
+
+      <h4>2. A fração livre — só ela é dialisável</h4>
+      <p class="sub">A droga ligada à albumina é grande demais para a membrana. Vale <code>f_livre = 1 − ligação</code>:
+      uma droga 95% ligada tem só 5% disponível para sair, por mais que o filtro depure.</p>
+      <div class="frow">
+        <div class="concept" id="draw-livre"></div>
+        <figure class="fviva"><img src="assets/m32/ligacao-proteica-remocao.svg" alt="Ligação proteica e a fração removível pela diálise" loading="lazy">
+          <figcaption><b>Fig. 4 · A fração livre.</b> A barra mostra ligada (sequestrada) × livre (removível). Ligação
+          de 90% → só 10% livre → a diálise toca uma fatia mínima por passagem.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m32/meia-vida-dialise.svg" alt="Meia-vida da droga encurtada pela diálise" loading="lazy">
+          <figcaption><b>Fig. 5 · Meia-vida na diálise.</b> Quando a droga é removível, a sessão <b>encurta</b> sua
+          meia-vida (t½ = 0,693·V/K_efetivo): o nível cai rápido durante a HD.</figcaption></figure>
+      </div>
+
+      <h4>3. Vd alto blinda a droga — a pérola</h4>
+      <p class="sub">Vd alto significa que a maior parte da droga está fora do sangue. O filtro só "vê" o pouco que
+      passa pelo plasma → remoção <b>ínfima</b> mesmo com clearance máximo. É o caso da <b>digoxina</b> (Vd ~6).</p>
+      <div class="frow">
+        <figure class="fviva"><img src="assets/m32/clearance-droga-dialise.svg" alt="Clearance alto não remove droga com Vd alto" loading="lazy">
+          <figcaption><b>Fig. 6 · Clearance alto não basta.</b> Por mais que o dialisador depure, se a droga não está
+          no sangue (Vd alto), há pouco a remover por passagem. A curva do Instrumento despenca com o Vd.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m32/volume-distribuicao-droga.svg" alt="A digoxina mora nos tecidos, blindada da diálise" loading="lazy">
+          <figcaption><b>Fig. 7 · Digoxina blindada.</b> Vd ~6 L/kg, ligada à Na/K-ATPase do músculo. A diálise não a
+          remove — daí o Fab antidigoxina, não a HD. Lítio (Vd ~0,7) é o oposto: bem removido.</figcaption></figure>
+      </div>
+
+      <h4>4. Dosar na diálise — a re-dose pós-HD</h4>
+      <p class="sub">Drogas removidas precisam de <b>dose suplementar pós-HD</b>, proporcional à fração removida:
+      vancomicina <b>15–20 mg/kg</b> (re-dose por nível), gentamicina <b>1–1,7 mg/kg</b>, cefepime ajustado por TFG. É
+      <b>homeostasia</b> por máquina: a diálise perturba o meio interno ao remover droga útil, e a re-dose restaura o
+      nível terapêutico.</p>
+      <div class="frow">
+        <div class="concept" id="draw-dose"></div>
+        <figure class="fviva"><img src="assets/m32/dose-suplementar-pos-hd.svg" alt="Dose suplementar de antibiótico após a hemodiálise" loading="lazy">
+          <figcaption><b>Fig. 8 · Re-dose pós-HD.</b> dose suplementar = dose × fração removida. Se a HD tira 35% da
+          vancomicina, repõe-se ~35% — ou doseia-se o nível. Timing: <b>após</b> a sessão.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m32/ajuste-antimicrobiano.svg" alt="Ajuste de antimicrobianos na diálise" loading="lazy">
+          <figcaption><b>Fig. 9 · Ajuste do antimicrobiano.</b> O ATB hidrofílico de Vd baixo (β-lactâmicos,
+          aminoglicosídeos, vancomicina) é removido → re-dose; o lipofílico de Vd alto, não.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASO -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — seis atos, decida antes de revelar</h3>
+      <p class="sub">Sepse em paciente em hemodiálise (high-flux). Precisamos dosar antibiótico, e há um lítio tóxico
+      no leito ao lado. O que a máquina remove — e o que ela não toca?</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step"><b>Ato 1.</b> Demos <b>vancomicina 17,5 mg/kg</b>. Por que a HD high-flux a remove em parte (Fig. 1)?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1">PM ~1449 (média), ligação ~50% (<b>f_livre 0,5</b>). Em <b>high-flux</b> a membrana
+          deixa passar moléculas médias → remoção parcial (~30–40%/sessão). Em low-flux, quase nada.</div></div>
+
+      <div class="step"><b>Ato 2.</b> <i>Prever:</i> a vancomicina precisa de re-dose? Quanto (Fig. 8)?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2"><b>Sim</b> — dose suplementar pós-HD ≈ dose × fração removida. Se a sessão tira ~35%,
+          repõe-se ~35% (ou se doseia o nível-alvo). No Lab, ligue high-flux e veja a re-dose computada em mg.</div></div>
+
+      <div class="step"><b>Ato 3.</b> O lítio do vizinho está em 4,5 mEq/L (tóxico). A HD ajuda (Fig. 7)?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3"><b>Muito.</b> Lítio: PM 7, ligação <b>zero</b> (f_livre 1), Vd ~0,7 (baixo) → a diálise
+          é o tratamento de escolha na intoxicação grave (ponte M33). Tudo a favor da remoção.</div></div>
+
+      <div class="step"><b>Ato 4.</b> <i>A pegadinha.</i> Um terceiro doente tem digoxina tóxica. Dialisamos (Fig. 7)?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>Não adianta.</b> Vd ~6 L/kg → a droga mora no músculo, não no sangue. Clearance
+          máximo do filtro remove quase nada (Vd alto <b>blinda</b>). O antídoto é o Fab, não a HD.</div></div>
+
+      <div class="step"><b>Ato 5.</b> <i>Outra droga.</i> Uma muito ligada (95% à albumina), PM baixo, Vd baixo. Removível?
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>Pouco.</b> Só a fração <b>livre</b> (5%) é dialisável; 95% está sequestrada nas
+          proteínas, grande demais para a membrana. A ligação proteica esconde a maior parte (Fig. 4).</div></div>
+
+      <div class="step"><b>Ato 6.</b> <i>Síntese.</i> Qual a regra de uma linha para "isto sai na diálise?"
+        <div><button class="act" data-rev="r6">Revelar</button></div>
+        <div class="reveal" id="r6">Sai o que é <b>pequeno, livre e de Vd baixo</b>. Falha qualquer um dos três e a
+          remoção despenca. Removeu → <b>re-dose pós-HD</b> proporcional à fração removida.</div></div>
+    </div>
+  </section>
+
+  <!-- TRILHA -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — nove perguntas que constroem o conceito</h3>
+      <details><summary>1. Quais as três propriedades que decidem a remoção?</summary><p>Peso molecular (baixo passa),
+        ligação proteica (só a fração livre sai) e Vd (baixo = no sangue, alto = blindada).</p></details>
+      <details><summary>2. O que é a fração livre?</summary><p>f_livre = 1 − ligação. Só a droga não ligada à
+        albumina é pequena o bastante para atravessar a membrana.</p></details>
+      <details><summary>3. Por que o PM importa?</summary><p>A membrana tem um corte: PM &lt;~500 Da passa em low-flux;
+        high-flux remove moléculas médias (até ~15 kDa). Acima disso, fica retido.</p></details>
+      <details><summary>4. O que é o Vd?</summary><p>Volume de distribuição (L/kg): quanto a droga se espalha pelos
+        tecidos. Vd alto = pouca droga no sangue → pouca ao alcance do filtro.</p></details>
+      <details><summary>5. Por que o Vd alto blinda a droga?</summary><p>Mesmo com clearance alto, o filtro só remove o
+        que passa pelo plasma. Se 95% da droga está no tecido, há pouco a tirar por passagem.</p></details>
+      <details><summary>6. Como se computa a fração removida?</summary><p>fração = 1 − exp(−K_efetivo·t/V), com
+        K_efetivo = K_dial·f_livre·fpm(PM) e V = Vd·peso. É wash-out exponencial do pool.</p></details>
+      <details><summary>7. Por que a vancomicina é removida em high-flux mas não em low-flux?</summary><p>PM ~1449 (médio):
+        a membrana high-flux a deixa passar; a low-flux a barra. Daí a re-dose depender da membrana.</p></details>
+      <details><summary>8. O que é a dose suplementar?</summary><p>A re-dose pós-HD que repõe o que a sessão removeu:
+        dose suplementar ≈ dose × fração removida (vancomicina 15–20 mg/kg; gentamicina 1–1,7 mg/kg).</p></details>
+      <details><summary>9. Em que sentido isto é homeostasia?</summary><p>A máquina perturba o meio interno ao remover
+        droga útil; a re-dose pós-HD restaura o nível terapêutico — repor o que foi levado.</p></details>
+    </div>
+  </section>
+
+  <!-- INSTRUMENTO -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — a fração removida × Vd (o despencar com Vd alto)</h3>
+      <p class="sub">A curva mostra a fração removida por sessão caindo conforme o Vd sobe, para a membrana e o tempo
+      atuais. Os marcadores ancoram lítio (Vd baixo, bem removido) e digoxina (Vd alto, blindada). O ponto laranja é a
+      droga selecionada no Lab.</p>
+      <canvas id="vd-canvas" width="900" height="360" aria-label="Fração removida em função do Vd"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- LAB -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — depuração de drogas (fração removida e re-dose computadas)</h3>
+      <div class="grid">
+        <div>
+          <label>Fármaco (ou manual)</label>
+          <select id="in-droga">
+            <option value="custom">— manual (sliders) —</option>
+            <option value="vancomicina">Vancomicina (PM 1449 · lig 50% · Vd 0,7)</option>
+            <option value="gentamicina">Gentamicina (PM 478 · lig 10% · Vd 0,25)</option>
+            <option value="cefepime">Cefepime (PM 480 · lig 20% · Vd 0,3)</option>
+            <option value="litio">Lítio (PM 7 · lig 0% · Vd 0,7)</option>
+            <option value="fenobarbital">Fenobarbital (PM 232 · lig 45% · Vd 0,6)</option>
+            <option value="digoxina">Digoxina (PM 781 · lig 25% · Vd 6,0)</option>
+          </select>
+          <label>Peso molecular (Da): <span class="val" id="lbl-pm">1500</span></label>
+          <input type="range" id="in-pm" min="5" max="40000" step="5" value="1500">
+          <label>Ligação proteica (%): <span class="val" id="lbl-lig">50</span></label>
+          <input type="range" id="in-lig" min="0" max="99" step="1" value="50">
+          <label>Vd (L/kg): <span class="val" id="lbl-vd">1.0</span></label>
+          <input type="range" id="in-vd" min="0.1" max="8" step="0.05" value="1.0">
+        </div>
+        <div>
+          <label>Clearance do dialisador K_dial (mL/min): <span class="val" id="lbl-kdial">180</span></label>
+          <input type="range" id="in-kdial" min="50" max="350" step="5" value="180">
+          <label>Tempo de sessão (min): <span class="val" id="lbl-t">240</span></label>
+          <input type="range" id="in-t" min="60" max="480" step="10" value="240">
+          <label>Peso (kg): <span class="val" id="lbl-peso">70</span></label>
+          <input type="range" id="in-peso" min="40" max="150" step="1" value="70">
+          <label>Dose de manutenção (mg/kg): <span class="val" id="lbl-dose">10</span></label>
+          <input type="range" id="in-dose" min="0" max="40" step="0.5" value="10">
+          <div style="display:flex;align-items:center;gap:8px;margin-top:12px"><input type="checkbox" id="in-flux" style="width:auto" checked><label style="margin:0">Membrana high-flux</label></div>
+          <div class="dose" id="dose-box">Selecione um fármaco ou ajuste os sliders para a dose suplementar (computada).</div>
+        </div>
+      </div>
+
+      <div class="presets">
+        <button class="act" data-preset="vancomicina">Vancomicina (high-flux)</button>
+        <button class="act" data-preset="gentamicina">Gentamicina</button>
+        <button class="act" data-preset="litio">Lítio (intox.)</button>
+        <button class="act" data-preset="digoxina">Digoxina (blindada)</button>
+        <button class="act" data-preset="muitoligada">Muito ligada (95%)</button>
+        <button class="act" data-preset="lowflux">Vanco em low-flux</button>
+      </div>
+
+      <table>
+        <tr><th>Variável</th><th>Atual</th><th>Comentário</th></tr>
+        <tr><td>Fração livre (1−ligação)</td><td class="num" id="out-livre">—</td><td class="num">só ela dialisa</td></tr>
+        <tr><td>Fator de PM (membrana)</td><td class="num" id="out-fpm">—</td><td class="num">1 = passa, 0 = retido</td></tr>
+        <tr><td>Clearance efetivo da droga (mL/min)</td><td class="num" id="out-kef">—</td><td class="num">K_dial·f_livre·fpm</td></tr>
+        <tr><td>Volume do compartimento (L)</td><td class="num" id="out-vl">—</td><td class="num">Vd·peso</td></tr>
+        <tr><td>Fração removida na sessão (%)</td><td class="num" id="out-frac">—</td><td class="num">≥25% = relevante</td></tr>
+        <tr><td>Dose suplementar pós-HD (mg)</td><td class="num" id="out-supl">—</td><td class="num">dose·fração</td></tr>
+        <tr><td>Meia-vida na diálise (min)</td><td class="num" id="out-t12">—</td><td class="num">0,693·V/K_ef</td></tr>
+        <tr><td>Padrão dominante</td><td class="num" id="out-classe">—</td><td class="num">—</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÃO -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (12)</button>
+        <button data-bank="textual">Textual (11)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica</b>. Este módulo M32
+    inclui <b>farmacologia aplicada</b> (vancomicina, gentamicina, cefepime, lítio, digoxina) com doses, unidades e
+    mecanismo — decisão de escopo do autor, válida só para este braço (§8). <b>Nota de honestidade do modelo:</b> o
+    wash-out exponencial, o fator de PM e a fração removida são simplificações didáticas calibradas para ensinar o
+    mecanismo, não para calcular prescrições reais. Não substitui julgamento clínico nem dosagem de nível sérico; a
+    decisão e a responsabilidade finais são sempre do profissional.
+  </div>
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+</div>
+
+<script>
+/* ENGINE INLINE — espelho fiel de build/m32/model32.js */
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
+var FARMACOS={
+  custom:{nome:'— manual (sliders) —',unidade:'mg/kg',pm:1500,lig:0.5,vd:1.0,dose:10,faixa:[0,50],alvo:'definido nos sliders',nota:'ajuste PM, ligação e Vd à mão'},
+  vancomicina:{nome:'Vancomicina',unidade:'mg/kg',pm:1449,lig:0.5,vd:0.7,dose:17.5,faixa:[15,20],alvo:'parede bacteriana (glicopeptídeo)',nota:'Vd moderado, PM ~1449; em HIGH-FLUX é parcialmente removida → re-dose por nível'},
+  gentamicina:{nome:'Gentamicina',unidade:'mg/kg',pm:478,lig:0.10,vd:0.25,dose:1.7,faixa:[1,1.7],alvo:'ribossomo 30S (aminoglicosídeo)',nota:'PM baixo, pouca ligação, Vd baixo → BEM removida → suplementar pós-HD'},
+  cefepime:{nome:'Cefepime',unidade:'mg/kg',pm:480,lig:0.20,vd:0.3,dose:30,faixa:[15,30],alvo:'PBP (β-lactâmico)',nota:'PM baixo, Vd baixo → dialisável; ajustado por TFG, suplementar pós-HD'},
+  litio:{nome:'Lítio',unidade:'mEq/kg',pm:7,lig:0.0,vd:0.7,dose:0,faixa:[0,0],alvo:'íon (estabilizador de humor)',nota:'PM ínfimo, ligação ZERO, Vd baixo → ALTAMENTE dialisável (toxina, M33)'},
+  fenobarbital:{nome:'Fenobarbital',unidade:'mg/kg',pm:232,lig:0.45,vd:0.6,dose:0,faixa:[0,0],alvo:'GABA-A (barbitúrico)',nota:'PM baixo, Vd baixo → dialisável (toxina, M33)'},
+  digoxina:{nome:'Digoxina',unidade:'mcg/kg',pm:781,lig:0.25,vd:6.0,dose:0,faixa:[0,0],alvo:'Na/K-ATPase (cardiotônico)',nota:'Vd ENORME (~6 L/kg) → BLINDADA: a diálise quase não a remove'}
+};
+function pmFator(pm,highFlux){ pm=clampv(pm,1,60000); var corte=highFlux?15000:1500, n=highFlux?2.2:3.0; return clampv(1/(1+Math.pow(pm/corte,n)),0,1); }
+function dialdrug(input){ var inp=input||{};
+  var droga=String(inp.droga==null?'custom':inp.droga).toLowerCase(); if(!FARMACOS.hasOwnProperty(droga)) droga='custom';
+  var meta=FARMACOS[droga], manual=droga==='custom';
+  var pm=clampv(inp.pm!==undefined&&manual?inp.pm:meta.pm,1,60000);
+  var ligacao=clampv((inp.ligacao!==undefined&&manual?inp.ligacao:meta.lig),0,0.999);
+  var vd=clampv(inp.vd!==undefined&&manual?inp.vd:meta.vd,0.05,30);
+  var kdial=clampv(inp.kdial!==undefined?inp.kdial:180,1,400);
+  var t=clampv(inp.t!==undefined?inp.t:240,1,1440);
+  var peso=clampv(inp.peso!==undefined?inp.peso:70,20,250);
+  var highFlux=inp.highFlux===true;
+  var doseMgKg=clampv(inp.dose!==undefined&&manual?inp.dose:meta.dose,0,5000);
+  var fLivre=clampv(1-ligacao,0.001,1), fpm=pmFator(pm,highFlux);
+  var kEfetivo=clampv(kdial*fLivre*fpm,0,400);
+  var vL=clampv(vd*peso,1,7500), vmL=vL*1000;
+  var expo=kEfetivo*t/vmL, fracaoRemovida=clampv(1-Math.exp(-expo),0,1);
+  var doseTotalMg=doseMgKg*peso, doseSuplementarMg=clampv(doseTotalMg*fracaoRemovida,0,1e7);
+  var meiaVidaDial=kEfetivo>1e-9?clampv(0.693*vmL/kEfetivo,1,1e7):1e7;
+  var dializavel=fracaoRemovida>=0.25, classe;
+  if(vd>=3) classe='blindada_vd';
+  else if(ligacao>=0.85) classe='blindada_ligacao';
+  else if(fracaoRemovida>=0.5) classe='bem_removida';
+  else if(dializavel) classe='parcial';
+  else classe='mal_removida';
+  return {droga:droga,nomeFarmaco:meta.nome,unidade:meta.unidade,alvo:meta.alvo,nota:meta.nota,
+    pm:pm,ligacao:ligacao,vd:vd,kdial:kdial,t:t,peso:peso,highFlux:highFlux,
+    fLivre:fLivre,fpm:fpm,kEfetivo:kEfetivo,vL:vL,expo:expo,fracaoRemovida:fracaoRemovida,
+    doseMgKg:doseMgKg,doseTotalMg:doseTotalMg,doseSuplementarMg:doseSuplementarMg,
+    meiaVidaDial:meiaVidaDial,dializavel:dializavel,classe:classe}; }
+function vdLayout(state,W,H){ state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=52,padR=16,padT=18,padB=38,baseY=H-padB, vdMin=0.1,vdMax=8,N=60;
+  var droga=String(state.droga==null?'custom':state.droga).toLowerCase(); if(!FARMACOS.hasOwnProperty(droga)) droga='custom';
+  var meta=FARMACOS[droga], manual=droga==='custom';
+  var ligacao=clampv((state.ligacao!==undefined&&manual?state.ligacao:meta.lig),0,0.999);
+  var pm=clampv(state.pm!==undefined&&manual?state.pm:meta.pm,1,60000);
+  var kdial=clampv(state.kdial!==undefined?state.kdial:180,1,400);
+  var t=clampv(state.t!==undefined?state.t:240,1,1440);
+  var peso=clampv(state.peso!==undefined?state.peso:70,20,250);
+  var highFlux=state.highFlux===true;
+  var fLivre=clampv(1-ligacao,0.001,1), fpm=pmFator(pm,highFlux), kEf=clampv(kdial*fLivre*fpm,0,400);
+  var pxX=(W-padL-padR)/(vdMax-vdMin), pxY=(baseY-padT), curva=[],i,vdv,fr;
+  for(i=0;i<=N;i++){ vdv=vdMin+(vdMax-vdMin)*i/N; var vmL=clampv(vdv*peso,1,7500)*1000; fr=clampv(1-Math.exp(-(kEf*t/vmL)),0,1);
+    curva.push({x:padL+(vdv-vdMin)*pxX,y:baseY-fr*pxY,vd:vdv,fr:fr}); }
+  var marks=[];
+  ['litio','gentamicina','vancomicina','digoxina'].forEach(function(k){ var m=FARMACOS[k], fl=clampv(1-m.lig,0.001,1), fp=pmFator(m.pm,highFlux), ke=clampv(kdial*fl*fp,0,400);
+    var vmL=clampv(m.vd*peso,1,7500)*1000, f=clampv(1-Math.exp(-(ke*t/vmL)),0,1), vdc=clampv(m.vd,vdMin,vdMax);
+    marks.push({k:k,nome:m.nome,vd:m.vd,fr:f,x:padL+(vdc-vdMin)*pxX,y:baseY-f*pxY}); });
+  var vdReal=(state.vd!==undefined&&manual?state.vd:meta.vd), vdc=clampv(vdReal,vdMin,vdMax);
+  var vmLc=clampv(vdReal,0.05,30)*clampv(peso,20,250)*1000, frc=clampv(1-Math.exp(-(kEf*t/vmLc)),0,1);
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,vdMin:vdMin,vdMax:vdMax,pxX:pxX,pxY:pxY,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},curva:curva,marks:marks,
+    current:{x:padL+(vdc-vdMin)*pxX,y:baseY-frc*pxY,vd:vdc,fr:frc}}; }
+window.dialdrug=dialdrug; window.pmFator=pmFator; window.vdLayout=vdLayout; window.FARMACOS=FARMACOS;
+window.MODEL={dialdrug:dialdrug,pmFator:pmFator,vdLayout:vdLayout,FARMACOS:FARMACOS,clampv:clampv};
+
+/* UI */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=(d===undefined?1:d); return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+var CLASSE_TXT={bem_removida:'bem removida',parcial:'parcial',mal_removida:'mal removida',blindada_vd:'blindada (Vd alto)',blindada_ligacao:'blindada (muito ligada)'};
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on'); b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on'); $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh(); });
+document.addEventListener('click',function(e){ var b=e.target.closest('button.act[data-rev]'); if(!b) return; var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on'); });
+
+function readInputs(){ return { droga:$('in-droga').value, pm:+$('in-pm').value, ligacao:(+$('in-lig').value)/100, vd:+$('in-vd').value, kdial:+$('in-kdial').value, t:+$('in-t').value, peso:+$('in-peso').value, dose:+$('in-dose').value, highFlux:$('in-flux').checked }; }
+function syncFromDrug(){ var d=$('in-droga').value, meta=FARMACOS[d]||FARMACOS.custom; var manual=d==='custom';
+  $('in-pm').disabled=!manual; $('in-lig').disabled=!manual; $('in-vd').disabled=!manual; $('in-dose').disabled=!manual;
+  if(!manual){ $('in-pm').value=Math.min(meta.pm,40000); $('in-lig').value=Math.round(meta.lig*100); $('in-vd').value=meta.vd; $('in-dose').value=meta.dose; } }
+function refresh(){ var inp=readInputs();
+  $('lbl-pm').textContent=fmt(inp.pm,0); $('lbl-lig').textContent=fmt(inp.ligacao*100,0); $('lbl-vd').textContent=fmt(inp.vd,2);
+  $('lbl-kdial').textContent=fmt(inp.kdial,0); $('lbl-t').textContent=fmt(inp.t,0); $('lbl-peso').textContent=fmt(inp.peso,0); $('lbl-dose').textContent=fmt(inp.dose,1);
+  var r=dialdrug(inp), meta=FARMACOS[inp.droga]||FARMACOS.custom;
+  $('out-livre').textContent=fmt(r.fLivre,2); $('out-fpm').textContent=fmt(r.fpm,2); $('out-kef').textContent=fmt(r.kEfetivo,0);
+  $('out-vl').textContent=fmt(r.vL,1); $('out-frac').textContent=fmt(r.fracaoRemovida*100,0)+'%'; $('out-supl').textContent=fmt(r.doseSuplementarMg,0)+' mg';
+  $('out-t12').textContent=(r.meiaVidaDial>=1e6?'∞ (não removida)':fmt(r.meiaVidaDial,0)); $('out-classe').textContent=CLASSE_TXT[r.classe]||r.classe;
+  // caixa de dose (dose↔unidade↔mecanismo, computada)
+  if(inp.droga==='custom'){ $('dose-box').innerHTML='<b>Manual.</b> dose '+fmt(inp.dose,1)+' mg/kg → total '+fmt(r.doseTotalMg,0)+' mg; suplementar pós-HD '+fmt(r.doseSuplementarMg,0)+' mg ('+fmt(r.fracaoRemovida*100,0)+'% removido). Ajuste PM/ligação/Vd.'; }
+  else { var dtxt = meta.dose>0 ? ('dose '+fmt(meta.faixa[0],1)+'–'+fmt(meta.faixa[1],1)+' '+meta.unidade+' → suplementar pós-HD '+fmt(r.doseSuplementarMg,0)+' mg') : ('toxina/sem dose de manutenção — ver M33');
+    $('dose-box').innerHTML='<b>'+meta.nome+'</b> — '+dtxt+' · alvo: '+meta.alvo+' · '+meta.nota+'.'; }
+  verdict(r,inp); drawVd(inp); pearl(r,inp); }
+function verdict(r,inp){ var v=$('veredito'), cls='b-good', msg;
+  if(r.classe==='blindada_vd'){ cls='b-bad'; msg=r.nomeFarmaco+': Vd '+fmt(r.vd,1)+' L/kg → só '+fmt(r.fracaoRemovida*100,0)+'% removido. A droga mora no tecido — clearance alto não a alcança (BLINDADA).'; }
+  else if(r.classe==='blindada_ligacao'){ cls='b-bad'; msg='Ligação '+fmt(r.ligacao*100,0)+'% → fração livre '+fmt(r.fLivre,2)+'. Só '+fmt(r.fracaoRemovida*100,0)+'% removido: as proteínas sequestram a droga.'; }
+  else if(r.classe==='bem_removida'){ cls='b-good'; msg=r.nomeFarmaco+': '+fmt(r.fracaoRemovida*100,0)+'% removido/sessão → re-dose pós-HD de '+fmt(r.doseSuplementarMg,0)+' mg. Pequena, livre e de Vd baixo.'; }
+  else if(r.classe==='parcial'){ cls='b-warn'; msg=r.nomeFarmaco+': '+fmt(r.fracaoRemovida*100,0)+'% removido (parcial) → considerar re-dose de '+fmt(r.doseSuplementarMg,0)+' mg (ou dosar nível).'; }
+  else { cls='b-warn'; msg='Pouco removido ('+fmt(r.fracaoRemovida*100,0)+'%): PM alto e/ou ligação alta e/ou Vd alto. Re-dose mínima.'; }
+  v.className='banner '+cls; v.textContent=msg; }
+function pearl(r,inp){ var p=$('lab-pearl'), ip=$('instr-pearl'), t;
+  if(r.classe==='blindada_vd') t='PÉROLA: Vd alto BLINDA a droga. Mesmo com K_efetivo '+fmt(r.kEfetivo,0)+' mL/min, só '+fmt(r.fracaoRemovida*100,0)+'% sai — a droga está nos tecidos, não no sangue.';
+  else if(r.classe==='blindada_ligacao') t='PÉROLA: a ligação proteica esconde a maior parte. f_livre = 1 − '+fmt(r.ligacao*100,0)+'% = '+fmt(r.fLivre,2)+'; só essa fatia é dialisável.';
+  else if(r.classe==='bem_removida') t='Pequena (PM '+fmt(r.pm,0)+'), livre (f '+fmt(r.fLivre,2)+') e de Vd baixo ('+fmt(r.vd,1)+') → '+fmt(r.fracaoRemovida*100,0)+'% removido. Re-dose pós-HD '+fmt(r.doseSuplementarMg,0)+' mg.';
+  else t='Fração removida = 1 − exp(−K_ef·t/V) = '+fmt(r.fracaoRemovida*100,0)+'%. K_ef = K_dial·f_livre·fpm = '+fmt(r.kEfetivo,0)+' mL/min; V = Vd·peso = '+fmt(r.vL,0)+' L.';
+  p.textContent=t; ip.textContent=t; }
+function drawVd(state){ var c=$('vd-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
+  var L=vdLayout(state,c.width,c.height); ctx.clearRect(0,0,L.W,L.H);
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('fração removida',8,L.padT+2); ctx.fillText('Vd (L/kg) →',L.W-120,L.baseY+24);
+  // curva fração removida
+  ctx.strokeStyle='#39c0c8'; ctx.lineWidth=2; ctx.beginPath(); for(var i=0;i<L.curva.length;i++){ if(i===0) ctx.moveTo(L.curva[i].x,L.curva[i].y); else ctx.lineTo(L.curva[i].x,L.curva[i].y);} ctx.stroke();
+  // marcadores
+  L.marks.forEach(function(m){ ctx.fillStyle=(m.k==='digoxina'?'#e0556b':(m.k==='litio'?'#52c08a':'#9fb1c0')); ctx.beginPath(); ctx.arc(m.x,m.y,4,0,6.28); ctx.fill();
+    ctx.fillText(m.nome.split(' ')[0],m.x+6,m.y-4); });
+  // ponto atual
+  var cx=L.current.x, cy=L.current.y; ctx.strokeStyle='#e8a13a'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(cx,L.padT); ctx.lineTo(cx,L.baseY); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#e8a13a'; ctx.beginPath(); ctx.arc(cx,cy,5,0,6.28); ctx.fill();
+  ctx.fillStyle='#9fb1c0'; ctx.fillText('fração removida × Vd',L.padL+6,L.padT+14); }
+
+['in-pm','in-lig','in-vd','in-kdial','in-t','in-peso','in-dose'].forEach(function(id){ $(id).addEventListener('input',refresh); });
+$('in-droga').addEventListener('change',function(){ syncFromDrug(); refresh(); });
+$('in-flux').addEventListener('change',refresh);
+
+var PRESETS={
+  vancomicina:{droga:'vancomicina',kdial:200,t:240,peso:70,flux:true},
+  gentamicina:{droga:'gentamicina',kdial:200,t:240,peso:70,flux:true},
+  litio:{droga:'litio',kdial:250,t:300,peso:70,flux:true},
+  digoxina:{droga:'digoxina',kdial:300,t:480,peso:70,flux:true},
+  muitoligada:{droga:'custom',pm:300,lig:95,vd:0.5,dose:10,kdial:250,t:300,peso:70,flux:true},
+  lowflux:{droga:'custom',pm:1449,lig:50,vd:0.7,dose:17.5,kdial:200,t:240,peso:70,flux:false}
+};
+function applyPreset(p){ var d=PRESETS[p]; if(!d) return; $('in-droga').value=d.droga; syncFromDrug();
+  if(d.droga==='custom'){ $('in-pm').value=d.pm; $('in-lig').value=d.lig; $('in-vd').value=d.vd; $('in-dose').value=d.dose; }
+  $('in-kdial').value=d.kdial; $('in-t').value=d.t; $('in-peso').value=d.peso; $('in-flux').checked=d.flux; refresh(); }
+document.querySelector('.presets').addEventListener('click',function(e){ var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset')); });
+
+/* ILUSTRAÇÕES computadas + helper raster */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+function vdMini(state,titulo){ var W=300,H=170,L=vdLayout(state,W,H),s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  var d=''; for(var i=0;i<L.curva.length;i++){ d+=(i===0?'M':'L')+f1(L.curva[i].x)+' '+f1(L.curva[i].y)+' '; }
+  s+='<path d="'+d+'" fill="none" stroke="#39c0c8" stroke-width="2"/>';
+  L.marks.forEach(function(m){ var col=(m.k==='digoxina'?'#e0556b':(m.k==='litio'?'#52c08a':'#9fb1c0')); s+='<circle cx="'+f1(m.x)+'" cy="'+f1(m.y)+'" r="3" fill="'+col+'"/>'; });
+  s+='<circle cx="'+f1(L.current.x)+'" cy="'+f1(L.current.y)+'" r="4" fill="#e8a13a"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'fração removida × Vd')+'</text>';
+  s+='<text x="'+(W-8)+'" y="'+(L.baseY+14)+'" fill="#9fb1c0" font-size="9" text-anchor="end">Vd →</text>';
+  return svgEl(W,H,s); }
+function livreBars(r){ var W=300,H=170,base=130,s='';
+  function bar(x,val,max,color,lab){ var h=clampv(val/max,0,1)*96; return '<rect x="'+x+'" y="'+f1(base-h)+'" width="64" height="'+f1(h)+'" fill="'+color+'" fill-opacity="0.65" stroke="'+color+'"/>'+
+    '<text x="'+(x+32)+'" y="'+(base+13)+'" fill="#9fb1c0" font-size="9" text-anchor="middle">'+lab+'</text>'+
+    '<text x="'+(x+32)+'" y="'+f1(base-h-4)+'" fill="#e7eef4" font-size="10" text-anchor="middle">'+fmt(val,0)+'</text>'; }
+  s+=bar(50,r.ligacao*100,100,'#e0556b','ligada %'); s+=bar(120,r.fLivre*100,100,'#52c08a','livre %'); s+=bar(190,r.fracaoRemovida*100,100,'#39c0c8','removida %');
+  s+='<text x="150" y="150" fill="#9fb1c0" font-size="10" text-anchor="middle">só a fração LIVRE é dialisável</text>';
+  s+='<text x="150" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">ligada × livre × removida</text>';
+  return svgEl(W,H,s); }
+function doseBars(r){ var W=300,H=170,base=130,s='';
+  function bar(x,val,max,color,lab){ var h=clampv(val/max,0,1)*96; return '<rect x="'+x+'" y="'+f1(base-h)+'" width="70" height="'+f1(h)+'" fill="'+color+'" fill-opacity="0.65" stroke="'+color+'"/>'+
+    '<text x="'+(x+35)+'" y="'+(base+13)+'" fill="#9fb1c0" font-size="9" text-anchor="middle">'+lab+'</text>'+
+    '<text x="'+(x+35)+'" y="'+f1(base-h-4)+'" fill="#e7eef4" font-size="10" text-anchor="middle">'+fmt(val,0)+'</text>'; }
+  var mx=Math.max(r.doseTotalMg,1); s+=bar(70,r.doseTotalMg,mx,'#9fb1c0','dose total mg'); s+=bar(170,r.doseSuplementarMg,mx,'#e8a13a','suplementar mg');
+  s+='<text x="150" y="150" fill="#9fb1c0" font-size="10" text-anchor="middle">re-dose pós-HD = dose × fração</text>';
+  s+='<text x="150" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">dose × suplementar (mg)</text>';
+  return svgEl(W,H,s); }
+function imgFig(slug,alt){ return '<img src="assets/m32/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+/* TUTOR */
+function R0(extra){ var o={}; if(extra) for(var k in extra) o[k]=extra[k]; return dialdrug(o); }
+var TUTOR_ILUSTRADO=[
+  {q:'Na curva, conforme o Vd sobe, a fração removida…',o:['sobe','despenca','não muda'],c:1,e:'Vd alto = droga nos tecidos → pouca no sangue → remoção despenca.',fig:function(){return vdMini({droga:'custom',ligacao:0.3,pm:500,vd:1},'fração removida × Vd');}},
+  {q:'A digoxina (Vd ~6) na curva fica…',o:['no topo (bem removida)','no chão (blindada)','fora da curva'],c:1,e:'Vd enorme blinda a droga — a HD quase não a remove.',fig:function(){return vdMini({droga:'digoxina'},'digoxina (Vd 6)');}},
+  {q:'O lítio (Vd ~0,7, ligação 0) na curva fica…',o:['no chão','alto (bem removido)','igual à digoxina'],c:1,e:'Pequeno, livre e de Vd baixo → altamente dialisável.',fig:function(){return vdMini({droga:'litio'},'lítio (Vd 0,7)');}},
+  {q:'Com ligação proteica de 90%, a fração livre é…',o:['90%','10%','100%'],c:1,e:'f_livre = 1 − 0,90 = 0,10; só ela é dialisável.',fig:function(){return livreBars(R0({droga:'custom',ligacao:0.9,vd:0.5,pm:300}));}},
+  {q:'A droga muito ligada (95%) é…',o:['bem removida','mal removida (blindada)','não dialisável só se Vd alto'],c:1,e:'Só 5% livre → a diálise toca uma fatia mínima.',fig:function(){return livreBars(R0({droga:'custom',ligacao:0.95,vd:0.5,pm:200}));}},
+  {q:'A gentamicina (PM baixo, lig 10%, Vd baixo) é…',o:['blindada','bem removida','não muda com a HD'],c:1,e:'As três propriedades favoráveis → boa remoção → re-dose pós-HD.',fig:function(){return livreBars(R0({droga:'gentamicina'}));}},
+  {q:'A re-dose pós-HD é proporcional…',o:['ao peso só','à fração removida','ao PM'],c:1,e:'dose suplementar = dose × fração removida.',fig:function(){return doseBars(R0({droga:'gentamicina'}));}},
+  {q:'Na figura, a vancomicina removida pede…',o:['nada','re-dose suplementar pós-HD','metade da dose sempre'],c:1,e:'Repõe-se o que a sessão removeu (ou dosa-se o nível).',fig:function(){return doseBars(R0({droga:'vancomicina',highFlux:true}));}},
+  {q:'Na prancha, os três critérios de dialisabilidade são…',o:['cor, cheiro, sabor','PM, ligação, Vd','dose, via, frequência'],c:1,e:'PM baixo, ligação baixa e Vd baixo.',fig:function(){return imgFig('droga-dialisavel-criterios.svg','critérios');}},
+  {q:'Na figura do Vd, a droga de Vd alto está…',o:['no plasma','nos tecidos','na urina'],c:1,e:'Vd alto = espalhada nos tecidos, fora do alcance do filtro.',fig:function(){return imgFig('volume-distribuicao-droga.svg','Vd');}},
+  {q:'Na figura da ligação, a fração removível é a…',o:['ligada','livre','total'],c:1,e:'Só a livre atravessa a membrana.',fig:function(){return imgFig('ligacao-proteica-remocao.svg','ligação');}},
+  {q:'Na figura da meia-vida, a diálise faz o nível…',o:['subir','cair mais rápido (t½ menor)','ficar igual'],c:1,e:'Se removível, a HD encurta a meia-vida (t½ = 0,693·V/K_ef).',fig:function(){return imgFig('meia-vida-dialise.svg','meia-vida');}}
+];
+var TUTOR_TEXTUAL=[
+  {q:'Quais as três propriedades que decidem a remoção dialítica?',o:['cor, dose, via','PM, ligação proteica, Vd','idade, sexo, peso'],c:1,e:'PM baixo, ligação baixa e Vd baixo.'},
+  {q:'A fração livre de uma droga 60% ligada é…',o:['0,60','0,40','1,0'],c:1,e:'f_livre = 1 − 0,60 = 0,40.'},
+  {q:'Vd alto significa que a droga está…',o:['no sangue','nos tecidos','na urina'],c:1,e:'Espalhada nos tecidos → pouca no compartimento dialisável.'},
+  {q:'A digoxina é mal dialisada porque…',o:['é muito pequena','tem Vd enorme (~6 L/kg)','não se liga a nada'],c:1,e:'Vd alto blinda — mora no músculo, não no sangue.'},
+  {q:'O lítio é bem dialisado porque…',o:['é grande','é pequeno, livre e de Vd baixo','é muito ligado'],c:1,e:'As três propriedades favorecem a remoção.'},
+  {q:'A vancomicina (PM ~1449) é removida em…',o:['low-flux só','high-flux (parcialmente)','nenhuma membrana'],c:1,e:'PM médio: a membrana high-flux a deixa passar.'},
+  {q:'A dose de manutenção da vancomicina é cerca de…',o:['15–20 mg/kg','1 g fixo','5 mcg/kg'],c:0,e:'15–20 mg/kg, com re-dose por nível na HD.'},
+  {q:'A gentamicina dosa-se em…',o:['1–1,7 mg/kg','500 mg fixo','10 g/dia'],c:0,e:'1–1,7 mg/kg; bem removida → suplementar pós-HD.'},
+  {q:'A dose suplementar pós-HD é…',o:['sempre o dobro','dose × fração removida','independente da HD'],c:1,e:'Repõe o que a sessão removeu.'},
+  {q:'Clearance alto do filtro não remove a droga quando…',o:['o Vd é alto','a ligação é zero','o PM é baixo'],c:0,e:'Vd alto: não há droga no sangue para remover.'},
+  {q:'A diálise restaura o meio interno ao…',o:['remover droga útil sem repor','remover e exigir re-dose pós-HD','nunca afetar fármacos'],c:1,e:'A re-dose pós-HD repõe o nível terapêutico — homeostasia.'}
+];
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL; window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+var BANKS={ilustrada:TUTOR_ILUSTRADO,textual:TUTOR_TEXTUAL}, curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+function renderTutor(){ var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():''; $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false; $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){ if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button'); btns[item.c].classList.add('ok'); if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block'; fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e; $('tutor-score').textContent=tScore; $('tutor-total').textContent=tTotal; });
+    box.appendChild(b); }); }
+$('banktabs').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor(); });
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+$('draw-vd').innerHTML = vdMini({droga:'custom',ligacao:0.3,pm:500,vd:1},'fração removida × Vd');
+$('draw-livre').innerHTML = livreBars(dialdrug({droga:'custom',ligacao:0.9,vd:0.5,pm:300}));
+$('draw-dose').innerHTML = doseBars(dialdrug({droga:'vancomicina',highFlux:true}));
+$('fig-caso').innerHTML = vdMini({droga:'vancomicina',highFlux:true},'vancomicina (high-flux)') + doseBars(dialdrug({droga:'gentamicina'}));
+
+syncFromDrug(); refresh(); renderTutor();
+</script>
+</body>
+</html>

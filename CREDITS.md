@@ -18,7 +18,7 @@ própria do autor (5 integradas em M1·M3·M5·M6·M8; 3 em disco aguardando M7 
 | `assets/m0/bicamada-lipidica.svg` | Bicamada lipídica | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
 | `assets/m0/osmose-tonicidade.svg` | Osmose e tonicidade | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
 | `assets/m0/hemacia-tonicidade.svg` | Hemácia × tonicidade | [Commons: Osmotic_pressure_on_blood_cells_diagram.svg](https://commons.wikimedia.org/wiki/File:Osmotic_pressure_on_blood_cells_diagram.svg) | Mariana Ruiz Villarreal (LadyofHats) | Domínio público (PD) |
-| `assets/m0/rim-anatomia.png` | Rim — anatomia | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
+| `assets/m0/rim-anatomia.webp` | Rim — anatomia | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
 | `assets/m0/cerebro-edema.jpg` | Edema cerebral (RM) | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
 | `assets/m0/fluidos-iv.jpg` | Fluidos IV | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
 | `assets/m0/darrow-yannet.svg` | Diagrama de Darrow–Yannet (leitura) | — | Projeto FILTRA | FILTRA (autoral) |
@@ -30,9 +30,9 @@ própria do autor (5 integradas em M1·M3·M5·M6·M8; 3 em disco aguardando M7 
 ## M1 — Néfron / forças de Starling
 | Arquivo | Descrição | Fonte (URL) | Autor | Licença |
 |---|---|---|---|---|
-| `assets/m1/nefron-rotulado.png` | Néfron rotulado | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
-| `assets/m1/glomerulo-aferente-eferente.jpg` | Glomérulo: aferente × eferente | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
-| `assets/m1/corpusculo-renal-histologia.jpg` | Corpúsculo renal (histologia) | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
+| `assets/m1/nefron-rotulado.webp` | Néfron rotulado | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
+| `assets/m1/glomerulo-aferente-eferente.webp` | Glomérulo: aferente × eferente | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
+| `assets/m1/corpusculo-renal-histologia.webp` | Corpúsculo renal (histologia) | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
 | `assets/m1/aparelho-justaglomerular.svg` | Aparelho justaglomerular | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
 | `assets/m1/rim-corte-sagital.png` | Rim — corte sagital | Gray's Anatomy (1918), via Wikimedia Commons | Henry Gray / Henry Vandyke Carter | Domínio público (PD) |
 | `assets/m1/forcas-starling-glomerulo.svg` | Forças de Starling | — | Projeto FILTRA | FILTRA (autoral) |
@@ -69,7 +69,7 @@ própria do autor (5 integradas em M1·M3·M5·M6·M8; 3 em disco aguardando M7 
 ## M3 — O glomérulo (barreira de filtração)
 | Arquivo | Descrição | Fonte (URL) | Autor | Licença |
 |---|---|---|---|---|
-| `assets/m3/endotelio-fenestrado.png` | Endotélio fenestrado (micrografia) | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
+| `assets/m3/endotelio-fenestrado.webp` | Endotélio fenestrado (micrografia) | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
 | `assets/m3/barreira-filtracao.svg` | Barreira de filtração (camadas) | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
 | `assets/m3/podocito-pedicelos.svg` | Podócito e pedicelos | _a creditar_ | _a creditar_ | _a creditar (Wikimedia)_ |
 | `assets/m3/glomerulo-mev.svg` | Tufo glomerular (esquema) | — | Projeto FILTRA | FILTRA (autoral) |

@@ -1,0 +1,4 @@
+PENDENTE (curadoria). O arquivo anterior era um placeholder de 725KB duplicado em 3 slots
+(m23/edema-pulmonar-rx, m23/sobrecarga-volume, m35/sobrecarga-volume-indicacao — md5 idêntico).
+Removido na limpeza de assets. Curar uma RX de tórax real de edema pulmonar/congestão (linhas B,
+cefalização) — CC0/PD/CC-BY. Ver assets/OnDemand.md (M23).

@@ -1,0 +1,3 @@
+PENDENTE. Slug tipo "figura" (manifest) — preferir SVG inline/computado, não foto raster.
+O arquivo anterior era cópia duplicada de edema-pulmonar-rx.jpg (placeholder). Removido.
+Desenhar esquema de sobrecarga de volume na construção do M23.

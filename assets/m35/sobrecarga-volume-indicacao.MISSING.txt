@@ -1,0 +1,3 @@
+PENDENTE. Slug tipo "figura" (manifest) — preferir SVG inline/computado.
+O arquivo anterior era cópia duplicada do mesmo placeholder de 725KB (md5 idêntico). Removido.
+Desenhar/curar na construção do M35 (sobrecarga como indicação do AEIOU).

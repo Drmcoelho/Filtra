@@ -112,3 +112,80 @@ en.wikipedia.org
 > **Próximos módulos (M3+):** ao construir cada módulo novo, abra aqui a seção `### MN — <título>` **antes** de
 > fechar o módulo, listando as imagens-base que faltarem na `manifest.json` e os aprofundamentos que a aula
 > pedir. Um módulo só é "excelente" quando as figuras acompanham a profundidade do texto.
+
+### M3 — Glomérulo / barreira de filtração
+> Tem a prancha autoral `atlas-glomerulo-barreira.png` (hero). Backlog = raster clínico que aprofunda.
+
+| slug | tipo | o que mostra · por que | fonte/licença provável | status |
+|---|---|---|---|---|
+| lesao-minima-podocitos-me.webp | raster (ME) | apagamento difuso dos processos podais (lesão mínima) · ancora a proteinúria SELETIVA por perda de carga com tamanho intacto | Commons CC-BY-SA | PEDIDO |
+| membranosa-spikes-prata.webp | raster (histologia) | espessamento da MBG / "spikes" (GN membranosa) · a barreira de TAMANHO rompida → não-seletiva | Commons CC-BY | PEDIDO |
+| cilindros-hematicos-urina.webp | raster (microscopia urina) | cilindros hemáticos dismórficos · separa a proteinúria glomerular/nefrítica da tubular | Commons CC-BY | PEDIDO |
+
+### M4 — Clearance / por que a creatinina mente
+| slug | tipo | o que mostra · por que | fonte/licença provável | status |
+|---|---|---|---|---|
+| ckd-epi-nomograma.svg | svg | nomograma eGFR × creatinina por idade/sexo · concretiza a estimativa e a faixa cega | autoral/computado | PEDIDO |
+| sarcopenia-idoso-foto.webp | raster (foto/DEXA) | baixa massa muscular do idoso · ancora "Cr normal com TFG ruim" (a creatinina mente) | Commons CC-BY | PEDIDO |
+| cistatina-vs-creatinina.svg | svg | duas hipérboles (Cr × cistatina) vs TFG · por que a cistatina desmascara | autoral/computado | PEDIDO |
+
+### M5 — TCP / SGLT2 / acetazolamida
+> Tem a prancha autoral `atlas-tcp.png` (hero). Backlog = raster clínico.
+
+| slug | tipo | o que mostra · por que | fonte/licença provável | status |
+|---|---|---|---|---|
+| glicosuria-fita-urinaria.webp | raster (foto) | fita reagente positiva para glicose · concretiza a glicosúria (renal × hiperglicêmica) | Commons CC-BY | PEDIDO |
+| acidose-tubular-proximal-esquema.svg | svg | ATR tipo 2 (Fanconi): bicarbonatúria com HCO₃ plasmático baixo · aprofunda o capstone ácido-base | autoral | PEDIDO |
+
+### M6 — Alça de Henle / diuréticos de alça
+> Tem a prancha autoral `atlas-alca-henle.png` (hero). Backlog = raster clínico.
+
+| slug | tipo | o que mostra · por que | fonte/licença provável | status |
+|---|---|---|---|---|
+| resistencia-diuretica-curva.svg | svg | curva dose-resposta deslocada à direita (braking/IRC) · quantifica a resistência | autoral/computado | PEDIDO |
+| nefrocalcinose-medular-us.webp | raster (US/TC) | nefrocalcinose medular · perda de Ca/Mg pela alça (≠ tiazídico) | Radiopaedia/Commons CC-BY | PEDIDO |
+
+### M7 — TCD / tiazídicos
+> Tem a prancha autoral `atlas-tcd.png` (hero). Backlog = raster clínico.
+
+| slug | tipo | o que mostra · por que | fonte/licença provável | status |
+|---|---|---|---|---|
+| litiase-calcica-tc.webp | raster (TC) | cálculo de cálcio · por que o tiazídico (Ca urinário↓) trata a nefrolitíase | Commons CC-BY | PEDIDO |
+| hiponatremia-tiazidica-esquema.svg | svg | mecanismo da hiponatremia da idosa sob tiazídico · o risco distinto da alça | autoral | PEDIDO |
+
+### M8 — Ducto coletor / poupadores / vaptanos
+| slug | tipo | o que mostra · por que | fonte/licença provável | status |
+|---|---|---|---|---|
+| celula-principal-intercalar-histologia.webp | raster (histologia) | célula principal × intercalar no ducto · as duas alavancas (Na/K/H × H⁺/HCO₃) | Commons CC-BY-SA | PEDIDO |
+| adenoma-conn-tc.webp | raster (TC) | adenoma adrenal · hiperaldo primário (hipocalemia/alcalose) — ponte M14 | Commons CC-BY | PEDIDO |
+| aquaporina2-ducto-esquema.svg | svg | inserção da AQP2 sob ADH × bloqueio pela vaptana · a aquarese | autoral | PEDIDO |
+
+### M9 — Sódio e volume (volume circulante efetivo)
+| slug | tipo | o que mostra · por que | fonte/licença provável | status |
+|---|---|---|---|---|
+| edema-cacifo-foto.webp | raster (foto) | edema com cacifo (godet) · o ECF expandido com volume circulante EFETIVO baixo | Commons CC-BY | PEDIDO |
+| ascite-cirrose-us.webp | raster (US/foto) | ascite volumosa · volume efetivo baixo apesar de ECF alto (ponte hepatorrenal) | Commons CC-BY | PEDIDO |
+
+### M10 — Água livre e disnatremias
+| slug | tipo | o que mostra · por que | fonte/licença provável | status |
+|---|---|---|---|---|
+| mielinolise-pontina-rm.webp | raster (RM T2/FLAIR) | hiperintensidade pontina central · a pérola "corrigir hipoNa crônica rápido demais desmieliniza" | Radiopaedia/Commons CC-BY | PEDIDO |
+| edema-cerebral-tc.webp | raster (TC) | apagamento de sulcos/edema · o outro lado: hiperNa crônica corrigida rápido / hipoNa aguda | Commons CC-BY | PEDIDO |
+| osmostato-adh-sede.svg | svg | limiar de sede × secreção de ADH vs osmolalidade · o controle fino da água livre | autoral/computado | PEDIDO |
+| siadh-vs-di-painel.svg | svg | painel U_osm / U_Na / volemia separando SIADH × DI central × nefrogênico | autoral | PEDIDO |
+
+### M12 — Cálcio · fósforo · magnésio
+| slug | tipo | o que mostra · por que | fonte/licença provável | status |
+|---|---|---|---|---|
+| ecg-hipercalcemia-qt.webp | raster (ECG) | QT curto da hipercalcemia (e QT longo da hipocalcemia) · liga o íon ao traçado | Commons CC-BY | PEDIDO |
+| osteodistrofia-renal-rx.webp | raster (Rx) | reabsorção subperiosteal / "rugger-jersey spine" · a osteíte fibrosa do hiperPTH 2º | Commons CC-BY | PEDIDO |
+| calcifilaxia-pele.webp | raster (foto clínica) | necrose cutânea da calcifilaxia · o desfecho do produto Ca×PO₄ elevado | Commons CC-BY | PEDIDO |
+| paratireoide-hiperplasia-histologia.webp | raster (histologia) | hiperplasia das paratireoides · complementa o esquema atual | Commons CC-BY-SA | PEDIDO |
+
+### M14 — RAAS e eixo endócrino renal
+| slug | tipo | o que mostra · por que | fonte/licença provável | status |
+|---|---|---|---|---|
+| estenose-arteria-renal-angio.webp | raster (angio/CTA) | estenose de artéria renal · HAS renovascular e RAAS↑ por hipoperfusão | Commons CC-BY | PEDIDO |
+| adenoma-adrenal-conn-tc.webp | raster (TC) | adenoma adrenal · hiperaldo primário (aldo↑, renina↓, ARR↑↑) | Commons CC-BY | PEDIDO |
+| aparelho-justaglomerular-histologia.webp | raster (histologia) | células justaglomerulares + mácula densa · o sensor dos 3 sinais da renina | Commons CC-BY-SA | PEDIDO |
+| esfregaco-anemia-drc.webp | raster (microscopia) | esfregaço normocítico-normocrômico · o efeito da queda de EPO | Commons CC-BY | PEDIDO |

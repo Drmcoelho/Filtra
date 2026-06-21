@@ -37,7 +37,7 @@ isso, a curadoria fica pendente.
    - Descreva **o que a imagem mostra** e **por que** (qual erro cognitivo corrige, qual batida do Conceito
      ela serve). Sugira `slug`, `tipo` (`svg` esquemático · `png/jpg/webp` raster) e a fonte provável.
 2. **Quem cura com internet** (ver `assets/INSTRUCOES.md`) baixa/gera, salva em `assets/mN/<slug>.<ext>`,
-   credita em `../CREDITS.md` e muda o status para `OBTIDO`.
+   (crédito **opcional** em `../CREDITS.md`) e muda o status para `OBTIDO`.
 3. **Quem integra** (de volta sem internet) insere a figura **inline** na batida certa do `filtraN.html`,
    como `<figure class="fviva">` com **legenda que ensina** e referência cruzada `Fig. N`, roda
    `npm run check` e muda o status para `INTEGRADO`.
@@ -50,8 +50,9 @@ Status: `PEDIDO` → `OBTIDO` → `INTEGRADO` (ou `RECUSADO` com motivo, ex.: li
 - **SVG esquemático fica inline** no HTML quando for desenho/figura computada; só **raster** (foto, micrografia,
   TC/RM, histologia) mora em `assets/`. Em dúvida: o conceito é numérico/computável? → SVG inline do engine.
   É uma foto do mundo real (lâmina, exame, equipamento)? → raster aqui.
-- **Licença:** CC0/domínio público preferido; CC-BY/CC-BY-SA aceitos **com atribuição** em `../CREDITS.md`.
-  Evitar NC/ND incompatíveis. Sem licença clara → `RECUSADO`.
+- **Licença:** CC0/domínio público/**obra própria** preferidos (sem obrigação de atribuição). CC-BY/CC-BY-SA
+  aceitos — aí a atribuição é exigência **da licença** (não do projeto). Evitar NC/ND. Sem licença clara → `RECUSADO`.
+- **Crédito é opcional** (decisão do autor, 2026-06): o validador **não** exige `CREDITS.md` — só garante o offline.
 - **Otimize:** `.webp`/`.svg`, comprimido; mantenha o repo leve.
 - **Acessibilidade:** todo pedido deve permitir um `alt` descritivo e uma legenda ≥30 caracteres que *ensina*
   (não um rótulo). Isso é exigido pelo validador.
@@ -362,6 +363,8 @@ Ao entregar cada lâmina nova: se `[c]`, integro inline e marco `INTEGRADO`; se 
 
 ## M23 — Ultrafiltração e o balanço de volume  [HTML pendente]
 > Peso seco, taxa de UF, refilling plasmático.
+> ⚠️ Limpeza 2026-06: `edema-pulmonar-rx` e `sobrecarga-volume` eram um placeholder jpg de 725KB duplicado
+> (md5 igual ao de M35) → viraram `.MISSING.txt`. Curar/desenhar pelos pedidos abaixo.
 
 | slug | tipo | o que mostra · por que | fonte/licença provável | status |
 |---|---|---|---|---|
@@ -459,6 +462,8 @@ Ao entregar cada lâmina nova: se `[c]`, integro inline e marco `INTEGRADO`; se 
 
 ## M35 — Indicações de TRS (AEIOU)  [HTML pendente]
 > O AEIOU como mapa de conduta (Acidose, Eletrólitos, Intoxicação, Sobrecarga, Uremia).
+> ⚠️ Limpeza 2026-06: `sobrecarga-volume-indicacao` era cópia do mesmo placeholder de 725KB → virou
+> `.MISSING.txt`. Curar/desenhar pelo pedido `edema-pulmonar-sobrecarga-rx.webp` abaixo.
 
 | slug | tipo | o que mostra · por que | fonte/licença provável | status |
 |---|---|---|---|---|

@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M34 — Síndrome de desequilíbrio dialítico: o gradiente que machuca</title>
+<style>
+  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--warn:#e8a13a;--bad:#e0556b;--good:#52c08a;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none} section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .presets{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px} .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)} .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)} .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)} .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M34</div>
+  <h1>Síndrome de desequilíbrio dialítico — o gradiente que machuca</h1>
+  <div class="sub">A hemodiálise remove ureia do <b>sangue</b> rápido (difusão no dialisador), mas a ureia do
+  <b>cérebro</b> sai <b>devagar</b> — a barreira hematoencefálica (BHE) atrasa o efluxo e o cérebro retém
+  osmoles. O cérebro fica <b>hiperosmolar relativo ao sangue</b> → a água migra DO sangue PARA o cérebro →
+  <b>edema cerebral</b>. É a <b>osmose REVERSA</b>: o gradiente que normalmente protege agora machuca. A regra
+  é simples — <b>gentil é seguro</b>: 1ª sessão lenta, curta, com queda-alvo limitada.</div>
+  <nav class="hex">
+    <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
+    <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="filtra.html">&larr; índice do braço FILTRA</a>
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- CONCEITO -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — o desequilíbrio dialítico, ilustrado</h3>
+      <p class="sub" style="margin-top:0"><b>A diálise não substitui o rim — substitui parcialmente uma função
+      por física.</b> Aqui, a física se volta contra o cérebro. As Fig. 1–8 voltam no Caso, na Trilha e na
+      Avaliação (algumas reaparecem nos exercícios). Atribuição em <code>CREDITS.md</code> (em curadoria).
+      Tudo ancorado na <b>homeostasia</b>: o corpo defende a tonicidade célula a célula; a diálise rápida
+      rompe esse equilíbrio no compartimento cerebral.</p>
+
+      <h4>1. Duas velocidades — o sangue cai rápido, o cérebro atrasa</h4>
+      <p class="sub">No dialisador, a ureia do sangue despenca em exponencial. No cérebro, a ureia só sai
+      <b>através da BHE</b>, devagar — e o tecido ainda gera <b>osmoles idiogênicos</b> que o seguram. Em pouco
+      tempo a ureia <b>cerebral &gt; sanguínea</b>: nasce o gradiente. O motor calcula as duas curvas: o sangue
+      <b>C(t)=BUN₀·exp(−k·t)</b> e o cérebro com atraso de constante <b>τ</b> (τ↑ com a integridade da BHE).</p>
+      <div class="frow">
+        <div class="concept" id="draw-duas"></div>
+        <figure class="fviva"><img src="assets/m34/gradiente-ureia-cerebro.svg" alt="Esquema do gradiente de ureia entre cérebro e sangue durante a diálise" loading="lazy">
+          <figcaption><b>Fig. 1 · O sangue limpa antes do cérebro.</b> Duas curvas: a do <b>sangue</b> (azul)
+          cai rápido; a do <b>cérebro</b> (vermelha) fica para trás. A distância vertical entre elas é o
+          <b>gradiente cérebro−sangue</b> — quanto maior, mais água é puxada para dentro do cérebro.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m34/osmoles-idiogenicos.svg" alt="Osmoles idiogênicos gerados pelo cérebro que retêm a osmolalidade" loading="lazy">
+          <figcaption><b>Fig. 2 · Os osmoles idiogênicos.</b> O cérebro não é um saco passivo: gera solutos
+          próprios (idiogênicos) que <b>retêm</b> a osmolalidade. Por isso ele equilibra com o sangue de forma
+          <b>lenta</b> — o τ do efluxo é grande. É a defesa virando armadilha.</figcaption></figure>
+      </div>
+
+      <h4>2. Osmose reversa — a água entra no cérebro</h4>
+      <p class="sub">Normalmente a osmolalidade plasmática <b>protege</b> a célula. Aqui o sinal se inverte: o
+      <b>cérebro hiperosmolar</b> puxa água do sangue para dentro de si. Gradiente <b>= (ureia_cérebro −
+      ureia_sangue)·fator</b>; a água segue o gradiente → <b>edema cerebral</b>. O edema estimado é
+      proporcional ao <b>pico</b> do gradiente durante a sessão.</p>
+      <div class="frow">
+        <div class="concept" id="draw-osmose"></div>
+        <figure class="fviva"><img src="assets/m34/edema-cerebral-osmose-reversa.svg" alt="Edema cerebral por osmose reversa: água migra do sangue para o cérebro" loading="lazy">
+          <figcaption><b>Fig. 3 · Osmose REVERSA.</b> As setas mostram a água migrando DO sangue PARA o cérebro
+          (o contrário do que protege a célula). O cérebro incha contra o crânio rígido. "Reversa" porque o
+          gradiente que costuma defender agora <b>machuca</b>.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m34/desequilibrio-dialitico.svg" alt="Síndrome de desequilíbrio dialítico: o gradiente osmótico durante a sessão" loading="lazy">
+          <figcaption><b>Fig. 4 · A síndrome, em uma frase.</b> Desequilíbrio = a homeostasia da tonicidade
+          quebrada entre dois compartimentos. O <b>pico do gradiente</b> (não o valor final) é o que conta — é
+          o instante de maior puxão de água. Veja o pico no Instrumento.</figcaption></figure>
+      </div>
+
+      <h4>3. Os sintomas — do gradiente à clínica</h4>
+      <p class="sub">O edema sobe a pressão intracraniana num crânio que não cede. A clínica é uma escada de
+      gravidade: <b>cefaleia → náusea/vômito → confusão → convulsão → coma</b>. Surge <b>durante ou logo após</b>
+      a sessão, tipicamente a primeira, no paciente muito urêmico.</p>
+      <div class="frow">
+        <div class="concept" id="draw-sintomas"></div>
+        <figure class="fviva"><img src="assets/m34/sintomas-desequilibrio.svg" alt="Escada de sintomas do desequilíbrio dialítico, da cefaleia ao coma" loading="lazy">
+          <figcaption><b>Fig. 5 · A escada dos sintomas.</b> Da leve à grave: <b>cefaleia</b> (1) →
+          <b>náusea</b> (2) → <b>confusão</b> (3) → <b>convulsão</b> (4) → <b>coma</b> (5). Cada degrau é mais
+          edema/PIC. Reconhecer cedo (cefaleia) evita o degrau seguinte.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m34/rm-edema-desequilibrio.svg" alt="Ressonância mostrando edema cerebral compatível com desequilíbrio dialítico" loading="lazy">
+          <figcaption><b>Fig. 6 · O edema na imagem.</b> A RM/TC pode mostrar <b>edema cerebral</b> difuso
+          (substância branca brilhante na RM). É o substrato físico do gradiente: água a mais dentro do tecido.
+          O diagnóstico, porém, é <b>clínico e por exclusão</b>.</figcaption></figure>
+      </div>
+
+      <h4>4. Quem corre risco — e como prevenir (gentil é seguro)</h4>
+      <p class="sub">Risco máximo: <b>1ª diálise</b> (sem adaptação prévia), <b>BUN muito alto</b>, remoção
+      <b>agressiva</b> (alta eficiência/tempo curto) e idade extrema. A prevenção é a mesma física ao contrário:
+      a <b>1ª sessão gentil</b> — baixo fluxo, curta, com <b>queda da ureia limitada (&lt;~30–40%)</b> — mantém o
+      gradiente pequeno. O motor mostra: baixar k achata a curva do edema.</p>
+      <div class="frow">
+        <div class="concept" id="draw-prevencao"></div>
+        <figure class="fviva"><img src="assets/m34/primeira-dialise-lenta.svg" alt="Primeira diálise lenta como estratégia de prevenção do desequilíbrio" loading="lazy">
+          <figcaption><b>Fig. 7 · A 1ª diálise lenta.</b> No paciente novo e muito urêmico, prescreve-se uma
+          sessão <b>curta e devagar</b> (baixa eficiência) para a ureia cair pouco. Menos queda → menor
+          gradiente → cérebro acompanha → sem edema. Gentil <b>é</b> seguro.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m34/prevencao-desequilibrio.svg" alt="Medidas de prevenção do desequilíbrio dialítico" loading="lazy">
+          <figcaption><b>Fig. 8 · O kit de prevenção.</b> Queda-alvo limitada, tempo curto, baixo fluxo de
+          sangue/dialisato e, se preciso, osmoles no dialisato. Todas movem a mesma alavanca: <b>achatar o
+          gradiente</b> cérebro−sangue. A curva do Instrumento é plana na gentil, com pico na agressiva.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASO -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — seis atos, decida antes de revelar</h3>
+      <p class="sub">Homem de 58 anos, ~70 kg, DRC recém-descoberta, <b>BUN 180 mg/dL</b>, urêmico, nunca
+      dialisou. O plantonista prescreve uma HD "completa" de 4 h em alta eficiência. Vamos ver o que a física
+      faz com o cérebro dele — e como evitá-la.</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step"><b>Ato 1.</b> 1ª diálise, BUN 180, sessão agressiva (k alto, 4 h). O que esperar do
+        gradiente cérebro−sangue (volte à Fig. 1)?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>Gradiente grande.</b> O sangue limpa rápido; o cérebro (BHE íntegra +
+          osmoles idiogênicos, 1ª diálise) fica para trás → ureia <b>cerebral ≫ sanguínea</b>. O motor marca
+          <b>risco ALTO</b>. A munição é o BUN 180 e a velocidade.</div></div>
+
+      <div class="step"><b>Ato 2.</b> No fim da 2ª hora ele tem <b>cefaleia e náusea</b>. É o quê (Fig. 5)?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2"><b>Desequilíbrio dialítico precoce.</b> Cefaleia → náusea são os primeiros
+          degraus da escada de sintomas. Pare/reduza JÁ — o degrau seguinte é confusão e <b>convulsão</b>. Não
+          espere "terminar a dose".</div></div>
+
+      <div class="step"><b>Ato 3.</b> <i>O mecanismo.</i> Por que a água entra no cérebro se a osmolalidade do
+        sangue está caindo (Fig. 3)?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3"><b>Osmose REVERSA.</b> O que importa é o gradiente <b>relativo</b>: o cérebro
+          ficou hiperosmolar em relação ao sangue. A água segue o gradiente → entra no cérebro. O sinal que
+          costuma proteger a célula aqui a <b>afoga</b>.</div></div>
+
+      <div class="step"><b>Ato 4.</b> <i>O caminho certo desde o início.</i> Como a 1ª sessão deveria ter sido
+        prescrita (Fig. 7)?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>Gentil:</b> sessão <b>curta e devagar</b> (baixa eficiência), com
+          <b>queda da ureia limitada a ~30–40%</b>. Menos queda → gradiente pequeno → o cérebro acompanha. A
+          dose "completa" vem em sessões diárias seguintes, suave.</div></div>
+
+      <div class="step"><b>Ato 5.</b> <i>A fronteira / a exceção.</i> Idoso ao lado, também 1ª diálise, mas BUN
+        só <b>70</b>: a mesma sessão agressiva é igualmente perigosa?
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>Menos perigosa — o gradiente nasce do BUN.</b> Com BUN baixo, a queda
+          absoluta de ureia é pequena → gradiente pequeno → pouco edema. O <b>BUN muito alto</b> é a munição;
+          sem ela, a osmose reversa quase não morde. A velocidade sozinha pesa menos.</div></div>
+
+      <div class="step"><b>Ato 6.</b> <i>O diagnóstico diferencial.</i> Pós-diálise, convulsão. Antes de chamar
+        "desequilíbrio", o que excluir (Fig. 6)?
+        <div><button class="act" data-rev="r6">Revelar</button></div>
+        <div class="reveal" id="r6"><b>É diagnóstico de EXCLUSÃO.</b> Descarte hipoglicemia, distúrbio de Na⁺,
+          hematoma subdural, AVC, intoxicação. O desequilíbrio é provável quando o quadro é <b>1ª diálise + BUN
+          muito alto + remoção rápida</b> e a imagem mostra edema difuso (Fig. 6), sem lesão focal.</div></div>
+    </div>
+  </section>
+
+  <!-- TRILHA -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — onze perguntas que constroem o conceito</h3>
+      <details><summary>1. Por que a ureia do sangue cai mais rápido que a do cérebro?</summary><p>O dialisador
+        limpa o sangue por difusão direta; a ureia do cérebro só sai <b>através da BHE</b>, devagar, e o tecido
+        gera osmoles idiogênicos que a retêm (Fig. 1–2).</p></details>
+      <details><summary>2. O que é o gradiente cérebro−sangue?</summary><p>A diferença de osmolalidade entre os
+        dois compartimentos: <b>(ureia_cérebro − ureia_sangue)·fator</b>. Quando o cérebro fica mais
+        concentrado, o gradiente puxa água para dentro dele.</p></details>
+      <details><summary>3. Por que "osmose reversa"?</summary><p>Porque o gradiente osmótico, que normalmente
+        <b>protege</b> a célula, aqui se inverte e <b>machuca</b>: a água migra DO sangue PARA o cérebro,
+        causando edema (Fig. 3).</p></details>
+      <details><summary>4. O que torna o gradiente maior?</summary><p>Um <b>BUN inicial muito alto</b> (mais
+        ureia para cair) e uma <b>remoção mais rápida</b> (k alto / tempo curto): o sangue despenca e o cérebro
+        não acompanha.</p></details>
+      <details><summary>5. Qual o papel da barreira hematoencefálica?</summary><p>A BHE atrasa o efluxo da ureia
+        cerebral. Quanto mais íntegra (τ maior), mais o cérebro fica para trás → maior o gradiente. É a defesa
+        homeostática virando armadilha.</p></details>
+      <details><summary>6. Por que a 1ª diálise é a mais perigosa?</summary><p>Sem adaptação prévia, o cérebro
+        está cheio de osmoles e a queda da ureia é a maior de todas. As sessões crônicas seguintes partem de um
+        BUN menor → gradientes menores (Fig. 7).</p></details>
+      <details><summary>7. Quais os sintomas, em ordem de gravidade?</summary><p><b>Cefaleia → náusea/vômito →
+        confusão → convulsão → coma.</b> Cada degrau é mais edema e mais PIC. Reconhecer a cefaleia evita o
+        próximo degrau (Fig. 5).</p></details>
+      <details><summary>8. Quando os sintomas aparecem?</summary><p>Durante ou <b>logo após</b> a sessão —
+        justamente quando o gradiente atinge o pico. Por isso o motor rastreia o <b>pico</b> do gradiente, não
+        só o valor final.</p></details>
+      <details><summary>9. Como se previne?</summary><p>1ª sessão <b>gentil</b>: baixo fluxo, curta, com
+        <b>queda da ureia limitada (&lt;~30–40%)</b>. Menos queda → gradiente pequeno → o cérebro acompanha.
+        Gentil é seguro (Fig. 8).</p></details>
+      <details><summary>10. E se o BUN não for muito alto?</summary><p>Menos munição: a queda absoluta de ureia é
+        pequena, o gradiente nasce pequeno e o risco cai muito — mesmo numa sessão rápida. O BUN muito alto é o
+        principal fator.</p></details>
+      <details><summary>11. Em que sentido isto é homeostasia?</summary><p>O corpo defende a tonicidade célula a
+        célula. A diálise rápida <b>quebra</b> esse equilíbrio entre sangue e cérebro. A prevenção devolve o
+        tempo de que a homeostasia precisa para acompanhar.</p></details>
+    </div>
+  </section>
+
+  <!-- INSTRUMENTO -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — o edema × a taxa de remoção da ureia</h3>
+      <p class="sub">Os controles do <b>Lab</b> alimentam esta curva: o <b>edema cerebral estimado (%)</b> em
+      função da <b>taxa de remoção k (h⁻¹)</b>. Veja o <b>pico</b> na remoção agressiva (k alto) e a curva
+      <b>plana</b> na gentil (k baixo) — a tese de prevenção. O marcador laranja é o k atual.</p>
+      <canvas id="edema-canvas" width="900" height="360" aria-label="Edema cerebral em função da taxa de remoção da ureia"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- LAB -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — mova o BUN, a eficiência, o tempo e a BHE; veja o gradiente e o edema</h3>
+      <div class="grid">
+        <div>
+          <label>BUN inicial (mg/dL): <span class="val" id="lbl-bun">80</span></label>
+          <input type="range" id="in-bun" min="20" max="300" step="2" value="80">
+          <label>Taxa de remoção / eficiência k (h⁻¹): <span class="val" id="lbl-k">0.30</span></label>
+          <input type="range" id="in-k" min="0.05" max="2" step="0.01" value="0.30">
+        </div>
+        <div>
+          <label>Duração da sessão t (h): <span class="val" id="lbl-t">4</span></label>
+          <input type="range" id="in-t" min="0.5" max="8" step="0.25" value="4">
+          <label>Integridade da BHE (0 = permeável · 1 = intacta): <span class="val" id="lbl-bbb">0.70</span></label>
+          <input type="range" id="in-bbb" min="0" max="1" step="0.05" value="0.70">
+        </div>
+      </div>
+
+      <div class="presets">
+        <button class="act" data-preset="padrao">Sessão padrão (adaptado)</button>
+        <button class="act" data-preset="primeira">1ª diálise agressiva (perigo)</button>
+        <button class="act" data-preset="gentil">1ª diálise GENTIL (prevenção)</button>
+        <button class="act" data-preset="bunalto">BUN muito alto (250)</button>
+        <button class="act" data-preset="bhebaixa">BHE permeável (equilibra rápido)</button>
+      </div>
+
+      <table>
+        <tr><th>Variável</th><th>Atual</th><th>Comentário</th></tr>
+        <tr><td>Queda da ureia sanguínea (%)</td><td class="num" id="out-queda">—</td><td class="num">alvo gentil &lt;~30–40%</td></tr>
+        <tr><td>BUN sangue no fim (mg/dL)</td><td class="num" id="out-bblood">—</td><td class="num">cai rápido</td></tr>
+        <tr><td>Ureia cerebral no fim (mg/dL)</td><td class="num" id="out-bbrain">—</td><td class="num">atrasa</td></tr>
+        <tr><td>Gradiente cérebro−sangue de PICO (mOsm)</td><td class="num" id="out-gpico">—</td><td class="num">o que machuca</td></tr>
+        <tr><td>τ do efluxo cerebral (h)</td><td class="num" id="out-tau">—</td><td class="num">↑ com BHE / 1ª diálise</td></tr>
+        <tr><td>Edema cerebral estimado (%)</td><td class="num" id="out-edema">—</td><td class="num">∝ gradiente de pico</td></tr>
+        <tr><td>Risco de desequilíbrio</td><td class="num" id="out-risco">—</td><td class="num">baixo · moderado · alto</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÃO -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (12)</button>
+        <button data-bank="textual">Textual (12)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica</b>. Este módulo M34
+    trata da síndrome de desequilíbrio dialítico; os números (queda da ureia em %, gradiente em mOsm, fluxos e
+    tempo em h, eficiência em h⁻¹) são apresentados como <b>mecanismo e prescrição didática</b> computados pelo
+    motor, não como ordem para um paciente real. O modelo de dois compartimentos (sangue × cérebro) é uma
+    simplificação calibrada. Não substitui julgamento clínico; a decisão e a responsabilidade finais são sempre
+    do profissional.
+  </div>
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+</div>
+
+<script>
+/* ENGINE INLINE — espelho fiel de build/m34/model34.js */
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
+function merge(def,inp){ var o={},k; for(k in def) o[k]=def[k]; if(inp) for(k in def) if(inp[k]!==undefined) o[k]=inp[k]; return o; }
+var DEFAULTS={ bun0:80, removalRate:0.3, tempo:4, bbb:0.7, primeira:0 };
+var OSM_FATOR=0.10, TAU_BASE=0.35, TAU_BBB=2.6, TAU_PRIMEIRA=1.4, EDEMA_K=3.2;
+function tauCerebro(bbb,primeira){ bbb=clampv(bbb,0,1); primeira=clampv(primeira,0,1); return clampv(TAU_BASE+TAU_BBB*bbb+TAU_PRIMEIRA*primeira,0.05,10); }
+function ureiaSangue(bun0,k,th){ bun0=clampv(bun0,1,300); k=clampv(k,0,5); th=clampv(th,0,24); return clampv(bun0*Math.exp(-k*th),0,300); }
+function ureiaCerebro(bun0,k,tau,th){ bun0=clampv(bun0,1,300); k=clampv(k,0,5); tau=clampv(tau,0.05,10); th=clampv(th,0,24);
+  var a=k*tau, cc;
+  if(Math.abs(1-a)<1e-6){ cc=bun0*Math.exp(-k*th)*(1+th/tau); }
+  else { var e1=Math.exp(-k*th), e2=Math.exp(-th/tau); cc=bun0*((1/(1-a))*e1-(a/(1-a))*e2); }
+  return clampv(cc,0,300); }
+function gradienteOsm(bun0,k,tau,th){ var cb=ureiaSangue(bun0,k,th), cc=ureiaCerebro(bun0,k,tau,th); var g=(cc-cb)*OSM_FATOR; return g>0?g:0; }
+function dds(input){ var inp=merge(DEFAULTS,input||{});
+  var bun0=clampv(inp.bun0,1,300), k=clampv(inp.removalRate,0,5), tempo=clampv(inp.tempo,0.1,24), bbb=clampv(inp.bbb,0,1), primeira=clampv(inp.primeira,0,1);
+  var tau=tauCerebro(bbb,primeira);
+  var N=120, gPico=0, tPico=0, i, th, g;
+  for(i=0;i<=N;i++){ th=tempo*i/N; g=gradienteOsm(bun0,k,tau,th); if(g>gPico){ gPico=g; tPico=th; } }
+  gPico=clampv(gPico,0,100);
+  var bunBloodFim=ureiaSangue(bun0,k,tempo), bunBrainFim=ureiaCerebro(bun0,k,tau,tempo);
+  var gradFim=clampv((bunBrainFim-bunBloodFim)*OSM_FATOR,0,100);
+  var quedaPct=clampv((1-bunBloodFim/bun0)*100,0,100);
+  var edemaPct=clampv(gPico*EDEMA_K,0,60);
+  var riscoScore=gPico+(bun0>150?1.6:0)+(primeira>0.5?1.6:0)+(quedaPct>50?1.0:0);
+  var risco=riscoScore<3.0?0:(riscoScore<5.5?1:2);
+  var riscoTxt=risco===0?'baixo':(risco===1?'moderado':'alto');
+  var agressiva=(k>=0.55), gentil=(k<=0.22), alvoQuedaOk=quedaPct<=40;
+  return { bun0:bun0, removalRate:k, tempo:tempo, bbb:bbb, primeira:primeira, tau:tau,
+    bunBloodFim:bunBloodFim, bunBrainFim:bunBrainFim, gradFim:gradFim, gPico:gPico, tPico:tPico,
+    quedaPct:quedaPct, edemaPct:edemaPct, riscoScore:riscoScore, risco:risco, riscoTxt:riscoTxt,
+    agressiva:agressiva, gentil:gentil, alvoQuedaOk:alvoQuedaOk }; }
+function ddsCurveLayout(state,W,H){ state=merge(DEFAULTS,state||{}); W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=52,padR=16,padT=18,padB=38,baseY=H-padB;
+  var bun0=clampv(state.bun0,1,300), k=clampv(state.removalRate,0,5), tempo=clampv(state.tempo,0.1,24), tau=tauCerebro(state.bbb,state.primeira);
+  var tMax=clampv(Math.max(tempo,4),0.1,24), N=80, yMax=Math.max(40,Math.ceil(bun0/20)*20);
+  var pxX=(W-padL-padR)/tMax, pxY=(baseY-padT)/yMax, blood=[], brain=[], grad=[], i, th, cb, cc, g;
+  for(i=0;i<=N;i++){ th=tMax*i/N; cb=ureiaSangue(bun0,k,th); cc=ureiaCerebro(bun0,k,tau,th); g=(cc-cb)*OSM_FATOR; if(g<0)g=0;
+    blood.push({t:th,c:cb,x:padL+th*pxX,y:baseY-clampv(cb,0,yMax)*pxY});
+    brain.push({t:th,c:cc,x:padL+th*pxX,y:baseY-clampv(cc,0,yMax)*pxY});
+    grad.push({t:th,g:g}); }
+  var tc=clampv(tempo,0,tMax), cbc=ureiaSangue(bun0,k,tc), ccc=ureiaCerebro(bun0,k,tau,tc);
+  return { W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,tMax:tMax,yMax:yMax,pxX:pxX,pxY:pxY,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY}, blood:blood, brain:brain, grad:grad,
+    current:{t:tc,xB:padL+tc*pxX,yBlood:baseY-clampv(cbc,0,yMax)*pxY,yBrain:baseY-clampv(ccc,0,yMax)*pxY,cBlood:cbc,cBrain:ccc} }; }
+function edemaSweepLayout(state,W,H){ state=merge(DEFAULTS,state||{}); W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=52,padR=16,padT=18,padB=38,baseY=H-padB, kMin=0.05, kMax=2.0, N=70, yMax=50;
+  var pxX=(W-padL-padR)/(kMax-kMin), pxY=(baseY-padT)/yMax, pts=[], i, kk, r;
+  for(i=0;i<=N;i++){ kk=kMin+(kMax-kMin)*i/N; r=dds({bun0:state.bun0,removalRate:kk,tempo:state.tempo,bbb:state.bbb,primeira:state.primeira});
+    pts.push({k:kk,edema:r.edemaPct,x:padL+(kk-kMin)*pxX,y:baseY-clampv(r.edemaPct,0,yMax)*pxY}); }
+  var kc=clampv(state.removalRate,kMin,kMax), rc=dds(state);
+  return { W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,kMin:kMin,kMax:kMax,yMax:yMax,pxX:pxX,pxY:pxY,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY}, pts:pts,
+    current:{x:padL+(kc-kMin)*pxX,y:baseY-clampv(rc.edemaPct,0,yMax)*pxY,k:kc,edema:rc.edemaPct} }; }
+window.dds=dds; window.tauCerebro=tauCerebro; window.ureiaSangue=ureiaSangue; window.ureiaCerebro=ureiaCerebro; window.gradienteOsm=gradienteOsm;
+window.ddsCurveLayout=ddsCurveLayout; window.edemaSweepLayout=edemaSweepLayout;
+window.MODEL={dds:dds,tauCerebro:tauCerebro,ureiaSangue:ureiaSangue,ureiaCerebro:ureiaCerebro,gradienteOsm:gradienteOsm,ddsCurveLayout:ddsCurveLayout,edemaSweepLayout:edemaSweepLayout,clampv:clampv,merge:merge,DEFAULTS:DEFAULTS,OSM_FATOR:OSM_FATOR,EDEMA_K:EDEMA_K};
+
+/* UI */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=(d===undefined?1:d); return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on'); b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on'); $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh(); });
+document.addEventListener('click',function(e){ var b=e.target.closest('button.act[data-rev]'); if(!b) return; var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on'); });
+
+var CURPRIM=0;
+function readInputs(){ return { bun0:+$('in-bun').value, removalRate:+$('in-k').value, tempo:+$('in-t').value, bbb:+$('in-bbb').value, primeira:CURPRIM }; }
+function refresh(){ var inp=readInputs();
+  $('lbl-bun').textContent=inp.bun0; $('lbl-k').textContent=fmt(inp.removalRate,2); $('lbl-t').textContent=fmt(inp.tempo,2); $('lbl-bbb').textContent=fmt(inp.bbb,2);
+  var r=dds(inp);
+  $('out-queda').textContent=fmt(r.quedaPct,0)+' %';
+  $('out-bblood').textContent=fmt(r.bunBloodFim,0);
+  $('out-bbrain').textContent=fmt(r.bunBrainFim,0);
+  $('out-gpico').textContent=fmt(r.gPico,2);
+  $('out-tau').textContent=fmt(r.tau,2);
+  $('out-edema').textContent=fmt(r.edemaPct,1)+' %';
+  $('out-risco').textContent=r.riscoTxt;
+  verdict(r); drawEdema(inp); pearl(r,inp); }
+function verdict(r){ var v=$('veredito'), cls='b-good', msg;
+  if(r.risco===2){ cls='b-bad'; msg='RISCO ALTO de desequilíbrio: gradiente de pico '+fmt(r.gPico,1)+' mOsm, edema estimado '+fmt(r.edemaPct,0)+'%. '+(r.primeira>0.5?'1ª diálise + ':'')+(r.bun0>150?'BUN '+fmt(r.bun0,0)+' muito alto + ':'')+(r.agressiva?'remoção rápida (k '+fmt(r.removalRate,2)+' h⁻¹). ':'')+'Torne a sessão GENTIL: baixe k e o tempo (queda-alvo <~30–40%).'; }
+  else if(r.risco===1){ cls='b-warn'; msg='RISCO MODERADO: gradiente de pico '+fmt(r.gPico,1)+' mOsm, edema '+fmt(r.edemaPct,0)+'%. Vigie cefaleia/náusea. '+(r.gentil?'Sessão já gentil; ':'Considere reduzir a eficiência. ')+'Queda da ureia '+fmt(r.quedaPct,0)+'%.'; }
+  else { cls='b-good'; msg='RISCO BAIXO: gradiente de pico '+fmt(r.gPico,1)+' mOsm, edema '+fmt(r.edemaPct,0)+'%. '+(r.gentil?'Sessão gentil (k '+fmt(r.removalRate,2)+' h⁻¹) — o cérebro acompanha. ':'')+'Queda '+fmt(r.quedaPct,0)+'%.'; }
+  v.className='banner '+cls; v.textContent=msg; }
+function pearl(r,inp){ var p=$('lab-pearl'), ip=$('instr-pearl'), t;
+  if(r.risco===2) t='PÉROLA (osmose reversa): a sessão "boa demais, rápido demais" deixa o cérebro hiperosmolar (ureia cerebral '+fmt(r.bunBrainFim,0)+' > sangue '+fmt(r.bunBloodFim,0)+' mg/dL) → água entra → edema '+fmt(r.edemaPct,0)+'%. GENTIL é seguro.';
+  else if(r.gentil) t='PÉROLA (prevenção): a 1ª sessão gentil (k '+fmt(inp.removalRate,2)+' h⁻¹) achata o gradiente para '+fmt(r.gPico,1)+' mOsm — o cérebro acompanha o sangue. Baixa eficiência é a defesa.';
+  else t='PÉROLA (a munição é o BUN): com BUN '+fmt(inp.bun0,0)+', o gradiente de pico é '+fmt(r.gPico,1)+' mOsm. Suba o BUN ou o k e o pico cresce; abaixe-os e a curva achata. O pico (não o fim) é o que machuca.';
+  p.textContent=t; ip.textContent=t; }
+function drawEdema(state){ var c=$('edema-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
+  var L=edemaSweepLayout(state,c.width,c.height); var r=dds(state); ctx.clearRect(0,0,L.W,L.H);
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('edema cerebral estimado (%)',8,L.padT+2); ctx.fillText('taxa de remoção k (h⁻¹) →',L.W-200,L.baseY+24);
+  // zona gentil (k<=0.22) sombreada
+  var xGentil=L.padL+(0.22-L.kMin)*L.pxX;
+  ctx.fillStyle='rgba(82,192,138,0.10)'; ctx.fillRect(L.padL,L.padT,Math.max(0,xGentil-L.padL),L.baseY-L.padT);
+  ctx.fillStyle='#52c08a'; ctx.fillText('gentil',L.padL+4,L.padT+14);
+  // curva do edema
+  ctx.strokeStyle='#e0556b'; ctx.lineWidth=2; ctx.beginPath();
+  for(var i=0;i<L.pts.length;i++){ var p=L.pts[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); } ctx.stroke();
+  // marcador do k atual
+  var cu=L.current; ctx.strokeStyle='#e8a13a'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(cu.x,L.padT); ctx.lineTo(cu.x,L.baseY); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#e8a13a'; ctx.fillRect(cu.x-3,cu.y-3,6,6);
+  ctx.fillStyle='#e7eef4'; ctx.fillText('k '+fmt(cu.k,2)+' · edema '+fmt(cu.edema,0)+'% · risco '+r.riscoTxt,Math.min(cu.x+6,L.W-220),Math.max(cu.y-6,L.padT+10)); }
+['in-bun','in-k','in-t','in-bbb'].forEach(function(id){ $(id).addEventListener('input',refresh); });
+
+var PRESETS={
+  padrao:{bun:80,k:0.30,t:4,bbb:0.70,prim:0},
+  primeira:{bun:180,k:0.90,t:4,bbb:0.90,prim:1},
+  gentil:{bun:180,k:0.15,t:2.5,bbb:0.90,prim:1},
+  bunalto:{bun:250,k:0.60,t:4,bbb:0.80,prim:0},
+  bhebaixa:{bun:150,k:1.00,t:3,bbb:0.10,prim:0}
+};
+function applyPreset(p){ var d=PRESETS[p]; if(!d) return;
+  $('in-bun').value=d.bun; $('in-k').value=d.k; $('in-t').value=d.t; $('in-bbb').value=d.bbb; CURPRIM=d.prim; refresh(); }
+document.querySelector('.presets').addEventListener('click',function(e){ var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset')); });
+
+/* ILUSTRAÇÕES computadas + helper raster */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+// Fig computada: as duas curvas sangue×cérebro
+function duasMini(state,titulo){ var W=300,H=170,L=ddsCurveLayout(state,W,H),s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  var db=''; for(var i=0;i<L.blood.length;i++){ db+=(i===0?'M':'L')+f1(L.blood[i].x)+' '+f1(L.blood[i].y)+' '; }
+  var dc=''; for(var j=0;j<L.brain.length;j++){ dc+=(j===0?'M':'L')+f1(L.brain[j].x)+' '+f1(L.brain[j].y)+' '; }
+  s+='<path d="'+dc+'" fill="none" stroke="#e0556b" stroke-width="2"/>';
+  s+='<path d="'+db+'" fill="none" stroke="#39c0c8" stroke-width="2"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'sangue (azul) × cérebro (vermelho)')+'</text>';
+  s+='<text x="'+(W-8)+'" y="'+(L.baseY+14)+'" fill="#9fb1c0" font-size="9" text-anchor="end">h →</text>';
+  s+='<text x="56" y="160" fill="#39c0c8" font-size="9">sangue</text><text x="120" y="160" fill="#e0556b" font-size="9">cérebro</text>';
+  return svgEl(W,H,s); }
+// Fig computada: edema × k
+function edemaMini(state,titulo){ var W=300,H=170,L=edemaSweepLayout(state,W,H),s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  var xg=L.padL+(0.22-L.kMin)*L.pxX; s+='<rect x="'+L.padL+'" y="'+L.padT+'" width="'+f1(Math.max(0,xg-L.padL))+'" height="'+f1(L.baseY-L.padT)+'" fill="#52c08a" fill-opacity="0.12"/>';
+  var d=''; for(var i=0;i<L.pts.length;i++){ d+=(i===0?'M':'L')+f1(L.pts[i].x)+' '+f1(L.pts[i].y)+' '; }
+  s+='<path d="'+d+'" fill="none" stroke="#e0556b" stroke-width="2"/>';
+  s+='<rect x="'+f1(L.current.x-3)+'" y="'+f1(L.current.y-3)+'" width="6" height="6" fill="#e8a13a"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'edema × taxa de remoção k')+'</text>';
+  s+='<text x="'+(L.padL+4)+'" y="'+(L.padT+12)+'" fill="#52c08a" font-size="9">gentil</text>';
+  s+='<text x="'+(W-8)+'" y="'+(L.baseY+14)+'" fill="#9fb1c0" font-size="9" text-anchor="end">k →</text>';
+  return svgEl(W,H,s); }
+// Fig esquemática: osmose reversa (sangue → cérebro)
+function osmoseMini(){ var W=300,H=170,s='';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">osmose REVERSA: água → cérebro</text>';
+  s+='<circle cx="150" cy="92" r="48" fill="#1b242d" stroke="#e0556b" stroke-width="2"/>';
+  s+='<text x="150" y="96" fill="#e0556b" font-size="11" text-anchor="middle">cérebro</text>';
+  s+='<text x="150" y="110" fill="#9fb1c0" font-size="8" text-anchor="middle">hiperosmolar</text>';
+  s+='<rect x="18" y="70" width="40" height="44" fill="#39c0c8" fill-opacity="0.3" stroke="#39c0c8"/>';
+  s+='<text x="38" y="128" fill="#39c0c8" font-size="8" text-anchor="middle">sangue</text>';
+  s+='<rect x="242" y="70" width="40" height="44" fill="#39c0c8" fill-opacity="0.3" stroke="#39c0c8"/>';
+  s+='<line x1="60" y1="92" x2="98" y2="92" stroke="#52c08a" stroke-width="5" marker-end="url(#aw)"/>';
+  s+='<line x1="240" y1="92" x2="202" y2="92" stroke="#52c08a" stroke-width="5" marker-end="url(#aw)"/>';
+  s+='<text x="150" y="154" fill="#9fb1c0" font-size="9" text-anchor="middle">a água segue o gradiente → edema</text>';
+  s+='<defs><marker id="aw" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7 z" fill="#52c08a"/></marker></defs>';
+  return svgEl(W,H,s); }
+// Fig esquemática: escada de sintomas
+function sintomasMini(){ var W=300,H=170,s='';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">escada de sintomas (↑ edema/PIC)</text>';
+  var steps=['cefaleia','náusea','confusão','convulsão','coma']; var cols=['#52c08a','#52c08a','#e8a13a','#e0556b','#e0556b'];
+  for(var i=0;i<steps.length;i++){ var x=20+i*54, h=22+i*16, y=140-h;
+    s+='<rect x="'+x+'" y="'+y+'" width="46" height="'+h+'" fill="'+cols[i]+'" fill-opacity="0.35" stroke="'+cols[i]+'"/>';
+    s+='<text x="'+(x+23)+'" y="152" fill="#9fb1c0" font-size="8" text-anchor="middle">'+(i+1)+'</text>';
+    s+='<text x="'+(x+23)+'" y="'+(y-3)+'" fill="#e7eef4" font-size="7.5" text-anchor="middle">'+steps[i]+'</text>'; }
+  return svgEl(W,H,s); }
+function imgFig(slug,alt){ return '<img src="assets/m34/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+/* desenhos da aba Conceito */
+$('draw-duas').innerHTML = duasMini({bun0:180,removalRate:0.9,tempo:4,bbb:0.9,primeira:1},'sangue cai · cérebro atrasa');
+$('draw-osmose').innerHTML = osmoseMini();
+$('draw-sintomas').innerHTML = sintomasMini();
+$('draw-prevencao').innerHTML = edemaMini({bun0:180,removalRate:0.9,tempo:4,bbb:0.9,primeira:1},'baixar k achata o edema') + duasMini({bun0:180,removalRate:0.15,tempo:4,bbb:0.9,primeira:1},'gentil: curvas quase juntas');
+$('fig-caso').innerHTML = duasMini({bun0:180,removalRate:0.9,tempo:4,bbb:0.9,primeira:1},'1ª HD agressiva, BUN 180') + edemaMini({bun0:180,removalRate:0.9,tempo:4,bbb:0.9,primeira:1},'edema × k');
+
+/* TUTOR */
+var TUTOR_ILUSTRADO=[
+  {q:'Nas duas curvas, por que a do cérebro fica acima da do sangue durante a sessão?',o:['o cérebro produz ureia','a ureia cerebral sai devagar (BHE + osmoles)','erro de medida'],c:1,e:'O sangue limpa rápido; o cérebro atrasa → cérebro hiperosmolar relativo.',fig:function(){return duasMini({bun0:180,removalRate:0.9,tempo:4,bbb:0.9,primeira:1},'sangue × cérebro');}},
+  {q:'A distância vertical entre as duas curvas representa…',o:['a dose Kt/V','o gradiente cérebro−sangue','a pressão arterial'],c:1,e:'Quanto maior o gradiente, mais água é puxada para o cérebro.',fig:function(){return duasMini({bun0:200,removalRate:1.0,tempo:3,bbb:0.9,primeira:1},'o gradiente');}},
+  {q:'Na curva edema × k, onde está o RISCO máximo?',o:['no k baixo (gentil)','no k alto (agressivo)','é constante'],c:1,e:'Remoção mais rápida → gradiente íngreme → mais edema.',fig:function(){return edemaMini({bun0:180,removalRate:0.9,tempo:4,bbb:0.9,primeira:1},'edema × k');}},
+  {q:'A zona verde "gentil" da curva edema × k corresponde a…',o:['k alto','k baixo (prevenção)','tempo curto'],c:1,e:'Baixa eficiência mantém o gradiente pequeno — a defesa.',fig:function(){return edemaMini({bun0:180,removalRate:0.15,tempo:4,bbb:0.9,primeira:1},'zona gentil');}},
+  {q:'No esquema da osmose reversa, as setas verdes mostram a água indo…',o:['do cérebro p/ o sangue','do sangue p/ o cérebro','para fora do crânio'],c:1,e:'Cérebro hiperosmolar puxa água do sangue → edema.',fig:function(){return osmoseMini();}},
+  {q:'Por que se chama osmose "reversa"?',o:['a máquina inverte o fluxo','o gradiente que protege passa a machucar','o sangue fica alcalino'],c:1,e:'O sinal osmótico que defende a célula aqui a afoga.',fig:function(){return osmoseMini();}},
+  {q:'Na escada de sintomas, qual é o PRIMEIRO degrau (alerta precoce)?',o:['coma','cefaleia','convulsão'],c:1,e:'Cefaleia → náusea → confusão → convulsão → coma. Pegue cedo.',fig:function(){return sintomasMini();}},
+  {q:'Reconhecer a cefaleia na sessão serve para…',o:['ignorar e terminar a dose','reduzir/parar antes do degrau seguinte','aumentar o fluxo'],c:1,e:'O próximo degrau é convulsão; agir cedo evita a escalada.',fig:function(){return sintomasMini();}},
+  {q:'Na Fig. da 1ª diálise lenta, a estratégia é…',o:['mais clearance','baixa eficiência / sessão curta','mais tempo em alta eficiência'],c:1,e:'Menos queda → gradiente pequeno → o cérebro acompanha.',fig:function(){return imgFig('primeira-dialise-lenta.svg','1ª diálise lenta');}},
+  {q:'No kit de prevenção, todas as medidas movem a mesma alavanca:',o:['subir a PA','achatar o gradiente cérebro−sangue','aquecer o dialisato'],c:1,e:'Queda-alvo limitada, baixo fluxo, tempo curto → gradiente pequeno.',fig:function(){return imgFig('prevencao-desequilibrio.svg','prevenção');}},
+  {q:'Na RM do desequilíbrio, o achado típico é…',o:['lesão focal isolada','edema cerebral difuso','atrofia'],c:1,e:'Água a mais no tecido; o diagnóstico é clínico e por exclusão.',fig:function(){return imgFig('rm-edema-desequilibrio.svg','RM edema');}},
+  {q:'Os osmoles idiogênicos do cérebro fazem o quê ao gradiente?',o:['somem o gradiente','retêm osmolalidade → atrasam o efluxo → gradiente maior','não afetam'],c:1,e:'Eles seguram a água no cérebro (τ maior) — a defesa vira armadilha.',fig:function(){return imgFig('osmoles-idiogenicos.svg','osmoles idiogênicos');}}
+];
+var TUTOR_TEXTUAL=[
+  {q:'A síndrome de desequilíbrio dialítico é causada por…',o:['hipotensão','edema cerebral por gradiente osmótico cérebro−sangue','infecção do acesso'],c:1,e:'A ureia cerebral atrasa → cérebro hiperosmolar → água entra → edema.'},
+  {q:'A ureia sai do sangue ____ e do cérebro ____.',o:['devagar / rápido','rápido / devagar','igual / igual'],c:1,e:'O dialisador limpa o sangue; a BHE atrasa o efluxo cerebral.'},
+  {q:'O gradiente osmótico cérebro−sangue é, em essência…',o:['(ureia_cérebro − ureia_sangue)·fator','a soma das ureias','a razão Kt/V'],c:0,e:'A água segue esse gradiente para dentro do cérebro.'},
+  {q:'Quanto MAIOR o BUN inicial, o gradiente…',o:['menor','maior','igual'],c:1,e:'Mais ureia para cair → maior diferença cérebro−sangue.'},
+  {q:'Uma remoção mais RÁPIDA (k alto, tempo curto) torna o edema…',o:['menor','maior','nulo'],c:1,e:'O sangue despenca e o cérebro não acompanha → gradiente íngreme.'},
+  {q:'O fator de risco isolado mais importante é…',o:['acesso venoso central','1ª diálise + BUN muito alto','peso seco'],c:1,e:'Sem adaptação prévia e com muita ureia, o gradiente é máximo.'},
+  {q:'A ordem dos sintomas, do leve ao grave, é…',o:['coma → cefaleia','cefaleia → náusea → convulsão → coma','convulsão → cefaleia'],c:1,e:'Escada de PIC crescente; reconhecer a cefaleia evita o resto.'},
+  {q:'A prevenção principal é…',o:['1ª sessão gentil (lenta, curta, queda limitada)','sessão mais longa em alta eficiência','dobrar o fluxo'],c:0,e:'Menos queda → gradiente pequeno → o cérebro acompanha. Gentil é seguro.'},
+  {q:'A "queda-alvo da ureia" recomendada na 1ª sessão de risco é em torno de…',o:['<~30–40%','80–90%','100%'],c:0,e:'Limitar a queda mantém o gradiente cérebro−sangue pequeno.'},
+  {q:'O termo "osmose reversa" aqui significa que…',o:['a máquina filtra ao contrário','o gradiente que protege a célula passa a machucá-la','o sangue vira urina'],c:1,e:'O sinal osmótico se inverte: a água entra no cérebro.'},
+  {q:'O diagnóstico de desequilíbrio dialítico é…',o:['confirmado por exame específico','clínico e por exclusão','radiológico apenas'],c:1,e:'Exclua hipoglicemia, disnatremia, AVC, subdural; some o contexto de risco.'},
+  {q:'Em que sentido o desequilíbrio é uma falha de homeostasia?',o:['o rim parou','a tonicidade entre sangue e cérebro foi quebrada rápido demais','a PA caiu'],c:1,e:'A diálise rápida não dá tempo para a homeostasia da tonicidade acompanhar.'}
+];
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL; window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+var BANKS={ilustrada:TUTOR_ILUSTRADO,textual:TUTOR_TEXTUAL}, curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+function renderTutor(){ var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():''; $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false; $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){ if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button'); btns[item.c].classList.add('ok'); if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block'; fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e; $('tutor-score').textContent=tScore; $('tutor-total').textContent=tTotal; });
+    box.appendChild(b); }); }
+$('banktabs').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor(); });
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+refresh(); renderTutor();
+</script>
+</body>
+</html>

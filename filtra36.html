@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M36 — O momento da substituição: quando iniciar a TRS</title>
+<style>
+  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--warn:#e8a13a;--bad:#e0556b;--good:#52c08a;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none} section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .presets{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px} .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)} .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)} .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)} .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M36</div>
+  <h1>O momento da substituição — quando iniciar a TRS</h1>
+  <div class="sub">Iniciar a terapia de substituição renal (TRS) é sobre <b>função refratária</b>, não sobre o
+  número da creatinina/ureia. Cada eixo do meio interno — <b>K⁺</b>, <b>pH/HCO₃⁻</b>, <b>volume</b>, <b>uremia</b>
+  — tem um limiar de <b>refratariedade</b>; quando <b>qualquer</b> eixo cruza esse limiar e não responde ao
+  clínico, há um <b>gatilho absoluto</b> que pede a máquina <i>já</i>. Os ensaios (ELAIN sugeriu benefício
+  precoce; <b>AKIKI</b> e <b>STARRT-AKI</b> não mostraram ganho de iniciar cedo na maioria) dizem o mesmo:
+  <b>esperar o gatilho clínico é seguro</b>; iniciar cedo "por precaução" adiciona dano (acesso, hemodinâmica,
+  anticoagulação) sem melhorar o desfecho. É homeostasia: o suporte entra quando a função que defende o meio
+  interno falha de forma <b>refratária</b>.</div>
+  <nav class="hex">
+    <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
+    <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="dialisa.html">&larr; índice do antebraço DIALISA</a>
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- CONCEITO -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — o momento, ilustrado</h3>
+      <p class="sub" style="margin-top:0"><b>Quando iniciar é uma decisão de mecanismo, não de número.</b> As
+      Fig. 1–8 voltam no Caso, na Trilha e na Avaliação. Atribuição em <code>CREDITS.md</code> (em curadoria).</p>
+
+      <h4>1. Os gatilhos ABSOLUTOS — a função que pede a máquina</h4>
+      <p class="sub">Há situações que pedem TRS <b>já</b>, refratárias ao tratamento clínico: <b>hipercalemia</b>
+      refratária com alterações no ECG; <b>acidose metabólica</b> grave refratária; <b>sobrecarga de volume</b>
+      refratária (edema pulmonar); <b>uremia sintomática</b> (pericardite, encefalopatia); certas
+      <b>intoxicações dialisáveis</b>. O mapa AEIOU (M35) lista as indicações; aqui o foco é o <b>momento</b>.</p>
+      <div class="frow">
+        <div class="concept" id="draw-gatilhos"></div>
+        <figure class="fviva"><img src="assets/m36/gatilhos-inicio-trs.svg" alt="Gatilhos absolutos de início de TRS: K, acidose, volume, uremia, intoxicação" loading="lazy">
+          <figcaption><b>Fig. 1 · Os gatilhos absolutos.</b> Cinco portas que abrem a TRS de imediato: K⁺ alto com
+          ECG, acidose grave refratária, edema pulmonar refratário, uremia <i>sintomática</i> e intoxicação
+          dialisável. Qualquer uma — e a função, refratária ao clínico, pede a máquina.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m36/criterios-urgencia.svg" alt="Critérios de urgência: o que é refratário ao tratamento clínico" loading="lazy">
+          <figcaption><b>Fig. 2 · Critérios de urgência.</b> Urgência = o eixo cruzou o limiar <b>E</b> não cede ao
+          clínico (gluconato/insulina-glicose/β para o K; bicarbonato para a acidose; diurético para o volume).
+          "Refratário" é a palavra-chave do momento.</figcaption></figure>
+      </div>
+
+      <h4>2. Refratário × responsivo ao clínico</h4>
+      <p class="sub">O mesmo número significa coisas opostas conforme <b>responde</b> ou não. K⁺ 6,5 que cai com
+      insulina-glicose é responsivo; K⁺ 6,5 que volta a subir apesar do tratamento é <b>refratário</b> — e só esse
+      pede a máquina. A resposta ao clínico <b>abaixa</b> a indicação; a refratariedade a <b>dispara</b>.</p>
+      <div class="frow">
+        <div class="concept" id="draw-refrat"></div>
+        <figure class="fviva"><img src="assets/m36/mecanismo-pede-suporte.svg" alt="O mecanismo que pede suporte: função refratária, não creatinina alta" loading="lazy">
+          <figcaption><b>Fig. 3 · O mecanismo que pede suporte.</b> A TRS substitui uma <b>função</b> que falhou de
+          forma refratária — depurar escória, regular K/ácido-base, retirar volume. Não substitui "a creatinina
+          alta". O gatilho é o mecanismo descompensado, não o laboratório isolado.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m36/biomarcadores-lra.svg" alt="Biomarcadores de LRA não definem o momento da TRS sozinhos" loading="lazy">
+          <figcaption><b>Fig. 4 · Biomarcadores ≠ gatilho.</b> NGAL, TIMP-2·IGFBP7 e a creatinina/ureia
+          <b>graduam</b> a lesão, mas não obrigam a iniciar. O número sobe; o momento é a <b>função refratária</b>.
+          Um traduz o outro — não o substitui.</figcaption></figure>
+      </div>
+
+      <h4>3. Precoce × tardio — a controvérsia e os ensaios</h4>
+      <p class="sub">Iniciar pela <b>tendência/preempção</b> (precoce) × esperar o <b>gatilho clínico</b> (tardio).
+      <b>ELAIN</b> (centro único, cirúrgico) sugeriu benefício precoce; <b>AKIKI</b> e <b>STARRT-AKI</b>
+      (multicêntricos) <b>não</b> mostraram benefício de iniciar cedo na maioria — e a estratégia tardia evitou
+      TRS em muitos que se recuperaram sozinhos. Conclusão prática: <b>esperar o gatilho é seguro</b>.</p>
+      <div class="frow">
+        <div class="concept" id="draw-precoce"></div>
+        <figure class="fviva"><img src="assets/m36/precoce-tardio.svg" alt="Precoce versus tardio: a janela onde esperar é seguro" loading="lazy">
+          <figcaption><b>Fig. 5 · Precoce × tardio.</b> Sem gatilho, iniciar cedo só <b>adianta o dano</b> (cateter,
+          hipotensão, anticoagulação) sem ganho de sobrevida; a janela de <b>espera é segura</b> enquanto a função
+          responde. O custo do "cedo demais" supera o do "esperar vigiando".</figcaption></figure>
+        <figure class="fviva"><img src="assets/m36/ensaios-timing.svg" alt="Ensaios clínicos sobre o momento da TRS: ELAIN, AKIKI, STARRT-AKI" loading="lazy">
+          <figcaption><b>Fig. 6 · Os ensaios.</b> ELAIN (precoce melhor, centro único) × AKIKI/STARRT-AKI (sem
+          ganho precoce, multicêntricos). A leitura madura: na <b>maioria</b>, esperar o gatilho clínico é seguro;
+          o número isolado não decide.</figcaption></figure>
+      </div>
+
+      <h4>4. O score por eixo — K · pH · volume · uremia</h4>
+      <p class="sub">Cada eixo recebe uma <b>gravidade</b> 0→1 (1 = no limiar refratário). O <b>score de indicação</b>
+      soma as gravidades, encolhe com a resposta ao clínico e cresce com a tendência ascendente. O <b>gatilho</b>
+      dispara quando <i>qualquer</i> eixo cruza o refratário sem responder — independente do score total.</p>
+      <div class="frow">
+        <div class="concept" id="draw-eixos"></div>
+        <figure class="fviva"><img src="assets/m36/timing-fluxograma.svg" alt="Fluxograma do momento: qualquer eixo refratário dispara o início" loading="lazy">
+          <figcaption><b>Fig. 7 · O fluxograma do momento.</b> Pergunta por eixo: cruzou o limiar? responde ao
+          clínico? Se <b>qualquer</b> eixo é refratário → <b>iniciar</b>. Se nenhum, mas a tendência sobe →
+          <b>preparar</b> o acesso. Se estável/respondendo → <b>esperar</b> e vigiar.</figcaption></figure>
+      </div>
+
+      <h4>5. Tendência × valor isolado — o que decide</h4>
+      <p class="sub">Um número alto que <b>responde</b> e <b>cai</b> não pede a máquina; um número moderado que
+      <b>sobe</b> apesar do clínico caminha para o gatilho. A <b>trajetória</b> conta mais que o ponto — por isso
+      o teste de estresse com furosemida (resposta diurética) ajuda a prever quem progride.</p>
+      <div class="frow">
+        <div class="concept" id="draw-tend"></div>
+        <figure class="fviva"><img src="assets/m36/furosemide-stress-test.svg" alt="Furosemide stress test: a resposta diurética prediz progressão da LRA" loading="lazy">
+          <figcaption><b>Fig. 8 · O teste da furosemida.</b> Uma dose padronizada de furosemida: <b>boa diurese</b>
+          → o néfron responde → adiar é seguro; <b>diurese pobre</b> → função refratária → maior chance de precisar
+          de TRS. A <b>resposta</b>, não o número parado, antecipa o momento.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASO -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — cinco atos, decida antes de revelar</h3>
+      <p class="sub">UTI. LRA por sepse. A pergunta de cada plantão: <b>é o momento de dialisar?</b> O número não
+      responde sozinho — o mecanismo refratário responde (volte às Fig. 1, 3 e 5).</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step"><b>Ato 1 — hipercalemia refratária.</b> K⁺ 7,0 mEq/L com ondas T apiculadas e QRS
+        alargando. Já recebeu gluconato de cálcio, insulina-glicose e β-agonista; o K⁺ volta a subir. Dialisar?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>Sim — TRS já.</b> K⁺ refratário com ECG é gatilho absoluto (Fig. 1). O
+          clínico não controlou → a função de excretar K⁺ falhou de forma refratária → o score dispara e o eixo
+          dominante é o <b>potássio</b>. Não se espera número nem tendência.</div></div>
+
+      <div class="step"><b>Ato 2 — creatinina alta, mas estável e respondendo.</b> Outro doente: creatinina 4,2,
+        ureia 150, mas K⁺ 4,6, HCO₃⁻ 20, sem sobrecarga, diurese mantida e <b>caindo</b> a escória. Iniciar
+        "porque a creatinina está alta"?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2"><b>Não.</b> Nenhum eixo é refratário; está <b>respondendo</b> ao clínico e a
+          tendência é de melhora. Iniciar cedo só adicionaria dano de acesso/hemodinâmica (Fig. 5–6). <b>Esperar e
+          vigiar</b> — a maioria desses se recupera (AKIKI/STARRT-AKI). O número não é o gatilho.</div></div>
+
+      <div class="step"><b>Ato 3 — sobrecarga de volume refratária.</b> Anúrico, +8 L acima do seco, edema
+        pulmonar, SpO₂ caindo apesar de furosemida em dose alta sem resposta. Dialisar?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3"><b>Sim — ultrafiltração já.</b> Sobrecarga refratária com edema pulmonar é
+          gatilho (Fig. 1). A diurese não responde (furosemida falhou) → a função de retirar volume está refratária
+          → eixo dominante <b>volume</b>. A máquina retira o que o rim não retira.</div></div>
+
+      <div class="step"><b>Ato 4 — uremia sintomática.</b> Ureia 240, agora com <b>pericardite urêmica</b>
+        (atrito) e rebaixamento (encefalopatia). Antes, com ureia parecida e <b>sem</b> sintomas, esperávamos.
+        Mudou algo?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>Mudou tudo.</b> A uremia vira gatilho quando há <b>sintomas</b>
+          (pericardite/encefalopatia), não pelo número (Fig. 3). O mesmo 240 sem sintomas não obrigava; com
+          sintomas, <b>iniciar</b>. A função — depurar a escória que está intoxicando — falhou clinicamente.</div></div>
+
+      <div class="step"><b>Ato 5 — intoxicação dialisável (a fronteira).</b> Outro paciente: intoxicação por
+        lítio com nível alto e neurotoxicidade, função renal limítrofe. O gatilho aqui é a LRA?
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>Não — é a própria toxina.</b> A intoxicação dialisável (lítio, salicilato,
+          metanol, etilenoglicol — M33) é um gatilho <b>independente</b> dos quatro eixos do meio interno: dialisa-se
+          para <b>remover o veneno</b>, mesmo com rim quase normal. É o quinto gatilho da Fig. 1 — a exceção que
+          confirma a regra "o mecanismo decide o momento".</div></div>
+    </div>
+  </section>
+
+  <!-- TRILHA -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — onze perguntas que constroem o momento</h3>
+      <details><summary>1. Iniciar TRS é sobre o número da creatinina?</summary><p>Não. É sobre <b>função
+        refratária</b>: o eixo do meio interno que falhou e não cede ao clínico. A creatinina/ureia gradua a lesão,
+        mas não obriga a iniciar.</p></details>
+      <details><summary>2. Quais são os gatilhos absolutos?</summary><p>Hipercalemia refratária com ECG; acidose
+        metabólica grave refratária; sobrecarga de volume refratária (edema pulmonar); uremia sintomática
+        (pericardite, encefalopatia); intoxicação dialisável.</p></details>
+      <details><summary>3. O que torna um eixo um "gatilho"?</summary><p>Cruzar o limiar de refratariedade <b>E</b>
+        não responder ao tratamento clínico. K⁺ 6,5 que cai com insulina-glicose é responsivo; o que volta a subir é
+        refratário — e só esse pede a máquina.</p></details>
+      <details><summary>4. Por que a uremia precisa de SINTOMAS?</summary><p>Porque o número da ureia sozinho não
+        intoxica de forma uniforme. O gatilho é a <b>síndrome urêmica</b> (pericardite, encefalopatia, sangramento)
+        — a função descompensada, não o valor.</p></details>
+      <details><summary>5. O que dizem ELAIN, AKIKI e STARRT-AKI?</summary><p>ELAIN (centro único, cirúrgico)
+        sugeriu benefício precoce; AKIKI e STARRT-AKI (multicêntricos) <b>não</b> mostraram ganho de iniciar cedo na
+        maioria. Esperar o gatilho clínico é seguro.</p></details>
+      <details><summary>6. Por que esperar é seguro?</summary><p>Muitos pacientes <b>recuperam</b> a função sem
+        diálise; a estratégia tardia evita TRS desnecessária. Sem gatilho, iniciar cedo só antecipa o risco de
+        acesso, hipotensão e anticoagulação.</p></details>
+      <details><summary>7. Qual o risco de iniciar PRECOCE sem gatilho?</summary><p>Dano de cateter (infecção,
+        trombose), hipotensão intradialítica/stunning, exposição à anticoagulação do circuito — tudo sem ganho de
+        desfecho. O "cedo demais" tem custo.</p></details>
+      <details><summary>8. O que é o "mecanismo que pede suporte"?</summary><p>A função específica que falhou de
+        forma refratária: depurar escória, regular K⁺/ácido-base, retirar volume. A TRS substitui essa função — não
+        "a creatinina".</p></details>
+      <details><summary>9. Tendência ou valor isolado?</summary><p>A <b>trajetória</b>: um número moderado que sobe
+        apesar do clínico caminha para o gatilho; um número alto que cai e responde, não. O furosemide stress test
+        prediz quem progride.</p></details>
+      <details><summary>10. Como o score traduz isso?</summary><p>Soma as gravidades dos quatro eixos, encolhe com a
+        resposta ao clínico e cresce com a tendência ascendente. Mas o <b>gatilho</b> dispara por qualquer eixo
+        refratário, independente do score.</p></details>
+      <details><summary>11. Em que sentido isto é homeostasia?</summary><p>O suporte entra quando a defesa do meio
+        interno (volume, K⁺, ácido-base, escória) falha de forma <b>refratária</b>. A máquina não substitui o rim —
+        substitui a função descompensada, no momento em que ela descompensa.</p></details>
+    </div>
+  </section>
+
+  <!-- INSTRUMENTO -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — score de indicação × gravidade (precoce × tardio)</h3>
+      <p class="sub">Os controles do <b>Lab</b> alimentam estas curvas. Em azul, o <b>score de indicação</b> sobe com
+      a gravidade global; em laranja, o <b>risco do início precoce</b> (alto quando ainda há pouca gravidade — o
+      "cedo demais"); em vermelho, o <b>risco do tardio</b>. O marcador é o ponto de operação atual; a faixa à
+      esquerda é a <b>janela onde esperar é seguro</b>, a da direita é onde o gatilho obriga.</p>
+      <canvas id="score-canvas" width="900" height="360" aria-label="Score de indicação por gravidade"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- LAB -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — mova os eixos; veja o gatilho e a recomendação</h3>
+      <div class="grid">
+        <div>
+          <label>K⁺ (mEq/L): <span class="val" id="lbl-k">4.5</span></label>
+          <input type="range" id="in-k" min="2.5" max="8.5" step="0.1" value="4.5">
+          <label>HCO₃⁻ (mEq/L): <span class="val" id="lbl-hco3">22</span></label>
+          <input type="range" id="in-hco3" min="4" max="28" step="0.5" value="22">
+          <label>Sobrecarga de volume (L acima do seco): <span class="val" id="lbl-volume">0</span></label>
+          <input type="range" id="in-volume" min="0" max="15" step="0.5" value="0">
+        </div>
+        <div>
+          <label>Ureia (mg/dL): <span class="val" id="lbl-ureia">60</span></label>
+          <input type="range" id="in-ureia" min="20" max="360" step="5" value="60">
+          <label>Sintomas urêmicos (0 nenhum → 1 pericardite/encefalopatia): <span class="val" id="lbl-sintomas">0.0</span></label>
+          <input type="range" id="in-sintomas" min="0" max="1" step="0.1" value="0">
+          <label>Resposta ao clínico (0 refratário → 1 responde): <span class="val" id="lbl-resposta">0.5</span></label>
+          <input type="range" id="in-resposta" min="0" max="1" step="0.05" value="0.5">
+          <label>Tendência (−1 melhora → +1 piora): <span class="val" id="lbl-tendencia">0.0</span></label>
+          <input type="range" id="in-tendencia" min="-1" max="1" step="0.1" value="0">
+        </div>
+      </div>
+
+      <div class="presets">
+        <button class="act" data-preset="estavel">LRA estável (esperar)</button>
+        <button class="act" data-preset="hipercalemia">Hipercalemia refratária</button>
+        <button class="act" data-preset="acidose">Acidose grave refratária</button>
+        <button class="act" data-preset="volume">Sobrecarga refratária</button>
+        <button class="act" data-preset="uremia">Uremia sintomática</button>
+        <button class="act" data-preset="preparar">Tendência ascendente</button>
+      </div>
+
+      <table>
+        <tr><th>Saída</th><th>Atual</th><th>Comentário</th></tr>
+        <tr><td>Score de indicação (0–100)</td><td class="num" id="out-score">—</td><td class="num">quanto a função pede suporte</td></tr>
+        <tr><td>Gatilho absoluto cruzado?</td><td class="num" id="out-gatilho">—</td><td class="num">qualquer eixo refratário</td></tr>
+        <tr><td>Eixo dominante</td><td class="num" id="out-eixo">—</td><td class="num">a função que mais pede</td></tr>
+        <tr><td>Risco do início precoce (0–100)</td><td class="num" id="out-precoce">—</td><td class="num">o "cedo demais"</td></tr>
+        <tr><td>Risco do tardio (0–100)</td><td class="num" id="out-tardio">—</td><td class="num">o "esperar demais"</td></tr>
+        <tr><td>Recomendação</td><td class="num" id="out-rec">—</td><td class="num">iniciar / preparar / esperar</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÃO -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (12)</button>
+        <button data-bank="textual">Textual (12)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica</b>. Este módulo M36 trata
+    do <b>momento</b> de iniciar a substituição renal; os limiares, o score e as recomendações são uma
+    simplificação didática calibrada para ensinar o <b>mecanismo</b> — não um protocolo de prescrição. As
+    estratégias citam ensaios (ELAIN, AKIKI, STARRT-AKI) para o raciocínio, não para guiar um paciente real. Não
+    substitui julgamento clínico; a decisão e a responsabilidade finais são sempre do profissional.
+  </div>
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+</div>
+
+<script>
+/* ENGINE INLINE — espelho fiel de build/m36/model36.js */
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
+var K_REFR=6.5, HCO3_REFR=12, VOL_REFR=7, UREIA_REFR=220;
+function sevK(k){ k=clampv(k,2,9); return clampv((k-4.0)/(K_REFR-4.0),0,1.4); }
+function sevHCO3(h){ h=clampv(h,2,30); return clampv((22-h)/(22-HCO3_REFR),0,1.4); }
+function sevVol(v){ v=clampv(v,0,20); return clampv(v/VOL_REFR,0,1.4); }
+function sevUreia(u,sint){ u=clampv(u,20,400); sint=clampv(sint,0,1); var base=clampv(u/UREIA_REFR,0,1.4); return clampv(base*(0.55+0.45*sint),0,1.4); }
+function timing(input){ var inp=input||{};
+  var k=clampv(inp.k!==undefined?inp.k:4.5,2,9);
+  var hco3=clampv(inp.hco3!==undefined?inp.hco3:22,2,30);
+  var volume=clampv(inp.volume!==undefined?inp.volume:0,0,20);
+  var ureia=clampv(inp.ureia!==undefined?inp.ureia:60,20,400);
+  var sintomas=clampv(inp.sintomas!==undefined?inp.sintomas:0,0,1);
+  var resposta=clampv(inp.resposta!==undefined?inp.resposta:0.5,0,1);
+  var tendencia=clampv(inp.tendencia!==undefined?inp.tendencia:0,-1,1);
+  var sK=sevK(k), sH=sevHCO3(hco3), sV=sevVol(volume), sU=sevUreia(ureia,sintomas);
+  var naoResponde=(1-resposta);
+  var gateK=k>=K_REFR&&naoResponde>0.2, gateHCO3=hco3<=HCO3_REFR&&naoResponde>0.2;
+  var gateVol=volume>=VOL_REFR&&naoResponde>0.2, gateUreia=ureia>=UREIA_REFR&&sintomas>=0.5;
+  var gatilhoCruzado=gateK||gateHCO3||gateVol||gateUreia;
+  var sevSoma=(sK+sH+sV+sU)/4;
+  var fatorResposta=0.35+0.65*naoResponde, fatorTend=1+0.45*clampv(tendencia,0,1)*naoResponde;
+  var score=clampv(sevSoma*fatorResposta*fatorTend*70,0,100);
+  if(gatilhoCruzado) score=clampv(Math.max(score,80),0,100);
+  var eixos=[{nome:'potássio',sev:sK,gate:gateK},{nome:'acidose',sev:sH,gate:gateHCO3},{nome:'volume',sev:sV,gate:gateVol},{nome:'uremia',sev:sU,gate:gateUreia}];
+  var dom=eixos[0],i; for(i=1;i<eixos.length;i++){ if(eixos[i].sev>dom.sev+1e-9) dom=eixos[i]; }
+  var eixoDominante=dom.nome, recomendacao;
+  if(gatilhoCruzado) recomendacao='iniciar'; else if(score>=55&&tendencia>0.15) recomendacao='preparar'; else recomendacao='esperar';
+  var riscoPrecoce=clampv(20+60*(1-sevSoma/1.4),0,100);
+  var riscoTardio=clampv(gatilhoCruzado?75+20*naoResponde:10+45*sevSoma*clampv(tendencia,0,1),0,100);
+  var janelaSegura=!gatilhoCruzado&&riscoTardio<riscoPrecoce;
+  return {k:k,hco3:hco3,volume:volume,ureia:ureia,sintomas:sintomas,resposta:resposta,tendencia:tendencia,
+    sevK:sK,sevHCO3:sH,sevVol:sV,sevUreia:sU,
+    gateK:gateK,gateHCO3:gateHCO3,gateVol:gateVol,gateUreia:gateUreia,gatilhoCruzado:gatilhoCruzado,
+    score:score,eixoDominante:eixoDominante,recomendacao:recomendacao,
+    riscoPrecoce:riscoPrecoce,riscoTardio:riscoTardio,janelaSegura:janelaSegura}; }
+function riskCurveLayout(state,W,H){ state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=52,padR=16,padT=18,padB=38,baseY=H-padB,N=60;
+  var resposta=clampv(state.resposta!==undefined?state.resposta:0.5,0,1), tendencia=clampv(state.tendencia!==undefined?state.tendencia:0,-1,1);
+  var pxX=(W-padL-padR)/N, pxY=(baseY-padT)/100, pts=[],ptsPrec=[],ptsTard=[],i,sev,st,r;
+  for(i=0;i<=N;i++){ sev=i/N;
+    st={k:4.0+sev*(K_REFR-4.0),hco3:22-sev*(22-HCO3_REFR),volume:sev*VOL_REFR,ureia:60+sev*(UREIA_REFR-60),sintomas:sev,resposta:resposta,tendencia:tendencia};
+    r=timing(st);
+    pts.push({sev:sev,score:r.score,x:padL+i*pxX,y:baseY-clampv(r.score,0,100)*pxY});
+    ptsPrec.push({sev:sev,v:r.riscoPrecoce,x:padL+i*pxX,y:baseY-clampv(r.riscoPrecoce,0,100)*pxY});
+    ptsTard.push({sev:sev,v:r.riscoTardio,x:padL+i*pxX,y:baseY-clampv(r.riscoTardio,0,100)*pxY}); }
+  var cur=timing(state), sevCur=clampv((cur.sevK+cur.sevHCO3+cur.sevVol+cur.sevUreia)/4,0,1), gx=padL+clampv(sevCur,0,1)*N*pxX;
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,N:N,pxX:pxX,pxY:pxY,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},pts:pts,ptsPrec:ptsPrec,ptsTard:ptsTard,
+    current:{x:gx,y:baseY-clampv(cur.score,0,100)*pxY,score:cur.score,sev:sevCur,gatilho:cur.gatilhoCruzado}}; }
+window.timing=timing; window.riskCurveLayout=riskCurveLayout; window.sevK=sevK; window.sevHCO3=sevHCO3; window.sevVol=sevVol; window.sevUreia=sevUreia;
+window.MODEL={timing:timing,riskCurveLayout:riskCurveLayout,sevK:sevK,sevHCO3:sevHCO3,sevVol:sevVol,sevUreia:sevUreia,clampv:clampv,K_REFR:K_REFR,HCO3_REFR:HCO3_REFR,VOL_REFR:VOL_REFR,UREIA_REFR:UREIA_REFR};
+
+/* UI */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=(d===undefined?1:d); return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on'); b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on'); $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh(); });
+document.addEventListener('click',function(e){ var b=e.target.closest('button.act[data-rev]'); if(!b) return; var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on'); });
+
+function readInputs(){ return { k:+$('in-k').value, hco3:+$('in-hco3').value, volume:+$('in-volume').value, ureia:+$('in-ureia').value, sintomas:+$('in-sintomas').value, resposta:+$('in-resposta').value, tendencia:+$('in-tendencia').value }; }
+function refresh(){ var inp=readInputs();
+  $('lbl-k').textContent=fmt(inp.k,1); $('lbl-hco3').textContent=fmt(inp.hco3,1); $('lbl-volume').textContent=fmt(inp.volume,1);
+  $('lbl-ureia').textContent=fmt(inp.ureia,0); $('lbl-sintomas').textContent=fmt(inp.sintomas,1); $('lbl-resposta').textContent=fmt(inp.resposta,2); $('lbl-tendencia').textContent=fmt(inp.tendencia,1);
+  var r=timing(inp);
+  $('out-score').textContent=fmt(r.score,0); $('out-gatilho').textContent=r.gatilhoCruzado?'SIM':'não';
+  $('out-eixo').textContent=r.eixoDominante; $('out-precoce').textContent=fmt(r.riscoPrecoce,0); $('out-tardio').textContent=fmt(r.riscoTardio,0);
+  $('out-rec').textContent=r.recomendacao.toUpperCase();
+  verdict(r); drawScore(inp); pearl(r,inp); }
+function verdict(r){ var v=$('veredito'), cls='b-good', msg;
+  if(r.recomendacao==='iniciar'){ cls='b-bad'; msg='INICIAR JÁ — gatilho absoluto pelo eixo '+r.eixoDominante+': a função está refratária ao clínico. A TRS entra agora, não pelo número.'; }
+  else if(r.recomendacao==='preparar'){ cls='b-warn'; msg='PREPARAR o acesso — sem gatilho ainda, mas score '+fmt(r.score,0)+' e tendência ascendente: caminha para o gatilho. Vigiar de perto.'; }
+  else { cls='b-good'; msg='ESPERAR e vigiar — nenhum eixo refratário (score '+fmt(r.score,0)+'); iniciar cedo só adicionaria dano. A janela de espera é segura.'; }
+  v.className='banner '+cls; v.textContent=msg; }
+function pearl(r,inp){ var p=$('lab-pearl'), ip=$('instr-pearl'), t;
+  if(r.gatilhoCruzado) t='PÉROLA (gatilho): basta UM eixo refratário — aqui o '+r.eixoDominante+'. O início é sobre FUNÇÃO refratária, não sobre o número da creatinina/ureia.';
+  else if(inp.ureia>UREIA_REFR&&inp.sintomas<0.5) t='PÉROLA (o número não decide): ureia '+fmt(inp.ureia,0)+' é alta, mas SEM sintomas urêmicos não é gatilho. Espera-se a função, não o valor.';
+  else if(r.janelaSegura&&r.riscoPrecoce>r.riscoTardio) t='PÉROLA (precoce × tardio): sem gatilho, iniciar cedo (risco '+fmt(r.riscoPrecoce,0)+') supera o de esperar (risco '+fmt(r.riscoTardio,0)+'). AKIKI/STARRT-AKI: esperar é seguro.';
+  else t='Score '+fmt(r.score,0)+', eixo dominante '+r.eixoDominante+'. O momento é o mecanismo refratário, não o laboratório isolado.';
+  p.textContent=t; ip.textContent=t; }
+function drawScore(state){ var c=$('score-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
+  var L=riskCurveLayout(state,c.width,c.height); ctx.clearRect(0,0,L.W,L.H);
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('risco / score',8,L.padT+2); ctx.fillText('gravidade global →',L.W-160,L.baseY+24);
+  function poly(pts,color,w){ ctx.strokeStyle=color; ctx.lineWidth=w; ctx.beginPath(); for(var i=0;i<pts.length;i++){ var p=pts[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); } ctx.stroke(); }
+  poly(L.ptsPrec,'#e8a13a',2); poly(L.ptsTard,'#e0556b',2); poly(L.pts,'#39c0c8',2);
+  var cu=L.current; ctx.strokeStyle='#e7eef4'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(cu.x,L.padT); ctx.lineTo(cu.x,L.baseY); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle=cu.gatilho?'#e0556b':'#52c08a'; ctx.fillRect(cu.x-4,cu.y-4,8,8);
+  ctx.fillStyle='#e7eef4'; ctx.fillText('score '+fmt(cu.score,0)+(cu.gatilho?' · GATILHO':''),Math.min(cu.x+8,L.W-150),Math.max(cu.y-6,L.padT+10)); }
+['in-k','in-hco3','in-volume','in-ureia','in-sintomas','in-resposta','in-tendencia'].forEach(function(id){ $(id).addEventListener('input',refresh); });
+
+var PRESETS={
+  estavel:{k:4.5,hco3:20,volume:2,ureia:120,sintomas:0,resposta:0.8,tendencia:-0.3},
+  hipercalemia:{k:7.0,hco3:20,volume:2,ureia:120,sintomas:0,resposta:0.1,tendencia:0.4},
+  acidose:{k:5.2,hco3:9,volume:2,ureia:140,sintomas:0,resposta:0.1,tendencia:0.4},
+  volume:{k:5.0,hco3:18,volume:9,ureia:130,sintomas:0,resposta:0.1,tendencia:0.3},
+  uremia:{k:5.0,hco3:17,volume:3,ureia:260,sintomas:1,resposta:0.3,tendencia:0.3},
+  preparar:{k:5.6,hco3:16,volume:4.5,ureia:170,sintomas:0.3,resposta:0.25,tendencia:0.7}
+};
+function applyPreset(p){ var d=PRESETS[p]; if(!d) return;
+  $('in-k').value=d.k; $('in-hco3').value=d.hco3; $('in-volume').value=d.volume; $('in-ureia').value=d.ureia;
+  $('in-sintomas').value=d.sintomas; $('in-resposta').value=d.resposta; $('in-tendencia').value=d.tendencia; refresh(); }
+document.querySelector('.presets').addEventListener('click',function(e){ var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset')); });
+
+/* ILUSTRAÇÕES computadas + helper raster */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+function scoreMini(state,titulo){ var W=300,H=170,L=riskCurveLayout(state,W,H),s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  function path(pts,color){ var d=''; for(var i=0;i<pts.length;i++){ d+=(i===0?'M':'L')+f1(pts[i].x)+' '+f1(pts[i].y)+' '; } return '<path d="'+d+'" fill="none" stroke="'+color+'" stroke-width="2"/>'; }
+  s+=path(L.ptsPrec,'#e8a13a'); s+=path(L.ptsTard,'#e0556b'); s+=path(L.pts,'#39c0c8');
+  var fill=L.current.gatilho?'#e0556b':'#52c08a';
+  s+='<rect x="'+f1(L.current.x-3)+'" y="'+f1(L.current.y-3)+'" width="6" height="6" fill="'+fill+'"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'score × gravidade')+'</text>';
+  s+='<text x="'+(W-8)+'" y="'+(L.baseY+14)+'" fill="#9fb1c0" font-size="9" text-anchor="end">gravidade →</text>';
+  return svgEl(W,H,s); }
+function eixoBars(r,titulo){ var W=300,H=170,base=130,s='';
+  function bar(x,sev,gate,lab){ var h=clampv(sev/1.4,0,1)*96; var color=gate?'#e0556b':(sev>0.7?'#e8a13a':'#39c0c8');
+    return '<rect x="'+x+'" y="'+f1(base-h)+'" width="42" height="'+f1(h)+'" fill="'+color+'" fill-opacity="0.6" stroke="'+color+'"/>'+
+    '<text x="'+(x+21)+'" y="'+(base+13)+'" fill="#9fb1c0" font-size="9" text-anchor="middle">'+lab+'</text>'+
+    '<text x="'+(x+21)+'" y="'+f1(base-h-4)+'" fill="#e7eef4" font-size="9" text-anchor="middle">'+fmt(sev,2)+'</text>'; }
+  s+='<line x1="40" y1="34" x2="40" y2="'+base+'" stroke="#3a4a58"/>';
+  s+=bar(54,r.sevK,r.gateK,'K⁺'); s+=bar(118,r.sevHCO3,r.gateHCO3,'pH'); s+=bar(182,r.sevVol,r.gateVol,'vol'); s+=bar(246,r.sevUreia,r.gateUreia,'ureia');
+  s+='<line x1="44" y1="'+f1(base-(1/1.4)*96)+'" x2="'+(W-8)+'" y2="'+f1(base-(1/1.4)*96)+'" stroke="#e0556b" stroke-dasharray="3 3" stroke-opacity="0.6"/>';
+  s+='<text x="'+(W-10)+'" y="'+f1(base-(1/1.4)*96-3)+'" fill="#e0556b" font-size="8" text-anchor="end">limiar refratário</text>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'gravidade por eixo')+'</text>';
+  return svgEl(W,H,s); }
+function trendMini(titulo){ var W=300,H=170,padL=40,padB=28,baseY=H-padB,padT=20,s='';
+  var pxX=(W-padL-12)/10, pxY=(baseY-padT)/100;
+  s+='<line x1="'+padL+'" y1="'+padT+'" x2="'+padL+'" y2="'+baseY+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+padL+'" y1="'+baseY+'" x2="'+(W-12)+'" y2="'+baseY+'" stroke="#3a4a58"/>';
+  function line(resp,tend,color){ var d=''; for(var t=0;t<=10;t++){ var sc=timing({volume:1+t*0.55,resposta:resp,tendencia:tend}).score; var x=padL+t*pxX,y=baseY-clampv(sc,0,100)*pxY; d+=(d===''?'M':'L')+f1(x)+' '+f1(y)+' '; } return '<path d="'+d+'" fill="none" stroke="'+color+'" stroke-width="2"/>'; }
+  s+=line(0.8,-0.5,'#52c08a'); s+=line(0.2,0.8,'#e0556b');
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'tendência × resposta')+'</text>';
+  s+='<text x="'+(padL+6)+'" y="'+(padT+12)+'" fill="#e0556b" font-size="9">refratário ↑</text>';
+  s+='<text x="'+(padL+6)+'" y="'+(baseY-6)+'" fill="#52c08a" font-size="9">respondendo ↓</text>';
+  s+='<text x="'+(W-8)+'" y="'+(baseY+14)+'" fill="#9fb1c0" font-size="9" text-anchor="end">tempo →</text>';
+  return svgEl(W,H,s); }
+function imgFig(slug,alt){ return '<img src="assets/m36/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+/* TUTOR */
+function R0(extra){ var o={}; if(extra) for(var k in extra) o[k]=extra[k]; return timing(o); }
+var TUTOR_ILUSTRADO=[
+  {q:'K⁺ 7,0 com ECG alterado que NÃO cede ao clínico. O score…',o:['fica baixo','dispara → iniciar (gatilho)','ignora o K'],c:1,e:'Hipercalemia refratária com ECG é gatilho absoluto: a função falhou ao clínico.',fig:function(){return eixoBars(R0({k:7.0,resposta:0.1}),'K refratário');}},
+  {q:'O mesmo K⁺ 7,0, mas caindo bem com insulina-glicose (responde). Agora?',o:['iniciar mesmo assim','não é gatilho — responde','dialisar por precaução'],c:1,e:'Responsivo ≠ refratário. O gatilho é a função que NÃO cede ao clínico.',fig:function(){return eixoBars(R0({k:7.0,resposta:0.9}),'K respondendo');}},
+  {q:'HCO₃⁻ 9 mEq/L, acidose grave refratária. O eixo dominante e a conduta?',o:['volume / esperar','acidose / iniciar','uremia / preparar'],c:1,e:'Acidose grave refratária é gatilho; o eixo acidose domina.',fig:function(){return eixoBars(R0({hco3:9,resposta:0.1}),'acidose refratária');}},
+  {q:'Sobrecarga +9 L, edema pulmonar, furosemida sem resposta. Conduta?',o:['esperar a creatinina','ultrafiltração já (gatilho volume)','só mais diurético'],c:1,e:'Sobrecarga refratária com edema pulmonar é gatilho; a UF retira o que o rim não retira.',fig:function(){return eixoBars(R0({volume:9,resposta:0.1}),'volume refratário');}},
+  {q:'Ureia 260 COM pericardite/encefalopatia (sintomas=1). É gatilho?',o:['não, é só número','sim — uremia sintomática','depende do K'],c:1,e:'A uremia vira gatilho quando há SINTOMAS, não pelo valor isolado.',fig:function(){return eixoBars(R0({ureia:260,sintomas:1}),'uremia sintomática');}},
+  {q:'Ureia 320, porém SEM sintomas e respondendo, tendência de melhora. Conduta?',o:['iniciar (número alto)','esperar — não há gatilho','preparar acesso'],c:1,e:'O número alto sem sintomas não obriga; espera-se a função, não o valor.',fig:function(){return eixoBars(R0({ureia:320,sintomas:0,resposta:0.8}),'ureia alta sem sintoma');}},
+  {q:'Sem nenhum gatilho, o que é mais perigoso na curva?',o:['esperar vigiando','iniciar cedo (risco precoce alto)','nada muda'],c:1,e:'À esquerda, o risco do precoce (laranja) supera o do tardio: cedo demais adiciona dano.',fig:function(){return scoreMini({k:4.5,hco3:20,volume:2,ureia:120,resposta:0.8,tendencia:-0.3},'janela segura');}},
+  {q:'Score moderado, mas tendência claramente ascendente sem resposta. Conduta?',o:['esperar parado','preparar o acesso','iniciar já'],c:1,e:'Sem gatilho mas caminhando para ele: preparar — não iniciar nem ignorar.',fig:function(){return scoreMini({k:5.6,hco3:16,volume:4.5,ureia:170,sintomas:0.3,resposta:0.25,tendencia:0.7},'tendência ↑');}},
+  {q:'Na figura dos ensaios, o que AKIKI e STARRT-AKI mostraram?',o:['benefício do precoce','sem ganho de iniciar cedo na maioria','que a TRS é inútil'],c:1,e:'Multicêntricos: esperar o gatilho clínico é seguro; o precoce não melhora o desfecho.',fig:function(){return imgFig('ensaios-timing.svg','ensaios sobre timing');}},
+  {q:'Na figura do furosemide stress test, diurese POBRE significa…',o:['rim respondendo','função refratária → maior chance de TRS','erro de exame'],c:1,e:'Resposta diurética pobre prediz progressão e necessidade de suporte.',fig:function(){return imgFig('furosemide-stress-test.svg','teste da furosemida');}},
+  {q:'Na figura do mecanismo, a TRS substitui…',o:['a creatinina alta','a função refratária (depurar/regular/retirar)','o néfron inteiro'],c:1,e:'Substitui a função descompensada, não o número nem o órgão por completo.',fig:function(){return imgFig('mecanismo-pede-suporte.svg','o mecanismo que pede suporte');}},
+  {q:'Intoxicação por lítio com rim quase normal. O gatilho é…',o:['a LRA','a própria toxina dialisável','a uremia'],c:1,e:'Intoxicação dialisável é gatilho independente dos quatro eixos — remove-se o veneno.',fig:function(){return imgFig('gatilhos-inicio-trs.svg','gatilhos de início');}}
+];
+var TUTOR_TEXTUAL=[
+  {q:'Iniciar TRS é, essencialmente, sobre…',o:['o número da creatinina','função refratária do meio interno','o tempo de internação'],c:1,e:'O gatilho é o mecanismo descompensado e refratário, não o laboratório.'},
+  {q:'São gatilhos absolutos, EXCETO…',o:['hipercalemia refratária com ECG','creatinina 3,0 estável e respondendo','edema pulmonar refratário'],c:1,e:'Creatinina alta porém estável/respondendo NÃO é gatilho.'},
+  {q:'O que torna um eixo um gatilho?',o:['cruzar o limiar e não responder ao clínico','o valor isolado','o tempo de UTI'],c:0,e:'Refratariedade = cruzou o limiar E não cede ao tratamento.'},
+  {q:'A uremia vira gatilho quando…',o:['a ureia passa de 100','há sintomas (pericardite/encefalopatia)','o K sobe'],c:1,e:'O gatilho é a síndrome urêmica, não o número da ureia.'},
+  {q:'ELAIN × AKIKI/STARRT-AKI: a leitura prática é…',o:['sempre iniciar cedo','esperar o gatilho clínico é seguro na maioria','nunca dialisar'],c:1,e:'Os multicêntricos não acharam ganho no precoce; o tardio é seguro.'},
+  {q:'O risco de iniciar precoce SEM gatilho inclui…',o:['nada','dano de acesso, hipotensão, anticoagulação','melhora garantida'],c:1,e:'Cedo demais adiciona risco sem ganho de desfecho.'},
+  {q:'O "mecanismo que pede suporte" é…',o:['a creatinina alta','a função refratária (K/ácido-base/volume/escória)','a idade'],c:1,e:'A TRS substitui a função que falhou de forma refratária.'},
+  {q:'Entre tendência e valor isolado, decide…',o:['o valor parado','a trajetória (sobe sem responder?)','nenhum'],c:1,e:'Um número que sobe apesar do clínico caminha para o gatilho.'},
+  {q:'No score, a resposta ao clínico…',o:['aumenta o score','diminui o score','não muda'],c:1,e:'Responder abaixa a indicação; refratariedade a dispara.'},
+  {q:'Um único eixo refratário…',o:['não basta','basta para o gatilho','precisa de mais dois'],c:1,e:'Qualquer eixo cruzando o refratário dispara o início.'},
+  {q:'A intoxicação dialisável (lítio, metanol) é gatilho…',o:['dependente da LRA','independente dos quatro eixos','só com uremia'],c:1,e:'Dialisa-se para remover a toxina, mesmo com rim normal.'},
+  {q:'Em síntese, o momento da TRS é…',o:['quando a creatinina passa de X','quando a função falha de forma refratária','no 1º dia de LRA'],c:1,e:'Homeostasia: o suporte entra quando a defesa do meio interno descompensa refratariamente.'}
+];
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL; window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+var BANKS={ilustrada:TUTOR_ILUSTRADO,textual:TUTOR_TEXTUAL}, curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+function renderTutor(){ var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():''; $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false; $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){ if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button'); btns[item.c].classList.add('ok'); if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block'; fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e; $('tutor-score').textContent=tScore; $('tutor-total').textContent=tTotal; });
+    box.appendChild(b); }); }
+$('banktabs').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor(); });
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+$('draw-gatilhos').innerHTML = eixoBars(timing({k:7.0,resposta:0.1}),'um eixo refratário basta');
+$('draw-refrat').innerHTML = eixoBars(timing({k:6.6,resposta:0.85}),'respondendo: não dispara');
+$('draw-precoce').innerHTML = scoreMini({k:4.5,hco3:20,volume:2,ureia:120,resposta:0.8,tendencia:-0.3},'janela segura (esperar)');
+$('draw-eixos').innerHTML = eixoBars(timing({k:5.5,hco3:15,volume:5,ureia:170,sintomas:0.4,resposta:0.3}),'score por eixo');
+$('draw-tend').innerHTML = trendMini('tendência × resposta');
+$('fig-caso').innerHTML = scoreMini({k:7.0,resposta:0.1},'gatilho cruzado') + eixoBars(timing({k:7.0,resposta:0.1}),'eixo dominante: K');
+
+refresh(); renderTutor();
+</script>
+</body>
+</html>

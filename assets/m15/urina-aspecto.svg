@@ -1,22 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#f8f8dc" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#666633" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#666633"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M15</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#666633" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">foto</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#3a3a1a" opacity="0.7">Ureia, creatinina, eGFR e a urina</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#3a3a1a">urina-aspecto</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#666633" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#666633">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#3a3a1a">Aspecto macroscópico da urina</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">O aspecto da urina — a primeira pista, à beira do leito</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">a cor e a turbidez sugerem hipótese; sempre confirme com fita e microscopia</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#3a3a1a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <g text-anchor="middle" font-size="9">
+    <!-- frascos -->
+    <rect x="50" y="80" width="56" height="120" rx="8" fill="#3a3a10" stroke="#9fb1c0"/><text x="78" y="218" fill="#cdd9e3">concentrada</text><text x="78" y="232" fill="#9fb1c0">desidratação/pré-renal</text>
+    <rect x="140" y="80" width="56" height="120" rx="8" fill="#5a4a10" stroke="#9fb1c0"/><text x="168" y="218" fill="#cdd9e3">âmbar escura</text><text x="168" y="232" fill="#9fb1c0">bilirrubina/colúria</text>
+    <rect x="230" y="80" width="56" height="120" rx="8" fill="#7a1818" stroke="#9fb1c0"/><text x="258" y="218" fill="#cdd9e3">vermelha</text><text x="258" y="232" fill="#9fb1c0">hematúria</text>
+    <rect x="320" y="80" width="56" height="120" rx="8" fill="#3a1010" stroke="#9fb1c0"/><text x="348" y="218" fill="#cdd9e3">marrom-chá</text><text x="348" y="232" fill="#9fb1c0">mioglobina (rabdomiólise)</text>
+    <rect x="410" y="80" width="56" height="120" rx="8" fill="#6a6a78" stroke="#9fb1c0"/><text x="438" y="218" fill="#cdd9e3">turva</text><text x="438" y="232" fill="#9fb1c0">piúria/cristais/infecção</text>
+    <rect x="500" y="80" width="56" height="120" rx="8" fill="#d8d088" stroke="#9fb1c0"/><text x="528" y="218" fill="#cdd9e3">espumosa</text><text x="528" y="232" fill="#9fb1c0">proteinúria importante</text>
+    <rect x="590" y="80" width="56" height="120" rx="8" fill="#cfcf9a" stroke="#9fb1c0"/><text x="618" y="218" fill="#cdd9e3">clara/diluída</text><text x="618" y="232" fill="#9fb1c0">poliúria/DI (ponte M10)</text>
+  </g>
+  <text x="340" y="262" text-anchor="middle" font-size="11" fill="#e8a13a">urina marrom-chá sem hemácias na microscopia → pense em mioglobina (rabdomiólise → NTA)</text>
+  <text x="340" y="284" text-anchor="middle" font-size="9" fill="#9fb1c0">o aspecto é hipótese, não diagnóstico — confirme sempre</text>
 </svg>

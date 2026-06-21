@@ -1,22 +1,34 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#f0e0ff" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#7733aa" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#7733aa"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M15</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#7733aa" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">micrografia</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#4a2060" opacity="0.7">Ureia, creatinina, eGFR e a urina</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#4a2060">cilindros-urinarios</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#7733aa" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#7733aa">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#4a2060">Cilindros urinários</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Cilindros — moldes do túbulo (proteína de Tamm-Horsfall)</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">formam-se no lúmen tubular; o que fica preso neles revela o que se passa lá dentro</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#4a2060" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <!-- molde tubular -->
+  <rect x="40" y="70" width="600" height="56" rx="10" fill="#0c2330" stroke="#39c0c8"/>
+  <text x="340" y="92" text-anchor="middle" font-size="11" fill="#9fe3ec">lúmen tubular → a matriz proteica endurece e vira um "molde" (cilindro)</text>
+  <text x="340" y="112" text-anchor="middle" font-size="9" fill="#9fb1c0">células e debris ficam embutidos; o cilindro carrega a assinatura do dano</text>
+
+  <g font-size="10">
+    <rect x="40" y="140" width="145" height="120" rx="8" fill="#10202c" stroke="#9fe3ec"/>
+    <text x="112" y="162" text-anchor="middle" fill="#9fe3ec" font-weight="bold">Hialino</text>
+    <rect x="70" y="176" width="84" height="20" rx="9" fill="none" stroke="#9fe3ec"/>
+    <text x="112" y="222" text-anchor="middle" fill="#cdd9e3">só matriz</text><text x="112" y="240" text-anchor="middle" fill="#9fb1c0">normal/pré-renal</text>
+
+    <rect x="195" y="140" width="145" height="120" rx="8" fill="#10202c" stroke="#e8a13a"/>
+    <text x="267" y="162" text-anchor="middle" fill="#f0c078" font-weight="bold">Granuloso</text>
+    <rect x="225" y="176" width="84" height="20" rx="5" fill="#7a5a30" stroke="#e8a13a"/>
+    <text x="267" y="222" text-anchor="middle" fill="#cdd9e3">células tubulares mortas</text><text x="267" y="240" text-anchor="middle" fill="#9fb1c0">NTA</text>
+
+    <rect x="350" y="140" width="145" height="120" rx="8" fill="#10202c" stroke="#e0556b"/>
+    <text x="422" y="162" text-anchor="middle" fill="#e08a96" font-weight="bold">Hemático</text>
+    <rect x="380" y="176" width="84" height="20" rx="5" fill="none" stroke="#e0556b"/><circle cx="400" cy="186" r="4" fill="#e0556b"/><circle cx="422" cy="186" r="4" fill="#e0556b"/><circle cx="444" cy="186" r="4" fill="#e0556b"/>
+    <text x="422" y="222" text-anchor="middle" fill="#cdd9e3">hemácias</text><text x="422" y="240" text-anchor="middle" fill="#9fb1c0">glomerulonefrite</text>
+
+    <rect x="505" y="140" width="135" height="120" rx="8" fill="#10202c" stroke="#3a7bd5"/>
+    <text x="572" y="162" text-anchor="middle" fill="#9bbef0" font-weight="bold">Leucocitário</text>
+    <rect x="532" y="176" width="80" height="20" rx="5" fill="none" stroke="#3a7bd5"/><circle cx="552" cy="186" r="4" fill="#3a7bd5"/><circle cx="572" cy="186" r="4" fill="#3a7bd5"/><circle cx="592" cy="186" r="4" fill="#3a7bd5"/>
+    <text x="572" y="222" text-anchor="middle" fill="#cdd9e3">leucócitos</text><text x="572" y="240" text-anchor="middle" fill="#9fb1c0">NIA / pielonefrite</text>
+  </g>
+  <text x="340" y="284" text-anchor="middle" font-size="9" fill="#e8a13a">a forma é o molde do túbulo; o conteúdo é a pista do mecanismo</text>
 </svg>

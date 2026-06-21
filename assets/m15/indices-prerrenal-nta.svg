@@ -1,22 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M15</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">Ureia, creatinina, eGFR e a urina</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">indices-prerrenal-nta</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">Índices: pré-renal × NTA</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 320" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="320" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="316" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">A urina conta a história — pré-renal × NTA</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">na pré-renal o túbulo está ÍNTEGRO e ávido; na NTA está LESADO e não reabsorve</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <g font-size="11">
+    <rect x="24" y="60" width="632" height="28" fill="#10202c" stroke="#283642"/>
+    <text x="40" y="79" fill="#9fb1c0">Índice</text><text x="320" y="79" fill="#9fe3ec">Pré-renal (íntegro)</text><text x="510" y="79" fill="#e08a96">NTA (lesado)</text>
+
+    <rect x="24" y="88" width="632" height="30" fill="#0c2330"/>
+    <text x="40" y="108" fill="#e7eef4">FE_Na</text><text x="320" y="108" fill="#9fe3ec">&lt; 1%</text><text x="510" y="108" fill="#e08a96">&gt; 2%</text>
+    <rect x="24" y="118" width="632" height="30" fill="#10202c"/>
+    <text x="40" y="138" fill="#e7eef4">FE_ureia (se diurético)</text><text x="320" y="138" fill="#9fe3ec">&lt; 35%</text><text x="510" y="138" fill="#e08a96">&gt; 50%</text>
+    <rect x="24" y="148" width="632" height="30" fill="#0c2330"/>
+    <text x="40" y="168" fill="#e7eef4">Na urinário</text><text x="320" y="168" fill="#9fe3ec">&lt; 20 mEq/L</text><text x="510" y="168" fill="#e08a96">&gt; 40 mEq/L</text>
+    <rect x="24" y="178" width="632" height="30" fill="#10202c"/>
+    <text x="40" y="198" fill="#e7eef4">Osmolalidade urinária</text><text x="320" y="198" fill="#9fe3ec">&gt; 500 (concentra)</text><text x="510" y="198" fill="#e08a96">~300 (iso)</text>
+    <rect x="24" y="208" width="632" height="30" fill="#0c2330"/>
+    <text x="40" y="228" fill="#e7eef4">U/P creatinina</text><text x="320" y="228" fill="#9fe3ec">&gt; 40</text><text x="510" y="228" fill="#e08a96">&lt; 20</text>
+    <rect x="24" y="238" width="632" height="30" fill="#10202c"/>
+    <text x="40" y="258" fill="#e7eef4">BUN:Cr</text><text x="320" y="258" fill="#9fe3ec">&gt; 20</text><text x="510" y="258" fill="#e08a96">10–15</text>
+    <rect x="24" y="268" width="632" height="30" fill="#0c2330"/>
+    <text x="40" y="288" fill="#e7eef4">Sedimento</text><text x="320" y="288" fill="#9fe3ec">cilindros hialinos</text><text x="510" y="288" fill="#e08a96">granulosos (muddy brown)</text>
+  </g>
+  <text x="340" y="312" text-anchor="middle" font-size="9" fill="#e8a13a">todos co-variam: é a mesma avidez tubular vista por ângulos diferentes (o engine os calcula juntos)</text>
 </svg>

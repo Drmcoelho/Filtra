@@ -1,22 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#f8f8dc" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#666633" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#666633"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M15</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#666633" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">foto</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#3a3a1a" opacity="0.7">Ureia, creatinina, eGFR e a urina</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#3a3a1a">tira-reagente-urina</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#666633" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#666633">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#3a3a1a">Tira reagente de urina</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">A fita reagente — barata, rápida, e o que ela NÃO vê</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">triagem útil, mas a dosagem quantitativa e a microscopia confirmam</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#3a3a1a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <!-- fita -->
+  <rect x="60" y="70" width="40" height="200" rx="6" fill="#1b242d" stroke="#3a4a58"/>
+  <rect x="66" y="80" width="28" height="20" fill="#e8d24a"/><rect x="66" y="104" width="28" height="20" fill="#7ec07e"/>
+  <rect x="66" y="128" width="28" height="20" fill="#c97e7e"/><rect x="66" y="152" width="28" height="20" fill="#7e9ec0"/>
+  <rect x="66" y="176" width="28" height="20" fill="#c0a050"/><rect x="66" y="200" width="28" height="20" fill="#9e7ec0"/>
+
+  <g font-size="11" fill="#e7eef4">
+    <text x="120" y="95">pH (5–8) e densidade — concentração</text>
+    <text x="120" y="119">proteína: detecta ALBUMINA (não cadeias leves!)</text>
+    <text x="120" y="143">sangue: hemácias × mioglobina (não distingue)</text>
+    <text x="120" y="167">glicose: limiar/SGLT2 (ponte M5)</text>
+    <text x="120" y="191">leucócito-esterase / nitrito: infecção</text>
+    <text x="120" y="215">cetonas: cetoacidose/jejum</text>
+  </g>
+  <text x="340" y="252" text-anchor="middle" font-size="11" fill="#e8a13a">armadilha: proteína "negativa" NÃO exclui mieloma (cadeias leves passam batido) → pedir relação proteína/Cr</text>
+  <text x="340" y="276" text-anchor="middle" font-size="9" fill="#9fb1c0">sangue "positivo" sem hemácias na microscopia = mioglobina (rabdomiólise) ou hemoglobina</text>
 </svg>

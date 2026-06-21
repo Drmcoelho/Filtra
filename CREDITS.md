@@ -243,6 +243,26 @@ depois) — preencher fonte/autor/licença antes de considerar o módulo finaliz
 > Nota: os 8 SVGs do M13 eram placeholders e foram **reescritos como autorais** + 5 novos; o M13 não usa
 > imagens raster importadas (todas as 13 figuras são autorais FILTRA).
 
+## M15 — Ureia, creatinina, eGFR e a urina (índices)
+| Arquivo | Descrição | Fonte (URL) | Autor | Licença |
+|---|---|---|---|---|
+| `assets/m15/indices-prerrenal-nta.svg` | Tabela de índices pré-renal × NTA | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m15/fena-feureia.svg` | FE_Na e FE_ureia | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m15/diuretico-confunde-fena.svg` | Diurético confunde a FE_Na | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m15/ureia-creatinina-manejo.svg` | Ureia × creatinina (BUN:Cr) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m15/egfr-creatinina-recap.svg` | Recap eGFR/creatinina (M4) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m15/sedimento-urinario.svg` | Sedimento por mecanismo | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m15/cilindros-urinarios.svg` | Tipos de cilindros | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m15/microscopia-urina-campos.svg` | Dois campos (pré-renal × NTA) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m15/tira-reagente-urina.svg` | Fita reagente e limites | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m15/urina-aspecto.svg` | Aspecto da urina | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m15/cristais-urinarios.svg` | Cristais urinários | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m15/fingerprint-fena-uosm.svg` | Mapa FE_Na × U_osm | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m15/abordagem-lra-urina.svg` | Fluxograma da LRA pela urina | — | Projeto FILTRA | FILTRA (autoral) |
+
+> Nota: os 8 SVGs do M15 eram placeholders e foram **reescritos como autorais** + 5 novos; o M15 não usa
+> imagens raster importadas (todas as 13 figuras são autorais FILTRA).
+
 ## Regras
 - Preferir **CC0 / domínio público**; **CC-BY / CC-BY-SA** aceitos **com atribuição** nesta tabela.
 - O caminho no `<img>` é sempre **relativo** (`assets/…`), nunca uma URL remota — o produto é offline.

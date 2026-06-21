@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M15 — Ureia, creatinina, eGFR e a urina: os índices</title>
+<style>
+  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--warn:#e8a13a;--bad:#e0556b;--good:#52c08a;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none} section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .presets{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px} .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)} .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)} .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)} .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M15</div>
+  <h1>Ureia, creatinina, eGFR e a urina — os índices que separam pré-renal de NTA</h1>
+  <div class="sub">A urina <b>conta a história</b>: na pré-renal o túbulo está <b>íntegro e ávido</b> (FE_Na baixa,
+  U_osm alta, BUN:Cr alta, sedimento limpo); na <b>NTA</b> o túbulo está <b>lesado</b> (FE_Na alta, U_osm
+  isosmótica, cilindros granulosos). A <b>ureia</b> é reabsorvida e a <b>creatinina</b> não; e o <b>diurético</b>
+  confunde a FE_Na — por isso existe a <b>FE_ureia</b>.</div>
+  <nav class="hex">
+    <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
+    <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="filtra.html">&larr; índice do braço FILTRA</a>
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- CONCEITO -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — ler a urina como um relato do túbulo</h3>
+      <p class="sub" style="margin-top:0"><b>Homeostasia vista pela urina.</b> O rim ajusta o que excreta para
+      defender o meio interno; os índices urinários leem esse ajuste e revelam o mecanismo da LRA. As Fig. 1–13
+      voltam no Caso, na Trilha e na Avaliação. Atribuição em <code>CREDITS.md</code> (em curadoria).</p>
+
+      <h4>1. A urina conta a história — pré-renal × NTA</h4>
+      <p class="sub">Todos os índices co-variam: são a mesma <b>avidez tubular</b> vista por ângulos diferentes.</p>
+      <div class="frow">
+        <div class="concept" id="draw-indices"></div>
+        <figure class="fviva"><img src="assets/m15/indices-prerrenal-nta.svg" alt="Tabela de índices urinários pré-renal versus NTA" loading="lazy">
+          <figcaption><b>Fig. 1 · Os índices.</b> FE_Na, FE_ureia, Na urinário, U_osm, U/P creatinina, BUN:Cr e
+          sedimento — todos apontam juntos para túbulo íntegro (pré-renal) ou lesado (NTA).</figcaption></figure>
+      </div>
+
+      <h4>2. As frações de excreção — e o confundidor diurético</h4>
+      <p class="sub">"Fração de excreção" = quanto do filtrado escapa. Baixa = reabsorção ávida.</p>
+      <div class="frow">
+        <div class="concept" id="draw-fingerprint"></div>
+        <figure class="fviva"><img src="assets/m15/fena-feureia.svg" alt="Fórmulas da FE_Na e FE_ureia" loading="lazy">
+          <figcaption><b>Fig. 2 · FE_Na e FE_ureia.</b> FE_Na = (U_Na·P_Cr)/(P_Na·U_Cr)×100. Baixa &lt;1% =
+          pré-renal; alta &gt;2% = NTA. A creatinina serve de referência do quanto se filtrou.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m15/diuretico-confunde-fena.svg" alt="O diurético eleva falsamente a FE_Na" loading="lazy">
+          <figcaption><b>Fig. 3 · O confundidor.</b> O diurético força natriurese e eleva a FE_Na mesmo numa
+          pré-renal. A FE_ureia (&lt;35%) resiste — o engine troca para ela automaticamente.</figcaption></figure>
+      </div>
+
+      <h4>3. Ureia × creatinina — por que diferem</h4>
+      <p class="sub">A ureia é reabsorvida (segue a água); a creatinina é filtrada e secretada. Daí a BUN:Cr.</p>
+      <div class="frow">
+        <figure class="fviva"><img src="assets/m15/ureia-creatinina-manejo.svg" alt="Manejo renal da ureia versus creatinina" loading="lazy">
+          <figcaption><b>Fig. 4 · Ureia × creatinina.</b> No baixo fluxo (pré-renal) reabsorve-se mais ureia → BUN:Cr
+          &gt;20. A creatinina não é reabsorvida → sobe proporcional à queda da TFG.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m15/egfr-creatinina-recap.svg" alt="Recap do M4: eGFR e creatinina" loading="lazy">
+          <figcaption><b>Fig. 5 · eGFR (recap M4).</b> O número dá o NÍVEL da função (com a faixa cega); a urina dá o
+          MECANISMO. Na LRA aguda a Cr atrasa — a urina fala antes.</figcaption></figure>
+      </div>
+
+      <h4>4. O sedimento — o local da lesão</h4>
+      <p class="sub">Os cilindros são moldes do túbulo; o que contêm aponta o mecanismo.</p>
+      <div class="frow">
+        <figure class="fviva"><img src="assets/m15/sedimento-urinario.svg" alt="Sedimento urinário e os mecanismos" loading="lazy">
+          <figcaption><b>Fig. 6 · O sedimento.</b> Hialino = pré-renal; granuloso pigmentado = NTA; hemático =
+          glomerulonefrite; leucocitário = nefrite intersticial.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m15/cilindros-urinarios.svg" alt="Tipos de cilindros urinários" loading="lazy">
+          <figcaption><b>Fig. 7 · Cilindros.</b> Moldes de proteína de Tamm-Horsfall; o conteúdo embutido (células
+          tubulares, hemácias, leucócitos) carrega a assinatura do dano.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m15/microscopia-urina-campos.svg" alt="Dois campos de microscopia: pré-renal versus NTA" loading="lazy">
+          <figcaption><b>Fig. 8 · Dois campos.</b> O mesmo oligúrico: campo limpo (pré-renal) × campo cheio de
+          cilindros granulosos (NTA). A microscopia decide.</figcaption></figure>
+      </div>
+
+      <h4>5. Tira reagente, aspecto e cristais</h4>
+      <div class="frow">
+        <figure class="fviva"><img src="assets/m15/tira-reagente-urina.svg" alt="A fita reagente de urina e suas limitações" loading="lazy">
+          <figcaption><b>Fig. 9 · A fita.</b> Rápida, mas limitada: a proteína detecta albumina (não cadeias
+          leves!); o "sangue" não distingue hemácias de mioglobina. Confirmar sempre.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m15/urina-aspecto.svg" alt="O aspecto da urina à beira do leito" loading="lazy">
+          <figcaption><b>Fig. 10 · O aspecto.</b> Cor/turbidez dão hipótese: marrom-chá sem hemácias → mioglobina
+          (rabdomiólise → NTA); espumosa → proteinúria; clara → poliúria/DI (M10).</figcaption></figure>
+        <figure class="fviva"><img src="assets/m15/cristais-urinarios.svg" alt="Cristais urinários e suas formas" loading="lazy">
+          <figcaption><b>Fig. 11 · Cristais.</b> Oxalato "envelope" (etilenoglicol!), ácido úrico (lise/gota),
+          estruvita (infecção), cistina (genética). Fármacos também cristalizam.</figcaption></figure>
+      </div>
+
+      <h4>6. A impressão digital e o fluxograma</h4>
+      <div class="frow">
+        <figure class="fviva"><img src="assets/m15/fingerprint-fena-uosm.svg" alt="Mapa FE_Na versus osmolalidade urinária" loading="lazy">
+          <figcaption><b>Fig. 12 · A impressão digital.</b> FE_Na × U_osm separa pré-renal (alto/esquerda) de NTA
+          (baixo/direita). É exatamente o Instrumento computado deste módulo.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m15/abordagem-lra-urina.svg" alt="Fluxograma da LRA pela urina" loading="lazy">
+          <figcaption><b>Fig. 13 · O fluxograma.</b> LRA → descartar pós-renal (US) → índices + sedimento → pré-renal
+          / intrínseca / pós-renal. É a porta do capstone M16.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASO -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — oito atos, decida antes de revelar</h3>
+      <p class="sub">Idoso, vômitos e diarreia há 3 dias, oligúrico. Cr subiu de 1,0 para 2,4. Em uso de
+      furosemida por ICC.</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step"><b>Ato 1.</b> A oligúria com Cr subindo é LRA. Primeiro passo (Fig. 13)?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>Descartar pós-renal</b> (ultrassom: sem hidronefrose). Depois, índices +
+          sedimento para separar pré-renal de intrínseca.</div></div>
+
+      <div class="step"><b>Ato 2.</b> Pelo quadro (perdas, hipovolemia), qual a hipótese (Fig. 1)?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2"><b>Pré-renal</b>: hipovolemia → hipoperfusão com túbulo íntegro. Esperamos FE_Na
+          baixa, U_osm alta, BUN:Cr alta, sedimento limpo.</div></div>
+
+      <div class="step"><b>Ato 3.</b> A FE_Na vem 2,1% (alta). Confirma NTA (Fig. 3)?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3"><b>Cuidado!</b> Ele usa <b>furosemida</b> — o diurético eleva a FE_Na
+          falsamente. A FE_Na está confundida; não confie nela aqui.</div></div>
+
+      <div class="step"><b>Ato 4.</b> Qual índice usar então (Fig. 2/3)?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4">A <b>FE_ureia</b>: a ureia é reabsorvida no proximal, antes do sítio do diurético.
+          FE_ureia &lt; 35% mantém o diagnóstico de pré-renal.</div></div>
+
+      <div class="step"><b>Ato 5.</b> FE_ureia vem 28%. E a BUN:Cr (Fig. 4)?
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>Pré-renal confirmada.</b> FE_ureia &lt;35% + BUN:Cr &gt;20 (baixo fluxo
+          reabsorve mais ureia). A FE_Na era a única "fora do tom".</div></div>
+
+      <div class="step"><b>Ato 6.</b> O sedimento ajuda (Fig. 6)?
+        <div><button class="act" data-rev="r6">Revelar</button></div>
+        <div class="reveal" id="r6"><b>Sim</b>: sedimento limpo / cilindros hialinos reforça pré-renal. Se viesse
+          <b>granuloso pigmentado</b>, pensaríamos em NTA já instalada.</div></div>
+
+      <div class="step"><b>Ato 7.</b> <i>Vira o jogo:</i> sem reposição, no 2º dia surgem cilindros granulosos e a
+        U_osm cai para ~310. O que houve (Fig. 8)?
+        <div><button class="act" data-rev="r7">Revelar</button></div>
+        <div class="reveal" id="r7">A pré-renal prolongada <b>evoluiu para NTA</b> (isquemia tubular). O contínuo
+          pré-renal → NTA é o mesmo eixo de avidez caindo — agora o túbulo morreu.</div></div>
+
+      <div class="step"><b>Ato 8.</b> <i>Síntese.</i> Lição de uma linha?
+        <div><button class="act" data-rev="r8">Revelar</button></div>
+        <div class="reveal" id="r8">A urina conta a história — mas conheça os confundidores: com diurético, troque a
+          FE_Na pela FE_ureia. Os índices co-variam porque medem a mesma avidez tubular.</div></div>
+    </div>
+  </section>
+
+  <!-- TRILHA -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — treze perguntas que constroem o conceito</h3>
+      <details><summary>1. O que a urina revela na LRA?</summary><p>O MECANISMO: se o túbulo está íntegro
+        (pré-renal) ou lesado (intrínseca/NTA). O número (Cr) dá só o nível.</p></details>
+      <details><summary>2. O que é a FE_Na?</summary><p>A fração do Na filtrado que é excretada: (U_Na·P_Cr)/(P_Na·U_Cr)×100.
+        Baixa = reabsorção ávida.</p></details>
+      <details><summary>3. FE_Na &lt;1% × &gt;2%?</summary><p>&lt;1% = pré-renal (túbulo segura o Na); &gt;2% = NTA
+        (túbulo lesado deixa escapar).</p></details>
+      <details><summary>4. Por que a FE_Na engana sob diurético?</summary><p>O diurético força natriurese → FE_Na
+        sobe mesmo na pré-renal. É um confundidor.</p></details>
+      <details><summary>5. Qual a solução para o diurético?</summary><p>A FE_ureia (&lt;35% = pré-renal): a ureia é
+        reabsorvida no proximal, antes do sítio do diurético.</p></details>
+      <details><summary>6. Por que a BUN:Cr sobe na pré-renal?</summary><p>A ureia é reabsorvida com a água; no baixo
+        fluxo reabsorve-se mais → BUN sobe desproporcional à Cr.</p></details>
+      <details><summary>7. A U_osm na pré-renal × NTA?</summary><p>Pré-renal concentra (&gt;500); NTA perde a
+        capacidade de concentrar (~isosmótica, ~300).</p></details>
+      <details><summary>8. O cilindro granuloso pigmentado indica?</summary><p>NTA (células tubulares mortas no
+        molde). O "muddy brown".</p></details>
+      <details><summary>9. E o cilindro hemático?</summary><p>Glomerulonefrite (hemácias dismórficas + cilindros
+        hemáticos).</p></details>
+      <details><summary>10. O que a fita NÃO detecta?</summary><p>Cadeias leves (mieloma) — a proteína da fita vê
+        albumina. Pedir relação proteína/Cr.</p></details>
+      <details><summary>11. Urina marrom-chá sem hemácias?</summary><p>Mioglobina (rabdomiólise) ou hemoglobina — a
+        fita dá "sangue" positivo sem hemácias na microscopia.</p></details>
+      <details><summary>12. Cristal de oxalato + acidose AG alto?</summary><p>Intoxicação por etilenoglicol (com gap
+        osmolar) — ponte M13/M33.</p></details>
+      <details><summary>13. Qual a ordem do raciocínio?</summary><p>LRA → descartar pós-renal → índices + sedimento →
+        pré-renal/intrínseca/pós-renal (capstone M16).</p></details>
+    </div>
+  </section>
+
+  <!-- INSTRUMENTO -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — a impressão digital FE_Na × U_osm</h3>
+      <p class="sub">Os controles do <b>Lab</b> movem o ponto. Avidez alta (túbulo íntegro) leva ao canto pré-renal
+      (alto/esquerda); avidez baixa (lesado) ao canto NTA (baixo/direita). O diurético empurra a FE_Na à direita.</p>
+      <canvas id="ur-canvas" width="900" height="380" aria-label="Mapa FE_Na por osmolalidade urinária"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- LAB -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — avidez tubular e o confundidor diurético</h3>
+      <div class="grid">
+        <div>
+          <label>Avidez tubular (0 = lesado/NTA · 1 = íntegro/pré-renal): <span class="val" id="lbl-av">0.50</span></label>
+          <input type="range" id="in-av" min="0" max="1" step="0.05" value="0.5">
+        </div>
+        <div>
+          <label>Diurético em uso: <span class="val" id="lbl-diu">não</span></label>
+          <input type="range" id="in-diu" min="0" max="1" step="1" value="0">
+        </div>
+      </div>
+
+      <div class="presets">
+        <button class="act" data-preset="prerenal">Pré-renal</button>
+        <button class="act" data-preset="nta">NTA</button>
+        <button class="act" data-preset="prediu">Pré-renal + diurético (a armadilha)</button>
+        <button class="act" data-preset="indet">Indeterminado</button>
+      </div>
+
+      <table>
+        <tr><th>Índice</th><th>Atual</th><th>Comentário</th></tr>
+        <tr><td>FE_Na (%)</td><td class="num" id="out-fena">—</td><td class="num">&lt;1 pré / &gt;2 NTA</td></tr>
+        <tr><td>FE_ureia (%)</td><td class="num" id="out-feu">—</td><td class="num">&lt;35 pré (sob diurético)</td></tr>
+        <tr><td>Na urinário (mEq/L)</td><td class="num" id="out-una">—</td><td class="num">&lt;20 pré / &gt;40 NTA</td></tr>
+        <tr><td>U_osm (mOsm/kg)</td><td class="num" id="out-uosm">—</td><td class="num">alta = concentra</td></tr>
+        <tr><td>BUN:Cr</td><td class="num" id="out-bun">—</td><td class="num">&gt;20 pré-renal</td></tr>
+        <tr><td>Sedimento</td><td class="num" id="out-sed">—</td><td class="num">o local da lesão</td></tr>
+        <tr><td>Índice usado · diagnóstico</td><td class="num" id="out-dx">—</td><td class="num">5 passos</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÃO -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (13)</button>
+        <button data-bank="textual">Textual (12)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica</b>. Este módulo M15 é
+    fisiologia/diagnóstico pela urina; os índices e cortes são uma simplificação didática (valores clássicos) e
+    não substituem o julgamento clínico do caso completo. A decisão final é sempre do profissional.
+  </div>
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+</div>
+
+<script>
+/* ENGINE INLINE — espelho fiel de build/m15/model15.js */
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
+function renalState(input){ var inp=input||{};
+  var avidez=clampv(inp.avidez!==undefined?inp.avidez:0.5,0,1), diuretic=clampv(inp.diuretic!==undefined?inp.diuretic:0,0,1);
+  var FENa=clampv((3.4-avidez*3.2)+diuretic*1.8,0.1,10), FEurea=clampv((62-avidez*42)+diuretic*3,5,90),
+    uNa=clampv((72-avidez*62)+diuretic*30,5,140), uOsm=clampv(300+avidez*420,280,900),
+    upCr=clampv(8+avidez*44,4,70), bunCr=clampv(10+avidez*16,8,40);
+  var idxName=diuretic>=0.5?'FE_ureia':'FE_Na', idxVal=diuretic>=0.5?FEurea:FENa, prerenalCut=diuretic>=0.5?35:1.0, ntaCut=diuretic>=0.5?50:2.0;
+  var classe; if(idxVal<prerenalCut) classe='pré-renal'; else if(idxVal>ntaCut) classe='NTA (intrínseca)'; else classe='indeterminado';
+  var sedimento; if(avidez>=0.6) sedimento='cilindros hialinos (bland)'; else if(avidez<=0.4) sedimento='cilindros granulosos pigmentados (muddy brown)'; else sedimento='sedimento inespecífico';
+  var fenaEnganosa=diuretic>=0.5&&avidez>=0.6&&FENa>=1.0;
+  return {avidez:avidez,diuretic:diuretic,FENa:FENa,FEurea:FEurea,uNa:uNa,uOsm:uOsm,upCr:upCr,bunCr:bunCr,
+    idxName:idxName,idxVal:idxVal,prerenalCut:prerenalCut,ntaCut:ntaCut,classe:classe,sedimento:sedimento,fenaEnganosa:fenaEnganosa}; }
+function renalLayout(state,W,H){ state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=56,padR=16,padT=18,padB=38,baseY=H-padB, feMin=0,feMax=6,oMin=250,oMax=900;
+  var pxX=(W-padL-padR)/(feMax-feMin), pxY=(baseY-padT)/(oMax-oMin);
+  function X(fe){ return padL+(clampv(fe,feMin,feMax)-feMin)*pxX; } function Y(o){ return baseY-(clampv(o,oMin,oMax)-oMin)*pxY; }
+  var r=renalState(state);
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,feMin:feMin,feMax:feMax,oMin:oMin,oMax:oMax,pxX:pxX,pxY:pxY,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},
+    zonaPre:{x1:X(0),x2:X(1),y1:Y(900),y2:Y(500)}, zonaNta:{x1:X(2),x2:X(6),y1:Y(400),y2:Y(250)},
+    current:{x:X(r.FENa),y:Y(r.uOsm),FENa:r.FENa,uOsm:r.uOsm}}; }
+window.renalState=renalState; window.renalLayout=renalLayout;
+window.MODEL={renalState:renalState,renalLayout:renalLayout,clampv:clampv};
+
+/* UI */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=(d===undefined?1:d); return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on'); b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on'); $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh(); });
+document.addEventListener('click',function(e){ var b=e.target.closest('button.act[data-rev]'); if(!b) return; var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on'); });
+
+function readInputs(){ return { avidez:+$('in-av').value, diuretic:+$('in-diu').value }; }
+function dxText(r){ return r.idxName+' '+(r.idxName==='FE_ureia'?fmt(r.FEurea,0)+'%':fmt(r.FENa,2)+'%')+' → '+r.classe; }
+function refresh(){ var inp=readInputs();
+  $('lbl-av').textContent=fmt(inp.avidez,2); $('lbl-diu').textContent=inp.diuretic>=0.5?'sim':'não';
+  var r=renalState(inp);
+  $('out-fena').textContent=fmt(r.FENa,2); $('out-feu').textContent=fmt(r.FEurea,0); $('out-una').textContent=fmt(r.uNa,0);
+  $('out-uosm').textContent=fmt(r.uOsm,0); $('out-bun').textContent=fmt(r.bunCr,0); $('out-sed').textContent=r.sedimento;
+  $('out-dx').textContent=dxText(r); verdict(r); drawMap(inp); pearl(r); }
+function verdict(r){ var v=$('veredito'), cls='b-warn';
+  if(r.classe==='pré-renal') cls='b-good'; else if(r.classe==='NTA (intrínseca)') cls='b-bad';
+  v.className='banner '+cls; v.textContent='Diagnóstico: '+r.classe+' — '+dxText(r)+'. U_osm '+fmt(r.uOsm,0)+', BUN:Cr '+fmt(r.bunCr,0)+', '+r.sedimento+'.'; }
+function pearl(r){ var p=$('lab-pearl'), ip=$('instr-pearl'), t;
+  if(r.fenaEnganosa) t='PÉROLA: a FENa '+fmt(r.FENa,2)+'% PARECE NTA, mas é o diurético confundindo — a FE_ureia '+fmt(r.FEurea,0)+'% confirma pré-renal.';
+  else if(r.classe==='pré-renal') t='Pré-renal: túbulo íntegro e ávido — FENa baixa, U_osm '+fmt(r.uOsm,0)+', BUN:Cr '+fmt(r.bunCr,0)+'.';
+  else if(r.classe==='NTA (intrínseca)') t='NTA: túbulo lesado — FENa '+fmt(r.FENa,2)+'%, U_osm isosmótica, '+r.sedimento+'.';
+  else t='Zona indeterminada: os índices não cravam — repetir, somar contexto e sedimento.';
+  p.textContent=t; ip.textContent=t; }
+function drawMap(state){ var c=$('ur-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
+  var L=renalLayout(state,c.width,c.height); ctx.clearRect(0,0,L.W,L.H);
+  // zonas
+  var zp=L.zonaPre; ctx.fillStyle='rgba(82,192,138,.16)'; ctx.fillRect(zp.x1,zp.y1,zp.x2-zp.x1,zp.y2-zp.y1);
+  var zn=L.zonaNta; ctx.fillStyle='rgba(224,85,107,.14)'; ctx.fillRect(zn.x1,zn.y1,zn.x2-zn.x1,zn.y2-zn.y1);
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('U_osm (mOsm/kg)',8,L.padT+2); ctx.fillText('FE_Na (%) →',L.W-110,L.baseY+24);
+  ctx.fillStyle='#9fe3ec'; ctx.fillText('pré-renal',zp.x1+8,zp.y1+18);
+  ctx.fillStyle='#e08a96'; ctx.fillText('NTA',zn.x1+8,zn.y2-8);
+  // marca
+  var cu=L.current; ctx.fillStyle='#e8a13a'; ctx.beginPath(); ctx.arc(cu.x,cu.y,6,0,2*Math.PI); ctx.fill();
+  ctx.fillStyle='#e7eef4'; ctx.fillText('FENa '+fmt(cu.FENa,2)+' · U_osm '+fmt(cu.uOsm,0),Math.min(cu.x+8,L.W-180),Math.max(cu.y-8,L.padT+10)); }
+['in-av','in-diu'].forEach(function(id){ $(id).addEventListener('input',refresh); });
+
+var PRESETS={ prerenal:{av:0.9,diu:0}, nta:{av:0.1,diu:0}, prediu:{av:0.85,diu:1}, indet:{av:0.5,diu:0} };
+function applyPreset(p){ var d=PRESETS[p]; if(!d) return; $('in-av').value=d.av; $('in-diu').value=d.diu; refresh(); }
+document.querySelector('.presets').addEventListener('click',function(e){ var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset')); });
+
+/* ILUSTRAÇÕES computadas + helper raster */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+function fingerMini(state,titulo){ var W=300,H=180,L=renalLayout(state,W,H),s='';
+  var zp=L.zonaPre; s+='<rect x="'+f1(zp.x1)+'" y="'+f1(zp.y1)+'" width="'+f1(zp.x2-zp.x1)+'" height="'+f1(zp.y2-zp.y1)+'" fill="#52c08a" fill-opacity="0.16"/>';
+  var zn=L.zonaNta; s+='<rect x="'+f1(zn.x1)+'" y="'+f1(zn.y1)+'" width="'+f1(zn.x2-zn.x1)+'" height="'+f1(zn.y2-zn.y1)+'" fill="#e0556b" fill-opacity="0.14"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  var cu=L.current; s+='<circle cx="'+f1(cu.x)+'" cy="'+f1(cu.y)+'" r="5" fill="#e8a13a"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'FE_Na × U_osm')+'</text>';
+  s+='<text x="'+(W-8)+'" y="'+(L.baseY+14)+'" fill="#9fb1c0" font-size="9" text-anchor="end">FE_Na →</text>';
+  return svgEl(W,H,s); }
+function idxBars(r){ var W=300,H=180,base=150,s='';
+  function bar(x,frac,color,lab,val){ var h=clampv(frac,0,1)*104; return '<rect x="'+x+'" y="'+f1(base-h)+'" width="48" height="'+f1(h)+'" fill="'+color+'" fill-opacity="0.6" stroke="'+color+'"/>'+
+    '<text x="'+(x+24)+'" y="'+(base+14)+'" fill="#9fb1c0" font-size="9" text-anchor="middle">'+lab+'</text>'+
+    '<text x="'+(x+24)+'" y="'+f1(base-h-4)+'" fill="#e7eef4" font-size="9" text-anchor="middle">'+val+'</text>'; }
+  s+=bar(40,r.FENa/4,'#e0556b','FE_Na',fmt(r.FENa,1));
+  s+=bar(98,r.FEurea/90,'#e8a13a','FE_ur',fmt(r.FEurea,0));
+  s+=bar(156,r.uOsm/900,'#52c08a','U_osm',fmt(r.uOsm,0));
+  s+=bar(214,r.bunCr/40,'#3a7bd5','BUN:Cr',fmt(r.bunCr,0));
+  s+='<text x="150" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">os índices co-variam</text>';
+  s+='<text x="150" y="170" fill="#e8a13a" font-size="9" text-anchor="middle">'+r.classe+'</text>';
+  return svgEl(W,H,s); }
+function imgFig(slug,alt){ return '<img src="assets/m15/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+/* TUTOR */
+function R0(extra){ var o={}; if(extra) for(var k in extra) o[k]=extra[k]; return renalState(o); }
+var TUTOR_ILUSTRADO=[
+  {q:'No mapa, avidez alta leva o ponto para…',o:['NTA (baixo/direita)','pré-renal (alto/esquerda)','centro'],c:1,e:'Túbulo íntegro: FENa baixa, U_osm alta.',fig:function(){return fingerMini({avidez:0.9},'avidez alta');}},
+  {q:'No mapa, avidez baixa cai em…',o:['pré-renal','NTA','indeterminado'],c:1,e:'Túbulo lesado: FENa alta, U_osm iso.',fig:function(){return fingerMini({avidez:0.1},'avidez baixa');}},
+  {q:'O diurético move o ponto…',o:['para a esquerda','para a direita (FENa↑)','para cima'],c:1,e:'Eleva a FENa (confundidor).',fig:function(){return fingerMini({avidez:0.85,diuretic:1},'+ diurético');}},
+  {q:'Nas barras, a pré-renal mostra…',o:['FENa alta','FENa baixa + U_osm alta','BUN:Cr baixa'],c:1,e:'Tudo aponta túbulo ávido.',fig:function(){return idxBars(R0({avidez:0.9}));}},
+  {q:'Nas barras da NTA, a U_osm está…',o:['alta','isosmótica (baixa)','zero'],c:1,e:'Perde a capacidade de concentrar.',fig:function(){return idxBars(R0({avidez:0.1}));}},
+  {q:'Com diurético, qual barra fica confiável?',o:['FE_Na','FE_ureia','Na urinário'],c:1,e:'A FE_ureia resiste ao diurético.',fig:function(){return idxBars(R0({avidez:0.85,diuretic:1}));}},
+  {q:'Na figura, FE_Na <1% indica…',o:['NTA','pré-renal','pós-renal'],c:1,e:'Túbulo segurando o Na.',fig:function(){return imgFig('fena-feureia.svg','FE');}},
+  {q:'Na figura, o cilindro granuloso pigmentado =',o:['pré-renal','NTA','glomerulonefrite'],c:1,e:'Muddy brown.',fig:function(){return imgFig('cilindros-urinarios.svg','cilindros');}},
+  {q:'Na figura, a BUN:Cr sobe na pré-renal porque…',o:['a creatinina é reabsorvida','a ureia é reabsorvida no baixo fluxo','o rim para'],c:1,e:'A ureia segue a água.',fig:function(){return imgFig('ureia-creatinina-manejo.svg','ureia');}},
+  {q:'Na figura, urina marrom-chá sem hemácias =',o:['glomerulonefrite','mioglobina (rabdomiólise)','infecção'],c:1,e:'Mioglobina → NTA.',fig:function(){return imgFig('urina-aspecto.svg','aspecto');}},
+  {q:'Na figura, cristal "envelope" sugere…',o:['ácido úrico','oxalato (etilenoglicol)','cistina'],c:1,e:'Oxalato de cálcio.',fig:function(){return imgFig('cristais-urinarios.svg','cristais');}},
+  {q:'Na figura, o diurético confunde qual índice?',o:['FE_ureia','FE_Na','BUN:Cr'],c:1,e:'Por isso usar a FE_ureia.',fig:function(){return imgFig('diuretico-confunde-fena.svg','confundidor');}},
+  {q:'Na figura, o 1º passo da LRA é…',o:['dosar FENa','descartar pós-renal (US)','dialisar'],c:1,e:'Excluir obstrução primeiro.',fig:function(){return imgFig('abordagem-lra-urina.svg','fluxograma');}}
+];
+var TUTOR_TEXTUAL=[
+  {q:'A urina, na LRA, revela…',o:['o nível da função','o mecanismo (pré/intr/pós)','a pressão'],c:1,e:'A Cr dá o nível; a urina, o mecanismo.'},
+  {q:'FE_Na <1% indica…',o:['NTA','pré-renal','pós-renal'],c:1,e:'Reabsorção ávida.'},
+  {q:'FE_Na >2% indica…',o:['pré-renal','NTA','normal'],c:1,e:'Túbulo lesado.'},
+  {q:'Sob diurético, use…',o:['FE_Na','FE_ureia','Na urinário'],c:1,e:'<35% = pré-renal.'},
+  {q:'A BUN:Cr >20 sugere…',o:['NTA','pré-renal (ou HDA)','pós-renal'],c:1,e:'Ureia reabsorvida no baixo fluxo.'},
+  {q:'U_osm alta (>500) na LRA aponta…',o:['NTA','pré-renal (concentra)','obstrução'],c:1,e:'Túbulo concentrando.'},
+  {q:'Cilindros granulosos pigmentados =',o:['pré-renal','NTA','GN'],c:1,e:'Muddy brown.'},
+  {q:'Cilindros hemáticos =',o:['NTA','glomerulonefrite','NIA'],c:1,e:'Hemácias dismórficas.'},
+  {q:'A fita NÃO detecta bem…',o:['glicose','cadeias leves (mieloma)','nitrito'],c:1,e:'Vê albumina; pedir prot/Cr.'},
+  {q:'Oxalato de cálcio + acidose AG alto =',o:['gota','etilenoglicol','cistinúria'],c:1,e:'Com gap osmolar (M13/M33).'},
+  {q:'A ureia difere da creatinina porque…',o:['não é filtrada','é reabsorvida (segue a água)','é secretada só ela'],c:1,e:'Daí a BUN:Cr.'},
+  {q:'A ordem do raciocínio é…',o:['índices → pós-renal','LRA → pós-renal → índices/sedimento','dialisar primeiro'],c:1,e:'Capstone M16.'}
+];
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL; window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+var BANKS={ilustrada:TUTOR_ILUSTRADO,textual:TUTOR_TEXTUAL}, curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+function renderTutor(){ var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():''; $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false; $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){ if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button'); btns[item.c].classList.add('ok'); if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block'; fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e; $('tutor-score').textContent=tScore; $('tutor-total').textContent=tTotal; });
+    box.appendChild(b); }); }
+$('banktabs').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor(); });
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+$('draw-indices').innerHTML = idxBars(renalState({avidez:0.9}));
+$('draw-fingerprint').innerHTML = fingerMini({avidez:0.5},'FE_Na × U_osm');
+$('fig-caso').innerHTML = fingerMini({avidez:0.85,diuretic:1},'pré-renal + diurético') + idxBars(renalState({avidez:0.85,diuretic:1}));
+
+refresh(); renderTutor();
+</script>
+</body>
+</html>

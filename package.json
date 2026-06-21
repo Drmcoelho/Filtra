@@ -26,7 +26,7 @@
     "test:20": "node build/m20/test20.node.js",
     "test:22": "node build/m22/test22.node.js",
     "test:24": "node build/m24/test24.node.js",
-    "test": "npm run test:0 && npm run test:1 && npm run test:2 && npm run test:3 && npm run test:4 && npm run test:5 && npm run test:6 && npm run test:7 && npm run test:8 && npm run test:9 && npm run test:10 && npm run test:11 && npm run test:12 && npm run test:13 && npm run test:14 && npm run test:16 && npm run test:18 && npm run test:20 && npm run test:22 && npm run test:24",
+    "test": "npm run test:0 && npm run test:1 && npm run test:2 && npm run test:3 && npm run test:4 && npm run test:5 && npm run test:6 && npm run test:7 && npm run test:8 && npm run test:9 && npm run test:10 && npm run test:11 && npm run test:12 && npm run test:13 && npm run test:14 && npm run test:15 && npm run test:16 && npm run test:18 && npm run test:20 && npm run test:22 && npm run test:24",
     "prevalidate": "node build/ensure-deps.js",
     "validate:0": "node build/m0/validate0.js",
     "validate:1": "node build/m1/validate1.js",
@@ -48,8 +48,10 @@
     "validate:20": "node build/m20/validate20.js",
     "validate:22": "node build/m22/validate22.js",
     "validate:24": "node build/m24/validate24.js",
-    "validate": "npm run validate:0 && npm run validate:1 && npm run validate:2 && npm run validate:3 && npm run validate:4 && npm run validate:5 && npm run validate:6 && npm run validate:7 && npm run validate:8 && npm run validate:9 && npm run validate:10 && npm run validate:11 && npm run validate:12 && npm run validate:13 && npm run validate:14 && npm run validate:16 && npm run validate:18 && npm run validate:20 && npm run validate:22 && npm run validate:24",
-    "check": "npm test && npm run validate"
+    "validate": "npm run validate:0 && npm run validate:1 && npm run validate:2 && npm run validate:3 && npm run validate:4 && npm run validate:5 && npm run validate:6 && npm run validate:7 && npm run validate:8 && npm run validate:9 && npm run validate:10 && npm run validate:11 && npm run validate:12 && npm run validate:13 && npm run validate:14 && npm run validate:15 && npm run validate:16 && npm run validate:18 && npm run validate:20 && npm run validate:22 && npm run validate:24",
+    "check": "npm test && npm run validate",
+    "test:15": "node build/m15/test15.node.js",
+    "validate:15": "node build/m15/validate15.js"
   },
   "devDependencies": {
     "jsdom": "^24.0.0"

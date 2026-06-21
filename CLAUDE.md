@@ -485,9 +485,10 @@ case com a UI. A ausência de dose onde o módulo a promete passa a ser falha.
 4. Então siga a escada §4.4, um módulo por vez, sempre fechando com `npm run check` verde.
 5. Mantenha o padrão de robustez (§6) em cada novo engine: faixas fisiológicas, identidades, leis,
    determinismo, robustez e **fuzzing semeado ≥ 5000**.
-6. **Pendência aberta (não esquecer):** a atribuição das imagens Wikimedia em `CREDITS.md` está marcada
-   "a creditar" (publicação adiantada, decisão do autor). Antes de declarar um módulo "finalizado", quite os
-   créditos das imagens que ele usa.
+6. **Crédito não é exigido (decisão do autor, 2026-06 — reafirmada):** o projeto **não** obriga atribuição;
+   `CREDITS.md` é um livro-razão **opcional** e o validador nunca o exige — só garante o *offline* (nenhum
+   `<img>` remoto). Para evitar qualquer obrigação de licença, prefira **CC0 / domínio público / obra própria**;
+   se um raster CC-BY/CC-BY-SA for usado, a atribuição é exigência **da licença**, não do projeto.
 
 ---
 

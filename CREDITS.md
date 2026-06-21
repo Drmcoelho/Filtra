@@ -1,15 +1,14 @@
-# Créditos de assets (fotos e figuras open source)
+# Créditos de assets (livro-razão OPCIONAL)
 
-Toda imagem **raster** em `assets/` deve ter uma linha aqui: arquivo, descrição, fonte (URL), autor e
-licença. Ilustrações **SVG autorais** (produção do projeto) ficam marcadas como tal. As linhas marcadas
-**"a creditar"** foram publicadas com a atribuição **pendente** (decisão do autor: publicar já, creditar
-depois) — preencher fonte/autor/licença antes de considerar o módulo finalizado.
+> **Crédito não é exigido (decisão do autor, 2026-06).** O validador **não** cobra este arquivo — só garante o
+> *offline* (nenhum `<img>` remoto). Este `CREDITS.md` é um **livro-razão opcional**, mantido por conveniência;
+> a ausência de uma linha **não** impede uma imagem de entrar. Para não ter obrigação de atribuição, o projeto
+> prefere **CC0 / domínio público / obra própria**; se um raster CC-BY/CC-BY-SA for usado, a atribuição passa a
+> ser exigência **da licença** (não do projeto), e aí convém registrá-la aqui.
 
-> ⚠️ Pendência: 13 imagens vieram do Wikimedia Commons (CC-BY/CC-BY-SA exigem atribuição). Completar as
-> colunas Fonte/Autor/Licença. As linhas marcadas "FILTRA (autoral)" são produção do projeto e não exigem crédito.
->
-> ➕ 2026-06: o autor forneceu 8 lâminas-síntese raster (webp, cromo FILTRA) — obra própria, "FILTRA (autoral)".
-> 5 integradas (M1·M3·M5·M6·M8) e 3 em disco aguardando o módulo (M7, M14×2). Listadas nas seções abaixo.
+As linhas marcadas "FILTRA (autoral)" são produção do projeto. As marcadas "_a creditar_" são rasters cuja
+fonte ainda não foi preenchida — sem impacto: preencher é opcional. As 8 lâminas-síntese (2026-06) são obra
+própria do autor (5 integradas em M1·M3·M5·M6·M8; 3 em disco aguardando M7 e M14×2).
 
 ## M0 — Compartimentos + fluidoterapia
 | Arquivo | Descrição | Fonte (URL) | Autor | Licença |

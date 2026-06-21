@@ -7,10 +7,10 @@ Fotos e figuras **raster** open source (histologia, micrografias, fotos reais) v
   Nunca `http(s)://…` num `<img>` (o validador recusa).
 - **SVG continua inline.** Desenhos esquemáticos e figuras computadas do engine ficam embutidos no próprio
   `filtraN.html` (single-file de fato). Só o raster mora aqui.
-- **Toda imagem precisa de crédito.** Cada arquivo desta pasta tem uma linha em `../CREDITS.md` com fonte,
-  autor e licença. Sem crédito, não entra.
-- **Licença preferida:** CC0 / domínio público (sem obrigação de atribuição) — mas atribuímos mesmo assim.
-  CC-BY é aceito desde que o crédito esteja em `CREDITS.md`. Evitar NC/ND que conflitem com o uso.
+- **Crédito não é exigido (decisão do autor, 2026-06).** O validador **não** cobra `CREDITS.md`; ele só garante
+  o *offline* (nenhum `<img>` remoto). `../CREDITS.md` é um **livro-razão opcional**, a cargo da curadoria.
+- **Licença preferida:** CC0 / domínio público / **obra própria** (sem qualquer obrigação de atribuição). CC-BY/
+  CC-BY-SA são aceitos, mas aí a atribuição é exigência **da licença** (não do projeto). Evitar NC/ND.
 - **Otimize:** prefira `.webp`/`.svg`; comprima; mantenha o repositório leve.
 
 ## Estrutura

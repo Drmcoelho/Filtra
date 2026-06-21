@@ -10,17 +10,19 @@ você só entrega os arquivos na pasta e o crédito.
    **Formato (decisão do projeto):** **SVG** se a fonte for vetorial (diagrama/esquema); **WebP** para raster
    (foto/histologia/micrografia/RM); **PNG** só como fallback (transparência lossless); evite JPG salvo se a
    fonte só existir assim. Ex.: `assets/m1/nefron-rotulado.svg`, `assets/m0/hemacia-tonicidade.webp`.
-2. Para **cada arquivo**, acrescente UMA linha em `/CREDITS.md` (tabela): arquivo, descrição, URL da fonte,
-   autor, licença (com versão).
+2. Crédito **não é exigido** pelo projeto (decisão do autor, 2026-06). `/CREDITS.md` é um livro-razão
+   **opcional** — preencha se quiser, mas a ausência não bloqueia nada. Para evitar obrigação de atribuição,
+   prefira **CC0 / domínio público / obra própria**.
 3. Não precisa tocar nos `filtraN.html` — a integração e a renderização no Pages são feitas depois, "conforme
    encaixe". Apenas deixe os arquivos e os créditos prontos.
 
 ## Regras inegociáveis
 - **OFFLINE / local:** só arquivos na pasta. Nada de hotlink/URL remota — o produto roda sem internet.
-- **Licença:** apenas **CC0 / Domínio Público / CC BY / CC BY-SA**. PROIBIDO NC, ND, "todos os direitos
-  reservados" ou licença não verificável. **Confirme a licença na página da fonte de CADA arquivo** (variam
-  no mesmo site). Para CC BY-SA, registre que derivados herdam a licença.
-- **Crédito sempre:** sem linha no `CREDITS.md`, a imagem não vale.
+- **Licença:** apenas **CC0 / Domínio Público / CC BY / CC BY-SA** (ou obra própria). PROIBIDO NC, ND, "todos
+  os direitos reservados" ou licença não verificável. **Confirme a licença na página da fonte de CADA arquivo**.
+  Atribuição não é cobrada pelo projeto; se usar CC BY/BY-SA, ela é obrigação **da licença** — prefira CC0/PD
+  para não ter essa obrigação.
+- **Crédito:** **opcional** (decisão do autor). `CREDITS.md` não é condição para a imagem entrar.
 - **Otimize:** largura máx ~1200 px, compressão razoável, repo leve. Remova metadados desnecessários.
 - **Conteúdo:** legendas/alt em **português do Brasil** (a integração usa isso depois).
 - **Precisão clínica:** prefira figuras corretas e rotuladas; descarte imagens enganosas. Se um item não
@@ -49,5 +51,6 @@ pode acrescentá-las (nomeie no mesmo padrão e credite).
 
 ## Definição de pronto
 - Cada `slug` do manifesto tem um arquivo em `assets/<dir>/` **ou** um `.MISSING.txt` justificado.
-- Todo arquivo de imagem tem licença aceitável e linha no `CREDITS.md`.
+- Todo arquivo de imagem tem licença aceitável (CC0/PD/CC-BY/CC-BY-SA/obra própria). Linha no `CREDITS.md` é
+  **opcional** — não é condição de "pronto".
 - Nenhuma URL remota; tudo local e otimizado. O repositório continua funcionando offline.

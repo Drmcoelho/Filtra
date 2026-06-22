@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M39 — Revisão global: exame de domínio · 100 questões</title>
+<style>
+  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--warn:#e8a13a;--bad:#e0556b;--good:#52c08a;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none} section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .presets{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px} .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)} .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)} .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)} .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+  .pill{display:inline-block;font-size:11px;padding:2px 8px;border:1px solid var(--line);border-radius:999px;color:var(--dim);margin:2px 4px 2px 0}
+  .barwrap{height:10px;background:var(--panel2);border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+  .barfill{height:100%;background:var(--accent)}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M39</div>
+  <h1>Revisão global — o exame de domínio do braço (100 questões)</h1>
+  <div class="sub">O <b>fecho</b> do FILTRA · DIALISA. Não há uma fisiologia nova aqui: este módulo é um
+  <b>instrumento de avaliação</b>. As 100 questões varrem os dez domínios do braço — dos <b>compartimentos</b> e do
+  <b>meio interno</b> à <b>filtração/clearance</b>, ao <b>túbulo e seus diuréticos</b>, aos <b>eletrólitos e o
+  ácido-base</b>, ao <b>RAAS/endócrino</b>, à <b>LRA</b> e a toda a <b>DIALISA</b> (princípios, HDI, TRRC,
+  indicação/integração). O <b>motor manda no pixel</b> também na prova: a nota, o <b>perfil por domínio</b> e a
+  <b>psicometria</b> (dificuldade <i>p</i>, discriminação ponto-bisserial, confiabilidade KR-20) são computados, não
+  decorados. A tese: o <b>número</b> (a nota) é uma sombra; o que ensina é <b>onde</b> a homeostasia do seu
+  raciocínio falha — por isso o perfil por domínio importa mais que o escore total. Unidades clínicas em
+  <b>mEq/L</b>, <b>mL/kg/h</b>, <b>Kt/V</b>; mecanismo antes do número, sempre.</div>
+  <nav class="hex">
+    <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
+    <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="dialisa.html">&larr; índice do antebraço DIALISA</a>
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- CONCEITO -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — o que é um exame de domínio e como ele se lê</h3>
+      <p class="sub" style="margin-top:0"><b>Um exame de domínio não mede "quanto você sabe" num número só — mede
+      ONDE você sabe.</b> O escore total é uma <b>sombra</b>; a <b>psicometria</b> (dificuldade, discriminação,
+      confiabilidade) e o <b>perfil por domínio</b> dizem se a prova é boa e onde está a lacuna. É a mesma
+      <b>homeostasia</b> do braço inteiro, aplicada ao raciocínio: defender o meio interno do paciente exige que
+      <i>cada</i> domínio esteja firme. As Fig. 1–8 voltam no Caso, na Trilha e na Avaliação. Atribuição em
+      <code>CREDITS.md</code> (em curadoria).</p>
+
+      <h4>1. O mapa do braço — os dez domínios em recapitulação</h4>
+      <p class="sub">As 100 questões cobrem dez blocos curriculares, de <b>FILTRA</b> (compartimentos → glomérulo →
+      túbulo → eletrólitos/ácido-base → RAAS → LRA) a <b>DIALISA</b> (princípios → HDI → TRRC → indicação/integração).
+      O exame é <b>balanceado</b>: ~10 itens por domínio, para que o perfil seja interpretável.</p>
+      <div class="frow">
+        <div class="concept" id="draw-mapa"></div>
+        <figure class="fviva"><img src="assets/m39/mapa-conceitual-renal.svg" alt="Mapa conceitual integrador do braço FILTRA DIALISA" loading="lazy">
+          <figcaption><b>Fig. 1 · O mapa conceitual.</b> A árvore do raciocínio renal: filtração → meio interno →
+          falência (LRA) → substituição (diálise). Cada ramo é um domínio do exame; olhe onde o seu perfil afunda —
+          é ali que a recapitulação precisa voltar.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m39/hexapode-mapa.svg" alt="Mapa do hexápode de medicina crítica, FILTRA como braço 3" loading="lazy">
+          <figcaption><b>Fig. 2 · O hexápode.</b> FILTRA é o braço 3; conversa com CHOCA (volume, cardiorrenal),
+          o pulmão (ácido-base) e a consciência (disnatremias). O exame cobra essas <b>pontes</b> — o rim não vive
+          sozinho.</figcaption></figure>
+      </div>
+
+      <h4>2. A nota e o corte — fração de acertos × passa-rasante</h4>
+      <p class="sub">A <b>nota</b> = Σ acertos; a <b>fração</b> = nota / nº de itens ∈ [0,1]. O <b>corte</b>
+      (passa-rasante, p.ex. 60%) separa aprovado de reprovado. O motor (<code>gradeExam</code>) computa tudo;
+      respostas faltando contam como erro, excedentes são ignoradas — robustez antes de aparência.</p>
+      <div class="frow">
+        <div class="concept" id="draw-corte"></div>
+        <figure class="fviva"><img src="assets/m39/meio-interno-resumo.svg" alt="Resumo do meio interno: volume, eletrólitos, ácido-base" loading="lazy">
+          <figcaption><b>Fig. 3 · O meio interno em resumo.</b> O que a metade FILTRA defende: volume circulante
+          efetivo, tonicidade, K⁺/Ca²⁺, ácido-base. Um bloco inteiro do exame mora aqui — passar exige firmeza em
+          cada eixo, como o rim exige.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m39/eletrolitos-resumo.svg" alt="Resumo dos eletrólitos e seus mecanismos" loading="lazy">
+          <figcaption><b>Fig. 4 · Eletrólitos em resumo.</b> Na⁺ é proxy de água (tonicidade); K⁺ é gradiente ×
+          estoque (o que mata pelo ECG); Ca²⁺ é o triângulo Ca-PO₄-PTH. As questões testam o <b>mecanismo</b>, não a
+          tabela de valores.</figcaption></figure>
+      </div>
+
+      <h4>3. Dificuldade do item (p) — fácil × difícil</h4>
+      <p class="sub">A <b>dificuldade</b> <i>p</i> = fração da coorte que acerta o item (paradoxo do nome: <i>p</i>
+      alto = item <b>fácil</b>). Itens muito fáceis (p≈1) ou muito difíceis (p≈0) discriminam pouco; o ideal fica em
+      torno de 0,3–0,8. O motor (<code>itemDifficulty</code>) computa p de uma matriz coorte × itens.</p>
+      <div class="frow">
+        <div class="concept" id="draw-dif"></div>
+        <figure class="fviva"><img src="assets/m39/nefron-resumo.png" alt="Néfron em resumo, com seus segmentos e transportadores" loading="lazy">
+          <figcaption><b>Fig. 5 · O néfron em resumo.</b> Os segmentos (TCP 65% do Na⁺, alça/NKCC2, TCD/NCC, ducto
+          coletor/ENaC) e suas chaves diuréticas. O domínio <b>Túbulo/diuréticos</b> cobra qual segmento cada droga
+          abre — a anatomia vira mecanismo.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m39/farmacologia-renal-resumo.svg" alt="Resumo da farmacologia renal: diuréticos, RAAS, eixo endócrino" loading="lazy">
+          <figcaption><b>Fig. 6 · Farmacologia renal em resumo.</b> Diurético = chave de um segmento; IECA/BRA mexem
+          o eferente (a creatinina que sobe pode ser o efeito esperado). O exame testa a <b>curva dose-resposta</b>
+          como fisiologia, não como número solto.</figcaption></figure>
+      </div>
+
+      <h4>4. Discriminação e confiabilidade — a prova mede de verdade?</h4>
+      <p class="sub">A <b>discriminação</b> (ponto-bisserial) mede se quem acerta o item tende a ter escore total
+      alto — itens que separam fortes de fracos. A <b>confiabilidade KR-20</b> resume a consistência interna do
+      teste (0–1): sobe quando os itens "puxam para o mesmo lado" numa coorte heterogênea. Um item que <b>todos</b>
+      acertam tem discriminação ≈0 — não separa ninguém.</p>
+      <div class="frow">
+        <div class="concept" id="draw-disc"></div>
+        <div class="concept" id="draw-kr20"></div>
+        <figure class="fviva"><img src="assets/m39/acidobase-resumo.svg" alt="Resumo do ácido-base renal: HCO3, NH4, anion gap" loading="lazy">
+          <figcaption><b>Fig. 7 · Ácido-base em resumo.</b> O rim regula o HCO₃⁻ (reabsorção + NH₄⁺ + acidez
+          titulável); ânion gap e delta-delta desmontam o distúrbio. Um domínio do exame inteiro — e o que mais
+          discrimina raciocínio fisiológico de decoreba.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m39/dialise-resumo.svg" alt="Resumo da diálise: difusão, convecção, ultrafiltração, adsorção" loading="lazy">
+          <figcaption><b>Fig. 8 · Diálise em resumo.</b> Quatro físicas: difusão (gradiente), convecção (arraste),
+          ultrafiltração (TMP, volume) e adsorção. A metade DIALISA cobra qual física remove o quê — a máquina
+          substitui <b>funções</b>, não o rim.</figcaption></figure>
+      </div>
+
+      <p class="sub" style="margin-top:14px"><b>Como usar este módulo:</b> faça as <b>100 questões</b> na aba
+      <b>Avaliação</b> (bloco "Exame 100"); o <b>Instrumento</b> pinta o seu perfil por domínio ao vivo; o <b>Lab</b>
+      simula coortes e mostra como dificuldade, discriminação e KR-20 se movem. O alvo não é o número — é ver
+      <b>onde</b> reforçar.</p>
+    </div>
+  </section>
+
+  <!-- CASO -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — cinco atos: lendo um boletim de desempenho</h3>
+      <p class="sub">Não é um paciente: é o <b>seu próprio exame</b>. Uma turma fez as 100 questões; vamos ler o
+      boletim como um clínico lê um meio interno — decompondo antes de interpretar (Fig. 1, 3).</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step"><b>Ato 1 — o número engana.</b> Aluno A tirou 72/100; aluno B, 70/100. A é "melhor"?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>Não dá para dizer pelo total.</b> O escore é uma <b>sombra</b> (Fig. 1). A
+          pode ter 72 com um buraco de 2/10 em <b>Eletrólitos/ácido-base</b> — o domínio que mata pelo ECG; B pode
+          ter 70 uniforme. O <b>perfil por domínio</b>, não o número, decide onde está o risco.</div></div>
+
+      <div class="step"><b>Ato 2 — o ponto fraco.</b> O perfil de A mostra 90% em quase tudo, mas 20% em
+        <b>TRRC/contínuas</b>. O que o motor reporta?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2"><b><code>pontoFraco = 'TRRC/contínuas'</code>.</b> <code>domainBreakdown</code>
+          calcula acertos/total por domínio e aponta o menor — aqui, a dose em <b>mL/kg/h</b> e pré/pós-diluição. A
+          recapitulação volta a M27–M28. O número global escondia exatamente o que importa.</div></div>
+
+      <div class="step"><b>Ato 3 — item fácil demais.</b> Uma questão foi acertada por <b>todos</b> os 60 alunos.
+        Boa questão para discriminar?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3"><b>Não.</b> Dificuldade <i>p</i>=1 (Fig. — item trivial): a <b>discriminação</b>
+          ponto-bisserial é ≈0 porque o item não <b>separa</b> ninguém (todos no mesmo lado). Ótimo para aquecer,
+          inútil para medir domínio. O motor devolve <code>d≈0</code>.</div></div>
+
+      <div class="step"><b>Ato 4 — a prova é confiável?</b> A turma é heterogênea (do iniciante ao craque) e os
+        itens "puxam para o mesmo lado". O KR-20 dá 0,86. E se a turma fosse toda craque?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>O KR-20 despencaria.</b> Confiabilidade depende de <b>variância de escore</b>:
+          numa coorte homogênea (todos quase 100%) quase não há variância → KR-20 cai, mesmo com itens bons. Não é a
+          prova que piorou — é a coorte que não a desafia. O motor computa exatamente isso.</div></div>
+
+      <div class="step"><b>Ato 5 — a ponte com o hexápode (a fronteira).</b> Uma questão de <b>síndrome
+        cardiorrenal</b> integra rim, coração e volume (ponte com CHOCA). Em qual domínio ela entra?
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>Em "Indicação/integração".</b> É a fronteira do braço: o item não é "puro"
+          renal — testa a <b>ponte</b> (Fig. 2). Por isso o domínio de integração existe: cobra o raciocínio que liga
+          o rim ao DC, à PVC e ao volume. O exame de domínio premia quem vê o sistema, não só o néfron.</div></div>
+    </div>
+  </section>
+
+  <!-- TRILHA -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — onze perguntas sobre medir o domínio</h3>
+      <details><summary>1. O escore total mede "quanto eu sei"?</summary><p>Mede um agregado, mas é uma <b>sombra</b>.
+        Dois alunos com a mesma nota podem ter perfis opostos. O que ensina é o <b>perfil por domínio</b> (Fig. 1) —
+        onde a lacuna está.</p></details>
+      <details><summary>2. O que é a fração e o corte?</summary><p>Fração = acertos / nº de itens ∈ [0,1]. O corte
+        (passa-rasante) é o limiar de aprovação. <code>gradeExam</code> computa ambos; corte mais alto nunca
+        <i>facilita</i> a aprovação.</p></details>
+      <details><summary>3. Por que 10 questões por domínio?</summary><p>Para o perfil ser <b>interpretável</b>: poucos
+        itens por bloco dão estimativas instáveis. Balancear os domínios (~10 cada) deixa o perfil por domínio
+        comparável entre blocos.</p></details>
+      <details><summary>4. Dificuldade <i>p</i> alta significa item difícil?</summary><p>Não — é o paradoxo do nome.
+        <i>p</i> = fração que <b>acerta</b>; p alto = item <b>fácil</b>. O útil para medir fica em ~0,3–0,8 (Fig. 5–6);
+        p≈1 ou p≈0 quase não discrimina.</p></details>
+      <details><summary>5. O que a discriminação mede?</summary><p>Se quem acerta o item tende a ter <b>escore total
+        alto</b> (ponto-bisserial). Item que separa fortes de fracos discrimina; item que todos acertam (ou erram)
+        tem discriminação ≈0.</p></details>
+      <details><summary>6. O que é o KR-20?</summary><p>A <b>confiabilidade</b> de consistência interna para itens
+        dicotômicos: KR-20 = (k/(k−1))·(1 − Σp·q / var_total) ∈ [0,1]. Quanto mais os itens concordam numa coorte
+        heterogênea, maior.</p></details>
+      <details><summary>7. Por que o KR-20 cai numa coorte homogênea?</summary><p>Porque depende da <b>variância de
+        escore</b>. Se todos acertam quase tudo, a variância tende a 0 e o KR-20 cai — mesmo com bons itens. É a
+        coorte, não a prova.</p></details>
+      <details><summary>8. Como o perfil por domínio guia a revisão?</summary><p><code>domainBreakdown</code> dá
+        acertos/total por bloco e aponta o <b>pontoFraco</b>. Você volta ao módulo daquele domínio (p.ex. lacuna em
+        TRRC → M27–M28).</p></details>
+      <details><summary>9. As pontes com o hexápode entram onde?</summary><p>No domínio <b>Indicação/integração</b>:
+        cardiorrenal, hepatorrenal, volume × Guyton (CHOCA), ácido-base × ventilação. O exame cobra o sistema, não só
+        o néfron (Fig. 2).</p></details>
+      <details><summary>10. O que torna um item "bom"?</summary><p>Dificuldade intermediária, discriminação positiva e
+        contribuição ao KR-20. Um item trivial (p≈1) ou ambíguo (discriminação ≤0) é candidato a revisão — a
+        psicometria expõe isso.</p></details>
+      <details><summary>11. Em que sentido isto é homeostasia?</summary><p>O exame defende a <b>integridade do
+        raciocínio</b>: cada domínio firme = o aluno consegue defender o meio interno do paciente em qualquer eixo. A
+        lacuna num domínio é uma falência local — corrige-se no mecanismo, não decorando o número.</p></details>
+    </div>
+  </section>
+
+  <!-- INSTRUMENTO -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — o perfil por domínio, ao vivo</h3>
+      <p class="sub">As barras são o <b>percentual de acertos por domínio</b> computado por
+      <code>scoreProfileLayout(domainBreakdown(…))</code>; a linha pontilhada é o <b>corte</b>. À medida que você
+      responde o <b>Exame 100</b> (aba Avaliação) ou move os controles do <b>Lab</b>, o perfil se redesenha. A barra
+      mais baixa é o seu <b>ponto fraco</b> — onde a recapitulação rende mais.</p>
+      <canvas id="score-canvas" width="900" height="360" aria-label="Perfil de acertos por domínio"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- LAB -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — simule uma coorte e veja a psicometria</h3>
+      <p class="sub">Gere um aluno-alvo (perfil de habilidade por domínio) e uma coorte; veja a nota, o perfil, a
+      dificuldade média, a discriminação e o KR-20 — tudo computado pelo motor.</p>
+      <div class="grid">
+        <div>
+          <label>Habilidade global do aluno (0 fraco → 1 craque): <span class="val" id="lbl-theta">0.65</span></label>
+          <input type="range" id="in-theta" min="0" max="1" step="0.01" value="0.65">
+          <label>Lacuna no domínio fraco (0 sem lacuna → 1 zera o domínio): <span class="val" id="lbl-lacuna">0.0</span></label>
+          <input type="range" id="in-lacuna" min="0" max="1" step="0.05" value="0">
+          <label>Tamanho da coorte (examinandos): <span class="val" id="lbl-coorte">60</span></label>
+          <input type="range" id="in-coorte" min="2" max="200" step="1" value="60">
+        </div>
+        <div>
+          <label>Heterogeneidade da coorte (0 homogênea → 1 muito variada): <span class="val" id="lbl-hetero">0.6</span></label>
+          <input type="range" id="in-hetero" min="0" max="1" step="0.05" value="0.6">
+          <label>Corte de aprovação (fração): <span class="val" id="lbl-corte">0.60</span></label>
+          <input type="range" id="in-corte" min="0" max="1" step="0.05" value="0.6">
+          <label>Domínio com lacuna:</label>
+          <select id="in-domfraco"></select>
+        </div>
+      </div>
+
+      <div class="presets">
+        <button class="act" data-preset="forte">Aluno forte (uniforme)</button>
+        <button class="act" data-preset="lacuna_eletro">Lacuna em eletrólitos</button>
+        <button class="act" data-preset="lacuna_dialise">Lacuna em diálise</button>
+        <button class="act" data-preset="limitrofe">Limítrofe (no corte)</button>
+        <button class="act" data-preset="homogenea">Coorte homogênea (KR-20 baixo)</button>
+      </div>
+
+      <table>
+        <tr><th>Saída</th><th>Atual</th><th>Comentário</th></tr>
+        <tr><td>Nota do aluno (de 100)</td><td class="num" id="out-score">—</td><td class="num">Σ acertos</td></tr>
+        <tr><td>Fração / percentual</td><td class="num" id="out-fracao">—</td><td class="num">acertos / itens</td></tr>
+        <tr><td>Aprovado?</td><td class="num" id="out-aprovado">—</td><td class="num">fração ≥ corte</td></tr>
+        <tr><td>Ponto fraco (domínio)</td><td class="num" id="out-fraco">—</td><td class="num">menor % por bloco</td></tr>
+        <tr><td>Dificuldade média da prova (p)</td><td class="num" id="out-dif">—</td><td class="num">1 = fácil p/ a coorte</td></tr>
+        <tr><td>Discriminação média</td><td class="num" id="out-disc">—</td><td class="num">ponto-bisserial</td></tr>
+        <tr><td>Confiabilidade (KR-20)</td><td class="num" id="out-kr20">—</td><td class="num">consistência interna</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÃO -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — o exame de domínio (100) e os dois blocos tutores</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (12)</button>
+        <button data-bank="textual">Textual (12)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+
+    <div class="panel" id="exame-panel">
+      <h3>Exame 100 — banco completo, dez domínios</h3>
+      <p class="sub">Responda; o perfil por domínio (aba Instrumento) e a nota são computados pelo motor ao vivo.
+      Cada questão traz seu domínio e a explicação ao confirmar.</p>
+      <div>Exame: <span class="val" id="exam-score">0</span> acertos · <span class="val" id="exam-done">0</span> /
+        <span id="exam-total">100</span> respondidas · domínio <span class="val" id="exam-dom">—</span></div>
+      <div class="barwrap" style="margin:8px 0"><div class="barfill" id="exam-bar" style="width:0%"></div></div>
+      <div id="exam-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="exam-opts"></div>
+      <div class="banner" id="exam-fb" style="display:none"></div>
+      <div>
+        <button class="act" id="exam-prev">&larr; Anterior</button>
+        <button class="act" id="exam-next">Próxima &rarr;</button>
+        <button class="act" id="exam-reset">Reiniciar exame</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica</b>. Este módulo M39 é a
+    <b>revisão global</b> do braço — um <b>instrumento de avaliação</b> (100 questões, perfil por domínio e
+    psicometria didática). Os parâmetros psicométricos (dificuldade, discriminação, KR-20) são simplificações para
+    ensinar <b>como se lê um exame</b>, não estatística certificada de banca. O conteúdo clínico segue o restante do
+    braço: mecanismo antes do número; não substitui julgamento clínico nem é dispositivo médico. A decisão e a
+    responsabilidade finais são sempre do profissional. <b>Nota de honestidade do modelo:</b> a coorte do Lab é
+    simulada por um gerador semeado; serve para mostrar o comportamento das métricas, não dados reais.
+  </div>
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+</div>
+
+<script>
+/* ===== ENGINE INLINE — espelho fiel de build/m39/model39.js ===== */
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
+function toIntIdx(v){ var n=Number(v); if(!isFinite(n)) return -1; n=Math.floor(n); return n; }
+var DOMINIOS=['Compartimentos/meio interno','Glomérulo/clearance','Túbulo/diuréticos','Eletrólitos/ácido-base','RAAS/endócrino','LRA','Princípios de diálise','HDI','TRRC/contínuas','Indicação/integração'];
+function asArray(x){ return Object.prototype.toString.call(x)==='[object Array]'?x:[]; }
+function acertos(respostas,gabarito){ var g=asArray(gabarito),r=asArray(respostas),out=[],i; for(i=0;i<g.length;i++){ var gi=toIntIdx(g[i]),ri=toIntIdx(r[i]); out.push((gi>=0&&ri===gi)?1:0); } return out; }
+function gradeExam(respostas,gabarito,corte){ var ac=acertos(respostas,gabarito),n=ac.length,i,soma=0; for(i=0;i<n;i++) soma+=ac[i];
+  var c=clampv(corte!==undefined?corte:0.6,0,1),fracao=n>0?soma/n:0; fracao=clampv(fracao,0,1);
+  return {nItens:n,score:soma,fracao:fracao,percentual:clampv(fracao*100,0,100),corte:c,aprovado:n>0&&fracao>=c-1e-12,acertos:ac}; }
+function domainBreakdown(respostas,gabarito,dominios){ var ac=acertos(respostas,gabarito),dn=asArray(dominios),mapa={},ordem=[],i;
+  for(i=0;i<ac.length;i++){ var d=(i<dn.length&&dn[i]!=null)?String(dn[i]):'sem-domínio'; if(!mapa[d]){ mapa[d]={dominio:d,total:0,acertos:0}; ordem.push(d); } mapa[d].total+=1; mapa[d].acertos+=ac[i]; }
+  var linhas=[],somaAc=0,somaTot=0;
+  for(i=0;i<ordem.length;i++){ var e=mapa[ordem[i]]; var frac=e.total>0?clampv(e.acertos/e.total,0,1):0; linhas.push({dominio:e.dominio,total:e.total,acertos:e.acertos,fracao:frac,percentual:clampv(frac*100,0,100)}); somaAc+=e.acertos; somaTot+=e.total; }
+  var fraco=null; for(i=0;i<linhas.length;i++){ if(!fraco||linhas[i].fracao<fraco.fracao-1e-12||(Math.abs(linhas[i].fracao-fraco.fracao)<=1e-12&&linhas[i].total>fraco.total)) fraco=linhas[i]; }
+  return {linhas:linhas,totalAcertos:somaAc,totalItens:somaTot,fracaoGlobal:somaTot>0?clampv(somaAc/somaTot,0,1):0,pontoFraco:fraco?fraco.dominio:null}; }
+function matrizAcertos(matriz,gabarito){ var Mz=asArray(matriz),g=asArray(gabarito),out=[],j; for(j=0;j<Mz.length;j++) out.push(acertos(Mz[j],g)); return out; }
+function itemDifficulty(matriz,gabarito){ var A=matrizAcertos(matriz,gabarito),nJ=A.length,nI=asArray(gabarito).length,p=[],i,j; for(i=0;i<nI;i++){ var s=0; for(j=0;j<nJ;j++) s+=(A[j]&&A[j][i])?1:0; p.push(nJ>0?clampv(s/nJ,0,1):0); } return p; }
+function escoresTotais(matriz,gabarito){ var A=matrizAcertos(matriz,gabarito),out=[],j,i; for(j=0;j<A.length;j++){ var s=0; for(i=0;i<A[j].length;i++) s+=A[j][i]; out.push(s); } return out; }
+function media(v){ var s=0,i; for(i=0;i<v.length;i++) s+=v[i]; return v.length>0?s/v.length:0; }
+function variancia(v){ var m=media(v),s=0,i; for(i=0;i<v.length;i++){ var d=v[i]-m; s+=d*d; } return v.length>0?s/v.length:0; }
+function itemDiscrimination(matriz,gabarito){ var A=matrizAcertos(matriz,gabarito),tot=escoresTotais(matriz,gabarito),sd=Math.sqrt(variancia(tot)),nJ=A.length,nI=asArray(gabarito).length,out=[],i,j;
+  for(i=0;i<nI;i++){ if(sd<=1e-12||nJ<2){ out.push(0); continue; } var s1=0,n1=0,s0=0,n0=0;
+    for(j=0;j<nJ;j++){ var ok=(A[j]&&A[j][i])?1:0; if(ok){ s1+=tot[j]; n1++; } else { s0+=tot[j]; n0++; } }
+    if(n1===0||n0===0){ out.push(0); continue; } var m1=s1/n1,m0=s0/n0,p=n1/nJ,q=1-p; out.push(clampv(((m1-m0)/sd)*Math.sqrt(p*q),-1,1)); } return out; }
+function kr20(matriz,gabarito){ var p=itemDifficulty(matriz,gabarito),k=p.length; if(k<2) return 0; var tot=escoresTotais(matriz,gabarito),varTot=variancia(tot); if(varTot<=1e-12) return 0; var sumPQ=0,i; for(i=0;i<k;i++) sumPQ+=p[i]*(1-p[i]); return clampv((k/(k-1))*(1-sumPQ/varTot),0,1); }
+function psychometrics(matriz,gabarito){ var p=itemDifficulty(matriz,gabarito),d=itemDiscrimination(matriz,gabarito),rel=kr20(matriz,gabarito),i,somaP=0,somaD=0; for(i=0;i<p.length;i++){ somaP+=p[i]; somaD+=d[i]; } var k=p.length;
+  return {k:k,dificuldadeMedia:k>0?clampv(somaP/k,0,1):0,discriminacaoMedia:k>0?clampv(somaD/k,-1,1):0,kr20:rel,p:p,d:d}; }
+function scoreProfileLayout(domainScores,W,H){ var linhas=asArray(domainScores&&domainScores.linhas?domainScores.linhas:domainScores); W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=52,padR=16,padT=18,padB=46,baseY=H-padB,n=linhas.length,innerW=W-padL-padR,innerH=baseY-padT,pxY=innerH/100,slot=n>0?innerW/n:innerW,barW=slot*0.6,bars=[],pts=[],i;
+  for(i=0;i<n;i++){ var ln=linhas[i]||{}; var pct=clampv(ln.percentual!==undefined?ln.percentual:(clampv(ln.fracao,0,1)*100),0,100); var cx=padL+slot*(i+0.5),bx=cx-barW/2,by=baseY-pct*pxY;
+    bars.push({i:i,dominio:ln.dominio!=null?String(ln.dominio):'',pct:pct,x:bx,y:by,w:barW,h:pct*pxY,cx:cx}); pts.push({i:i,pct:pct,x:cx,y:by}); }
+  var corte=clampv(domainScores&&domainScores.corte!==undefined?domainScores.corte:0.6,0,1),corteY=baseY-corte*100*pxY;
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,n:n,pxY:pxY,slot:slot,barW:barW,axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},bars:bars,pts:pts,corte:corte,corteY:corteY,cortePts:[{x:padL,y:corteY},{x:W-padR,y:corteY}]}; }
+window.clampv=clampv; window.gradeExam=gradeExam; window.domainBreakdown=domainBreakdown; window.scoreProfileLayout=scoreProfileLayout;
+window.itemDifficulty=itemDifficulty; window.itemDiscrimination=itemDiscrimination; window.kr20=kr20; window.psychometrics=psychometrics;
+window.DOMINIOS=DOMINIOS;
+window.MODEL={gradeExam:gradeExam,domainBreakdown:domainBreakdown,scoreProfileLayout:scoreProfileLayout,itemDifficulty:itemDifficulty,itemDiscrimination:itemDiscrimination,kr20:kr20,psychometrics:psychometrics,clampv:clampv,DOMINIOS:DOMINIOS};
+
+/* ===== UI ===== */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=(d===undefined?1:d); return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on'); b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on'); $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh(); });
+document.addEventListener('click',function(e){ var b=e.target.closest('button.act[data-rev]'); if(!b) return; var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on'); });
+
+/* ===== SVG helpers (ilustrações computadas) ===== */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+/* perfil mini a partir de um breakdown */
+function profileMini(db,titulo){ var W=320,H=180,L=scoreProfileLayout(db,W,H),s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  for(var i=0;i<L.bars.length;i++){ var bb=L.bars[i]; var col=bb.pct<L.corte*100?'#e0556b':(bb.pct<75?'#e8a13a':'#39c0c8');
+    s+='<rect x="'+f1(bb.x)+'" y="'+f1(bb.y)+'" width="'+f1(bb.w)+'" height="'+f1(bb.h)+'" fill="'+col+'" fill-opacity="0.6" stroke="'+col+'"/>'; }
+  s+='<line x1="'+L.cortePts[0].x+'" y1="'+f1(L.corteY)+'" x2="'+L.cortePts[1].x+'" y2="'+f1(L.corteY)+'" stroke="#e7eef4" stroke-dasharray="4 3" stroke-opacity="0.6"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'perfil por domínio')+'</text>';
+  s+='<text x="'+(W-8)+'" y="'+(L.baseY+16)+'" fill="#9fb1c0" font-size="9" text-anchor="end">domínios →</text>';
+  return svgEl(W,H,s); }
+/* histograma de dificuldade p */
+function difMini(ps,titulo){ var W=320,H=180,padL=40,padB=28,baseY=H-padB,padT=20,s='';
+  var n=ps.length,slot=(W-padL-12)/Math.max(n,1),barW=slot*0.7,pxY=(baseY-padT);
+  s+='<line x1="'+padL+'" y1="'+padT+'" x2="'+padL+'" y2="'+baseY+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+padL+'" y1="'+baseY+'" x2="'+(W-12)+'" y2="'+baseY+'" stroke="#3a4a58"/>';
+  for(var i=0;i<n;i++){ var h=clampv(ps[i],0,1)*pxY; var col=ps[i]>0.85||ps[i]<0.15?'#e0556b':'#39c0c8';
+    s+='<rect x="'+f1(padL+slot*i+(slot-barW)/2)+'" y="'+f1(baseY-h)+'" width="'+f1(barW)+'" height="'+f1(h)+'" fill="'+col+'" fill-opacity="0.6" stroke="'+col+'"/>'; }
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'dificuldade p por item')+'</text>';
+  s+='<text x="'+(padL+4)+'" y="'+(padT+10)+'" fill="#9fb1c0" font-size="9">p=1 fácil</text>';
+  s+='<text x="'+(padL+4)+'" y="'+(baseY-4)+'" fill="#9fb1c0" font-size="9">p=0 difícil</text>';
+  return svgEl(W,H,s); }
+/* nuvem discriminação × dificuldade */
+function discMini(ps,ds,titulo){ var W=320,H=180,padL=40,padB=28,baseY=H-padB,padT=20,s='';
+  var pxX=(W-padL-12),midY=(padT+baseY)/2;
+  s+='<line x1="'+padL+'" y1="'+padT+'" x2="'+padL+'" y2="'+baseY+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+padL+'" y1="'+f1(midY)+'" x2="'+(W-12)+'" y2="'+f1(midY)+'" stroke="#3a4a58" stroke-dasharray="3 3"/>';
+  for(var i=0;i<ps.length;i++){ var x=padL+clampv(ps[i],0,1)*pxX; var y=midY-clampv(ds[i],-1,1)*(baseY-padT)/2; var col=ds[i]<=0.02?'#e0556b':'#52c08a';
+    s+='<circle cx="'+f1(x)+'" cy="'+f1(y)+'" r="3.5" fill="'+col+'" fill-opacity="0.7"/>'; }
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'discriminação × dificuldade')+'</text>';
+  s+='<text x="'+(padL+4)+'" y="'+(padT+10)+'" fill="#52c08a" font-size="9">discrimina ↑</text>';
+  s+='<text x="'+(padL+4)+'" y="'+(baseY-4)+'" fill="#e0556b" font-size="9">não separa</text>';
+  s+='<text x="'+(W-8)+'" y="'+(baseY+16)+'" fill="#9fb1c0" font-size="9" text-anchor="end">dificuldade p →</text>';
+  return svgEl(W,H,s); }
+/* duas barras de confiabilidade KR-20 (heterogênea × homogênea) */
+function kr20Mini(relHet,relHom,titulo){ var W=320,H=180,padB=34,baseY=H-padB,padT=24,s='';
+  var pxY=(baseY-padT);
+  function bar(x,val,lab,col){ var h=clampv(val,0,1)*pxY;
+    return '<rect x="'+x+'" y="'+f1(baseY-h)+'" width="64" height="'+f1(h)+'" fill="'+col+'" fill-opacity="0.6" stroke="'+col+'"/>'+
+    '<text x="'+(x+32)+'" y="'+(baseY+14)+'" fill="#9fb1c0" font-size="9" text-anchor="middle">'+lab+'</text>'+
+    '<text x="'+(x+32)+'" y="'+f1(baseY-h-4)+'" fill="#e7eef4" font-size="10" text-anchor="middle">'+fmt(val,2)+'</text>'; }
+  s+='<line x1="80" y1="'+padT+'" x2="80" y2="'+baseY+'" stroke="#3a4a58"/>';
+  s+='<line x1="80" y1="'+baseY+'" x2="'+(W-12)+'" y2="'+baseY+'" stroke="#3a4a58"/>';
+  s+=bar(110,relHet,'heterogênea','#52c08a'); s+=bar(210,relHom,'homogênea','#e0556b');
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'KR-20')+'</text>';
+  s+='<text x="76" y="'+(padT+2)+'" fill="#9fb1c0" font-size="9" text-anchor="end">1</text>';
+  s+='<text x="76" y="'+baseY+'" fill="#9fb1c0" font-size="9" text-anchor="end">0</text>';
+  return svgEl(W,H,s); }
+function imgFig(slug,alt){ return '<img src="assets/m39/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+/* ===== gerador de coorte semeado (Lab + demos) ===== */
+function mulberry32(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; var t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+/* monta gabarito demo de 100 itens (cíclico) e domínios balanceados */
+function demoGabarito(){ var g=[],i; for(i=0;i<100;i++) g.push(i%4); return g; }
+function demoDominios(){ var d=[],i; for(i=0;i<100;i++) d.push(DOMINIOS[Math.floor(i/10)%DOMINIOS.length]); return d; }
+/* respostas de um aluno com habilidade por domínio (lacuna num domínio) */
+function alunoRespostas(gab,doms,theta,lacuna,domFraco,rnd){ var r=[],i; for(i=0;i<gab.length;i++){ var th=theta; if(doms[i]===domFraco) th=clampv(theta*(1-lacuna),0,1); r.push(rnd()<th?gab[i]:((gab[i]+1+((rnd()*3)|0))%4)); } return r; }
+function montaCoorte(gab,doms,nJ,hetero,domFraco,lacuna,seed){ var rnd=mulberry32(seed),mat=[],j; for(j=0;j<nJ;j++){ var base=0.5+(hetero)*(rnd()-0.5)*1.4; var th=clampv(base,0.05,0.98); mat.push(alunoRespostas(gab,doms,th,lacuna,domFraco,rnd)); } return mat; }
+
+/* ===== LAB ===== */
+var GAB=demoGabarito(), DOMS=demoDominios();
+(function(){ var sel=$('in-domfraco'); for(var i=0;i<DOMINIOS.length;i++){ var o=document.createElement('option'); o.value=DOMINIOS[i]; o.textContent=DOMINIOS[i]; sel.appendChild(o); } sel.value='Eletrólitos/ácido-base'; })();
+function labState(){ return { theta:+$('in-theta').value, lacuna:+$('in-lacuna').value, coorte:Math.round(+$('in-coorte').value), hetero:+$('in-hetero').value, corte:+$('in-corte').value, domfraco:$('in-domfraco').value }; }
+function labBreakdown(st){ var rnd=mulberry32(0xA17); var resp=alunoRespostas(GAB,DOMS,st.theta,st.lacuna,st.domfraco,rnd); var db=domainBreakdown(resp,GAB,DOMS); db.corte=st.corte; db._resp=resp; return db; }
+function refresh(){ var st=labState();
+  $('lbl-theta').textContent=fmt(st.theta,2); $('lbl-lacuna').textContent=fmt(st.lacuna,1); $('lbl-coorte').textContent=String(st.coorte);
+  $('lbl-hetero').textContent=fmt(st.hetero,1); $('lbl-corte').textContent=fmt(st.corte,2);
+  var db=labBreakdown(st); var g=gradeExam(db._resp,GAB,st.corte);
+  var mat=montaCoorte(GAB,DOMS,st.coorte,st.hetero,st.domfraco,st.lacuna,0x5151); var ps=psychometrics(mat,GAB);
+  $('out-score').textContent=String(g.score); $('out-fracao').textContent=fmt(g.fracao,2)+' · '+fmt(g.percentual,0)+'%';
+  $('out-aprovado').textContent=g.aprovado?'SIM':'não'; $('out-fraco').textContent=db.pontoFraco||'—';
+  $('out-dif').textContent=fmt(ps.dificuldadeMedia,2); $('out-disc').textContent=fmt(ps.discriminacaoMedia,2); $('out-kr20').textContent=fmt(ps.kr20,2);
+  verdict(g,db,ps); drawProfile(db); pearl(g,db,ps); }
+function verdict(g,db,ps){ var v=$('veredito'),cls='b-good',msg;
+  if(!g.aprovado){ cls='b-bad'; msg='REPROVADO ('+fmt(g.percentual,0)+'% < corte '+fmt(db.corte*100,0)+'%). Ponto fraco: '+db.pontoFraco+'. O número é sombra — volte ao módulo desse domínio.'; }
+  else if(db.pontoFraco&&menorPct(db)<60){ cls='b-warn'; msg='Aprovado ('+fmt(g.percentual,0)+'%), MAS com lacuna em '+db.pontoFraco+' ('+fmt(menorPct(db),0)+'%). Passar não basta: reforce o domínio fraco.'; }
+  else { cls='b-good'; msg='Aprovado ('+fmt(g.percentual,0)+'%) com perfil firme. KR-20 da coorte: '+fmt(ps.kr20,2)+' (confiabilidade da prova nesta turma).'; }
+  v.className='banner '+cls; v.textContent=msg; }
+function menorPct(db){ var m=101,i; for(i=0;i<db.linhas.length;i++) if(db.linhas[i].percentual<m) m=db.linhas[i].percentual; return m===101?0:m; }
+function pearl(g,db,ps){ var p=$('lab-pearl'),ip=$('instr-pearl'),t;
+  if(ps.kr20<0.4) t='PÉROLA (confiabilidade): KR-20 '+fmt(ps.kr20,2)+' baixo — a coorte é homogênea demais (pouca variância de escore), não a prova que é ruim. A confiabilidade depende da turma.';
+  else if(db.pontoFraco&&menorPct(db)<50) t='PÉROLA (o número é sombra): nota '+fmt(g.percentual,0)+'%, mas o perfil mostra '+fmt(menorPct(db),0)+'% em '+db.pontoFraco+'. O escore total esconde a lacuna — o perfil por domínio a revela.';
+  else if(ps.dificuldadeMedia>0.9) t='PÉROLA (item fácil não discrimina): dificuldade média '+fmt(ps.dificuldadeMedia,2)+' (quase todos acertam). Itens p≈1 quase não separam fortes de fracos — discriminação tende a 0.';
+  else t='Nota '+fmt(g.percentual,0)+'%, ponto fraco '+db.pontoFraco+'. Dificuldade média p='+fmt(ps.dificuldadeMedia,2)+', discriminação '+fmt(ps.discriminacaoMedia,2)+', KR-20 '+fmt(ps.kr20,2)+'.';
+  p.textContent=t; ip.textContent=t; }
+function drawProfile(db){ var c=$('score-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
+  var L=scoreProfileLayout(db,c.width,c.height); ctx.clearRect(0,0,L.W,L.H);
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('% acertos',8,L.padT+2); ctx.fillText('domínios →',L.W-110,L.baseY+30);
+  for(var i=0;i<L.bars.length;i++){ var bb=L.bars[i]; var col=bb.pct<L.corte*100?'#e0556b':(bb.pct<75?'#e8a13a':'#39c0c8');
+    ctx.fillStyle=col; ctx.globalAlpha=0.6; ctx.fillRect(bb.x,bb.y,bb.w,bb.h); ctx.globalAlpha=1; ctx.strokeStyle=col; ctx.strokeRect(bb.x,bb.y,bb.w,bb.h);
+    ctx.fillStyle='#9fb1c0'; ctx.fillText(String(i+1),bb.cx-3,L.baseY+14); }
+  /* polilinha do perfil (== scoreProfileLayout.pts) */
+  ctx.strokeStyle='#39c0c8'; ctx.lineWidth=2; ctx.beginPath();
+  for(i=0;i<L.pts.length;i++){ var p=L.pts[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); } ctx.stroke();
+  /* linha do corte */
+  ctx.strokeStyle='#e7eef4'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(L.cortePts[0].x,L.corteY); ctx.lineTo(L.cortePts[1].x,L.corteY); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#e7eef4'; ctx.fillText('corte '+fmt(L.corte*100,0)+'%',L.padL+4,Math.max(L.corteY-4,L.padT+10)); }
+['in-theta','in-lacuna','in-coorte','in-hetero','in-corte'].forEach(function(id){ $(id).addEventListener('input',refresh); });
+$('in-domfraco').addEventListener('change',refresh);
+
+var PRESETS={
+  forte:{theta:0.92,lacuna:0,coorte:60,hetero:0.6,corte:0.6,domfraco:'Eletrólitos/ácido-base'},
+  lacuna_eletro:{theta:0.85,lacuna:0.8,coorte:60,hetero:0.6,corte:0.6,domfraco:'Eletrólitos/ácido-base'},
+  lacuna_dialise:{theta:0.85,lacuna:0.85,coorte:60,hetero:0.6,corte:0.6,domfraco:'TRRC/contínuas'},
+  limitrofe:{theta:0.62,lacuna:0.25,coorte:60,hetero:0.6,corte:0.6,domfraco:'LRA'},
+  homogenea:{theta:0.9,lacuna:0,coorte:80,hetero:0.05,corte:0.6,domfraco:'HDI'}
+};
+function applyPreset(p){ var d=PRESETS[p]; if(!d) return;
+  $('in-theta').value=d.theta; $('in-lacuna').value=d.lacuna; $('in-coorte').value=d.coorte; $('in-hetero').value=d.hetero; $('in-corte').value=d.corte; $('in-domfraco').value=d.domfraco; refresh(); }
+document.querySelector('.presets').addEventListener('click',function(e){ var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset')); });
+
+/* ===== TUTOR (dois blocos ilustrado/textual) ===== */
+function demoDbForFig(theta,lacuna,domf){ var rnd=mulberry32(0xF1); var r=alunoRespostas(GAB,DOMS,theta,lacuna,domf,rnd); var db=domainBreakdown(r,GAB,DOMS); db.corte=0.6; return db; }
+function demoPsy(theta,hetero,lacuna,domf){ var mat=montaCoorte(GAB,DOMS,60,hetero,domf,lacuna,0x77); return psychometrics(mat,GAB); }
+var TUTOR_ILUSTRADO=[
+  {q:'No perfil por domínio, a barra vermelha abaixo do corte indica…',o:['o domínio mais forte','o ponto fraco a reforçar','um erro de cálculo'],c:1,e:'Barra abaixo do corte = domínio com menor % de acertos: o ponto onde a recapitulação rende mais.',fig:function(){return profileMini(demoDbForFig(0.85,0.8,'Eletrólitos/ácido-base'),'perfil — lacuna em eletrólitos');}},
+  {q:'Dois alunos, mesma nota total. O que decide quem está em risco?',o:['o número total','o perfil por domínio','a ordem alfabética'],c:1,e:'O escore total é uma sombra; o perfil mostra ONDE a lacuna está.',fig:function(){return profileMini(demoDbForFig(0.8,0.6,'TRRC/contínuas'),'mesma nota, perfis diferentes');}},
+  {q:'Dificuldade p≈1 (quase todos acertam). Esse item…',o:['discrimina muito bem','quase não separa fortes de fracos','é o melhor da prova'],c:1,e:'Item trivial (p≈1) tem discriminação ≈0: não separa ninguém.',fig:function(){return difMini([1,0.98,0.95,0.9,0.99,1,0.97],'itens fáceis demais');}},
+  {q:'Na nuvem discriminação × dificuldade, pontos vermelhos no eixo central são…',o:['itens excelentes','itens que não discriminam (rever)','itens difíceis'],c:1,e:'Discriminação ≈0 (na linha central) = item que não separa — candidato a revisão.',fig:function(){var pp=demoPsy(0.6,0.6,0,'LRA'); return discMini(pp.p,pp.d,'discriminação × dificuldade');}},
+  {q:'Coorte homogênea (todos craques). O KR-20 tende a…',o:['subir muito','cair (pouca variância de escore)','ficar em 1'],c:1,e:'Confiabilidade depende da variância de escore; coorte homogênea → KR-20 baixo.',fig:function(){var pp=demoPsy(0.9,0.05,0,'HDI'); return difMini(pp.p,'coorte homogênea: p alto, var baixa');}},
+  {q:'No mapa do braço, o domínio "Indicação/integração" cobra…',o:['só anatomia do néfron','as pontes (cardiorrenal, volume × Choca)','apenas diálise'],c:1,e:'É a fronteira do braço: integra rim, coração e volume — o sistema, não só o néfron.',fig:function(){return imgFig('hexapode-mapa.svg','mapa do hexápode');}},
+  {q:'A barra mais baixa do perfil de um aluno é "Túbulo/diuréticos". A conduta de estudo?',o:['ignorar — passou','revisar o segmento e a chave diurética','refazer eletrólitos'],c:1,e:'O ponto fraco guia a revisão: volte ao segmento e à curva dose-resposta do diurético.',fig:function(){return profileMini(demoDbForFig(0.85,0.7,'Túbulo/diuréticos'),'fraco em túbulo/diuréticos');}},
+  {q:'No resumo do néfron, o TCP reabsorve ~65% do Na⁺. Isso importa porque…',o:['a alça é independente','a alça é prisioneira do que sai no proximal','o ducto faz tudo'],c:1,e:'O proximal define a carga que chega à alça — base do raciocínio de diurético sequencial.',fig:function(){return imgFig('nefron-resumo.png','néfron em resumo');}},
+  {q:'No resumo de diálise, retirar VOLUME é função de…',o:['difusão','ultrafiltração (TMP)','adsorção'],c:1,e:'Volume sai por ultrafiltração (pressão transmembrana); soluto por difusão/convecção.',fig:function(){return imgFig('dialise-resumo.svg','diálise em resumo');}},
+  {q:'Aluno com nota 72% e perfil afundando só em ácido-base. O motor reporta pontoFraco =',o:['o domínio mais alto','Eletrólitos/ácido-base','nenhum'],c:1,e:'domainBreakdown aponta o domínio de menor %: a lacuna que o total esconde.',fig:function(){return profileMini(demoDbForFig(0.82,0.75,'Eletrólitos/ácido-base'),'pontoFraco = ácido-base');}},
+  {q:'No resumo de farmacologia renal, a creatinina que sobe ao iniciar IECA pode ser…',o:['sempre lesão','o efeito hemodinâmico esperado (eferente)','erro de exame'],c:1,e:'IECA/BRA relaxam o eferente → TFG cai um pouco; a creatinina subir pode ser o efeito esperado.',fig:function(){return imgFig('farmacologia-renal-resumo.svg','farmacologia renal');}},
+  {q:'O perfil ideal de um aluno aprovado com segurança é…',o:['alto em um domínio só','firme em todos os domínios acima do corte','baixo, mas com nota alta'],c:1,e:'Homeostasia do raciocínio: cada domínio firme defende o meio interno do paciente em qualquer eixo.',fig:function(){return profileMini(demoDbForFig(0.92,0,'LRA'),'perfil firme (aprovado seguro)');}}
+];
+var TUTOR_TEXTUAL=[
+  {q:'O escore total de um exame de domínio é, sobretudo…',o:['a medida definitiva do saber','uma sombra; o perfil por domínio ensina mais','irrelevante'],c:1,e:'O total agrega; o perfil mostra ONDE está a lacuna.'},
+  {q:'A fração de acertos é definida como…',o:['acertos × itens','acertos / nº de itens','itens / acertos'],c:1,e:'Fração = acertos/itens ∈ [0,1]; o corte separa aprovado de reprovado.'},
+  {q:'Respostas faltando (menos que o gabarito) contam como…',o:['acerto','erro','anuladas'],c:1,e:'O motor trata ausência como erro; respostas excedentes são ignoradas.'},
+  {q:'Dificuldade p de um item é…',o:['fração que erra','fração que acerta (p alto = fácil)','o tempo de resposta'],c:1,e:'p = fração que acerta; paradoxo do nome: p alto = item fácil.'},
+  {q:'A discriminação ponto-bisserial mede se…',o:['o item é longo','quem acerta tende a ter escore total alto','a prova é grande'],c:1,e:'Itens que separam fortes de fracos têm discriminação positiva.'},
+  {q:'Um item que TODOS acertam tem discriminação…',o:['máxima','≈0 (não separa ninguém)','negativa sempre'],c:1,e:'Sem variação de acerto, o item não distingue examinandos.'},
+  {q:'O KR-20 mede…',o:['a dificuldade média','a confiabilidade (consistência interna)','o tempo da prova'],c:1,e:'KR-20 ∈ [0,1] resume a consistência interna de itens dicotômicos.'},
+  {q:'O KR-20 cai numa coorte homogênea porque…',o:['os itens pioram','a variância de escore tende a 0','o corte muda'],c:1,e:'Confiabilidade depende da variância de escore — não da qualidade do item.'},
+  {q:'O domínio "Indicação/integração" inclui…',o:['só clearance','pontes como cardiorrenal e volume (Choca)','apenas TRRC'],c:1,e:'É a fronteira do braço: integra rim, coração e volume.'},
+  {q:'Para guiar a revisão, o melhor é olhar…',o:['a nota total','o pontoFraco do perfil por domínio','o nome do aluno'],c:1,e:'domainBreakdown aponta o domínio de menor % — onde reforçar.'},
+  {q:'Em diálise, remover SOLUTO usa…',o:['só ultrafiltração','difusão e convecção','só adsorção'],c:1,e:'Soluto sai por difusão (gradiente) e convecção (arraste); volume por UF.'},
+  {q:'Em síntese, um bom desempenho de domínio é…',o:['nota alta com uma lacuna grande','perfil firme em todos os blocos','acertar só os fáceis'],c:1,e:'Homeostasia do raciocínio: cada domínio acima do corte.'}
+];
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL; window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+var BANKS={ilustrada:TUTOR_ILUSTRADO,textual:TUTOR_TEXTUAL}, curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+function renderTutor(){ var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():''; $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false; $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){ if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button'); btns[item.c].classList.add('ok'); if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block'; fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e; $('tutor-score').textContent=tScore; $('tutor-total').textContent=tTotal; });
+    box.appendChild(b); }); }
+$('banktabs').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor(); });
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+/* ===== EXAME 100 (o coração do M39) ===== */
+var EXAM=buildExam();
+window.EXAM=EXAM;
+var exGab=EXAM.map(function(q){ return q.c; });
+var exDoms=EXAM.map(function(q){ return q.dominio; });
+var exResp=EXAM.map(function(){ return -1; }); // −1 = não respondida
+var exIdx=0;
+function exGrade(){ return gradeExam(exResp,exGab,0.6); }
+function exBreakdown(){ var db=domainBreakdown(exResp.map(function(v){ return v; }),exGab,exDoms); db.corte=0.6; return db; }
+function renderExam(){ var q=EXAM[exIdx];
+  $('exam-q').textContent=(exIdx+1)+'/'+EXAM.length+'. '+q.q;
+  $('exam-dom').textContent=q.dominio;
+  var box=$('exam-opts'); box.innerHTML='';
+  q.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    if(exResp[exIdx]!==-1){ if(i===q.c) b.classList.add('ok'); else if(i===exResp[exIdx]) b.classList.add('no'); }
+    b.addEventListener('click',function(){ if(exResp[exIdx]!==-1) return; exResp[exIdx]=i;
+      var btns=box.querySelectorAll('button'); btns[q.c].classList.add('ok'); if(i!==q.c) b.classList.add('no');
+      var fb=$('exam-fb'); fb.style.display='block'; fb.className='banner '+(i===q.c?'b-good':'b-bad'); fb.textContent=(i===q.c?'Correto. ':'Não. ')+q.e;
+      updateExamHUD(); refresh(); });
+    box.appendChild(b); });
+  var fb=$('exam-fb'); if(exResp[exIdx]!==-1){ fb.style.display='block'; fb.className='banner '+(exResp[exIdx]===q.c?'b-good':'b-bad'); fb.textContent=(exResp[exIdx]===q.c?'Correto. ':'Não. ')+q.e; } else { fb.style.display='none'; } }
+function updateExamHUD(){ var g=exGrade(); var done=0,i; for(i=0;i<exResp.length;i++) if(exResp[i]!==-1) done++;
+  $('exam-score').textContent=String(g.score); $('exam-done').textContent=String(done); $('exam-total').textContent=String(EXAM.length);
+  $('exam-bar').style.width=(100*done/EXAM.length)+'%'; }
+$('exam-next').addEventListener('click',function(){ exIdx=(exIdx+1)%EXAM.length; renderExam(); });
+$('exam-prev').addEventListener('click',function(){ exIdx=(exIdx-1+EXAM.length)%EXAM.length; renderExam(); });
+$('exam-reset').addEventListener('click',function(){ exResp=EXAM.map(function(){ return -1; }); exIdx=0; renderExam(); updateExamHUD(); refresh(); });
+
+/* ===== desenhos do Conceito ===== */
+$('draw-mapa').innerHTML = profileMini(demoDbForFig(0.86,0.6,'TRRC/contínuas'),'perfil por domínio (exemplo)');
+$('draw-corte').innerHTML = profileMini(demoDbForFig(0.6,0.3,'LRA'),'nota × corte por domínio');
+(function(){ var pp=demoPsy(0.6,0.6,0,'HDI'); $('draw-dif').innerHTML = difMini(pp.p.slice(0,12),'dificuldade p por item'); $('draw-disc').innerHTML = discMini(pp.p,pp.d,'discriminação × dificuldade');
+  var relHet=kr20(montaCoorte(GAB,DOMS,60,0.7,'HDI',0,0xA1),GAB), relHom=kr20(montaCoorte(GAB,DOMS,60,0.05,'HDI',0,0xA2),GAB);
+  $('draw-kr20').innerHTML = kr20Mini(relHet,relHom,'KR-20: heterogênea × homogênea'); })();
+$('fig-caso').innerHTML = profileMini(demoDbForFig(0.85,0.8,'TRRC/contínuas'),'boletim: lacuna escondida pelo total');
+
+refresh(); renderTutor(); renderExam(); updateExamHUD();
+
+/* ===== BANCO DE 100 QUESTÕES (10 por domínio) ===== */
+function buildExam(){
+  var D=DOMINIOS, E=[];
+  function add(dom,q,o,c,e){ E.push({dominio:dom,q:q,o:o,c:c,e:e}); }
+  /* 0 · Compartimentos / meio interno */
+  add(D[0],'A água corporal total (TBW) divide-se aproximadamente em…',['toda no plasma','2/3 intracelular, 1/3 extracelular','metade no terceiro espaço'],1,'ICF ≈ 2/3 da TBW; ECF ≈ 1/3, e o plasma ≈ 1/4 do ECF.');
+  add(D[0],'A tonicidade é governada por…',['todos os osmoles, inclusive ureia','os osmoles EFETIVOS (que não cruzam a membrana)','só o sódio total'],1,'Tonicidade = osmoles efetivos/TBW; a ureia é osmol inefetivo, entra na osmolalidade medida, não na tonicidade.');
+  add(D[0],'O SF 0,9% é iso-osmolar, mas em grande volume causa…',['alcalose','acidose hiperclorêmica','hipernatremia grave'],1,'Cl⁻ 154 (plasma ~100) → acidose hiperclorêmica; iso-osmolar ≠ homeostático.');
+  add(D[0],'Infundir SG5% equivale, em destino, a oferecer…',['volume plasmático puro','água livre (glicose é metabolizada)','sódio'],1,'A glicose é consumida; sobra água livre, distribuída por toda a TBW.');
+  add(D[0],'Na⁺ plasmático ≈ 120 com glicemia muito alta: a hiponatremia é…',['verdadeira hipotônica','translocacional (pseudo), corrige-se o cálculo','erro de laboratório'],1,'A glicose puxa água do ICF → dilui o Na⁺; é tonicidade efetiva preservada/alta.');
+  add(D[0],'O compartimento que melhor reflete o "volume circulante efetivo" é…',['a água intracelular','o volume arterial efetivo (perfusão)','a urina'],1,'O rim defende a perfusão (volume arterial efetivo), não a água total.');
+  add(D[0],'Perder água pura (p.ex. febre, DI) move o Na⁺ para…',['baixo','alto (hipernatremia)','inalterado'],1,'Menos água com mesmo soluto → tonicidade e Na⁺ sobem.');
+  add(D[0],'Coloide difere de cristaloide porque tende a…',['sair todo para o ICF','permanecer mais no intravascular (oncótica)','virar água livre'],1,'A pressão oncótica retém o coloide no plasma por mais tempo.');
+  add(D[0],'O balanço hídrico compara…',['só a diurese','ingesta vs perdas (insensíveis, renais, GI)','peso × altura'],1,'Homeostasia de volume = entradas menos todas as perdas.');
+  add(D[0],'A "banana no mar" (célula em meio hipotônico) tende a…',['murchar','inchar (entra água)','não mudar'],1,'Meio hipotônico → água entra na célula → edema celular.');
+  /* 1 · Glomérulo / clearance */
+  add(D[1],'A TFG é o produto Kf × (P_GC − P_BC − π_GC). Oligúria pré-renal nasce de…',['Kf lesado','P_GC baixa (hipoperfusão)','P_BC alta'],1,'Pré-renal = pressão do capilar glomerular cai; túbulo íntegro.');
+  add(D[1],'Obstrução (pós-renal) eleva qual termo, derrubando a TFG?',['π_GC','P_BC (pressão na cápsula de Bowman)','Kf'],1,'A obstrução aumenta a pressão a jusante (cápsula), opondo-se à filtração.');
+  add(D[1],'A fração de filtração (FF) é…',['TFG / FPR','FPR / TFG','TFG × FPR'],0,'FF = TFG/FPR; sobe quando o eferente contrai (ex.: AngII).');
+  add(D[1],'A creatinina "mente" como marcador de TFG porque…',['some na urina','tem cinética lenta e depende de massa muscular','não é filtrada'],1,'Subida tardia, secreção tubular e dependência muscular distorcem a leitura.');
+  add(D[1],'O clearance de uma substância x é C_x =',['U_x·V̇ / P_x','P_x / U_x','U_x + P_x'],0,'C_x = (U_x·fluxo urinário)/P_x; a inulina é o padrão-ouro.');
+  add(D[1],'A barreira de filtração impede proteínas por…',['só tamanho','carga E tamanho','só carga'],1,'A barreira é seletiva por carga (negativa) e por tamanho (fenda).');
+  add(D[1],'Proteinúria glomerular maciça (nefrótica) sugere lesão de…',['túbulo proximal','barreira/podócito','ducto coletor'],1,'Dano ao podócito/barreira deixa passar albumina em grande quantidade.');
+  add(D[1],'Kf depende de…',['permeabilidade × área de filtração','só pressão','só fluxo'],0,'Kf = coeficiente de permeabilidade × área; cai em lesões que reduzem superfície.');
+  add(D[1],'A autorregulação mantém a TFG estável via…',['miogênica + feedback tubuloglomerular','só pressão arterial','ADH'],0,'O tônus aferente miogênico e o feedback da mácula densa estabilizam a TFG.');
+  add(D[1],'Abaixo do limite de autorregulação (PAM muito baixa), a TFG…',['mantém-se','cai abruptamente (precipício)','sobe'],1,'Ultrapassado o piso autorregulatório, a TFG despenca.');
+  /* 2 · Túbulo / diuréticos */
+  add(D[2],'O segmento que reabsorve ~65% do Na⁺ filtrado é…',['o ducto coletor','o túbulo proximal','o TCD'],1,'O TCP reabsorve a maior fração; a alça é "prisioneira" do que sai daí.');
+  add(D[2],'O diurético de alça age sobre…',['NCC no TCD','NKCC2 no ramo espesso','ENaC no coletor'],1,'Furosemida/bumetanida bloqueiam o NKCC2 — os mais potentes (teto alto).');
+  add(D[2],'O tiazídico bloqueia…',['NKCC2','NCC no túbulo distal','anidrase carbônica'],1,'Tiazídico inibe o NCC; paradoxalmente retém Ca²⁺.');
+  add(D[2],'A acetazolamida inibe a anidrase carbônica, causando…',['alcalose','bicarbonatúria e acidose metabólica','hipercalemia'],1,'Perde-se HCO₃⁻ na urina → acidose metabólica hiperclorêmica.');
+  add(D[2],'Os SGLT2i agem no proximal promovendo…',['retenção de glicose','glicosúria (e natriurese leve)','alcalose'],1,'Bloqueiam o SGLT2 → glicose e Na⁺ saem; efeito cardiorrenal.');
+  add(D[2],'O fenômeno de "braking" (frenagem) desloca a curva dose-resposta…',['para a esquerda','para a direita (resistência)','não muda'],1,'A retenção compensatória de Na⁺ exige doses maiores — curva à direita.');
+  add(D[2],'O bloqueio sequencial do néfron combina…',['dois diuréticos de alça','alça + tiazídico (segmentos diferentes)','dois tiazídicos'],1,'Bloquear segmentos distintos (alça + distal) vence a resistência por sinergia.');
+  add(D[2],'O poupador de K⁺ espironolactona antagoniza…',['o NKCC2','o receptor de aldosterona (ENaC indireto)','o NCC'],1,'Antagonista mineralocorticoide → menos ENaC → poupa K⁺.');
+  add(D[2],'O manitol é um diurético…',['de alça','osmótico (puxa água no proximal/alça)','tiazídico'],1,'Osmótico não-reabsorvido retém água no lúmen.');
+  add(D[2],'O diurético de alça tem "teto" alto porque…',['age num segmento de baixa capacidade','bloqueia o segmento de maior reabsorção pós-proximal','não tem teto'],1,'O ramo espesso reabsorve muito Na⁺ → bloqueá-lo gera grande natriurese.');
+  /* 3 · Eletrólitos / ácido-base */
+  add(D[3],'O K⁺ que "mata" age sobretudo pelo…',['estoque corporal total','gradiente transcelular (ECG)','peso'],1,'É o gradiente (não o estoque) que altera o potencial de membrana e o ECG.');
+  add(D[3],'Insulina, β-agonista e alcalose deslocam o K⁺…',['para fora da célula','para dentro da célula (shift)','para a urina só'],1,'Esses fatores empurram K⁺ para o ICF — útil na hipercalemia aguda.');
+  add(D[3],'O ânion gap é calculado por…',['Na⁺ − (Cl⁻ + HCO₃⁻)','Cl⁻ − Na⁺','Na⁺ + K⁺'],0,'AG = Na⁺ − (Cl⁻ + HCO₃⁻); alto sugere ácidos não medidos.');
+  add(D[3],'Na acidose metabólica, a compensação respiratória esperada (Winter) é…',['PaCO₂ sobe','PaCO₂ cai (hiperventilação)','PaCO₂ não muda'],1,'O pulmão baixa a PaCO₂ para compensar a queda do HCO₃⁻.');
+  add(D[3],'O delta-delta avalia…',['só o pH','distúrbios mistos (ΔAG vs ΔHCO₃)','a calemia'],1,'Compara a variação do AG com a do HCO₃⁻ para achar distúrbios sobrepostos.');
+  add(D[3],'A acidose tubular renal tipo 1 (distal) caracteriza-se por…',['incapacidade de acidificar a urina distal','perda proximal de HCO₃','hipercalemia sempre'],0,'Defeito na secreção distal de H⁺ → urina inapropriadamente alcalina.');
+  add(D[3],'O cálcio sérico total deve ser corrigido pela…',['glicemia','albumina (e ver o ionizado)','ureia'],1,'Hipoalbuminemia baixa o total sem mudar o ionizado — corrigir.');
+  add(D[3],'O triângulo do eixo ósseo-mineral envolve…',['Na-K-Cl','Ca-PO₄-PTH','glicose-insulina'],1,'PTH, vitamina D e FGF23 regulam Ca²⁺ e fosfato.');
+  add(D[3],'O rim regenera HCO₃⁻ principalmente via…',['amoniogênese (NH₄⁺) e acidez titulável','reabsorção de Cl⁻','secreção de K⁺'],0,'Excretar H⁺ como NH₄⁺/acidez titulável gera bicarbonato novo.');
+  add(D[3],'O Mg²⁺ baixo dificulta corrigir…',['o sódio','a hipocalemia/hipocalcemia refratárias','o pH'],1,'A hipomagnesemia perpetua perda de K⁺ e disfunção de PTH.');
+  /* 4 · RAAS / endócrino */
+  add(D[4],'A renina é liberada em resposta a…',['Na⁺ alto','queda de pressão/Na⁺ na mácula densa','alcalose'],1,'O aparelho justaglomerular sente pressão e sódio e libera renina.');
+  add(D[4],'A angiotensina II contrai preferencialmente a arteríola…',['aferente','eferente (preserva TFG)','nenhuma'],1,'A constrição eferente mantém a P_GC e a TFG na hipoperfusão.');
+  add(D[4],'A aldosterona, na célula principal, promove…',['perda de Na⁺','reabsorção de Na⁺ e secreção de K⁺/H⁺','retenção de K⁺'],1,'Via ENaC: retém Na⁺, troca por K⁺/H⁺.');
+  add(D[4],'O ADH (vasopressina) age abrindo…',['NKCC2','aquaporinas-2 no ducto coletor','NCC'],1,'O ADH insere AQP2 → reabsorção de água livre.');
+  add(D[4],'O rim como glândula produz, entre outros…',['insulina','eritropoetina e calcitriol','glucagon'],1,'EPO (anemia) e ativação da vitamina D são funções endócrinas renais.');
+  add(D[4],'Iniciar IECA e ver a creatinina subir um pouco pode significar…',['lesão sempre','o efeito hemodinâmico esperado (eferente relaxa)','erro'],1,'A queda leve da TFG pelo relaxamento eferente costuma ser esperada/aceitável.');
+  add(D[4],'Os ARM (espironolactona/eplerenona) tendem a causar…',['hipocalemia','hipercalemia','alcalose'],1,'Antagonizar aldosterona retém K⁺ — risco de hipercalemia.');
+  add(D[4],'O sacubitril (com valsartana) inibe a neprilisina, aumentando…',['angiotensina','peptídeos natriuréticos','aldosterona'],1,'Menos degradação de BNP/ANP → mais natriurese/vasodilatação.');
+  add(D[4],'Na hipoperfusão, o eixo RAAS + SNS visa…',['perder volume','reter Na⁺/água e sustentar a perfusão','baixar a PA'],1,'A resposta neuro-hormonal defende o volume circulante efetivo.');
+  add(D[4],'A inibição dupla aferente (AINE) + eferente (IECA) no rim hipoperfundido…',['protege a TFG','ameaça a TFG (perde os dois ajustes)','não afeta'],1,'Sem aferente nem eferente para compensar, a TFG cai perigosamente.');
+  /* 5 · LRA */
+  add(D[5],'A LRA, por mecanismo, divide-se em…',['só pré-renal','pré-renal, intrínseca, pós-renal','só intrínseca'],1,'A mesma creatinina alta tem três mecanismos — decompor antes de interpretar.');
+  add(D[5],'A FE_Na baixa (<1%) sugere tipicamente…',['NTA','pré-renal (rim ávido por Na⁺)','obstrução'],1,'Na hipoperfusão o túbulo retém Na⁺ avidamente → FE_Na baixa.');
+  add(D[5],'Cilindros granulosos "marrom-lama" na urina sugerem…',['pré-renal','necrose tubular aguda','glomerulonefrite'],1,'São marca da NTA (lesão tubular intrínseca).');
+  add(D[5],'O estadiamento KDIGO baseia-se em…',['só ureia','creatinina e débito urinário','só FE_Na'],1,'KDIGO usa variação de creatinina e diurese para estadiar.');
+  add(D[5],'A síndrome cardiorrenal liga…',['rim e fígado','coração e rim (falência mútua)','pulmão e rim'],1,'Disfunção cardíaca e renal se retroalimentam (congestão venosa, baixo DC).');
+  add(D[5],'A síndrome hepatorrenal é, em essência…',['obstrução','vasoconstrição renal por vasodilatação esplâncnica','glomerulonefrite'],1,'A vasodilatação esplâncnica reduz o volume efetivo → vasoconstrição renal funcional.');
+  add(D[5],'A nefrite intersticial aguda (NIA) costuma associar-se a…',['fármacos/alergia (eosinofilúria)','desidratação','pedra'],0,'Reação a drogas com infiltrado intersticial; piúria estéril/eosinófilos.');
+  add(D[5],'Diurético em uso pode invalidar a FE_Na; usa-se então…',['FE_ureia','FE_glicose','FE_K'],0,'A FE_ureia é menos afetada pelo diurético para inferir pré-renal.');
+  add(D[5],'A oligúria pós-renal por obstrução exige…',['só hidratar','desobstruir (alívio mecânico)','diurético'],1,'Remover a obstrução restaura a filtração; o mecanismo é mecânico.');
+  add(D[5],'A medula renal é vulnerável à isquemia porque…',['recebe muito O₂','vive à beira da hipóxia (alta demanda, baixo fluxo)','não tem túbulos'],1,'O ramo espesso medular consome muito O₂ num leito pouco oxigenado.');
+  /* 6 · Princípios de diálise */
+  add(D[6],'A remoção de SOLUTO na diálise ocorre por…',['só ultrafiltração','difusão (gradiente) + convecção (arraste)','só adsorção'],1,'Difusão pelo gradiente e convecção pelo arraste do solvente removem soluto.');
+  add(D[6],'A remoção de VOLUME ocorre por…',['difusão','ultrafiltração (gradiente de pressão, TMP)','adsorção'],1,'A UF retira água por pressão transmembrana (TMP).');
+  add(D[6],'A convecção remove melhor moléculas…',['só pequenas','médias (arraste pelo solvente)','nenhuma'],1,'O arraste convectivo alcança solutos de peso médio.');
+  add(D[6],'A adsorção remove soluto por…',['gradiente','ligação à membrana/superfície','pressão'],1,'Certas toxinas aderem ao material da membrana (ex.: algumas citocinas).');
+  add(D[6],'A difusão é tanto maior quanto…',['menor o gradiente','maior o gradiente de concentração','maior o peso molecular'],1,'O fluxo difusivo cresce com o gradiente e cai com o tamanho do soluto.');
+  add(D[6],'O KoA da membrana descreve…',['a pressão','a eficiência de transferência de massa do dialisador','o fluxo de sangue'],1,'KoA = capacidade do dialisador de depurar um soluto (clearance máximo).');
+  add(D[6],'O coeficiente de sieving próximo de 1 indica…',['o soluto não passa','o soluto passa livremente por convecção','adsorção total'],1,'Sieving 1 = a membrana deixa o soluto acompanhar o ultrafiltrado.');
+  add(D[6],'Membrana high-flux difere da low-flux por…',['poros menores','poros maiores (remove moléculas médias)','não filtrar água'],1,'High-flux tem permeabilidade maior; depura solutos de peso médio.');
+  add(D[6],'A diálise, em essência, substitui…',['o rim por completo','algumas FUNÇÕES por física (difusão/convecção/UF)','o endócrino'],1,'Substitui funções de depuração/volume; não repõe EPO, vitamina D etc.');
+  add(D[6],'A backfiltration ocorre quando…',['o sangue entra no dialisato','o dialisato cruza para o sangue (pressão local)','não há fluxo'],1,'Em high-flux, parte do dialisato pode retornar — exige água ultrapura.');
+  /* 7 · HDI */
+  add(D[7],'A hemodiálise intermitente (HDI) caracteriza-se por…',['baixa eficiência contínua','alta eficiência em poucas horas','sem anticoagulação'],1,'Gradientes altos em sessão curta — eficiente, porém com custo hemodinâmico.');
+  add(D[7],'A hipotensão intradialítica clássica decorre de…',['UF maior que o refilling plasmático','excesso de volume','febre'],0,'Retirar volume mais rápido que o refilling capilar derruba a pressão.');
+  add(D[7],'O "peso seco" é…',['o peso sem roupa','o peso sem excesso de volume (euvolemia)','o peso ideal por IMC'],1,'É o alvo de volume ao fim da sessão, sem sobrecarga nem hipovolemia.');
+  add(D[7],'A adequação da HDI é medida por…',['só pela diurese','Kt/V e URR','peso × altura'],1,'Kt/V e a taxa de redução de ureia (URR) quantificam a dose entregue.');
+  add(D[7],'O rebote de ureia pós-diálise reflete…',['erro de coleta','reequilíbrio entre compartimentos (duplo pool)','infecção'],1,'A ureia volta dos tecidos ao sangue após a sessão — cinética de duplo compartimento.');
+  add(D[7],'O stunning miocárdico na HDI relaciona-se a…',['UF agressiva e hipoperfusão','hipervolemia','hipertensão'],0,'Episódios de baixa perfusão durante a UF agridem o miocárdio.');
+  add(D[7],'Aumentar a dose de HDI sem teto é limitado por…',['nada','rebote/duplo pool e tolerância hemodinâmica','peso seco'],1,'Acima de certo ponto, o reequilíbrio e a tolerância limitam o ganho.');
+  add(D[7],'O "custo" do termo intermitente é…',['nenhum','gradientes bruscos e instabilidade entre sessões','baixa eficiência'],1,'A intermitência concentra a depuração, gerando oscilações.');
+  add(D[7],'Para remoção RÁPIDA (hipercalemia grave estável) prefere-se…',['DP','HDI (alta eficiência)','observação'],1,'A HDI remove K⁺ rapidamente quando o paciente tolera.');
+  add(D[7],'A 1ª sessão de um paciente muito urêmico deve ser…',['máxima','gentil (evitar desequilíbrio dialítico)','sem UF'],1,'Reduzir o gradiente evita edema cerebral por osmose reversa (M34).');
+  /* 8 · TRRC / contínuas */
+  add(D[8],'A TRRC (CRRT) é preferida no paciente…',['estável ambulatorial','hemodinamicamente instável','sem LRA'],1,'A remoção lenta e contínua tolera melhor a instabilidade.');
+  add(D[8],'A CVVH remove soluto sobretudo por…',['difusão','convecção','adsorção'],1,'CVVH = convecção (arraste); CVVHD = difusão; CVVHDF combina.');
+  add(D[8],'A dose da TRRC é prescrita em…',['mg/dia','efluente mL/kg/h','mEq'],1,'O alvo usual de efluente é ~20–25 mL/kg/h.');
+  add(D[8],'A pré-diluição (reposição antes do filtro) tende a…',['aumentar coágulo','reduzir a coagulação do filtro, diluindo a depuração','não ter efeito'],1,'Diluir o sangue antes do filtro protege o circuito, mas reduz um pouco o clearance.');
+  add(D[8],'A anticoagulação regional com citrato age por…',['heparinizar o paciente','quelar o Ca²⁺ no circuito','aquecer o sangue'],1,'O citrato remove Ca²⁺ ionizado só no circuito — repõe-se Ca²⁺ ao paciente.');
+  add(D[8],'A vantagem do citrato sobre a heparina sistêmica é…',['mais barato','anticoagulação restrita ao circuito (menos sangramento)','não precisa monitorar'],1,'A anticoagulação fica regional, poupando o paciente com risco de sangramento.');
+  add(D[8],'A CVVHD remove soluto por…',['convecção','difusão (dialisato em contracorrente)','UF apenas'],1,'O dialisato cria gradiente difusivo, como na HD, mas contínuo.');
+  add(D[8],'O "contínuo" da TRRC traz como benefício…',['remoção brusca','controle gradual de volume e solutos','dispensar acesso'],1,'A gentileza temporal estabiliza a hemodinâmica e o meio interno.');
+  add(D[8],'Um distúrbio do citrato a vigiar é…',['hipernatremia','acúmulo de citrato (alcalose/gap, Ca total alto, ionizado baixo)','febre'],1,'No acúmulo, o Ca total sobe e o ionizado cai — sinal de toxicidade do citrato.');
+  add(D[8],'A escolha entre CVVH, CVVHD e CVVHDF baseia-se em…',['preço só','o alvo de remoção (peso molecular) e o serviço','sorte'],1,'Convecção alcança moléculas médias; difusão, pequenas; HDF, ambas.');
+  /* 9 · Indicação / integração */
+  add(D[9],'O mnemônico AEIOU para indicação de TRS inclui…',['só uremia','Acidose, Eletrólitos, Intoxicação, Overload, Uremia','só volume'],1,'AEIOU mapeia as indicações por mecanismo descompensado.');
+  add(D[9],'Iniciar TRS é decisão de…',['número da creatinina','função refratária do meio interno','idade'],1,'O gatilho é o mecanismo refratário ao clínico, não o laboratório isolado.');
+  add(D[9],'Os ensaios AKIKI/STARRT-AKI sugerem que iniciar PRECOCE sem gatilho…',['salva sempre','não melhora o desfecho na maioria','é obrigatório'],1,'Esperar o gatilho clínico é seguro; o precoce adiciona dano sem ganho.');
+  add(D[9],'Na síndrome cardiorrenal com sobrecarga refratária, a UF compete com…',['antibiótico','o diurético (quando há resistência)','o oxigênio'],1,'Quando o diurético falha, a ultrafiltração retira o volume que o rim não retira.');
+  add(D[9],'A intoxicação por lítio/metanol é gatilho de diálise…',['dependente da LRA','independente dos eixos (remover a toxina)','só com uremia'],1,'Dialisa-se para remover o veneno, mesmo com rim quase normal (M33).');
+  add(D[9],'A escolha da modalidade sai…',['de receita fixa','do mecanismo descompensado (instabilidade × velocidade)','do horário'],1,'Instável → TRRC; estável que precisa de rápido → HDI; meio-termo → SLED.');
+  add(D[9],'A ponte com o CHOCA aparece em volume porque…',['são independentes','perfusão renal = DC × pressão (Guyton)','o rim ignora o DC'],1,'O rim recebe 20% do DC; a hemodinâmica do Choca governa a perfusão renal.');
+  add(D[9],'A síndrome de desequilíbrio dialítico resulta de…',['hiperglicemia','queda osmótica plasmática rápida → edema cerebral','febre'],1,'A ureia cai rápido no sangue e a água migra para o cérebro (osmose reversa).');
+  add(D[9],'A diálise peritoneal usa como membrana…',['um filtro sintético','o peritônio (UF osmótica pela glicose)','a pele'],1,'O peritônio é a membrana; a glicose do banho gera UF osmótica.');
+  add(D[9],'O fecho do raciocínio do braço é: a diálise restaura o meio interno…',['repondo o rim','substituindo FUNÇÕES por física até a recuperação','curando a LRA'],1,'A máquina substitui funções (depuração/volume) enquanto o rim se recupera.');
+  return E;
+}
+</script>
+</body>
+</html>

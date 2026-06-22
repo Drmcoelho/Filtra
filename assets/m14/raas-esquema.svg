@@ -1,22 +1,46 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dce8ff" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#3366cc" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#3366cc"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M14</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#3366cc" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">diagrama</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a3a6e" opacity="0.7">RAAS e eixo endócrino renal</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a3a6e">raas-esquema</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#3366cc" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#3366cc">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a3a6e">Sistema renina–angiotensina–aldosterona</text>
-
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a3a6e" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1448" height="1086" viewBox="0 0 1448 1086" role="img" aria-labelledby="title desc">
+  <title id="title">Cascata renina–angiotensina–aldosterona</title><desc id="desc">Cada etapa tem origem, enzima e alvo próprios; Ang II é o principal nó efetor.</desc><defs>
+    <marker id="arrow-cyan" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#55cbd3"/></marker>
+    <marker id="arrow-gold" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#e3ad4f"/></marker>
+    <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#e26464"/></marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#68c58a"/></marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity=".28"/></filter>
+    <style>
+      .t{font-family:system-ui,-apple-system,Segoe UI,sans-serif;fill:#eef5f4}.dim{fill:#aac0c4}.h{font-weight:800}.title{font-size:46px}.sub{font-size:21px}.m{font-size:24px}.s{font-size:18px}.xs{font-size:15px}.panel{fill:#101d27;stroke:#36505f;stroke-width:2}.panel2{fill:#152631;stroke:#36505f;stroke-width:2}.flow{fill:none;stroke:#55cbd3;stroke-width:4;marker-end:url(#arrow-cyan)}.goldflow{fill:none;stroke:#e3ad4f;stroke-width:4;marker-end:url(#arrow-gold)}.redflow{fill:none;stroke:#e26464;stroke-width:4;marker-end:url(#arrow-red)}.greenflow{fill:none;stroke:#68c58a;stroke-width:4;marker-end:url(#arrow-green)}
+    </style>
+  </defs>
+  <rect width="1448" height="1086" fill="#071018"/>
+  <text x="42" y="64" class="t h title"><tspan fill="#55cbd3">FILTRA</tspan><tspan fill="#e3ad4f"> · Cascata renina–angiotensina–aldosterona</tspan></text>
+  <text x="44" y="101" class="t sub dim">Cada etapa tem origem, enzima e alvo próprios; Ang II é o principal nó efetor.</text>
+  <g transform="translate(36 118)">
+    <rect width="210" height="206" rx="20" class="panel"/>
+    <path d="M95 28C48 22 32 70 42 115c9 42 41 71 76 61 21-6 20-30 8-51-10-18-6-36 8-50 20-21 1-42-39-47Z" fill="#a64148" stroke="#ef8b83" stroke-width="4"/>
+    <path d="M106 48c-24 9-32 36-27 61 5 24 20 41 37 42-9-20-8-42 6-62 10-14 5-31-16-41Z" fill="#e2a477" opacity=".72"/>
+    <circle cx="114" cy="88" r="13" fill="#55cbd3"/><path d="M126 88H176" class="flow"/>
+    <text x="20" y="190" class="t h s">Rim</text>
+    <text x="112" y="116" text-anchor="middle" class="t xs">renina</text>
+  </g>
+  <g transform="translate(278 142)">
+    <rect width="1134" height="804" rx="24" class="panel" filter="url(#shadow)"/>
+    <g transform="translate(40 70)">
+      <rect width="210" height="128" rx="20" fill="#32251a" stroke="#e3ad4f" stroke-width="3"/><text x="105" y="50" text-anchor="middle" class="t h m">FÍGADO</text><text x="105" y="86" text-anchor="middle" class="t s">angiotensinogênio</text>
+      <path d="M222 64H330" class="goldflow"/><text x="276" y="48" text-anchor="middle" class="t xs" fill="#e3ad4f">RENINA</text>
+      <rect x="342" width="190" height="128" rx="20" class="panel2"/><text x="437" y="53" text-anchor="middle" class="t h m">ANG I</text><text x="437" y="87" text-anchor="middle" class="t s dim">decapeptídeo</text>
+      <path d="M544 64H654" class="flow"/><text x="599" y="48" text-anchor="middle" class="t xs" fill="#55cbd3">ECA</text>
+      <rect x="666" width="190" height="128" rx="20" fill="#351c22" stroke="#e26464" stroke-width="3"/><text x="761" y="53" text-anchor="middle" class="t h m">ANG II</text><text x="761" y="87" text-anchor="middle" class="t s dim">octapeptídeo</text>
+      <path d="M868 64H976" class="redflow"/><text x="922" y="48" text-anchor="middle" class="t xs" fill="#e26464">AT1</text>
+      <rect x="988" width="90" height="128" rx="20" fill="#3c2c18" stroke="#e88b4a" stroke-width="3"/><text x="1033" y="52" text-anchor="middle" class="t h s">EFEITOS</text><text x="1033" y="83" text-anchor="middle" class="t xs">rápidos</text>
+    </g>
+    <text x="340" y="250" class="t s dim">ECA: endotélio vascular, abundantemente pulmonar; não é exclusiva do pulmão.</text>
+    <path d="M801 286V354H185" class="redflow"/><path d="M801 286V354H453" class="redflow"/><path d="M801 286V354H721" class="redflow"/><path d="M801 286V354H989" class="redflow"/>
+    <g transform="translate(54 382)">
+      <rect width="244" height="178" rx="18" class="panel2"/><text x="122" y="42" text-anchor="middle" class="t h s">VASOS</text><text x="24" y="82" class="t s">vasoconstrição</text><text x="24" y="116" class="t s">RVS e pressão ↑</text><text x="24" y="150" class="t xs dim">eferente sensível</text>
+      <rect x="268" width="244" height="178" rx="18" class="panel2"/><text x="390" y="42" text-anchor="middle" class="t h s">TCP</text><text x="292" y="82" class="t s">NHE3 e Na⁺ ↑</text><text x="292" y="116" class="t s">HCO₃⁻/água ↑</text><text x="292" y="150" class="t xs dim">reabsorção proximal</text>
+      <rect x="536" width="244" height="178" rx="18" class="panel2"/><text x="658" y="42" text-anchor="middle" class="t h s">SUPRARRENAL</text><text x="560" y="82" class="t s">aldosterona ↑</text><text x="560" y="116" class="t s">Na⁺ retido</text><text x="560" y="150" class="t xs dim">K⁺ e H⁺ excretados</text>
+      <rect x="804" width="244" height="178" rx="18" class="panel2"/><text x="926" y="42" text-anchor="middle" class="t h s">CÉREBRO</text><text x="828" y="82" class="t s">sede e ADH ↑</text><text x="828" y="116" class="t s">simpático ↑</text><text x="828" y="150" class="t xs dim">água + tônus</text>
+    </g>
+    <rect x="54" y="618" width="1048" height="112" rx="18" fill="#0d171f" stroke="#36505f"/><text x="80" y="658" class="t h s" fill="#68c58a">FEEDBACK NEGATIVO</text><text x="80" y="696" class="t s">Volume e pressão restaurados + Ang II em AT1 da célula granular → renina ↓.</text>
+  </g>
+  <rect x="32" y="1015" width="1384" height="45" rx="14" fill="#0d1821" stroke="#36505f"/>
+  <text x="724" y="1045" text-anchor="middle" class="t s"><tspan fill="#55cbd3">angiotensinogênio → renina → ECA → Ang II → AT1</tspan><tspan class="dim"> · M14 · endocrinologia renal</tspan></text>
+  </svg>

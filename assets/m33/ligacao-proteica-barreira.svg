@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" font-family="Georgia,serif">
+  <rect width="640" height="340" fill="#0a1016"/>
+  <rect x="2" y="2" width="636" height="336" rx="6" fill="none" stroke="#283642" stroke-width="2"/>
+  <text x="320" y="30" text-anchor="middle" font-size="17" font-weight="bold" fill="#e7eef4">A ligação proteica é a barreira: só a fração LIVRE dialisa</text>
+  <text x="320" y="50" text-anchor="middle" font-size="11" fill="#9fb1c0">a droga ligada à albumina é grande demais para passar — fica retida</text>
+
+  <!-- caso 1: pouca ligacao -->
+  <rect x="50" y="80" width="250" height="200" rx="10" fill="#52c08a" opacity="0.08" stroke="#52c08a"/>
+  <text x="175" y="104" text-anchor="middle" font-size="13" fill="#52c08a" font-weight="bold">ligação BAIXA (5%)</text>
+  <!-- albumina -->
+  <ellipse cx="120" cy="150" rx="26" ry="18" fill="#9fb1c0" opacity="0.25" stroke="#9fb1c0"/>
+  <text x="120" y="154" text-anchor="middle" font-size="8" fill="#9fb1c0">albumina</text>
+  <!-- livres -->
+  <circle cx="200" cy="140" r="7" fill="#52c08a"/><circle cx="230" cy="160" r="7" fill="#52c08a"/>
+  <circle cx="190" cy="185" r="7" fill="#52c08a"/><circle cx="235" cy="200" r="7" fill="#52c08a"/>
+  <circle cx="160" cy="210" r="7" fill="#52c08a"/>
+  <!-- membrana -->
+  <line x1="280" y1="90" x2="280" y2="270" stroke="#39c0c8" stroke-width="3" stroke-dasharray="2 4"/>
+  <text x="175" y="262" text-anchor="middle" font-size="10" fill="#52c08a">f_livre alto → dialisa bem</text>
+
+  <!-- caso 2: muita ligacao -->
+  <rect x="340" y="80" width="250" height="200" rx="10" fill="#e0556b" opacity="0.08" stroke="#e0556b"/>
+  <text x="465" y="104" text-anchor="middle" font-size="13" fill="#e0556b" font-weight="bold">ligação ALTA (97%)</text>
+  <ellipse cx="420" cy="150" rx="30" ry="20" fill="#9fb1c0" opacity="0.25" stroke="#9fb1c0"/>
+  <circle cx="408" cy="146" r="6" fill="#e0556b"/><circle cx="432" cy="152" r="6" fill="#e0556b"/>
+  <circle cx="420" cy="166" r="6" fill="#e0556b"/>
+  <ellipse cx="480" cy="200" rx="30" ry="20" fill="#9fb1c0" opacity="0.25" stroke="#9fb1c0"/>
+  <circle cx="468" cy="196" r="6" fill="#e0556b"/><circle cx="492" cy="202" r="6" fill="#e0556b"/>
+  <circle cx="480" cy="216" r="6" fill="#e0556b"/>
+  <circle cx="540" cy="150" r="6" fill="#e0556b"/>
+  <line x1="570" y1="90" x2="570" y2="270" stroke="#39c0c8" stroke-width="3" stroke-dasharray="2 4"/>
+  <text x="465" y="262" text-anchor="middle" font-size="10" fill="#e0556b">f_livre ínfimo → mal dialisa</text>
+
+  <text x="320" y="316" text-anchor="middle" font-size="11" fill="#e7eef4">f_livre = 1 − ligação · a alta ligação proteica MATA a dialisabilidade (ex.: clopidogrel, varfarina)</text>
+  <text x="320" y="334" text-anchor="middle" font-size="9" fill="#9fb1c0" opacity="0.6">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" font-family="system-ui,Segoe UI,Arial">
+  <rect width="480" height="300" fill="#0a1016"/>
+  <text x="240" y="24" fill="#39c0c8" font-size="15" font-weight="bold" text-anchor="middle">Tolerância: UF × refilling plasmático</text>
+  <!-- vessel -->
+  <rect x="60" y="70" width="360" height="60" rx="8" fill="#1b242d" stroke="#3a4a58"/>
+  <text x="240" y="106" fill="#9fb1c0" font-size="11" text-anchor="middle">plasma (volume circulante)</text>
+  <!-- interstitium -->
+  <rect x="60" y="180" width="360" height="60" rx="8" fill="#141b22" stroke="#3a4a58"/>
+  <text x="240" y="216" fill="#9fb1c0" font-size="11" text-anchor="middle">interstício (reserva)</text>
+  <!-- UF out (up arrow leaving plasma) -->
+  <path d="M120 70 L120 40" stroke="#e0556b" stroke-width="3" marker-end="url(#u)"/>
+  <text x="120" y="34" fill="#e0556b" font-size="10" text-anchor="middle">UF (sai)</text>
+  <!-- refilling arrow interstitium -> plasma -->
+  <path d="M340 180 L340 130" stroke="#52c08a" stroke-width="3" marker-end="url(#u)"/>
+  <text x="340" y="160" fill="#52c08a" font-size="10" text-anchor="middle">refilling</text>
+  <!-- balance note -->
+  <text x="240" y="278" fill="#e8a13a" font-size="11" text-anchor="middle">SLED: UF lenta ≤ refilling → o plasma não esvazia → PAM mantida</text>
+  <defs><marker id="u" markerWidth="9" markerHeight="9" refX="3" refY="6" orient="auto"><path d="M0 6 L3 0 L6 6 Z" fill="context-stroke"/></marker></defs>
+  <!-- marker fallback colored -->
+  <path d="M116 44 L120 36 L124 44 Z" fill="#e0556b"/>
+  <path d="M336 134 L340 126 L344 134 Z" fill="#52c08a"/>
+</svg>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" font-family="Georgia,serif">
+  <rect width="640" height="340" fill="#0a1016"/>
+  <rect x="2" y="2" width="636" height="336" rx="6" fill="none" stroke="#283642" stroke-width="2"/>
+  <text x="320" y="30" text-anchor="middle" font-size="17" font-weight="bold" fill="#e7eef4">Salicilato: a HD remove o tóxico E corrige o ácido</text>
+  <text x="320" y="50" text-anchor="middle" font-size="11" fill="#9fb1c0">um só procedimento ataca dois alvos — o veneno e a acidose metabólica</text>
+
+  <!-- alvo 1 -->
+  <rect x="60" y="80" width="240" height="150" rx="10" fill="#e0556b" opacity="0.10" stroke="#e0556b"/>
+  <text x="180" y="104" text-anchor="middle" font-size="13" fill="#e0556b" font-weight="bold">① remove o SALICILATO</text>
+  <text x="180" y="128" text-anchor="middle" font-size="10" fill="#9fb1c0">PM 138, Vd baixo (0,2 L/kg)</text>
+  <text x="180" y="146" text-anchor="middle" font-size="10" fill="#9fb1c0">na acidemia: mais fração LIVRE</text>
+  <text x="180" y="164" text-anchor="middle" font-size="10" fill="#9fb1c0">→ ainda mais dialisável</text>
+  <text x="180" y="196" text-anchor="middle" font-size="11" fill="#e7eef4">desacopla a fosforilação oxidativa</text>
+  <text x="180" y="214" text-anchor="middle" font-size="10" fill="#9fb1c0">nível mg/dL ↓ pela difusão</text>
+
+  <!-- alvo 2 -->
+  <rect x="340" y="80" width="240" height="150" rx="10" fill="#52c08a" opacity="0.10" stroke="#52c08a"/>
+  <text x="460" y="104" text-anchor="middle" font-size="13" fill="#52c08a" font-weight="bold">② corrige a ACIDOSE</text>
+  <text x="460" y="128" text-anchor="middle" font-size="10" fill="#9fb1c0">o banho repõe HCO₃⁻ (tampão)</text>
+  <text x="460" y="146" text-anchor="middle" font-size="10" fill="#9fb1c0">o ânion-gap fecha</text>
+  <text x="460" y="178" text-anchor="middle" font-size="11" fill="#e7eef4">pH ↑ → menos salicilato</text>
+  <text x="460" y="196" text-anchor="middle" font-size="11" fill="#e7eef4">não-ionizado no SNC</text>
+  <text x="460" y="214" text-anchor="middle" font-size="10" fill="#9fb1c0">HCO₃⁻ mEq/L de volta à faixa</text>
+
+  <rect x="120" y="252" width="400" height="36" rx="6" fill="#141b22" stroke="#283642"/>
+  <text x="320" y="275" text-anchor="middle" font-size="12" fill="#e7eef4">a difusão tira o veneno; o tampão do banho repõe a base — dois em um</text>
+  <text x="320" y="320" text-anchor="middle" font-size="9" fill="#9fb1c0" opacity="0.6">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+</svg>

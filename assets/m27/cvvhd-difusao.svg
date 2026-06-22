@@ -1,22 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dce8ff" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#3366cc" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#3366cc"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M27</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#3366cc" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">diagrama</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a3a6e" opacity="0.7">Terapias contínuas (TRRC/CRRT)</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a3a6e">cvvhd-difusao</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#3366cc" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#3366cc">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a3a6e">CVVHD (difusão)</text>
-
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a3a6e" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 300" font-family="system-ui,Segoe UI,Arial" role="img">
+  <rect width="520" height="300" fill="#0a1016"/>
+  <text x="260" y="24" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">CVVHD — difusão: gradiente em contracorrente</text>
+  <rect x="190" y="58" width="140" height="180" rx="8" fill="#141b22" stroke="#39c0c8" stroke-width="2"/>
+  <line x1="260" y1="58" x2="260" y2="238" stroke="#283642" stroke-dasharray="4 4"/>
+  <text x="225" y="76" text-anchor="middle" font-size="10" fill="#9fb1c0">sangue →</text>
+  <text x="296" y="76" text-anchor="middle" font-size="10" fill="#9fb1c0">← dialisato</text>
+  <defs><marker id="d" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 Z" fill="#e0556b"/></marker></defs>
+  <circle cx="222" cy="100" r="6" fill="#e0556b"/><circle cx="222" cy="130" r="6" fill="#e0556b"/><circle cx="222" cy="160" r="6" fill="#e0556b"/><circle cx="222" cy="190" r="6" fill="#e0556b"/>
+  <path d="M232 100 H300" stroke="#e0556b" stroke-width="2" marker-end="url(#d)"/>
+  <path d="M232 130 H300" stroke="#e0556b" stroke-width="2" marker-end="url(#d)"/>
+  <path d="M232 160 H300" stroke="#e0556b" stroke-width="2" marker-end="url(#d)"/>
+  <path d="M232 190 H300" stroke="#e0556b" stroke-width="2" marker-end="url(#d)"/>
+  <circle cx="306" cy="100" r="3" fill="#e0556b" opacity="0.5"/><circle cx="306" cy="130" r="3" fill="#e0556b" opacity="0.5"/>
+  <text x="115" y="50" text-anchor="middle" font-size="10" fill="#39c0c8">Qd baixo</text>
+  <text x="420" y="50" text-anchor="middle" font-size="10" fill="#e0556b">soluto difunde →</text>
+  <text x="40" y="262" font-size="11" fill="#9fb1c0">① soluto (vermelho) difunde do sangue ao dialisato pelo gradiente de concentração.</text>
+  <text x="40" y="280" font-size="11" fill="#9fb1c0">② no fluxo BAIXO da TRRC o dialisato SATURA → clearance ≈ Qd (nunca excede Qd).</text>
 </svg>

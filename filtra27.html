@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M27 — Terapias contínuas (TRRC/CRRT): CVVH × CVVHD × CVVHDF</title>
+<style>
+  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--warn:#e8a13a;--bad:#e0556b;--good:#52c08a;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none} section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .presets{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px} .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)} .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)} .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)} .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M27</div>
+  <h1>Terapias contínuas (TRRC/CRRT) — CVVH × CVVHD × CVVHDF, e por que "contínuo"</h1>
+  <div class="sub">A TRRC remove <b>soluto</b> e <b>volume</b> devagar e <b>contínuo</b> (24 h), tolerada pelo
+  paciente instável. <b>CVVH</b> usa <b>convecção</b> (reposição + UF alta, o soluto é arrastado pela água);
+  <b>CVVHD</b> usa <b>difusão</b> (dialisato em contracorrente, o soluto segue o gradiente); <b>CVVHDF</b> soma
+  os dois. O "contínuo" troca a <b>eficiência por hora</b> pela <b>gentileza hemodinâmica</b> (UF &lt; refilling,
+  ponte M23/M24). O alvo é a <b>homeostasia</b>: a diálise não substitui o rim — substitui <b>funções</b> por
+  física (difusão · convecção · ultrafiltração, M19).</div>
+  <nav class="hex">
+    <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
+    <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="dialisa.html">&larr; índice do antebraço DIALISA</a>
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- CONCEITO -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — três físicas, um circuito contínuo</h3>
+      <p class="sub" style="margin-top:0"><b>A TRRC substitui FUNÇÕES do rim por física.</b> Remoção de
+      <b>soluto</b> = difusão (gradiente) + convecção (arraste por solvente); remoção de <b>volume</b> =
+      ultrafiltração (pressão transmembrana). Os três modos diferem em <i>qual física domina</i>: CVVH
+      (convecção), CVVHD (difusão), CVVHDF (os dois). As Fig. 1–8 voltam no Caso, na Trilha e na Avaliação.
+      Atribuição em <code>CREDITS.md</code> (em curadoria).</p>
+
+      <h4>1. CVVH — convecção: o soluto é ARRASTADO pela água</h4>
+      <p class="sub">Na <b>convecção</b>, ultrafiltra-se muito (UF alta) e repõe-se fluido de reposição; o
+      soluto é <b>carregado junto com a água</b> que atravessa a membrana — "solvent drag". O clearance ≈
+      <b>taxa de efluente convectivo × sieving</b> (o sieving de soluto pequeno como a ureia ≈ 1). É a física
+      que melhor remove moléculas médias.</p>
+      <div class="frow">
+        <div class="concept" id="draw-cvvh"></div>
+        <figure class="fviva"><img src="assets/m27/cvvh-conveccao.svg" alt="CVVH: convecção arrasta o soluto junto com a água ultrafiltrada" loading="lazy">
+          <figcaption><b>Fig. 1 · CVVH (convecção).</b> <b>①</b> a água (verde) é puxada pela pressão
+          transmembrana; <b>②</b> o soluto (laranja) é <b>arrastado junto</b> — sai dos dois lados em igual
+          concentração (sieving ≈ 1). <b>③</b> clearance ≈ taxa de efluente × sieving. Repõe-se fluido de
+          reposição para manter o volume.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m27/circuito-trrc.svg" alt="Circuito extracorpóreo da TRRC: paciente, bomba, dialisador, fluxos" loading="lazy">
+          <figcaption><b>Fig. 2 · O circuito da TRRC.</b> <b>①</b> a bomba move o sangue (<b>Qb</b>); <b>②</b> o
+          <b>dialisador</b> é a membrana onde a física age; <b>③</b> entra o dialisato (<b>Qd</b>), <b>④</b> sai
+          o efluente (UF); <b>⑤</b> a reposição devolve volume. Tudo <b>contínuo</b>, 24 h — daí a gentileza.</figcaption></figure>
+      </div>
+
+      <h4>2. CVVHD — difusão: o soluto segue o GRADIENTE</h4>
+      <p class="sub">Na <b>difusão</b>, o dialisato corre em <b>contracorrente</b> e o soluto passa do sangue
+      (concentrado) para o dialisato (limpo), pelo gradiente de concentração. No fluxo <b>baixo</b> da TRRC o
+      dialisato <b>satura</b> (atinge a concentração do sangue) → o clearance ≈ <b>Qd</b> para pequenos solutos:
+      a membrana (KoA) deixa de ser o gargalo, o fluxo de dialisato é que limita.</p>
+      <div class="frow">
+        <div class="concept" id="draw-cvvhd"></div>
+        <figure class="fviva"><img src="assets/m27/cvvhd-difusao.svg" alt="CVVHD: difusão do soluto pelo gradiente; o dialisato satura no fluxo baixo" loading="lazy">
+          <figcaption><b>Fig. 3 · CVVHD (difusão).</b> <b>①</b> o soluto (vermelho) difunde do sangue para o
+          dialisato pelo <b>gradiente</b>; <b>②</b> no fluxo BAIXO da TRRC o dialisato <b>satura</b> → o
+          clearance ≈ <b>Qd</b> e <b>nunca o excede</b>. Subir o Qd sobe o clearance — até o teto do plasma.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m27/cvvhdf-soma.svg" alt="CVVHDF: difusão e convecção somam-se com desconto de interação" loading="lazy">
+          <figcaption><b>Fig. 4 · CVVHDF (os dois).</b> <b>①</b> convecção (verde, UF) <b>+</b> <b>②</b> difusão
+          (vermelho, Qd) somam-se; <b>③</b> aplica-se um <b>desconto de interação</b> (1−i): a convecção "rouba"
+          gradiente da difusão, então o total fica <b>abaixo</b> da soma ingênua. Ainda assim &gt; cada parte.</figcaption></figure>
+      </div>
+
+      <h4>3. Pré × pós-diluição — proteger a membrana ou maximizar o clearance</h4>
+      <p class="sub">A reposição (na CVVH/CVVHDF) entra <b>antes</b> (pré) ou <b>depois</b> (pós) do filtro. A
+      <b>pré-diluição</b> dilui o plasma que chega ao filtro → o clearance <b>efetivo cai</b> (fator
+      plasma/(plasma+pré)), mas <b>protege a membrana</b> e reduz coágulo. A <b>pós-diluição</b> não dilui →
+      clearance cheio, porém a <b>fração de filtração</b> sobe e o filtro <b>coagula mais</b>.</p>
+      <div class="frow">
+        <div class="concept" id="draw-diluicao"></div>
+        <figure class="fviva"><img src="assets/m27/pre-vs-pos-diluicao.svg" alt="Pré-diluição protege a membrana mas reduz clearance; pós-diluição é eficiente mas coagula mais" loading="lazy">
+          <figcaption><b>Fig. 5 · Pré × pós-diluição.</b> <b>Pré-filtro</b> (verde): plasma <b>diluído</b> →
+          clearance ↓, mas protege a membrana e coagula menos. <b>Pós-filtro</b> (vermelho): plasma <b>cheio</b>
+          → clearance cheio, mas a <b>FF</b> alta faz coagular mais. O sieving e a pré-diluição governam o
+          clearance efetivo.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m27/dose-efluente.svg" alt="A dose da TRRC é o efluente em mL/kg/h: (Qd + Qf) por peso" loading="lazy">
+          <figcaption><b>Fig. 6 · A dose é o efluente.</b> <b>①</b> a dose contínua é o <b>efluente</b> (mL/kg/h),
+          não o Kt/V; <b>②</b> efluente = <b>Qd</b> (difusato) + <b>Qf</b> (ultrafiltrado), conforme o modo;
+          alvo ~<b>25 mL/kg/h</b> (M28); <b>③</b> paciente mais pesado pede mais efluente total para a mesma
+          dose.</figcaption></figure>
+      </div>
+
+      <h4>4. Por que "contínuo" — eficiência por hora baixa, dose/24 h adequada</h4>
+      <p class="sub">A HDI tem clearance <b>altíssimo por hora</b> (~200 mL/min) por 4 h; a TRRC tem clearance
+      <b>baixo por hora</b> (~25–45 mL/min) — mas por <b>24 h</b>. A <b>área</b> (dose/24 h, clearance × tempo)
+      se equipara. A vantagem do contínuo não é eficiência: é a <b>gentileza</b> — remover devagar é o que o
+      instável tolera.</p>
+      <p class="sub">Quantitativamente: um soluto pequeno como a <b>ureia</b> ou o <b>K⁺</b> (mEq/L) tem sieving
+      ≈ 1 e atravessa as duas físicas com facilidade; o que muda entre os modos é <i>como</i> ele sai (arraste ou
+      gradiente), não <i>se</i> sai. O contínuo aposta no tempo.</p>
+      <div class="frow">
+        <div class="concept" id="draw-continuo"></div>
+        <div class="concept" id="draw-tolera"></div>
+        <figure class="fviva"><img src="assets/m27/continuo-vs-intermitente.svg" alt="Contínuo versus intermitente: clearance por hora baixo mas integrado em 24 h" loading="lazy">
+          <figcaption><b>Fig. 7 · Contínuo × intermitente.</b> <b>①</b> a HDI é um <b>pico alto e curto</b> de
+          clearance/hora; <b>②</b> a TRRC é uma <b>faixa baixa e longa</b> (24 h); <b>③</b> a <b>área</b>
+          (dose/24 h) se equipara. O instável tolera a TRRC porque a remoção é <b>lenta e sustentada</b>.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m27/tolerancia-hemodinamica.svg" alt="Tolerância hemodinâmica: UF lenta menor que o refilling mantém a PAM" loading="lazy">
+          <figcaption><b>Fig. 8 · UF &lt; refilling.</b> A UF tira água do <b>plasma</b>; o <b>refilling</b>
+          (verde) a repõe do interstício, com atraso. Se a UF é <b>lenta</b> (&lt; refilling), a PAM se mantém —
+          o instável tolera. UF <b>rápida</b> (&gt; refilling) colaba o plasma → hipotensão (M24). É o cerne do
+          "contínuo".</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASO -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — cinco atos, decida antes de revelar</h3>
+      <p class="sub">UTI. Um doente em TRRC e as decisões de física e fluxo. A pergunta de cada ato: <b>qual
+      modo, qual fluxo, e por quê?</b> Volte às Fig. 1, 5 e 7: a física decide.</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step"><b>Ato 1 — choque séptico instável, indicada TRRC.</b> PAM 58 com noradrenalina,
+        LRA KDIGO 3, hipercalemia moderada. A equipe cogita HDI rápida. Por que TRRC?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>TRRC porque é CONTÍNUA e gentil.</b> A remoção lenta de volume (UF &lt;
+          refilling, Fig. 8) mantém a PAM — o instável não toleraria a UF rápida da HDI. A dose/24 h é adequada
+          mesmo com clearance/hora baixo (Fig. 7). Escolhe-se a física pela <b>estabilidade</b>, não pela
+          pressa.</div></div>
+
+      <div class="step"><b>Ato 2 — escolher o modo: CVVH, CVVHD ou CVVHDF?</b> O médico quer boa remoção de
+        ureia (pequena) e alguma remoção de moléculas médias. Qual modo e por quê?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2"><b>CVVHDF — soma difusão + convecção.</b> A difusão (Qd, Fig. 3) limpa bem
+          os pequenos solutos; a convecção (Qf, Fig. 1) acrescenta o arraste das moléculas médias. O total é a
+          soma com desconto de interação (Fig. 4), maior que CVVH ou CVVHD isolados. Para só ureia, CVVHD
+          bastaria.</div></div>
+
+      <div class="step"><b>Ato 3 — pré ou pós-diluição?</b> O hematócrito está alto (hemoconcentração) e o
+        filtro vem coagulando antes do tempo. Onde colocar a reposição?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3"><b>Pré-diluição.</b> Diluir o plasma <b>antes</b> do filtro (Fig. 5) baixa a
+          fração de filtração e <b>protege a membrana</b> — o filtro dura mais. O custo é um clearance efetivo
+          menor (fator plasma/(plasma+pré)): troca-se eficiência por durabilidade. A pós-diluição seria mais
+          eficiente, mas coagularia ainda mais.</div></div>
+
+      <div class="step"><b>Ato 4 — prescrever a dose.</b> Paciente de 80 kg, alvo de efluente 25 mL/kg/h. O que
+        isso significa em fluxo?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>Efluente ≈ 2000 mL/h.</b> Dose = efluente ÷ peso (Fig. 6): 25 mL/kg/h ×
+          80 kg = 2000 mL/h. Esse efluente é a soma de Qd (difusato) + Qf (UF) conforme o modo. A dose é o
+          <b>efluente em mL/kg/h</b> — não Kt/V (isso é da HDI, M25). Mais detalhe da dose contínua em
+          M28.</div></div>
+
+      <div class="step"><b>Ato 5 — a fronteira: pós-diluição agressiva (a exceção).</b> Para "maximizar o
+        clearance", subiu-se a UF na pós-diluição até a fração de filtração ultrapassar ~25%. O que acontece?
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>O filtro coagula.</b> Sem pré-diluição e com FF alta (Fig. 5), o sangue
+          hemoconcentra dentro do filtro e <b>coagula</b> — o circuito para, a dose entregue despenca por
+          downtime. O clearance "no papel" era maior; o clearance <b>entregue</b> caiu. A física tem um limite
+          prático: maximizar a convecção na pós-diluição se volta contra a dose.</div></div>
+    </div>
+  </section>
+
+  <!-- TRILHA -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — nove perguntas que constroem a TRRC</h3>
+      <details><summary>1. O que a diálise substitui — o rim ou funções?</summary><p>Substitui <b>funções</b>
+        por física: difusão, convecção e ultrafiltração (M19). Não recupera a glândula nem a secreção tubular;
+        depura soluto e remove volume — até o rim voltar, ou indefinidamente.</p></details>
+      <details><summary>2. Como a CVVH remove soluto?</summary><p>Por <b>convecção</b>: ultrafiltra-se muito e o
+        soluto é <b>arrastado pela água</b> (solvent drag). O clearance ≈ taxa de efluente × sieving (Fig. 1).
+        Repõe-se fluido de reposição para não desidratar.</p></details>
+      <details><summary>3. Como a CVVHD remove soluto?</summary><p>Por <b>difusão</b>: o dialisato em
+        contracorrente cria gradiente e o soluto passa do sangue para ele. No fluxo baixo da TRRC o dialisato
+        <b>satura</b> → clearance ≈ Qd para pequenos solutos (Fig. 3).</p></details>
+      <details><summary>4. O que é a CVVHDF?</summary><p>A <b>soma</b> de difusão (Qd) + convecção (Qf), com um
+        <b>desconto de interação</b> (a convecção rouba gradiente da difusão). O total fica abaixo da soma
+        ingênua, mas acima de cada componente isolado (Fig. 4).</p></details>
+      <details><summary>5. Por que o clearance da CVVHD não passa de Qd?</summary><p>Porque, no fluxo baixo, o
+        dialisato <b>satura</b> — atinge a concentração do sangue e não pode carregar mais. O Qd é o teto; subir
+        o KoA aproxima da saturação, mas não a ultrapassa.</p></details>
+      <details><summary>6. Pré ou pós-diluição — o que muda?</summary><p>A <b>pré</b> dilui o plasma antes do
+        filtro → clearance efetivo ↓, mas protege a membrana e coagula menos. A <b>pós</b> mantém o clearance,
+        mas a fração de filtração sobe e o filtro coagula mais (Fig. 5).</p></details>
+      <details><summary>7. Qual é a dose da TRRC?</summary><p>O <b>efluente</b> em <b>mL/kg/h</b> (alvo ~25), não
+        o Kt/V. Efluente = Qd + Qf conforme o modo; dose = efluente ÷ peso (Fig. 6). O detalhamento está em
+        M28.</p></details>
+      <details><summary>8. Por que "contínuo" se a HDI é mais eficiente por hora?</summary><p>Porque a vantagem
+        não é eficiência: é <b>gentileza</b>. O clearance/hora é baixo, mas integrado em 24 h a dose se
+        equipara (Fig. 7). A remoção lenta de volume (UF &lt; refilling) é o que o instável tolera.</p></details>
+      <details><summary>9. Em que sentido isto restaura a homeostasia?</summary><p>A TRRC devolve o meio interno
+        à faixa — depura escórias, corrige eletrólitos e remove volume — no ritmo que a hemodinâmica tolera. Não
+        substitui o rim; substitui suas <b>funções</b> por física, contínua e gentilmente.</p></details>
+    </div>
+  </section>
+
+  <!-- INSTRUMENTO -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — clearance × fluxo da modalidade</h3>
+      <p class="sub">Os controles do <b>Lab</b> movem o ponto nesta curva. Eixo horizontal = <b>fluxo</b> da
+      modalidade (Qf no convectivo CVVH/CVVHDF; Qd no difusivo CVVHD), em mL/min; eixo vertical =
+      <b>clearance</b> total (mL/min). A curva azul varre o fluxo no modo escolhido; o marcador é o ponto de
+      operação atual, colorido pelo modo. Note como a pré-diluição achata a curva e como a difusão satura.</p>
+      <canvas id="clearance-canvas" width="900" height="360" aria-label="Clearance da TRRC versus fluxo"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- LAB -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — monte a TRRC; veja clearance, dose de efluente e tolerância</h3>
+      <div class="grid">
+        <div>
+          <label>Modo</label>
+          <select id="in-modo">
+            <option value="CVVH">CVVH (convecção)</option>
+            <option value="CVVHD">CVVHD (difusão)</option>
+            <option value="CVVHDF" selected>CVVHDF (os dois)</option>
+          </select>
+          <label>Qb — fluxo de sangue (mL/min): <span class="val" id="lbl-qb">150</span></label>
+          <input type="range" id="in-qb" min="50" max="300" step="5" value="150">
+          <label>Qd — fluxo de dialisato (mL/min): <span class="val" id="lbl-qd">25</span></label>
+          <input type="range" id="in-qd" min="0" max="60" step="1" value="25">
+          <label>Qf — UF / efluente convectivo (mL/min): <span class="val" id="lbl-qf">25</span></label>
+          <input type="range" id="in-qf" min="0" max="60" step="1" value="25">
+          <label>Fração de pré-diluição (0 pós → 1 pré): <span class="val" id="lbl-preFrac">0.30</span></label>
+          <input type="range" id="in-preFrac" min="0" max="1" step="0.05" value="0.3">
+        </div>
+        <div>
+          <label>KoA da membrana (difusão): <span class="val" id="lbl-koa">600</span></label>
+          <input type="range" id="in-koa" min="100" max="1200" step="50" value="600">
+          <label>Hematócrito (fração): <span class="val" id="lbl-hct">0.30</span></label>
+          <input type="range" id="in-hct" min="0.15" max="0.55" step="0.01" value="0.30">
+          <label>Peso (kg): <span class="val" id="lbl-pesoKg">70</span></label>
+          <input type="range" id="in-pesoKg" min="40" max="160" step="1" value="70">
+          <label>UF líquida — remoção de volume (mL/h): <span class="val" id="lbl-ufLiquida">100</span></label>
+          <input type="range" id="in-ufLiquida" min="0" max="600" step="10" value="100">
+          <label>Refilling plasmático (mL/h): <span class="val" id="lbl-refilling">400</span></label>
+          <input type="range" id="in-refilling" min="100" max="700" step="10" value="400">
+        </div>
+      </div>
+
+      <div class="presets">
+        <button class="act" data-preset="cvvh">CVVH (convecção pura)</button>
+        <button class="act" data-preset="cvvhd">CVVHD (difusão pura)</button>
+        <button class="act" data-preset="cvvhdf">CVVHDF (os dois)</button>
+        <button class="act" data-preset="predil">Pré-diluição (protege)</button>
+        <button class="act" data-preset="posdil">Pós-diluição (coagula)</button>
+        <button class="act" data-preset="instavel">Instável (UF lenta)</button>
+      </div>
+
+      <table>
+        <tr><th>Saída</th><th>Atual</th><th>Comentário</th></tr>
+        <tr><td>Modo</td><td class="num" id="out-modo">—</td><td class="num">qual física domina</td></tr>
+        <tr><td>Clearance total (mL/min)</td><td class="num" id="out-clear">—</td><td class="num">difusão + convecção</td></tr>
+        <tr><td>Componentes (dif · conv)</td><td class="num" id="out-comp">—</td><td class="num">cada física isolada</td></tr>
+        <tr><td>Dose de efluente (mL/kg/h)</td><td class="num" id="out-dose">—</td><td class="num">(Qd+Qf)·60 ÷ peso · alvo ~25</td></tr>
+        <tr><td>Eficiência/hora · dose/24 h (vs HDI)</td><td class="num" id="out-comparacao">—</td><td class="num">contínuo: baixa/hora, ok/24h</td></tr>
+        <tr><td>Tolerância (UF × refilling)</td><td class="num" id="out-tolera">—</td><td class="num">UF &lt; refilling = tolera</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÃO -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (12)</button>
+        <button data-bank="textual">Textual (12)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica</b>. Este módulo M27
+    modela as terapias contínuas (CVVH/CVVHD/CVVHDF), o clearance por física, a dose de efluente (mL/kg/h) e a
+    tolerância hemodinâmica como uma simplificação didática calibrada para ensinar o <b>mecanismo</b> — não um
+    protocolo de prescrição para um paciente real. Não substitui julgamento clínico; a decisão e a
+    responsabilidade finais são sempre do profissional.
+  </div>
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+</div>
+
+<script>
+/* ENGINE INLINE — espelho fiel de build/m27/model27.js */
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
+var SIEVING_PEQ=1.0, QD_SAT=0.95, INTERACAO=0.12, CL_HDI=200;
+function fracPlasma(hct){ hct=clampv(hct,0.10,0.65); return 1-hct; }
+function cvvh(o){ o=o||{};
+  var qf=clampv(o.qf,0,80);
+  var sieving=clampv(o.sieving!==undefined?o.sieving:SIEVING_PEQ,0,1);
+  var preFrac=clampv(o.preFrac!==undefined?o.preFrac:0,0,1);
+  var qPlasma=clampv(o.qPlasma!==undefined?o.qPlasma:120,10,400);
+  var fatorPre=clampv(qPlasma/(qPlasma+preFrac*qf),0,1);
+  var clear=qf*sieving*fatorPre; return clampv(clear,0,80); }
+function cvvhd(o){ o=o||{};
+  var qd=clampv(o.qd,0,80);
+  var sieving=clampv(o.sieving!==undefined?o.sieving:SIEVING_PEQ,0,1);
+  var koa=clampv(o.koa!==undefined?o.koa:600,50,1200);
+  var sat=clampv(QD_SAT*(1-Math.exp(-koa/300)),0,1);
+  var clear=qd*sat*sieving; return clampv(clear,0,80); }
+function cvvhdf(o){ o=o||{}; var cd=cvvhd(o), cc=cvvh(o); var clear=(cd+cc)*(1-INTERACAO); return clampv(clear,0,120); }
+function trrc(input){ var inp=input||{};
+  var modo=inp.modo; if(modo!=='CVVH'&&modo!=='CVVHD'&&modo!=='CVVHDF') modo='CVVHDF';
+  var qb=clampv(inp.qb!==undefined?inp.qb:150,50,350);
+  var qd=clampv(inp.qd!==undefined?inp.qd:25,0,80);
+  var qf=clampv(inp.qf!==undefined?inp.qf:25,0,80);
+  var preFrac=clampv(inp.preFrac!==undefined?inp.preFrac:0.3,0,1);
+  var sieving=clampv(inp.sieving!==undefined?inp.sieving:SIEVING_PEQ,0,1);
+  var koa=clampv(inp.koa!==undefined?inp.koa:600,50,1200);
+  var hct=clampv(inp.hct!==undefined?inp.hct:0.30,0.10,0.65);
+  var pesoKg=clampv(inp.pesoKg!==undefined?inp.pesoKg:70,30,200);
+  var ufLiquida=clampv(inp.ufLiquida!==undefined?inp.ufLiquida:100,0,600);
+  var refilling=clampv(inp.refilling!==undefined?inp.refilling:400,50,800);
+  var qPlasma=qb*fracPlasma(hct);
+  var clConv=0, clDif=0;
+  if(modo==='CVVH'){ clConv=cvvh({qf:qf,sieving:sieving,preFrac:preFrac,qPlasma:qPlasma}); }
+  else if(modo==='CVVHD'){ clDif=cvvhd({qd:qd,sieving:sieving,koa:koa}); }
+  else { clDif=cvvhd({qd:qd,sieving:sieving,koa:koa}); clConv=cvvh({qf:qf,sieving:sieving,preFrac:preFrac,qPlasma:qPlasma}); }
+  var clearanceBruto=clDif+clConv;
+  var clearanceTotal=(modo==='CVVHDF')?clearanceBruto*(1-INTERACAO):clearanceBruto;
+  clearanceTotal=clampv(clearanceTotal,0,120);
+  var efluenteMin=0;
+  if(modo==='CVVH') efluenteMin=qf; else if(modo==='CVVHD') efluenteMin=qd; else efluenteMin=qd+qf;
+  var efluenteMlH=efluenteMin*60;
+  var doseEfluente=clampv(efluenteMlH/pesoKg,0,60);
+  var volDepuradoTRRC=clearanceTotal*60*24;
+  var volDepuradoHDI=CL_HDI*60*4;
+  var razaoEficienciaHora=clampv(clearanceTotal/CL_HDI,0,1);
+  var razaoDose24h=clampv(volDepuradoTRRC/volDepuradoHDI,0,5);
+  var doseAdequada24h=razaoDose24h>=0.9;
+  var eficienciaHoraBaixa=razaoEficienciaHora<0.4;
+  var ufExcedeRefilling=ufLiquida>refilling+1e-9;
+  var toleraVolume=!ufExcedeRefilling;
+  var margemRefilling=clampv(refilling-ufLiquida,-600,800);
+  var fracaoFiltracao=clampv(qf/Math.max(qPlasma,1),0,1);
+  var coagulaMais=(preFrac<0.2)&&(fracaoFiltracao>0.20);
+  var preProtege=preFrac>=0.2;
+  return {modo:modo,qb:qb,qd:qd,qf:qf,preFrac:preFrac,sieving:sieving,koa:koa,hct:hct,pesoKg:pesoKg,ufLiquida:ufLiquida,refilling:refilling,
+    qPlasma:qPlasma,clDif:clDif,clConv:clConv,clearanceBruto:clearanceBruto,clearanceTotal:clearanceTotal,
+    efluenteMin:efluenteMin,efluenteMlH:efluenteMlH,doseEfluente:doseEfluente,
+    volDepuradoTRRC:volDepuradoTRRC,volDepuradoHDI:volDepuradoHDI,razaoEficienciaHora:razaoEficienciaHora,razaoDose24h:razaoDose24h,
+    doseAdequada24h:doseAdequada24h,eficienciaHoraBaixa:eficienciaHoraBaixa,
+    ufExcedeRefilling:ufExcedeRefilling,toleraVolume:toleraVolume,margemRefilling:margemRefilling,
+    fracaoFiltracao:fracaoFiltracao,coagulaMais:coagulaMais,preProtege:preProtege}; }
+function clearanceLayout(state,W,H){ state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=52,padR=16,padT=18,padB=38,baseY=H-padB,N=60,fluxoMax=60,clMax=80;
+  var pxX=(W-padL-padR)/fluxoMax, pxY=(baseY-padT)/clMax, base={}; for(var kk in state) base[kk]=state[kk];
+  var modo=(base.modo==='CVVH'||base.modo==='CVVHD'||base.modo==='CVVHDF')?base.modo:'CVVHDF';
+  var convectivo=(modo!=='CVVHD');
+  var pts=[],i,fx;
+  for(i=0;i<=N;i++){ fx=(i/N)*fluxoMax; var st={}; for(var z in base) st[z]=base[z];
+    if(convectivo) st.qf=fx; else st.qd=fx;
+    var r=trrc(st), cl=clampv(r.clearanceTotal,0,clMax);
+    pts.push({fluxo:fx,clearance:cl,x:padL+fx*pxX,y:baseY-cl*pxY}); }
+  var cur=trrc(state), fxCur=convectivo?cur.qf:cur.qd;
+  var cx=padL+clampv(fxCur,0,fluxoMax)*pxX, cy=baseY-clampv(cur.clearanceTotal,0,clMax)*pxY;
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,N:N,fluxoMax:fluxoMax,clMax:clMax,pxX:pxX,pxY:pxY,modo:modo,convectivo:convectivo,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},pts:pts,
+    current:{x:cx,y:cy,fluxo:fxCur,clearance:cur.clearanceTotal,modo:cur.modo}}; }
+window.trrc=trrc; window.clearanceLayout=clearanceLayout; window.cvvh=cvvh; window.cvvhd=cvvhd; window.cvvhdf=cvvhdf; window.fracPlasma=fracPlasma;
+window.MODEL={trrc:trrc,clearanceLayout:clearanceLayout,cvvh:cvvh,cvvhd:cvvhd,cvvhdf:cvvhdf,fracPlasma:fracPlasma,clampv:clampv,SIEVING_PEQ:SIEVING_PEQ,QD_SAT:QD_SAT,INTERACAO:INTERACAO,CL_HDI:CL_HDI};
+
+/* UI */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=(d===undefined?1:d); return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+function modLong(m){ return m==='CVVH'?'CVVH (convecção)':(m==='CVVHD'?'CVVHD (difusão)':'CVVHDF (os dois)'); }
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on'); b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on'); $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh(); });
+document.addEventListener('click',function(e){ var b=e.target.closest('button.act[data-rev]'); if(!b) return; var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on'); });
+
+function readInputs(){ return { modo:$('in-modo').value, qb:+$('in-qb').value, qd:+$('in-qd').value, qf:+$('in-qf').value,
+  preFrac:+$('in-preFrac').value, koa:+$('in-koa').value, hct:+$('in-hct').value, pesoKg:+$('in-pesoKg').value,
+  ufLiquida:+$('in-ufLiquida').value, refilling:+$('in-refilling').value }; }
+function refresh(){ var inp=readInputs();
+  $('lbl-qb').textContent=fmt(inp.qb,0); $('lbl-qd').textContent=fmt(inp.qd,0); $('lbl-qf').textContent=fmt(inp.qf,0);
+  $('lbl-preFrac').textContent=fmt(inp.preFrac,2); $('lbl-koa').textContent=fmt(inp.koa,0); $('lbl-hct').textContent=fmt(inp.hct,2);
+  $('lbl-pesoKg').textContent=fmt(inp.pesoKg,0); $('lbl-ufLiquida').textContent=fmt(inp.ufLiquida,0); $('lbl-refilling').textContent=fmt(inp.refilling,0);
+  var r=trrc(inp);
+  $('out-modo').textContent=modLong(r.modo);
+  $('out-clear').textContent=fmt(r.clearanceTotal,1)+' mL/min';
+  $('out-comp').textContent='dif '+fmt(r.clDif,1)+' · conv '+fmt(r.clConv,1)+' mL/min';
+  $('out-dose').textContent=fmt(r.doseEfluente,1)+' mL/kg/h ('+fmt(r.efluenteMlH,0)+' mL/h)';
+  $('out-comparacao').textContent=fmt(r.razaoEficienciaHora*100,0)+'% /hora · '+fmt(r.razaoDose24h,2)+'× /24h'+(r.doseAdequada24h?' ✓':'');
+  $('out-tolera').textContent=(r.toleraVolume?'tolera':'NÃO tolera')+' · margem '+fmt(r.margemRefilling,0)+' mL/h';
+  verdict(r); drawClear(inp); pearl(r,inp); }
+function verdict(r){ var v=$('veredito'), cls='b-good', msg;
+  if(!r.toleraVolume){ cls='b-bad'; msg='UF > refilling — a UF líquida ('+fmt(r.ufLiquida,0)+' mL/h) excede o refilling: o plasma colaba → hipotensão/stunning (M24). Reduza a UF.'; }
+  else if(r.coagulaMais){ cls='b-warn'; msg='Pós-diluição com FF alta ('+fmt(r.fracaoFiltracao*100,0)+'%) — clearance cheio, mas o filtro COAGULA mais. Considere pré-diluição (Fig. 5).'; }
+  else if(r.modo==='CVVHDF'){ cls='b-good'; msg='CVVHDF — soma difusão ('+fmt(r.clDif,1)+') + convecção ('+fmt(r.clConv,1)+'), clearance total '+fmt(r.clearanceTotal,1)+' mL/min. Dose '+fmt(r.doseEfluente,1)+' mL/kg/h. UF lenta < refilling: tolera.'; }
+  else if(r.modo==='CVVHD'){ cls='b-good'; msg='CVVHD — difusão pura, clearance '+fmt(r.clearanceTotal,1)+' mL/min (≈ Qd, satura). Dose '+fmt(r.doseEfluente,1)+' mL/kg/h.'; }
+  else { cls='b-good'; msg='CVVH — convecção pura, clearance '+fmt(r.clearanceTotal,1)+' mL/min (arraste por solvente). '+(r.preProtege?'Pré-diluição protege a membrana.':'Pós-diluição: eficiente, vigie o coágulo.'); }
+  v.className='banner '+cls; v.textContent=msg; }
+function pearl(r,inp){ var p=$('lab-pearl'), ip=$('instr-pearl'), t;
+  if(!r.toleraVolume) t='PÉROLA (o cerne do contínuo): UF rápida > refilling derruba a PAM (M24). A TRRC tira volume DEVAGAR — por isso o instável tolera.';
+  else if(r.eficienciaHoraBaixa&&r.doseAdequada24h) t='PÉROLA (contínuo = lento mas suficiente): clearance/hora só '+fmt(r.razaoEficienciaHora*100,0)+'% da HDI, mas a dose/24 h chega a '+fmt(r.razaoDose24h,2)+'× — a ÁREA se equipara (Fig. 7).';
+  else if(r.coagulaMais) t='PÉROLA (pós × pré): a pós-diluição é mais eficiente (não dilui o plasma), mas a FF alta COAGULA mais. A pré protege a membrana ao custo de clearance.';
+  else if(r.modo==='CVVHD') t='PÉROLA (a difusão satura): no fluxo baixo da TRRC o clearance ≈ Qd e nunca o excede — o Qd é o teto, não a membrana (Fig. 3).';
+  else if(r.modo==='CVVH') t='PÉROLA (arraste por solvente): na convecção o soluto sai COM a água; clearance ≈ efluente × sieving. A pré-diluição dilui e baixa o clearance efetivo.';
+  else t='Modo '+r.modo+', clearance '+fmt(r.clearanceTotal,1)+' mL/min. A TRRC substitui FUNÇÕES por física (difusão/convecção/UF), não o rim.';
+  p.textContent=t; ip.textContent=t; }
+function drawClear(state){ var c=$('clearance-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
+  var L=clearanceLayout(state,c.width,c.height); ctx.clearRect(0,0,L.W,L.H);
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('clearance (mL/min) ↑',8,L.padT+2); ctx.fillText((L.convectivo?'Qf (UF) →':'Qd (dialisato) →'),L.W-160,L.baseY+24);
+  function poly(pts,color,w){ ctx.strokeStyle=color; ctx.lineWidth=w; ctx.beginPath(); for(var i=0;i<pts.length;i++){ var p=pts[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); } ctx.stroke(); }
+  poly(L.pts,'#39c0c8',2);
+  var cu=L.current; ctx.strokeStyle='#e7eef4'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(cu.x,L.padT); ctx.lineTo(cu.x,L.baseY); ctx.stroke(); ctx.setLineDash([]);
+  var col=cu.modo==='CVVHDF'?'#39c0c8':(cu.modo==='CVVH'?'#52c08a':'#e0556b');
+  ctx.fillStyle=col; ctx.fillRect(cu.x-4,cu.y-4,8,8);
+  ctx.fillStyle='#e7eef4'; ctx.fillText(cu.modo+' · '+fmt(cu.clearance,0)+' mL/min',Math.min(cu.x+8,L.W-160),Math.max(cu.y-6,L.padT+10)); }
+['in-modo','in-qb','in-qd','in-qf','in-preFrac','in-koa','in-hct','in-pesoKg','in-ufLiquida','in-refilling'].forEach(function(id){ var el=$(id); el.addEventListener('input',refresh); el.addEventListener('change',refresh); });
+
+var PRESETS={
+  cvvh:{modo:'CVVH',qb:150,qd:0,qf:35,preFrac:0.3,koa:600,hct:0.30,pesoKg:70,ufLiquida:120,refilling:400},
+  cvvhd:{modo:'CVVHD',qb:150,qd:30,qf:0,preFrac:0.3,koa:600,hct:0.30,pesoKg:70,ufLiquida:120,refilling:400},
+  cvvhdf:{modo:'CVVHDF',qb:180,qd:25,qf:25,preFrac:0.3,koa:700,hct:0.30,pesoKg:75,ufLiquida:150,refilling:420},
+  predil:{modo:'CVVH',qb:150,qd:0,qf:45,preFrac:0.6,koa:600,hct:0.40,pesoKg:80,ufLiquida:150,refilling:400},
+  posdil:{modo:'CVVH',qb:120,qd:0,qf:45,preFrac:0,koa:600,hct:0.30,pesoKg:80,ufLiquida:150,refilling:400},
+  instavel:{modo:'CVVHDF',qb:140,qd:22,qf:22,preFrac:0.4,koa:600,hct:0.28,pesoKg:72,ufLiquida:120,refilling:250}
+};
+function applyPreset(p){ var d=PRESETS[p]; if(!d) return;
+  $('in-modo').value=d.modo; $('in-qb').value=d.qb; $('in-qd').value=d.qd; $('in-qf').value=d.qf;
+  $('in-preFrac').value=d.preFrac; $('in-koa').value=d.koa; $('in-hct').value=d.hct; $('in-pesoKg').value=d.pesoKg;
+  $('in-ufLiquida').value=d.ufLiquida; $('in-refilling').value=d.refilling; refresh(); }
+document.querySelector('.presets').addEventListener('click',function(e){ var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset')); });
+
+/* ILUSTRAÇÕES computadas + helper raster */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+function clearMini(state,titulo){ var W=300,H=170,L=clearanceLayout(state,W,H),s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  function path(pts,color){ var d=''; for(var i=0;i<pts.length;i++){ d+=(i===0?'M':'L')+f1(pts[i].x)+' '+f1(pts[i].y)+' '; } return '<path d="'+d+'" fill="none" stroke="'+color+'" stroke-width="2"/>'; }
+  s+=path(L.pts,'#39c0c8');
+  var cu=L.current, col=cu.modo==='CVVHDF'?'#39c0c8':(cu.modo==='CVVH'?'#52c08a':'#e0556b');
+  s+='<rect x="'+f1(cu.x-3)+'" y="'+f1(cu.y-3)+'" width="6" height="6" fill="'+col+'"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'clearance × fluxo')+'</text>';
+  s+='<text x="'+(L.padL+4)+'" y="'+(L.padT+12)+'" fill="#9fb1c0" font-size="8">clearance ↑</text>';
+  s+='<text x="'+(W-8)+'" y="'+(L.baseY-4)+'" fill="#9fb1c0" font-size="8" text-anchor="end">'+(L.convectivo?'Qf →':'Qd →')+'</text>';
+  return svgEl(W,H,s); }
+function compBars(r,titulo){ var W=300,H=170,base=130,s='';
+  function bar(x,frac,color,lab,val){ var h=clampv(frac,0,1)*96; return '<rect x="'+x+'" y="'+f1(base-h)+'" width="46" height="'+f1(h)+'" fill="'+color+'" fill-opacity="0.6" stroke="'+color+'"/>'+
+    '<text x="'+(x+23)+'" y="'+(base+13)+'" fill="#9fb1c0" font-size="9" text-anchor="middle">'+lab+'</text>'+
+    '<text x="'+(x+23)+'" y="'+f1(base-h-4)+'" fill="#e7eef4" font-size="9" text-anchor="middle">'+val+'</text>'; }
+  s+='<line x1="40" y1="34" x2="40" y2="'+base+'" stroke="#3a4a58"/>';
+  // normaliza por 80 mL/min
+  s+=bar(58,r.clDif/80,'#e0556b','difusão',fmt(r.clDif,0));
+  s+=bar(132,r.clConv/80,'#52c08a','convecção',fmt(r.clConv,0));
+  s+=bar(206,r.clearanceTotal/80,'#39c0c8','total',fmt(r.clearanceTotal,0));
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'clearance por física (mL/min)')+'</text>';
+  return svgEl(W,H,s); }
+function modeIcon(r,titulo){ var W=300,H=170,s='';
+  var col=r.modo==='CVVHDF'?'#39c0c8':(r.modo==='CVVH'?'#52c08a':'#e0556b');
+  s+='<rect x="70" y="50" width="160" height="70" rx="10" fill="'+col+'" fill-opacity="0.18" stroke="'+col+'"/>';
+  s+='<text x="150" y="84" fill="'+col+'" font-size="20" text-anchor="middle" font-weight="bold">'+r.modo+'</text>';
+  s+='<text x="150" y="104" fill="#9fb1c0" font-size="10" text-anchor="middle">clearance '+fmt(r.clearanceTotal,0)+' mL/min · dose '+fmt(r.doseEfluente,0)+' mL/kg/h</text>';
+  s+='<text x="'+(W/2)+'" y="20" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'modo')+'</text>';
+  s+='<text x="150" y="146" fill="#e7eef4" font-size="9" text-anchor="middle">'+(r.toleraVolume?'UF < refilling (tolera)':'UF > refilling (risco)')+'</text>';
+  return svgEl(W,H,s); }
+function imgFig(slug,alt){ return '<img src="assets/m27/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+/* TUTOR */
+function R0(extra){ var o={}; if(extra) for(var k in extra) o[k]=extra[k]; return trrc(o); }
+var TUTOR_ILUSTRADO=[
+  {q:'Na CVVH, o soluto sai por…',o:['difusão pelo gradiente','arraste pela água ultrafiltrada (convecção)','adsorção'],c:1,e:'Convecção = solvent drag: o soluto é carregado junto com a água. Clearance ≈ efluente × sieving.',fig:function(){return modeIcon(R0({modo:'CVVH',qf:35,preFrac:0.3}),'CVVH (convecção)');}},
+  {q:'Na CVVHD, no fluxo baixo da TRRC, o clearance ≈…',o:['Qb','Qd (o dialisato satura)','infinito'],c:1,e:'O dialisato satura → clearance ≈ Qd para pequenos solutos; nunca excede Qd.',fig:function(){return modeIcon(R0({modo:'CVVHD',qd:30}),'CVVHD (difusão)');}},
+  {q:'A CVVHDF, comparada a CVVH ou CVVHD isolados, tem clearance…',o:['menor','maior (soma com desconto)','igual'],c:1,e:'Soma difusão + convecção, com desconto de interação; ainda assim maior que cada componente.',fig:function(){return compBars(R0({modo:'CVVHDF',qd:25,qf:25,preFrac:0}),'CVVHDF soma');}},
+  {q:'Subir o Qf na CVVH faz o clearance convectivo…',o:['cair','subir','não mudar'],c:1,e:'Mais ultrafiltração arrasta mais soluto: clearance convectivo sobe com o Qf.',fig:function(){return clearMini({modo:'CVVH',preFrac:0,qb:150,hct:0.30},'Qf↑ → clearance↑');}},
+  {q:'A pré-diluição, comparada à pós, faz o clearance efetivo…',o:['subir','cair (dilui o plasma)','não mudar'],c:1,e:'A reposição antes do filtro dilui o plasma que chega; o clearance efetivo cai, mas protege a membrana.',fig:function(){return clearMini({modo:'CVVH',preFrac:0.6,qb:150,hct:0.40},'pré → clearance↓');}},
+  {q:'A vantagem do "contínuo" sobre a HDI é…',o:['clearance/hora maior','a gentileza hemodinâmica (UF lenta)','custo menor'],c:1,e:'O clearance/hora é menor; a vantagem é remover devagar — o instável tolera (UF < refilling).',fig:function(){return modeIcon(R0({modo:'CVVHDF',qd:22,qf:22,preFrac:0.4,ufLiquida:120,refilling:400}),'contínuo = gentil');}},
+  {q:'Se a UF líquida excede o refilling, o que ocorre?',o:['nada','o plasma colaba → hipotensão (M24)','o filtro melhora'],c:1,e:'A água sai do plasma mais rápido que o refilling a repõe → volume plasmático cai → hipotensão/stunning.',fig:function(){return modeIcon(R0({modo:'CVVHDF',ufLiquida:550,refilling:300}),'UF > refilling');}},
+  {q:'A pós-diluição com FF alta tende a…',o:['proteger o filtro','coagular mais o filtro','baixar o clearance'],c:1,e:'Sem diluir o plasma, a fração de filtração sobe e o sangue hemoconcentra no filtro → coágulo.',fig:function(){return modeIcon(R0({modo:'CVVH',qf:45,preFrac:0,hct:0.30,qb:120}),'pós → coágulo');}},
+  {q:'Na Fig. 1 (CVVH), a água verde representa…',o:['o dialisato','a UF que arrasta o soluto','o sangue'],c:1,e:'A água ultrafiltrada arrasta o soluto (laranja) junto — solvent drag.',fig:function(){return imgFig('cvvh-conveccao.svg','CVVH convecção');}},
+  {q:'Na Fig. 7 (contínuo × intermitente), a ÁREA representa…',o:['o clearance/hora','a dose/24 h (clearance × tempo)','a PAM'],c:1,e:'A área é a dose acumulada em 24 h; ela se equipara à HDI apesar do clearance/hora baixo.',fig:function(){return imgFig('continuo-vs-intermitente.svg','contínuo versus intermitente');}},
+  {q:'Na Fig. 8, o refilling (verde) faz o quê?',o:['tira água do plasma','repõe a água do interstício para o plasma','coagula o filtro'],c:1,e:'O refilling devolve água ao plasma; se a UF é mais lenta que ele, a PAM se mantém.',fig:function(){return imgFig('tolerancia-hemodinamica.svg','tolerância hemodinâmica');}},
+  {q:'Na Fig. 6, a dose da TRRC é medida em…',o:['Kt/V','efluente mL/kg/h','TMP'],c:1,e:'A dose contínua é o efluente (Qd+Qf) por kg por hora; Kt/V é da HDI (M25).',fig:function(){return imgFig('dose-efluente.svg','dose de efluente');}}
+];
+var TUTOR_TEXTUAL=[
+  {q:'A TRRC, fisiologicamente, substitui…',o:['o rim inteiro','FUNÇÕES do rim por física (difusão/convecção/UF)','a creatinina'],c:1,e:'Substitui funções do meio interno por mecanismos físicos (M19), não o órgão.'},
+  {q:'O clearance convectivo (CVVH) é aproximadamente…',o:['Qb','taxa de efluente × sieving','KoA'],c:1,e:'O soluto é arrastado pela água; o clearance ≈ efluente convectivo × coeficiente de sieving.'},
+  {q:'O clearance difusivo (CVVHD), no fluxo baixo da TRRC, satura em…',o:['Qb','Qd','infinito'],c:1,e:'O dialisato atinge a concentração do sangue (satura) → clearance ≈ Qd para pequenos solutos.'},
+  {q:'A CVVHDF é…',o:['só convecção','difusão + convecção (soma com desconto)','só ultrafiltração'],c:1,e:'Soma as duas físicas, com desconto de interação; remove pequenos e médios.'},
+  {q:'A pré-diluição, em relação à pós-diluição…',o:['aumenta o clearance efetivo','reduz o clearance efetivo mas protege a membrana','não muda nada'],c:1,e:'Dilui o plasma antes do filtro: clearance efetivo cai, mas coagula menos.'},
+  {q:'A pós-diluição é…',o:['menos eficiente','mais eficiente, porém coagula mais (FF alta)','sempre proibida'],c:1,e:'Não dilui o plasma → clearance cheio; mas a fração de filtração sobe e o filtro coagula.'},
+  {q:'A dose da TRRC é prescrita por…',o:['Kt/V','efluente em mL/kg/h (~25)','número de sessões'],c:1,e:'Dose = efluente (Qd+Qf) ÷ peso, em mL/kg/h; alvo ~25 (M28).'},
+  {q:'O "contínuo" troca eficiência por hora por…',o:['custo','gentileza hemodinâmica (UF < refilling)','tempo de UTI'],c:1,e:'Remove devagar e por 24 h; a UF lenta mantém a PAM — o instável tolera.'},
+  {q:'A dose/24 h da TRRC, comparada à HDI…',o:['é sempre menor','pode se equiparar apesar do clearance/hora baixo','é sempre maior'],c:1,e:'A área (clearance × 24 h) equipara-se à HDI; a vantagem é a tolerância, não a dose.'},
+  {q:'Se a UF excede o refilling plasmático…',o:['a PAM sobe','o plasma colaba → hipotensão intradialítica (M24)','o filtro dura mais'],c:1,e:'A água sai do plasma mais rápido que o refilling a repõe → hipotensão e stunning.'},
+  {q:'Aumentar o KoA da membrana, na difusão…',o:['reduz o clearance','aproxima da saturação (clearance ↑ até o teto Qd)','não tem efeito'],c:1,e:'KoA melhor aproxima a saturação; mas o teto é Qd, não a membrana.'},
+  {q:'Em síntese, escolhe-se a TRRC pela…',o:['rapidez','estabilidade hemodinâmica (remover devagar)','simplicidade'],c:1,e:'O instável tolera a remoção lenta e contínua — o cerne do "contínuo".'}
+];
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL; window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+var BANKS={ilustrada:TUTOR_ILUSTRADO,textual:TUTOR_TEXTUAL}, curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+function renderTutor(){ var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():''; $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false; $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){ if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button'); btns[item.c].classList.add('ok'); if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block'; fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e; $('tutor-score').textContent=tScore; $('tutor-total').textContent=tTotal; });
+    box.appendChild(b); }); }
+$('banktabs').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor(); });
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+$('draw-cvvh').innerHTML = modeIcon(trrc({modo:'CVVH',qf:35,preFrac:0.3}),'CVVH — convecção');
+$('draw-cvvhd').innerHTML = clearMini({modo:'CVVHD',koa:600},'CVVHD — clearance ≈ Qd');
+$('draw-diluicao').innerHTML = clearMini({modo:'CVVH',preFrac:0.6,qb:150,hct:0.40},'pré-diluição achata');
+$('draw-continuo').innerHTML = compBars(trrc({modo:'CVVHDF',qd:25,qf:25,preFrac:0.3}),'contínuo — clearance/min baixo');
+$('draw-tolera').innerHTML = modeIcon(trrc({modo:'CVVHDF',qd:22,qf:22,preFrac:0.4,ufLiquida:120,refilling:400}),'UF lenta < refilling');
+$('fig-caso').innerHTML = modeIcon(trrc({modo:'CVVHDF',qb:140,qd:22,qf:22,preFrac:0.4,ufLiquida:120,refilling:250}),'o caso: TRRC gentil') + clearMini({modo:'CVVHDF',preFrac:0.4},'clearance × fluxo');
+
+refresh(); renderTutor();
+</script>
+</body>
+</html>

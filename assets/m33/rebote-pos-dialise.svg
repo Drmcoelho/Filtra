@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" font-family="Georgia,serif">
+  <rect width="640" height="340" fill="#0a1016"/>
+  <rect x="2" y="2" width="636" height="336" rx="6" fill="none" stroke="#283642" stroke-width="2"/>
+  <text x="320" y="30" text-anchor="middle" font-size="17" font-weight="bold" fill="#e7eef4">O rebote pós-diálise — o nível volta a subir</text>
+  <text x="320" y="50" text-anchor="middle" font-size="11" fill="#9fb1c0">Vd alto (lítio): os tecidos reenchem o sangue depois de desligar a máquina</text>
+
+  <line x1="70" y1="80" x2="70" y2="270" stroke="#3a4a58" stroke-width="1.5"/>
+  <line x1="70" y1="270" x2="590" y2="270" stroke="#3a4a58" stroke-width="1.5"/>
+  <text x="40" y="100" text-anchor="middle" font-size="10" fill="#9fb1c0">nível</text>
+  <text x="40" y="116" text-anchor="middle" font-size="9" fill="#9fb1c0">(mEq/L)</text>
+  <text x="320" y="292" text-anchor="middle" font-size="10" fill="#9fb1c0">tempo (h)</text>
+
+  <!-- fim de sessao -->
+  <line x1="320" y1="80" x2="320" y2="270" stroke="#283642" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="320" y="78" text-anchor="middle" font-size="9" fill="#9fb1c0">fim da sessão</text>
+  <text x="190" y="78" text-anchor="middle" font-size="9" fill="#39c0c8">HD ligada</text>
+  <text x="460" y="78" text-anchor="middle" font-size="9" fill="#e0556b">HD desligada</text>
+
+  <!-- alvo -->
+  <line x1="70" y1="230" x2="590" y2="230" stroke="#52c08a" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="582" y="225" text-anchor="end" font-size="9" fill="#52c08a">alvo seguro</text>
+
+  <!-- queda durante HD -->
+  <path d="M70 100 Q200 200 320 245" fill="none" stroke="#39c0c8" stroke-width="3"/>
+  <!-- rebote depois -->
+  <path d="M320 245 Q420 215 500 200 T590 192" fill="none" stroke="#e0556b" stroke-width="3"/>
+  <text x="470" y="180" font-size="11" fill="#e0556b" font-weight="bold">REBOTE ↑</text>
+  <circle cx="320" cy="245" r="4" fill="#e7eef4"/>
+  <text x="330" y="262" font-size="9" fill="#e7eef4">menor nível</text>
+
+  <text x="320" y="316" text-anchor="middle" font-size="11" fill="#e7eef4">o nível ultrapassa o alvo de novo → reavaliar e, muitas vezes, REPETIR a sessão</text>
+  <text x="320" y="334" text-anchor="middle" font-size="9" fill="#9fb1c0" opacity="0.6">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" font-family="system-ui,Segoe UI,Arial">
+  <rect width="480" height="300" fill="#0a1016"/>
+  <text x="240" y="26" fill="#39c0c8" font-size="15" font-weight="bold" text-anchor="middle">Eficiência por hora × duração</text>
+  <!-- two boxes comparing -->
+  <rect x="36" y="60" width="190" height="190" rx="8" fill="#52c08a" fill-opacity="0.08" stroke="#52c08a" stroke-width="1.5"/>
+  <text x="131" y="84" fill="#52c08a" font-size="13" font-weight="bold" text-anchor="middle">HDI</text>
+  <text x="131" y="102" fill="#9fb1c0" font-size="10" text-anchor="middle">clearance/h ALTO · curto</text>
+  <!-- tall narrow bar -->
+  <rect x="96" y="120" width="34" height="110" fill="#52c08a" fill-opacity="0.55" stroke="#52c08a"/>
+  <text x="113" y="245" fill="#9fb1c0" font-size="9" text-anchor="middle">4 h</text>
+  <text x="113" y="114" fill="#cfe6e8" font-size="9" text-anchor="middle">alta/h</text>
+
+  <rect x="254" y="60" width="190" height="190" rx="8" fill="#39c0c8" fill-opacity="0.08" stroke="#39c0c8" stroke-width="1.5"/>
+  <text x="349" y="84" fill="#39c0c8" font-size="13" font-weight="bold" text-anchor="middle">SLED</text>
+  <text x="349" y="102" fill="#9fb1c0" font-size="10" text-anchor="middle">clearance/h BAIXO · longo</text>
+  <!-- short wide bar -->
+  <rect x="290" y="178" width="118" height="52" fill="#39c0c8" fill-opacity="0.55" stroke="#39c0c8"/>
+  <text x="349" y="245" fill="#9fb1c0" font-size="9" text-anchor="middle">10 h</text>
+  <text x="349" y="172" fill="#cfe6e8" font-size="9" text-anchor="middle">baixa/h</text>
+  <!-- equal area note -->
+  <text x="240" y="278" fill="#e8a13a" font-size="11" text-anchor="middle">mesma ÁREA (Kt total) — alta×curta ≈ baixa×longa</text>
+</svg>

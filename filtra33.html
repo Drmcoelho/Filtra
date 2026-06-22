@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M33 — Remoção de toxinas: intoxicações dialisáveis</title>
+<style>
+  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--warn:#e8a13a;--bad:#e0556b;--good:#52c08a;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none} section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .presets{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px} .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)} .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)} .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)} .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M33</div>
+  <h1>Remoção de toxinas — intoxicações dialisáveis (lítio · salicilato · metanol · etilenoglicol)</h1>
+  <div class="sub">A diálise não é só para a uremia: ela é um <b>antídoto físico</b>. Uma toxina é <b>dialisável</b>
+  quando tem <b>baixo peso molecular</b>, <b>baixa ligação proteica</b> (só a fração livre passa), <b>baixo Vd</b>
+  (mora no sangue, não nos tecidos) e é <b>hidrossolúvel</b>. O <b>lítio</b> (Vd baixo, ligação zero) é muito
+  dialisável — mas <b>rebota</b> dos tecidos; o <b>salicilato</b>, o <b>metanol</b> e o <b>etilenoglicol</b> são
+  removidos <b>e</b> a HD ainda <b>corrige a acidose</b> que eles geram (com fomepizol travando a enzima que cria o
+  metabólito). A <b>digoxina</b> (Vd ~6) é a <b>fronteira</b>: não dialisa. O alvo é a <b>homeostasia</b> — devolver
+  o meio interno à faixa removendo o veneno por <b>difusão</b> rápida (clearance alto).</div>
+  <nav class="hex">
+    <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
+    <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="dialisa.html">&larr; índice do antebraço DIALISA</a>
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- CONCEITO -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — a toxina passa, ou fica retida?</h3>
+      <p class="sub" style="margin-top:0"><b>A dialisabilidade é física, não tabela.</b> Quatro propriedades decidem
+      se a membrana remove a toxina; depois, o nível e a gravidade decidem se vale dialisar; por fim, o Vd decide se o
+      nível vai <b>rebotar</b>. As Fig. 1–8 voltam no Caso, na Trilha e na Avaliação. Atribuição em
+      <code>CREDITS.md</code> (em curadoria).</p>
+
+      <h4>1. Os quatro critérios da dialisabilidade</h4>
+      <p class="sub">Pense na membrana como uma peneira fina. <b>PM baixo</b> atravessa; <b>pouca ligação proteica</b>
+      deixa a droga <b>livre</b> (a ligada à albumina é grande demais); <b>Vd baixo</b> mantém a toxina no
+      <b>sangue</b> — o único compartimento que a máquina alcança; e <b>hidrossolúvel</b> não se esconde na gordura.
+      O score sai do <b>produto</b> dos quatro: um fator ruim derruba tudo.</p>
+      <div class="frow">
+        <div class="concept" id="draw-criterios"></div>
+        <figure class="fviva"><img src="assets/m33/dialisabilidade-criterios.svg" alt="Os quatro critérios da dialisabilidade: PM, ligação, Vd, hidrossolubilidade" loading="lazy">
+          <figcaption><b>Fig. 1 · Os 4 critérios.</b> <b>①</b> PM baixo passa pela membrana; <b>②</b> só a fração
+          <i>livre</i> (1−ligação) dialisa; <b>③</b> Vd baixo mantém a toxina no sangue; <b>④</b> hidrossolúvel não se
+          sequestra na gordura. O score é o <b>produto</b> — qualquer fator ruim mata a dialisabilidade. Lítio pontua
+          alto; digoxina (Vd ~6) é blindada.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m33/ligacao-proteica-barreira.svg" alt="A ligação proteica é barreira: só a fração livre dialisa" loading="lazy">
+          <figcaption><b>Fig. 2 · A barreira da ligação.</b> À esquerda, ligação <b>baixa</b>: as moléculas livres
+          (verdes) cruzam a membrana (tracejado azul). À direita, ligação <b>alta</b>: presas à albumina (cinza), são
+          grandes demais e ficam retidas. <b>f_livre = 1 − ligação</b>: a alta ligação proteica <b>mata</b> a
+          dialisabilidade.</figcaption></figure>
+      </div>
+
+      <h4>2. O lítio — muito dialisável, mas rebota dos tecidos</h4>
+      <p class="sub">O lítio é o caso-modelo: <b>PM 7</b>, <b>ligação zero</b>, <b>Vd 0,7 L/kg</b> → score altíssimo. A HD
+      esvazia o <b>sangue</b> depressa. O problema é o <b>pool intracelular</b>: o íon vive dentro da célula, e quando a
+      máquina desliga os tecidos <b>reenchem</b> o sangue → o nível (mEq/L) <b>sobe</b> de novo. Por isso o lítio pede
+      <b>reavaliar</b> o nível pós-sessão e, com frequência, <b>repetir</b>.</p>
+      <div class="frow">
+        <div class="concept" id="draw-litio"></div>
+        <figure class="fviva"><img src="assets/m33/litio-vd-tecidos.svg" alt="Lítio: muito dialisável mas rebota dos tecidos intracelulares" loading="lazy">
+          <figcaption><b>Fig. 3 · O lítio rebota.</b> A HD remove o íon do <b>sangue</b> (azul) rápido; mas o
+          reservatório está nos <b>tecidos</b> (laranja). Desligada a máquina, a seta vermelha mostra o
+          <b>reequilíbrio</b>: os tecidos reenchem o plasma. Vd baixo no plasma → dialisável; pool intracelular →
+          nível sobe → repetir a sessão.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m33/rebote-pos-dialise.svg" alt="O rebote pós-diálise: o nível volta a subir após a sessão" loading="lazy">
+          <figcaption><b>Fig. 4 · O rebote no tempo.</b> Durante a HD (azul) o nível despenca; ao desligar, a curva
+          vermelha <b>sobe</b> — o nível ultrapassa o alvo de novo. O ponto branco é o menor nível (fim de sessão). Vd
+          alto → rebote grande → reavaliar e repetir. Toxinas de Vd baixo quase não rebotam.</figcaption></figure>
+      </div>
+
+      <h4>3. Salicilato, metanol, etilenoglicol — a HD remove o tóxico E corrige o ácido</h4>
+      <p class="sub">Estes três geram <b>acidose metabólica</b>. A HD é dupla: tira a toxina <b>e</b> repõe tampão
+      (HCO₃⁻ do banho) — o ânion-gap fecha. No <b>salicilato</b>, a acidemia ainda joga mais droga para a forma livre,
+      <b>aumentando</b> a remoção. No <b>metanol</b> e no <b>etilenoglicol</b>, o álcool-pai é pouco tóxico; o
+      metabólito (formato, oxalato) é que mata — o <b>fomepizol bloqueia a álcool-desidrogenase</b> e fecha a fábrica do
+      veneno, enquanto a HD esvazia o tanque.</p>
+      <div class="frow">
+        <div class="concept" id="draw-salicilato"></div>
+        <figure class="fviva"><img src="assets/m33/salicilato-acidose.svg" alt="Salicilato: a HD remove o tóxico e corrige a acidose metabólica" loading="lazy">
+          <figcaption><b>Fig. 5 · Dois alvos, um procedimento.</b> <b>①</b> A HD remove o salicilato (mg/dL) por
+          difusão — e na acidemia há mais fração <i>livre</i>, então remove ainda mais. <b>②</b> O banho repõe HCO₃⁻
+          (mEq/L) e o pH sobe — menos salicilato não-ionizado entra no SNC. Veneno e acidose caem
+          juntos.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m33/metanol-etilenoglicol-via.svg" alt="Metanol e etilenoglicol: a via tóxica e o duplo bloqueio fomepizol mais HD" loading="lazy">
+          <figcaption><b>Fig. 6 · A via tóxica e o duplo ataque.</b> A álcool-desidrogenase (ADH) converte
+          metanol→<b>formato</b> e etilenoglicol→<b>oxalato</b>. O <b>fomepizol</b> (laranja, ✕) <b>bloqueia a ADH</b> e
+          trava a produção do metabólito; a <b>HD</b> (verde) remove o álcool-pai e o metabólito E corrige a acidose —
+          clearance alto, rápido.</figcaption></figure>
+      </div>
+
+      <h4>4. A cinética — a queda exponencial e o tempo até o alvo</h4>
+      <p class="sub">Removida a toxina dialisável, o nível cai <b>exponencialmente</b>: <b>C(t) = C₀·e^(−K·t/V)</b>, com
+      K = clearance da máquina + clearance endógeno (mL/min) e V o volume de distribuição (Vd·peso). Clearance alto →
+      <b>meia-vida curta</b> → o nível cruza o alvo seguro em <b>poucas horas</b>. O rim sozinho mal arranha a curva.
+      Isso é o que faz da HD o <b>antídoto rápido</b>.</p>
+      <div class="frow">
+        <div class="concept" id="draw-queda"></div>
+        <figure class="fviva"><img src="assets/m33/queda-nivel-hd.svg" alt="A queda exponencial do nível da toxina com a hemodiálise" loading="lazy">
+          <figcaption><b>Fig. 7 · A queda exponencial.</b> Com HD (azul) o nível despenca de C₀ e cruza o <b>limiar</b>
+          (laranja) e o <b>alvo</b> (verde) em <b>t_alvo</b>. Sem HD (cinza, só o rim) a queda é lenta. A inclinação é o
+          clearance (mL/min): quanto maior, mais curta a meia-vida intradialítica.</figcaption></figure>
+      </div>
+
+      <h4>5. A indicação — passa pela membrana E há gatilho</h4>
+      <p class="sub">Indicar a HD por toxina exige <b>duas</b> condições. Primeiro: a toxina é <b>dialisável</b> (score
+      ≥ 0,4)? Se não — Vd alto ou muito ligada, como a <b>digoxina</b> — a máquina <b>não ajuda</b> (trata-se com
+      antídoto específico, p.ex. Fab antidigoxina). Se sim: há <b>gatilho</b> — nível acima do limiar, sintomas graves,
+      ou acidose refratária? Então <b>dialisa</b>: remove o veneno e, quando aplicável, corrige o ácido.</p>
+      <div class="frow">
+        <div class="concept" id="draw-indicacao"></div>
+        <figure class="fviva"><img src="assets/m33/indicacao-hd-toxina.svg" alt="Fluxograma da indicação de hemodiálise por toxina" loading="lazy">
+          <figcaption><b>Fig. 8 · O algoritmo da indicação.</b> Pergunta-se primeiro <b>se</b> a toxina dialisa: não →
+          a HD não ajuda (Vd alto/ligação alta). Sim → há <b>gatilho</b> (nível, gravidade, acidose)? Então
+          <b>indica</b> — remove o tóxico e corrige a acidose. A homeostasia volta porque a física removeu o veneno, não
+          porque o rim funcionou.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASO -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — cinco intoxicações, decida antes de revelar</h3>
+      <p class="sub">Emergência. Cinco quadros. A pergunta de cada um: <b>essa toxina dialisa? Indica HD? Vai
+      rebotar?</b> Volte às Fig. 1, 3, 6 e 8: a física decide.</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step"><b>Ato 1 — lítio 4,0 mEq/L, tremor e confusão.</b> Uso crônico, função renal piorando, neuro
+        alterado. Dialisa? E depois da sessão?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>Sim — HD; e cuidado com o REBOTE.</b> O lítio é <b>muito dialisável</b> (PM 7,
+          ligação 0, Vd 0,7; Fig. 1/3): a HD baixa o nível depressa. Mas o íon está nos <b>tecidos</b> — ao desligar, o
+          nível <b>sobe</b> (Fig. 4). Reavaliar o nível (mEq/L) pós-sessão e, quase sempre, <b>repetir</b>. O nível
+          isolado não basta: a tendência conta.</div></div>
+
+      <div class="step"><b>Ato 2 — salicilato 90 mg/dL, taquipneia, acidose.</b> Tentativa de autoextermínio com AAS,
+        ânion-gap alto, zumbido. Por que a HD faz dois trabalhos?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2"><b>HD — remove o tóxico E corrige o ácido.</b> PM 138, Vd baixo → dialisável; e na
+          <b>acidemia</b> mais salicilato fica <b>livre</b> (mais removível, Fig. 5). A HD ainda repõe HCO₃⁻: o pH sobe,
+          menos droga não-ionizada entra no SNC. Dois alvos, um procedimento. O nível alto (mg/dL) + acidose é o
+          gatilho.</div></div>
+
+      <div class="step"><b>Ato 3 — metanol, gap osmolar alto, visão borrada.</b> Ingestão de "álcool" adulterado, ainda
+        sem acidose franca. Espera a acidose para agir?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3"><b>Não — fomepizol JÁ + HD.</b> O metanol é pouco tóxico; o <b>formato</b> é que
+          cega e acidifica (Fig. 6). O <b>fomepizol bloqueia a ADH</b> e trava a produção do metabólito <i>antes</i> de
+          o dano se instalar. A <b>HD</b> (PM 32, Vd baixo) remove o álcool-pai e o formato E corrige o ácido —
+          clearance alto, rápido. Não se espera o estrago.</div></div>
+
+      <div class="step"><b>Ato 4 — etilenoglicol, cristais na urina, LRA incipiente.</b> Ingestão de anticongelante,
+        oxalato de cálcio no sedimento. Mesma lógica do metanol?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>Sim — fomepizol + HD.</b> A ADH converte etilenoglicol → glicolato/<b>oxalato</b>,
+          que precipita e causa LRA (Fig. 6). O <b>fomepizol</b> fecha a fábrica; a <b>HD</b> (PM 62, Vd baixo) remove o
+          álcool e o metabólito E corrige a acidose. A LRA por oxalato reforça a indicação: o rim já não depura.</div></div>
+
+      <div class="step"><b>Ato 5 — digoxina, nível 10 ng/mL, arritmia (a fronteira).</b> Intoxicação digitálica grave,
+        bradicardia, hipercalemia. A HD resolve o nível?
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>Não — a HD NÃO remove (Vd ~6 L/kg).</b> A digoxina mora nos <b>tecidos</b>: o
+          Vd enorme <b>blinda</b> a droga (score baixo, Fig. 1/8) — clearance alto não a alcança. O antídoto é o
+          <b>Fab antidigoxina</b>, não a máquina. A fronteira do módulo: nem todo veneno grave é dialisável; o Vd manda.</div></div>
+    </div>
+  </section>
+
+  <!-- TRILHA -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — nove perguntas que constroem a dialisabilidade</h3>
+      <details><summary>1. O que torna uma toxina dialisável?</summary><p>Quatro propriedades: <b>PM baixo</b>
+        (atravessa a membrana), <b>baixa ligação proteica</b> (só a fração livre passa), <b>Vd baixo</b> (mora no
+        sangue) e ser <b>hidrossolúvel</b>. O score é o produto — um fator ruim derruba tudo (Fig. 1).</p></details>
+      <details><summary>2. Por que só a fração livre dialisa?</summary><p>A droga ligada à albumina vira um complexo
+        <b>grande</b> demais para cruzar a membrana. <b>f_livre = 1 − ligação</b>. Ligação alta (≥85%) praticamente
+        anula a remoção, mesmo com PM e Vd favoráveis (Fig. 2).</p></details>
+      <details><summary>3. Por que o Vd alto blinda a droga?</summary><p>Vd alto significa que a toxina está nos
+        <b>tecidos</b>, não no sangue. A máquina só alcança o <b>compartimento sanguíneo</b>; pouca droga lá → pouca
+        removida, mesmo com clearance alto. É o caso da digoxina (Vd ~6 L/kg).</p></details>
+      <details><summary>4. O lítio é dialisável. Qual o porém?</summary><p>É muito dialisável (PM 7, ligação 0, Vd
+        0,7). Mas o íon é <b>intracelular</b>: ao desligar a máquina, os tecidos <b>reenchem</b> o sangue → o nível
+        (mEq/L) <b>rebota</b> (Fig. 3/4). Reavaliar pós-sessão e repetir.</p></details>
+      <details><summary>5. Como a HD ajuda na acidose do salicilato/metanol?</summary><p>Além de remover a toxina, o
+        <b>banho repõe HCO₃⁻</b> (tampão): o ânion-gap fecha. No salicilato, a acidemia ainda solta mais droga (mais
+        livre → mais removível). Dois alvos, um procedimento (Fig. 5).</p></details>
+      <details><summary>6. O que faz o fomepizol no metanol/etilenoglicol?</summary><p><b>Bloqueia a
+        álcool-desidrogenase (ADH)</b> — a enzima que converte o álcool-pai no metabólito tóxico (formato, oxalato).
+        Trava a fábrica do veneno; a HD esvazia o tanque já formado (Fig. 6).</p></details>
+      <details><summary>7. Como cai o nível da toxina com a HD?</summary><p><b>Exponencialmente</b>: C(t) =
+        C₀·e^(−K·t/V), K = clearance total (mL/min), V = Vd·peso. Clearance alto → meia-vida curta → o nível cruza o
+        alvo em poucas horas (Fig. 7). O rim sozinho mal arranha a curva.</p></details>
+      <details><summary>8. Quando indicar a HD por toxina?</summary><p>Duas condições: a toxina é <b>dialisável</b>
+        (score ≥ 0,4) E há <b>gatilho</b> — nível acima do limiar, sintomas graves, ou acidose refratária. Sem
+        dialisabilidade, a máquina não ajuda, por mais grave que seja (Fig. 8).</p></details>
+      <details><summary>9. Em que sentido isto restaura a homeostasia?</summary><p>A HD age como um <b>antídoto
+        físico</b>: por difusão remove o veneno e por tampão repõe a base. O meio interno (eletrólitos, ácido-base,
+        escórias) volta à faixa — não porque o rim funcionou, mas porque a física substituiu a depuração que
+        faltava.</p></details>
+    </div>
+  </section>
+
+  <!-- INSTRUMENTO -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — a queda do nível × tempo (com HD, sem HD, e o rebote)</h3>
+      <p class="sub">Os controles do <b>Lab</b> movem estas curvas. Eixo horizontal = <b>tempo</b> (min/h); eixo
+      vertical = <b>nível</b> da toxina (na unidade dela). A curva <b>azul</b> é o nível <b>com HD</b> — despenca na
+      sessão e, se o Vd for alto, <b>rebota</b> depois; a <b>cinza</b> é só o clearance endógeno (o rim). As linhas
+      tracejadas marcam o <b>limiar</b> (laranja) e o <b>alvo seguro</b> (verde). Quanto maior o clearance e menor o Vd,
+      mais cedo o nível cruza o alvo.</p>
+      <canvas id="nivel-canvas" width="900" height="360" aria-label="Queda do nível da toxina ao longo do tempo"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- LAB -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — escolha a toxina; veja dialisabilidade, indicação, tempo e rebote</h3>
+      <div class="grid">
+        <div>
+          <label>Toxina</label>
+          <select id="in-toxina">
+            <option value="litio">Lítio</option>
+            <option value="salicilato">Salicilato (AAS)</option>
+            <option value="metanol">Metanol</option>
+            <option value="etilenoglicol">Etilenoglicol</option>
+            <option value="digoxina">Digoxina (fronteira: não dialisa)</option>
+            <option value="custom">— manual (sliders) —</option>
+          </select>
+          <label>Nível atual (na unidade da toxina): <span class="val" id="lbl-nivel">3.5</span></label>
+          <input type="range" id="in-nivel" min="0" max="120" step="0.5" value="3.5">
+          <label>PM (Da) [modo manual]: <span class="val" id="lbl-pm">100</span></label>
+          <input type="range" id="in-pm" min="1" max="6000" step="1" value="100">
+          <label>Ligação proteica (fração) [manual]: <span class="val" id="lbl-ligacao">0.30</span></label>
+          <input type="range" id="in-ligacao" min="0" max="0.99" step="0.01" value="0.3">
+          <label>Vd (L/kg) [manual]: <span class="val" id="lbl-vd">0.60</span></label>
+          <input type="range" id="in-vd" min="0.05" max="8" step="0.05" value="0.6">
+        </div>
+        <div>
+          <label>Hidrossolubilidade (0 lipo → 1 hidro) [manual]: <span class="val" id="lbl-hidro">0.80</span></label>
+          <input type="range" id="in-hidro" min="0" max="1" step="0.05" value="0.8">
+          <label>Clearance do dialisador (mL/min): <span class="val" id="lbl-kdial">180</span></label>
+          <input type="range" id="in-kdial" min="60" max="350" step="5" value="180">
+          <label>Peso (kg): <span class="val" id="lbl-peso">70</span></label>
+          <input type="range" id="in-peso" min="40" max="160" step="1" value="70">
+          <label>Tempo de sessão (min): <span class="val" id="lbl-tSessao">240</span></label>
+          <input type="range" id="in-tSessao" min="60" max="600" step="10" value="240">
+          <label>Sintomas/gravidade (0 → 1): <span class="val" id="lbl-sintomas">0.0</span></label>
+          <input type="range" id="in-sintomas" min="0" max="1" step="0.1" value="0">
+          <label>Acidose (0 → 1): <span class="val" id="lbl-acidose">0.0</span></label>
+          <input type="range" id="in-acidose" min="0" max="1" step="0.1" value="0">
+        </div>
+      </div>
+
+      <div class="presets">
+        <button class="act" data-preset="litio">Lítio</button>
+        <button class="act" data-preset="salicilato">Salicilato</button>
+        <button class="act" data-preset="metanol">Metanol</button>
+        <button class="act" data-preset="altaligacao">Alta ligação (não dialisa)</button>
+        <button class="act" data-preset="digoxina">Digoxina (Vd alto)</button>
+      </div>
+
+      <table>
+        <tr><th>Saída</th><th>Atual</th><th>Comentário</th></tr>
+        <tr><td>Dialisabilidade (score 0–1)</td><td class="num" id="out-score">—</td><td class="num">PM · ligação · Vd · hidro</td></tr>
+        <tr><td>Indicação de HD</td><td class="num" id="out-indica">—</td><td class="num">dialisável + gatilho</td></tr>
+        <tr><td>Fração removida na sessão</td><td class="num" id="out-fracao">—</td><td class="num">wash-out exponencial</td></tr>
+        <tr><td>Tempo até o alvo seguro</td><td class="num" id="out-talvo">—</td><td class="num">C(t) cruza o alvo</td></tr>
+        <tr><td>Rebote pós-diálise</td><td class="num" id="out-rebote">—</td><td class="num">Vd alto → reequilíbrio</td></tr>
+        <tr><td>Correção da acidose / fomepizol</td><td class="num" id="out-acido">—</td><td class="num">tóxico E ácido</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÃO -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (12)</button>
+        <button data-bank="textual">Textual (12)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica</b>. Este módulo M33 modela a
+    remoção de toxinas (dialisabilidade, cinética de queda do nível, rebote, indicação) como simplificação didática
+    calibrada para ensinar o <b>mecanismo</b> — não um protocolo de manejo toxicológico para um paciente real. Os
+    níveis, limiares e tempos são ilustrativos. Não substitui julgamento clínico nem consulta a centro de informação
+    toxicológica; a decisão e a responsabilidade finais são sempre do profissional.
+  </div>
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+</div>
+
+<script>
+/* ENGINE INLINE — espelho fiel de build/m33/model33.js */
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
+var TOXINAS={
+  custom:{nome:'— manual (sliders) —',unidade:'mmol/L',pm:100,lig:0.3,vd:0.6,hidro:0.8,c0:4,alvo:1,limiar:2.5,corrigeAcido:false,fomepizol:false,alvoMolec:'definido nos sliders',nota:'ajuste PM, ligação, Vd à mão'},
+  litio:{nome:'Lítio',unidade:'mEq/L',pm:7,lig:0.0,vd:0.7,hidro:1.0,c0:3.5,alvo:1.0,limiar:4.0,corrigeAcido:false,fomepizol:false,alvoMolec:'íon monovalente (estabilizador de humor)',nota:'PM ínfimo, ligação ZERO, Vd baixo -> ALTAMENTE dialisável; MAS rebota dos tecidos (pool intracelular) -> reavaliar o nível e repetir a sessão'},
+  salicilato:{nome:'Salicilato (AAS)',unidade:'mg/dL',pm:138,lig:0.55,vd:0.2,hidro:0.9,c0:90,alvo:30,limiar:80,corrigeAcido:true,fomepizol:false,alvoMolec:'desacopla a fosforilação oxidativa',nota:'PM baixo, Vd baixo; a ligação satura e o Vd sobe na acidemia (mais fração livre) -> dialisável; a HD remove o tóxico E corrige a acidose metabólica'},
+  metanol:{nome:'Metanol',unidade:'mg/dL',pm:32,lig:0.0,vd:0.6,hidro:1.0,c0:60,alvo:20,limiar:50,corrigeAcido:true,fomepizol:true,alvoMolec:'metabolizado a FORMATO (toxina retiniana/SNC)',nota:'PM ínfimo, ligação zero, Vd baixo -> muito dialisável; a HD remove o álcool E o ácido (formato + acidose). Fomepizol BLOQUEIA a ADH e trava a produção de formato'},
+  etilenoglicol:{nome:'Etilenoglicol',unidade:'mg/dL',pm:62,lig:0.0,vd:0.65,hidro:1.0,c0:60,alvo:20,limiar:50,corrigeAcido:true,fomepizol:true,alvoMolec:'metabolizado a OXALATO (cristais -> LRA)',nota:'PM baixo, Vd baixo -> dialisável; a HD remove o álcool E o ácido. Fomepizol BLOQUEIA a ADH e trava a produção de glicolato/oxalato'},
+  digoxina:{nome:'Digoxina',unidade:'ng/mL',pm:781,lig:0.25,vd:6.0,hidro:0.3,c0:6,alvo:2,limiar:5,corrigeAcido:false,fomepizol:false,alvoMolec:'Na/K-ATPase (cardiotônico)',nota:'FRONTEIRA: Vd ENORME (~6 L/kg) -> mora nos tecidos -> NÃO dialisável; trata-se com Fab antidigoxina, não com a máquina'}
+};
+function dialisabilidade(input){ var inp=input||{};
+  var pm=clampv(inp.pm!==undefined?inp.pm:100,1,60000);
+  var ligacao=clampv(inp.ligacao!==undefined?inp.ligacao:0.3,0,0.999);
+  var vd=clampv(inp.vd!==undefined?inp.vd:0.6,0.05,30);
+  var hidro=clampv(inp.hidro!==undefined?inp.hidro:0.8,0,1);
+  var fPM=clampv(1/(1+Math.pow(pm/1500,2.2)),0,1);
+  var fLig=clampv(1-ligacao,0.001,1);
+  var fVd=clampv(1/(1+Math.pow(vd/1.2,1.8)),0,1);
+  var fHidro=clampv(0.3+0.7*hidro,0,1);
+  var score=clampv(fPM*fLig*fVd*fHidro,0,1);
+  return {pm:pm,ligacao:ligacao,vd:vd,hidro:hidro,fPM:fPM,fLig:fLig,fVd:fVd,fHidro:fHidro,score:score}; }
+function remocao(input){ var inp=input||{};
+  var c0=clampv(inp.c0!==undefined?inp.c0:4,0,1e6);
+  var alvo=clampv(inp.alvo!==undefined?inp.alvo:1,0,1e6);
+  var kdial=clampv(inp.kdial!==undefined?inp.kdial:180,0,400);
+  var kendo=clampv(inp.kendo!==undefined?inp.kendo:10,0,400);
+  var vd=clampv(inp.vd!==undefined?inp.vd:0.6,0.05,30);
+  var peso=clampv(inp.peso!==undefined?inp.peso:70,20,250);
+  var t=clampv(inp.t!==undefined?inp.t:240,1,1440);
+  var kTotal=clampv(kdial+kendo,0.001,800);
+  var vmL=clampv(vd*peso,1,7500)*1000;
+  var kRate=kTotal/vmL;
+  var ct=clampv(c0*Math.exp(-kRate*t),0,1e6);
+  var fracaoRemovida=c0>1e-12?clampv(1-ct/c0,0,1):0;
+  var tAlvoMin=(c0>alvo&&alvo>0&&kRate>1e-12)?clampv(Math.log(c0/alvo)/kRate,0,1e6):0;
+  var tAlvoH=tAlvoMin/60;
+  var meiaVida=kRate>1e-12?clampv(0.693/kRate,0,1e7):1e7;
+  return {c0:c0,alvo:alvo,kdial:kdial,kendo:kendo,vd:vd,peso:peso,t:t,kTotal:kTotal,vmL:vmL,kRate:kRate,ct:ct,fracaoRemovida:fracaoRemovida,tAlvoMin:tAlvoMin,tAlvoH:tAlvoH,meiaVida:meiaVida}; }
+function rebote(input){ var inp=input||{};
+  var vd=clampv(inp.vd!==undefined?inp.vd:0.6,0.05,30);
+  var fracaoRemovida=clampv(inp.fracaoRemovida!==undefined?inp.fracaoRemovida:0.5,0,1);
+  var ctFim=clampv(inp.ctFim!==undefined?inp.ctFim:0,0,1e6);
+  var potencialVd=clampv((vd/(vd+1.0)),0,1);
+  var fracaoRebote=clampv(potencialVd*(0.4+0.6*fracaoRemovida),0,0.9);
+  var nivelPosRebote=clampv(ctFim*(1+fracaoRebote*3),0,1e6);
+  var reboteSignificativo=fracaoRebote>=0.30;
+  return {vd:vd,potencialVd:potencialVd,fracaoRebote:fracaoRebote,nivelPosRebote:nivelPosRebote,reboteSignificativo:reboteSignificativo}; }
+function toxina(input){ var inp=input||{};
+  var nome=String(inp.toxina==null?'custom':inp.toxina).toLowerCase();
+  if(!TOXINAS.hasOwnProperty(nome)) nome='custom';
+  var meta=TOXINAS[nome], manual=nome==='custom';
+  var pm=clampv((inp.pm!==undefined&&manual)?inp.pm:meta.pm,1,60000);
+  var ligacao=clampv((inp.ligacao!==undefined&&manual)?inp.ligacao:meta.lig,0,0.999);
+  var vd=clampv((inp.vd!==undefined&&manual)?inp.vd:meta.vd,0.05,30);
+  var hidro=clampv((inp.hidro!==undefined&&manual)?inp.hidro:meta.hidro,0,1);
+  var nivel=clampv(inp.nivel!==undefined?inp.nivel:meta.c0,0,1e6);
+  var alvo=clampv(inp.alvo!==undefined?inp.alvo:meta.alvo,0,1e6);
+  var limiar=clampv(inp.limiar!==undefined?inp.limiar:meta.limiar,0,1e6);
+  var kdial=clampv(inp.kdial!==undefined?inp.kdial:180,0,400);
+  var kendo=clampv(inp.kendo!==undefined?inp.kendo:(meta.fomepizol?5:12),0,400);
+  var peso=clampv(inp.peso!==undefined?inp.peso:70,20,250);
+  var sintomas=clampv(inp.sintomas!==undefined?inp.sintomas:0,0,1);
+  var acidose=clampv(inp.acidose!==undefined?inp.acidose:0,0,1);
+  var tSessao=clampv(inp.tSessao!==undefined?inp.tSessao:240,30,1440);
+  var di=dialisabilidade({pm:pm,ligacao:ligacao,vd:vd,hidro:hidro});
+  var kdialEf=clampv(kdial*di.score,0,400);
+  var rk=remocao({c0:nivel,alvo:alvo,kdial:kdialEf,kendo:kendo,vd:vd,peso:peso,t:tSessao});
+  var rb=rebote({vd:vd,fracaoRemovida:rk.fracaoRemovida,ctFim:rk.ct});
+  var acimaLimiar=nivel>=limiar;
+  var graveClinico=sintomas>=0.6;
+  var acidoGrave=meta.corrigeAcido&&acidose>=0.6;
+  var dialisavel=di.score>=0.4;
+  var indicaHD=dialisavel&&(acimaLimiar||graveClinico||acidoGrave);
+  var naoDialisavel=di.score<0.4;
+  var corrigeAcidose=meta.corrigeAcido, fomepizolUtil=meta.fomepizol;
+  var classe;
+  if(vd>=3) classe='blindada_vd';
+  else if(ligacao>=0.85) classe='blindada_ligacao';
+  else if(di.score>=0.6) classe='muito_dialisavel';
+  else if(dialisavel) classe='parcial';
+  else classe='mal_dialisavel';
+  return {toxina:nome,nome:meta.nome,unidade:meta.unidade,alvoMolec:meta.alvoMolec,nota:meta.nota,
+    pm:pm,ligacao:ligacao,vd:vd,hidro:hidro,nivel:nivel,alvo:alvo,limiar:limiar,kdial:kdial,kdialEf:kdialEf,kendo:kendo,peso:peso,
+    sintomas:sintomas,acidose:acidose,tSessao:tSessao,
+    score:di.score,fPM:di.fPM,fLig:di.fLig,fVd:di.fVd,fHidro:di.fHidro,
+    kTotal:rk.kTotal,kRate:rk.kRate,ct:rk.ct,fracaoRemovida:rk.fracaoRemovida,tAlvoMin:rk.tAlvoMin,tAlvoH:rk.tAlvoH,meiaVida:rk.meiaVida,
+    potencialVd:rb.potencialVd,fracaoRebote:rb.fracaoRebote,nivelPosRebote:rb.nivelPosRebote,reboteSignificativo:rb.reboteSignificativo,
+    acimaLimiar:acimaLimiar,graveClinico:graveClinico,acidoGrave:acidoGrave,dialisavel:dialisavel,indicaHD:indicaHD,naoDialisavel:naoDialisavel,
+    corrigeAcidose:corrigeAcidose,fomepizolUtil:fomepizolUtil,classe:classe}; }
+function nivelLayout(state,W,H){ state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=52,padR=16,padT=18,padB=38,baseY=H-padB;
+  var r=toxina(state);
+  var nivel0=clampv(r.nivel,1e-6,1e6), tSessao=r.tSessao;
+  var tMax=clampv(tSessao*1.8,60,1440), N=80;
+  var yMaxData=Math.max(nivel0,r.nivelPosRebote), yTop=yMaxData*1.05;
+  var pxX=(W-padL-padR)/tMax, pxY=(baseY-padT)/(yTop>1e-9?yTop:1);
+  var kHD=r.kRate, vmLendo=clampv(r.vd*r.peso,1,7500)*1000, kEndoRate=clampv(r.kendo/vmLendo,0,1);
+  var comHD=[],semHD=[],i,tt,yHD,ySem,ctFim=r.ct;
+  for(i=0;i<=N;i++){ tt=tMax*i/N;
+    if(tt<=tSessao){ yHD=nivel0*Math.exp(-kHD*tt); }
+    else { var dt=tt-tSessao, alvoReb=r.nivelPosRebote; yHD=alvoReb-(alvoReb-ctFim)*Math.exp(-dt/60); }
+    ySem=nivel0*Math.exp(-kEndoRate*tt);
+    yHD=clampv(yHD,0,1e6); ySem=clampv(ySem,0,1e6);
+    comHD.push({t:tt,y:yHD,x:padL+tt*pxX,py:baseY-clampv(yHD,0,yTop)*pxY});
+    semHD.push({t:tt,y:ySem,x:padL+tt*pxX,py:baseY-clampv(ySem,0,yTop)*pxY}); }
+  var yAlvo=baseY-clampv(r.alvo,0,yTop)*pxY, yLimiar=baseY-clampv(r.limiar,0,yTop)*pxY;
+  var xSessao=padL+clampv(tSessao,0,tMax)*pxX;
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,N:N,pxX:pxX,pxY:pxY,tMax:tMax,yTop:yTop,tSessao:tSessao,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},comHD:comHD,semHD:semHD,
+    refs:{yAlvo:yAlvo,yLimiar:yLimiar,xSessao:xSessao,alvo:r.alvo,limiar:r.limiar},
+    score:r.score,fracaoRemovida:r.fracaoRemovida,fracaoRebote:r.fracaoRebote,indicaHD:r.indicaHD,naoDialisavel:r.naoDialisavel}; }
+window.dialisabilidade=dialisabilidade; window.remocao=remocao; window.rebote=rebote; window.toxina=toxina; window.nivelLayout=nivelLayout; window.TOXINAS=TOXINAS;
+window.MODEL={dialisabilidade:dialisabilidade,remocao:remocao,rebote:rebote,toxina:toxina,nivelLayout:nivelLayout,clampv:clampv,TOXINAS:TOXINAS};
+
+/* UI */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=(d===undefined?1:d); return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on'); b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on'); $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh(); });
+document.addEventListener('click',function(e){ var b=e.target.closest('button.act[data-rev]'); if(!b) return; var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on'); });
+
+function readInputs(){ return { toxina:$('in-toxina').value, nivel:+$('in-nivel').value, pm:+$('in-pm').value,
+  ligacao:+$('in-ligacao').value, vd:+$('in-vd').value, hidro:+$('in-hidro').value, kdial:+$('in-kdial').value,
+  peso:+$('in-peso').value, tSessao:+$('in-tSessao').value, sintomas:+$('in-sintomas').value, acidose:+$('in-acidose').value }; }
+function refresh(){ var inp=readInputs();
+  $('lbl-nivel').textContent=fmt(inp.nivel,1); $('lbl-pm').textContent=fmt(inp.pm,0); $('lbl-ligacao').textContent=fmt(inp.ligacao,2);
+  $('lbl-vd').textContent=fmt(inp.vd,2); $('lbl-hidro').textContent=fmt(inp.hidro,2); $('lbl-kdial').textContent=fmt(inp.kdial,0);
+  $('lbl-peso').textContent=fmt(inp.peso,0); $('lbl-tSessao').textContent=fmt(inp.tSessao,0); $('lbl-sintomas').textContent=fmt(inp.sintomas,1); $('lbl-acidose').textContent=fmt(inp.acidose,1);
+  var r=toxina(inp);
+  $('out-score').textContent=fmt(r.score,2)+' ('+(r.naoDialisavel?'não dialisa':(r.score>=0.6?'muito dialisável':'parcial'))+')';
+  $('out-indica').textContent=r.indicaHD?'SIM — indica HD':(r.naoDialisavel?'NÃO — Vd alto/ligada':'não (sem gatilho)');
+  $('out-fracao').textContent=fmt(r.fracaoRemovida*100,0)+'% / sessão';
+  $('out-talvo').textContent=(r.tAlvoH>1e4||r.score<0.05)?'∞ (mal removida)':fmt(r.tAlvoH,1)+' h';
+  $('out-rebote').textContent=fmt(r.fracaoRebote*100,0)+'%'+(r.reboteSignificativo?' — significativo (repetir)':'');
+  $('out-acido').textContent=(r.corrigeAcidose?'HD corrige a acidose':'sem acidose própria')+(r.fomepizolUtil?' · + fomepizol':'');
+  verdict(r); drawNivel(inp); pearl(r,inp); }
+function verdict(r){ var v=$('veredito'), cls='b-good', msg;
+  if(r.naoDialisavel){ cls='b-bad'; msg=r.nome+' — NÃO dialisável (score '+fmt(r.score,2)+'): Vd alto/muita ligação blinda a toxina. A HD não ajuda; o antídoto é específico (ex.: Fab para digoxina).'; }
+  else if(r.indicaHD&&r.reboteSignificativo){ cls='b-warn'; msg=r.nome+' — INDICA HD (score '+fmt(r.score,2)+'), remove ~'+fmt(r.fracaoRemovida*100,0)+'%/sessão; mas REBOTE '+fmt(r.fracaoRebote*100,0)+'% (Vd '+fmt(r.vd,1)+' L/kg) → reavaliar o nível e repetir.'; }
+  else if(r.indicaHD){ cls='b-good'; msg=r.nome+' — INDICA HD: dialisável (score '+fmt(r.score,2)+'), clearance alto → alvo em ~'+fmt(r.tAlvoH,1)+' h.'+(r.corrigeAcidose?' A HD também corrige a acidose.':''); }
+  else { cls='b-good'; msg=r.nome+' — dialisável (score '+fmt(r.score,2)+'), mas sem gatilho atual (nível < limiar, sem gravidade/acidose). Tratar e observar.'; }
+  v.className='banner '+cls; v.textContent=msg; }
+function pearl(r,inp){ var p=$('lab-pearl'), ip=$('instr-pearl'), t;
+  if(r.toxina==='litio') t='PÉROLA (rebote): o lítio é MUITO dialisável (PM 7, ligação 0) mas REBOTA '+fmt(r.fracaoRebote*100,0)+'% dos tecidos (pool intracelular). O nível volta a subir → reavaliar e repetir.';
+  else if(r.naoDialisavel) t='PÉROLA (Vd blinda): '+r.nome+' tem Vd alto/muita ligação → mora nos tecidos. Clearance alto NÃO a alcança. Nem todo veneno grave é dialisável.';
+  else if(r.corrigeAcidose&&r.fomepizolUtil) t='PÉROLA (duplo): a HD remove '+r.nome+' E corrige a acidose; o FOMEPIZOL bloqueia a ADH e trava a produção do metabólito tóxico (formato/oxalato).';
+  else if(r.corrigeAcidose) t='PÉROLA (dois alvos): a HD remove o salicilato E repõe HCO₃⁻ (corrige o ácido). Na acidemia, mais droga livre → remove ainda mais.';
+  else if(r.ligacao>=0.85) t='PÉROLA (ligação): ligação proteica alta ('+fmt(r.ligacao*100,0)+'%) → só a fração livre dialisa. A dialisabilidade desaba mesmo com PM/Vd bons.';
+  else t='Score '+fmt(r.score,2)+'. A dialisabilidade é o produto de PM, ligação, Vd e hidrossolubilidade — um fator ruim derruba tudo.';
+  p.textContent=t; ip.textContent=t; }
+function drawNivel(state){ var c=$('nivel-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
+  var L=nivelLayout(state,c.width,c.height); ctx.clearRect(0,0,L.W,L.H);
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('nível ↑',8,L.padT+2); ctx.fillText('tempo →',L.W-80,L.baseY+24);
+  // referencias alvo/limiar
+  ctx.strokeStyle='#e8a13a'; ctx.setLineDash([5,4]); ctx.beginPath(); ctx.moveTo(L.padL,L.refs.yLimiar); ctx.lineTo(L.W-L.padR,L.refs.yLimiar); ctx.stroke();
+  ctx.strokeStyle='#52c08a'; ctx.beginPath(); ctx.moveTo(L.padL,L.refs.yAlvo); ctx.lineTo(L.W-L.padR,L.refs.yAlvo); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#e8a13a'; ctx.fillText('limiar',L.W-L.padR-44,L.refs.yLimiar-4);
+  ctx.fillStyle='#52c08a'; ctx.fillText('alvo',L.W-L.padR-34,L.refs.yAlvo-4);
+  // fim de sessao
+  ctx.strokeStyle='#283642'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(L.refs.xSessao,L.padT); ctx.lineTo(L.refs.xSessao,L.baseY); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#9fb1c0'; ctx.fillText('fim da sessão',Math.min(L.refs.xSessao+4,L.W-110),L.padT+12);
+  function poly(pts,color,w){ ctx.strokeStyle=color; ctx.lineWidth=w; ctx.beginPath(); for(var i=0;i<pts.length;i++){ var p=pts[i]; if(i===0) ctx.moveTo(p.x,p.py); else ctx.lineTo(p.x,p.py); } ctx.stroke(); }
+  poly(L.semHD,'#9fb1c0',1.5); poly(L.comHD,'#39c0c8',2.5);
+  ctx.fillStyle='#39c0c8'; ctx.fillText('com HD',L.padL+10,L.padT+28);
+  ctx.fillStyle='#9fb1c0'; ctx.fillText('sem HD (rim)',L.padL+10,L.padT+44); }
+['in-nivel','in-pm','in-ligacao','in-vd','in-hidro','in-kdial','in-peso','in-tSessao','in-sintomas','in-acidose'].forEach(function(id){ $(id).addEventListener('input',refresh); });
+$('in-toxina').addEventListener('change',function(){ syncToxina(); refresh(); });
+function syncToxina(){ var t=$('in-toxina').value, m=TOXINAS[t]||TOXINAS.custom;
+  // ajusta o range/valor do nível para a toxina escolhida
+  $('in-nivel').value=m.c0; if(t!=='custom'){ $('in-pm').value=m.pm; $('in-ligacao').value=m.lig; $('in-vd').value=m.vd; $('in-hidro').value=m.hidro; } }
+
+var PRESETS={
+  litio:{toxina:'litio',nivel:4.0,kdial:200,peso:70,tSessao:300,sintomas:0.6,acidose:0},
+  salicilato:{toxina:'salicilato',nivel:90,kdial:200,peso:70,tSessao:300,sintomas:0.6,acidose:0.7},
+  metanol:{toxina:'metanol',nivel:60,kdial:220,peso:70,tSessao:300,sintomas:0.6,acidose:0.6},
+  altaligacao:{toxina:'custom',nivel:50,pm:300,ligacao:0.97,vd:0.3,hidro:1,kdial:200,peso:70,tSessao:300,sintomas:0.6,acidose:0},
+  digoxina:{toxina:'digoxina',nivel:10,kdial:200,peso:70,tSessao:300,sintomas:0.8,acidose:0}
+};
+function applyPreset(p){ var d=PRESETS[p]; if(!d) return;
+  $('in-toxina').value=d.toxina;
+  if(d.pm!==undefined) $('in-pm').value=d.pm; if(d.ligacao!==undefined) $('in-ligacao').value=d.ligacao;
+  if(d.vd!==undefined) $('in-vd').value=d.vd; if(d.hidro!==undefined) $('in-hidro').value=d.hidro;
+  $('in-nivel').value=d.nivel; $('in-kdial').value=d.kdial; $('in-peso').value=d.peso; $('in-tSessao').value=d.tSessao;
+  $('in-sintomas').value=d.sintomas; $('in-acidose').value=d.acidose; refresh(); }
+document.querySelector('.presets').addEventListener('click',function(e){ var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset')); });
+
+/* ILUSTRAÇÕES computadas + helper raster */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+function nivelMini(state,titulo){ var W=300,H=170,L=nivelLayout(state,W,H),s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.padL+'" y1="'+f1(L.refs.yAlvo)+'" x2="'+(W-L.padR)+'" y2="'+f1(L.refs.yAlvo)+'" stroke="#52c08a" stroke-dasharray="4 3"/>';
+  s+='<line x1="'+L.padL+'" y1="'+f1(L.refs.yLimiar)+'" x2="'+(W-L.padR)+'" y2="'+f1(L.refs.yLimiar)+'" stroke="#e8a13a" stroke-dasharray="4 3"/>';
+  function path(pts,color,w){ var d=''; for(var i=0;i<pts.length;i++){ d+=(i===0?'M':'L')+f1(pts[i].x)+' '+f1(pts[i].py)+' '; } return '<path d="'+d+'" fill="none" stroke="'+color+'" stroke-width="'+w+'"/>'; }
+  s+=path(L.semHD,'#9fb1c0',1.2); s+=path(L.comHD,'#39c0c8',2);
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'nível × tempo')+'</text>';
+  return svgEl(W,H,s); }
+function scoreBars(r,titulo){ var W=300,H=170,base=132,s='';
+  function bar(x,frac,color,lab,val){ var h=clampv(frac,0,1)*92; return '<rect x="'+x+'" y="'+f1(base-h)+'" width="40" height="'+f1(h)+'" fill="'+color+'" fill-opacity="0.6" stroke="'+color+'"/>'+
+    '<text x="'+(x+20)+'" y="'+(base+13)+'" fill="#9fb1c0" font-size="9" text-anchor="middle">'+lab+'</text>'+
+    '<text x="'+(x+20)+'" y="'+f1(base-h-4)+'" fill="#e7eef4" font-size="8" text-anchor="middle">'+val+'</text>'; }
+  s+='<line x1="40" y1="36" x2="40" y2="'+base+'" stroke="#3a4a58"/>';
+  s+=bar(54,r.fPM,'#39c0c8','PM',fmt(r.fPM,2));
+  s+=bar(112,r.fLig,'#52c08a','lig',fmt(r.fLig,2));
+  s+=bar(170,r.fVd,'#e8a13a','Vd',fmt(r.fVd,2));
+  s+=bar(228,r.fHidro,'#39c0c8','hidro',fmt(r.fHidro,2));
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'fatores → score '+fmt(r.score,2))+'</text>';
+  return svgEl(W,H,s); }
+function toxIcon(r,titulo){ var W=300,H=170,s='';
+  var col=r.naoDialisavel?'#e0556b':(r.score>=0.6?'#52c08a':'#e8a13a');
+  s+='<rect x="70" y="46" width="160" height="74" rx="10" fill="'+col+'" fill-opacity="0.16" stroke="'+col+'"/>';
+  s+='<text x="150" y="78" fill="'+col+'" font-size="18" text-anchor="middle" font-weight="bold">'+(r.nome.length>16?r.nome.slice(0,14)+'…':r.nome)+'</text>';
+  s+='<text x="150" y="100" fill="#9fb1c0" font-size="10" text-anchor="middle">'+(r.naoDialisavel?'NÃO dialisa (Vd '+fmt(r.vd,1)+')':'score '+fmt(r.score,2)+(r.indicaHD?' · indica HD':''))+'</text>';
+  s+='<text x="'+(W/2)+'" y="20" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'a toxina')+'</text>';
+  s+='<text x="150" y="146" fill="#e7eef4" font-size="9" text-anchor="middle">'+(r.corrigeAcidose?'HD corrige a acidose'+(r.fomepizolUtil?' + fomepizol':''):'sem acidose própria')+'</text>';
+  return svgEl(W,H,s); }
+function imgFig(slug,alt){ return '<img src="assets/m33/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+/* TUTOR */
+function R0(extra){ var o={}; if(extra) for(var k in extra) o[k]=extra[k]; return toxina(o); }
+var TUTOR_ILUSTRADO=[
+  {q:'Quais propriedades tornam uma toxina dialisável?',o:['PM alto, Vd alto','PM baixo, ligação baixa, Vd baixo, hidrossolúvel','muita ligação proteica'],c:1,e:'O score é o produto: PM baixo, ligação baixa, Vd baixo e hidrossolúvel. Um fator ruim derruba tudo.',fig:function(){return scoreBars(R0({toxina:'litio'}),'lítio → fatores');}},
+  {q:'Lítio 4,0 mEq/L, neurotóxico. Dialisa? E depois?',o:['não dialisa','dialisa muito, mas REBOTA dos tecidos','dialisa e não volta'],c:1,e:'Vd baixo no plasma → muito dialisável; pool intracelular → rebote → reavaliar e repetir.',fig:function(){return toxIcon(R0({toxina:'litio',nivel:4,sintomas:0.7}),'lítio');}},
+  {q:'No gráfico do lítio, o que acontece após o fim da sessão?',o:['o nível segue caindo','o nível REBOTA (sobe)','o nível some'],c:1,e:'Os tecidos reenchem o sangue: o nível volta a subir — pode pedir nova sessão.',fig:function(){return nivelMini({toxina:'litio',nivel:4,tSessao:240,peso:70},'lítio: queda + rebote');}},
+  {q:'Salicilato 90 mg/dL com acidose. Por que a HD faz dois trabalhos?',o:['só remove o tóxico','remove o tóxico E corrige o ácido','só corrige o ácido'],c:1,e:'A difusão tira o salicilato; o banho repõe HCO₃⁻. Na acidemia, mais droga livre → remove mais.',fig:function(){return toxIcon(R0({toxina:'salicilato',nivel:90,acidose:0.7}),'salicilato');}},
+  {q:'Metanol: por que o fomepizol entra ANTES da acidose?',o:['ele dialisa','bloqueia a ADH e trava a produção de formato','repõe bicarbonato'],c:1,e:'O metanol é pouco tóxico; o formato cega/acidifica. Fomepizol fecha a fábrica do metabólito.',fig:function(){return imgFig('metanol-etilenoglicol-via.svg','via tóxica metanol/etilenoglicol');}},
+  {q:'Digoxina, nível 10 ng/mL, arritmia. A HD remove?',o:['sim, clearance alto','não — Vd ~6 blinda a droga','sim, em 1 h'],c:1,e:'Vd enorme → mora nos tecidos → a máquina não a alcança. Antídoto: Fab antidigoxina.',fig:function(){return toxIcon(R0({toxina:'digoxina',nivel:10,sintomas:0.8}),'digoxina (fronteira)');}},
+  {q:'Na figura dos 4 critérios, o score sai de…',o:['da soma dos fatores','do PRODUTO dos quatro fatores','só do PM'],c:1,e:'score = fPM·fLig·fVd·fHidro — um fator ruim derruba o conjunto.',fig:function(){return imgFig('dialisabilidade-criterios.svg','os 4 critérios');}},
+  {q:'Na figura da ligação proteica, o que NÃO atravessa a membrana?',o:['a fração livre','a droga ligada à albumina','as moléculas pequenas'],c:1,e:'O complexo droga+albumina é grande demais. Só a fração livre (1−ligação) dialisa.',fig:function(){return imgFig('ligacao-proteica-barreira.svg','barreira da ligação');}},
+  {q:'Na figura da queda, a curva azul (com HD) vs cinza (rim)…',o:['são iguais','a azul despenca; a cinza mal cai','a cinza cai mais'],c:1,e:'O clearance alto da HD encurta a meia-vida: o nível cruza o alvo em poucas horas.',fig:function(){return imgFig('queda-nivel-hd.svg','queda exponencial');}},
+  {q:'Na figura da indicação, quando a HD NÃO ajuda?',o:['quando há gatilho','quando a toxina não é dialisável (Vd alto/ligada)','quando o nível é alto'],c:1,e:'Sem dialisabilidade (score < 0,4), a máquina não alcança a toxina — antídoto específico.',fig:function(){return imgFig('indicacao-hd-toxina.svg','algoritmo da indicação');}},
+  {q:'Alta ligação proteica (97%) faz com a dialisabilidade…',o:['aumenta','desaba (quase nada livre)','não muda'],c:1,e:'f_livre = 1 − ligação. Com 97% ligada, quase nada passa — score mínimo.',fig:function(){return scoreBars(R0({toxina:'custom',ligacao:0.97,pm:300,vd:0.3,hidro:1}),'97% ligada');}},
+  {q:'Etilenoglicol: o metabólito que causa LRA é o…',o:['formato','oxalato (cristais)','glicose'],c:1,e:'A ADH converte etilenoglicol → glicolato/oxalato, que precipita e lesa o rim. Fomepizol bloqueia; HD remove.',fig:function(){return toxIcon(R0({toxina:'etilenoglicol',nivel:60,acidose:0.6}),'etilenoglicol');}}
+];
+var TUTOR_TEXTUAL=[
+  {q:'As quatro propriedades da dialisabilidade são…',o:['PM, cor, sabor, peso','PM baixo, ligação baixa, Vd baixo, hidrossolúvel','PM alto, Vd alto'],c:1,e:'O score é o produto das quatro — um fator ruim derruba tudo.'},
+  {q:'Só a fração LIVRE dialisa porque…',o:['a ligada é grande demais p/ a membrana','a ligada é tóxica','a livre é maior'],c:0,e:'f_livre = 1 − ligação. A droga presa à albumina não cruza a membrana.'},
+  {q:'O Vd alto blinda a droga porque…',o:['ela fica no sangue','ela mora nos tecidos, fora do alcance da máquina','ela é eliminada pelo rim'],c:1,e:'A HD só alcança o compartimento sanguíneo; pouca droga lá → pouca removida (digoxina).'},
+  {q:'O lítio é muito dialisável, mas o porém é…',o:['liga muito à albumina','rebota dos tecidos (pool intracelular)','tem PM alto'],c:1,e:'Ao desligar a máquina, os tecidos reenchem o sangue → o nível sobe → repetir.'},
+  {q:'No salicilato/metanol, além de remover, a HD…',o:['piora a acidose','corrige a acidose (repõe HCO₃⁻)','não muda o pH'],c:1,e:'O banho repõe tampão; o ânion-gap fecha. Dois alvos, um procedimento.'},
+  {q:'O fomepizol, no metanol/etilenoglicol…',o:['dialisa a toxina','bloqueia a álcool-desidrogenase (ADH)','repõe bicarbonato'],c:1,e:'Trava a enzima que cria o metabólito tóxico (formato/oxalato) — fecha a fábrica do veneno.'},
+  {q:'O nível da toxina cai com a HD de forma…',o:['linear','exponencial: C(t)=C₀·e^(−K·t/V)','degrau'],c:1,e:'Clearance alto → meia-vida curta → o nível cruza o alvo em poucas horas.'},
+  {q:'Indicar HD por toxina exige…',o:['só nível alto','dialisável (score ≥ 0,4) E gatilho','sempre que houver intoxicação'],c:1,e:'Sem dialisabilidade, a máquina não ajuda; com ela, basta nível/gravidade/acidose.'},
+  {q:'A digoxina (Vd ~6) é a fronteira do módulo porque…',o:['dialisa muito rápido','NÃO dialisa — trata-se com Fab','tem ligação zero'],c:1,e:'Vd enorme blinda a droga; o antídoto é o fragmento Fab, não a máquina.'},
+  {q:'O metabólito tóxico do metanol é o…',o:['oxalato','formato (cega/acidifica)','glicolato'],c:1,e:'A ADH gera formato — toxina retiniana e do SNC, e gera acidose.'},
+  {q:'A HD, como antídoto, restaura a homeostasia ao…',o:['regenerar o rim','remover o veneno (difusão) e repor a base (tampão)','aumentar a creatinina'],c:1,e:'Substitui por física a depuração que faltava: o meio interno volta à faixa.'},
+  {q:'Em síntese, a dialisabilidade é…',o:['uma tabela fixa por droga','física: PM, ligação, Vd e hidrossolubilidade','decidida pelo nível só'],c:1,e:'O score sai do produto das quatro propriedades; depois o gatilho decide dialisar.'}
+];
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL; window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+var BANKS={ilustrada:TUTOR_ILUSTRADO,textual:TUTOR_TEXTUAL}, curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+function renderTutor(){ var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():''; $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false; $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){ if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button'); btns[item.c].classList.add('ok'); if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block'; fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e; $('tutor-score').textContent=tScore; $('tutor-total').textContent=tTotal; });
+    box.appendChild(b); }); }
+$('banktabs').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor(); });
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+$('draw-criterios').innerHTML = scoreBars(toxina({toxina:'litio'}),'lítio: fatores → score');
+$('draw-litio').innerHTML = nivelMini({toxina:'litio',nivel:4,tSessao:240,peso:70},'lítio: queda + rebote');
+$('draw-salicilato').innerHTML = toxIcon(toxina({toxina:'salicilato',nivel:90,acidose:0.7}),'salicilato: tóxico + ácido');
+$('draw-queda').innerHTML = nivelMini({toxina:'metanol',nivel:60,tSessao:240,peso:70},'metanol: queda rápida');
+$('draw-indicacao').innerHTML = toxIcon(toxina({toxina:'digoxina',nivel:10,sintomas:0.8}),'digoxina: não dialisa');
+$('fig-caso').innerHTML = toxIcon(toxina({toxina:'litio',nivel:4,sintomas:0.7}),'o caso: lítio') + nivelMini({toxina:'litio',nivel:4,tSessao:240,peso:70},'queda + rebote');
+
+syncToxina(); refresh(); renderTutor();
+</script>
+</body>
+</html>

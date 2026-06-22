@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M23 — Ultrafiltração e o balanço de volume: peso seco, taxa de UF, refilling</title>
+<style>
+  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--warn:#e8a13a;--bad:#e0556b;--good:#52c08a;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none} section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .presets{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px} .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)} .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)} .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)} .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M23</div>
+  <h1>Ultrafiltração e o balanço de volume — peso seco, taxa de UF, refilling plasmático</h1>
+  <div class="sub">A diálise tira soluto por difusão/convecção; tira <b>água</b> por <b>ultrafiltração (UF)</b>. Mas a UF
+  só alcança o <b>compartimento intravascular</b> (o plasma). O interstício repõe o plasma pelo <b>refilling</b> —
+  com <b>atraso</b>. Se a <b>taxa de UF &gt; taxa de refilling</b>, o volume sanguíneo (<b>RBV</b>) cai → hipotensão.
+  O <b>peso seco</b> é o alvo: errar para baixo tira água demais (hipotensão); para cima deixa sobrecarga. A
+  <b>homeostasia</b> do volume mora nessa desigualdade — UF rate × refilling.</div>
+  <nav class="hex">
+    <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
+    <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="dialisa.html">&larr; índice do antebraço DIALISA</a>
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- CONCEITO -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — a UF tira do plasma; o refilling repõe (com atraso)</h3>
+      <p class="sub" style="margin-top:0">A UF retira água do <b>plasma</b>. O plasma murcha; o interstício devolve
+      água pelo <b>refilling</b>, mas devagar. Enquanto a <b>UF rate ≤ refilling</b>, o RBV se mantém — homeostasia
+      preservada. Quando a <b>UF rate &gt; refilling</b>, o RBV despenca → hipotensão intradialítica e
+      <b>stunning</b> miocárdico. As Fig. 1–8 voltam no Caso, na Trilha e na Avaliação.</p>
+
+      <h4>1. O peso seco — o alvo da retirada (dano em U)</h4>
+      <p class="sub">O <b>peso seco</b> é o peso em que o paciente está euvolêmico. A UF total a retirar é
+      <b>peso atual − peso seco</b>. Errar o alvo machuca dos <b>dois lados</b>: alvo <b>baixo demais</b> → tira água
+      além do necessário → hipotensão/cãibra; alvo <b>alto demais</b> → deixa sobrecarga → edema/HVE. O dano é um
+      <b>vale em U</b> com fundo único.</p>
+      <div class="frow">
+        <div class="concept" id="draw-seco"></div>
+        <figure class="fviva"><img src="assets/m23/peso-seco.svg" alt="Peso seco como alvo: o dano em U de errar para baixo ou para cima" loading="lazy">
+          <figcaption><b>Fig. 1 · O peso seco (vale em U).</b> <b>①</b> alvo abaixo do real → retira água demais →
+          hipotensão; <b>②</b> o fundo do vale é o peso seco (euvolemia); <b>③/④</b> os dois lados sobem — errar para
+          baixo (vermelho) ou para cima (laranja) é nocivo. O número certo de UF nasce do peso seco
+          correto.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m23/sobrecarga-vs-seco.svg" alt="Sobrecarga acima do peso seco e o cálculo da UF total e da UF rate" loading="lazy">
+          <figcaption><b>Fig. 2 · Sobrecarga × peso seco.</b> <b>①</b> a sobrecarga (faixa azul) é o que está acima do
+          <b>②</b> peso seco; <b>③</b> UF total (L) = peso atual − peso seco; <b>④</b> UF rate = UF total ÷ tempo.
+          Subestimar o seco deixa sobrecarga; superestimar a sobrecarga tira demais.</figcaption></figure>
+      </div>
+
+      <h4>2. A desigualdade central — UF rate × refilling</h4>
+      <p class="sub">A UF tira do <b>plasma</b>; o <b>interstício</b> repõe o plasma pelo <b>refilling</b>, com atraso.
+      O refilling é uma <b>força restauradora</b>: cresce com o déficit que já se instalou, é limitado por uma
+      <b>capacidade</b> (oncótica/capilar) e seca perto do peso seco. <b>Enquanto a UF rate cabe no refilling, o RBV
+      estabiliza.</b> Quando a UF rate supera a capacidade de refilling, o plasma murcha sem reposição → o RBV cai.</p>
+      <div class="frow">
+        <div class="concept" id="draw-balanco"></div>
+        <figure class="fviva"><img src="assets/m23/uf-vs-refilling.svg" alt="A desigualdade central: UF retira do plasma, refilling repõe do interstício com atraso" loading="lazy">
+          <figcaption><b>Fig. 3 · UF × refilling.</b> <b>①</b> o plasma é o único compartimento que a <b>③</b> UF
+          alcança; <b>②</b> o interstício é o reservatório que devolve água pelo <b>④</b> refilling — com atraso.
+          UF ≤ refilling → RBV estável (tolerado); UF &gt; refilling → RBV cai → hipotensão.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m23/compartimentos-vascular-intersticio.svg" alt="De onde a UF tira a água: do vaso, reposto pelo interstício" loading="lazy">
+          <figcaption><b>Fig. 4 · De onde sai a água.</b> <b>①</b> a UF tira do <b>vaso</b> (plasma ~3 L); <b>②</b> o
+          interstício guarda uma reserva muito maior e <b>③</b> repõe o vaso pelo refilling. O plasma é pequeno — por
+          isso ele murcha primeiro se o refilling não acompanha.</figcaption></figure>
+      </div>
+
+      <h4>3. A curva RBV × tempo — o que o motor pinta</h4>
+      <p class="sub">O <b>RBV</b> (volume sanguíneo relativo) é o termômetro: começa em 1,0 e cai conforme integra
+      <b>(UF − refilling)</b>. <b>UF lenta</b> → o RBV estabiliza acima do limiar de crash. <b>UF rápida</b> → o RBV
+      despenca e cruza o <b>limiar de crash</b> (≈0,85) → hipotensão. É exatamente esta curva que o Instrumento
+      desenha ao vivo.</p>
+      <div class="frow">
+        <div class="concept" id="draw-rbv"></div>
+        <figure class="fviva"><img src="assets/m23/rbv-curva.svg" alt="Curva RBV × tempo: estável com UF lenta, despenca com UF rápida" loading="lazy">
+          <figcaption><b>Fig. 5 · A curva RBV × tempo.</b> <b>①</b> UF lenta → RBV estável (verde); <b>②</b> UF média
+          (azul); <b>③</b> UF rápida → despenca (vermelho) e cruza o <b>④</b> limiar de crash ≈0,85. A mesma meta de
+          volume, percorrida em tempos diferentes, dá curvas opostas.</figcaption></figure>
+      </div>
+
+      <h4>4. Mesma meta, tempos diferentes — a UF rate é a alavanca</h4>
+      <p class="sub">A pérola operacional: a <b>mesma meta de volume</b> em <b>menos tempo</b> derruba a PAM, porque a
+      UF rate sobe acima do refilling. <b>Mais tempo</b> (mesma meta) → UF rate menor → cabe no refilling → protege.
+      Por isso a prevenção da hipotensão é, antes de tudo, <b>baixar a taxa de UF</b> (estender o tempo).</p>
+      <div class="frow">
+        <div class="concept" id="draw-taxa"></div>
+        <figure class="fviva"><img src="assets/m23/taxa-uf-tempo.svg" alt="Mesma meta de 4 L em 2, 4 ou 8 horas: a UF rate muda" loading="lazy">
+          <figcaption><b>Fig. 6 · UF rate = meta ÷ tempo.</b> 4 L em <b>①</b> 2 h = 2000 mL/h (excede o refilling) ×
+          <b>②</b> 8 h = 500 mL/h (cabe no refilling → protege). A UF total é a mesma; o que muda — e decide a
+          tolerância — é a <b>taxa</b>.</figcaption></figure>
+      </div>
+
+      <h4>5. As consequências — hipotensão intradialítica e stunning miocárdico</h4>
+      <p class="sub">Quando a UF rate vence o refilling, a cascata é mecânica: <b>RBV↓ → pré-carga↓ → débito↓ →
+      PAM↓</b> = hipotensão intradialítica. E há um custo silencioso: cada queda rápida do RBV <b>hipoperfunde o
+      miocárdio</b> → atordoamento (<b>stunning</b>) cumulativo, sem dor, com perda de função a longo prazo. A UF
+      gentil protege a PAM <i>e</i> o coração (ponte com M24).</p>
+      <div class="frow">
+        <div class="concept" id="draw-hipo"></div>
+        <figure class="fviva"><img src="assets/m23/hipotensao-intradialitica.svg" alt="Cascata da hipotensão intradialítica: UF maior que refilling até PAM cair" loading="lazy">
+          <figcaption><b>Fig. 7 · Cascata da hipotensão.</b> <b>①</b> UF rate &gt; refilling → <b>②</b> volume
+          plasmático↓ (RBV cai) → <b>③</b> pré-carga↓ e débito↓ → <b>④</b> PAM↓. A prevenção (verde): baixar a taxa de
+          UF para caber no refilling.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m23/stunning-miocardico.svg" alt="Stunning miocárdico: hipoperfusão repetida atordoa o coração silenciosamente" loading="lazy">
+          <figcaption><b>Fig. 8 · Stunning miocárdico.</b> <b>①</b> o miocárdio sofre <b>②</b> hipoperfusão a cada
+          queda rápida do RBV; <b>③</b> repetida sessão após sessão → atordoamento cumulativo; <b>④</b> dano
+          <b>silencioso</b>. A UF gentil é cardioprotetora.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASO -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — cinco atos, decida antes de revelar</h3>
+      <p class="sub">Sala de HDI. Cinco apresentações do balanço de volume. A pergunta de cada uma: <b>a UF rate cabe
+      no refilling? Qual o peso seco? O que acontece com o RBV?</b> Volte às Fig. 3, 5 e 6.</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step"><b>Ato 1 — a meta apertada.</b> 80 kg, peso seco 75 kg (sobrecarga 5 L), sessão de 2 h. A UF
+        rate sobe a 2500 mL/h. O paciente tolera?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>Não — a UF rate (2500 mL/h) excede a capacidade de refilling.</b> O RBV
+          despenca abaixo do limiar de crash (Fig. 5) → hipotensão intradialítica. A <b>meta</b> (5 L) é correta; o
+          erro está na <b>taxa</b> — 5 L em 2 h é rápido demais (Fig. 6).</div></div>
+
+      <div class="step"><b>Ato 2 — a mesma meta, mais tempo.</b> O mesmo paciente, mesma sobrecarga de 5 L, agora em
+        8 h. Muda algo?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2"><b>Sim — agora protege.</b> 5 L em 8 h = 625 mL/h, abaixo da capacidade de
+          refilling. O RBV estabiliza acima do limiar (Fig. 5, curva verde). <b>Mesma UF total, taxa menor</b> — a
+          alavanca é o tempo (Fig. 6). Prevenir hipotensão é, antes de tudo, baixar a UF rate.</div></div>
+
+      <div class="step"><b>Ato 3 — o refilling pobre.</b> Outro doente, sobrecarga 4 L em 4 h (UF rate 1000 mL/h),
+        mas <b>hipoalbuminêmico</b> (albumina 1,8). A mesma UF rate de um paciente normal seria segura — e aqui?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3"><b>Aqui crasha.</b> A hipoalbuminemia reduz o gradiente oncótico → o
+          <b>refilling fica pobre</b>. A mesma UF rate que um paciente normal toleraria agora supera o refilling → RBV
+          despenca. <b>Refilling lento = intolerância</b> (Fig. 3). A taxa "segura" depende do paciente.</div></div>
+
+      <div class="step"><b>Ato 4 — o peso seco errado para baixo.</b> Prescreve-se peso seco 72 kg num paciente cujo
+        seco real é 76 kg. A UF "completa" a meta. Qual o problema?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>Tira água demais.</b> O alvo está <b>abaixo</b> do real → a UF retira além do
+          necessário, levando o paciente à hipovolemia/hipotensão e cãibras (Fig. 1, lado esquerdo do U). O número da
+          UF estava "certo" para o alvo — mas o <b>alvo estava errado</b>.</div></div>
+
+      <div class="step"><b>Ato 5 — a fronteira: peso seco alto demais.</b> Com medo da hipotensão, prescreve-se peso
+        seco 79 kg num paciente cujo seco real é 76 kg. A sessão termina sem queda de PAM. Sucesso?
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>Não — fica sobrecarga oculta.</b> O alvo está <b>acima</b> do real → sobram ~3 L
+          (Fig. 1, lado direito do U): hipertensão volume-dependente, congestão, HVE a longo prazo. Evitar a
+          hipotensão errando para cima troca um dano agudo por um <b>dano crônico</b>. O fundo do vale (o seco
+          correto) é o único alvo bom.</div></div>
+    </div>
+  </section>
+
+  <!-- TRILHA -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — nove perguntas que constroem o balanço de volume</h3>
+      <details><summary>1. De qual compartimento a UF tira a água?</summary><p>Do <b>plasma</b> (intravascular) — é
+        o único que a máquina alcança (Fig. 4). O interstício e a célula não são tocados <i>diretamente</i>; só
+        repõem o plasma pelo refilling.</p></details>
+      <details><summary>2. O que é o refilling plasmático?</summary><p>A água que o <b>interstício devolve ao
+        plasma</b> conforme o plasma murcha. É uma força restauradora com <b>atraso</b>: leva tempo para responder ao
+        déficit (Fig. 3).</p></details>
+      <details><summary>3. Qual é a desigualdade central?</summary><p><b>UF rate × refilling.</b> Enquanto a UF rate
+        ≤ refilling, o RBV se mantém. Quando a UF rate &gt; refilling, o plasma murcha sem reposição → RBV cai →
+        hipotensão.</p></details>
+      <details><summary>4. O que é o RBV e por que ele cai?</summary><p>RBV = volume sanguíneo relativo (plasma
+        atual / inicial). Cai porque integra <b>(UF − refilling)</b> ao longo da sessão. UF lenta → estabiliza; UF
+        rápida → despenca (Fig. 5).</p></details>
+      <details><summary>5. Como calcular a UF total e a UF rate?</summary><p><b>UF total (L) = peso atual − peso
+        seco.</b> <b>UF rate (mL/h) = UF total ÷ tempo.</b> A mesma meta em menos tempo → UF rate maior (Fig. 6,
+        Fig. 2).</p></details>
+      <details><summary>6. Por que a mesma meta em menos tempo derruba a PAM?</summary><p>Porque a UF rate sobe
+        acima do refilling. Mais tempo (mesma meta) → UF rate menor → cabe no refilling → protege. A <b>taxa</b>, não
+        a meta, decide a tolerância.</p></details>
+      <details><summary>7. O que torna o refilling lento (intolerância)?</summary><p>A <b>hipoalbuminemia</b>
+        (gradiente oncótico↓) e a proximidade do <b>peso seco</b> (reserva intersticial esgota). Com refilling pobre,
+        a mesma UF rate que seria segura crasha (Ato 3).</p></details>
+      <details><summary>8. O que é o stunning miocárdico?</summary><p>O <b>atordoamento</b> do miocárdio pela
+        hipoperfusão repetida das quedas rápidas do RBV. Dano cumulativo e <b>silencioso</b> (Fig. 8). A UF gentil é
+        cardioprotetora.</p></details>
+      <details><summary>9. Em que sentido isto é homeostasia?</summary><p>O objetivo da UF é devolver o <b>volume</b>
+        à faixa (defender o meio interno) sem despressurizar o plasma. A boa prescrição retira o excesso no
+        <b>ritmo</b> que o refilling tolera — homeostasia do volume restaurada sem crash.</p></details>
+    </div>
+  </section>
+
+  <!-- INSTRUMENTO -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — a curva RBV × tempo, ao vivo</h3>
+      <p class="sub">Os controles do <b>Lab</b> movem esta curva. Eixo horizontal = <b>tempo</b> da sessão; eixo
+      vertical = <b>RBV</b> (volume sanguíneo relativo). A linha tracejada laranja é o <b>limiar de crash</b> (≈0,85):
+      cruzá-la sinaliza hipotensão intradialítica provável. UF lenta → curva estável; UF rápida ou refilling pobre →
+      a curva despenca e cruza o limiar.</p>
+      <canvas id="rbv-canvas" width="900" height="360" aria-label="Curva RBV × tempo"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- LAB -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — monte a sessão; veja UF rate, RBV e o veredito</h3>
+      <div class="grid">
+        <div>
+          <label>Peso atual (kg): <span class="val" id="lbl-pesoAtual">73</span></label>
+          <input type="range" id="in-pesoAtual" min="40" max="150" step="0.5" value="73">
+          <label>Peso seco — alvo (kg): <span class="val" id="lbl-pesoSeco">70</span></label>
+          <input type="range" id="in-pesoSeco" min="38" max="148" step="0.5" value="70">
+          <label>Sobrecarga real a retirar (L): <span class="val" id="lbl-sobrecargaL">3</span></label>
+          <input type="range" id="in-sobrecargaL" min="0" max="12" step="0.5" value="3">
+          <label>Tempo de sessão (h): <span class="val" id="lbl-tempoSessao">4</span></label>
+          <input type="range" id="in-tempoSessao" min="1" max="12" step="0.5" value="4">
+        </div>
+        <div>
+          <label>Capacidade de refilling basal (mL/h): <span class="val" id="lbl-taxaRefillBasal">1300</span></label>
+          <input type="range" id="in-taxaRefillBasal" min="100" max="1500" step="50" value="1300">
+          <label>Albumina (g/dL) — gradiente oncótico: <span class="val" id="lbl-albumina">3.8</span></label>
+          <input type="range" id="in-albumina" min="1.2" max="5" step="0.1" value="3.8">
+          <label>Volume plasmático inicial (L): <span class="val" id="lbl-volPlasma">3.0</span></label>
+          <input type="range" id="in-volPlasma" min="2" max="5" step="0.1" value="3.0">
+        </div>
+      </div>
+
+      <div class="presets">
+        <button class="act" data-preset="agressiva">UF agressiva (5 L / 2 h)</button>
+        <button class="act" data-preset="gentil">UF gentil (5 L / 8 h)</button>
+        <button class="act" data-preset="refillLento">Refilling lento (albumina baixa)</button>
+        <button class="act" data-preset="sobrecargaGrande">Sobrecarga grande (10 L)</button>
+        <button class="act" data-preset="rotina">Rotina (3 L / 4 h)</button>
+        <button class="act" data-preset="secoBaixo">Peso seco baixo demais</button>
+      </div>
+
+      <table>
+        <tr><th>Saída</th><th>Atual</th><th>Comentário</th></tr>
+        <tr><td>UF total (L)</td><td class="num" id="out-uftotal">—</td><td class="num">peso atual − peso seco</td></tr>
+        <tr><td>UF rate (mL/h · mL/kg/h)</td><td class="num" id="out-ufrate">—</td><td class="num">UF total ÷ tempo</td></tr>
+        <tr><td>Capacidade de refilling (mL/h)</td><td class="num" id="out-refill">—</td><td class="num">teto sustentável</td></tr>
+        <tr><td>Margem (refilling − UF rate)</td><td class="num" id="out-margem">—</td><td class="num">negativa = déficit</td></tr>
+        <tr><td>RBV final · mínimo</td><td class="num" id="out-rbv">—</td><td class="num">termômetro do plasma</td></tr>
+        <tr><td>Erro do peso seco (kg)</td><td class="num" id="out-erro">—</td><td class="num">vale em U</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÃO -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (12)</button>
+        <button data-bank="textual">Textual (12)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica</b>. Este módulo M23
+    modela o balanço de volume na ultrafiltração (UF rate, refilling, RBV, peso seco) como uma simplificação
+    didática calibrada para ensinar o <b>mecanismo</b> — não um protocolo de prescrição para um paciente real. As
+    taxas e os limiares são pedagógicos. Não substitui julgamento clínico; a decisão e a responsabilidade finais são
+    sempre do profissional.
+  </div>
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+</div>
+
+<script>
+/* ENGINE INLINE — espelho fiel de build/m23/model23.js */
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
+var UF_RATE_ALTA=13, RBV_CRASH=0.85, REFILL_BASAL=1300, DEFICIT_REF=50, RES_FLOOR=0.5;
+function refilling(state){ var st=state||{};
+  var sobrecarga=clampv(st.sobrecarga,0,30);
+  var sobrecargaIni=clampv(st.sobrecargaIni,0.0001,30);
+  var taxaBasal=clampv(st.taxaRefillBasal,50,1500);
+  var albumina=clampv(st.albumina,1.0,5.5);
+  var deficit=clampv(st.deficit,0,5000);
+  var fDeficit=deficit/(deficit+DEFICIT_REF);
+  var fracReserva=clampv(RES_FLOOR+(1-RES_FLOOR)*clampv(sobrecarga/sobrecargaIni,0,1),0,1);
+  var fOnco=clampv(0.35+0.65*(albumina-1.5)/(4.0-1.5),0.2,1.0);
+  return clampv(taxaBasal*fDeficit*fracReserva*fOnco,0,1500); }
+function ultrafiltracao(input){ var inp=input||{};
+  var pesoAtual=clampv(inp.pesoAtual!==undefined?inp.pesoAtual:73,30,250);
+  var pesoSeco=clampv(inp.pesoSeco!==undefined?inp.pesoSeco:70,25,250);
+  var tempoSessao=clampv(inp.tempoSessao!==undefined?inp.tempoSessao:4,0.5,12);
+  var sobrecargaL=clampv(inp.sobrecargaL!==undefined?inp.sobrecargaL:(pesoAtual-pesoSeco),0,30);
+  var taxaRefillBasal=clampv(inp.taxaRefillBasal!==undefined?inp.taxaRefillBasal:REFILL_BASAL,50,1500);
+  var albumina=clampv(inp.albumina!==undefined?inp.albumina:3.8,1.0,5.5);
+  var volPlasma=clampv(inp.volPlasma!==undefined?inp.volPlasma:3.0,1.5,6.0);
+  var ufTotalL=sobrecargaL;
+  var ufRate=clampv(ufTotalL*1000/tempoSessao,0,60000);
+  var ufRatePorKg=clampv(ufRate/pesoSeco,0,1000);
+  var secoReal=clampv(pesoAtual-sobrecargaL,25,250);
+  var erroSecoKg=pesoSeco-secoReal;
+  var STEPS=240, dt=tempoSessao/STEPS, rbv=1.0, sobra=sobrecargaL, rbvMin=1.0, somaRefill=0, nRefill=0, crashTempo=-1;
+  for(var i=0;i<STEPS;i++){
+    var deficitMl=clampv((1.0-rbv)*volPlasma*1000,0,5000);
+    var refill=refilling({sobrecarga:sobra,sobrecargaIni:sobrecargaL,taxaRefillBasal:taxaRefillBasal,albumina:albumina,deficit:deficitMl});
+    somaRefill+=refill; nRefill++;
+    var saiPlasma=(ufRate-refill)*dt;
+    var dRBV=-saiPlasma/(volPlasma*1000);
+    rbv=clampv(rbv+dRBV,0.3,1.05);
+    if(rbv<rbvMin) rbvMin=rbv;
+    if(crashTempo<0&&rbv<RBV_CRASH) crashTempo=(i+1)*dt;
+    sobra=clampv(sobra-(ufRate*dt)/1000,0,30);
+  }
+  var refillMedio=nRefill>0?somaRefill/nRefill:0;
+  var rbvFinal=rbv;
+  var quedaRBVporH=clampv((1.0-rbvFinal)/tempoSessao,0,1);
+  var refillCap=refilling({sobrecarga:sobrecargaL,sobrecargaIni:sobrecargaL,taxaRefillBasal:taxaRefillBasal,albumina:albumina,deficit:5000});
+  var ufExcedeRefill=ufRate>refillCap+1e-9;
+  var margemRefill=refillCap-ufRate;
+  var hipotensao=ufExcedeRefill&&(rbvMin<RBV_CRASH);
+  var stunning=(quedaRBVporH>0.06)||(rbvMin<RBV_CRASH);
+  var secoBaixoDemais=erroSecoKg<-0.5;
+  var secoAltoDemais=erroSecoKg>0.5;
+  var ufRateAlta=ufRatePorKg>UF_RATE_ALTA;
+  return {pesoAtual:pesoAtual,pesoSeco:pesoSeco,tempoSessao:tempoSessao,sobrecargaL:sobrecargaL,
+    taxaRefillBasal:taxaRefillBasal,albumina:albumina,volPlasma:volPlasma,
+    ufTotalL:ufTotalL,ufRate:ufRate,ufRatePorKg:ufRatePorKg,
+    refillMedio:refillMedio,refillCap:refillCap,margemRefill:margemRefill,ufExcedeRefill:ufExcedeRefill,
+    rbvFinal:rbvFinal,rbvMin:rbvMin,quedaRBVporH:quedaRBVporH,crashTempo:crashTempo,
+    secoReal:secoReal,erroSecoKg:erroSecoKg,secoBaixoDemais:secoBaixoDemais,secoAltoDemais:secoAltoDemais,
+    ufRateAlta:ufRateAlta,hipotensao:hipotensao,stunning:stunning}; }
+function rbvLayout(state,W,H){ state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=52,padR=16,padT=18,padB=38,baseY=H-padB, inp={};
+  inp.pesoAtual=clampv(state.pesoAtual!==undefined?state.pesoAtual:73,30,250);
+  inp.pesoSeco=clampv(state.pesoSeco!==undefined?state.pesoSeco:70,25,250);
+  inp.tempoSessao=clampv(state.tempoSessao!==undefined?state.tempoSessao:4,0.5,12);
+  inp.sobrecargaL=clampv(state.sobrecargaL!==undefined?state.sobrecargaL:(inp.pesoAtual-inp.pesoSeco),0,30);
+  inp.taxaRefillBasal=clampv(state.taxaRefillBasal!==undefined?state.taxaRefillBasal:REFILL_BASAL,50,1500);
+  inp.albumina=clampv(state.albumina!==undefined?state.albumina:3.8,1.0,5.5);
+  inp.volPlasma=clampv(state.volPlasma!==undefined?state.volPlasma:3.0,1.5,6.0);
+  var ufRate=clampv(inp.sobrecargaL*1000/inp.tempoSessao,0,60000);
+  var N=80, dt=inp.tempoSessao/N, pxX=(W-padL-padR)/inp.tempoSessao;
+  var rbvLo=0.70, rbvHi=1.02, pxY=(baseY-padT)/(rbvHi-rbvLo);
+  function yOf(rbv){ return baseY-(clampv(rbv,rbvLo,rbvHi)-rbvLo)*pxY; }
+  var pts=[], rbv=1.0, sobra=inp.sobrecargaL, i;
+  pts.push({t:0,rbv:rbv,x:padL,y:yOf(rbv)});
+  for(i=0;i<N;i++){
+    var deficitMl=clampv((1.0-rbv)*inp.volPlasma*1000,0,5000);
+    var refill=refilling({sobrecarga:sobra,sobrecargaIni:inp.sobrecargaL,taxaRefillBasal:inp.taxaRefillBasal,albumina:inp.albumina,deficit:deficitMl});
+    var saiPlasma=(ufRate-refill)*dt;
+    rbv=clampv(rbv-saiPlasma/(inp.volPlasma*1000),0.30,1.05);
+    sobra=clampv(sobra-(ufRate*dt)/1000,0,30);
+    var t=(i+1)*dt;
+    pts.push({t:t,rbv:rbv,x:padL+t*pxX,y:yOf(rbv)});
+  }
+  var crashY=yOf(RBV_CRASH);
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,N:N,pxX:pxX,pxY:pxY,rbvLo:rbvLo,rbvHi:rbvHi,ufRate:ufRate,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},crashY:crashY,crashRBV:RBV_CRASH,pts:pts,
+    end:{x:pts[pts.length-1].x,y:pts[pts.length-1].y,rbv:pts[pts.length-1].rbv}}; }
+window.ultrafiltracao=ultrafiltracao; window.rbvLayout=rbvLayout; window.refilling=refilling;
+window.MODEL={ultrafiltracao:ultrafiltracao,rbvLayout:rbvLayout,refilling:refilling,clampv:clampv,UF_RATE_ALTA:UF_RATE_ALTA,RBV_CRASH:RBV_CRASH,REFILL_BASAL:REFILL_BASAL};
+
+/* UI */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=(d===undefined?1:d); return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on'); b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on'); $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh(); });
+document.addEventListener('click',function(e){ var b=e.target.closest('button.act[data-rev]'); if(!b) return; var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on'); });
+
+function readInputs(){ return { pesoAtual:+$('in-pesoAtual').value, pesoSeco:+$('in-pesoSeco').value, sobrecargaL:+$('in-sobrecargaL').value,
+  tempoSessao:+$('in-tempoSessao').value, taxaRefillBasal:+$('in-taxaRefillBasal').value, albumina:+$('in-albumina').value, volPlasma:+$('in-volPlasma').value }; }
+function refresh(){ var inp=readInputs();
+  $('lbl-pesoAtual').textContent=fmt(inp.pesoAtual,1); $('lbl-pesoSeco').textContent=fmt(inp.pesoSeco,1); $('lbl-sobrecargaL').textContent=fmt(inp.sobrecargaL,1);
+  $('lbl-tempoSessao').textContent=fmt(inp.tempoSessao,1); $('lbl-taxaRefillBasal').textContent=fmt(inp.taxaRefillBasal,0);
+  $('lbl-albumina').textContent=fmt(inp.albumina,1); $('lbl-volPlasma').textContent=fmt(inp.volPlasma,1);
+  var r=ultrafiltracao(inp);
+  $('out-uftotal').textContent=fmt(r.ufTotalL,2)+' L';
+  $('out-ufrate').textContent=fmt(r.ufRate,0)+' mL/h · '+fmt(r.ufRatePorKg,1)+' mL/kg/h'+(r.ufRateAlta?' (alta)':'');
+  $('out-refill').textContent=fmt(r.refillCap,0)+' mL/h';
+  $('out-margem').textContent=fmt(r.margemRefill,0)+' mL/h'+(r.margemRefill<0?' (déficit)':'');
+  $('out-rbv').textContent=fmt(r.rbvFinal,2)+' · mín '+fmt(r.rbvMin,2);
+  $('out-erro').textContent=(r.erroSecoKg>0?'+':'')+fmt(r.erroSecoKg,1)+' kg'+(r.secoBaixoDemais?' (baixo demais)':(r.secoAltoDemais?' (alto demais)':' (ok)'));
+  verdict(r); drawRBV(inp); pearl(r,inp); }
+function verdict(r){ var v=$('veredito'), cls='b-good', msg;
+  if(r.hipotensao){ cls='b-bad'; msg='HIPOTENSÃO provável — UF rate ('+fmt(r.ufRate,0)+' mL/h) excede a capacidade de refilling ('+fmt(r.refillCap,0)+' mL/h). O RBV cai a '+fmt(r.rbvMin,2)+' (< '+RBV_CRASH+'). Baixe a TAXA de UF: estenda o tempo.'; }
+  else if(r.secoBaixoDemais){ cls='b-bad'; msg='PESO SECO BAIXO DEMAIS — o alvo está '+fmt(-r.erroSecoKg,1)+' kg abaixo do real: a UF tira água além do necessário → hipovolemia/cãibra (Fig. 1).'; }
+  else if(r.secoAltoDemais){ cls='b-warn'; msg='PESO SECO ALTO DEMAIS — o alvo está '+fmt(r.erroSecoKg,1)+' kg acima do real: sobra sobrecarga oculta → congestão/HVE (Fig. 1).'; }
+  else if(r.stunning){ cls='b-warn'; msg='TOLERADO, mas a queda do RBV ('+fmt(r.quedaRBVporH*100,1)+'%/h) ainda atordoa o miocárdio (stunning). UF mais gentil protege o coração (Fig. 8).'; }
+  else { cls='b-good'; msg='SESSÃO TOLERADA — UF rate ('+fmt(r.ufRate,0)+' mL/h) cabe no refilling ('+fmt(r.refillCap,0)+' mL/h). RBV estável em '+fmt(r.rbvFinal,2)+'. Homeostasia do volume preservada.'; }
+  v.className='banner '+cls; v.textContent=msg; }
+function pearl(r,inp){ var p=$('lab-pearl'), ip=$('instr-pearl'), t;
+  if(r.hipotensao&&r.ufExcedeRefill) t='PÉROLA (a taxa, não a meta): a mesma UF total em menos tempo eleva a UF rate acima do refilling e derruba a PAM. Estender o tempo é a prevenção.';
+  else if(r.secoBaixoDemais) t='PÉROLA (vale em U, lado baixo): errar o peso seco PARA BAIXO faz a UF tirar água demais → hipotensão. O número da UF estava certo; o alvo, não.';
+  else if(r.secoAltoDemais) t='PÉROLA (vale em U, lado alto): errar o peso seco PARA CIMA deixa sobrecarga oculta → congestão/HVE. Evitar a hipotensão errando para cima troca dano agudo por crônico.';
+  else if(inp.albumina<2.6) t='PÉROLA (refilling lento = intolerância): a hipoalbuminemia reduz o gradiente oncótico → a mesma UF rate que seria segura agora supera o refilling.';
+  else t='PÉROLA (UF lenta e longa protege): com a UF rate dentro do refilling, o RBV estabiliza e o coração não é atordoado. A homeostasia do volume volta sem crash.';
+  p.textContent=t; ip.textContent=t; }
+function drawRBV(state){ var c=$('rbv-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
+  var L=rbvLayout(state,c.width,c.height); ctx.clearRect(0,0,L.W,L.H);
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('RBV ↑',8,L.padT+2); ctx.fillText('tempo (h) →',L.W-110,L.baseY+24);
+  /* limiar de crash */
+  ctx.strokeStyle='#e8a13a'; ctx.setLineDash([5,4]); ctx.beginPath(); ctx.moveTo(L.axis.x0,L.crashY); ctx.lineTo(L.axis.xEnd,L.crashY); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#e8a13a'; ctx.fillText('limiar de crash ('+L.crashRBV.toFixed(2)+')',L.axis.x0+8,L.crashY-5);
+  /* curva RBV */
+  function poly(pts,color,w){ ctx.strokeStyle=color; ctx.lineWidth=w; ctx.beginPath(); for(var i=0;i<pts.length;i++){ var p=pts[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); } ctx.stroke(); }
+  var crashes=L.end.rbv<L.crashRBV; poly(L.pts, crashes?'#e0556b':'#52c08a', 2.5);
+  /* marcador final */
+  var e=L.end; ctx.fillStyle=crashes?'#e0556b':'#52c08a'; ctx.fillRect(e.x-4,e.y-4,8,8);
+  ctx.fillStyle='#e7eef4'; ctx.fillText('RBV '+e.rbv.toFixed(2),Math.min(e.x-30,L.W-90),Math.max(e.y-8,L.padT+12)); }
+['in-pesoAtual','in-pesoSeco','in-sobrecargaL','in-tempoSessao','in-taxaRefillBasal','in-albumina','in-volPlasma'].forEach(function(id){ $(id).addEventListener('input',refresh); });
+
+var PRESETS={
+  agressiva:{pesoAtual:80,pesoSeco:75,sobrecargaL:5,tempoSessao:2,taxaRefillBasal:1300,albumina:3.8,volPlasma:3.0},
+  gentil:{pesoAtual:80,pesoSeco:75,sobrecargaL:5,tempoSessao:8,taxaRefillBasal:1300,albumina:3.8,volPlasma:3.0},
+  refillLento:{pesoAtual:78,pesoSeco:74,sobrecargaL:4,tempoSessao:4,taxaRefillBasal:1300,albumina:1.8,volPlasma:3.0},
+  sobrecargaGrande:{pesoAtual:85,pesoSeco:75,sobrecargaL:10,tempoSessao:4,taxaRefillBasal:1300,albumina:3.6,volPlasma:3.2},
+  rotina:{pesoAtual:73,pesoSeco:70,sobrecargaL:3,tempoSessao:4,taxaRefillBasal:1300,albumina:3.8,volPlasma:3.0},
+  secoBaixo:{pesoAtual:80,pesoSeco:72,sobrecargaL:4,tempoSessao:4,taxaRefillBasal:1300,albumina:3.8,volPlasma:3.0}
+};
+function applyPreset(p){ var d=PRESETS[p]; if(!d) return;
+  $('in-pesoAtual').value=d.pesoAtual; $('in-pesoSeco').value=d.pesoSeco; $('in-sobrecargaL').value=d.sobrecargaL;
+  $('in-tempoSessao').value=d.tempoSessao; $('in-taxaRefillBasal').value=d.taxaRefillBasal; $('in-albumina').value=d.albumina; $('in-volPlasma').value=d.volPlasma; refresh(); }
+document.querySelector('.presets').addEventListener('click',function(e){ var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset')); });
+
+/* ILUSTRAÇÕES computadas + helper raster */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+function rbvMini(state,titulo){ var W=300,H=170,L=rbvLayout(state,W,H),s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+f1(L.crashY)+'" x2="'+L.axis.xEnd+'" y2="'+f1(L.crashY)+'" stroke="#e8a13a" stroke-dasharray="4 3"/>';
+  function path(pts,color){ var d=''; for(var i=0;i<pts.length;i++){ d+=(i===0?'M':'L')+f1(pts[i].x)+' '+f1(pts[i].y)+' '; } return '<path d="'+d+'" fill="none" stroke="'+color+'" stroke-width="2"/>'; }
+  var crashes=L.end.rbv<L.crashRBV; s+=path(L.pts,crashes?'#e0556b':'#52c08a');
+  s+='<rect x="'+f1(L.end.x-3)+'" y="'+f1(L.end.y-3)+'" width="6" height="6" fill="'+(crashes?'#e0556b':'#52c08a')+'"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'RBV × tempo')+'</text>';
+  s+='<text x="'+(L.axis.x0+4)+'" y="'+(L.padT+12)+'" fill="#9fb1c0" font-size="8">RBV ↑</text>';
+  s+='<text x="'+(W-8)+'" y="'+(L.baseY-4)+'" fill="#9fb1c0" font-size="8" text-anchor="end">tempo →</text>';
+  return svgEl(W,H,s); }
+function balancoMini(r,titulo){ var W=300,H=170,base=130,s='';
+  function bar(x,frac,color,lab,val){ var h=clampv(frac,0,1)*92; return '<rect x="'+x+'" y="'+f1(base-h)+'" width="70" height="'+f1(h)+'" fill="'+color+'" fill-opacity="0.6" stroke="'+color+'"/>'+
+    '<text x="'+(x+35)+'" y="'+(base+13)+'" fill="#9fb1c0" font-size="9" text-anchor="middle">'+lab+'</text>'+
+    '<text x="'+(x+35)+'" y="'+f1(base-h-4)+'" fill="#e7eef4" font-size="9" text-anchor="middle">'+val+'</text>'; }
+  s+='<line x1="40" y1="34" x2="40" y2="'+base+'" stroke="#3a4a58"/>';
+  var maxv=Math.max(r.ufRate,r.refillCap,1);
+  s+=bar(70,r.ufRate/maxv,(r.ufExcedeRefill?'#e0556b':'#52c08a'),'UF rate',fmt(r.ufRate,0));
+  s+=bar(180,r.refillCap/maxv,'#39c0c8','refilling',fmt(r.refillCap,0));
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'UF rate × refilling (mL/h)')+'</text>';
+  return svgEl(W,H,s); }
+function valeMini(r,titulo){ var W=300,H=170,s='';
+  s+='<line x1="30" y1="130" x2="270" y2="130" stroke="#3a4a58"/>';
+  s+='<path d="M40 50 Q150 130 150 122 Q150 130 260 50" fill="none" stroke="#b8402f" stroke-width="2"/>';
+  s+='<line x1="150" y1="40" x2="150" y2="130" stroke="#52c08a" stroke-dasharray="4 3"/>';
+  s+='<text x="150" y="34" fill="#52c08a" font-size="9" text-anchor="middle">peso seco</text>';
+  /* marcador do erro atual */
+  var e=clampv(r.erroSecoKg,-6,6), mx=150+e*18, col=Math.abs(e)<0.5?'#52c08a':(e<0?'#e0556b':'#e8a13a');
+  var my=50+(1-Math.min(Math.abs(e)/6,1))*0+ (130-50)*(1-Math.pow(Math.min(Math.abs(e)/6,1),1));
+  s+='<circle cx="'+f1(mx)+'" cy="'+f1(130-(1-Math.min(Math.abs(e)/6,1))*80)+'" r="5" fill="'+col+'"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'erro do peso seco (U)')+'</text>';
+  s+='<text x="60" y="60" fill="#e0556b" font-size="8">baixo</text>';
+  s+='<text x="240" y="60" fill="#e8a13a" font-size="8" text-anchor="end">alto</text>';
+  return svgEl(W,H,s); }
+function imgFig(slug,alt){ return '<img src="assets/m23/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+/* TUTOR */
+function R0(extra){ var o={}; if(extra) for(var k in extra) o[k]=extra[k]; return ultrafiltracao(o); }
+var TUTOR_ILUSTRADO=[
+  {q:'A UF retira água diretamente de qual compartimento?',o:['Do interstício','Do plasma (intravascular)','Da célula'],c:1,e:'A UF só alcança o plasma; o interstício repõe o plasma pelo refilling (Fig. 4).',fig:function(){return imgFig('compartimentos-vascular-intersticio.svg','de onde a UF tira');}},
+  {q:'Quando o RBV cai e dá hipotensão?',o:['Quando UF rate ≤ refilling','Quando UF rate > refilling','Sempre que há UF'],c:1,e:'A desigualdade central: UF acima do refilling murcha o plasma (Fig. 3).',fig:function(){return imgFig('uf-vs-refilling.svg','UF × refilling');}},
+  {q:'5 L em 2 h (UF 2500 mL/h), refilling normal. O RBV…',o:['fica estável','despenca e cruza o crash','sobe'],c:1,e:'A UF rate excede o refilling → o RBV cruza o limiar de crash.',fig:function(){return rbvMini({pesoAtual:80,pesoSeco:75,sobrecargaL:5,tempoSessao:2},'5 L / 2 h');}},
+  {q:'A MESMA meta de 5 L, agora em 8 h (UF 625 mL/h). O RBV…',o:['despenca igual','fica estável (cabe no refilling)','não muda'],c:1,e:'Mesma UF total, taxa menor → cabe no refilling → protege (Fig. 6).',fig:function(){return rbvMini({pesoAtual:80,pesoSeco:75,sobrecargaL:5,tempoSessao:8},'5 L / 8 h');}},
+  {q:'Comparando UF rate e refilling (4 L / 2 h), a barra mostra…',o:['UF abaixo do refilling','UF acima do refilling (déficit)','iguais'],c:1,e:'A UF rate excede a capacidade de refilling → margem negativa.',fig:function(){return balancoMini(R0({pesoAtual:78,pesoSeco:74,sobrecargaL:4,tempoSessao:2}),'4 L / 2 h');}},
+  {q:'A mesma UF rate, mas albumina 1,8. O refilling…',o:['melhora','piora (intolerância)','não muda'],c:1,e:'Hipoalbuminemia → gradiente oncótico↓ → refilling pobre → mesma UF crasha.',fig:function(){return balancoMini(R0({pesoAtual:78,pesoSeco:74,sobrecargaL:4,tempoSessao:4,albumina:1.8}),'albumina 1,8');}},
+  {q:'O dano de errar o peso seco é…',o:['só para baixo','só para cima','um vale em U (dos dois lados)'],c:2,e:'Baixo demais → tira demais; alto demais → deixa sobrecarga (Fig. 1).',fig:function(){return imgFig('peso-seco.svg','vale em U do peso seco');}},
+  {q:'Alvo de peso seco 72 num paciente cujo seco real é 76. O erro…',o:['deixa sobrecarga','tira água demais (lado baixo do U)','é neutro'],c:1,e:'Alvo abaixo do real → UF retira além do necessário → hipotensão.',fig:function(){return valeMini(R0({pesoAtual:80,pesoSeco:72,sobrecargaL:4,tempoSessao:4}),'seco baixo demais');}},
+  {q:'UF lenta e longa (5 L / 10 h). A curva RBV…',o:['cruza o crash','estabiliza acima do crash','é igual à rápida'],c:1,e:'A UF rate cabe no refilling → RBV estável → protege.',fig:function(){return rbvMini({pesoAtual:80,pesoSeco:75,sobrecargaL:5,tempoSessao:10},'5 L / 10 h');}},
+  {q:'Na cascata da hipotensão, a sequência é…',o:['PAM↓ → RBV↓','RBV↓ → pré-carga↓ → débito↓ → PAM↓','UF↓ → RBV↑'],c:1,e:'RBV cai → pré-carga e débito caem → PAM cai (Fig. 7).',fig:function(){return imgFig('hipotensao-intradialitica.svg','cascata da hipotensão');}},
+  {q:'O stunning miocárdico é…',o:['dor torácica aguda','atordoamento silencioso por hipoperfusão repetida','um tipo de arritmia'],c:1,e:'Quedas rápidas de RBV hipoperfundem o coração → dano cumulativo silencioso (Fig. 8).',fig:function(){return imgFig('stunning-miocardico.svg','stunning miocárdico');}},
+  {q:'UF total e UF rate: a meta é 4 L. Para baixar a UF rate, eu…',o:['encurto o tempo','estendo o tempo','aumento a meta'],c:1,e:'UF rate = meta ÷ tempo. Mais tempo → taxa menor (Fig. 6, Fig. 2).',fig:function(){return imgFig('taxa-uf-tempo.svg','mesma meta tempos diferentes');}}
+];
+var TUTOR_TEXTUAL=[
+  {q:'A ultrafiltração retira água de qual compartimento, diretamente?',o:['interstício','plasma (intravascular)','intracelular'],c:1,e:'Só o plasma; o interstício repõe o plasma pelo refilling.'},
+  {q:'O refilling plasmático é…',o:['a UF da máquina','a água que o interstício devolve ao plasma, com atraso','a diurese residual'],c:1,e:'Força restauradora com atraso — o motor do equilíbrio do RBV.'},
+  {q:'A desigualdade que governa a tolerância é…',o:['UF total × peso','UF rate × refilling','Kt/V × tempo'],c:1,e:'UF ≤ refilling → RBV estável; UF > refilling → RBV cai.'},
+  {q:'UF total (L) é igual a…',o:['peso seco','peso atual − peso seco','sobrecarga × tempo'],c:1,e:'A água a retirar é o excesso sobre o peso seco.'},
+  {q:'UF rate (mL/h) é…',o:['UF total × tempo','UF total ÷ tempo','peso ÷ tempo'],c:1,e:'A taxa é a meta dividida pelo tempo — a alavanca da tolerância.'},
+  {q:'A mesma meta de volume em MENOS tempo…',o:['é mais segura','eleva a UF rate e derruba a PAM','não muda a PAM'],c:1,e:'Taxa maior → excede o refilling → hipotensão.'},
+  {q:'O refilling fica LENTO (intolerância) com…',o:['albumina alta','hipoalbuminemia e proximidade do peso seco','volume plasmático alto'],c:1,e:'Gradiente oncótico↓ e reserva intersticial esgotada cortam o refilling.'},
+  {q:'O RBV mede…',o:['o sódio','o volume sanguíneo relativo (plasma atual/inicial)','a ureia'],c:1,e:'É o termômetro do plasma durante a sessão.'},
+  {q:'Errar o peso seco para BAIXO causa…',o:['sobrecarga','hipovolemia/hipotensão (tira demais)','nada'],c:1,e:'Alvo abaixo do real → UF excessiva (lado baixo do vale em U).'},
+  {q:'Errar o peso seco para CIMA causa…',o:['hipotensão','sobrecarga oculta → congestão/HVE','cãibra'],c:1,e:'Alvo acima do real → sobra volume (lado alto do vale em U).'},
+  {q:'O stunning miocárdico resulta de…',o:['excesso de sódio','hipoperfusão repetida nas quedas rápidas de RBV','infecção do acesso'],c:1,e:'Dano cumulativo e silencioso; a UF gentil protege o coração.'},
+  {q:'A prevenção primária da hipotensão intradialítica é…',o:['mais UF','baixar a TAXA de UF (estender o tempo)','dar mais sódio'],c:1,e:'Manter a UF rate dentro do refilling — a homeostasia do volume sem crash.'}
+];
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL; window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+var BANKS={ilustrada:TUTOR_ILUSTRADO,textual:TUTOR_TEXTUAL}, curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+function renderTutor(){ var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():''; $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false; $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){ if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button'); btns[item.c].classList.add('ok'); if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block'; fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e; $('tutor-score').textContent=tScore; $('tutor-total').textContent=tTotal; });
+    box.appendChild(b); }); }
+$('banktabs').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor(); });
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+$('draw-seco').innerHTML = valeMini(ultrafiltracao({pesoAtual:80,pesoSeco:75,sobrecargaL:5,tempoSessao:4}),'erro do peso seco (U)');
+$('draw-balanco').innerHTML = balancoMini(ultrafiltracao({pesoAtual:80,pesoSeco:75,sobrecargaL:5,tempoSessao:3}),'UF rate × refilling');
+$('draw-rbv').innerHTML = rbvMini({pesoAtual:80,pesoSeco:75,sobrecargaL:5,tempoSessao:8},'sessão gentil');
+$('draw-taxa').innerHTML = balancoMini(ultrafiltracao({pesoAtual:84,pesoSeco:74,sobrecargaL:10,tempoSessao:3}),'mesma meta, rápido');
+$('draw-hipo').innerHTML = rbvMini({pesoAtual:80,pesoSeco:75,sobrecargaL:5,tempoSessao:2},'sessão rápida → crash');
+$('fig-caso').innerHTML = rbvMini({pesoAtual:80,pesoSeco:75,sobrecargaL:5,tempoSessao:2},'Ato 1: 5 L / 2 h') + balancoMini(ultrafiltracao({pesoAtual:80,pesoSeco:75,sobrecargaL:5,tempoSessao:2}),'UF rate × refilling');
+
+refresh(); renderTutor();
+</script>
+</body>
+</html>

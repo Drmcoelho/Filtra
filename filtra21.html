@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M21 — A membrana e o clearance: KoA, sieving, backfiltration</title>
+<style>
+  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--warn:#e8a13a;--bad:#e0556b;--good:#52c08a;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none} section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .presets{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px} .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)} .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)} .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)} .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M21</div>
+  <h1>A membrana e o clearance — KoA, sieving, backfiltration (high-flux × low-flux)</h1>
+  <div class="sub">A <b>membrana define o que passa.</b> O clearance <b>difusivo</b> do dialisador não é um número fixo —
+  ele nasce de três coisas: <b>KoA</b> (transferência de massa × área, a "competência" da membrana), <b>Qb</b>
+  (fluxo de sangue) e <b>Qd</b> (fluxo de dialisato), na equação clássica
+  <b>K = Qb·(e<sup>z</sup>−1)/(e<sup>z</sup>−Qb/Qd)</b>. Dois limites mandam: <b>K ≤ Qb</b> (não se depura mais sangue
+  do que passa) e, com KoA enorme, <b>K → o menor fluxo</b>. O <b>sieving</b> (S) diz a fração que atravessa por
+  convecção: cai perto do <b>cutoff</b> da membrana — <b>high-flux</b> tem cutoff maior e remove o <b>médio</b>
+  (β2-microglobulina), permitindo <b>backfiltration</b>; <b>low-flux</b> não. É homeostasia por física: a máquina
+  substitui FUNÇÕES por difusão e convecção.</div>
+  <nav class="hex">
+    <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
+    <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="dialisa.html">&larr; índice do antebraço DIALISA</a>
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- CONCEITO -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — a membrana é o que decide</h3>
+      <p class="sub" style="margin-top:0">Diálise difusiva é gradiente atravessando uma membrana. O quanto ela depura
+      depende da <b>membrana</b> (KoA, cutoff) e dos <b>fluxos</b> (Qb, Qd). As Fig. 1–8 voltam no Caso, na Trilha e na
+      Avaliação. Atribuição em <code>CREDITS.md</code> (em curadoria).</p>
+
+      <h4>1. O dialisador de fibras ocas — onde a membrana mora</h4>
+      <p class="sub">O dialisador é um feixe de milhares de fibras capilares: o sangue corre <b>dentro</b> das fibras, o
+      dialisato corre <b>fora</b>, em <b>contracorrente</b>. As milhares de fibras somam uma <b>área</b> enorme. Área ×
+      permeabilidade da membrana = o coeficiente <b>KoA</b> — a "competência" difusiva do filtro (Fig. 1).</p>
+      <div class="frow">
+        <div class="concept" id="draw-fibras"></div>
+        <figure class="fviva"><img src="assets/m21/fibra-capilar-corte.svg" alt="Corte do dialisador de fibras ocas: sangue dentro, dialisato fora em contracorrente" loading="lazy">
+          <figcaption><b>Fig. 1 · O dialisador.</b> As fibras vermelhas levam o <b>sangue</b>; o <b>dialisato</b> banha
+          por fora em sentido oposto (a seta azul = contracorrente). O ganho do filtro vem de duas coisas decodificadas
+          no rótulo: a <b>área</b> (milhares de fibras) e a <b>permeabilidade</b> da membrana — juntas, o
+          <b>KoA</b>.</figcaption></figure>
+      </div>
+
+      <h4>2. KoA — transferência de massa × área</h4>
+      <p class="sub"><b>KoA</b> (em mL·min⁻¹) é o coeficiente de transferência de massa (Ko) vezes a área (A): mede o
+      quanto a membrana <b>deixa difundir</b>. Dois extremos provam o conceito: <b>KoA → 0</b> (membrana inerte) → K=0;
+      <b>KoA → ∞</b> (membrana perfeita) → K limitado pelo <b>menor fluxo</b> (Qb ou Qd), nunca mais (Fig. 2).</p>
+      <div class="frow">
+        <div class="concept" id="draw-koa"></div>
+        <figure class="fviva"><img src="assets/m21/koa-clearance.svg" alt="KoA como transferência de massa vezes área: mais área e permeabilidade levam a mais difusão" loading="lazy">
+          <figcaption><b>Fig. 2 · KoA decodificado.</b> As setas vermelhas = soluto difundindo do sangue para o
+          dialisato através da membrana (linhas verticais). O texto traduz: <b>mais área</b> (Ko·A) e <b>mais
+          permeabilidade</b> → mais difusão → <b>K↑</b>. KoA é a soma dessas duas alavancas da membrana.</figcaption></figure>
+      </div>
+
+      <h4>3. Clearance × Qb — sobe e SATURA</h4>
+      <p class="sub">Subir o fluxo de sangue (Qb) aumenta o clearance — mas com <b>teto</b>. A curva K(Qb) é
+      <b>côncava</b>: o ganho marginal <b>∂K/∂Qb</b> decresce. <b>Dobrar Qb não dobra K</b>, porque a membrana (KoA) e o
+      dialisato (Qd) limitam quanto se consegue extrair de cada mililitro de sangue (Fig. 3).</p>
+      <div class="frow">
+        <div class="concept" id="draw-clear"></div>
+        <figure class="fviva"><img src="assets/m21/permeabilidade-membrana.svg" alt="Curva clearance versus Qb que sobe e satura, com ganho marginal decrescente" loading="lazy">
+          <figcaption><b>Fig. 3 · K × Qb satura.</b> Eixo X = Qb, eixo Y = K. A curva azul sobe rápido no começo e
+          <b>achata</b>: os dois pontos verdes mostram que o segundo salto de Qb rende menos K que o primeiro. O ganho
+          marginal cai porque a difusão <b>esgota o gradiente</b> — não adianta empurrar mais sangue.</figcaption></figure>
+      </div>
+
+      <h4>4. Sieving × peso molecular — o cutoff separa low de high-flux</h4>
+      <p class="sub">O <b>coeficiente de sieving</b> S (0 a 1) é a fração do soluto que <b>atravessa por convecção</b>.
+      S=1 (passa livre, como a ureia); S=0 (totalmente retido). A sigmoide <b>cai perto do cutoff</b> da membrana.
+      <b>High-flux</b> tem cutoff alto e deixa passar o <b>médio</b> (β2m, ~11,8 kDa); <b>low-flux</b> o barra (Fig. 4).</p>
+      <div class="frow">
+        <div class="concept" id="draw-sieve"></div>
+        <figure class="fviva"><img src="assets/m21/sieving-coefficient.svg" alt="Coeficiente de sieving versus peso molecular para low-flux e high-flux" loading="lazy">
+          <figcaption><b>Fig. 4 · Sieving × PM.</b> Curva <b>verde</b> = high-flux (cutoff alto); <b>vermelha</b> =
+          low-flux. As verticais marcam a <b>ureia</b> (passa em ambas) e a <b>β2m</b>: a verde ainda a deixa passar,
+          a vermelha já a derrubou a quase zero. É o <b>médio</b> que separa as duas membranas — não o pequeno.</figcaption></figure>
+      </div>
+
+      <h4>5. High-flux × low-flux — quem passa em cada uma</h4>
+      <p class="sub">As duas membranas depuram a <b>ureia</b> igualmente bem (molécula pequena). A diferença está no
+      <b>médio</b>: poros pequenos (low-flux) barram o β2m; poros grandes (high-flux) o deixam passar — e, por serem
+      muito permeáveis à água, permitem <b>backfiltration</b> (Fig. 5).</p>
+      <div class="frow">
+        <div class="concept" id="draw-flux"></div>
+        <figure class="fviva"><img src="assets/m21/high-flux-low-flux.svg" alt="Comparação high-flux e low-flux: ureia passa nas duas, beta2-microglobulina só na high-flux" loading="lazy">
+          <figcaption><b>Fig. 5 · As duas classes.</b> Painel vermelho (low-flux): <b>ureia ✓</b>, <b>β2m ✗</b> (a bola
+          maior é barrada). Painel verde (high-flux): <b>ureia ✓</b> e <b>β2m ✓</b>. O ✓/✗ decodifica o que cada poro
+          deixa passar; a nota laranja avisa: high-flux <b>permite backfiltration</b>.</figcaption></figure>
+      </div>
+
+      <h4>6. Backfiltration — o fluxo reverso e a pureza do dialisato</h4>
+      <p class="sub">Na porção <b>distal</b> do dialisador high-flux, com <b>Qd alto</b> e a TMP média/baixa, a pressão
+      do compartimento de <b>dialisato</b> supera localmente a do sangue → fluxo <b>reverso</b> (dialisato → sangue).
+      Se o banho não for <b>ultrapuro</b>, a endotoxina reflui para o paciente (Fig. 6).</p>
+      <div class="frow">
+        <div class="concept" id="draw-back"></div>
+        <figure class="fviva"><img src="assets/m21/backfiltration.svg" alt="Backfiltration: fluxo reverso do dialisato para o sangue na porção distal do filtro" loading="lazy">
+          <figcaption><b>Fig. 6 · Backfiltration.</b> Compartimento vermelho = sangue; azul = dialisato. Na entrada, a
+          seta verde = UF normal (sangue → dialisato). Na saída, a seta vermelha <b>aponta para cima</b> = o dialisato
+          volta ao sangue. A legenda traduz o risco: sem dialisato <b>ultrapuro</b>, a endotoxina entra.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m21/membrana-dialise-poros.svg" alt="Contracorrente: sangue e dialisato em sentidos opostos mantêm o gradiente ao longo do filtro" loading="lazy">
+          <figcaption><b>Fig. 7 · Contracorrente.</b> Sangue (vermelho) corre para a direita; dialisato (azul) para a
+          esquerda. As setas verdes verticais = difusão soluto → banho. A contracorrente mantém o <b>gradiente</b> em
+          TODO o comprimento (não se iguala no meio) — por isso ela maximiza o clearance.</figcaption></figure>
+      </div>
+
+      <h4>7. O cutoff da membrana — o tamanho do poro decide</h4>
+      <p class="sub">O <b>cutoff</b> é o peso molecular em que o sieving cai a 0,5. Moléculas menores que o poro passam;
+      maiores são retidas. A ureia passa em quase tudo; o β2m só passa se o cutoff for alto; a <b>albumina</b> (66 kDa)
+      idealmente fica retida — perdê-la seria dano (Fig. 8).</p>
+      <div class="frow">
+        <div class="concept" id="draw-cutoff"></div>
+        <figure class="fviva"><img src="assets/m21/biocompatibilidade.svg" alt="O cutoff da membrana: ureia passa, beta2-microglobulina depende do cutoff, albumina retida" loading="lazy">
+          <figcaption><b>Fig. 8 · O cutoff.</b> Três moléculas de tamanhos crescentes diante de dois poros: <b>ureia</b>
+          (verde, atravessa), <b>β2m</b> (laranja, passa só se o cutoff for alto), <b>albumina</b> (vermelha, retida —
+          o poro é menor que ela). O cutoff é a fronteira de tamanho que a legenda decodifica.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASO -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — cinco atos, decida antes de revelar</h3>
+      <p class="sub">Prescrevendo HD. Cinco perguntas sobre a <b>membrana e os fluxos</b>: o que muda o clearance, o que
+      cada membrana remove, e onde mora o perigo. Volte às Fig. 3, 4 e 6: a membrana decide.</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step"><b>Ato 1 — clearance de ureia insuficiente.</b> Dialisador KoA 500, Qb 250, Qd 500. A ureia não
+        cai o esperado. Subir o Qb de 250 para 400 vai resolver linearmente?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>Não — a curva K(Qb) satura (Fig. 3).</b> Subir Qb aumenta o K, mas o ganho
+          marginal <b>decresce</b>: dobrar o Qb não dobra o clearance, porque o KoA e o Qd limitam quanto se extrai de
+          cada mL. Ganha-se algo, mas é preciso também olhar <b>KoA</b> (membrana maior) e <b>Qd</b>.</div></div>
+
+      <div class="step"><b>Ato 2 — β2-microglobulina acumulando (amiloidose).</b> Paciente crônico em low-flux há anos,
+        síndrome do túnel do carpo. A membrana atual remove a β2m?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2"><b>Não — low-flux barra o médio (Fig. 4/5).</b> O cutoff baixo da membrana low-flux
+          deixa passar a ureia mas <b>retém o β2m</b> (sieving ≈ 0). Trocar para <b>high-flux</b> (cutoff alto) abre a
+          remoção do médio por sieving/convecção — é o que falta para o acúmulo amiloidogênico.</div></div>
+
+      <div class="step"><b>Ato 3 — high-flux com Qd alto e febre pós-sessão.</b> Membrana high-flux, Qd 800, TMP baixa
+        na porção distal. O paciente tem reação febril recorrente no fim da diálise. Mecanismo?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3"><b>Backfiltration de dialisato não-ultrapuro (Fig. 6).</b> Na porção distal, a
+          pressão do banho supera a do sangue → fluxo <b>reverso</b> (dialisato → sangue). Se o dialisato carrega
+          endotoxina, ela entra. A conduta de mecanismo: <b>dialisato ultrapuro</b> obrigatório no high-flux.</div></div>
+
+      <div class="step"><b>Ato 4 — KoA alto não dá clearance ilimitado.</b> Trocou para um dialisador de KoA muito alto
+        esperando clearance "infinito". O K chegou perto de Qb e parou. Por quê?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>O teto é o MENOR fluxo (Fig. 2).</b> Com KoA → ∞, a membrana deixa de ser o
+          gargalo, e o clearance passa a ser limitado pelo <b>menor entre Qb e Qd</b>: não se pode depurar mais sangue
+          do que passa pelo filtro. KoA alto aproxima K do teto, mas <b>nunca</b> o ultrapassa.</div></div>
+
+      <div class="step"><b>Ato 5 — a fronteira: perder albumina.</b> Tentado uma membrana de cutoff altíssimo
+        (high cut-off) para "limpar tudo". A albumina sérica cai. O que aconteceu?
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>O cutoff subiu demais (Fig. 8).</b> Um cutoff alto demais deixa passar não só o
+          médio, mas também a <b>albumina</b> (66 kDa) — perda proteica indesejada. O cutoff ideal remove o médio e
+          <b>retém</b> a albumina: a seletividade da membrana é um equilíbrio, não "quanto mais aberto, melhor".</div></div>
+    </div>
+  </section>
+
+  <!-- TRILHA -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — nove perguntas que constroem o clearance</h3>
+      <details><summary>1. De que depende o clearance difusivo do dialisador?</summary><p>De <b>três</b> coisas:
+        <b>KoA</b> (membrana), <b>Qb</b> (fluxo de sangue) e <b>Qd</b> (fluxo de dialisato), na equação
+        K = Qb·(e<sup>z</sup>−1)/(e<sup>z</sup>−Qb/Qd), com z = KoA·(1−Qb/Qd)/Qb (Fig. 2/3).</p></details>
+      <details><summary>2. O que é KoA?</summary><p>O coeficiente de transferência de massa (Ko) vezes a área (A) —
+        a "competência" difusiva da membrana, em mL·min⁻¹. KoA alto = membrana mais permeável e/ou maior área (Fig. 1/2).</p></details>
+      <details><summary>3. Subir o Qb sempre vale a pena na mesma proporção?</summary><p>Não. A curva K(Qb) é
+        <b>côncava</b>: o ganho marginal ∂K/∂Qb <b>decresce</b>. Dobrar Qb não dobra K — a membrana e o Qd limitam a
+        extração de cada mL (Fig. 3).</p></details>
+      <details><summary>4. Qual é o teto do clearance?</summary><p>O <b>menor fluxo</b>. K ≤ Qb sempre (não se depura
+        mais sangue do que passa); com KoA enorme, K → min(Qb, Qd). A membrana perfeita não vence a logística dos
+        fluxos (Fig. 2).</p></details>
+      <details><summary>5. O que mede o sieving?</summary><p>A fração do soluto que <b>atravessa por convecção</b>
+        (0 a 1). S=1 = passa livre; S=0 = retido. A sigmoide cai perto do <b>cutoff</b> da membrana (Fig. 4).</p></details>
+      <details><summary>6. Por que a ureia não distingue low de high-flux?</summary><p>Porque é <b>pequena</b> (~60 Da):
+        passa em qualquer cutoff (S ≈ 1). É o <b>médio</b> (β2m, ~11,8 kDa) que separa — só o high-flux o deixa passar
+        (Fig. 4/5).</p></details>
+      <details><summary>7. O que é backfiltration e quando ocorre?</summary><p>Fluxo <b>reverso</b> (dialisato →
+        sangue) na porção distal do <b>high-flux</b>, quando a pressão do banho (Qd alto) supera localmente a do
+        sangue. Em low-flux praticamente não ocorre (Fig. 6).</p></details>
+      <details><summary>8. Por que o high-flux exige dialisato ultrapuro?</summary><p>Porque a backfiltration leva o
+        <b>banho de volta ao sangue</b>. Se o dialisato carrega endotoxina, ela entra no paciente → reação
+        inflamatória. Ultrapuro é segurança, não luxo (Fig. 6).</p></details>
+      <details><summary>9. Em que sentido isto é homeostasia?</summary><p>A membrana, por <b>física</b> (difusão +
+        convecção), repõe a depuração que o rim perdeu — sem substituí-lo. Escolher KoA, cutoff e fluxos é ajustar
+        <b>quais</b> escórias e eletrólitos (K⁺ em mEq/L, ureia, β2m) do meio interno voltam à faixa (Fig. 7/8).</p></details>
+    </div>
+  </section>
+
+  <!-- INSTRUMENTO -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — o clearance × Qb (sobe e satura)</h3>
+      <p class="sub">Os controles do <b>Lab</b> movem esta curva. Eixo horizontal = <b>Qb</b> (fluxo de sangue);
+      eixo vertical = <b>clearance</b> (K). A curva azul é K(Qb) para o KoA e o Qd atuais; o marcador é o Qb de
+      operação; a linha tracejada laranja marca o <b>teto</b> (o menor fluxo). Note como a curva <b>achata</b>: dobrar
+      o Qb não dobra o K.</p>
+      <canvas id="clear-canvas" width="900" height="360" aria-label="Clearance × Qb"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- LAB -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — monte a membrana e os fluxos; veja o clearance e o sieving</h3>
+      <div class="grid">
+        <div>
+          <label>KoA (mL·min⁻¹) — competência da membrana: <span class="val" id="lbl-koa">600</span></label>
+          <input type="range" id="in-koa" min="100" max="1400" step="20" value="600">
+          <label>Qb — fluxo de sangue (mL/min): <span class="val" id="lbl-qb">300</span></label>
+          <input type="range" id="in-qb" min="100" max="500" step="10" value="300">
+          <label>Qd — fluxo de dialisato (mL/min): <span class="val" id="lbl-qd">500</span></label>
+          <input type="range" id="in-qd" min="200" max="1000" step="20" value="500">
+        </div>
+        <div>
+          <label>Classe da membrana: <span class="val" id="lbl-highFlux">high-flux</span></label>
+          <input type="range" id="in-highFlux" min="0" max="1" step="1" value="1">
+          <label>Cutoff (Da) — o poro: <span class="val" id="lbl-cutoff">25000</span></label>
+          <input type="range" id="in-cutoff" min="1000" max="50000" step="500" value="25000">
+          <label>TMP — pressão transmembrana (mmHg): <span class="val" id="lbl-tmp">100</span></label>
+          <input type="range" id="in-tmp" min="0" max="300" step="5" value="100">
+        </div>
+      </div>
+
+      <div class="presets">
+        <button class="act" data-preset="lowflux">Low-flux</button>
+        <button class="act" data-preset="highflux">High-flux</button>
+        <button class="act" data-preset="qbalto">Qb alto (satura)</button>
+        <button class="act" data-preset="medio">Remover molécula média</button>
+        <button class="act" data-preset="backfilt">Risco de backfiltration</button>
+        <button class="act" data-preset="koainfinito">KoA muito alto (teto)</button>
+      </div>
+
+      <table>
+        <tr><th>Saída</th><th>Atual</th><th>Comentário</th></tr>
+        <tr><td>Classe da membrana</td><td class="num" id="out-classe">—</td><td class="num">cutoff baixo × alto</td></tr>
+        <tr><td>Clearance de ureia K (mL/min)</td><td class="num" id="out-clearUreia">—</td><td class="num">soluto pequeno (60 Da)</td></tr>
+        <tr><td>Clearance da β2m (mL/min)</td><td class="num" id="out-clearMedio">—</td><td class="num">molécula média (11,8 kDa)</td></tr>
+        <tr><td>Sieving ureia · β2m</td><td class="num" id="out-sieving">—</td><td class="num">fração que atravessa</td></tr>
+        <tr><td>Ganho marginal ∂K/∂Qb</td><td class="num" id="out-ganho">—</td><td class="num">cai = saturação</td></tr>
+        <tr><td>Backfiltration</td><td class="num" id="out-backfilt">—</td><td class="num">fluxo reverso 0..1</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÃO -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (12)</button>
+        <button data-bank="textual">Textual (12)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica</b>. Este módulo M21 modela
+    o clearance do dialisador (equação clássica K em função de KoA, Qb, Qd), o sieving e a backfiltration como
+    simplificação didática calibrada para ensinar o <b>mecanismo</b> da membrana — não um protocolo de prescrição para
+    um paciente real. Não substitui julgamento clínico; a decisão e a responsabilidade finais são sempre do
+    profissional.
+  </div>
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+</div>
+
+<script>
+/* ENGINE INLINE — espelho fiel de build/m21/model21.js */
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
+var PM_UREIA=60, PM_B2M=11800, CUTOFF_LOW=2000, CUTOFF_HIGH=25000, STEEP=4;
+function clearanceDialisador(o){ o=o||{};
+  var koa=clampv(o.koa,0,2000), qb=clampv(o.qb,1,600), qd=clampv(o.qd,1,1200), ratio=qb/qd, K;
+  if(Math.abs(qb-qd)<1e-6){ K=qb*koa/(qb+koa); }
+  else { var z=koa*(1-ratio)/qb;
+    if(z>60){ K=Math.min(qb,qd); }
+    else if(z<-60){ K=qb*koa/(qb+koa); }
+    else { var ez=Math.exp(z), denom=ez-ratio; if(Math.abs(denom)<1e-9){ K=qb*koa/(qb+koa); } else { K=qb*(ez-1)/denom; } } }
+  K=clampv(K,0,Math.min(qb,qd)); return K; }
+function sieving(o){ o=o||{};
+  var pm=clampv(o.pm,1,70000), cutoff=clampv(o.cutoff,200,60000), steep=clampv(o.steep,1,12);
+  return clampv(1/(1+Math.pow(pm/cutoff,steep)),0,1); }
+function backfiltration(o){ o=o||{};
+  var highFlux=clampv(o.highFlux,0,1), qd=clampv(o.qd,1,1200), tmp=clampv(o.tmp,0,400);
+  var qdComp=clampv((qd-300)/500,0,1), tmpComp=clampv(1-tmp/80,0,1);
+  return clampv(highFlux*(0.55*qdComp+0.45*tmpComp),0,1); }
+function membrana(input){ var inp=input||{};
+  var koa=clampv(inp.koa!==undefined?inp.koa:600,0,2000);
+  var qb=clampv(inp.qb!==undefined?inp.qb:300,1,600);
+  var qd=clampv(inp.qd!==undefined?inp.qd:500,1,1200);
+  var tmp=clampv(inp.tmp!==undefined?inp.tmp:100,0,400);
+  var highFlux=clampv(inp.highFlux!==undefined?inp.highFlux:1,0,1);
+  var cutoff=inp.cutoff!==undefined?clampv(inp.cutoff,200,60000):(highFlux>=0.5?CUTOFF_HIGH:CUTOFF_LOW);
+  var steep=clampv(inp.steep!==undefined?inp.steep:STEEP,1,12);
+  var clearUreia=clearanceDialisador({koa:koa,qb:qb,qd:qd});
+  var sUreia=sieving({pm:PM_UREIA,cutoff:cutoff,steep:steep});
+  var sMedio=sieving({pm:PM_B2M,cutoff:cutoff,steep:steep});
+  var koaMedio=koa*sMedio*0.6;
+  var clearMedio=clearanceDialisador({koa:koaMedio,qb:qb,qd:qd});
+  var fracUreia=clampv(clearUreia/Math.max(qb,1e-9),0,1);
+  var classe=highFlux>=0.5?'high-flux':'low-flux';
+  var removeMedio=sMedio>=0.3;
+  var bf=backfiltration({highFlux:highFlux,qd:qd,tmp:tmp});
+  var precisaUltrapuro=bf>=0.15;
+  var dQb=1;
+  var Khi=clearanceDialisador({koa:koa,qb:clampv(qb+dQb,1,600),qd:qd});
+  var Klo=clearanceDialisador({koa:koa,qb:clampv(qb-dQb,1,600),qd:qd});
+  var ganhoMarginal=clampv((Khi-Klo)/(2*dQb),0,1);
+  return {koa:koa,qb:qb,qd:qd,tmp:tmp,highFlux:highFlux,cutoff:cutoff,steep:steep,
+    clearUreia:clearUreia,clearMedio:clearMedio,fracUreia:fracUreia,ganhoMarginal:ganhoMarginal,
+    sUreia:sUreia,sMedio:sMedio,koaMedio:koaMedio,classe:classe,removeMedio:removeMedio,
+    backfilt:bf,precisaUltrapuro:precisaUltrapuro}; }
+function clearanceLayout(state,W,H){ state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=52,padR=16,padT=18,padB=38,baseY=H-padB;
+  var koa=clampv(state.koa!==undefined?state.koa:600,0,2000);
+  var qd=clampv(state.qd!==undefined?state.qd:500,1,1200);
+  var qbCur=clampv(state.qb!==undefined?state.qb:300,1,600);
+  var QBMAX=500, KMAX=320, N=50, plotW=(W-padL-padR), plotH=(baseY-padT);
+  var pts=[],i,qb,K;
+  for(i=0;i<=N;i++){ qb=1+(QBMAX-1)*i/N; K=clearanceDialisador({koa:koa,qb:qb,qd:qd});
+    pts.push({qb:qb,K:K,x:padL+(qb/QBMAX)*plotW,y:baseY-clampv(K/KMAX,0,1)*plotH}); }
+  var Kcur=clearanceDialisador({koa:koa,qb:qbCur,qd:qd});
+  var cx=padL+clampv(qbCur/QBMAX,0,1)*plotW, cy=baseY-clampv(Kcur/KMAX,0,1)*plotH;
+  var teto=Math.min(QBMAX,qd), ytetoK=clearanceDialisador({koa:koa,qb:teto,qd:qd});
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,QBMAX:QBMAX,KMAX:KMAX,N:N,plotW:plotW,plotH:plotH,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},pts:pts,
+    current:{x:cx,y:cy,qb:qbCur,K:Kcur},
+    teto:{qb:teto,K:ytetoK,x:padL+clampv(teto/QBMAX,0,1)*plotW,y:baseY-clampv(ytetoK/KMAX,0,1)*plotH}}; }
+window.clearanceDialisador=clearanceDialisador; window.sieving=sieving; window.backfiltration=backfiltration;
+window.membrana=membrana; window.clearanceLayout=clearanceLayout;
+window.MODEL={clearanceDialisador:clearanceDialisador,sieving:sieving,backfiltration:backfiltration,membrana:membrana,clearanceLayout:clearanceLayout,clampv:clampv,PM_UREIA:PM_UREIA,PM_B2M:PM_B2M,CUTOFF_LOW:CUTOFF_LOW,CUTOFF_HIGH:CUTOFF_HIGH,STEEP:STEEP};
+
+/* UI */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=(d===undefined?1:d); return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on'); b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on'); $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh(); });
+document.addEventListener('click',function(e){ var b=e.target.closest('button.act[data-rev]'); if(!b) return; var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on'); });
+
+function readInputs(){ return { koa:+$('in-koa').value, qb:+$('in-qb').value, qd:+$('in-qd').value,
+  highFlux:+$('in-highFlux').value, cutoff:+$('in-cutoff').value, tmp:+$('in-tmp').value }; }
+function refresh(){ var inp=readInputs();
+  $('lbl-koa').textContent=fmt(inp.koa,0); $('lbl-qb').textContent=fmt(inp.qb,0); $('lbl-qd').textContent=fmt(inp.qd,0);
+  $('lbl-highFlux').textContent=(inp.highFlux>=0.5?'high-flux':'low-flux'); $('lbl-cutoff').textContent=fmt(inp.cutoff,0); $('lbl-tmp').textContent=fmt(inp.tmp,0);
+  var r=membrana(inp);
+  $('out-classe').textContent=r.classe+(r.removeMedio?' (remove o médio)':' (barra o médio)');
+  $('out-clearUreia').textContent=fmt(r.clearUreia,0)+' mL/min';
+  $('out-clearMedio').textContent=fmt(r.clearMedio,0)+' mL/min';
+  $('out-sieving').textContent='ureia '+fmt(r.sUreia,2)+' · β2m '+fmt(r.sMedio,2);
+  $('out-ganho').textContent=fmt(r.ganhoMarginal,2)+' (mL/min por mL/min)';
+  $('out-backfilt').textContent=fmt(r.backfilt,2)+(r.precisaUltrapuro?' → ultrapuro!':'');
+  verdict(r); drawClear(inp); pearl(r,inp); }
+function verdict(r){ var v=$('veredito'), cls='b-good', msg;
+  if(r.precisaUltrapuro){ cls='b-bad'; msg='BACKFILTRATION ('+fmt(r.backfilt,2)+') — high-flux com Qd alto e TMP baixa: o dialisato pode refluir para o sangue. O banho DEVE ser ultrapuro, senão a endotoxina entra (M19/M20).'; }
+  else if(r.classe==='low-flux'){ cls='b-warn'; msg='LOW-FLUX — depura a ureia (K '+fmt(r.clearUreia,0)+' mL/min) mas BARRA o médio (β2m sieving '+fmt(r.sMedio,2)+'). Para remover o médio, é preciso high-flux.'; }
+  else { cls='b-good'; msg='HIGH-FLUX — ureia K '+fmt(r.clearUreia,0)+' mL/min e remove o médio (β2m sieving '+fmt(r.sMedio,2)+'). Ganho marginal de Qb '+fmt(r.ganhoMarginal,2)+': '+(r.ganhoMarginal<0.4?'já saturando':'ainda rende')+'.'; }
+  v.className='banner '+cls; v.textContent=msg; }
+function pearl(r,inp){ var p=$('lab-pearl'), ip=$('instr-pearl'), t;
+  if(r.precisaUltrapuro) t='PÉROLA (pureza não é luxo): a backfiltration leva o BANHO de volta ao sangue. High-flux exige dialisato ultrapuro — a permeabilidade que remove o médio também abre a porta para a endotoxina.';
+  else if(r.classe==='low-flux') t='PÉROLA (o médio separa as membranas): a ureia passa em qualquer cutoff (sieving ≈1). É a β2m (11,8 kDa) que distingue low de high-flux — aqui o sieving do médio é só '+fmt(r.sMedio,2)+'.';
+  else if(r.ganhoMarginal<0.35) t='PÉROLA (dobrar Qb não dobra K): o ganho marginal ∂K/∂Qb caiu para '+fmt(r.ganhoMarginal,2)+'. A curva saturou — subir mais o Qb rende pouco; olhe KoA e Qd.';
+  else if(inp.koa>=1300) t='PÉROLA (o teto é o menor fluxo): com KoA muito alto, a membrana deixa de ser o gargalo. K se aproxima de min(Qb,Qd) e NÃO o ultrapassa — não se depura mais sangue do que passa.';
+  else t='High-flux, K '+fmt(r.clearUreia,0)+' mL/min. O clearance é difusão (gradiente) + convecção (arraste). A membrana, por física, repõe a depuração que o rim perdeu.';
+  p.textContent=t; ip.textContent=t; }
+function drawClear(state){ var c=$('clear-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
+  var L=clearanceLayout(state,c.width,c.height); ctx.clearRect(0,0,L.W,L.H);
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('clearance K (mL/min) ↑',8,L.padT+2); ctx.fillText('Qb (mL/min) →',L.W-120,L.baseY+24);
+  // teto (menor fluxo)
+  ctx.strokeStyle='#e8a13a'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(L.padL,L.teto.y); ctx.lineTo(L.axis.xEnd,L.teto.y); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#e8a13a'; ctx.fillText('teto = menor fluxo ('+fmt(L.teto.K,0)+')',L.W-200,Math.max(L.teto.y-6,L.padT+10));
+  function poly(pts,color,w){ ctx.strokeStyle=color; ctx.lineWidth=w; ctx.beginPath(); for(var i=0;i<pts.length;i++){ var p=pts[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); } ctx.stroke(); }
+  poly(L.pts,'#39c0c8',2);
+  var cu=L.current; ctx.strokeStyle='#e7eef4'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(cu.x,L.baseY); ctx.lineTo(cu.x,cu.y); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#52c08a'; ctx.fillRect(cu.x-4,cu.y-4,8,8);
+  ctx.fillStyle='#e7eef4'; ctx.fillText('K '+fmt(cu.K,0)+' @ Qb '+fmt(cu.qb,0),Math.min(cu.x+8,L.W-150),Math.max(cu.y-6,L.padT+10)); }
+['in-koa','in-qb','in-qd','in-highFlux','in-cutoff','in-tmp'].forEach(function(id){ $(id).addEventListener('input',refresh); });
+
+var PRESETS={
+  lowflux:{koa:500,qb:300,qd:500,highFlux:0,cutoff:2000,tmp:100},
+  highflux:{koa:800,qb:300,qd:500,highFlux:1,cutoff:25000,tmp:100},
+  qbalto:{koa:600,qb:480,qd:500,highFlux:1,cutoff:25000,tmp:100},
+  medio:{koa:900,qb:350,qd:600,highFlux:1,cutoff:30000,tmp:120},
+  backfilt:{koa:900,qb:300,qd:900,highFlux:1,cutoff:25000,tmp:20},
+  koainfinito:{koa:1400,qb:300,qd:500,highFlux:1,cutoff:25000,tmp:100}
+};
+function applyPreset(p){ var d=PRESETS[p]; if(!d) return;
+  $('in-koa').value=d.koa; $('in-qb').value=d.qb; $('in-qd').value=d.qd;
+  $('in-highFlux').value=d.highFlux; $('in-cutoff').value=d.cutoff; $('in-tmp').value=d.tmp; refresh(); }
+document.querySelector('.presets').addEventListener('click',function(e){ var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset')); });
+
+/* ILUSTRAÇÕES computadas + helper raster */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+function clearMini(state,titulo){ var W=300,H=170,L=clearanceLayout(state,W,H),s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.padL+'" y1="'+f1(L.teto.y)+'" x2="'+L.axis.xEnd+'" y2="'+f1(L.teto.y)+'" stroke="#e8a13a" stroke-dasharray="3 2" opacity="0.6"/>';
+  function path(pts,color){ var d=''; for(var i=0;i<pts.length;i++){ d+=(i===0?'M':'L')+f1(pts[i].x)+' '+f1(pts[i].y)+' '; } return '<path d="'+d+'" fill="none" stroke="'+color+'" stroke-width="2"/>'; }
+  s+=path(L.pts,'#39c0c8');
+  var cu=L.current; s+='<rect x="'+f1(cu.x-3)+'" y="'+f1(cu.y-3)+'" width="6" height="6" fill="#52c08a"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'K × Qb')+'</text>';
+  s+='<text x="'+(L.padL+2)+'" y="'+(L.padT+10)+'" fill="#9fb1c0" font-size="8">K ↑</text>';
+  s+='<text x="'+(W-8)+'" y="'+(L.baseY-4)+'" fill="#9fb1c0" font-size="8" text-anchor="end">Qb →</text>';
+  return svgEl(W,H,s); }
+function sieveMini(r,titulo){ var W=300,H=170,base=130,padL=44,plotW=240,s='';
+  s+='<line x1="'+padL+'" y1="34" x2="'+padL+'" y2="'+base+'" stroke="#3a4a58"/><line x1="'+padL+'" y1="'+base+'" x2="'+(padL+plotW)+'" y2="'+base+'" stroke="#3a4a58"/>';
+  function curve(cut,color){ var d=''; for(var i=0;i<=40;i++){ var pm=Math.pow(10,1+i/40*4.5); var S=sieving({pm:pm,cutoff:cut,steep:4}); var x=padL+(Math.log(pm)/Math.LN10-1)/4.5*plotW; var y=base-S*92; d+=(i===0?'M':'L')+f1(x)+' '+f1(y)+' '; } return '<path d="'+d+'" fill="none" stroke="'+color+'" stroke-width="2"/>'; }
+  s+=curve(r.cutoff,'#52c08a');
+  // vertical β2m
+  var xb=padL+(Math.log(PM_B2M)/Math.LN10-1)/4.5*plotW;
+  s+='<line x1="'+f1(xb)+'" y1="34" x2="'+f1(xb)+'" y2="'+base+'" stroke="#e8a13a" stroke-dasharray="3 2"/>';
+  s+='<text x="'+f1(xb)+'" y="30" fill="#e8a13a" font-size="8" text-anchor="middle">β2m</text>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'sieving × PM')+'</text>';
+  s+='<text x="'+(padL+plotW)+'" y="'+(base+14)+'" fill="#9fb1c0" font-size="8" text-anchor="end">PM (log) →</text>';
+  s+='<text x="150" y="158" fill="#e7eef4" font-size="9" text-anchor="middle">'+r.classe+' · β2m S='+fmt(r.sMedio,2)+'</text>';
+  return svgEl(W,H,s); }
+function membIcon(r,titulo){ var W=300,H=170,s='';
+  var col=r.classe==='high-flux'?'#52c08a':'#e0556b';
+  s+='<rect x="60" y="46" width="180" height="76" rx="10" fill="'+col+'" fill-opacity="0.16" stroke="'+col+'"/>';
+  s+='<text x="150" y="76" fill="'+col+'" font-size="17" text-anchor="middle" font-weight="bold">'+r.classe+'</text>';
+  s+='<text x="150" y="98" fill="#9fb1c0" font-size="10" text-anchor="middle">'+(r.removeMedio?'remove o médio':'barra o médio')+(r.precisaUltrapuro?' · ultrapuro!':'')+'</text>';
+  s+='<text x="'+(W/2)+'" y="20" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'membrana')+'</text>';
+  s+='<text x="150" y="146" fill="#e7eef4" font-size="9" text-anchor="middle">K '+fmt(r.clearUreia,0)+' · médio '+fmt(r.clearMedio,0)+' mL/min · bf '+fmt(r.backfilt,2)+'</text>';
+  return svgEl(W,H,s); }
+function imgFig(slug,alt){ return '<img src="assets/m21/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+/* TUTOR */
+function R0(extra){ var o={}; if(extra) for(var k in extra) o[k]=extra[k]; return membrana(o); }
+var TUTOR_ILUSTRADO=[
+  {q:'O clearance de ureia não cai o esperado. Subir Qb de 250 para 400 resolve LINEARMENTE?',o:['sim, dobra o K','não, a curva K(Qb) satura','o K cai'],c:1,e:'A curva K(Qb) é côncava: dobrar Qb não dobra K. KoA e Qd limitam a extração de cada mL.',fig:function(){return clearMini({koa:500,qb:250,qd:500},'K(Qb) satura');}},
+  {q:'Paciente crônico com amiloidose por β2m. A membrana low-flux remove o médio?',o:['sim','não — cutoff baixo barra o β2m','só com Qb alto'],c:1,e:'Low-flux barra o médio (sieving≈0). É preciso high-flux (cutoff alto) para remover o β2m.',fig:function(){return sieveMini(R0({highFlux:0}),'low-flux barra β2m');}},
+  {q:'High-flux, Qd 900, TMP baixa, febre pós-sessão. O mecanismo é…',o:['infecção do cateter','backfiltration de banho não-ultrapuro','hipotensão'],c:1,e:'O dialisato reflui ao sangue na porção distal. High-flux exige banho ultrapuro.',fig:function(){return membIcon(R0({highFlux:1,qd:900,tmp:20}),'backfiltration → ultrapuro');}},
+  {q:'Com KoA muito alto, o K chegou perto de Qb e parou. Por quê?',o:['o filtro quebrou','o teto é o MENOR fluxo','o Qd estava baixo'],c:1,e:'KoA→∞ deixa de ser o gargalo; K → min(Qb,Qd) e não o ultrapassa.',fig:function(){return clearMini({koa:1400,qb:300,qd:500},'KoA alto → teto');}},
+  {q:'Membrana high cut-off altíssimo: a albumina sérica caiu. O que houve?',o:['o cutoff subiu demais e a albumina passou','desidratação','erro de laboratório'],c:0,e:'Cutoff alto demais deixa passar a albumina (66 kDa). O ideal remove o médio e RETÉM a albumina.',fig:function(){return imgFig('biocompatibilidade.svg','o cutoff da membrana');}},
+  {q:'No gráfico, a curva clearance × Qb…',o:['é uma reta','sobe e satura (ganho marginal cai)','desce'],c:1,e:'É côncava: o ∂K/∂Qb decresce porque a difusão esgota o gradiente.',fig:function(){return imgFig('permeabilidade-membrana.svg','clearance × Qb satura');}},
+  {q:'Na figura do sieving, o que separa low de high-flux é…',o:['a ureia','a molécula MÉDIA (β2m)','a água'],c:1,e:'A ureia passa nas duas (S≈1). É o β2m que distingue: só o high-flux o deixa passar.',fig:function(){return imgFig('sieving-coefficient.svg','sieving × PM');}},
+  {q:'Na figura da backfiltration, a seta vermelha distal aponta…',o:['do sangue para o dialisato','do dialisato de volta para o sangue','para fora'],c:1,e:'É o fluxo reverso: sem dialisato ultrapuro, a endotoxina entra.',fig:function(){return imgFig('backfiltration.svg','backfiltration');}},
+  {q:'Na figura do dialisador, o KoA é a soma de…',o:['Qb e Qd','área × permeabilidade da membrana','TMP e pressão'],c:1,e:'KoA = coef. de transferência de massa (Ko) × área (A): a competência difusiva do filtro.',fig:function(){return imgFig('koa-clearance.svg','KoA = Ko × A');}},
+  {q:'A contracorrente (Fig. 7) serve para…',o:['economizar dialisato','manter o gradiente em todo o filtro','aquecer o sangue'],c:1,e:'Sangue e dialisato em sentidos opostos não igualam a concentração no meio → maior clearance.',fig:function(){return imgFig('membrana-dialise-poros.svg','contracorrente');}},
+  {q:'O clearance da β2m em high-flux comparado ao low-flux é…',o:['igual','muito maior','menor'],c:1,e:'High-flux deixa passar o médio (sieving alto) → depura MUITO mais β2m que o low-flux.',fig:function(){return membIcon(R0({highFlux:1,koa:900,cutoff:30000}),'high-flux remove o médio');}},
+  {q:'A ureia (60 Da) em low-flux e high-flux…',o:['só passa no high-flux','passa em ambas (sieving≈1)','é retida'],c:1,e:'A ureia é pequena: passa em qualquer cutoff. É o MÉDIO que separa as membranas.',fig:function(){return sieveMini(R0({highFlux:1,cutoff:25000}),'ureia passa em ambas');}}
+];
+var TUTOR_TEXTUAL=[
+  {q:'O clearance difusivo do dialisador depende de…',o:['só do Qb','KoA, Qb e Qd','só da membrana'],c:1,e:'K = Qb·(e^z−1)/(e^z−Qb/Qd), z = KoA·(1−Qb/Qd)/Qb. Membrana E fluxos.'},
+  {q:'KoA é…',o:['o fluxo de sangue','transferência de massa × área (competência da membrana)','a pressão'],c:1,e:'Ko·A em mL·min⁻¹: o quanto a membrana deixa difundir.'},
+  {q:'Dobrar o Qb…',o:['dobra o K','não dobra o K (saturação)','zera o K'],c:1,e:'A curva K(Qb) é côncava; o ganho marginal decresce — KoA e Qd limitam.'},
+  {q:'O teto do clearance é…',o:['infinito','o menor fluxo (K ≤ min(Qb,Qd))','a TMP'],c:1,e:'K ≤ Qb sempre; com KoA enorme, K → min(Qb,Qd).'},
+  {q:'O coeficiente de sieving mede…',o:['a pressão','a fração do soluto que atravessa (0..1)','o pH'],c:1,e:'S=1 passa livre; S=0 retido. Cai perto do cutoff.'},
+  {q:'O cutoff da membrana é…',o:['o Qd','o PM em que o sieving cai a 0,5','a área'],c:1,e:'Acima do cutoff a molécula é progressivamente barrada.'},
+  {q:'A ureia (60 Da) distingue low de high-flux?',o:['sim','não — passa em ambas','só com TMP alta'],c:1,e:'É pequena demais; S≈1 em qualquer cutoff. O médio é que separa.'},
+  {q:'A β2-microglobulina (~11,8 kDa) é removida por…',o:['low-flux','high-flux (cutoff alto)','qualquer membrana'],c:1,e:'Só o high-flux tem cutoff suficiente para deixá-la passar.'},
+  {q:'A backfiltration é o fluxo…',o:['de sangue para o dialisato','reverso, dialisato → sangue (porção distal)','de ar'],c:1,e:'Em high-flux com Qd alto e TMP baixa, a pressão do banho vence localmente.'},
+  {q:'O high-flux exige dialisato ultrapuro porque…',o:['é mais barato','a backfiltration pode levar endotoxina ao sangue','aquece menos'],c:1,e:'O banho volta ao paciente; impuro, carrega endotoxina → inflamação.'},
+  {q:'A contracorrente serve para…',o:['resfriar','manter o gradiente ao longo de todo o filtro','filtrar ar'],c:1,e:'Sentidos opostos evitam que sangue e banho igualem a concentração no meio.'},
+  {q:'Em síntese, a membrana e os fluxos definem…',o:['só o volume','o que e o quanto é depurado (K, sieving)','a PAM'],c:1,e:'A diálise repõe FUNÇÕES por física: a membrana decide quais escórias voltam à faixa.'}
+];
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL; window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+var BANKS={ilustrada:TUTOR_ILUSTRADO,textual:TUTOR_TEXTUAL}, curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+function renderTutor(){ var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():''; $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false; $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){ if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button'); btns[item.c].classList.add('ok'); if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block'; fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e; $('tutor-score').textContent=tScore; $('tutor-total').textContent=tTotal; });
+    box.appendChild(b); }); }
+$('banktabs').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor(); });
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+$('draw-fibras').innerHTML = clearMini({koa:600,qb:300,qd:500},'clearance do filtro');
+$('draw-koa').innerHTML = clearMini({koa:1000,qb:300,qd:500},'KoA alto → K maior');
+$('draw-clear').innerHTML = clearMini({koa:600,qb:300,qd:500},'K × Qb satura');
+$('draw-sieve').innerHTML = sieveMini(membrana({highFlux:1,cutoff:25000}),'high-flux deixa o β2m passar');
+$('draw-flux').innerHTML = membIcon(membrana({highFlux:1}),'high-flux') + membIcon(membrana({highFlux:0}),'low-flux');
+$('draw-back').innerHTML = membIcon(membrana({highFlux:1,qd:900,tmp:20}),'backfiltration ativa');
+$('draw-cutoff').innerHTML = sieveMini(membrana({highFlux:0,cutoff:2000}),'low-flux: cutoff baixo');
+$('fig-caso').innerHTML = clearMini({koa:500,qb:250,qd:500},'o caso no espaço K×Qb') + membIcon(membrana({highFlux:0}),'membrana do caso');
+
+refresh(); renderTutor();
+</script>
+</body>
+</html>

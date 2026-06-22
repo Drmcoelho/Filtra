@@ -1,22 +1,40 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M14</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">RAAS e eixo endócrino renal</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">adh-vasopressina</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">ADH/vasopressina</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" font-family="system-ui,Segoe UI,Arial,sans-serif">
+  <rect width="640" height="360" fill="#0f1620"/>
+  <text x="320" y="26" text-anchor="middle" font-size="15" font-weight="700" fill="#e7eef4">ADH / VASOPRESSINA — dois receptores</text>
+  <text x="320" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">a hipófise libera ADH; o eixo da ÁGUA e o eixo da PRESSÃO</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <!-- hipófise -->
+  <ellipse cx="320" cy="92" rx="52" ry="30" fill="#1b242d" stroke="#3a7bd5" stroke-width="2"/>
+  <text x="320" y="90" text-anchor="middle" font-size="10.5" font-weight="700" fill="#3a7bd5">neuro-hipófise</text>
+  <text x="320" y="104" text-anchor="middle" font-size="9" fill="#9fb1c0">libera ADH</text>
+
+  <!-- estímulos -->
+  <text x="320" y="138" text-anchor="middle" font-size="10" fill="#9fb1c0">gatilhos: osmolalidade↑ (osmorreceptor) · volume↓ (barorreceptor)</text>
+
+  <!-- V2 -->
+  <line x1="290" y1="120" x2="180" y2="170" stroke="#3a7bd5" stroke-width="2" marker-end="url(#a)"/>
+  <rect x="40" y="170" width="220" height="130" rx="8" fill="#141b22" stroke="#3a7bd5"/>
+  <text x="150" y="192" text-anchor="middle" font-size="12" font-weight="700" fill="#3a7bd5">receptor V2 (rim)</text>
+  <text x="150" y="212" text-anchor="middle" font-size="10" fill="#cfdbe6">ducto coletor → AMPc</text>
+  <rect x="120" y="222" width="60" height="18" rx="4" fill="#102333" stroke="#3a7bd5"/>
+  <text x="150" y="235" text-anchor="middle" font-size="9" fill="#3a7bd5">aquaporina-2</text>
+  <text x="150" y="258" text-anchor="middle" font-size="10" fill="#cfdbe6">insere AQP2 apical</text>
+  <text x="150" y="276" text-anchor="middle" font-size="10.5" fill="#52c08a">→ REABSORVE ÁGUA</text>
+  <text x="150" y="292" text-anchor="middle" font-size="9.5" fill="#9fb1c0">urina concentrada</text>
+
+  <!-- V1 -->
+  <line x1="350" y1="120" x2="460" y2="170" stroke="#e0556b" stroke-width="2" marker-end="url(#ar)"/>
+  <rect x="380" y="170" width="220" height="130" rx="8" fill="#141b22" stroke="#e0556b"/>
+  <text x="490" y="192" text-anchor="middle" font-size="12" font-weight="700" fill="#e0556b">receptor V1 (vasos)</text>
+  <text x="490" y="212" text-anchor="middle" font-size="10" fill="#cfdbe6">músculo liso vascular</text>
+  <text x="490" y="234" text-anchor="middle" font-size="10.5" fill="#e0556b">→ VASOCONSTRIÇÃO</text>
+  <text x="490" y="252" text-anchor="middle" font-size="10" fill="#cfdbe6">sobe a PA (choque, M28)</text>
+  <text x="490" y="276" text-anchor="middle" font-size="9.5" fill="#9fb1c0">é o "vasopressina" da UTI</text>
+  <text x="490" y="292" text-anchor="middle" font-size="9.5" fill="#9fb1c0">ponte com o Choca</text>
+
+  <text x="320" y="332" text-anchor="middle" font-size="10.5" fill="#9fb1c0">SIADH = ADH inapropriado → retém água → hiponatremia. Vaptano bloqueia o V2 (M8).</text>
+  <defs>
+    <marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#3a7bd5"/></marker>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#e0556b"/></marker>
+  </defs>
 </svg>

@@ -1,22 +1,44 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M14</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">RAAS e eixo endócrino renal</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">aldosterona-sintese</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">Síntese e ação da aldosterona</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" font-family="system-ui,Segoe UI,Arial,sans-serif">
+  <rect width="640" height="360" fill="#0f1620"/>
+  <text x="320" y="26" text-anchor="middle" font-size="15" font-weight="700" fill="#e7eef4">ALDOSTERONA — do estímulo ao ENaC</text>
+  <text x="320" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">a Ang II (e o K⁺ alto) acionam a zona glomerulosa da adrenal</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <!-- adrenal -->
+  <ellipse cx="130" cy="130" rx="64" ry="44" fill="#1b242d" stroke="#52c08a" stroke-width="2"/>
+  <path d="M82 110 q48 -28 96 0" fill="none" stroke="#52c08a" stroke-width="2"/>
+  <text x="130" y="100" text-anchor="middle" font-size="10" font-weight="700" fill="#52c08a">zona glomerulosa</text>
+  <text x="130" y="140" text-anchor="middle" font-size="10" fill="#9fb1c0">(córtex adrenal)</text>
+
+  <!-- estímulos -->
+  <text x="130" y="200" text-anchor="middle" font-size="10.5" fill="#cfdbe6">estimulada por:</text>
+  <text x="130" y="218" text-anchor="middle" font-size="10.5" fill="#39c0c8">Ang II ↑ · K⁺ ↑</text>
+
+  <line x1="194" y1="130" x2="270" y2="130" stroke="#52c08a" stroke-width="2" marker-end="url(#a)"/>
+  <rect x="272" y="106" width="120" height="48" rx="8" fill="#19303a" stroke="#52c08a" stroke-width="2"/>
+  <text x="332" y="128" text-anchor="middle" font-size="13" font-weight="700" fill="#52c08a">ALDOSTERONA</text>
+  <text x="332" y="144" text-anchor="middle" font-size="9" fill="#9fb1c0">esteroide</text>
+
+  <line x1="392" y1="130" x2="466" y2="130" stroke="#52c08a" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- célula principal -->
+  <rect x="466" y="80" width="150" height="200" rx="8" fill="#141b22" stroke="#3a4a58"/>
+  <text x="541" y="100" text-anchor="middle" font-size="10.5" font-weight="700" fill="#e7eef4">célula principal</text>
+  <text x="541" y="114" text-anchor="middle" font-size="9" fill="#9fb1c0">(ducto coletor, M8)</text>
+  <!-- ENaC apical -->
+  <rect x="474" y="130" width="40" height="18" rx="4" fill="#102a2c" stroke="#39c0c8"/>
+  <text x="494" y="143" text-anchor="middle" font-size="9" fill="#39c0c8">ENaC</text>
+  <text x="474" y="166" font-size="9.5" fill="#cfdbe6">Na⁺ entra →</text>
+  <!-- ROMK -->
+  <rect x="474" y="180" width="40" height="18" rx="4" fill="#2a210f" stroke="#e8a13a"/>
+  <text x="494" y="193" text-anchor="middle" font-size="9" fill="#e8a13a">ROMK</text>
+  <text x="474" y="216" font-size="9.5" fill="#cfdbe6">← K⁺ sai</text>
+  <text x="474" y="244" font-size="9.5" fill="#cfdbe6">← H⁺ sai</text>
+
+  <!-- resultado -->
+  <rect x="40" y="296" width="560" height="50" rx="8" fill="#102026" stroke="#39c0c8" stroke-dasharray="4 3"/>
+  <text x="320" y="316" text-anchor="middle" font-size="11" fill="#cfdbe6">Efeito-rede: reabsorve <tspan fill="#39c0c8" font-weight="700">Na⁺</tspan> (retém volume) e secreta <tspan fill="#e8a13a" font-weight="700">K⁺ e H⁺</tspan>.</text>
+  <text x="320" y="334" text-anchor="middle" font-size="10.5" fill="#9fb1c0">"Na in, K/H out" — hiperaldo dá hipocalemia + alcalose; falta de aldo dá hipercalemia.</text>
+  <defs>
+    <marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#52c08a"/></marker>
+  </defs>
 </svg>

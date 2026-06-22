@@ -1,22 +1,50 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M14</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">RAAS e eixo endócrino renal</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">angiotensina-ii-acoes</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">Ações da angiotensina II</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" font-family="system-ui,Segoe UI,Arial,sans-serif">
+  <rect width="640" height="360" fill="#0f1620"/>
+  <text x="320" y="26" text-anchor="middle" font-size="15" font-weight="700" fill="#e7eef4">As ações da ANGIOTENSINA II</text>
+  <text x="320" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">um hormônio, cinco frentes — todas defendem volume e pressão</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <circle cx="320" cy="100" r="40" fill="#19303a" stroke="#39c0c8" stroke-width="2"/>
+  <text x="320" y="98" text-anchor="middle" font-size="13" font-weight="700" fill="#39c0c8">Ang II</text>
+  <text x="320" y="115" text-anchor="middle" font-size="9" fill="#9fb1c0">receptor AT1</text>
+
+  <!-- 5 raios -->
+  <g stroke="#3a4a58" stroke-width="1.5">
+    <line x1="290" y1="130" x2="120" y2="200"/>
+    <line x1="305" y1="138" x2="240" y2="220"/>
+    <line x1="320" y1="140" x2="320" y2="220"/>
+    <line x1="335" y1="138" x2="400" y2="220"/>
+    <line x1="350" y1="130" x2="520" y2="200"/>
+  </g>
+
+  <g font-size="10.5">
+    <rect x="28" y="200" width="172" height="66" rx="7" fill="#141b22" stroke="#e8a13a"/>
+    <text x="40" y="220" font-weight="700" fill="#e8a13a">arteríola EFERENTE</text>
+    <text x="40" y="237" fill="#cfdbe6">constringe → ↑P_GC</text>
+    <text x="40" y="253" fill="#cfdbe6">DEFENDE a TFG</text>
+
+    <rect x="208" y="226" width="150" height="60" rx="7" fill="#141b22" stroke="#52c08a"/>
+    <text x="220" y="246" font-weight="700" fill="#52c08a">aldosterona</text>
+    <text x="220" y="262" fill="#cfdbe6">adrenal → ENaC</text>
+    <text x="220" y="278" fill="#cfdbe6">retém Na, perde K</text>
+
+    <rect x="250" y="296" width="140" height="52" rx="7" fill="#141b22" stroke="#3a7bd5"/>
+    <text x="262" y="316" font-weight="700" fill="#3a7bd5">sede + ADH</text>
+    <text x="262" y="333" fill="#cfdbe6">retém água</text>
+
+    <rect x="404" y="226" width="120" height="60" rx="7" fill="#141b22" stroke="#e0556b"/>
+    <text x="416" y="246" font-weight="700" fill="#e0556b">vasos</text>
+    <text x="416" y="262" fill="#cfdbe6">vasoconstrição</text>
+    <text x="416" y="278" fill="#cfdbe6">sistêmica → ↑PA</text>
+
+    <rect x="448" y="200" width="172" height="56" rx="7" fill="#141b22" stroke="#9fb1c0"/>
+    <text x="460" y="220" font-weight="700" fill="#cfdbe6">túbulo proximal</text>
+    <text x="460" y="237" fill="#cfdbe6">↑ reabsorção de Na</text>
+  </g>
+
+  <rect x="60" y="290" width="180" height="58" rx="8" fill="#102026" stroke="#39c0c8" stroke-dasharray="4 3"/>
+  <text x="150" y="312" text-anchor="middle" font-size="10" fill="#9fb1c0">PÉROLA: a eferente é o</text>
+  <text x="150" y="328" text-anchor="middle" font-size="10" fill="#9fb1c0">truque que mantém a TFG</text>
+  <text x="150" y="343" text-anchor="middle" font-size="10" fill="#9fb1c0">quando a pressão cai (M18)</text>
+
+  <defs></defs>
 </svg>

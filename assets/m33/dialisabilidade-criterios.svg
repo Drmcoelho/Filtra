@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" font-family="Georgia,serif">
+  <rect width="640" height="340" fill="#0a1016"/>
+  <rect x="2" y="2" width="636" height="336" rx="6" fill="none" stroke="#283642" stroke-width="2"/>
+  <text x="320" y="30" text-anchor="middle" font-size="17" font-weight="bold" fill="#e7eef4">Os 4 critérios da DIALISABILIDADE</text>
+  <text x="320" y="50" text-anchor="middle" font-size="11" fill="#9fb1c0">a toxina passa pela membrana quando as quatro setas apontam para "sim"</text>
+
+  <!-- 1 PM -->
+  <g>
+    <circle cx="120" cy="120" r="34" fill="#39c0c8" opacity="0.15" stroke="#39c0c8"/>
+    <text x="120" y="116" text-anchor="middle" font-size="22" fill="#39c0c8">●</text>
+    <text x="120" y="170" text-anchor="middle" font-size="13" fill="#e7eef4" font-weight="bold">① PM baixo</text>
+    <text x="120" y="188" text-anchor="middle" font-size="10" fill="#9fb1c0">pequeno atravessa</text>
+    <text x="120" y="202" text-anchor="middle" font-size="10" fill="#9fb1c0">a membrana (Da)</text>
+  </g>
+  <!-- 2 ligacao -->
+  <g>
+    <rect x="208" y="92" width="64" height="56" rx="6" fill="#52c08a" opacity="0.12" stroke="#52c08a"/>
+    <text x="240" y="128" text-anchor="middle" font-size="20" fill="#52c08a">○</text>
+    <text x="240" y="170" text-anchor="middle" font-size="13" fill="#e7eef4" font-weight="bold">② Ligação baixa</text>
+    <text x="240" y="188" text-anchor="middle" font-size="10" fill="#9fb1c0">só a fração LIVRE</text>
+    <text x="240" y="202" text-anchor="middle" font-size="10" fill="#9fb1c0">é dialisável</text>
+  </g>
+  <!-- 3 Vd -->
+  <g>
+    <circle cx="400" cy="120" r="34" fill="#e8a13a" opacity="0.12" stroke="#e8a13a"/>
+    <text x="400" y="126" text-anchor="middle" font-size="18" fill="#e8a13a">⬤</text>
+    <text x="400" y="170" text-anchor="middle" font-size="13" fill="#e7eef4" font-weight="bold">③ Vd baixo</text>
+    <text x="400" y="188" text-anchor="middle" font-size="10" fill="#9fb1c0">mora no SANGUE,</text>
+    <text x="400" y="202" text-anchor="middle" font-size="10" fill="#9fb1c0">não nos tecidos (L/kg)</text>
+  </g>
+  <!-- 4 hidro -->
+  <g>
+    <rect x="488" y="92" width="64" height="56" rx="6" fill="#39c0c8" opacity="0.12" stroke="#39c0c8"/>
+    <text x="520" y="128" text-anchor="middle" font-size="18" fill="#39c0c8">≈</text>
+    <text x="520" y="170" text-anchor="middle" font-size="13" fill="#e7eef4" font-weight="bold">④ Hidrossolúvel</text>
+    <text x="520" y="188" text-anchor="middle" font-size="10" fill="#9fb1c0">lipossolúvel se</text>
+    <text x="520" y="202" text-anchor="middle" font-size="10" fill="#9fb1c0">esconde na gordura</text>
+  </g>
+
+  <!-- formula -->
+  <rect x="80" y="232" width="480" height="40" rx="6" fill="#141b22" stroke="#283642"/>
+  <text x="320" y="258" text-anchor="middle" font-size="13" fill="#e7eef4">score = fPM · fLig · fVd · fHidro  (produto: um fator ruim derruba tudo)</text>
+
+  <text x="320" y="300" text-anchor="middle" font-size="11" fill="#52c08a">lítio (PM 7, lig 0, Vd 0,7) → score alto · digoxina (Vd ~6) → blindada</text>
+  <text x="320" y="328" text-anchor="middle" font-size="10" fill="#9fb1c0" opacity="0.7">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+</svg>

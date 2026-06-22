@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M31 — SLED / híbridas: o meio-termo entre HDI e TRRC</title>
+<style>
+  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--warn:#e8a13a;--bad:#e0556b;--good:#52c08a;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none} section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .presets{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px} .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)} .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)} .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)} .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M31</div>
+  <h1>SLED / híbridas — o meio-termo entre HDI e TRRC</h1>
+  <div class="sub">A <b>SLED</b> (sustained low-efficiency dialysis) não é uma terapia nova; é um <b>ponto num
+  espectro</b> de eficiência × tempo × tolerância. Fluxos <b>baixos</b> (Qb/Qd menores que a HDI) por tempo
+  <b>longo</b> (6–12 h). O resultado é a <b>mesma dose total</b> (Kt) da HDI — porque o tempo longo compensa o
+  clearance baixo — mas com taxa de <b>UF</b> e queda de <b>gradiente</b> mais lentas. Logo: tolerada por quem
+  <b>não aguenta</b> a HDI rápida, sem precisar da <b>TRRC 24 h</b>. A tese: a mesma meta de volume e soluto, com
+  <b>menor estresse hemodinâmico por hora</b> (ponte M23/M24, UF &lt; refilling). A homeostasia volta no ritmo certo.</div>
+  <nav class="hex">
+    <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
+    <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="dialisa.html">&larr; índice do antebraço DIALISA</a>
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- CONCEITO -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — a SLED como ponto no espectro eficiência × tempo × tolerância</h3>
+      <p class="sub" style="margin-top:0"><b>A SLED é o meio-termo.</b> Entre a HDI (intensa e curta) e a TRRC
+      (gentil e contínua 24 h), há uma terapia que pega o melhor dos dois: a <b>dose total</b> da HDI com a
+      <b>tolerância</b> aproximada da TRRC. O segredo é a <b>aritmética</b>: dose = clearance × tempo. Baixe o
+      clearance (fluxos baixos) e estenda o tempo, e a dose total não muda — mas a <b>taxa</b> de tudo cai. As
+      Fig. 1–8 voltam no Caso, na Trilha e na Avaliação. Atribuição em <code>CREDITS.md</code> (em curadoria).</p>
+
+      <h4>1. O espectro — HDI ↔ SLED ↔ TRRC</h4>
+      <p class="sub">As três modalidades vivem num único eixo de <b>tempo de sessão</b>. A <b>HDI</b> ocupa o canto
+      rápido (3–4 h, eficiência por hora alta); a <b>TRRC</b> ocupa o canto lento (24 h, eficiência por hora
+      baixa); a <b>SLED</b> mora no meio (6–12 h). À medida que se anda da esquerda para a direita, a
+      <b>tolerância hemodinâmica sobe</b> e o estresse por hora cai. A SLED é uma escolha de <b>posição</b> nesse
+      espectro — não uma máquina diferente.</p>
+      <div class="frow">
+        <div class="concept" id="draw-espectro"></div>
+        <figure class="fviva"><img src="assets/m31/espectro-hdi-sled-trrc.svg" alt="O espectro HDI, SLED e TRRC por tempo de sessão e tolerância" loading="lazy">
+          <figcaption><b>Fig. 1 · O espectro.</b> Um único eixo de <b>tempo</b>: <b>①</b> HDI (3–4 h, eficiência/h
+          alta, à esquerda), <b>②</b> SLED (6–12 h, o meio-termo, no centro), <b>③</b> TRRC (24 h, eficiência/h
+          baixa, à direita). A seta superior é a <b>tolerância hemodinâmica</b>: cresce da esquerda para a direita.
+          A SLED é uma <i>posição</i> escolhida, não uma terapia à parte.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m31/eficiencia-vs-tempo.svg" alt="Eficiência por hora versus duração: barra alta e estreita da HDI versus baixa e larga da SLED" loading="lazy">
+          <figcaption><b>Fig. 2 · Eficiência/h × duração.</b> A HDI é uma barra <b>alta e estreita</b> (clearance/h
+          alto, 4 h); a SLED, <b>baixa e larga</b> (clearance/h baixo, 10 h). A <b>área</b> — que é o Kt total —
+          é a mesma: alta×curta ≈ baixa×longa. A dose não mora na intensidade; mora no produto.</figcaption></figure>
+      </div>
+
+      <h4>2. A dose total — Kt/V acumulado × tempo</h4>
+      <p class="sub">A adequação se mede por <b>Kt/V</b> (M25): o clearance <b>K</b> vezes o tempo <b>t</b>, dividido
+      pelo volume de distribuição <b>V</b> da ureia. É um integral: o Kt/V <b>acumula</b> ao longo da sessão. A HDI
+      sobe íngreme e curta; a SLED sobe <b>devagar mas por mais tempo</b> — e cruza a <b>mesma linha do alvo</b>
+      (Kt/V ≈ 1,2). Por isso a SLED é uma diálise <b>adequada</b>, não uma diálise "fraca": o tempo paga o que falta
+      na taxa.</p>
+      <div class="frow">
+        <div class="concept" id="draw-ktv"></div>
+        <figure class="fviva"><img src="assets/m31/ktv-acumulado.svg" alt="Kt/V acumulado versus tempo: a SLED chega ao mesmo alvo mais devagar" loading="lazy">
+          <figcaption><b>Fig. 3 · Kt/V acumulado.</b> A linha tracejada é o <b>alvo</b> (Kt/V ≈ 1,2). A curva verde
+          (<b>HDI</b>) sobe íngreme e bate o alvo em 4 h; a azul (<b>SLED</b>) sobe suave e bate o <b>mesmo</b> alvo
+          em ~10 h. A inclinação é o clearance/hora; a altura final é a dose. Mesma altura, tempos
+          diferentes.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m31/fluxos-baixos.svg" alt="Dialisador com fluxos baixos Qb e Qd, gradiente suave" loading="lazy">
+          <figcaption><b>Fig. 4 · Fluxos baixos.</b> No dialisador, o <b>Qb</b> (sangue, vermelho ~200 mL/min) e o
+          <b>Qd</b> (dialisato, azul ~300 mL/min, em contracorrente) da SLED são <b>menores</b> que os da HDI (~350 /
+          ~600). Fluxo menor → gradiente difusivo menor por hora → soluto cai <b>suave</b>, sem o degrau abrupto da
+          HDI.</figcaption></figure>
+      </div>
+
+      <h4>3. A tolerância — UF rate e o refilling plasmático</h4>
+      <p class="sub">A remoção de <b>volume</b> obedece à mesma aritmética: <b>UF rate = volume ÷ tempo</b>. Tirar 5 L
+      em 4 h exige 1250 mL/h; em 14 h, só ~357 mL/h. O <b>refilling plasmático</b> (a água que volta do interstício
+      ao plasma, M23) tem um teto (~400 mL/h). Se a UF <b>excede</b> o refilling, o volume circulante despenca →
+      hipotensão intradialítica e stunning miocárdico (M24). A SLED mantém a UF <b>abaixo</b> do refilling pelo tempo
+      longo → <b>tolerada</b>.</p>
+      <div class="frow">
+        <div class="concept" id="draw-uf"></div>
+        <figure class="fviva"><img src="assets/m31/uf-rate-lenta.svg" alt="UF rate da HDI excede o refilling; a da SLED fica abaixo" loading="lazy">
+          <figcaption><b>Fig. 5 · UF × refilling.</b> Para os <b>mesmos</b> 5 L: a barra vermelha (<b>HDI 4 h</b>,
+          1250 mL/h) <b>ultrapassa</b> a linha do refilling (~400 mL/h) → hipotensão; a barra verde (<b>SLED 14 h</b>,
+          357 mL/h) fica <b>abaixo</b> → tolerada. A diferença não é a quantidade removida; é a <b>taxa</b>.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m31/tolerancia-hemodinamica.svg" alt="Plasma e interstício: UF retira do plasma, refilling repõe" loading="lazy">
+          <figcaption><b>Fig. 6 · O refilling.</b> A <b>UF</b> (seta vermelha) retira água do <b>plasma</b>; o
+          <b>refilling</b> (seta verde) a repõe do <b>interstício</b>, com atraso. Enquanto a UF lenta ≤ refilling, o
+          plasma não esvazia e a <b>PAM</b> se mantém. A SLED compra esse equilíbrio com tempo.</figcaption></figure>
+      </div>
+
+      <h4>4. A pérola — mesma dose, menos estresse por hora</h4>
+      <p class="sub">É o coração do módulo: a SLED entrega a <b>mesma meta</b> (volume removido + soluto depurado)
+      que a HDI, mas distribuída no tempo, com <b>menor estresse hemodinâmico e osmótico por hora</b>. O gradiente
+      entre sangue e cérebro também desce devagar — o que reduz o risco de desequilíbrio (M34) — e o plasma não é
+      esvaziado rápido demais. O custo é o tempo de máquina. O ganho é a <b>tolerância</b> em quem está
+      intermediariamente instável.</p>
+      <div class="frow">
+        <div class="concept" id="draw-estresse"></div>
+        <figure class="fviva"><img src="assets/m31/mesma-dose-menos-estresse.svg" alt="Queda íngreme do soluto na HDI versus queda suave na SLED, mesmo ponto final" loading="lazy">
+          <figcaption><b>Fig. 7 · Mesma dose, menos estresse.</b> A queda do soluto é <b>íngreme</b> na HDI (estresse
+          osmótico alto) e <b>suave</b> na SLED — mas ambas chegam ao <b>mesmo ponto final</b> (Kt total igual). A SLED
+          só evita o <b>gradiente abrupto</b> entre sangue e cérebro. Mesma chegada, viagem mais gentil.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m31/quando-sled.svg" alt="Fluxograma: quando escolher SLED entre HDI e TRRC" loading="lazy">
+          <figcaption><b>Fig. 8 · Quando a SLED.</b> Tolera a HDI rápida? Sim → <b>HDI</b>. Não → precisa de 24 h
+          contínuas? Sim → <b>TRRC</b>; não → <b>SLED</b>. O meio-termo cobre a <b>instabilidade intermediária</b>:
+          quem a HDI não tolera mas para quem a TRRC seria demais (e tem custo logístico).</figcaption></figure>
+      </div>
+      <p class="sub" style="margin-top:14px">Em síntese: a SLED é <b>aritmética da diálise</b> aplicada à
+      homeostasia. Mantendo o produto clearance × tempo (a dose) e baixando a taxa (a tolerância), o meio interno —
+      volume, eletrólitos como K⁺ em <b>mEq/L</b>, ácido-base, escórias — volta à faixa sem o trauma hemodinâmico da
+      pressa. A diálise substitui <b>funções</b> por física (difusão/convecção/UF, M19); a SLED só escolhe o ritmo.</p>
+      <div class="concept" id="draw-sintese"></div>
+    </div>
+  </section>
+
+  <!-- CASO -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — cinco atos, decida antes de revelar</h3>
+      <p class="sub">UTI. Cinco apresentações que tensionam a escolha de ritmo. A pergunta de cada uma: <b>HDI, SLED
+      ou TRRC — e por quê?</b> Volte às Fig. 1, 3 e 5: o mecanismo é a aritmética dose × taxa.</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step"><b>Ato 1 — o que é a SLED, afinal?</b> Pediram "SLED 8 h" para um doente. Em uma frase: o que
+        muda da HDI? E a dose total cai?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>Fluxos baixos (Qb/Qd menores), tempo longo — a dose total NÃO cai.</b> A SLED
+          (Fig. 1) é a HDI desacelerada: clearance/hora menor, mas <b>tempo maior</b>. Como Kt/V = clearance × tempo /
+          V (Fig. 3), o produto se mantém — só a <b>taxa</b> de remoção (de soluto e de volume) é mais lenta. É o
+          meio-termo do espectro.</div></div>
+
+      <div class="step"><b>Ato 2 — instabilidade intermediária + sobrecarga.</b> ICC + LRA, +5 L, PAM 70 limítrofe,
+        diurético sem resposta. A HDI clássica de 4 h tiraria os 5 L. Pode?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2"><b>Não — a UF rápida derrubaria a PAM; escolha a SLED.</b> 5 L em 4 h = 1250 mL/h,
+          muito acima do refilling (~400 mL/h, Fig. 5) → hipotensão. Em SLED de 14 h, a UF cai para ~357 mL/h, <b>abaixo</b>
+          do refilling → tolerada. Mesmo volume removido, taxa segura. O instável intermediário é o paciente da
+          SLED.</div></div>
+
+      <div class="step"><b>Ato 3 — "mas a SLED é diálise de verdade?"</b> A enfermagem questiona se a SLED depura o
+        suficiente, já que os fluxos são baixos. Responda pelo número.
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3"><b>Sim — o tempo paga a taxa.</b> Clearance/hora baixo × muitas horas atinge o
+          <b>mesmo Kt/V-alvo</b> (~1,2) da HDI (Fig. 3). A SLED de 8–12 h é uma diálise <b>adequada</b>, não fraca. A
+          adequação mora no <b>produto</b> clearance × tempo, não na intensidade instantânea (Fig. 2).</div></div>
+
+      <div class="step"><b>Ato 4 — SLED versus TRRC.</b> Outro doente, instabilidade intermediária, sem vasopressor em
+        dose alta, ICU lotada de bombas de CRRT. Por que não simplesmente TRRC 24 h?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>A TRRC seria "demais": 24 h, custo e anticoagulação contínua.</b> Se o doente
+          tolera uma UF de 6–12 h (não precisa do gentil absoluto da TRRC contínua), a SLED entrega a tolerância
+          necessária <b>liberando a máquina</b> para outro paciente e poupando logística (Fig. 8). O meio-termo existe
+          justamente para quem não está no extremo.</div></div>
+
+      <div class="step"><b>Ato 5 — a fronteira: empurrar a SLED para 4 h.</b> Por pressa, alguém propõe rodar a "SLED"
+        em 4 h com fluxos altos para o doente intermediário. O que isso vira?
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>Vira HDI — e perde o ponto.</b> Encurtar o tempo e subir os fluxos recoloca o
+          doente no canto <b>rápido</b> do espectro (Fig. 1): a UF volta a exceder o refilling e o gradiente fica
+          abrupto. A SLED só protege enquanto o <b>tempo é longo</b>. Apressá-la é desfazer a própria razão de
+          existir.</div></div>
+    </div>
+  </section>
+
+  <!-- TRILHA -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — nove perguntas que constroem a SLED</h3>
+      <details><summary>1. O que define a SLED como modalidade?</summary><p><b>Fluxos baixos</b> (Qb/Qd menores que
+        a HDI) por <b>tempo longo</b> (6–12 h). É um ponto intermediário no espectro de tempo entre a HDI (3–4 h) e a
+        TRRC (24 h) — o <b>meio-termo</b>.</p></details>
+      <details><summary>2. Por que a dose total não cai com fluxos baixos?</summary><p>Porque a dose é
+        <b>clearance × tempo</b> (Kt/V = K·t/V, M25). O clearance/hora baixo é <b>compensado</b> pelo tempo longo: o
+        produto — a área sob a curva — se preserva (Fig. 2/3).</p></details>
+      <details><summary>3. O que é o Kt/V acumulado?</summary><p>O integral da depuração ao longo da sessão. Sobe
+        íngreme na HDI e suave na SLED, mas ambos cruzam o <b>mesmo alvo</b> (~1,2). A SLED é uma diálise
+        <b>adequada</b>.</p></details>
+      <details><summary>4. Qual a aritmética da UF?</summary><p><b>UF rate = volume ÷ tempo</b>. Os mesmos 5 L exigem
+        1250 mL/h em 4 h, mas só ~357 mL/h em 14 h. Esticar o tempo <b>desacelera</b> a remoção de volume.</p></details>
+      <details><summary>5. O que é o refilling plasmático e por que importa?</summary><p>É a água que volta do
+        interstício ao plasma (M23), com um teto (~400 mL/h). Se a UF <b>excede</b> o refilling, o volume circulante
+        cai → hipotensão e stunning miocárdico (M24). A SLED mantém a UF <b>abaixo</b> dele.</p></details>
+      <details><summary>6. Por que a SLED é mais tolerada que a HDI?</summary><p>Porque distribui a mesma UF e a mesma
+        depuração no <b>tempo</b>: a taxa por hora cai, a UF fica sob o refilling e o gradiente osmótico desce devagar.
+        Menos <b>estresse por hora</b> (Fig. 7).</p></details>
+      <details><summary>7. Quem é o paciente da SLED?</summary><p>O de <b>instabilidade intermediária</b>: não tolera
+        a HDI rápida, mas não precisa da TRRC 24 h. A SLED cobre essa faixa do meio (Fig. 8).</p></details>
+      <details><summary>8. SLED ou TRRC, então?</summary><p>Se o doente tolera uma sessão de 6–12 h e não exige o
+        gentil absoluto da terapia contínua, a SLED entrega a tolerância <b>liberando a máquina de CRRT</b> e poupando
+        logística e anticoagulação contínua (M29).</p></details>
+      <details><summary>9. Em que sentido a SLED restaura a homeostasia?</summary><p>Entrega a <b>mesma meta</b>
+        (volume, eletrólitos como K⁺ em mEq/L, ácido-base, escórias) com <b>menor estresse por hora</b>. A diálise
+        substitui <b>funções</b> por física (difusão/convecção/UF, M19); a SLED só escolhe o <b>ritmo</b> em que o
+        meio interno volta à faixa.</p></details>
+    </div>
+  </section>
+
+  <!-- INSTRUMENTO -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — Kt/V acumulado × tempo (HDI vs SLED)</h3>
+      <p class="sub">Os controles do <b>Lab</b> movem as curvas. A curva <b>verde</b> é a HDI de referência (fluxos
+      altos, 4 h); a <b>azul</b> é a SLED corrente (seus fluxos, seu tempo). A linha tracejada é o <b>alvo</b> de
+      Kt/V (≈ 1,2). Observe: ao baixar os fluxos e estender o tempo, a curva azul fica menos íngreme — mas
+      <b>alcança</b> a mesma altura. A dose mora na chegada; a tolerância, na inclinação.</p>
+      <canvas id="espectro-canvas" width="900" height="360" aria-label="Kt/V acumulado por tempo, HDI versus SLED"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- LAB -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — escolha os fluxos e o tempo; veja a dose, a UF e a tolerância</h3>
+      <div class="grid">
+        <div>
+          <label>Fluxo de sangue Qb (mL/min): <span class="val" id="lbl-qb">200</span></label>
+          <input type="range" id="in-qb" min="80" max="450" step="10" value="200">
+          <label>Fluxo de dialisato Qd (mL/min): <span class="val" id="lbl-qd">300</span></label>
+          <input type="range" id="in-qd" min="100" max="800" step="20" value="300">
+          <label>KoA da membrana (mL/min): <span class="val" id="lbl-koa">600</span></label>
+          <input type="range" id="in-koa" min="200" max="1400" step="20" value="600">
+          <label>Tempo de sessão (h): <span class="val" id="lbl-tempo">8</span></label>
+          <input type="range" id="in-tempo" min="1" max="24" step="0.5" value="8">
+        </div>
+        <div>
+          <label>Sobrecarga de volume a remover (L): <span class="val" id="lbl-volume">4</span></label>
+          <input type="range" id="in-volume" min="0" max="12" step="0.5" value="4">
+          <label>Refilling plasmático (mL/h): <span class="val" id="lbl-refilling">400</span></label>
+          <input type="range" id="in-refilling" min="150" max="800" step="10" value="400">
+          <label>Peso (kg): <span class="val" id="lbl-pesoKg">70</span></label>
+          <input type="range" id="in-pesoKg" min="40" max="160" step="1" value="70">
+        </div>
+      </div>
+
+      <div class="presets">
+        <button class="act" data-preset="hdi">HDI rápida (4 h)</button>
+        <button class="act" data-preset="sled8">SLED 8 h</button>
+        <button class="act" data-preset="sled12">SLED 12 h</button>
+        <button class="act" data-preset="instavel">Instável (sobrecarga)</button>
+        <button class="act" data-preset="trrc">TRRC 24 h</button>
+      </div>
+
+      <table>
+        <tr><th>Saída</th><th>Atual</th><th>Comentário</th></tr>
+        <tr><td>Posição no espectro</td><td class="num" id="out-modalidade">—</td><td class="num">HDI ↔ SLED ↔ TRRC (pelo tempo)</td></tr>
+        <tr><td>Clearance instantâneo</td><td class="num" id="out-clearance">—</td><td class="num">mL/min · pelos fluxos e KoA</td></tr>
+        <tr><td>Dose acumulada (Kt/V)</td><td class="num" id="out-ktv">—</td><td class="num">K·t/V · alvo ≈ 1,2</td></tr>
+        <tr><td>UF rate</td><td class="num" id="out-uf">—</td><td class="num">mL/h · volume ÷ tempo</td></tr>
+        <tr><td>Tolerância (UF × refilling)</td><td class="num" id="out-tol">—</td><td class="num">índice 0–1 · UF &lt; refilling</td></tr>
+        <tr><td>Estresse por hora</td><td class="num" id="out-estresse">—</td><td class="num">gradiente + UF/h</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÃO -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (12)</button>
+        <button data-bank="textual">Textual (12)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica</b>. Este módulo M31
+    modela a SLED/híbridas como um ponto num espectro (eficiência × tempo × tolerância): o clearance, o Kt/V
+    acumulado, a UF rate e a tolerância são uma simplificação didática calibrada para ensinar o <b>mecanismo</b> —
+    não um protocolo de prescrição para um paciente real. Não substitui julgamento clínico; a decisão e a
+    responsabilidade finais são sempre do profissional.
+  </div>
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+</div>
+
+<script>
+/* ENGINE INLINE — espelho fiel de build/m31/model31.js */
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
+var REFILL_DEFAULT=400, KTV_ALVO=1.2;
+function eficiencia(args){ args=args||{};
+  var qb=clampv(args.qb!==undefined?args.qb:300,50,500);
+  var qd=clampv(args.qd!==undefined?args.qd:500,100,800);
+  var koa=clampv(args.koa!==undefined?args.koa:600,100,1500);
+  var teto=Math.min(qb,qd);
+  var fracMembrana=1-Math.exp(-koa/Math.max(teto,1));
+  var cl=teto*clampv(fracMembrana,0,1);
+  return clampv(cl,0,500); }
+function doseTotal(args){ args=args||{};
+  var clearance=clampv(args.clearance!==undefined?args.clearance:200,0,500);
+  var tempo=clampv(args.tempo!==undefined?args.tempo:4,0,24);
+  var V=clampv(args.V!==undefined?args.V:36,10,80);
+  var ktMin=clearance*tempo*60, ktL=ktMin/1000, ktv=ktL/V;
+  return { ktL:clampv(ktL,0,1000), ktv:clampv(ktv,0,12) }; }
+function toleranciaUF(args){ args=args||{};
+  var volume=clampv(args.volume!==undefined?args.volume:3,0,20);
+  var tempo=clampv(args.tempo!==undefined?args.tempo:4,0.25,24);
+  var refilling=clampv(args.refilling!==undefined?args.refilling:REFILL_DEFAULT,50,1200);
+  var ufRate=volume*1000/tempo;
+  var razao=ufRate/refilling;
+  var tol=clampv(1-0.85*clampv(razao-0.5,0,1.5)/1.5,0,1);
+  if(razao>1) tol=clampv(tol*(1-0.4*clampv(razao-1,0,1)),0,1);
+  return { ufRate:clampv(ufRate,0,80000), razao:razao, tolerancia:clampv(tol,0,1), excedeRefilling:ufRate>refilling+1e-9 }; }
+function sled(input){ var inp=input||{};
+  var pesoKg=clampv(inp.pesoKg!==undefined?inp.pesoKg:70,30,200);
+  var V=clampv(inp.V!==undefined?inp.V:pesoKg*0.55,10,80);
+  var qb=clampv(inp.qb!==undefined?inp.qb:200,50,500);
+  var qd=clampv(inp.qd!==undefined?inp.qd:300,100,800);
+  var koa=clampv(inp.koa!==undefined?inp.koa:600,100,1500);
+  var tempo=clampv(inp.tempo!==undefined?inp.tempo:8,0.5,24);
+  var volume=clampv(inp.volume!==undefined?inp.volume:3,0,20);
+  var refilling=clampv(inp.refilling!==undefined?inp.refilling:REFILL_DEFAULT,50,1200);
+  var clearance=eficiencia({qb:qb,qd:qd,koa:koa});
+  var dose=doseTotal({clearance:clearance,tempo:tempo,V:V});
+  var ktv=dose.ktv, ktL=dose.ktL, atingiuAlvo=ktv>=KTV_ALVO-1e-9;
+  var tol=toleranciaUF({volume:volume,tempo:tempo,refilling:refilling});
+  var ufRate=tol.ufRate, tolerancia=tol.tolerancia, excedeRefilling=tol.excedeRefilling;
+  var ktvPorHora=ktv/tempo;
+  var modalidade;
+  if(tempo<=5) modalidade='HDI'; else if(tempo>=20) modalidade='TRRC'; else modalidade='SLED';
+  var espectro=clampv((tempo-4)/(24-4),0,1);
+  var estresseUF=clampv(ufRate/refilling,0,3);
+  var estresseHora=clampv(0.6*estresseUF+0.4*(ktvPorHora/0.4),0,3);
+  var tolerada=tolerancia>=0.6&&!excedeRefilling;
+  return { pesoKg:pesoKg,V:V,qb:qb,qd:qd,koa:koa,tempo:tempo,volume:volume,refilling:refilling,
+    clearance:clearance,ktL:ktL,ktv:ktv,atingiuAlvo:atingiuAlvo,ktvPorHora:ktvPorHora,
+    ufRate:ufRate,tolerancia:tolerancia,excedeRefilling:excedeRefilling,
+    modalidade:modalidade,espectro:espectro,estresseUF:estresseUF,estresseHora:estresseHora,tolerada:tolerada }; }
+function espectroLayout(state,W,H){ state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=52,padR=16,padT=18,padB=38,baseY=H-padB;
+  var r=sled(state), V=r.V;
+  var clHDI=eficiencia({qb:350,qd:600,koa:r.koa}), tHDI=4;
+  var clSLED=r.clearance, tSLED=r.tempo;
+  var tMax=Math.max(tHDI,tSLED,1);
+  var ktvHDImax=clampv(clHDI*tHDI*60/1000/V,0,12), ktvSLEDmax=r.ktv;
+  var yMax=Math.max(ktvHDImax,ktvSLEDmax,KTV_ALVO*1.1,0.5);
+  var pxX=(W-padL-padR)/tMax, pxY=(baseY-padT)/yMax;
+  function curva(cl,tEnd){ var pts=[],N=48,i,t,ktv;
+    for(i=0;i<=N;i++){ t=tEnd*i/N; ktv=clampv(cl*t*60/1000/V,0,12);
+      pts.push({t:t,ktv:ktv,x:padL+t*pxX,y:baseY-clampv(ktv,0,yMax)*pxY}); }
+    return pts; }
+  var ptsHDI=curva(clHDI,tHDI), ptsSLED=curva(clSLED,tSLED);
+  var yAlvo=baseY-clampv(KTV_ALVO,0,yMax)*pxY;
+  return { W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,
+    pxX:pxX,pxY:pxY,tMax:tMax,yMax:yMax,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},
+    ptsHDI:ptsHDI,ptsSLED:ptsSLED,
+    alvo:{ktv:KTV_ALVO,y:yAlvo},
+    current:{modalidade:r.modalidade,ktv:r.ktv,ufRate:r.ufRate,tempo:tSLED,espectro:r.espectro} }; }
+window.sled=sled; window.espectroLayout=espectroLayout; window.eficiencia=eficiencia; window.doseTotal=doseTotal; window.toleranciaUF=toleranciaUF;
+window.MODEL={sled:sled,espectroLayout:espectroLayout,eficiencia:eficiencia,doseTotal:doseTotal,toleranciaUF:toleranciaUF,clampv:clampv,REFILL_DEFAULT:REFILL_DEFAULT,KTV_ALVO:KTV_ALVO};
+
+/* UI */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=(d===undefined?1:d); return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+function modLong(m){ return m==='HDI'?'HDI (rápida, 3–4 h)':(m==='TRRC'?'TRRC (contínua, 24 h)':'SLED (meio-termo, 6–12 h)'); }
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on'); b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on'); $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh(); });
+document.addEventListener('click',function(e){ var b=e.target.closest('button.act[data-rev]'); if(!b) return; var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on'); });
+
+function readInputs(){ return { qb:+$('in-qb').value, qd:+$('in-qd').value, koa:+$('in-koa').value, tempo:+$('in-tempo').value,
+  volume:+$('in-volume').value, refilling:+$('in-refilling').value, pesoKg:+$('in-pesoKg').value }; }
+function refresh(){ var inp=readInputs();
+  $('lbl-qb').textContent=fmt(inp.qb,0); $('lbl-qd').textContent=fmt(inp.qd,0); $('lbl-koa').textContent=fmt(inp.koa,0);
+  $('lbl-tempo').textContent=fmt(inp.tempo,1); $('lbl-volume').textContent=fmt(inp.volume,1);
+  $('lbl-refilling').textContent=fmt(inp.refilling,0); $('lbl-pesoKg').textContent=fmt(inp.pesoKg,0);
+  var r=sled(inp);
+  $('out-modalidade').textContent=modLong(r.modalidade);
+  $('out-clearance').textContent=fmt(r.clearance,0)+' mL/min';
+  $('out-ktv').textContent='Kt/V '+fmt(r.ktv,2)+(r.atingiuAlvo?' ✓ (alvo)':' (abaixo do alvo)');
+  $('out-uf').textContent=fmt(r.ufRate,0)+' mL/h'+(r.excedeRefilling?' (excede refilling)':'');
+  $('out-tol').textContent=fmt(r.tolerancia,2)+(r.tolerada?' · tolerada':' · arriscada');
+  $('out-estresse').textContent=fmt(r.estresseHora,2);
+  verdict(r); drawEspectro(inp); pearl(r,inp); }
+function verdict(r){ var v=$('veredito'), cls='b-good', msg;
+  if(r.excedeRefilling){ cls='b-bad'; msg='UF rate '+fmt(r.ufRate,0)+' mL/h EXCEDE o refilling ('+fmt(r.refilling,0)+' mL/h): o volume plasmático cai → hipotensão intradialítica/stunning (M24). Estenda o tempo para baixar a UF.'; }
+  else if(r.modalidade==='HDI'){ cls=r.tolerada?'b-good':'b-warn'; msg='Posição HDI (4 h) — eficiência/h alta, gradiente abrupto. UF '+fmt(r.ufRate,0)+' mL/h, tolerância '+fmt(r.tolerancia,2)+'. Para o instável intermediário, mova para SLED.'; }
+  else if(r.modalidade==='SLED'){ cls='b-good'; msg='Posição SLED ('+fmt(r.tempo,0)+' h) — o meio-termo: Kt/V '+fmt(r.ktv,2)+(r.atingiuAlvo?' (atinge o alvo)':' (estenda o tempo p/ alcançar o alvo)')+', UF '+fmt(r.ufRate,0)+' mL/h sob o refilling. Mesma dose, menos estresse/hora.'; }
+  else { cls='b-warn'; msg='Posição TRRC (≥20 h) — contínua: eficiência/h muito baixa, UF '+fmt(r.ufRate,0)+' mL/h. Se 6–12 h bastam, a SLED libera a máquina.'; }
+  v.className='banner '+cls; v.textContent=msg; }
+function pearl(r,inp){ var p=$('lab-pearl'), ip=$('instr-pearl'), t;
+  if(r.modalidade==='SLED'&&r.atingiuAlvo&&r.tolerada) t='PÉROLA (mesma dose, menos estresse/hora): a SLED de '+fmt(r.tempo,0)+' h atinge o Kt/V-alvo da HDI (Kt/V '+fmt(r.ktv,2)+') com UF '+fmt(r.ufRate,0)+' mL/h SOB o refilling. O tempo paga a taxa.';
+  else if(r.excedeRefilling) t='PÉROLA (UF < refilling é a regra): '+fmt(inp.volume,1)+' L em '+fmt(r.tempo,1)+' h = '+fmt(r.ufRate,0)+' mL/h, acima do refilling. Estenda o tempo: a SLED desacelera a UF para tolerá-la (M24).';
+  else if(r.modalidade==='HDI') t='PÉROLA (a SLED é a HDI desacelerada): aqui a sessão é curta (HDI). Baixe os fluxos e estenda o tempo → a dose total se mantém (clearance × tempo), mas a taxa cai.';
+  else if(!r.atingiuAlvo) t='PÉROLA (o tempo paga a taxa): clearance/hora '+fmt(r.clearance,0)+' mL/min é baixo, mas o Kt/V acumula com o tempo. Estenda a sessão para cruzar o alvo (Kt/V 1,2).';
+  else t='Posição '+r.modalidade+': clearance '+fmt(r.clearance,0)+' mL/min, Kt/V '+fmt(r.ktv,2)+', UF '+fmt(r.ufRate,0)+' mL/h. A SLED é uma posição no espectro, não uma máquina diferente.';
+  p.textContent=t; ip.textContent=t; }
+function drawEspectro(state){ var c=$('espectro-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
+  var L=espectroLayout(state,c.width,c.height); ctx.clearRect(0,0,L.W,L.H);
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('Kt/V acumulado ↑',8,L.padT+2); ctx.fillText('tempo (h) →',L.W-110,L.baseY+24);
+  // alvo line
+  ctx.strokeStyle='#9fb1c0'; ctx.setLineDash([5,4]); ctx.beginPath(); ctx.moveTo(L.axis.x0,L.alvo.y); ctx.lineTo(L.axis.xEnd,L.alvo.y); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#9fb1c0'; ctx.fillText('alvo Kt/V '+L.alvo.ktv.toFixed(1),L.axis.xEnd-110,L.alvo.y-4);
+  function poly(pts,color,w){ ctx.strokeStyle=color; ctx.lineWidth=w; ctx.beginPath(); for(var i=0;i<pts.length;i++){ var p=pts[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); } ctx.stroke(); }
+  poly(L.ptsHDI,'#52c08a',2.2);
+  poly(L.ptsSLED,'#39c0c8',2.2);
+  // endpoints
+  var eH=L.ptsHDI[L.ptsHDI.length-1], eS=L.ptsSLED[L.ptsSLED.length-1];
+  ctx.fillStyle='#52c08a'; ctx.fillRect(eH.x-4,eH.y-4,8,8); ctx.fillText('HDI 4h',Math.min(eH.x+8,L.W-90),eH.y-6);
+  ctx.fillStyle='#39c0c8'; ctx.fillRect(eS.x-4,eS.y-4,8,8); ctx.fillText('SLED '+fmt(L.current.tempo,0)+'h',Math.min(eS.x+8,L.W-90),eS.y+14); }
+['in-qb','in-qd','in-koa','in-tempo','in-volume','in-refilling','in-pesoKg'].forEach(function(id){ $(id).addEventListener('input',refresh); });
+
+var PRESETS={
+  hdi:{qb:350,qd:600,koa:800,tempo:4,volume:3,refilling:400,pesoKg:75},
+  sled8:{qb:200,qd:300,koa:600,tempo:8,volume:4,refilling:400,pesoKg:75},
+  sled12:{qb:180,qd:300,koa:600,tempo:12,volume:5,refilling:400,pesoKg:80},
+  instavel:{qb:200,qd:300,koa:600,tempo:14,volume:5,refilling:380,pesoKg:80},
+  trrc:{qb:150,qd:250,koa:600,tempo:24,volume:6,refilling:400,pesoKg:80}
+};
+function applyPreset(p){ var d=PRESETS[p]; if(!d) return;
+  $('in-qb').value=d.qb; $('in-qd').value=d.qd; $('in-koa').value=d.koa; $('in-tempo').value=d.tempo;
+  $('in-volume').value=d.volume; $('in-refilling').value=d.refilling; $('in-pesoKg').value=d.pesoKg; refresh(); }
+document.querySelector('.presets').addEventListener('click',function(e){ var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset')); });
+
+/* ILUSTRAÇÕES computadas + helper raster */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+function espectroMini(state,titulo){ var W=300,H=170,L=espectroLayout(state,W,H),s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+f1(L.alvo.y)+'" x2="'+L.axis.xEnd+'" y2="'+f1(L.alvo.y)+'" stroke="#9fb1c0" stroke-dasharray="4 3"/>';
+  function path(pts,color){ var d=''; for(var i=0;i<pts.length;i++){ d+=(i===0?'M':'L')+f1(pts[i].x)+' '+f1(pts[i].y)+' '; } return '<path d="'+d+'" fill="none" stroke="'+color+'" stroke-width="2"/>'; }
+  s+=path(L.ptsHDI,'#52c08a'); s+=path(L.ptsSLED,'#39c0c8');
+  var eH=L.ptsHDI[L.ptsHDI.length-1], eS=L.ptsSLED[L.ptsSLED.length-1];
+  s+='<rect x="'+f1(eH.x-3)+'" y="'+f1(eH.y-3)+'" width="6" height="6" fill="#52c08a"/>';
+  s+='<rect x="'+f1(eS.x-3)+'" y="'+f1(eS.y-3)+'" width="6" height="6" fill="#39c0c8"/>';
+  s+='<text x="'+(W/2)+'" y="13" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'Kt/V × tempo')+'</text>';
+  s+='<text x="'+(L.axis.x0+4)+'" y="'+(L.padT+10)+'" fill="#52c08a" font-size="8">HDI</text>';
+  s+='<text x="'+(W-8)+'" y="'+(L.baseY-4)+'" fill="#39c0c8" font-size="8" text-anchor="end">SLED</text>';
+  return svgEl(W,H,s); }
+function ufBars(r,titulo){ var W=300,H=170,base=132,s='';
+  var refY=base-clampv(r.refilling/1400,0,1)*96;
+  s+='<line x1="40" y1="34" x2="40" y2="'+base+'" stroke="#3a4a58"/>';
+  s+='<line x1="40" y1="'+f1(refY)+'" x2="270" y2="'+f1(refY)+'" stroke="#e0556b" stroke-dasharray="4 3"/>';
+  s+='<text x="266" y="'+f1(refY-3)+'" fill="#e0556b" font-size="8" text-anchor="end">refilling</text>';
+  var h=clampv(r.ufRate/1400,0,1)*96, col=r.excedeRefilling?'#e0556b':'#52c08a';
+  s+='<rect x="120" y="'+f1(base-h)+'" width="60" height="'+f1(h)+'" fill="'+col+'" fill-opacity="0.55" stroke="'+col+'"/>';
+  s+='<text x="150" y="'+(base+13)+'" fill="#9fb1c0" font-size="9" text-anchor="middle">UF rate</text>';
+  s+='<text x="150" y="'+f1(base-h-4)+'" fill="#e7eef4" font-size="9" text-anchor="middle">'+fmt(r.ufRate,0)+' mL/h</text>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'UF × refilling')+'</text>';
+  return svgEl(W,H,s); }
+function specIcon(r,titulo){ var W=300,H=170,s='';
+  var col=r.modalidade==='HDI'?'#52c08a':(r.modalidade==='TRRC'?'#e8a13a':'#39c0c8');
+  // spectrum line
+  s+='<line x1="40" y1="100" x2="260" y2="100" stroke="#3a4a58"/>';
+  s+='<text x="40" y="120" fill="#9fb1c0" font-size="8">rápido</text>';
+  s+='<text x="260" y="120" fill="#9fb1c0" font-size="8" text-anchor="end">lento 24h</text>';
+  var px=40+clampv(r.espectro,0,1)*220;
+  s+='<circle cx="'+f1(px)+'" cy="100" r="11" fill="'+col+'" fill-opacity="0.3" stroke="'+col+'" stroke-width="2"/>';
+  s+='<text x="150" y="50" fill="'+col+'" font-size="18" text-anchor="middle" font-weight="bold">'+r.modalidade+'</text>';
+  s+='<text x="150" y="68" fill="#9fb1c0" font-size="9" text-anchor="middle">Kt/V '+fmt(r.ktv,2)+' · UF '+fmt(r.ufRate,0)+' mL/h</text>';
+  s+='<text x="'+(W/2)+'" y="20" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'posição no espectro')+'</text>';
+  s+='<text x="150" y="150" fill="#e7eef4" font-size="9" text-anchor="middle">tolerância '+fmt(r.tolerancia,2)+(r.tolerada?' (tolerada)':' (arriscada)')+'</text>';
+  return svgEl(W,H,s); }
+function imgFig(slug,alt){ return '<img src="assets/m31/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+/* TUTOR */
+function R0(extra){ var o={}; if(extra) for(var k in extra) o[k]=extra[k]; return sled(o); }
+var TUTOR_ILUSTRADO=[
+  {q:'No espectro, onde mora a SLED?',o:['no canto rápido (3–4 h)','no meio (6–12 h)','na continuidade (24 h)'],c:1,e:'A SLED é o meio-termo: fluxos baixos por tempo longo, entre a HDI e a TRRC.',fig:function(){return specIcon(R0({tempo:8}),'SLED = meio-termo');}},
+  {q:'Baixando os fluxos (Qb/Qd) e estendendo o tempo, a dose total (Kt/V)…',o:['cai junto com os fluxos','se mantém (o tempo compensa)','dobra'],c:1,e:'Kt/V = clearance × tempo / V. Clearance/h baixo × tempo longo preserva o produto.',fig:function(){return espectroMini({qb:200,qd:300,tempo:10},'mesma dose, mais devagar');}},
+  {q:'A curva azul (SLED) e a verde (HDI) no Kt/V acumulado…',o:['nunca se encontram','atingem o mesmo alvo, em tempos diferentes','a SLED fica sempre abaixo'],c:1,e:'A SLED sobe suave mas, com tempo suficiente, cruza o mesmo Kt/V-alvo da HDI.',fig:function(){return espectroMini({qb:200,qd:300,tempo:10},'mesmo alvo');}},
+  {q:'Tirar 5 L em 4 h (HDI) versus 14 h (SLED): a UF rate…',o:['é igual','cai muito no tempo longo','sobe no tempo longo'],c:1,e:'UF = volume/tempo. 5 L/4 h = 1250 mL/h; 5 L/14 h ≈ 357 mL/h. O tempo desacelera a UF.',fig:function(){return ufBars(R0({volume:5,tempo:14,refilling:400}),'5 L em 14 h');}},
+  {q:'Quando a UF rate excede o refilling plasmático…',o:['nada acontece','o volume circulante cai → hipotensão','a dose aumenta'],c:1,e:'UF > refilling esvazia o plasma → hipotensão intradialítica e stunning (M24).',fig:function(){return ufBars(R0({volume:5,tempo:4,refilling:400}),'UF excede refilling');}},
+  {q:'A SLED é mais tolerada que a HDI porque…',o:['depura menos','distribui a mesma carga no tempo (menos estresse/h)','usa membrana diferente'],c:1,e:'Mesma dose e mesma UF, mas por mais horas: a taxa por hora cai, e a UF fica sob o refilling.',fig:function(){return specIcon(R0({qb:200,qd:300,tempo:10,volume:4}),'tolerada');}},
+  {q:'O paciente típico da SLED tem instabilidade…',o:['nenhuma (estável total)','intermediária','extrema (choque profundo)'],c:1,e:'Não tolera a HDI rápida, mas não precisa da TRRC 24 h — a faixa do meio.',fig:function(){return imgFig('quando-sled.svg','quando escolher SLED');}},
+  {q:'Encurtar a "SLED" para 4 h com fluxos altos a transforma em…',o:['TRRC','HDI','diálise peritoneal'],c:1,e:'Tempo curto + fluxos altos = canto rápido do espectro = HDI. Perde-se a tolerância.',fig:function(){return specIcon(R0({qb:350,qd:600,tempo:4}),'virou HDI');}},
+  {q:'Na figura do espectro, a tolerância hemodinâmica cresce…',o:['da SLED para a HDI','da HDI para a TRRC (esquerda→direita)','não muda'],c:1,e:'Quanto mais longo o tempo, mais lenta a taxa por hora — mais tolerada.',fig:function(){return imgFig('espectro-hdi-sled-trrc.svg','o espectro');}},
+  {q:'Na figura eficiência × tempo, a "área" das barras representa…',o:['o custo','o Kt total (a dose)','a PAM'],c:1,e:'Alta×curta (HDI) ≈ baixa×larga (SLED): a área (dose) é a mesma.',fig:function(){return imgFig('eficiencia-vs-tempo.svg','eficiência × tempo');}},
+  {q:'Na figura do refilling, a UF lenta da SLED permite que…',o:['o plasma esvazie','o refilling reponha a água e a PAM se mantenha','a dose caia'],c:1,e:'Enquanto UF ≤ refilling, o interstício repõe o plasma e a pressão se mantém.',fig:function(){return imgFig('tolerancia-hemodinamica.svg','o refilling');}},
+  {q:'Na figura "mesma dose, menos estresse", a SLED e a HDI…',o:['chegam a pontos finais diferentes','chegam ao mesmo ponto final, por caminhos diferentes','não removem soluto'],c:1,e:'Mesmo Kt total; a SLED só evita o gradiente abrupto entre sangue e cérebro.',fig:function(){return imgFig('mesma-dose-menos-estresse.svg','mesma dose, menos estresse');}}
+];
+var TUTOR_TEXTUAL=[
+  {q:'A SLED se define por…',o:['membrana especial','fluxos baixos (Qb/Qd) por tempo longo','convecção pura'],c:1,e:'É a HDI desacelerada: fluxos menores, 6–12 h. Um ponto no espectro de tempo.'},
+  {q:'A dose total da SLED, comparada à HDI…',o:['é sempre menor','pode ser a mesma (o tempo compensa)','é sempre maior'],c:1,e:'Kt/V = K·t/V. Clearance/h baixo × tempo longo preserva o Kt total.'},
+  {q:'O Kt/V acumulado é…',o:['o clearance instantâneo','o integral da depuração ao longo da sessão','a UF rate'],c:1,e:'Sobe íngreme na HDI e suave na SLED, mas ambos cruzam o mesmo alvo (~1,2).'},
+  {q:'A UF rate é dada por…',o:['volume × tempo','volume ÷ tempo','volume + tempo'],c:1,e:'Esticar o tempo desacelera a remoção de volume — a chave da tolerância.'},
+  {q:'O refilling plasmático é…',o:['a água que volta do interstício ao plasma','o fluxo de dialisato','a dose de diálise'],c:0,e:'Tem um teto (~400 mL/h); se a UF o excede, o plasma esvazia (M23/M24).'},
+  {q:'UF > refilling causa…',o:['mais dose','hipotensão intradialítica e stunning (M24)','alcalose'],c:1,e:'O volume circulante cai porque a água sai do plasma mais rápido que o refilling repõe.'},
+  {q:'A SLED é mais tolerada porque…',o:['remove menos','a taxa por hora (UF e gradiente) é menor','a membrana é menor'],c:1,e:'Mesma carga distribuída no tempo → menos estresse hemodinâmico e osmótico por hora.'},
+  {q:'O candidato à SLED tem instabilidade…',o:['intermediária','nula','extrema'],c:0,e:'Não tolera a HDI rápida, mas não exige a TRRC contínua — a faixa do meio.'},
+  {q:'SLED versus TRRC: a SLED é preferível quando…',o:['o doente exige 24 h contínuas','6–12 h bastam e libera-se a máquina/logística','há choque profundo'],c:1,e:'Poupa máquina de CRRT, anticoagulação contínua e logística — sem perder a tolerância.'},
+  {q:'Apressar a SLED (4 h, fluxos altos) a transforma em…',o:['TRRC','HDI','DP'],c:1,e:'Volta ao canto rápido do espectro: a UF excede o refilling e o gradiente fica abrupto.'},
+  {q:'O ganho central da SLED é…',o:['mais dose que a HDI','a mesma meta com menor estresse por hora','custo menor sempre'],c:1,e:'Mesma remoção de volume e soluto, distribuída no tempo: tolerância sem perder adequação.'},
+  {q:'A SLED, fisiologicamente, restaura a homeostasia ao…',o:['substituir o rim inteiro','substituir funções por física, no ritmo tolerado','elevar a creatinina'],c:1,e:'Difusão/convecção/UF repõem volume, eletrólitos e ácido-base; a SLED só escolhe o ritmo (M19).'}
+];
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL; window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+var BANKS={ilustrada:TUTOR_ILUSTRADO,textual:TUTOR_TEXTUAL}, curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+function renderTutor(){ var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():''; $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false; $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){ if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button'); btns[item.c].classList.add('ok'); if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block'; fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e; $('tutor-score').textContent=tScore; $('tutor-total').textContent=tTotal; });
+    box.appendChild(b); }); }
+$('banktabs').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor(); });
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+$('draw-espectro').innerHTML = specIcon(sled({tempo:8}),'a SLED no meio do espectro');
+$('draw-ktv').innerHTML = espectroMini({qb:200,qd:300,tempo:10},'Kt/V acumulado: SLED alcança o alvo');
+$('draw-uf').innerHTML = ufBars(sled({volume:5,tempo:14,refilling:400}),'UF lenta < refilling');
+$('draw-estresse').innerHTML = specIcon(sled({qb:200,qd:300,tempo:10,volume:4}),'mesma dose, menos estresse/h');
+$('draw-sintese').innerHTML = espectroMini({qb:200,qd:300,tempo:8,volume:4},'síntese: SLED no espectro');
+$('fig-caso').innerHTML = espectroMini({qb:200,qd:300,tempo:10},'o caso no espectro') + ufBars(sled({volume:5,tempo:4,refilling:400}),'HDI: UF excede refilling');
+
+refresh(); renderTutor();
+</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 300" font-family="system-ui,Segoe UI,Arial" role="img">
+  <rect width="520" height="300" fill="#0a1016"/>
+  <text x="260" y="22" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Pré × pós-diluição (CVVH)</text>
+  <!-- PRE -->
+  <text x="130" y="48" text-anchor="middle" font-size="12" fill="#52c08a" font-weight="bold">PRÉ-filtro</text>
+  <circle cx="80" cy="100" r="10" fill="#39c0c8"/><text x="80" y="125" text-anchor="middle" font-size="9" fill="#39c0c8">reposição</text>
+  <rect x="120" y="78" width="40" height="120" rx="6" fill="#141b22" stroke="#52c08a" stroke-width="2"/>
+  <text x="140" y="70" text-anchor="middle" font-size="9" fill="#9fb1c0">filtro</text>
+  <text x="130" y="225" text-anchor="middle" font-size="10" fill="#9fb1c0">plasma DILUÍDO</text>
+  <text x="130" y="242" text-anchor="middle" font-size="10" fill="#e8a13a">clearance ↓</text>
+  <text x="130" y="259" text-anchor="middle" font-size="10" fill="#52c08a">protege a membrana</text>
+  <text x="130" y="276" text-anchor="middle" font-size="10" fill="#52c08a">menos coágulo</text>
+  <!-- POS -->
+  <text x="390" y="48" text-anchor="middle" font-size="12" fill="#e0556b" font-weight="bold">PÓS-filtro</text>
+  <rect x="360" y="78" width="40" height="120" rx="6" fill="#141b22" stroke="#e0556b" stroke-width="2"/>
+  <text x="380" y="70" text-anchor="middle" font-size="9" fill="#9fb1c0">filtro</text>
+  <circle cx="440" cy="100" r="10" fill="#39c0c8"/><text x="440" y="125" text-anchor="middle" font-size="9" fill="#39c0c8">reposição</text>
+  <text x="390" y="225" text-anchor="middle" font-size="10" fill="#9fb1c0">plasma CHEIO</text>
+  <text x="390" y="242" text-anchor="middle" font-size="10" fill="#52c08a">clearance cheio</text>
+  <text x="390" y="259" text-anchor="middle" font-size="10" fill="#e0556b">FF alta</text>
+  <text x="390" y="276" text-anchor="middle" font-size="10" fill="#e0556b">coagula MAIS</text>
+  <line x1="260" y1="50" x2="260" y2="290" stroke="#283642" stroke-dasharray="3 3"/>
+</svg>

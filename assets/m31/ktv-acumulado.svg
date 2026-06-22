@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" font-family="system-ui,Segoe UI,Arial">
+  <rect width="480" height="300" fill="#0a1016"/>
+  <text x="240" y="24" fill="#39c0c8" font-size="15" font-weight="bold" text-anchor="middle">Kt/V acumulado × tempo</text>
+  <!-- axes -->
+  <line x1="50" y1="250" x2="455" y2="250" stroke="#3a4a58" stroke-width="1.5"/>
+  <line x1="50" y1="40" x2="50" y2="250" stroke="#3a4a58" stroke-width="1.5"/>
+  <text x="252" y="278" fill="#9fb1c0" font-size="11" text-anchor="middle">tempo (h)  →</text>
+  <text x="18" y="150" fill="#9fb1c0" font-size="11" transform="rotate(-90 18 150)" text-anchor="middle">Kt/V  ↑</text>
+  <!-- target line Kt/V=1.2 -->
+  <line x1="50" y1="110" x2="455" y2="110" stroke="#9fb1c0" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="455" y="106" fill="#9fb1c0" font-size="10" text-anchor="end">alvo Kt/V ≈ 1,2</text>
+  <!-- HDI steep short, reaches target at 4h -->
+  <path d="M50 250 L 150 110" stroke="#52c08a" stroke-width="2.5" fill="none"/>
+  <circle cx="150" cy="110" r="4" fill="#52c08a"/>
+  <text x="150" y="266" fill="#52c08a" font-size="9" text-anchor="middle">HDI 4h</text>
+  <text x="92" y="180" fill="#52c08a" font-size="10" font-weight="bold">HDI</text>
+  <!-- SLED gentle slope, reaches same target at ~10h -->
+  <path d="M50 250 L 340 110" stroke="#39c0c8" stroke-width="2.5" fill="none"/>
+  <circle cx="340" cy="110" r="4" fill="#39c0c8"/>
+  <text x="340" y="266" fill="#39c0c8" font-size="9" text-anchor="middle">SLED 10h</text>
+  <text x="230" y="200" fill="#39c0c8" font-size="10" font-weight="bold">SLED</text>
+  <!-- meeting note -->
+  <text x="250" y="58" fill="#e8a13a" font-size="11" text-anchor="middle">a SLED chega ao MESMO Kt/V — só mais devagar</text>
+</svg>

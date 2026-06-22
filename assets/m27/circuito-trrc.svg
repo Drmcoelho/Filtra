@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 300" font-family="system-ui,Segoe UI,Arial" role="img">
+  <rect width="520" height="300" fill="#0a1016"/>
+  <text x="260" y="22" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Circuito extracorpóreo da TRRC</text>
+  <!-- paciente -->
+  <circle cx="60" cy="150" r="34" fill="#141b22" stroke="#9fb1c0" stroke-width="2"/>
+  <text x="60" y="155" text-anchor="middle" font-size="11" fill="#9fb1c0">paciente</text>
+  <!-- bomba de sangue -->
+  <circle cx="160" cy="100" r="20" fill="#141b22" stroke="#e8a13a" stroke-width="2"/>
+  <text x="160" y="104" text-anchor="middle" font-size="9" fill="#e8a13a">bomba</text>
+  <text x="160" y="135" text-anchor="middle" font-size="9" fill="#9fb1c0">Qb</text>
+  <!-- filtro -->
+  <rect x="240" y="70" width="60" height="160" rx="8" fill="#141b22" stroke="#39c0c8" stroke-width="2"/>
+  <text x="270" y="60" text-anchor="middle" font-size="9" fill="#39c0c8">dialisador</text>
+  <!-- dialisato / efluente / reposicao -->
+  <text x="350" y="100" font-size="9" fill="#e0556b">Qd dialisato</text>
+  <path d="M345 105 H305" stroke="#e0556b" stroke-width="2"/>
+  <text x="350" y="200" font-size="9" fill="#52c08a">efluente (UF)</text>
+  <path d="M305 205 H345" stroke="#52c08a" stroke-width="2"/>
+  <text x="430" y="150" font-size="9" fill="#39c0c8">reposição</text>
+  <!-- fluxo sangue -->
+  <path d="M90 135 Q120 110 140 105" stroke="#e0556b" stroke-width="3" fill="none"/>
+  <path d="M180 100 H238" stroke="#e0556b" stroke-width="3" fill="none"/>
+  <path d="M300 200 Q200 270 90 165" stroke="#3aa0c8" stroke-width="3" fill="none"/>
+  <text x="40" y="262" font-size="11" fill="#9fb1c0">① a bomba move o sangue (Qb); ② o dialisador é a membrana onde difusão+convecção agem;</text>
+  <text x="40" y="280" font-size="11" fill="#9fb1c0">③ Qd entra, ④ efluente (UF) sai; ⑤ a reposição devolve volume. Tudo CONTÍNUO, 24 h.</text>
+</svg>

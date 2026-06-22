@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" font-family="Georgia,serif">
+  <rect width="640" height="340" fill="#0a1016"/>
+  <rect x="2" y="2" width="636" height="336" rx="6" fill="none" stroke="#283642" stroke-width="2"/>
+  <text x="320" y="30" text-anchor="middle" font-size="17" font-weight="bold" fill="#e7eef4">A queda exponencial do nível com a HD</text>
+  <text x="320" y="50" text-anchor="middle" font-size="11" fill="#9fb1c0">C(t) = C₀ · e^(−K·t/V) — a máquina (azul) despenca; o rim sozinho (cinza) mal cai</text>
+
+  <!-- eixos -->
+  <line x1="70" y1="80" x2="70" y2="270" stroke="#3a4a58" stroke-width="1.5"/>
+  <line x1="70" y1="270" x2="590" y2="270" stroke="#3a4a58" stroke-width="1.5"/>
+  <text x="40" y="100" text-anchor="middle" font-size="10" fill="#9fb1c0">nível</text>
+  <text x="40" y="116" text-anchor="middle" font-size="9" fill="#9fb1c0">(mg/dL)</text>
+  <text x="320" y="292" text-anchor="middle" font-size="10" fill="#9fb1c0">tempo (h)</text>
+
+  <!-- limiar e alvo -->
+  <line x1="70" y1="140" x2="590" y2="140" stroke="#e8a13a" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="582" y="135" text-anchor="end" font-size="9" fill="#e8a13a">limiar de HD</text>
+  <line x1="70" y1="226" x2="590" y2="226" stroke="#52c08a" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="582" y="221" text-anchor="end" font-size="9" fill="#52c08a">alvo seguro</text>
+
+  <!-- curva com HD (exp rápida) -->
+  <path d="M70 90 Q160 175 250 215 T430 252 T590 262" fill="none" stroke="#39c0c8" stroke-width="3"/>
+  <text x="250" y="205" font-size="11" fill="#39c0c8" font-weight="bold">COM HD</text>
+
+  <!-- curva sem HD (lenta) -->
+  <path d="M70 90 Q250 105 430 122 T590 145" fill="none" stroke="#9fb1c0" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="450" y="118" font-size="10" fill="#9fb1c0">SEM HD (só o rim)</text>
+
+  <!-- tAlvo -->
+  <line x1="300" y1="226" x2="300" y2="270" stroke="#52c08a" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="300" y="284" text-anchor="middle" font-size="9" fill="#52c08a">t_alvo</text>
+
+  <text x="320" y="316" text-anchor="middle" font-size="11" fill="#e7eef4">clearance alto → meia-vida curta → o nível cruza o alvo em poucas horas</text>
+  <text x="320" y="334" text-anchor="middle" font-size="9" fill="#9fb1c0" opacity="0.6">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 300" font-family="system-ui,Segoe UI,Arial" role="img">
+  <rect width="520" height="300" fill="#0a1016"/>
+  <text x="260" y="24" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">CVVHDF — difusão + convecção (com interação)</text>
+  <rect x="200" y="58" width="120" height="180" rx="8" fill="#141b22" stroke="#39c0c8" stroke-width="2"/>
+  <line x1="260" y1="58" x2="260" y2="238" stroke="#283642" stroke-dasharray="4 4"/>
+  <defs>
+    <marker id="g1" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 Z" fill="#52c08a"/></marker>
+    <marker id="r1" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 Z" fill="#e0556b"/></marker>
+  </defs>
+  <text x="228" y="76" text-anchor="middle" font-size="10" fill="#9fb1c0">sangue</text>
+  <path d="M205 95 H318" stroke="#52c08a" stroke-width="3" marker-end="url(#g1)"/>
+  <path d="M205 120 H318" stroke="#52c08a" stroke-width="3" marker-end="url(#g1)"/>
+  <path d="M205 165 H318" stroke="#e0556b" stroke-width="2" marker-end="url(#r1)"/>
+  <path d="M205 195 H318" stroke="#e0556b" stroke-width="2" marker-end="url(#r1)"/>
+  <text x="360" y="100" font-size="10" fill="#52c08a">convecção (UF)</text>
+  <text x="360" y="180" font-size="10" fill="#e0556b">difusão (Qd)</text>
+  <text x="120" y="280" font-size="22" fill="#39c0c8" font-weight="bold">CL ≈ (CLdif + CLconv)·(1−i)</text>
+  <text x="40" y="50" font-size="11" fill="#9fb1c0">① convecção (verde) + ② difusão (vermelho) somam-se;</text>
+  <text x="40" y="256" font-size="11" fill="#9fb1c0">③ desconto de INTERAÇÃO (1−i): a convecção rouba gradiente da difusão → total &lt; soma ingênua.</text>
+</svg>

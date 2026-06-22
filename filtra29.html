@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M29 — Anticoagulação do circuito: citrato regional × heparina</title>
+<style>
+  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--warn:#e8a13a;--bad:#e0556b;--good:#52c08a;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none} section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .presets{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px} .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)} .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)} .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)} .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M29</div>
+  <h1>Anticoagulação do circuito — citrato regional × heparina</h1>
+  <div class="sub">O sangue <b>coagula</b> no circuito extracorpóreo (parado sobre superfícies estranhas); mas anticoagular o
+  <b>paciente</b> o faz <b>sangrar</b>. A saída é a anticoagulação <b>regional</b>. O <b>citrato</b> infunde antes do filtro
+  e <b>quela o Ca²⁺ ionizado</b> só dentro do circuito — e como o Ca²⁺ é <b>cofator</b> da cascata, sem ele o circuito não
+  coagula; depois do filtro, <b>repõe-se cálcio</b> e o paciente volta com Ca²⁺ normal, nunca anticoagulado. A <b>heparina</b>
+  é sistêmica: simples, mas sangra. O preço do citrato é vigiar <b>dois</b> cálcios — o do circuito (alvo baixo) e o
+  sistêmico (normal) — e o <b>acúmulo</b> no fígado ruim, que abre um <b>gap</b> entre Ca total e ionizado. Unidades de
+  diálise: <b>mmol/L · mmol/h · mL/h · razão · %</b> (sem massa solta). O alvo é a <b>homeostasia</b> do meio interno.</div>
+  <nav class="hex">
+    <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
+    <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="dialisa.html">&larr; índice do antebraço DIALISA</a>
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- CONCEITO -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — anticoagular o circuito, não o paciente</h3>
+      <p class="sub" style="margin-top:0"><b>O dilema:</b> sem anticoagulante o circuito coagula e a sessão para; com
+      anticoagulante sistêmico o paciente sangra. A anticoagulação <b>regional por citrato</b> resolve o dilema —
+      age só onde o sangue corre fora do corpo. As Fig. 1–8 voltam no Caso, na Trilha e na Avaliação. Atribuição em
+      <code>CREDITS.md</code> (em curadoria).</p>
+
+      <h4>1. O Ca²⁺ é cofator da coagulação — e a chave da quelação</h4>
+      <p class="sub">A cascata de coagulação <b>precisa de Ca²⁺ ionizado</b> em vários passos (os fatores II, VII, IX, X
+      dependem dele). Se removermos o Ca²⁺, a cascata <b>não dispara</b>. O <b>citrato</b> faz exatamente isso: <b>quela</b>
+      (sequestra) o Ca²⁺ ionizado. Infundido antes do filtro, derruba o Ca²⁺ do circuito para ~<b>0,25–0,35 mmol/L</b> —
+      e o circuito deixa de coagular (Fig. 1).</p>
+      <div class="frow">
+        <div class="concept" id="draw-cascata"></div>
+        <figure class="fviva"><img src="assets/m29/cascata-coagulacao-ca.svg" alt="Cascata da coagulação: o Ca²⁺ como cofator de cada passo" loading="lazy">
+          <figcaption><b>Fig. 1 · O Ca²⁺ é cofator.</b> A cascata Fator X → protrombina → trombina → fibrina depende de
+          <b>Ca²⁺ ionizado</b> (setas laranja) em cada degrau. O citrato <b>quela</b> o Ca²⁺ → a cascata <b>para</b> → o
+          circuito não coagula. Tira-se o cofator, não o fator.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m29/citrato-quelacao-circuito.svg" alt="Citrato quela o Ca²⁺ só dentro do circuito extracorpóreo" loading="lazy">
+          <figcaption><b>Fig. 2 · Quelação no circuito.</b> O <b>citrato</b> entra antes do filtro (ponto laranja) e
+          derruba o Ca²⁺ do sangue do circuito de 1,15 → ~<b>0,30 mmol/L</b> (anticoagula localmente). Pós-filtro,
+          <b>repõe-se cálcio</b> (ponto verde) e o retorno volta com Ca²⁺ 1,2 — o paciente <b>não</b> é
+          anticoagulado.</figcaption></figure>
+      </div>
+
+      <h4>2. Anticoagulação REGIONAL — dois cálcios, dois alvos</h4>
+      <p class="sub">O segredo é a <b>geografia</b>: o citrato age só no circuito; o cálcio reposto no retorno restaura o
+      paciente. Por isso monitoram-se <b>dois</b> cálcios. O Ca²⁺ do <b>circuito</b> (pós-filtro) tem alvo <b>baixo</b>
+      (0,25–0,35 mmol/L) para anticoagular; o Ca²⁺ <b>sistêmico</b> tem alvo <b>normal</b> (1,1–1,3 mmol/L) para a
+      segurança do doente. Titula-se o <b>citrato</b> pelo primeiro e o <b>cálcio</b> pelo segundo.</p>
+      <div class="frow">
+        <div class="concept" id="draw-regional"></div>
+        <figure class="fviva"><img src="assets/m29/reposicao-calcio.svg" alt="Reposição de cálcio: alvo baixo no circuito, normal no sistêmico" loading="lazy">
+          <figcaption><b>Fig. 3 · Dois alvos de cálcio.</b> O Ca²⁺ do <b>circuito</b> mira a faixa <b>baixa</b> (laranja,
+          0,25–0,35) — anticoagula. O Ca²⁺ <b>sistêmico</b> mira a faixa <b>normal</b> (verde, 1,1–1,3) — segura o
+          paciente. A reposição (seta verde) sobe o cálcio só onde precisa: no doente.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m29/circuito-pontos-monitor.svg" alt="Os dois pontos de monitorização do cálcio no circuito de diálise" loading="lazy">
+          <figcaption><b>Fig. 4 · Os dois pontos de coleta.</b> <b>①</b> Ca²⁺ do <b>circuito</b> (pós-filtro, laranja):
+          guia a dose de <b>citrato</b> (alvo baixo). <b>②</b> Ca²⁺ <b>sistêmico</b> (no paciente, verde): guia a
+          <b>reposição de cálcio</b> (alvo normal). Dois números, duas alavancas.</figcaption></figure>
+      </div>
+
+      <h4>3. Heparina — sistêmica, simples, mas sangra</h4>
+      <p class="sub">A alternativa é a <b>heparina</b>: potencia a antitrombina e anticoagula o <b>paciente inteiro</b>
+      (TTPa↑ no corpo todo). É simples e barata, sem o trabalho de vigiar dois cálcios — mas, sem proteção regional, o
+      <b>risco de sangramento</b> sobe com a dose. É a escolha de quem <b>não</b> tem risco de sangrar.</p>
+      <div class="frow">
+        <div class="concept" id="draw-heparina"></div>
+        <figure class="fviva"><img src="assets/m29/heparina-sistemica.svg" alt="Heparina sistêmica: anticoagula o paciente inteiro, risco de sangramento sobe com a dose" loading="lazy">
+          <figcaption><b>Fig. 5 · Heparina sistêmica.</b> A heparina anticoagula <b>circuito + paciente</b> (TTPa↑ no
+          corpo todo). O risco de sangramento cresce <b>∝ dose</b> (linha vermelha): sem proteção regional. Simples,
+          mas perigosa em quem já sangra.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m29/citrato-vs-heparina.svg" alt="Citrato regional versus heparina sistêmica: prós e contras" loading="lazy">
+          <figcaption><b>Fig. 6 · Citrato × heparina.</b> O <b>citrato</b> protege quem sangra (regional), ao custo de
+          monitorar dois cálcios e do risco de <b>acúmulo</b> no fígado ruim. A <b>heparina</b> é simples mas sistêmica
+          (sangra). A escolha sai do <b>mecanismo</b>: sangramento × função hepática.</figcaption></figure>
+      </div>
+
+      <h4>4. O acúmulo de citrato — o perigo do fígado ruim e o gap do cálcio</h4>
+      <p class="sub">O citrato que volta ao paciente é <b>metabolizado</b> (fígado/músculo) a bicarbonato e Ca²⁺ liberado.
+      Se o clearance hepático cai (choque, insuficiência hepática, lactato alto), o citrato <b>acumula</b> e quela Ca²⁺
+      <b>sistêmico</b>: o Ca²⁺ <b>ionizado</b> cai, mas o Ca <b>total</b> sobe (o cálcio preso ao citrato conta no total).
+      A pista é a razão <b>Ca total / Ca ionizado</b> — quando passa de <b>2,5</b>, é <b>acúmulo</b>, e o fígado ruim
+      <b>contraindica</b> o citrato (Fig. 7–8).</p>
+      <div class="frow">
+        <div class="concept" id="draw-gap"></div>
+        <figure class="fviva"><img src="assets/m29/acumulo-citrato-figado.svg" alt="Acúmulo de citrato: fígado bom depura, fígado ruim acumula" loading="lazy">
+          <figcaption><b>Fig. 7 · O fígado depura o citrato.</b> Fígado <b>OK</b> (verde): metaboliza o citrato a HCO₃⁻ +
+          Ca²⁺, gap normal. Fígado <b>ruim</b> (vermelho): não depura → citrato <b>acumula</b> → quela Ca²⁺ sistêmico →
+          gap↑. Por isso o fígado ruim <b>contraindica</b> o citrato.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m29/gap-ca-total-ionizado.svg" alt="Gap Ca total sobre Ca ionizado: a pista do acúmulo de citrato" loading="lazy">
+          <figcaption><b>Fig. 8 · O gap Ca total/ionizado.</b> No <b>acúmulo</b>, o Ca <b>total</b> sobe (citrato-Ca
+          conta) e o <b>ionizado</b> cai. A razão <b>total/ionizado &gt; 2,5</b> é o <b>alarme</b> — o sinal de que o
+          citrato está sequestrando cálcio sistêmico. Vigia-se o gap, não só um número.</figcaption></figure>
+      </div>
+
+      <h4>5. A homeostasia — anticoagular sem desequilibrar o meio interno</h4>
+      <p class="sub">Tudo isto serve à <b>homeostasia</b>: manter o circuito patente para a máquina <b>substituir as
+      funções</b> renais (depurar escórias por <b>difusão/convecção</b>, retirar volume por <b>ultrafiltração</b>) sem
+      criar dois problemas novos — sangramento (heparina em excesso) ou distúrbio do cálcio/ácido-base (acúmulo de
+      citrato). A boa anticoagulação é invisível: o sangue corre, o paciente não sangra e o meio interno volta à faixa.</p>
+      <div class="frow">
+        <div class="concept" id="draw-homeostase"></div>
+        <p class="sub" style="flex:1 1 240px;min-width:230px">O gráfico computado mostra o <b>Ca²⁺ ionizado</b> ao longo do
+        circuito: cai no <b>pós-citrato</b> (anticoagula) e volta ao normal no <b>retorno</b> (reposição). A homeostasia
+        é exatamente isso — o circuito protegido, o paciente intacto. <b>Fig. 4</b> mostra os dois pontos onde se mede.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASO -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — cinco atos, decida antes de revelar</h3>
+      <p class="sub">UTI, mesma máquina de TRRC, anticoagulações diferentes. A pergunta de cada ato: <b>citrato ou
+      heparina — e por quê?</b> Volte às Fig. 2, 6 e 8: o mecanismo (sangramento × fígado) decide.</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step"><b>Ato 1 — paciente que sangra (CIVD, plaquetopenia).</b> TRRC indicada, mas o doente tem
+        coagulopatia e sangramento ativo. Heparina sistêmica?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>Não — citrato regional.</b> A heparina anticoagularia o paciente <b>inteiro</b> e
+          pioraria o sangramento (Fig. 5). O <b>citrato</b> quela o Ca²⁺ só no circuito (Fig. 2) e repõe cálcio no
+          retorno — o paciente <b>não</b> é anticoagulado. É a anticoagulação de quem sangra.</div></div>
+
+      <div class="step"><b>Ato 2 — sem risco de sangrar, fígado bom.</b> Outro doente: estável, sem coagulopatia,
+        função hepática preservada. Vale a complexidade do citrato?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2"><b>Heparina é razoável.</b> Sem risco de sangramento, a heparina sistêmica é
+          <b>mais simples</b> (sem vigiar dois cálcios). O citrato continua válido e é o padrão em muitos serviços, mas o
+          mecanismo aqui não <b>exige</b> a proteção regional. A escolha sai do risco (Fig. 6).</div></div>
+
+      <div class="step"><b>Ato 3 — o circuito ainda coagula.</b> Em citrato, o Ca²⁺ do circuito mede <b>0,5 mmol/L</b> e
+        o filtro está coagulando. O que ajustar?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3"><b>Subir o citrato.</b> O Ca²⁺ do circuito está <b>acima</b> da janela (0,25–0,35):
+          ainda há cálcio para a cascata (Fig. 1). Aumenta-se a <b>dose de citrato</b> (mmol/L de sangue) até o Ca²⁺ do
+          circuito cair na faixa — titula-se pelo <b>ponto ①</b> (Fig. 4). O cálcio sistêmico não muda essa
+          decisão.</div></div>
+
+      <div class="step"><b>Ato 4 — fígado ruim, choque, lactato alto.</b> Em citrato há 12 h: Ca²⁺ ionizado <b>caindo</b>,
+        Ca <b>total subindo</b>, razão total/ionizado <b>2,9</b>. O que está acontecendo?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>Acúmulo de citrato.</b> O fígado em choque não depura o citrato (Fig. 7) → ele
+          acumula e quela Ca²⁺ <b>sistêmico</b>: ionizado↓, total↑, <b>gap &gt; 2,5</b> (Fig. 8). Conduta: <b>reduzir ou
+          suspender o citrato</b> e migrar para heparina/sem anticoagulação. O fígado ruim <b>contraindica</b> o
+          citrato.</div></div>
+
+      <div class="step"><b>Ato 5 — a tentação do número isolado (a fronteira).</b> O Ca <b>total</b> está alto (3,2) e a
+        equipe pensa em hipercalcemia, querendo <b>reduzir cálcio</b>. Está certo?
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>Não — olhe o IONIZADO.</b> No acúmulo de citrato o Ca <b>total</b> engana: o que
+          importa é o Ca²⁺ <b>ionizado</b>, que está <b>baixo</b> (Fig. 8). Reduzir cálcio pioraria a hipocalcemia
+          ionizada (tetania, arritmia). A conduta é tratar o <b>acúmulo</b> (cortar citrato), não o número total. O gap
+          é a pista — o número total isolado mente.</div></div>
+    </div>
+  </section>
+
+  <!-- TRILHA -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — dez perguntas que constroem a conduta</h3>
+      <details><summary>1. Por que o circuito coagula sem anticoagulação?</summary><p>Porque o sangue corre <b>parado e
+        lento</b> sobre superfícies estranhas (cânulas, membrana). A cascata de coagulação dispara → o filtro coagula → a
+        sessão para. É preciso anticoagular o circuito.</p></details>
+      <details><summary>2. Por que não simplesmente anticoagular o paciente?</summary><p>Porque o paciente crítico muitas
+        vezes <b>já sangra</b> (cirurgia, CIVD, plaquetopenia). Anticoagular o corpo inteiro (heparina) piora isso. Daí a
+        ideia de anticoagular <b>só o circuito</b> — regional.</p></details>
+      <details><summary>3. Como o citrato anticoagula só o circuito?</summary><p>O Ca²⁺ é <b>cofator</b> da coagulação. O
+        citrato infunde antes do filtro e <b>quela</b> o Ca²⁺ do sangue do circuito (cai a ~0,25–0,35 mmol/L) → sem
+        cálcio, a cascata não dispara <b>localmente</b>. Depois do filtro, repõe-se cálcio.</p></details>
+      <details><summary>4. Qual o alvo do Ca²⁺ do circuito?</summary><p>~<b>0,25–0,35 mmol/L</b> (baixo). Acima disso, ainda
+        há cálcio para coagular (subdosagem). Titula-se a <b>dose de citrato</b> (mmol/L de sangue) por esse Ca²⁺
+        pós-filtro.</p></details>
+      <details><summary>5. Qual o alvo do Ca²⁺ sistêmico?</summary><p><b>Normal</b> (1,1–1,3 mmol/L). É o cálcio do
+        <b>paciente</b>, restaurado pela <b>reposição</b> pós-filtro. Titula-se o <b>cálcio</b> por ele. Dois números,
+        duas alavancas (Fig. 4).</p></details>
+      <details><summary>6. O que a heparina faz de diferente?</summary><p>Anticoagula o <b>paciente inteiro</b> (potencia a
+        antitrombina → TTPa↑ no corpo todo). Simples, sem dois cálcios para vigiar — mas o <b>risco de sangramento</b>
+        sobe com a dose, sem proteção regional.</p></details>
+      <details><summary>7. Quem sangra prefere o quê?</summary><p><b>Citrato regional.</b> Como não anticoagula o paciente,
+        o risco de sangramento fica ≈ basal. A heparina, sistêmica, somaria risco. Para o doente que sangra, o citrato é
+        a escolha de mecanismo.</p></details>
+      <details><summary>8. O que é o acúmulo de citrato?</summary><p>O citrato que volta é metabolizado pelo
+        <b>fígado/músculo</b>. Se o clearance cai (choque, insuf. hepática), o citrato <b>acumula</b> e quela Ca²⁺
+        <b>sistêmico</b>. O fígado ruim <b>contraindica</b> o citrato.</p></details>
+      <details><summary>9. Como reconhecer o acúmulo?</summary><p>Pela razão <b>Ca total / Ca ionizado</b>: o total
+        <b>sobe</b> (citrato-Ca conta) e o ionizado <b>cai</b>. Razão <b>&gt; 2,5</b> = alarme. O número total isolado
+        engana; o gap é a pista (Fig. 8).</p></details>
+      <details><summary>10. Em que sentido isso serve à homeostasia?</summary><p>A anticoagulação mantém o circuito patente
+        para a máquina <b>substituir funções</b> renais (difusão/convecção/UF) <b>sem</b> criar sangramento ou distúrbio
+        do cálcio. A boa anticoagulação é invisível — devolve o meio interno à faixa.</p></details>
+    </div>
+  </section>
+
+  <!-- INSTRUMENTO -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — o cálcio ao longo do circuito e o gap × fígado</h3>
+      <p class="sub">Os controles do <b>Lab</b> movem este gráfico. As três barras mostram o Ca²⁺ ionizado (mmol/L) nas
+      estações do circuito: <b>paciente</b> (entrada) → <b>pós-citrato</b> (baixo, dentro da faixa anticoagulante laranja)
+      → <b>retorno</b> (normal de novo, pela reposição). A curva azul é o <b>gap Ca total/ionizado</b> em função da
+      <b>função hepática</b>: à esquerda (fígado ruim) o gap <b>sobe</b> e cruza a linha de alarme (2,5); o marcador é o
+      paciente atual. Acima da linha → <b>acúmulo de citrato</b>.</p>
+      <canvas id="ca-canvas" width="900" height="360" aria-label="Cálcio no circuito e gap × função hepática"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- LAB -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — monte o circuito; veja a escolha, os cálcios e o gap</h3>
+      <div class="grid">
+        <div>
+          <label>Risco de sangramento do paciente (0 baixo → 1 alto): <span class="val" id="lbl-sangramento">0.20</span></label>
+          <input type="range" id="in-sangramento" min="0" max="1" step="0.05" value="0.2">
+          <label>Função hepática (0 falência → 1 normal): <span class="val" id="lbl-funcaoHepatica">1.00</span></label>
+          <input type="range" id="in-funcaoHepatica" min="0" max="1" step="0.05" value="1">
+          <label>Dose de citrato (mmol/L de sangue): <span class="val" id="lbl-citratoDose">2.0</span></label>
+          <input type="range" id="in-citratoDose" min="0" max="6" step="0.1" value="2">
+          <label>Fluxo de sangue Qb (mL/min): <span class="val" id="lbl-qb">150</span></label>
+          <input type="range" id="in-qb" min="80" max="300" step="5" value="150">
+        </div>
+        <div>
+          <label>Ca²⁺ ionizado de entrada (mmol/L): <span class="val" id="lbl-caBasal">1.15</span></label>
+          <input type="range" id="in-caBasal" min="0.6" max="1.4" step="0.05" value="1.15">
+          <label>Reposição de cálcio (mmol/h): <span class="val" id="lbl-caReposicao">1.7</span></label>
+          <input type="range" id="in-caReposicao" min="0" max="5" step="0.1" value="1.7">
+          <label>Ca²⁺ sistêmico de base (mmol/L): <span class="val" id="lbl-caSistBasal">1.20</span></label>
+          <input type="range" id="in-caSistBasal" min="0.8" max="1.4" step="0.05" value="1.2">
+          <label>Dose de heparina (0 nenhuma → 1 plena): <span class="val" id="lbl-heparinaDose">0.50</span></label>
+          <input type="range" id="in-heparinaDose" min="0" max="1" step="0.05" value="0.5">
+        </div>
+      </div>
+
+      <div class="presets">
+        <button class="act" data-preset="padrao">Citrato padrão</button>
+        <button class="act" data-preset="acumulo">Acúmulo (fígado ruim)</button>
+        <button class="act" data-preset="heparina">Heparina</button>
+        <button class="act" data-preset="sangra">Paciente que sangra</button>
+        <button class="act" data-preset="subdose">Citrato subdosado</button>
+      </div>
+
+      <table>
+        <tr><th>Saída</th><th>Atual</th><th>Comentário</th></tr>
+        <tr><td>Anticoagulação recomendada</td><td class="num" id="out-modalidade">—</td><td class="num">sangramento × fígado</td></tr>
+        <tr><td>Ca²⁺ no circuito (mmol/L)</td><td class="num" id="out-cacirc">—</td><td class="num">alvo 0,25–0,35 (anticoagula)</td></tr>
+        <tr><td>Ca²⁺ sistêmico (mmol/L)</td><td class="num" id="out-casist">—</td><td class="num">alvo 1,1–1,3 (paciente)</td></tr>
+        <tr><td>Gap Ca total/ionizado (razão)</td><td class="num" id="out-gap">—</td><td class="num">&gt; 2,5 → acúmulo</td></tr>
+        <tr><td>Carga de citrato / TTPa</td><td class="num" id="out-carga">—</td><td class="num">mmol/h · razão</td></tr>
+        <tr><td>Risco de sangramento resultante</td><td class="num" id="out-sangra">—</td><td class="num">citrato ≈ basal</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÃO -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (12)</button>
+        <button data-bank="textual">Textual (12)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica</b>. Este módulo M29 modela a
+    anticoagulação do circuito (quelação por citrato, reposição de cálcio, acúmulo, heparina) como uma simplificação
+    didática calibrada para ensinar o <b>mecanismo</b> — não um protocolo de prescrição para um paciente real. Doses,
+    alvos e razões são ilustrativos. Não substitui julgamento clínico; a decisão e a responsabilidade finais são sempre
+    do profissional.
+  </div>
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+</div>
+
+<script>
+/* ENGINE INLINE — espelho fiel de build/m29/model29.js */
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
+var CA_CIRC_ALVO_LO=0.25, CA_CIRC_ALVO_HI=0.35, CA_SIST_ALVO=1.20, GAP_ALARME=2.5;
+function citrato(inp){ inp=inp||{};
+  var citratoDose=clampv(inp.citratoDose!==undefined?inp.citratoDose:3.0,0,8);
+  var qb=clampv(inp.qb!==undefined?inp.qb:150,50,350);
+  var caBasal=clampv(inp.caBasal!==undefined?inp.caBasal:1.15,0.4,1.6);
+  var caReposicao=clampv(inp.caReposicao!==undefined?inp.caReposicao:1.7,0,6);
+  var quela=1-Math.exp(-0.85*citratoDose);
+  var caCircuito=clampv(caBasal*(1-0.97*quela),0.05,caBasal);
+  var qbLh=qb*60/1000, cargaCitrato=citratoDose*qbLh;
+  var anticoagulado=caCircuito<=CA_CIRC_ALVO_HI;
+  var subdosado=caCircuito>CA_CIRC_ALVO_HI;
+  var sobredosado=caCircuito<CA_CIRC_ALVO_LO-1e-9;
+  return {citratoDose:citratoDose,qb:qb,caBasal:caBasal,caReposicao:caReposicao,quela:quela,caCircuito:caCircuito,
+    qbLh:qbLh,cargaCitrato:cargaCitrato,anticoagulado:anticoagulado,subdosado:subdosado,sobredosado:sobredosado}; }
+function acumuloCitrato(inp){ inp=inp||{};
+  var funcaoHepatica=clampv(inp.funcaoHepatica!==undefined?inp.funcaoHepatica:1.0,0,1);
+  var cargaCitrato=clampv(inp.cargaCitrato!==undefined?inp.cargaCitrato:18,0,120);
+  var caReposicao=clampv(inp.caReposicao!==undefined?inp.caReposicao:1.7,0,6);
+  var caSistBasal=clampv(inp.caSistBasal!==undefined?inp.caSistBasal:1.20,0.5,1.6);
+  var clearanceRel=clampv(0.08+0.92*funcaoHepatica,0.05,1);
+  var citratoNaoDepurado=cargaCitrato*(1-clearanceRel);
+  var citratoSerico=clampv(0.2+0.06*citratoNaoDepurado,0.1,2.5);
+  var caIonizado=clampv(caSistBasal+0.10*(caReposicao-1.7)-0.32*(citratoSerico-0.2),0.5,1.6);
+  var caLigadoCitrato=0.55*citratoSerico;
+  var caTotal=clampv(caIonizado+caLigadoCitrato+0.9,1.0,4.5);
+  var gap=clampv(caTotal/Math.max(caIonizado,0.05),1.0,12);
+  var alarmeAcumulo=gap>GAP_ALARME;
+  return {funcaoHepatica:funcaoHepatica,cargaCitrato:cargaCitrato,caReposicao:caReposicao,clearanceRel:clearanceRel,
+    citratoNaoDepurado:citratoNaoDepurado,citratoSerico:citratoSerico,caIonizado:caIonizado,caLigadoCitrato:caLigadoCitrato,
+    caTotal:caTotal,gap:gap,alarmeAcumulo:alarmeAcumulo}; }
+function heparina(inp){ inp=inp||{};
+  var dose=clampv(inp.dose!==undefined?inp.dose:0.5,0,1);
+  var sangramentoBasal=clampv(inp.sangramentoBasal!==undefined?inp.sangramentoBasal:0.2,0,1);
+  var ttpaRatio=clampv(1.0+1.6*dose,1.0,3.0);
+  var riscoSangramento=clampv(sangramentoBasal+0.7*dose,0,1);
+  return {dose:dose,sangramentoBasal:sangramentoBasal,ttpaRatio:ttpaRatio,riscoSangramento:riscoSangramento,regional:false}; }
+function anticoagulacao(input){ var inp=input||{};
+  var sangramento=clampv(inp.sangramento!==undefined?inp.sangramento:0.2,0,1);
+  var funcaoHepatica=clampv(inp.funcaoHepatica!==undefined?inp.funcaoHepatica:1.0,0,1);
+  var citratoDose=clampv(inp.citratoDose!==undefined?inp.citratoDose:3.0,0,8);
+  var qb=clampv(inp.qb!==undefined?inp.qb:150,50,350);
+  var caBasal=clampv(inp.caBasal!==undefined?inp.caBasal:1.15,0.4,1.6);
+  var caReposicao=clampv(inp.caReposicao!==undefined?inp.caReposicao:1.7,0,6);
+  var caSistBasal=clampv(inp.caSistBasal!==undefined?inp.caSistBasal:1.20,0.5,1.6);
+  var heparinaDose=clampv(inp.heparinaDose!==undefined?inp.heparinaDose:0.5,0,1);
+  var cit=citrato({citratoDose:citratoDose,qb:qb,caBasal:caBasal,caReposicao:caReposicao});
+  var acc=acumuloCitrato({funcaoHepatica:funcaoHepatica,cargaCitrato:cit.cargaCitrato,caReposicao:caReposicao,caSistBasal:caSistBasal});
+  var hep=heparina({dose:heparinaDose,sangramentoBasal:sangramento});
+  var figadoRuim=funcaoHepatica<0.4, modalidade, motivo;
+  if(sangramento>=0.4&&!figadoRuim){ modalidade='citrato'; motivo='paciente sangra e o fígado depura o citrato → regional, não anticoagula o doente'; }
+  else if(sangramento>=0.4&&figadoRuim){ modalidade='heparina'; motivo='sangra MAS fígado ruim contraindica citrato (acúmulo) → heparina/sem anticoag com cautela'; }
+  else { modalidade='heparina'; motivo='baixo risco de sangrar → heparina sistêmica, mais simples'; }
+  var citratoContraindicado=figadoRuim||acc.alarmeAcumulo;
+  var citratoSeguro=(modalidade==='citrato')&&!citratoContraindicado;
+  var riscoSangramentoResultante=(modalidade==='citrato')?clampv(sangramento,0,1):hep.riscoSangramento;
+  var caCircuito=cit.caCircuito, caSistemico=acc.caIonizado, gap=acc.gap, alarmeAcumulo=acc.alarmeAcumulo;
+  var circuitoProtegido=(modalidade==='citrato')?(cit.anticoagulado&&!alarmeAcumulo):(hep.ttpaRatio>=1.8);
+  return {sangramento:sangramento,funcaoHepatica:funcaoHepatica,citratoDose:citratoDose,qb:qb,caBasal:caBasal,
+    caReposicao:caReposicao,caSistBasal:caSistBasal,heparinaDose:heparinaDose,modalidade:modalidade,motivo:motivo,
+    figadoRuim:figadoRuim,citratoContraindicado:citratoContraindicado,citratoSeguro:citratoSeguro,quela:cit.quela,
+    cargaCitrato:cit.cargaCitrato,citratoSubdosado:cit.subdosado,citratoSobredosado:cit.sobredosado,citratoSerico:acc.citratoSerico,
+    caLigadoCitrato:acc.caLigadoCitrato,caTotal:acc.caTotal,ttpaRatio:hep.ttpaRatio,caCircuito:caCircuito,caSistemico:caSistemico,
+    gap:gap,alarmeAcumulo:alarmeAcumulo,riscoSangramento:riscoSangramentoResultante,circuitoProtegido:circuitoProtegido}; }
+function caLayout(state,W,H){ state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=54,padR=18,padT=20,padB=40,baseY=H-padB,plotW=W-padL-padR,plotH=baseY-padT,base={}; for(var kk in state) base[kk]=state[kk];
+  var r=anticoagulacao(base), caMax=1.6;
+  function yCa(ca){ return baseY-clampv(ca,0,caMax)/caMax*plotH; }
+  var stations=[{nome:'paciente',ca:r.caBasal,x:padL+plotW*0.12},{nome:'pós-citrato',ca:r.caCircuito,x:padL+plotW*0.50},{nome:'retorno',ca:r.caSistemico,x:padL+plotW*0.88}];
+  for(var s=0;s<stations.length;s++){ stations[s].y=yCa(stations[s].ca); }
+  var bandHi=yCa(CA_CIRC_ALVO_HI), bandLo=yCa(CA_CIRC_ALVO_LO);
+  var N=48,gapMax=6,pts=[];
+  for(var i=0;i<=N;i++){ var fh=i/N; var stm={}; for(var z in base) stm[z]=base[z]; stm.funcaoHepatica=fh;
+    var rg=anticoagulacao(stm); pts.push({fh:fh,gap:rg.gap,x:padL+(i/N)*plotW,y:baseY-clampv(rg.gap,0,gapMax)/gapMax*plotH}); }
+  var alarmY=baseY-clampv(GAP_ALARME,0,gapMax)/gapMax*plotH;
+  var curX=padL+clampv(r.funcaoHepatica,0,1)*plotW, curY=baseY-clampv(r.gap,0,gapMax)/gapMax*plotH;
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,plotW:plotW,plotH:plotH,caMax:caMax,gapMax:gapMax,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},stations:stations,bandHi:bandHi,bandLo:bandLo,N:N,pts:pts,alarmY:alarmY,
+    current:{x:curX,y:curY,funcaoHepatica:r.funcaoHepatica,gap:r.gap,modalidade:r.modalidade,alarme:r.alarmeAcumulo}}; }
+window.anticoagulacao=anticoagulacao; window.caLayout=caLayout; window.citrato=citrato; window.acumuloCitrato=acumuloCitrato; window.heparina=heparina;
+window.MODEL={anticoagulacao:anticoagulacao,caLayout:caLayout,citrato:citrato,acumuloCitrato:acumuloCitrato,heparina:heparina,clampv:clampv,CA_CIRC_ALVO_LO:CA_CIRC_ALVO_LO,CA_CIRC_ALVO_HI:CA_CIRC_ALVO_HI,CA_SIST_ALVO:CA_SIST_ALVO,GAP_ALARME:GAP_ALARME};
+
+/* UI */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=(d===undefined?1:d); return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on'); b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on'); $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh(); });
+document.addEventListener('click',function(e){ var b=e.target.closest('button.act[data-rev]'); if(!b) return; var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on'); });
+
+function readInputs(){ return { sangramento:+$('in-sangramento').value, funcaoHepatica:+$('in-funcaoHepatica').value,
+  citratoDose:+$('in-citratoDose').value, qb:+$('in-qb').value, caBasal:+$('in-caBasal').value,
+  caReposicao:+$('in-caReposicao').value, caSistBasal:+$('in-caSistBasal').value, heparinaDose:+$('in-heparinaDose').value }; }
+function refresh(){ var inp=readInputs();
+  $('lbl-sangramento').textContent=fmt(inp.sangramento,2); $('lbl-funcaoHepatica').textContent=fmt(inp.funcaoHepatica,2);
+  $('lbl-citratoDose').textContent=fmt(inp.citratoDose,1); $('lbl-qb').textContent=fmt(inp.qb,0);
+  $('lbl-caBasal').textContent=fmt(inp.caBasal,2); $('lbl-caReposicao').textContent=fmt(inp.caReposicao,1);
+  $('lbl-caSistBasal').textContent=fmt(inp.caSistBasal,2); $('lbl-heparinaDose').textContent=fmt(inp.heparinaDose,2);
+  var r=anticoagulacao(inp);
+  $('out-modalidade').textContent=(r.modalidade==='citrato'?'citrato regional':'heparina sistêmica');
+  $('out-cacirc').textContent=fmt(r.caCircuito,2)+' mmol/L'+(r.citratoSubdosado?' (alto · subdose)':(r.citratoSobredosado?' (muito baixo)':' ✓'));
+  $('out-casist').textContent=fmt(r.caSistemico,2)+' mmol/L'+((r.caSistemico>=1.0&&r.caSistemico<=1.3)?' ✓':' ⚠');
+  $('out-gap').textContent=fmt(r.gap,2)+(r.alarmeAcumulo?' ⚠ acúmulo':' ✓');
+  $('out-carga').textContent=fmt(r.cargaCitrato,1)+' mmol/h · TTPa '+fmt(r.ttpaRatio,2)+'×';
+  $('out-sangra').textContent=fmt(r.riscoSangramento,2)+(r.modalidade==='citrato'?' (≈ basal)':' (heparina)');
+  verdict(r); drawCa(inp); pearl(r,inp); }
+function verdict(r){ var v=$('veredito'), cls='b-good', msg;
+  if(r.alarmeAcumulo){ cls='b-bad'; msg='ALARME de acúmulo de citrato — gap Ca total/ionizado '+fmt(r.gap,2)+' (> 2,5). O fígado não depura o citrato; ele quela Ca²⁺ sistêmico (ionizado '+fmt(r.caSistemico,2)+' mmol/L↓). Reduza/suspenda o citrato → heparina.'; }
+  else if(r.modalidade==='citrato'){ cls=(r.citratoSubdosado?'b-warn':'b-good'); msg='Citrato regional — sangramento alto, fígado depura: anticoagula SÓ o circuito (Ca²⁺ circuito '+fmt(r.caCircuito,2)+' mmol/L), o paciente volta com Ca²⁺ '+fmt(r.caSistemico,2)+'. '+(r.citratoSubdosado?'Ca²⁺ do circuito ACIMA do alvo (0,25–0,35) → suba o citrato.':'Na janela anticoagulante.'); }
+  else if(r.figadoRuim){ cls='b-warn'; msg='Heparina (cautela) — o paciente sangra, mas o fígado ruim CONTRAINDICA o citrato (acúmulo). Heparina sistêmica ou sem anticoagulação, monitorando o sangramento.'; }
+  else { cls='b-good'; msg='Heparina sistêmica — baixo risco de sangrar: a opção mais simples (TTPa '+fmt(r.ttpaRatio,2)+'×), sem vigiar dois cálcios. O circuito '+(r.circuitoProtegido?'está protegido.':'precisa de mais dose.'); }
+  v.className='banner '+cls; v.textContent=msg; }
+function pearl(r,inp){ var p=$('lab-pearl'), ip=$('instr-pearl'), t;
+  if(r.alarmeAcumulo) t='PÉROLA (o gap é a pista): fígado ruim → citrato acumula → Ca TOTAL↑ mas IONIZADO↓ (gap '+fmt(r.gap,2)+'). O número total mente; trate o acúmulo (corte o citrato), não o total (M29).';
+  else if(r.modalidade==='citrato') t='PÉROLA (anticoagulação regional): o citrato quela o Ca²⁺ SÓ no circuito (Ca²⁺ '+fmt(r.caCircuito,2)+' mmol/L) e repõe-se cálcio no retorno (Ca²⁺ '+fmt(r.caSistemico,2)+') — o paciente NÃO é anticoagulado.';
+  else if(r.figadoRuim&&inp.sangramento>=0.4) t='PÉROLA (mecanismo > reflexo): o paciente sangra, mas o fígado ruim contraindica o citrato pelo acúmulo. A escolha sai de DOIS eixos: sangramento E função hepática.';
+  else t='PÉROLA (sistêmica × regional): a heparina anticoagula o paciente inteiro (TTPa '+fmt(r.ttpaRatio,2)+'×) — simples, mas sangra. Quem sangra prefere o citrato regional.';
+  p.textContent=t; ip.textContent=t; }
+function drawCa(state){ var c=$('ca-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
+  var L=caLayout(state,c.width,c.height); ctx.clearRect(0,0,L.W,L.H);
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('Ca²⁺ (mmol/L) ↑ · gap →',8,L.padT-6);
+  /* faixa anticoagulante alvo (Ca circuito 0,25–0,35) */
+  ctx.fillStyle='rgba(232,161,58,0.14)'; ctx.fillRect(L.padL, Math.min(L.bandHi,L.bandLo), L.plotW, Math.abs(L.bandLo-L.bandHi));
+  ctx.fillStyle='#e8a13a'; ctx.fillText('faixa anticoagulante (Ca circuito)',L.padL+8,Math.min(L.bandHi,L.bandLo)-4);
+  /* barras das estações do circuito */
+  var bw=44;
+  for(var i=0;i<L.stations.length;i++){ var st=L.stations[i];
+    var inWin=(st.nome==='pós-citrato'); var col=inWin?'#e8a13a':'#39c08a';
+    ctx.fillStyle=col; ctx.globalAlpha=0.5; ctx.fillRect(st.x-bw/2,st.y,bw,L.baseY-st.y); ctx.globalAlpha=1;
+    ctx.strokeStyle=col; ctx.strokeRect(st.x-bw/2,st.y,bw,L.baseY-st.y);
+    ctx.fillStyle='#9fb1c0'; ctx.fillText(st.nome,st.x-bw/2-2,L.baseY+16);
+    ctx.fillStyle='#e7eef4'; ctx.fillText(fmt(st.ca,2),st.x-12,st.y-6); }
+  /* curva gap × função hepática */
+  ctx.strokeStyle='#39c0c8'; ctx.lineWidth=2; ctx.beginPath();
+  for(var j=0;j<L.pts.length;j++){ var p=L.pts[j]; if(j===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); } ctx.stroke();
+  ctx.fillStyle='#39c0c8'; ctx.fillText('gap × função hepática (esq. = fígado ruim)',L.padL+L.plotW-300,L.padT+12);
+  /* linha de alarme do gap */
+  ctx.strokeStyle='#e0556b'; ctx.setLineDash([5,4]); ctx.beginPath(); ctx.moveTo(L.padL,L.alarmY); ctx.lineTo(L.padL+L.plotW,L.alarmY); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#e0556b'; ctx.fillText('alarme gap 2,5',L.padL+L.plotW-110,L.alarmY-4);
+  /* marcador do paciente atual na curva gap */
+  var cu=L.current, mc=cu.alarme?'#e0556b':'#52c08a';
+  ctx.fillStyle=mc; ctx.fillRect(cu.x-4,cu.y-4,8,8);
+  ctx.fillStyle='#e7eef4'; ctx.fillText((cu.modalidade==='citrato'?'citrato':'heparina')+(cu.alarme?' · acúmulo':''),Math.min(cu.x+8,L.W-160),Math.max(cu.y-6,L.padT+12)); }
+['in-sangramento','in-funcaoHepatica','in-citratoDose','in-qb','in-caBasal','in-caReposicao','in-caSistBasal','in-heparinaDose'].forEach(function(id){ $(id).addEventListener('input',refresh); });
+
+var PRESETS={
+  padrao:{sangramento:0.7,funcaoHepatica:1.0,citratoDose:2.0,qb:150,caBasal:1.15,caReposicao:1.7,caSistBasal:1.2,heparinaDose:0.5},
+  acumulo:{sangramento:0.7,funcaoHepatica:0.1,citratoDose:4.0,qb:220,caBasal:1.1,caReposicao:1.7,caSistBasal:1.15,heparinaDose:0.5},
+  heparina:{sangramento:0.1,funcaoHepatica:1.0,citratoDose:2.0,qb:200,caBasal:1.15,caReposicao:1.7,caSistBasal:1.2,heparinaDose:0.7},
+  sangra:{sangramento:0.9,funcaoHepatica:0.9,citratoDose:2.0,qb:150,caBasal:1.15,caReposicao:1.7,caSistBasal:1.2,heparinaDose:0.5},
+  subdose:{sangramento:0.7,funcaoHepatica:1.0,citratoDose:0.8,qb:150,caBasal:1.15,caReposicao:1.7,caSistBasal:1.2,heparinaDose:0.5}
+};
+function applyPreset(p){ var d=PRESETS[p]; if(!d) return;
+  $('in-sangramento').value=d.sangramento; $('in-funcaoHepatica').value=d.funcaoHepatica; $('in-citratoDose').value=d.citratoDose;
+  $('in-qb').value=d.qb; $('in-caBasal').value=d.caBasal; $('in-caReposicao').value=d.caReposicao;
+  $('in-caSistBasal').value=d.caSistBasal; $('in-heparinaDose').value=d.heparinaDose; refresh(); }
+document.querySelector('.presets').addEventListener('click',function(e){ var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset')); });
+
+/* ILUSTRAÇÕES computadas + helper raster */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+function circuitoMini(state,titulo){ var W=300,H=170,L=caLayout(state,W,H),s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<rect x="'+L.padL+'" y="'+f1(Math.min(L.bandHi,L.bandLo))+'" width="'+f1(L.plotW)+'" height="'+f1(Math.abs(L.bandLo-L.bandHi))+'" fill="#e8a13a" fill-opacity="0.16"/>';
+  for(var i=0;i<L.stations.length;i++){ var st=L.stations[i], col=(st.nome==='pós-citrato')?'#e8a13a':'#39c08a';
+    s+='<rect x="'+f1(st.x-16)+'" y="'+f1(st.y)+'" width="32" height="'+f1(L.baseY-st.y)+'" fill="'+col+'" fill-opacity="0.5" stroke="'+col+'"/>';
+    s+='<text x="'+f1(st.x)+'" y="'+f1(st.y-3)+'" fill="#e7eef4" font-size="9" text-anchor="middle">'+fmt(st.ca,2)+'</text>'; }
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'Ca²⁺ no circuito')+'</text>';
+  s+='<text x="'+(L.padL+4)+'" y="'+(L.baseY+12)+'" fill="#9fb1c0" font-size="8">pac · circuito · retorno</text>';
+  return svgEl(W,H,s); }
+function gapMini(state,titulo){ var W=300,H=170,L=caLayout(state,W,H),s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  var d=''; for(var i=0;i<L.pts.length;i++){ d+=(i===0?'M':'L')+f1(L.pts[i].x)+' '+f1(L.pts[i].y)+' '; }
+  s+='<path d="'+d+'" fill="none" stroke="#39c0c8" stroke-width="2"/>';
+  s+='<line x1="'+L.padL+'" y1="'+f1(L.alarmY)+'" x2="'+f1(L.padL+L.plotW)+'" y2="'+f1(L.alarmY)+'" stroke="#e0556b" stroke-dasharray="4 3"/>';
+  var cu=L.current, mc=cu.alarme?'#e0556b':'#52c08a';
+  s+='<rect x="'+f1(cu.x-3)+'" y="'+f1(cu.y-3)+'" width="6" height="6" fill="'+mc+'"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'gap × função hepática')+'</text>';
+  s+='<text x="'+(L.padL+4)+'" y="'+(L.padT+10)+'" fill="#e0556b" font-size="8">alarme 2,5</text>';
+  s+='<text x="'+(W-8)+'" y="'+(L.baseY+12)+'" fill="#9fb1c0" font-size="8" text-anchor="end">fígado normal →</text>';
+  return svgEl(W,H,s); }
+function escolhaIcon(r,titulo){ var W=300,H=170,s='';
+  var cit=(r.modalidade==='citrato'), col=cit?'#52c08a':'#e0556b';
+  s+='<rect x="70" y="50" width="160" height="70" rx="10" fill="'+col+'" fill-opacity="0.18" stroke="'+col+'"/>';
+  s+='<text x="150" y="84" fill="'+col+'" font-size="18" text-anchor="middle" font-weight="bold">'+(cit?'CITRATO':'HEPARINA')+'</text>';
+  s+='<text x="150" y="104" fill="#9fb1c0" font-size="10" text-anchor="middle">'+(cit?'regional':'sistêmica')+(r.alarmeAcumulo?' · ACÚMULO':'')+'</text>';
+  s+='<text x="'+(W/2)+'" y="20" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'anticoagulação')+'</text>';
+  s+='<text x="150" y="146" fill="#e7eef4" font-size="9" text-anchor="middle">Ca circ '+fmt(r.caCircuito,2)+' · sist '+fmt(r.caSistemico,2)+' · gap '+fmt(r.gap,2)+'</text>';
+  return svgEl(W,H,s); }
+function imgFig(slug,alt){ return '<img src="assets/m29/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+/* TUTOR */
+function R0(extra){ var o={}; if(extra) for(var k in extra) o[k]=extra[k]; return anticoagulacao(o); }
+var TUTOR_ILUSTRADO=[
+  {q:'Por que o citrato anticoagula SÓ o circuito?',o:['porque diminui a pressão','porque quela o Ca²⁺ (cofator) só dentro do circuito','porque dilui o sangue'],c:1,e:'O Ca²⁺ é cofator da cascata; o citrato o quela no circuito e repõe-se cálcio no retorno.',fig:function(){return circuitoMini({sangramento:0.7,funcaoHepatica:1,citratoDose:2,qb:150},'paciente · pós-citrato · retorno');}},
+  {q:'O alvo do Ca²⁺ no CIRCUITO (pós-filtro) é…',o:['1,1–1,3 mmol/L','0,25–0,35 mmol/L','0 mmol/L'],c:1,e:'Baixo (0,25–0,35) para anticoagular. O sistêmico é que fica normal (1,1–1,3).',fig:function(){return circuitoMini({sangramento:0.7,funcaoHepatica:1,citratoDose:2,qb:150},'faixa anticoagulante');}},
+  {q:'Paciente que SANGRA (CIVD). A anticoagulação é…',o:['heparina sistêmica','citrato regional','varfarina'],c:1,e:'O citrato não anticoagula o paciente → seguro para quem sangra.',fig:function(){return escolhaIcon(R0({sangramento:0.9,funcaoHepatica:0.9,citratoDose:2}),'sangra → citrato');}},
+  {q:'O Ca²⁺ do circuito mede 0,5 mmol/L e o filtro coagula. Conduta?',o:['subir o citrato','subir o cálcio','parar tudo'],c:0,e:'Ca²⁺ do circuito ACIMA do alvo (0,25–0,35) → ainda coagula. Sobe-se o citrato.',fig:function(){return circuitoMini({sangramento:0.7,funcaoHepatica:1,citratoDose:0.8,qb:150},'subdosado');}},
+  {q:'Fígado ruim, gap Ca total/ionizado 2,9. O que é?',o:['hipercalcemia','acúmulo de citrato','erro de exame'],c:1,e:'O fígado não depura o citrato → acumula → quela Ca sistêmico → gap↑.',fig:function(){return gapMini({sangramento:0.7,funcaoHepatica:0.1,citratoDose:4,qb:220},'fígado ruim → gap↑');}},
+  {q:'No acúmulo de citrato, o Ca TOTAL alto significa…',o:['hipercalcemia, reduza cálcio','engano: o IONIZADO está baixo','nada'],c:1,e:'O cálcio preso ao citrato conta no total; o ionizado é que importa, e está baixo.',fig:function(){return gapMini({sangramento:0.7,funcaoHepatica:0.15,citratoDose:4,qb:220},'total↑ ionizado↓');}},
+  {q:'Sem risco de sangrar, a anticoagulação mais simples é…',o:['citrato','heparina','nenhuma'],c:1,e:'Heparina sistêmica: simples, sem vigiar dois cálcios. O risco de sangrar é baixo.',fig:function(){return escolhaIcon(R0({sangramento:0.1,funcaoHepatica:1,heparinaDose:0.6}),'não sangra → heparina');}},
+  {q:'No gráfico gap × função hepática, à ESQUERDA (fígado ruim)…',o:['o gap cai','o gap sobe e cruza o alarme','nada muda'],c:1,e:'Menos clearance → mais acúmulo → gap sobe acima de 2,5.',fig:function(){return gapMini({sangramento:0.7,funcaoHepatica:0.2,citratoDose:4,qb:200},'esq = fígado ruim');}},
+  {q:'Na figura da cascata, o citrato age tirando…',o:['o Fator X','o cofator Ca²⁺','a fibrina'],c:1,e:'Tira o COFATOR (Ca²⁺), não um fator: sem Ca²⁺ a cascata não dispara.',fig:function(){return imgFig('cascata-coagulacao-ca.svg','cascata e o Ca²⁺');}},
+  {q:'Na figura citrato × heparina, a escolha sai de…',o:['o peso','sangramento × função hepática','a creatinina'],c:1,e:'Dois eixos: quem sangra → citrato; fígado ruim → contraindica citrato.',fig:function(){return imgFig('citrato-vs-heparina.svg','citrato versus heparina');}},
+  {q:'Na figura dos dois pontos, o ponto ① (circuito) guia…',o:['a reposição de cálcio','a dose de citrato','o Qb'],c:1,e:'① Ca²⁺ do circuito → titula o citrato (alvo baixo). ② sistêmico → titula o cálcio.',fig:function(){return imgFig('circuito-pontos-monitor.svg','dois pontos de monitorização');}},
+  {q:'Na figura do gap, a razão > 2,5 indica…',o:['boa anticoagulação','acúmulo de citrato','heparina insuficiente'],c:1,e:'Total↑ e ionizado↓ → razão > 2,5 = alarme de acúmulo.',fig:function(){return imgFig('gap-ca-total-ionizado.svg','gap total/ionizado');}}
+];
+var TUTOR_TEXTUAL=[
+  {q:'O circuito extracorpóreo, sem anticoagulação,…',o:['funciona igual','coagula e a sessão para','dilui o sangue'],c:1,e:'Sangue lento sobre superfícies estranhas dispara a coagulação; o filtro coagula.'},
+  {q:'O citrato anticoagula porque…',o:['aquece o sangue','quela o Ca²⁺ ionizado (cofator da cascata)','remove plaquetas'],c:1,e:'Sem Ca²⁺ ionizado, a cascata de coagulação não dispara — só no circuito.'},
+  {q:'A reposição de cálcio (pós-filtro) serve para…',o:['anticoagular mais','devolver o Ca²⁺ sistêmico ao normal','aumentar o Qb'],c:1,e:'O paciente volta com Ca²⁺ 1,1–1,3 mmol/L — não é anticoagulado.'},
+  {q:'No citrato, monitoram-se…',o:['um cálcio','dois cálcios (circuito e sistêmico)','nenhum'],c:1,e:'Ca²⁺ do circuito (alvo baixo, titula citrato) e sistêmico (normal, titula cálcio).'},
+  {q:'A heparina, diferente do citrato,…',o:['é regional','anticoagula o paciente inteiro','não usa anticoagulação'],c:1,e:'Sistêmica: TTPa↑ no corpo todo; o risco de sangramento sobe com a dose.'},
+  {q:'O paciente que sangra prefere…',o:['heparina','citrato regional','dose dupla de heparina'],c:1,e:'O citrato não anticoagula o paciente → risco de sangramento ≈ basal.'},
+  {q:'O acúmulo de citrato ocorre quando…',o:['o Qb é baixo','o clearance hepático cai (fígado ruim/choque)','a dose é baixa'],c:1,e:'O fígado metaboliza o citrato; se não depura, ele acumula e quela Ca sistêmico.'},
+  {q:'O sinal laboratorial do acúmulo é…',o:['Ca total baixo','razão Ca total/ionizado > 2,5','potássio alto'],c:1,e:'Total↑ (citrato-Ca conta) e ionizado↓ → gap > 2,5 = alarme.'},
+  {q:'No acúmulo, o que tratar é…',o:['o Ca total alto, reduzindo cálcio','o acúmulo, cortando/reduzindo o citrato','a heparina'],c:1,e:'O ionizado é que está baixo; reduzir cálcio pioraria. Corta-se o citrato.'},
+  {q:'O fígado ruim, em relação ao citrato,…',o:['favorece o citrato','contraindica o citrato (acúmulo)','não importa'],c:1,e:'Sem clearance hepático, o citrato acumula → migra-se para heparina/sem anticoag.'},
+  {q:'A carga de citrato ao paciente cresce com…',o:['a reposição de cálcio','a dose de citrato e o Qb','a função hepática'],c:1,e:'Carga (mmol/h) = dose (mmol/L) × Qb (L/h). Mais sangue/dose, mais citrato.'},
+  {q:'A anticoagulação serve, no fim, à…',o:['velocidade da bomba','homeostasia: circuito patente para substituir funções sem sangrar/desequilibrar','cor do efluente'],c:1,e:'Mantém o filtro funcionando para a máquina restaurar o meio interno com segurança.'}
+];
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL; window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+var BANKS={ilustrada:TUTOR_ILUSTRADO,textual:TUTOR_TEXTUAL}, curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+function renderTutor(){ var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():''; $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false; $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){ if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button'); btns[item.c].classList.add('ok'); if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block'; fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e; $('tutor-score').textContent=tScore; $('tutor-total').textContent=tTotal; });
+    box.appendChild(b); }); }
+$('banktabs').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor(); });
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+$('draw-cascata').innerHTML = escolhaIcon(anticoagulacao({sangramento:0.7,funcaoHepatica:1,citratoDose:2}),'sangra + fígado bom → citrato');
+$('draw-regional').innerHTML = circuitoMini({sangramento:0.7,funcaoHepatica:1,citratoDose:2,qb:150},'Ca²⁺: circuito baixo, retorno normal');
+$('draw-heparina').innerHTML = escolhaIcon(anticoagulacao({sangramento:0.1,funcaoHepatica:1,heparinaDose:0.6}),'não sangra → heparina');
+$('draw-gap').innerHTML = gapMini({sangramento:0.7,funcaoHepatica:0.2,citratoDose:4,qb:220},'fígado ruim → gap↑ (acúmulo)');
+$('draw-homeostase').innerHTML = circuitoMini({sangramento:0.7,funcaoHepatica:1,citratoDose:2,qb:150},'homeostasia: circuito protegido, paciente intacto');
+$('fig-caso').innerHTML = circuitoMini({sangramento:0.7,funcaoHepatica:1,citratoDose:2,qb:150},'o circuito do caso') + escolhaIcon(anticoagulacao({sangramento:0.9,funcaoHepatica:0.9,citratoDose:2}),'conduta');
+
+refresh(); renderTutor();
+</script>
+</body>
+</html>

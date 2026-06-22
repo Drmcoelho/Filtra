@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 300" font-family="system-ui,Segoe UI,Arial" role="img">
+  <rect width="520" height="300" fill="#0a1016"/>
+  <text x="260" y="22" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Tolerância hemodinâmica — UF &lt; refilling</text>
+  <!-- plasma compartment -->
+  <rect x="80" y="60" width="150" height="170" rx="10" fill="#141b22" stroke="#3aa0c8" stroke-width="2"/>
+  <text x="155" y="80" text-anchor="middle" font-size="10" fill="#3aa0c8">plasma</text>
+  <!-- interstitium -->
+  <rect x="290" y="60" width="150" height="170" rx="10" fill="#141b22" stroke="#9fb1c0" stroke-width="2"/>
+  <text x="365" y="80" text-anchor="middle" font-size="10" fill="#9fb1c0">interstício</text>
+  <!-- refilling arrow -->
+  <defs><marker id="m1" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 Z" fill="#52c08a"/></marker></defs>
+  <path d="M285 150 H235" stroke="#52c08a" stroke-width="4" marker-end="url(#m1)"/>
+  <text x="260" y="140" text-anchor="middle" font-size="9" fill="#52c08a">refilling</text>
+  <!-- UF arrow out -->
+  <path d="M80 120 H30" stroke="#e0556b" stroke-width="4" marker-end="url(#m1)" transform="scale(1)"/>
+  <text x="50" y="110" font-size="9" fill="#e0556b">UF →</text>
+  <!-- balance -->
+  <text x="155" y="255" text-anchor="middle" font-size="11" fill="#9fb1c0">se UF lenta &lt; refilling → PAM mantida</text>
+  <text x="155" y="273" text-anchor="middle" font-size="11" fill="#52c08a">o instável TOLERA (TRRC)</text>
+  <text x="365" y="255" text-anchor="middle" font-size="11" fill="#e0556b">se UF rápida &gt; refilling →</text>
+  <text x="365" y="273" text-anchor="middle" font-size="11" fill="#e0556b">plasma colaba → hipotensão (M24)</text>
+</svg>

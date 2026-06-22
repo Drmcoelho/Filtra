@@ -1,22 +1,41 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M9</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">Sódio e volume</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">sns-raas-volume</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">SNS e RAAS na regulação de volume</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" font-family="system-ui,Segoe UI,Arial,sans-serif">
+  <rect width="640" height="360" fill="#0f1620"/>
+  <text x="320" y="26" text-anchor="middle" font-size="15" font-weight="700" fill="#e7eef4">SNS + RAAS — os efetores que RETÊM Na quando o VCE cai</text>
+  <text x="320" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">o eixo antinatriurético: defende o volume efetivo às custas de mais Na/água</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <!-- gatilho -->
+  <rect x="220" y="62" width="200" height="46" rx="8" fill="#1a1410" stroke="#e0556b" stroke-width="2"/>
+  <text x="320" y="84" text-anchor="middle" font-size="12" font-weight="700" fill="#e0556b">VCE ↓ (volume efetivo baixo)</text>
+  <text x="320" y="100" text-anchor="middle" font-size="9.5" fill="#9fb1c0">barorreceptor descarregado</text>
+
+  <!-- dois braços -->
+  <line x1="270" y1="108" x2="150" y2="142" stroke="#e8a13a" stroke-width="2" marker-end="url(#a)"/>
+  <line x1="370" y1="108" x2="490" y2="142" stroke="#39c0c8" stroke-width="2" marker-end="url(#b)"/>
+
+  <rect x="34" y="146" width="240" height="100" rx="8" fill="#141b22" stroke="#e8a13a"/>
+  <text x="154" y="168" text-anchor="middle" font-size="12" font-weight="700" fill="#e8a13a">① SNS (simpático)</text>
+  <text x="50" y="190" font-size="10" fill="#cfdbe6">• vasoconstrição (mantém PA)</text>
+  <text x="50" y="206" font-size="10" fill="#cfdbe6">• β1 na JGA → libera renina</text>
+  <text x="50" y="222" font-size="10" fill="#cfdbe6">• reabsorção proximal de Na</text>
+  <text x="50" y="238" font-size="9.5" fill="#9fb1c0">resposta rápida (segundos)</text>
+
+  <rect x="366" y="146" width="240" height="100" rx="8" fill="#141b22" stroke="#39c0c8"/>
+  <text x="486" y="168" text-anchor="middle" font-size="12" font-weight="700" fill="#39c0c8">② RAAS</text>
+  <text x="382" y="190" font-size="10" fill="#cfdbe6">renina → Ang I →(ECA)→ Ang II</text>
+  <text x="382" y="206" font-size="10" fill="#cfdbe6">• Ang II: constrição eferente, sede</text>
+  <text x="382" y="222" font-size="10" fill="#cfdbe6">• aldosterona → ENaC reabsorve Na</text>
+  <text x="382" y="238" font-size="9.5" fill="#9fb1c0">resposta sustentada (M14)</text>
+
+  <!-- convergência -->
+  <line x1="154" y1="246" x2="290" y2="282" stroke="#e8a13a" stroke-width="2" marker-end="url(#a)"/>
+  <line x1="486" y1="246" x2="350" y2="282" stroke="#39c0c8" stroke-width="2" marker-end="url(#b)"/>
+  <rect x="180" y="286" width="280" height="46" rx="8" fill="#101d22" stroke="#52c08a" stroke-width="2"/>
+  <text x="320" y="308" text-anchor="middle" font-size="12" font-weight="700" fill="#52c08a">RETENÇÃO de Na → FE_Na ↓ · U_Na &lt; 20</text>
+  <text x="320" y="324" text-anchor="middle" font-size="9.5" fill="#cfdbe6">o rim fica "ávido" — restaura o VCE retendo sal e água</text>
+
+  <text x="320" y="352" text-anchor="middle" font-size="9" fill="#5b6b78">FILTRA · M9 — SNS (rápido) e RAAS (sustentado) somam-se para defender o volume efetivo</text>
+  <defs>
+    <marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#e8a13a"/></marker>
+    <marker id="b" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#39c0c8"/></marker>
+  </defs>
 </svg>

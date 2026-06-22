@@ -1,22 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dce8ff" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#3366cc" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#3366cc"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M9</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#3366cc" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">diagrama</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a3a6e" opacity="0.7">Sódio e volume</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a3a6e">volume-circulante-efetivo</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#3366cc" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#3366cc">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a3a6e">Volume circulante efetivo</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" font-family="system-ui,Segoe UI,Arial,sans-serif">
+  <rect width="640" height="360" fill="#0f1620"/>
+  <text x="320" y="26" text-anchor="middle" font-size="15" font-weight="700" fill="#e7eef4">Volume circulante EFETIVO ≠ volume total</text>
+  <text x="320" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">o rim só "sente" a fração que enche e perfunde o leito arterial</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a3a6e" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <rect x="34" y="64" width="572" height="116" rx="10" fill="#101d22" stroke="#283642"/>
+  <text x="46" y="84" font-size="12" font-weight="700" fill="#9fb1c0">ÁGUA / Na CORPORAL TOTAL — toda a ECF</text>
+  <rect x="46" y="94" width="176" height="76" rx="8" fill="#102a2c" stroke="#39c0c8" stroke-width="2"/>
+  <text x="134" y="122" text-anchor="middle" font-size="13" font-weight="700" fill="#39c0c8">① VCE</text>
+  <text x="134" y="140" text-anchor="middle" font-size="10" fill="#cfdbe6">leito arterial</text>
+  <text x="134" y="154" text-anchor="middle" font-size="10" fill="#cfdbe6">que perfunde tecidos</text>
+  <rect x="234" y="94" width="360" height="76" rx="8" fill="#1a1410" stroke="#e8a13a" stroke-dasharray="5 4"/>
+  <text x="414" y="120" text-anchor="middle" font-size="12" font-weight="700" fill="#e8a13a">② volume NÃO efetivo</text>
+  <text x="414" y="138" text-anchor="middle" font-size="10" fill="#cfdbe6">interstício · edema · ascite · pool venoso esplâncnico</text>
+  <text x="414" y="154" text-anchor="middle" font-size="10" fill="#cfdbe6">presente, porém o barorreceptor NÃO o conta</text>
+
+  <circle cx="134" cy="238" r="30" fill="#102a2c" stroke="#39c0c8" stroke-width="2"/>
+  <text x="134" y="234" text-anchor="middle" font-size="10" font-weight="700" fill="#39c0c8">③ sensor</text>
+  <text x="134" y="248" text-anchor="middle" font-size="9" fill="#9fb1c0">lê só o VCE</text>
+  <line x1="134" y1="170" x2="134" y2="206" stroke="#39c0c8" stroke-width="2" marker-end="url(#a)"/>
+
+  <rect x="206" y="212" width="388" height="60" rx="8" fill="#141b22" stroke="#e0556b"/>
+  <text x="222" y="234" font-size="12" font-weight="700" fill="#e0556b">underfilling</text>
+  <text x="222" y="252" font-size="10.5" fill="#cfdbe6">ICC · cirrose · síndrome nefrótica: o TOTAL está ALTO,</text>
+  <text x="222" y="268" font-size="10.5" fill="#cfdbe6">mas o VCE está BAIXO → o rim retém Na como se faltasse volume</text>
+
+  <text x="320" y="312" text-anchor="middle" font-size="11" fill="#52c08a">homeostasia: defender o ① mesmo que o ② transborde</text>
+  <text x="320" y="356" text-anchor="middle" font-size="9" fill="#5b6b78">FILTRA · M9 — o rim defende o VOLUME EFETIVO, não a soma total da água</text>
+  <defs>
+    <marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#39c0c8"/></marker>
+  </defs>
 </svg>

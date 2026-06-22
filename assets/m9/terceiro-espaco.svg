@@ -1,22 +1,45 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M9</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">Sódio e volume</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">terceiro-espaco</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">Terceiro espaço</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" font-family="system-ui,Segoe UI,Arial,sans-serif">
+  <rect width="640" height="360" fill="#0f1620"/>
+  <text x="320" y="26" text-anchor="middle" font-size="15" font-weight="700" fill="#e7eef4">O terceiro espaço — líquido preso fora do leito útil</text>
+  <text x="320" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">o volume existe no corpo, mas NÃO perfunde: o VCE cai mesmo com edema</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <!-- 1o espaço -->
+  <rect x="40" y="78" width="160" height="92" rx="10" fill="#102a2c" stroke="#39c0c8" stroke-width="2"/>
+  <text x="120" y="100" text-anchor="middle" font-size="12" font-weight="700" fill="#39c0c8">1º espaço</text>
+  <text x="120" y="118" text-anchor="middle" font-size="10" fill="#cfdbe6">INTRAVASCULAR</text>
+  <text x="120" y="134" text-anchor="middle" font-size="9.5" fill="#9fb1c0">plasma — é o VCE</text>
+  <text x="120" y="152" text-anchor="middle" font-size="9" fill="#9fb1c0">o que perfunde</text>
+
+  <!-- 2o espaço -->
+  <rect x="240" y="78" width="160" height="92" rx="10" fill="#15252b" stroke="#52c08a"/>
+  <text x="320" y="100" text-anchor="middle" font-size="12" font-weight="700" fill="#52c08a">2º espaço</text>
+  <text x="320" y="118" text-anchor="middle" font-size="10" fill="#cfdbe6">INTERSTÍCIO normal</text>
+  <text x="320" y="134" text-anchor="middle" font-size="9.5" fill="#9fb1c0">em troca com o plasma</text>
+  <text x="320" y="152" text-anchor="middle" font-size="9" fill="#9fb1c0">reabsorvível</text>
+
+  <!-- 3o espaço -->
+  <rect x="440" y="78" width="160" height="92" rx="10" fill="#1a1410" stroke="#e0556b" stroke-width="2" stroke-dasharray="5 4"/>
+  <text x="520" y="100" text-anchor="middle" font-size="12" font-weight="700" fill="#e0556b">3º espaço</text>
+  <text x="520" y="118" text-anchor="middle" font-size="10" fill="#cfdbe6">SEQUESTRADO</text>
+  <text x="520" y="134" text-anchor="middle" font-size="9.5" fill="#9fb1c0">ascite · derrame · íleo</text>
+  <text x="520" y="152" text-anchor="middle" font-size="9" fill="#9fb1c0">edema · queimadura</text>
+
+  <line x1="200" y1="124" x2="238" y2="124" stroke="#52c08a" stroke-width="2" marker-end="url(#b)"/>
+  <line x1="400" y1="124" x2="438" y2="124" stroke="#e0556b" stroke-width="2" marker-end="url(#r)"/>
+  <text x="220" y="116" text-anchor="middle" font-size="9" fill="#52c08a">troca</text>
+  <text x="419" y="116" text-anchor="middle" font-size="9" fill="#e0556b">fuga</text>
+
+  <rect x="80" y="206" width="480" height="56" rx="8" fill="#141b22" stroke="#e8a13a"/>
+  <text x="320" y="228" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e8a13a">o paradoxo: hipovolemia EFETIVA com sobrecarga TOTAL</text>
+  <text x="320" y="247" text-anchor="middle" font-size="10" fill="#cfdbe6">o paciente está "encharcado" (3º espaço cheio), mas o 1º espaço (VCE) está vazio</text>
+
+  <rect x="80" y="274" width="480" height="46" rx="8" fill="#101d22" stroke="#39c0c8"/>
+  <text x="320" y="296" text-anchor="middle" font-size="10.5" fill="#cfdbe6">por isso o rim retém Na (FE_Na &lt; 1%) APESAR do edema — ele só lê o VCE baixo.</text>
+  <text x="320" y="312" text-anchor="middle" font-size="9.5" fill="#9fb1c0">tratar: corrigir a causa (oncótica, leak) — dar só volume piora o edema</text>
+
+  <text x="320" y="352" text-anchor="middle" font-size="9" fill="#5b6b78">FILTRA · M9 — o líquido do 3º espaço conta para o peso, não para a perfusão</text>
+  <defs>
+    <marker id="b" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#52c08a"/></marker>
+    <marker id="r" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#e0556b"/></marker>
+  </defs>
 </svg>

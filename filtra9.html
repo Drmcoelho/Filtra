@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M9 — Sódio e volume: o volume circulante efetivo (VCE), edema e tonicidade</title>
+<style>
+  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--warn:#e8a13a;--bad:#e0556b;--good:#52c08a;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none} section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:200px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .presets{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px} .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)} .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)} .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)} .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M9</div>
+  <h1>Sódio e volume — o rim defende o volume circulante efetivo (VCE)</h1>
+  <div class="sub">A tese deste módulo derruba o erro <i>"Na baixo = falta de sal"</i>: o sódio é <b>proxy de água/volume</b>,
+  não um número a tratar. <b>Volume</b> (conteúdo de Na na ECF) e <b>tonicidade</b> (concentração = água) são dois eixos
+  <b>ortogonais</b>. O rim não lê o volume total — lê o <b>volume circulante efetivo</b>, a fração que perfunde e é
+  sentida pelos barorreceptores. É homeostasia: defender o VCE retendo (RAAS/SNS) ou excretando (ANP/BNP) sódio.</div>
+  <nav class="hex">
+    <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
+    <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="filtra.html">&larr; índice do braço FILTRA</a>
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- CONCEITO -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — o volume efetivo, ilustrado</h3>
+      <p class="sub" style="margin-top:0"><b>O rim é o guardião do volume circulante efetivo.</b> Ele lê quanto sangue
+      realmente perfunde o leito arterial (não a soma total da água), e despacha efetores que retêm ou excretam Na para
+      defender esse volume. As Fig. 1–8 voltam no Caso, na Trilha e na Avaliação. Atribuição em <code>CREDITS.md</code>
+      (em curadoria).</p>
+
+      <h4>1. Volume efetivo ≠ volume total</h4>
+      <p class="sub">O <b>volume circulante efetivo (VCE)</b> é só a fração do líquido extracelular que enche e perfunde o
+      leito arterial — a única que os sensores conseguem ler. O resto (interstício, ascite, edema, pool venoso) existe,
+      mas o barorreceptor não o conta. Por isso, na ICC e na cirrose, o VCE pode estar <b>baixo</b> com o volume total
+      <b>alto</b> (Fig. 1). É o conceito-fio: <b>homeostasia</b> é defender o VCE.</p>
+      <div class="frow">
+        <div class="concept" id="draw-vce"></div>
+        <figure class="fviva"><img src="assets/m9/volume-circulante-efetivo.svg" alt="Volume circulante efetivo: a fração arterial sentida pelo barorreceptor versus o volume não efetivo" loading="lazy">
+          <figcaption><b>Fig. 1 · VCE ≠ volume total.</b> ① <b>VCE</b> (verde): o leito arterial que perfunde — a única
+          fatia que o ③ <b>sensor</b> lê. ② volume <b>não efetivo</b> (laranja tracejado): interstício, edema, ascite,
+          pool esplâncnico — presente, porém ignorado pelo barorreceptor. No <b>underfilling</b> (vermelho) o total está
+          alto e o VCE baixo: o rim retém Na como se faltasse volume.</figcaption></figure>
+      </div>
+
+      <h4>2. Os sensores de volume — os barorreceptores</h4>
+      <p class="sub">Quatro detetores traduzem o VCE em sinal: dois de <b>alta pressão</b> (seio carotídeo, arco aórtico)
+      e dois renais/atriais de <b>baixa pressão</b> (arteríola aferente/JGA e o estiramento dos átrios → ANP). VCE baixo
+      → barorreceptor descarregado → RAAS/SNS sobem; VCE alto → átrios estirados → ANP/BNP sobem (Fig. 2).</p>
+      <div class="frow">
+        <div class="concept" id="draw-baro"></div>
+        <figure class="fviva"><img src="assets/m9/barorreceptores.svg" alt="Os quatro sensores de volume: seio carotídeo, arco aórtico, aparelho justaglomerular e átrios" loading="lazy">
+          <figcaption><b>Fig. 2 · Os 4 sensores de volume.</b> ① seio carotídeo e ② arco aórtico (alta pressão arterial);
+          ③ aferente/JGA (perfusão + NaCl) e ④ átrios (estiramento → ANP) de baixa pressão. A leitura integrada do VCE
+          aciona o eixo antinatriurético (RAAS/SNS) quando cai, ou o natriurético (ANP/BNP) quando sobe.</figcaption></figure>
+      </div>
+
+      <h4>3. Os efetores que retêm Na — SNS + RAAS</h4>
+      <p class="sub">Quando o VCE cai, dois braços antinatriuréticos disparam: o <b>SNS</b> (rápido — vasoconstrição, β1 na
+      JGA, reabsorção proximal) e o <b>RAAS</b> (sustentado — renina→AngII→aldosterona→ENaC). O resultado é retenção ávida
+      de Na: <b>FE_Na &lt; 1%</b> e <b>U_Na &lt; 20</b> (Fig. 3, ponte M14).</p>
+      <div class="frow">
+        <div class="concept" id="draw-efetor"></div>
+        <figure class="fviva"><img src="assets/m9/sns-raas-volume.svg" alt="SNS e RAAS como efetores antinatriuréticos quando o volume efetivo cai" loading="lazy">
+          <figcaption><b>Fig. 3 · SNS + RAAS retêm Na.</b> VCE↓ → barorreceptor descarregado → ① <b>SNS</b> (resposta em
+          segundos: vasoconstrição, renina, Na proximal) e ② <b>RAAS</b> (sustentado: AngII contrai a eferente, aldosterona
+          abre o ENaC). Convergem em retenção: <b>FE_Na↓ · U_Na&lt;20</b> — o rim "ávido".</figcaption></figure>
+      </div>
+
+      <h4>4. O contrapeso — ANP/BNP</h4>
+      <p class="sub">Quando o volume <b>sobe</b>, o coração estirado libera os <b>peptídeos natriuréticos</b>: ANP (átrio) e
+      BNP (ventrículo). Eles fazem natriurese, dilatam a aferente (↑TFG), vasodilatam e <b>inibem a renina/aldosterona</b>.
+      São o freio que equilibra o acelerador do RAAS (Fig. 4). Na ICC, o BNP sobe muito — marcador de sobrecarga.</p>
+      <div class="frow">
+        <div class="concept" id="draw-anp"></div>
+        <figure class="fviva"><img src="assets/m9/peptideo-natriuretico.svg" alt="Peptídeos natriuréticos ANP e BNP como contrapeso natriurético do RAAS" loading="lazy">
+          <figcaption><b>Fig. 4 · ANP/BNP, o contrapeso.</b> ① átrio estirado (volume↑) → ② ANP/BNP↑ → ③ natriurese, ↑TFG,
+          vasodilatação e inibição de renina/aldosterona. A gangorra RAAS (retém) × ANP (excreta) define o tamanho final
+          da ECF; na ICC o BNP elevado mede o estiramento.</figcaption></figure>
+      </div>
+
+      <h4>5. O balanço de Na e o tamanho da ECF</h4>
+      <p class="sub">Em equilíbrio, a <b>excreção</b> de Na iguala a <b>ingesta</b> — o Na corporal total (e a ECF) ficam
+      fixos. Se o rim retém mais do que entra (balanço &gt; 0), a ECF expande. "Onde está o sal, está a água": o Na total
+      é o tamanho da ECF, a natremia é outra coisa (Fig. 5).</p>
+      <div class="frow">
+        <div class="concept" id="draw-balanco"></div>
+        <figure class="fviva"><img src="assets/m9/balanco-sodio-rim.svg" alt="Balanço de sódio: ingesta versus excreção renal define o tamanho da ECF" loading="lazy">
+          <figcaption><b>Fig. 5 · Balanço de Na = tamanho da ECF.</b> ① ingesta (entra) → ② o <b>rim</b> titula a ③ excreção
+          (FE_Na) conforme lê o VCE. Balanço = 0 → ECF estável; balanço &gt; 0 → retém → ECF expande → ④ <b>edema</b>. O Na
+          corporal total retido é, literalmente, o tamanho da ECF.</figcaption></figure>
+      </div>
+
+      <h4>6. A fisiopatologia do edema — Starling capilar</h4>
+      <p class="sub">O edema nasce quando, no capilar, a força de <b>saída</b> (hidrostática) vence o <b>retorno</b>
+      (oncótica). Três caminhos: ① hidrostática↑ (retenção renal de Na, ICC), ② oncótica↓ (albumina baixa — cirrose,
+      nefrótico) e ③ permeabilidade↑ (sepse). Em todos, o VCE cai e o rim retém ainda mais Na (Fig. 6).</p>
+      <div class="frow">
+        <div class="concept" id="draw-edema"></div>
+        <figure class="fviva"><img src="assets/m9/edema-fisiopatologia.svg" alt="Forças de Starling capilar e as três vias do edema: hidrostática, oncótica e permeabilidade" loading="lazy">
+          <figcaption><b>Fig. 6 · As forças de Starling e o edema.</b> No capilar, a P <b>hidrostática</b> (vermelho) empurra
+          para fora e a π <b>oncótica</b> (verde) puxa de volta. Edema quando saída &gt; retorno por ① hidrostática↑
+          (Na retido), ② oncótica↓ (albumina baixa) ou ③ permeabilidade↑ (leak). O VCE cai → retenção renal perpetua o
+          ciclo.</figcaption></figure>
+      </div>
+
+      <h4>7. O terceiro espaço e o paradoxo do underfilling</h4>
+      <p class="sub">O líquido sequestrado no <b>terceiro espaço</b> (ascite, derrame, edema, leak) pesa no corpo mas não
+      perfunde. Daí o paradoxo: <b>hipovolemia efetiva com sobrecarga total</b>. O rim, lendo só o VCE baixo, retém Na
+      (FE_Na &lt; 1%) apesar do edema — e dar só volume piora o quadro (Fig. 7).</p>
+      <div class="frow">
+        <figure class="fviva"><img src="assets/m9/terceiro-espaco.svg" alt="Os três espaços: intravascular, interstício e o terceiro espaço sequestrado" loading="lazy">
+          <figcaption><b>Fig. 7 · O terceiro espaço.</b> 1º espaço (intravascular = VCE), 2º (interstício em troca) e 3º
+          (sequestrado: ascite, derrame, íleo). O paradoxo: o paciente está "encharcado" (3º cheio) com o 1º vazio. O rim
+          retém Na apesar do edema — tratar a causa (oncótica/leak), não despejar volume.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m9/balanco-sodio-rim.svg" alt="A leitura urinária de sódio revela a percepção de volume do rim" loading="lazy">
+          <figcaption><b>Fig. 7b · A urina conta a leitura de volume (revisão da Fig. 5).</b> U_Na &lt; 20 e FE_Na &lt; 1%
+          dizem que o rim "percebe" o VCE baixo e está retendo avidamente — mesmo num paciente edemaciado. O índice urinário
+          é a janela para a percepção volêmica renal.</figcaption></figure>
+      </div>
+
+      <h4>8. Os dois eixos ortogonais — volume × tonicidade</h4>
+      <p class="sub">O ponto-chave: o <b>Na total</b> (eixo horizontal) é o tamanho da ECF; a <b>natremia/tonicidade</b>
+      (eixo vertical) é problema de <b>água</b>. Eles se movem de forma independente — o mesmo "Na 130" cabe em qualquer
+      quadrante. <b>Tratar o número Na é erro</b>: corrige-se a água (M10) e avalia-se o volume à parte (Fig. 8).</p>
+      <div class="frow">
+        <div class="concept" id="draw-orto"></div>
+        <figure class="fviva"><img src="assets/m9/volume-vs-tonicidade.svg" alt="Plano ortogonal volume versus tonicidade com os quatro quadrantes clínicos" loading="lazy">
+          <figcaption><b>Fig. 8 · Volume × tonicidade, ortogonais.</b> Horizontal = <b>volume</b> (Na total → tamanho da
+          ECF); vertical = <b>tonicidade</b> (água → natremia). Os quadrantes mostram que hipo/hipernatremia podem coexistir
+          com qualquer volume (desidratação, salina hipertônica, diurético, ICC/SIADH). Natremia não diz o volume — são
+          eixos independentes.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASO -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — oito atos, decida antes de revelar</h3>
+      <p class="sub">Uma paciente com insuficiência cardíaca percorre os eixos do volume e da tonicidade.</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step"><b>Ato 1.</b> Mulher, 68a, ICC avançada. Edema de membros até a coxa, ascite, peso +9 kg. PA 96/64,
+        extremidades frias. Volume total: alto ou baixo (Fig. 1)?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1">O volume <b>total</b> está <b>altíssimo</b> (todo aquele edema/ascite é Na + água
+        retidos). Mas o <b>VCE</b> está <b>baixo</b> — daí a PA limítrofe e as extremidades frias. É o <b>underfilling</b>:
+        o débito cardíaco baixo não enche o leito arterial.</div></div>
+
+      <div class="step"><b>Ato 2.</b> <i>Prever:</i> o que a urina dela vai mostrar — U_Na alto ou baixo (Fig. 3, 5)?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2"><b>U_Na &lt; 20 e FE_Na &lt; 1%.</b> O rim lê o VCE baixo e retém Na <b>avidamente</b>
+        (RAAS/SNS no talo), apesar do corpo estar encharcado. A urina revela a percepção volêmica renal — o paradoxo do
+        Ato 1 fica medível.</div></div>
+
+      <div class="step"><b>Ato 3.</b> Por que ela continua retendo Na mesmo com tanto edema (Fig. 1, 7)?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3">Porque o rim <b>só lê o VCE</b>, não o volume total. O coração fraco não gera VCE, então
+        o barorreceptor sinaliza "falta volume" sem parar → RAAS/SNS retêm Na → mais edema → o VCE não melhora. É um ciclo
+        vicioso (Fig. 5).</div></div>
+
+      <div class="step"><b>Ato 4.</b> O sódio sérico dela é 129 (hiponatremia). A equipe sugere "repor sal". Certo (Fig. 8)?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>Errado.</b> A pérola do módulo: <b>hiponatremia ≠ falta de sal</b>. Ela tem Na total
+        <b>sobrando</b> (edema). O 129 é <b>excesso de água livre</b> (ADH alto pelo VCE baixo, dilui o Na) — é o eixo da
+        <b>tonicidade</b>, não do volume. Repor sal pioraria a ICC.</div></div>
+
+      <div class="step"><b>Ato 5.</b> <i>A conduta correta de volume.</i> Como remover o líquido sem dar mais sal (Fig. 6)?
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>Diurético (alça)</b> para excretar o Na retido + <b>restrição de Na e de água</b>. Tira-se
+        a sobrecarga (hidrostática↓) e, ao mesmo tempo, restringe-se a água para corrigir a tonicidade. Otimizar o coração
+        melhora o VCE — o motor do problema (ponte Choca M16/M23).</div></div>
+
+      <div class="step"><b>Ato 6.</b> <i>A fronteira/exceção.</i> Outro paciente: cirrótico, ascite tensa, albumina 2,0,
+        U_Na &lt; 10, Na 131. Por que o edema aqui (Fig. 6, 7)?
+        <div><button class="act" data-rev="r6">Revelar</button></div>
+        <div class="reveal" id="r6"><b>Oncótica baixíssima (albumina 2,0) + vasodilatação esplâncnica</b> → o plasma escapa para
+        a ascite (terceiro espaço) → VCE despenca → RAAS extremo (U_Na &lt; 10). Mesmo mecanismo final (VCE↓ → retém Na),
+        causa diferente. Dar só volume vaza para a ascite; corrige-se a oncótica/causa.</div></div>
+
+      <div class="step"><b>Ato 7.</b> <i>O contraste.</i> Uma terceira paciente: euvolêmica, sem edema, PA normal, Na 126.
+        É o mesmo problema da primeira (Fig. 8)?
+        <div><button class="act" data-rev="r7">Revelar</button></div>
+        <div class="reveal" id="r7"><b>Não.</b> Volume normal + hiponatremia = ganho puro de <b>água livre</b> (SIADH, por
+        ex.). Mostra que os eixos são <b>ortogonais</b>: o mesmo Na 126 pode estar com volume baixo, normal ou alto. A
+        natremia não diz o volume — avaliam-se separados (M10).</div></div>
+
+      <div class="step"><b>Ato 8.</b> <i>Síntese.</i> Qual a lição de uma linha?
+        <div><button class="act" data-rev="r8">Revelar</button></div>
+        <div class="reveal" id="r8">O rim defende o <b>volume circulante efetivo</b>, não a concentração nem o total. Volume
+        (Na) e tonicidade (água) são eixos ortogonais; o edema é o rim retendo Na porque sente o VCE baixo — mesmo quando o
+        corpo transborda. Decompor antes de tratar.</div></div>
+    </div>
+  </section>
+
+  <!-- TRILHA -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — treze perguntas que constroem o conceito</h3>
+      <details><summary>1. Qual é o erro que este módulo corrige?</summary><p>"Na baixo = falta de sal". Na verdade o
+        sódio é proxy de água/volume; a natremia é problema de água, não de sal (Fig. 8).</p></details>
+      <details><summary>2. O que é o volume circulante efetivo (VCE)?</summary><p>A fração da ECF que enche e perfunde o
+        leito arterial e é "sentida" pelos barorreceptores — não a soma total da água do corpo (Fig. 1).</p></details>
+      <details><summary>3. Como o VCE pode estar baixo com o volume total alto?</summary><p>No underfilling (ICC, cirrose,
+        nefrótico): o líquido está no edema/ascite (não efetivo) e o leito arterial está vazio (Fig. 1, 7).</p></details>
+      <details><summary>4. Quais são os sensores de volume?</summary><p>Alta pressão: seio carotídeo e arco aórtico. Baixa
+        pressão/renal: aferente/JGA e átrios (estiramento → ANP) (Fig. 2).</p></details>
+      <details><summary>5. O que acontece quando o VCE cai?</summary><p>O barorreceptor descarrega → RAAS e SNS sobem →
+        retenção ávida de Na (FE_Na &lt; 1%, U_Na &lt; 20) (Fig. 3).</p></details>
+      <details><summary>6. Quem é o contrapeso natriurético?</summary><p>ANP (átrio) e BNP (ventrículo): com o volume alto,
+        o coração estirado os libera → natriurese, ↑TFG, vasodilatação, inibe renina/aldo (Fig. 4).</p></details>
+      <details><summary>7. O que o balanço de Na determina?</summary><p>O tamanho da ECF. Excreção = ingesta → ECF estável;
+        reter mais que comer → ECF expande → edema. O Na total É o tamanho da ECF (Fig. 5).</p></details>
+      <details><summary>8. Quais as três vias do edema (Starling)?</summary><p>Hidrostática↑ (Na retido/ICC), oncótica↓
+        (albumina baixa) e permeabilidade↑ (leak/sepse). Saída &gt; retorno capilar (Fig. 6).</p></details>
+      <details><summary>9. O que é o terceiro espaço?</summary><p>Líquido sequestrado (ascite, derrame, edema, leak) que
+        pesa mas não perfunde → hipovolemia efetiva com sobrecarga total (Fig. 7).</p></details>
+      <details><summary>10. Por que U_Na/FE_Na são a "janela" do volume?</summary><p>Revelam a percepção volêmica do rim:
+        baixos = ávido (VCE baixo); altos = natriurético (VCE alto/sobrecarga real) (Fig. 3, 5).</p></details>
+      <details><summary>11. Por que "Na baixo na ICC" não é falta de sal?</summary><p>O Na total está sobrando (edema). O
+        número baixo é diluição por água livre (ADH alto pelo VCE baixo) — eixo da tonicidade (Fig. 8, Caso 4).</p></details>
+      <details><summary>12. Em que sentido volume e tonicidade são ortogonais?</summary><p>O Na total move o eixo horizontal
+        (tamanho da ECF); a água move o vertical (natremia). O mesmo Na 130 cabe em qualquer quadrante (Fig. 8).</p></details>
+      <details><summary>13. Em que sentido tudo isto é homeostasia?</summary><p>O rim sente o VCE e ajusta a excreção de Na
+        (RAAS/SNS × ANP/BNP) para defender o volume efetivo do meio interno, apesar de entradas e perdas (Fig. 1–5).</p></details>
+    </div>
+  </section>
+
+  <!-- INSTRUMENTO -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — a FE_Na × o volume circulante efetivo</h3>
+      <p class="sub">Os controles do <b>Lab</b> alimentam esta curva. VCE baixo → o rim retém Na avidamente → a FE_Na
+      despenca (&lt; 1%). O marcador laranja é o ponto de operação atual; albumina, leak e Na total deslocam o VCE.</p>
+      <canvas id="vce-canvas" width="900" height="360" aria-label="FE_Na por volume circulante efetivo"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- LAB -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — o volume efetivo e a tonicidade (computados)</h3>
+      <div class="grid">
+        <div>
+          <label>Enchimento arterial / débito (1 = normal): <span class="val" id="lbl-ench">1.0</span></label>
+          <input type="range" id="in-ench" min="0" max="2" step="0.05" value="1">
+          <label>Albumina (g/dL): <span class="val" id="lbl-alb">4.4</span></label>
+          <input type="range" id="in-alb" min="0.5" max="6" step="0.1" value="4.4">
+          <label>Permeabilidade capilar / leak (0 = normal): <span class="val" id="lbl-leak">0.0</span></label>
+          <input type="range" id="in-leak" min="0" max="1" step="0.05" value="0">
+        </div>
+        <div>
+          <label>Na corporal total (1 = normal; tamanho da ECF): <span class="val" id="lbl-nat">1.0</span></label>
+          <input type="range" id="in-nat" min="0.4" max="2" step="0.05" value="1">
+          <label>Ingesta de Na (1 = normal ~150 mEq/d): <span class="val" id="lbl-ing">1.0</span></label>
+          <input type="range" id="in-ing" min="0" max="4" step="0.1" value="1">
+          <label>Água corporal total (1 = normal; eixo da tonicidade): <span class="val" id="lbl-agua">1.0</span></label>
+          <input type="range" id="in-agua" min="0.5" max="1.8" step="0.05" value="1">
+        </div>
+      </div>
+
+      <div class="presets">
+        <button class="act" data-preset="euvolemia">Euvolemia</button>
+        <button class="act" data-preset="icc">ICC (underfill)</button>
+        <button class="act" data-preset="cirrose">Cirrose</button>
+        <button class="act" data-preset="nefrotico">Nefrótico</button>
+        <button class="act" data-preset="desidratacao">Desidratação</button>
+        <button class="act" data-preset="siadh">SIADH (contraste)</button>
+        <button class="act" data-preset="sobrecarga">Sobrecarga real</button>
+      </div>
+
+      <table>
+        <tr><th>Variável</th><th>Atual</th><th>Comentário</th></tr>
+        <tr><td>VCE (× normal)</td><td class="num" id="out-vce">—</td><td class="num">o que o rim sente</td></tr>
+        <tr><td>Sinal barorreceptor (0–1)</td><td class="num" id="out-baro">—</td><td class="num">1 = leito pleno</td></tr>
+        <tr><td>RAAS + SNS (× normal)</td><td class="num" id="out-raas">—</td><td class="num">retém Na</td></tr>
+        <tr><td>ANP / BNP (× normal)</td><td class="num" id="out-anp">—</td><td class="num">excreta Na</td></tr>
+        <tr><td>FE_Na (%)</td><td class="num" id="out-fena">—</td><td class="num">&lt;1 = ávido (pré-renal)</td></tr>
+        <tr><td>U_Na (mEq/L)</td><td class="num" id="out-una">—</td><td class="num">&lt;20 = retém</td></tr>
+        <tr><td>ECF (× normal)</td><td class="num" id="out-ecf">—</td><td class="num">tamanho do compartimento</td></tr>
+        <tr><td>Na sérico (mEq/L)</td><td class="num" id="out-na">—</td><td class="num">135–145 · eixo da água</td></tr>
+        <tr><td>Tonicidade (mOsm/kg)</td><td class="num" id="out-toni">—</td><td class="num">≈ 2 · Na</td></tr>
+        <tr><td>Disnatremia</td><td class="num" id="out-disn">—</td><td class="num">problema de água</td></tr>
+        <tr><td>Padrão volêmico</td><td class="num" id="out-classe">—</td><td class="num">—</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÃO -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (13)</button>
+        <button data-bank="textual">Textual (13)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica</b>. Este módulo M9 trata o
+    sódio e o volume — o volume circulante efetivo, os sensores, os efetores (RAAS/SNS × ANP/BNP) e a gênese do edema;
+    a tonicidade (disnatremias) é aprofundada no M10 e a farmacologia diurética nos M6/M17. Diuréticos e fluidoterapia
+    são citados como conduta/gancho, sem prescrição de dose neste módulo. <b>Nota de honestidade do modelo:</b> a curva
+    FE_Na × VCE, o VCE, os índices urinários e a natremia computados aqui são simplificações didáticas calibradas para
+    ensinar o mecanismo (ortogonalidade volume × tonicidade, underfilling), não para calcular condutas reais. Não
+    substitui julgamento clínico; a decisão e a responsabilidade finais são sempre do profissional.
+  </div>
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+</div>
+
+<script>
+/* ENGINE INLINE — espelho fiel de build/m9/model9.js */
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
+function sig(x,x0,k){ return 1/(1+Math.exp(-clampv(k,1e-6,1e3)*(Number(x)-Number(x0)))); }
+function vceFrom(enchimento,albumina,leak,naTotal){
+  var E=clampv(enchimento,0,2), A=clampv(albumina,0.5,6), K=clampv(leak,0,1), Ntot=clampv(naTotal,0.4,2);
+  var oncot=clampv(0.45+A/8,0.4,1.1);
+  var retencaoVaso=clampv(1-0.7*K,0.3,1);
+  var efetividade=clampv(oncot*retencaoVaso,0.2,1.1);
+  var vce=clampv(0.35*E+0.65*E*efetividade*(0.4+0.6*Ntot),0.05,1.8);
+  return vce;
+}
+function volume(input){ var inp=input||{};
+  var enchimento=clampv(inp.enchimento!==undefined?inp.enchimento:1,0,2);
+  var albumina=clampv(inp.albumina!==undefined?inp.albumina:4.4,0.5,6);
+  var leak=clampv(inp.leak!==undefined?inp.leak:0,0,1);
+  var naTotal=clampv(inp.naTotal!==undefined?inp.naTotal:1,0.4,2);
+  var ingestaNa=clampv(inp.ingestaNa!==undefined?inp.ingestaNa:1,0,4);
+  var aguaCorporal=clampv(inp.aguaCorporal!==undefined?inp.aguaCorporal:1,0.5,1.8);
+  var vce=vceFrom(enchimento,albumina,leak,naTotal);
+  var sinalBaro=clampv(sig(vce,0.85,5.0)*0.85+0.15*clampv(vce,0,1.4)/1.4,0,1);
+  var raasSns=clampv(1+2.4*(1-sinalBaro)-0.4*(sinalBaro),0,4);
+  var natriuretico=clampv(0.5+2.2*sig(vce,1.05,4.0),0,4);
+  var balancoEfetor=clampv(raasSns/(0.6+0.4*natriuretico),0.1,6);
+  var feNa=clampv(1.1/(balancoEfetor*balancoEfetor),0.05,8);
+  var uNa=clampv(95/balancoEfetor-20,2,160);
+  var avido=(feNa<1)&&(uNa<20);
+  var excrecaoNaRel=clampv(feNa/1.0,0.05,8);
+  var balancoNa=clampv(ingestaNa-excrecaoNaRel,-4,4);
+  var ecfExpansao=clampv(naTotal+0.5*clampv(balancoNa,0,4),0.4,3);
+  var forcaEdema=clampv(0.6*(ecfExpansao-1)+0.5*(1-sinalBaro)+0.6*(4.4-albumina)/4.4+0.6*leak,0,3);
+  var edema=forcaEdema>0.55;
+  var terceiroEspaco=(leak>0.35||albumina<3.0)&&edema;
+  var naSerico=clampv(140/aguaCorporal+6*(naTotal-1)/Math.max(aguaCorporal,0.5)*0.25,105,175);
+  var tonicidade=clampv(2*naSerico,210,350);
+  var disnatremia; if(naSerico<135) disnatremia='hiponatremia'; else if(naSerico>145) disnatremia='hipernatremia'; else disnatremia='normonatremia';
+  var classe;
+  if(edema&&vce<0.85) classe='edema-underfill';
+  else if(vce<0.7) classe='hipovolemia';
+  else if(ecfExpansao>1.5&&vce>=1.05) classe='sobrecarga';
+  else classe='euvolemia';
+  return {enchimento:enchimento,albumina:albumina,leak:leak,naTotal:naTotal,ingestaNa:ingestaNa,aguaCorporal:aguaCorporal,
+    vce:vce,sinalBaro:sinalBaro,raasSns:raasSns,natriuretico:natriuretico,balancoEfetor:balancoEfetor,
+    feNa:feNa,uNa:uNa,avido:avido,excrecaoNaRel:excrecaoNaRel,balancoNa:balancoNa,ecfExpansao:ecfExpansao,
+    forcaEdema:forcaEdema,edema:edema,terceiroEspaco:terceiroEspaco,
+    naSerico:naSerico,tonicidade:tonicidade,disnatremia:disnatremia,classe:classe}; }
+function volumeLayout(state,W,H){ state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=54,padR=16,padT=18,padB=38,baseY=H-padB, xMin=0,xMax=1.8,N=56, pxX=(W-padL-padR)/(xMax-xMin), yMin=0,yMax=4, pxY=(baseY-padT)/(yMax-yMin);
+  var alb=clampv(state.albumina!==undefined?state.albumina:4.4,0.5,6), lk=clampv(state.leak!==undefined?state.leak:0,0,1),
+      nt=clampv(state.naTotal!==undefined?state.naTotal:1,0.4,2), ag=clampv(state.aguaCorporal!==undefined?state.aguaCorporal:1,0.5,1.8),
+      ing=clampv(state.ingestaNa!==undefined?state.ingestaNa:1,0,4);
+  var pts=[],i,e,vc,r;
+  for(i=0;i<=N;i++){ e=2*i/N; r=volume({enchimento:e,albumina:alb,leak:lk,naTotal:nt,aguaCorporal:ag,ingestaNa:ing}); vc=clampv(r.vce,xMin,xMax);
+    pts.push({enchimento:e,vce:vc,feNa:r.feNa,x:padL+(vc-xMin)*pxX,y:baseY-(clampv(r.feNa,yMin,yMax)-yMin)*pxY}); }
+  var cur=volume(state), cvce=clampv(cur.vce,xMin,xMax);
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,xMin:xMin,xMax:xMax,yMin:yMin,yMax:yMax,pxX:pxX,pxY:pxY,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},pts:pts,
+    current:{x:padL+(cvce-xMin)*pxX,y:baseY-(clampv(cur.feNa,yMin,yMax)-yMin)*pxY,vce:cvce,feNa:cur.feNa}}; }
+window.clampv=clampv; window.sig=sig; window.vceFrom=vceFrom; window.volume=volume; window.volumeLayout=volumeLayout;
+window.MODEL={clampv:clampv,sig:sig,vceFrom:vceFrom,volume:volume,volumeLayout:volumeLayout};
+
+/* UI */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=(d===undefined?1:d); return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+var CLASSE_TXT={euvolemia:'euvolemia (VCE pleno)','edema-underfill':'edema / underfilling (VCE↓, total↑)',hipovolemia:'hipovolemia (VCE e total baixos)',sobrecarga:'sobrecarga real (VCE↑, ECF↑)'};
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on'); b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on'); $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh(); });
+document.addEventListener('click',function(e){ var b=e.target.closest('button.act[data-rev]'); if(!b) return; var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on'); });
+
+function readInputs(){ return { enchimento:+$('in-ench').value, albumina:+$('in-alb').value, leak:+$('in-leak').value,
+  naTotal:+$('in-nat').value, ingestaNa:+$('in-ing').value, aguaCorporal:+$('in-agua').value }; }
+function refresh(){ var inp=readInputs();
+  $('lbl-ench').textContent=fmt(inp.enchimento,2); $('lbl-alb').textContent=fmt(inp.albumina,1);
+  $('lbl-leak').textContent=fmt(inp.leak,2); $('lbl-nat').textContent=fmt(inp.naTotal,2);
+  $('lbl-ing').textContent=fmt(inp.ingestaNa,1); $('lbl-agua').textContent=fmt(inp.aguaCorporal,2);
+  var r=volume(inp);
+  $('out-vce').textContent=fmt(r.vce,2); $('out-baro').textContent=fmt(r.sinalBaro,2); $('out-raas').textContent=fmt(r.raasSns,2);
+  $('out-anp').textContent=fmt(r.natriuretico,2); $('out-fena').textContent=fmt(r.feNa,2); $('out-una').textContent=fmt(r.uNa,0);
+  $('out-ecf').textContent=fmt(r.ecfExpansao,2); $('out-na').textContent=fmt(r.naSerico,0); $('out-toni').textContent=fmt(r.tonicidade,0);
+  $('out-disn').textContent=r.disnatremia; $('out-classe').textContent=CLASSE_TXT[r.classe]||r.classe;
+  verdict(r,inp); drawVce(inp); pearl(r,inp); }
+function verdict(r,inp){ var v=$('veredito'), cls='b-good', msg;
+  if(r.classe==='edema-underfill'){ cls='b-bad'; msg='Underfilling: VCE '+fmt(r.vce,2)+'× (baixo) com ECF '+fmt(r.ecfExpansao,2)+'× (alta) → o rim retém Na avidamente (FE_Na '+fmt(r.feNa,2)+'%, U_Na '+fmt(r.uNa,0)+') e gera edema. O total sobra, o efetivo falta.'; }
+  else if(r.classe==='hipovolemia'){ cls='b-warn'; msg='Hipovolemia: VCE '+fmt(r.vce,2)+'× → RAAS/SNS '+fmt(r.raasSns,2)+'× retêm Na (FE_Na '+fmt(r.feNa,2)+'%, U_Na '+fmt(r.uNa,0)+'). O rim ávido tenta restaurar o volume.'; }
+  else if(r.classe==='sobrecarga'){ cls='b-warn'; msg='Sobrecarga real: ECF '+fmt(r.ecfExpansao,2)+'× com VCE pleno → ANP/BNP '+fmt(r.natriuretico,2)+'× promovem natriurese (FE_Na '+fmt(r.feNa,2)+'%). O contrapeso natriurético assume.'; }
+  else { cls='b-good'; msg='Euvolemia: VCE '+fmt(r.vce,2)+'×, equilíbrio RAAS ('+fmt(r.raasSns,2)+'×) × ANP ('+fmt(r.natriuretico,2)+'×). Na '+fmt(r.naSerico,0)+' ('+r.disnatremia+').'; }
+  if(r.disnatremia!=='normonatremia'){ msg+=' Tonicidade '+r.disnatremia+' (Na '+fmt(r.naSerico,0)+') é eixo SEPARADO da água — não é falta/excesso de sal.'; }
+  v.className='banner '+cls; v.textContent=msg; }
+function pearl(r,inp){ var p=$('lab-pearl'), ip=$('instr-pearl'), t;
+  if(r.classe==='edema-underfill') t='PÉROLA: edema = o rim retém Na porque SENTE o VCE baixo ('+fmt(r.vce,2)+'×) mesmo com o total alto (ECF '+fmt(r.ecfExpansao,2)+'×). U_Na '+fmt(r.uNa,0)+' revela a leitura: rim ávido apesar do encharcamento.';
+  else if(inp.aguaCorporal>1.12&&r.naSerico<135) t='PÉROLA: hiponatremia (Na '+fmt(r.naSerico,0)+') ≠ falta de sal — é ÁGUA em excesso (eixo da tonicidade, M10). Note que o volume (classe '+(CLASSE_TXT[r.classe]||r.classe)+') é problema à parte.';
+  else if(inp.aguaCorporal<0.88&&r.naSerico>145) t='PÉROLA: hipernatremia (Na '+fmt(r.naSerico,0)+') = falta de ÁGUA, não excesso de sal. O eixo da tonicidade é ortogonal ao do volume — corrige-se a água.';
+  else if(r.vce>1.05&&r.natriuretico>r.raasSns) t='PÉROLA: ANP/BNP ('+fmt(r.natriuretico,2)+'×) é o contrapeso natriurético do RAAS ('+fmt(r.raasSns,2)+'×). Com o volume alto, o coração estirado manda excretar Na (FE_Na '+fmt(r.feNa,2)+'%).';
+  else t='Volume (Na total → ECF '+fmt(r.ecfExpansao,2)+'×) e tonicidade (água → Na '+fmt(r.naSerico,0)+') são eixos ortogonais. O rim defende o VCE ('+fmt(r.vce,2)+'×) via FE_Na '+fmt(r.feNa,2)+'%.';
+  p.textContent=t; ip.textContent=t; }
+function drawVce(state){ var c=$('vce-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
+  var L=volumeLayout(state,c.width,c.height); ctx.clearRect(0,0,L.W,L.H);
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('FE_Na (%)',8,L.padT+2); ctx.fillText('volume circulante efetivo →',L.W-220,L.baseY+24);
+  /* linha de referência FE_Na = 1% (limiar do rim ávido) */
+  var y1=L.baseY-(1-L.yMin)*L.pxY; ctx.strokeStyle='#5b6b78'; ctx.setLineDash([3,3]); ctx.beginPath(); ctx.moveTo(L.axis.x0,y1); ctx.lineTo(L.axis.xEnd,y1); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#5b6b78'; ctx.fillText('FE_Na 1% (ávido abaixo)',L.axis.x0+6,y1-4);
+  ctx.strokeStyle='#39c0c8'; ctx.lineWidth=2; ctx.beginPath();
+  for(var i=0;i<L.pts.length;i++){ var p=L.pts[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); } ctx.stroke();
+  var cu=L.current; ctx.strokeStyle='#e8a13a'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(cu.x,L.padT); ctx.lineTo(cu.x,L.baseY); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#e8a13a'; ctx.fillRect(cu.x-3,cu.y-3,6,6);
+  ctx.fillStyle='#e7eef4'; ctx.fillText('FE_Na '+fmt(cu.feNa,2)+'% @ VCE '+fmt(cu.vce,2)+'×',Math.min(cu.x+6,L.W-180),Math.max(cu.y-6,L.padT+10)); }
+['in-ench','in-alb','in-leak','in-nat','in-ing','in-agua'].forEach(function(id){ $(id).addEventListener('input',refresh); });
+
+var PRESETS={
+  euvolemia:{enchimento:1,albumina:4.4,leak:0,naTotal:1,ingestaNa:1,aguaCorporal:1},
+  icc:{enchimento:0.45,albumina:4.0,leak:0,naTotal:1.5,ingestaNa:2,aguaCorporal:1.12},
+  cirrose:{enchimento:0.6,albumina:2.2,leak:0.2,naTotal:1.5,ingestaNa:1.5,aguaCorporal:1.1},
+  nefrotico:{enchimento:0.9,albumina:1.8,leak:0.25,naTotal:1.4,ingestaNa:1.5,aguaCorporal:1},
+  desidratacao:{enchimento:0.5,albumina:4.4,leak:0,naTotal:0.7,ingestaNa:0.5,aguaCorporal:0.85},
+  siadh:{enchimento:1,albumina:4.4,leak:0,naTotal:1,ingestaNa:1,aguaCorporal:1.35},
+  sobrecarga:{enchimento:1.1,albumina:4.4,leak:0,naTotal:1.7,ingestaNa:3,aguaCorporal:1}
+};
+function applyPreset(p){ var d=PRESETS[p]; if(!d) return;
+  $('in-ench').value=d.enchimento; $('in-alb').value=d.albumina; $('in-leak').value=d.leak;
+  $('in-nat').value=d.naTotal; $('in-ing').value=d.ingestaNa; $('in-agua').value=d.aguaCorporal; refresh(); }
+document.querySelector('.presets').addEventListener('click',function(e){ var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset')); });
+
+/* ILUSTRAÇÕES computadas + helper raster */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+function vceMini(state,titulo){ var W=300,H=170,L=volumeLayout(state,W,H),s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  var y1=L.baseY-(1-L.yMin)*L.pxY; s+='<line x1="'+L.axis.x0+'" y1="'+f1(y1)+'" x2="'+L.axis.xEnd+'" y2="'+f1(y1)+'" stroke="#5b6b78" stroke-dasharray="3 3"/>';
+  var d=''; for(var i=0;i<L.pts.length;i++){ d+=(i===0?'M':'L')+f1(L.pts[i].x)+' '+f1(L.pts[i].y)+' '; }
+  s+='<path d="'+d+'" fill="none" stroke="#39c0c8" stroke-width="2"/>';
+  s+='<rect x="'+f1(L.current.x-3)+'" y="'+f1(L.current.y-3)+'" width="6" height="6" fill="#e8a13a"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'FE_Na × VCE')+'</text>';
+  s+='<text x="'+(W-8)+'" y="'+(L.baseY+14)+'" fill="#9fb1c0" font-size="9" text-anchor="end">VCE →</text>';
+  return svgEl(W,H,s); }
+function efetorBars(r){ var W=300,H=170,base=132,s='';
+  function bar(x,val,max,color,lab){ var h=clampv(val/max,0,1)*92; return '<rect x="'+x+'" y="'+f1(base-h)+'" width="46" height="'+f1(h)+'" fill="'+color+'" fill-opacity="0.6" stroke="'+color+'"/>'+
+    '<text x="'+(x+23)+'" y="'+(base+13)+'" fill="#9fb1c0" font-size="9" text-anchor="middle">'+lab+'</text>'+
+    '<text x="'+(x+23)+'" y="'+f1(base-h-4)+'" fill="#e7eef4" font-size="9" text-anchor="middle">'+fmt(val,2)+'</text>'; }
+  s+=bar(34,r.vce,1.8,'#52c08a','VCE'); s+=bar(100,r.raasSns,4,'#e8a13a','RAAS'); s+=bar(166,r.natriuretico,4,'#39c0c8','ANP'); s+=bar(232,r.feNa,4,'#e0556b','FE_Na%');
+  s+='<text x="150" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">efetores × VCE</text>';
+  return svgEl(W,H,s); }
+function ecfBars(r){ var W=300,H=170,base=132,s='';
+  function bar(x,val,max,color,lab,dec){ var h=clampv(val/max,0,1)*92; return '<rect x="'+x+'" y="'+f1(base-h)+'" width="60" height="'+f1(h)+'" fill="'+color+'" fill-opacity="0.6" stroke="'+color+'"/>'+
+    '<text x="'+(x+30)+'" y="'+(base+13)+'" fill="#9fb1c0" font-size="9" text-anchor="middle">'+lab+'</text>'+
+    '<text x="'+(x+30)+'" y="'+f1(base-h-4)+'" fill="#e7eef4" font-size="10" text-anchor="middle">'+fmt(val,dec)+'</text>'; }
+  s+=bar(50,r.ecfExpansao,3,'#e8a13a','ECF ×',2); s+=bar(180,r.vce,1.8,'#52c08a','VCE ×',2);
+  s+='<text x="150" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">ECF total × VCE efetivo</text>';
+  s+='<text x="150" y="150" fill="#9fb1c0" font-size="10" text-anchor="middle">'+(r.edema?(r.terceiroEspaco?'edema + terceiro espaço':'edema (retém Na)'):'sem edema')+'</text>';
+  return svgEl(W,H,s); }
+function ortoPlot(r){ var W=300,H=180,cx=150,cy=96,s='';
+  s+='<line x1="40" y1="'+cy+'" x2="260" y2="'+cy+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+cx+'" y1="26" x2="'+cx+'" y2="166" stroke="#3a4a58"/>';
+  s+='<text x="256" y="'+(cy-4)+'" fill="#39c0c8" font-size="9" text-anchor="end">volume (ECF) →</text>';
+  s+='<text x="'+(cx+4)+'" y="32" fill="#e8a13a" font-size="9">tonicidade ↑</text>';
+  var px=clampv(cx+(r.ecfExpansao-1)*70,46,254);
+  var py=clampv(cy-(r.naSerico-140)*3.0,30,162);
+  s+='<circle cx="'+f1(px)+'" cy="'+f1(py)+'" r="6" fill="#e0556b" stroke="#fff"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">o ponto do paciente</text>';
+  s+='<text x="'+f1(px)+'" y="'+f1(py-10)+'" fill="#e7eef4" font-size="9" text-anchor="middle">Na '+fmt(r.naSerico,0)+'</text>';
+  return svgEl(W,H,s); }
+function imgFig(slug,alt){ return '<img src="assets/m9/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+/* TUTOR */
+function R0(extra){ var o={}; if(extra) for(var k in extra) o[k]=extra[k]; return volume(o); }
+var TUTOR_ILUSTRADO=[
+  {q:'Na curva FE_Na × VCE, baixar o VCE faz a FE_Na…',o:['subir','cair (rim ávido)','não mudar'],c:1,e:'VCE baixo → RAAS/SNS retêm Na → FE_Na despenca (<1%).',fig:function(){return vceMini({enchimento:0.4},'VCE baixo');}},
+  {q:'Com o VCE alto (sobrecarga), a FE_Na…',o:['cai','sobe (natriurese)','some'],c:1,e:'ANP/BNP promovem excreção de Na → FE_Na sobe.',fig:function(){return vceMini({naTotal:1.7,ingestaNa:3,enchimento:1.1},'sobrecarga');}},
+  {q:'No ponto de operação atual (normal), a FE_Na fica…',o:['acima de 1% (natriurético)','abaixo de ~1% (limiar)','exatamente 0'],c:1,e:'No basal o rim opera perto do limiar de avidez.',fig:function(){return vceMini({},'euvolemia');}},
+  {q:'Nas barras dos efetores, hipoperfusão eleva o RAAS e a FE_Na…',o:['sobe junto','cai (ávido)','não muda'],c:1,e:'RAAS alto → retenção → FE_Na baixa.',fig:function(){return efetorBars(R0({enchimento:0.4}));}},
+  {q:'Com o VCE alto, qual efetor domina nas barras?',o:['RAAS','ANP/BNP','nenhum'],c:1,e:'O contrapeso natriurético assume na sobrecarga.',fig:function(){return efetorBars(R0({naTotal:1.7,ingestaNa:3,enchimento:1.1}));}},
+  {q:'Nas barras ECF × VCE da ICC, o padrão é…',o:['ambos altos','ECF alta, VCE baixo (underfill)','ambos baixos'],c:1,e:'Total alto, efetivo baixo: o paradoxo do edema.',fig:function(){return ecfBars(R0({enchimento:0.45,naTotal:1.5,ingestaNa:2}));}},
+  {q:'Na desidratação, as barras ECF × VCE mostram…',o:['ECF alta','ambos baixos','VCE alto'],c:1,e:'Perda real de volume: total e efetivo caem juntos.',fig:function(){return ecfBars(R0({enchimento:0.5,naTotal:0.7,aguaCorporal:0.85}));}},
+  {q:'No plano volume × tonicidade, a ICC com Na 130 cai no quadrante…',o:['volume baixo + hipo','volume ALTO + hipo','volume alto + hiper'],c:1,e:'Edema (volume alto) com água em excesso (hiponatremia).',fig:function(){return ortoPlot(R0({enchimento:0.45,naTotal:1.5,ingestaNa:2,aguaCorporal:1.25}));}},
+  {q:'No plano ortogonal, a desidratação hipernatrêmica fica em…',o:['volume baixo + hiper','volume alto + hiper','volume alto + hipo'],c:0,e:'Perda de água > sal: VCE baixo e Na alto.',fig:function(){return ortoPlot(R0({enchimento:0.5,naTotal:0.7,aguaCorporal:0.75}));}},
+  {q:'Na figura do VCE, o que o barorreceptor NÃO conta?',o:['o leito arterial','o volume do edema/ascite','o débito cardíaco'],c:1,e:'O volume não efetivo (3º espaço) é ignorado pelo sensor.',fig:function(){return imgFig('volume-circulante-efetivo.svg','VCE vs total');}},
+  {q:'Na figura dos sensores, qual é de BAIXA pressão?',o:['seio carotídeo','átrios (estiramento → ANP)','arco aórtico'],c:1,e:'Os átrios e a aferente/JGA são de baixa pressão.',fig:function(){return imgFig('barorreceptores.svg','sensores de volume');}},
+  {q:'Na figura do edema, a oncótica baixa atua por…',o:['empurrar o líquido para fora','não segurar o plasma no vaso','fechar o capilar'],c:1,e:'Albumina baixa → π↓ → o plasma vaza para o interstício.',fig:function(){return imgFig('edema-fisiopatologia.svg','forças de Starling');}},
+  {q:'Na figura do terceiro espaço, o paradoxo é…',o:['hipervolemia efetiva','hipovolemia efetiva com sobrecarga total','desidratação pura'],c:1,e:'Encharcado por fora (3º espaço), VCE vazio por dentro.',fig:function(){return imgFig('terceiro-espaco.svg','terceiro espaço');}}
+];
+var TUTOR_TEXTUAL=[
+  {q:'O erro que este módulo corrige é…',o:['"Na baixo = falta de sal"','"o rim filtra demais"','"edema é falta de água"'],c:0,e:'O Na é proxy de água/volume; a natremia é problema de água.'},
+  {q:'O volume circulante efetivo (VCE) é…',o:['a soma de toda a água corporal','a fração que perfunde e é sentida pelos sensores','o volume da urina'],c:1,e:'Só o leito arterial efetivo é lido pelos barorreceptores.'},
+  {q:'No underfilling (ICC, cirrose), o VCE está… e o volume total está…',o:['alto / baixo','baixo / alto','ambos normais'],c:1,e:'O líquido está no edema/ascite, fora do leito efetivo.'},
+  {q:'Quando o VCE cai, os efetores que sobem são…',o:['ANP/BNP','RAAS + SNS (retêm Na)','nenhum'],c:1,e:'O eixo antinatriurético defende o volume efetivo.'},
+  {q:'O contrapeso natriurético do RAAS é…',o:['o cortisol','ANP/BNP (peptídeos natriuréticos)','o ADH'],c:1,e:'Liberados pelo coração estirado; promovem natriurese.'},
+  {q:'Um rim que percebe VCE baixo mostra na urina…',o:['U_Na > 40, FE_Na > 2%','U_Na < 20, FE_Na < 1% (ávido)','U_Na indetectável'],c:1,e:'Os índices urinários revelam a percepção de volume.'},
+  {q:'O Na corporal TOTAL determina…',o:['a concentração de Na','o tamanho da ECF','a osmolalidade urinária'],c:1,e:'"Onde está o sal, está a água" — é o tamanho da ECF.'},
+  {q:'As três vias do edema (Starling) são…',o:['hidrostática↑, oncótica↓, permeabilidade↑','só a oncótica','só a pressão venosa'],c:0,e:'Quando a saída capilar vence o retorno, forma edema.'},
+  {q:'A hiponatremia na ICC é, na verdade,…',o:['falta de sal','excesso de água livre (ADH alto)','perda renal de Na'],c:1,e:'O Na total sobra (edema); o número baixo é diluição.'},
+  {q:'Volume e tonicidade são eixos…',o:['idênticos','ortogonais (independentes)','sempre opostos'],c:1,e:'O mesmo Na 130 cabe em qualquer volume.'},
+  {q:'O terceiro espaço é líquido que…',o:['perfunde normalmente','pesa mas não perfunde (sequestrado)','está na urina'],c:1,e:'Ascite, derrame, edema, leak — fora do leito útil.'},
+  {q:'Dar só volume a um cirrótico com ascite tende a…',o:['corrigir o VCE','vazar para a ascite (terceiro espaço)','elevar a albumina'],c:1,e:'Sem corrigir oncótica/causa, o líquido escapa.'},
+  {q:'O fio condutor de tudo isto é…',o:['a filtração passiva','a homeostasia: defender o VCE','a excreção de ureia'],c:1,e:'O rim ajusta a excreção de Na para defender o volume efetivo.'}
+];
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL; window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+var BANKS={ilustrada:TUTOR_ILUSTRADO,textual:TUTOR_TEXTUAL}, curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+function renderTutor(){ var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():''; $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false; $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){ if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button'); btns[item.c].classList.add('ok'); if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block'; fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e; $('tutor-score').textContent=tScore; $('tutor-total').textContent=tTotal; });
+    box.appendChild(b); }); }
+$('banktabs').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor(); });
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+$('draw-vce').innerHTML = vceMini({enchimento:1},'FE_Na × VCE (normal)');
+$('draw-baro').innerHTML = efetorBars(volume({enchimento:0.5}));
+$('draw-efetor').innerHTML = efetorBars(volume({enchimento:0.45,naTotal:1.5}));
+$('draw-anp').innerHTML = efetorBars(volume({naTotal:1.7,ingestaNa:3,enchimento:1.1}));
+$('draw-balanco').innerHTML = ecfBars(volume({enchimento:0.45,naTotal:1.5,ingestaNa:2}));
+$('draw-edema').innerHTML = ecfBars(volume({albumina:1.8,leak:0.25,naTotal:1.4}));
+$('draw-orto').innerHTML = ortoPlot(volume({enchimento:0.45,naTotal:1.5,ingestaNa:2,aguaCorporal:1.25}));
+$('fig-caso').innerHTML = ecfBars(volume({enchimento:0.45,naTotal:1.5,ingestaNa:2})) + ortoPlot(volume({enchimento:0.45,naTotal:1.5,ingestaNa:2,aguaCorporal:1.25}));
+
+refresh(); renderTutor();
+</script>
+</body>
+</html>

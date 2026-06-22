@@ -1,22 +1,45 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M9</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">Sódio e volume</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">barorreceptores</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">Barorreceptores e sensores de volume</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" font-family="system-ui,Segoe UI,Arial,sans-serif">
+  <rect width="640" height="360" fill="#0f1620"/>
+  <text x="320" y="26" text-anchor="middle" font-size="15" font-weight="700" fill="#e7eef4">Os sensores de volume — onde o corpo "mede" o VCE</text>
+  <text x="320" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">quatro detetores: dois de alta pressão, dois renais/atriais de baixa pressão</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <!-- alta pressão arterial -->
+  <rect x="32" y="64" width="262" height="118" rx="8" fill="#141b22" stroke="#e8a13a"/>
+  <text x="44" y="86" font-size="12" font-weight="700" fill="#e8a13a">ALTA PRESSÃO (arterial)</text>
+  <circle cx="70" cy="120" r="9" fill="#e8a13a" opacity="0.7"/>
+  <text x="90" y="118" font-size="11" fill="#cfdbe6">① seio carotídeo</text>
+  <text x="90" y="132" font-size="9.5" fill="#9fb1c0">estiramento da carótida</text>
+  <circle cx="70" cy="156" r="9" fill="#e8a13a" opacity="0.7"/>
+  <text x="90" y="154" font-size="11" fill="#cfdbe6">② arco aórtico</text>
+  <text x="90" y="168" font-size="9.5" fill="#9fb1c0">pressão de ejeção arterial</text>
+
+  <!-- baixa pressão / renal -->
+  <rect x="346" y="64" width="262" height="118" rx="8" fill="#141b22" stroke="#39c0c8"/>
+  <text x="358" y="86" font-size="12" font-weight="700" fill="#39c0c8">BAIXA PRESSÃO / RENAL</text>
+  <circle cx="384" cy="120" r="9" fill="#39c0c8" opacity="0.7"/>
+  <text x="404" y="118" font-size="11" fill="#cfdbe6">③ aferente / JGA</text>
+  <text x="404" y="132" font-size="9.5" fill="#9fb1c0">pressão de perfusão + NaCl</text>
+  <circle cx="384" cy="156" r="9" fill="#39c0c8" opacity="0.7"/>
+  <text x="404" y="154" font-size="11" fill="#cfdbe6">④ átrios (estiramento)</text>
+  <text x="404" y="168" font-size="9.5" fill="#9fb1c0">enchimento venoso → ANP</text>
+
+  <!-- integrador -->
+  <rect x="226" y="210" width="188" height="50" rx="8" fill="#102a2c" stroke="#52c08a" stroke-width="2"/>
+  <text x="320" y="232" text-anchor="middle" font-size="12" font-weight="700" fill="#52c08a">leitura do VCE</text>
+  <text x="320" y="250" text-anchor="middle" font-size="9.5" fill="#cfdbe6">integra os 4 sinais</text>
+  <line x1="160" y1="182" x2="270" y2="208" stroke="#e8a13a" stroke-width="2" marker-end="url(#a)"/>
+  <line x1="480" y1="182" x2="370" y2="208" stroke="#39c0c8" stroke-width="2" marker-end="url(#b)"/>
+
+  <rect x="60" y="284" width="240" height="42" rx="8" fill="#1a1410" stroke="#e0556b"/>
+  <text x="180" y="305" text-anchor="middle" font-size="11" font-weight="700" fill="#e0556b">VCE baixo → RAAS/SNS ↑ (retém Na)</text>
+  <text x="180" y="320" text-anchor="middle" font-size="9.5" fill="#9fb1c0">descarga simpática · renina · aldosterona · ADH</text>
+  <rect x="340" y="284" width="240" height="42" rx="8" fill="#101d22" stroke="#52c08a"/>
+  <text x="460" y="305" text-anchor="middle" font-size="11" font-weight="700" fill="#52c08a">VCE alto → ANP/BNP ↑ (excreta Na)</text>
+  <text x="460" y="320" text-anchor="middle" font-size="9.5" fill="#9fb1c0">natriurese · vasodilatação · contrapeso</text>
+
+  <text x="320" y="352" text-anchor="middle" font-size="9" fill="#5b6b78">FILTRA · M9 — sensores de pressão e estiramento traduzem o VCE em hormônio</text>
+  <defs>
+    <marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#e8a13a"/></marker>
+    <marker id="b" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#39c0c8"/></marker>
+  </defs>
 </svg>

@@ -1,22 +1,48 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M9</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">Sódio e volume</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">edema-fisiopatologia</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">Fisiopatologia do edema</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" font-family="system-ui,Segoe UI,Arial,sans-serif">
+  <rect width="640" height="360" fill="#0f1620"/>
+  <text x="320" y="26" text-anchor="middle" font-size="15" font-weight="700" fill="#e7eef4">As forças de Starling capilar e a gênese do edema</text>
+  <text x="320" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">o líquido sai quando a hidrostática vence a oncótica — e o rim retém Na</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <!-- capilar -->
+  <rect x="60" y="86" width="520" height="46" rx="10" fill="#15252b" stroke="#39c0c8"/>
+  <text x="320" y="114" text-anchor="middle" font-size="12" font-weight="700" fill="#39c0c8">CAPILAR (intravascular)</text>
+  <text x="100" y="78" font-size="10" fill="#9fb1c0">extremo arterial</text>
+  <text x="500" y="78" font-size="10" fill="#9fb1c0">extremo venoso</text>
+
+  <!-- interstício -->
+  <rect x="60" y="170" width="520" height="44" rx="10" fill="#1a1410" stroke="#e8a13a" stroke-dasharray="5 4"/>
+  <text x="320" y="197" text-anchor="middle" font-size="12" font-weight="700" fill="#e8a13a">INTERSTÍCIO → edema quando acumula</text>
+
+  <!-- setas de força: saída (hidrostática) -->
+  <line x1="150" y1="132" x2="150" y2="168" stroke="#e0556b" stroke-width="3" marker-end="url(#out)"/>
+  <text x="150" y="152" text-anchor="middle" font-size="9" fill="#e0556b" transform="rotate(0)"> </text>
+  <text x="186" y="150" font-size="10" fill="#e0556b">P hidrostática ↑ (empurra p/ fora)</text>
+  <!-- seta de retorno (oncótica) -->
+  <line x1="470" y1="168" x2="470" y2="132" stroke="#52c08a" stroke-width="3" marker-end="url(#inn)"/>
+  <text x="340" y="152" font-size="10" fill="#52c08a">π oncótica (albumina) puxa p/ dentro</text>
+
+  <!-- três causas -->
+  <rect x="36" y="236" width="180" height="84" rx="8" fill="#141b22" stroke="#e0556b"/>
+  <text x="126" y="258" text-anchor="middle" font-size="11" font-weight="700" fill="#e0556b">① hidrostática ↑</text>
+  <text x="126" y="276" text-anchor="middle" font-size="9.5" fill="#cfdbe6">ICC, sobrecarga de Na</text>
+  <text x="126" y="290" text-anchor="middle" font-size="9.5" fill="#cfdbe6">retenção renal de Na</text>
+  <text x="126" y="306" text-anchor="middle" font-size="9" fill="#9fb1c0">expande a ECF</text>
+
+  <rect x="230" y="236" width="180" height="84" rx="8" fill="#141b22" stroke="#39c0c8"/>
+  <text x="320" y="258" text-anchor="middle" font-size="11" font-weight="700" fill="#39c0c8">② oncótica ↓</text>
+  <text x="320" y="276" text-anchor="middle" font-size="9.5" fill="#cfdbe6">albumina baixa</text>
+  <text x="320" y="290" text-anchor="middle" font-size="9.5" fill="#cfdbe6">cirrose, nefrótico</text>
+  <text x="320" y="306" text-anchor="middle" font-size="9" fill="#9fb1c0">vaso não segura o plasma</text>
+
+  <rect x="424" y="236" width="180" height="84" rx="8" fill="#141b22" stroke="#e8a13a"/>
+  <text x="514" y="258" text-anchor="middle" font-size="11" font-weight="700" fill="#e8a13a">③ permeabilidade ↑</text>
+  <text x="514" y="276" text-anchor="middle" font-size="9.5" fill="#cfdbe6">sepse, inflamação</text>
+  <text x="514" y="290" text-anchor="middle" font-size="9.5" fill="#cfdbe6">capilar "vaza"</text>
+  <text x="514" y="306" text-anchor="middle" font-size="9" fill="#9fb1c0">leak → terceiro espaço</text>
+
+  <text x="320" y="346" text-anchor="middle" font-size="9" fill="#5b6b78">FILTRA · M9 — edema = força de saída &gt; retorno; o VCE cai e o rim retém ainda mais Na</text>
+  <defs>
+    <marker id="out" markerWidth="9" markerHeight="9" refX="4" refY="7" orient="auto"><path d="M0,0 L8,0 L4,8 Z" fill="#e0556b"/></marker>
+    <marker id="inn" markerWidth="9" markerHeight="9" refX="4" refY="7" orient="auto"><path d="M0,0 L8,0 L4,8 Z" fill="#52c08a"/></marker>
+  </defs>
 </svg>

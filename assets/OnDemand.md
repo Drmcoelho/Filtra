@@ -130,7 +130,7 @@ ainda vai desenhar). `[c]` = módulo construído (integra na hora) · `[p]` = HT
 | M4 `[c]`  | m4/clearance-sintese.webp | clearance · a hipérbole Cr×TFG · secreção tubular · massa muscular | **PEDIDO** |
 | M5 `[c]`  | m5/tcp-sintese.webp | TCP: NHE3/SGLT2/NaPi-IIa/AC + acetazolamida/SGLT2i/manitol | INTEGRADO |
 | M6 `[c]`  | m6/alca-henle-sintese.webp | alça: NKCC2, contracorrente, gradiente 300→1200 | INTEGRADO |
-| M7 `[p]`  | m7/tcd-sintese.webp | TCD: NCC, Ca²⁺, tiazídicos (paradoxo do Ca) | OBTIDO |
+| M7 `[c]`  | m7/tcd-sintese.webp | TCD: NCC, Ca²⁺, tiazídicos (paradoxo do Ca) | INTEGRADO |
 | M8 `[c]`  | m8/ducto-coletor-sintese.webp | ducto: ENaC/aldo, ADH/AQP2, intercalares, poupadores/vaptano | INTEGRADO |
 | M9 `[p]`  | m9/sodio-volume-sintese.webp | volume circulante efetivo × tonicidade · barorreceptores · SNS/RAAS/PN | **PEDIDO** |
 | M10 `[p]` | m10/agua-livre-sintese.webp | disnatremias = distúrbio de água · ADH/sede · velocidade de correção (mielinólise/edema) | **PEDIDO** |
@@ -165,7 +165,7 @@ ainda vai desenhar). `[c]` = módulo construído (integra na hora) · `[p]` = HT
 | M38 `[p]` | m38/capstone-modalidade-sintese.webp | LRA grave → escolha de modalidade/prescrição por mecanismo | **PEDIDO** |
 | M39 `[p]` | m39/mapa-integrador-sintese.webp | mapa integrador néfron→meio interno→falência→fármaco→diálise · hexápode | **PEDIDO** |
 
-**Resumo:** 7 módulos já têm a lâmina autoral (M1·M3·M5·M6·M8 `INTEGRADO`; M7·M14×2 `OBTIDO`).
+**Resumo:** 7 módulos já têm a lâmina autoral (M1·M3·M5·M6·M7·M8 `INTEGRADO`; M14×2 `OBTIDO`).
 **Faltam 33 lâminas** a desenhar (`PEDIDO`): M0, M2, M4 (já construídos → integram na hora) + M9–M13, M15–M39.
 Ao entregar cada lâmina nova: se `[c]`, integro inline e marco `INTEGRADO`; se `[p]`, gravo o webp e marco
 `OBTIDO` até o módulo ser construído.
@@ -211,7 +211,7 @@ Ao entregar cada lâmina nova: se `[c]`, integro inline e marco `INTEGRADO`; se 
 | histologia-ramo-espesso-medula.webp | raster (histologia) | corte medular com ramo espesso × ramo fino lado a lado · mostra a parede impermeável à água que dilui (o motor) | Commons CC-BY | PEDIDO |
 | nefrocalcinose-alca-us.webp | raster (US/Rx) | nefrocalcinose / hipercalciúria do diurético de alça · ancora o efeito de segmento (de alça **espolia** Ca, ao contrário do tiazídico) | Radiopaedia/Commons CC-BY | PEDIDO |
 
-## M7 — TCD (NCC, manejo de Ca, segmento diluidor distal)  [HTML pendente]
+## M7 — TCD (NCC, manejo de Ca, segmento diluidor distal)  [módulo construído ✓]
 > Erro que corrige: "tudo é igual no túbulo"; verdade: o TCD ajusta fino; NCC e o **paradoxo do Ca** dos tiazídicos.
 > Farmacologia: tiazídicos. Base na `manifest.json` (8 SVGs). Raster a obter para a construção:
 

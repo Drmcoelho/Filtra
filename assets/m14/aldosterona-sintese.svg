@@ -1,22 +1,45 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M14</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">RAAS e eixo endócrino renal</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">aldosterona-sintese</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">Síntese e ação da aldosterona</text>
-
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1448" height="1086" viewBox="0 0 1448 1086" role="img" aria-labelledby="title desc">
+  <title id="title">Aldosterona: néfron distal</title><desc id="desc">Ang II e K⁺ estimulam a zona glomerulosa; MR/SGK1 reorganiza células principal e intercalada α.</desc><defs>
+    <marker id="arrow-cyan" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#55cbd3"/></marker>
+    <marker id="arrow-gold" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#e3ad4f"/></marker>
+    <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#e26464"/></marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#68c58a"/></marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity=".28"/></filter>
+    <style>
+      .t{font-family:system-ui,-apple-system,Segoe UI,sans-serif;fill:#eef5f4}.dim{fill:#aac0c4}.h{font-weight:800}.title{font-size:46px}.sub{font-size:21px}.m{font-size:24px}.s{font-size:18px}.xs{font-size:15px}.panel{fill:#101d27;stroke:#36505f;stroke-width:2}.panel2{fill:#152631;stroke:#36505f;stroke-width:2}.flow{fill:none;stroke:#55cbd3;stroke-width:4;marker-end:url(#arrow-cyan)}.goldflow{fill:none;stroke:#e3ad4f;stroke-width:4;marker-end:url(#arrow-gold)}.redflow{fill:none;stroke:#e26464;stroke-width:4;marker-end:url(#arrow-red)}.greenflow{fill:none;stroke:#68c58a;stroke-width:4;marker-end:url(#arrow-green)}
+    </style>
+  </defs>
+  <rect width="1448" height="1086" fill="#071018"/>
+  <text x="42" y="64" class="t h title"><tspan fill="#55cbd3">FILTRA</tspan><tspan fill="#e3ad4f"> · Aldosterona: néfron distal</tspan></text>
+  <text x="44" y="101" class="t sub dim">Ang II e K⁺ estimulam a zona glomerulosa; MR/SGK1 reorganiza células principal e intercalada α.</text>
+  <g transform="translate(36 118)">
+    <rect width="210" height="206" rx="20" class="panel"/>
+    <path d="M95 28C48 22 32 70 42 115c9 42 41 71 76 61 21-6 20-30 8-51-10-18-6-36 8-50 20-21 1-42-39-47Z" fill="#a64148" stroke="#ef8b83" stroke-width="4"/>
+    <path d="M106 48c-24 9-32 36-27 61 5 24 20 41 37 42-9-20-8-42 6-62 10-14 5-31-16-41Z" fill="#e2a477" opacity=".72"/>
+    <circle cx="114" cy="88" r="13" fill="#55cbd3"/><path d="M126 88H176" class="flow"/>
+    <text x="20" y="190" class="t h s">Néfron distal</text>
+    <text x="112" y="116" text-anchor="middle" class="t xs">coletor</text>
+  </g>
+  <g transform="translate(278 132)"><rect width="1134" height="830" rx="24" class="panel" filter="url(#shadow)"/>
+    <rect x="42" y="52" width="1050" height="128" rx="20" class="panel2"/><text x="68" y="92" class="t h s">ZONA GLOMERULOSA</text>
+    <circle cx="340" cy="116" r="42" fill="#3b1b22" stroke="#e26464" stroke-width="3"/><text x="340" y="123" text-anchor="middle" class="t h s">Ang II</text>
+    <circle cx="470" cy="116" r="42" fill="#33291a" stroke="#e3ad4f" stroke-width="3"/><text x="470" y="123" text-anchor="middle" class="t h s">K⁺ ↑</text>
+    <path d="M520 116H650" class="goldflow"/><rect x="662" y="76" width="220" height="80" rx="18" fill="#392819" stroke="#e88b4a" stroke-width="3"/><text x="772" y="125" text-anchor="middle" class="t h m">ALDOSTERONA</text>
+    <text x="900" y="108" class="t s dim">ACTH: papel agudo menor</text><text x="900" y="138" class="t s dim">ANP: inibe</text>
+    <rect x="42" y="220" width="510" height="520" rx="22" class="panel2"/><text x="68" y="262" class="t h m" fill="#55cbd3">CÉLULA PRINCIPAL</text>
+    <rect x="74" y="300" width="92" height="360" rx="24" fill="#3b2746" stroke="#b58ae0"/><text x="120" y="330" text-anchor="middle" class="t h xs">LÚMEN</text>
+    <rect x="428" y="300" width="92" height="360" rx="24" fill="#3a1920" stroke="#e26464"/><text x="474" y="330" text-anchor="middle" class="t h xs">SANGUE</text>
+    <rect x="164" y="388" width="72" height="56" rx="16" fill="#173840" stroke="#55cbd3" stroke-width="3"/><text x="200" y="423" text-anchor="middle" class="t h s">ENaC</text><path d="M120 416H158" class="flow"/><text x="94" y="404" class="t s">Na⁺</text>
+    <rect x="164" y="520" width="72" height="56" rx="16" fill="#33273b" stroke="#b58ae0" stroke-width="3"/><text x="200" y="555" text-anchor="middle" class="t h s">ROMK</text><path d="M282 548H240" stroke="#e26464" stroke-width="4"/><path d="M160 548H126" class="redflow"/><text x="290" y="555" class="t s">K⁺</text>
+    <rect x="362" y="405" width="82" height="82" rx="18" fill="#19303a" stroke="#5d9ee8" stroke-width="3"/><text x="403" y="438" text-anchor="middle" class="t h xs">Na⁺/K⁺</text><text x="403" y="462" text-anchor="middle" class="t h xs">ATPase</text><text x="260" y="350" class="t xs">MR → SGK1</text><text x="260" y="375" class="t xs">ENaC · ROMK · Na⁺/K⁺-ATPase ↑</text>
+    <rect x="582" y="220" width="510" height="520" rx="22" class="panel2"/><text x="608" y="262" class="t h m" fill="#e88b4a">INTERCALADA α</text>
+    <rect x="614" y="300" width="92" height="360" rx="24" fill="#3b2746" stroke="#b58ae0"/><text x="660" y="330" text-anchor="middle" class="t h xs">LÚMEN</text>
+    <rect x="968" y="300" width="92" height="360" rx="24" fill="#3a1920" stroke="#e26464"/><text x="1014" y="330" text-anchor="middle" class="t h xs">SANGUE</text>
+    <rect x="706" y="396" width="90" height="58" rx="16" fill="#3a2518" stroke="#e88b4a" stroke-width="3"/><text x="751" y="432" text-anchor="middle" class="t h xs">H⁺-ATPase</text><path d="M850 425H800" stroke="#e3ad4f" stroke-width="4"/><path d="M702 425H670" class="goldflow"/><text x="862" y="432" class="t s">H⁺</text>
+    <rect x="900" y="510" width="72" height="58" rx="16" fill="#183441" stroke="#5d9ee8" stroke-width="3"/><text x="936" y="546" text-anchor="middle" class="t h s">AE1</text><path d="M846 538H896" stroke="#55cbd3" stroke-width="4"/><path d="M976 538H1010" class="flow"/><text x="774" y="546" class="t s">HCO₃⁻</text>
+    <text x="742" y="366" class="t xs">aldosterona favorece secreção de H⁺</text><text x="742" y="628" class="t s dim">hiperaldosteronismo → hipocalemia + alcalose</text>
+    <rect x="42" y="772" width="1050" height="36" rx="12" fill="#0d171f"/><text x="567" y="797" text-anchor="middle" class="t s">Na⁺ é retido na principal; K⁺ e H⁺ saem por células e transportadores distintos.</text>
+  </g>
+  <rect x="32" y="1015" width="1384" height="45" rx="14" fill="#0d1821" stroke="#36505f"/>
+  <text x="724" y="1045" text-anchor="middle" class="t s"><tspan fill="#55cbd3">Ang II/K⁺ → aldosterona → MR/SGK1</tspan><tspan class="dim"> · M14 · endocrinologia renal</tspan></text>
+  </svg>

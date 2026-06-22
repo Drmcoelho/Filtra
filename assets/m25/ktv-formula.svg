@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
+  <rect width="640" height="320" fill="#0f1620" rx="6"/>
+  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#39c0c8" stroke-width="2"/>
+  <rect x="20" y="16" width="56" height="24" rx="4" fill="#39c0c8"/>
+  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="#05181a">M25</text>
+  <text x="320" y="34" text-anchor="middle" font-size="15" fill="#9fb1c0">A anatomia do Kt/V — a dose fracionada</text>
+  <!-- the formula -->
+  <text x="320" y="110" text-anchor="middle" font-size="40" fill="#e7eef4">Kt/V = </text>
+  <text x="430" y="98" text-anchor="middle" font-size="28" fill="#52c08a">K · t</text>
+  <line x1="392" y1="110" x2="470" y2="110" stroke="#e7eef4" stroke-width="2"/>
+  <text x="430" y="142" text-anchor="middle" font-size="28" fill="#e8a13a">V</text>
+  <!-- legend boxes -->
+  <rect x="60" y="180" width="160" height="100" rx="6" fill="#52c08a" fill-opacity="0.12" stroke="#52c08a"/>
+  <text x="140" y="206" text-anchor="middle" font-size="15" font-weight="bold" fill="#52c08a">K · t</text>
+  <text x="140" y="230" text-anchor="middle" font-size="11" fill="#9fb1c0">clearance (mL/min)</text>
+  <text x="140" y="248" text-anchor="middle" font-size="11" fill="#9fb1c0">× tempo (h)</text>
+  <text x="140" y="268" text-anchor="middle" font-size="11" fill="#9fb1c0">o quanto foi limpo</text>
+  <rect x="240" y="180" width="160" height="100" rx="6" fill="#e8a13a" fill-opacity="0.12" stroke="#e8a13a"/>
+  <text x="320" y="206" text-anchor="middle" font-size="15" font-weight="bold" fill="#e8a13a">V</text>
+  <text x="320" y="230" text-anchor="middle" font-size="11" fill="#9fb1c0">volume de ureia (L)</text>
+  <text x="320" y="248" text-anchor="middle" font-size="11" fill="#9fb1c0">≈ peso · 0,58</text>
+  <text x="320" y="268" text-anchor="middle" font-size="11" fill="#9fb1c0">V grande dilui a dose</text>
+  <rect x="420" y="180" width="160" height="100" rx="6" fill="#39c0c8" fill-opacity="0.12" stroke="#39c0c8"/>
+  <text x="500" y="206" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">alvo</text>
+  <text x="500" y="230" text-anchor="middle" font-size="11" fill="#9fb1c0">≥ 1,2 / sessão</text>
+  <text x="500" y="248" text-anchor="middle" font-size="11" fill="#9fb1c0">3× / semana</text>
+  <text x="500" y="268" text-anchor="middle" font-size="11" fill="#9fb1c0">adimensional</text>
+</svg>

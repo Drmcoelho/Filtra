@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M25 — Dose e adequação: Kt/V, URR, clearance, a prescrição</title>
+<style>
+  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--warn:#e8a13a;--bad:#e0556b;--good:#52c08a;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none} section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .presets{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px} .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)} .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)} .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)} .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M25</div>
+  <h1>Dose e adequação — Kt/V, URR e a prescrição da hemodiálise</h1>
+  <div class="sub">A dose de hemodiálise intermitente (HDI) é <b>medida</b>, não adivinhada. Dois números a quantificam:
+  <b>Kt/V</b> (= clearance <b>K</b> × tempo <b>t</b> / volume de distribuição <b>V</b> da ureia) — a dose fracionada,
+  alvo ~<b>1,2/sessão</b>, 3×/sem; e <b>URR</b> = (1 − R)·100, a taxa de redução da ureia (alvo ≥ 65%). A
+  <b>prescrição</b> é o que se <b>move</b> para atingir o alvo: ↑<b>tempo</b>, ↑<b>Qb</b> (fluxo de sangue),
+  ↑<b>Qd</b>/dialisador <b>high-flux</b>. Mas o clearance <b>satura</b> — dobrar Qb não dobra Kt/V — e o
+  <b>V</b> grande dilui a dose. O alvo é a <b>homeostasia</b> do meio interno: limpar as escórias sem subdosar,
+  e na 1ª sessão urêmica, sem ir rápido demais (M34).</div>
+  <nav class="hex">
+    <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
+    <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="dialisa.html">&larr; índice do antebraço DIALISA</a>
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- CONCEITO -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — a dose como número, e a prescrição como alavanca</h3>
+      <p class="sub" style="margin-top:0"><b>A dose de diálise não é "quanto tempo o paciente ficou na máquina" — é
+      quanto do volume de ureia foi efetivamente limpo.</b> O Kt/V e o URR medem isso; a prescrição (tempo, Qb, Qd,
+      dialisador) é o que se ajusta para chegar ao alvo. As Fig. 1–8 voltam no Caso, na Trilha e na Avaliação.
+      Atribuição em <code>CREDITS.md</code> (em curadoria).</p>
+
+      <h4>1. O que é Kt/V — a dose fracionada</h4>
+      <p class="sub">O <b>Kt/V</b> é adimensional: <b>K</b> (clearance, mL/min) × <b>t</b> (tempo, h) dividido por
+      <b>V</b> (volume de distribuição da ureia, L ≈ peso·0,58). É "quantas vezes" o volume corporal de ureia foi
+      depurado. O alvo é <b>Kt/V ≥ 1,2</b> por sessão, 3×/semana. Um número que parece abstrato, mas é só a razão
+      entre o que a máquina limpou e o tanque que precisava limpar.</p>
+      <div class="frow">
+        <div class="concept" id="draw-ktv"></div>
+        <figure class="fviva"><img src="assets/m25/ktv-formula.svg" alt="Anatomia do Kt/V: K vezes t sobre V, a dose fracionada" loading="lazy">
+          <figcaption><b>Fig. 1 · A anatomia do Kt/V.</b> A fração <b>K·t</b> (clearance × tempo, o quanto foi
+          limpo) sobre <b>V</b> (o volume de ureia ≈ peso·0,58, o tanque a limpar). <b>①</b> numerador sobe com K e t;
+          <b>②</b> denominador V dilui a dose; <b>③</b> alvo ≥ 1,2/sessão, 3×/sem. Adimensional — uma razão, não um
+          tempo.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m25/volume-distribuicao-ureia.svg" alt="V = volume de distribuição da ureia, peso vezes 0,58" loading="lazy">
+          <figcaption><b>Fig. 2 · O V dilui a dose.</b> O <b>volume de distribuição</b> da ureia ≈ a água corporal
+          total (peso·0,58 no homem, ·0,50 na mulher). Mesmo <b>K·t</b>, o paciente <b>grande</b> tem V maior → o
+          <b>Kt/V cai</b>. Por isso o paciente grande precisa de mais clearance ou mais tempo: a dose é relativa ao
+          tanque.</figcaption></figure>
+      </div>
+
+      <h4>2. URR — a leitura crua, e por que anda junto do Kt/V</h4>
+      <p class="sub">O <b>URR</b> (urea reduction ratio) = (1 − R)·100, onde <b>R</b> = ureia_pós/ureia_pré. Se a ureia
+      cai de 150 para 48 mg/dL, R = 0,32 e <b>URR = 68%</b> (alvo ≥ 65%). É a leitura mais simples — só duas dosagens
+      de ureia — e <b>anda junto do Kt/V</b>: ambos derivam do mesmo R. São a mesma coisa por ângulos distintos.</p>
+      <div class="frow">
+        <div class="concept" id="draw-urr"></div>
+        <figure class="fviva"><img src="assets/m25/urr-reducao-ureia.svg" alt="URR igual a 1 menos R vezes 100, a queda da ureia" loading="lazy">
+          <figcaption><b>Fig. 3 · URR — a queda da ureia.</b> A ureia <b>pré</b> (barra vermelha) cai por <b>difusão</b>
+          para a <b>pós</b> (barra verde). <b>R</b> = pós/pré; <b>URR</b> = (1−R)·100. Aqui 150→48 → R 0,32 → URR 68%.
+          Sem cálculo de cinética: só duas dosagens. E como nasce do mesmo R, <b>anda junto do Kt/V</b>.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m25/kinetica-ureia-sessao.svg" alt="Cinética da ureia na sessão, queda exponencial R igual e elevado a menos K t sobre V" loading="lazy">
+          <figcaption><b>Fig. 4 · A cinética por trás.</b> A ureia cai <b>exponencialmente</b>: R = e^(−K·t/V). A
+          inclinação é K/V; o <b>tempo</b> encolhe R. É daí que saem o URR e o Kt/V — a dose é a integral dessa
+          queda. Mais tempo, mais clearance ou menos V → R menor → dose maior.</figcaption></figure>
+      </div>
+
+      <h4>3. O clearance satura — dobrar Qb não dobra Kt/V</h4>
+      <p class="sub">O <b>clearance K</b> sobe com o fluxo de sangue (<b>Qb</b>), mas <b>satura</b>: a membrana tem uma
+      capacidade (o <b>KoA</b>). Dobrar o Qb de 200 para 400 mL/min sobe K de ~150 para ~240 — não para 300. O ganho
+      diminui. Por isso, num clearance já saturado, a alavanca eficiente passa a ser o <b>tempo</b>, não o fluxo.</p>
+      <div class="frow">
+        <div class="concept" id="draw-satura"></div>
+        <figure class="fviva"><img src="assets/m25/clearance-saturacao-qb.svg" alt="Clearance K versus Qb, curva que satura no teto da membrana KoA" loading="lazy">
+          <figcaption><b>Fig. 5 · A saturação do clearance.</b> K cresce com o Qb mas curva para o <b>teto da membrana
+          (KoA)</b>. <b>①</b> Qb 200 → K 150; <b>②</b> Qb 400 → K 240 (não 300). O ganho marginal cai. A lição: o fluxo
+          tem limite — quando o clearance satura, sobe-se o <b>tempo</b>.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m25/ktv-vs-tempo.svg" alt="Kt/V versus tempo, curva que sobe e satura, com linha de alvo 1,2" loading="lazy">
+          <figcaption><b>Fig. 6 · Kt/V × tempo.</b> O Kt/V <b>sobe e satura</b> com o tempo de sessão. A 2 h →
+          <b>subdose</b> (abaixo da linha-alvo 1,2); a 4 h → adequado. Esse é o <b>custo do intermitente</b>: corta-se
+          o tempo, corta-se a dose. O tempo é uma alavanca direta — entra no numerador K·t.</figcaption></figure>
+      </div>
+
+      <h4>4. A prescrição — as alavancas que se movem para o alvo</h4>
+      <p class="sub">Diante de uma <b>subdose</b>, a prescrição é o que muda: <b>① ↑tempo</b> (sobe K·t direto),
+      <b>② ↑Qb</b> (sobe K, mas satura), <b>③ ↑Qd / dialisador high-flux</b> (sobe o KoA efetivo). O motor sugere
+      <b>qual</b> mover: com clearance saturado, tempo; com folga em Qb, Qb; com membrana low-flux, trocar o
+      dialisador. A dose é prescrição, não sorte.</p>
+      <p class="sub">A exceção: a <b>1ª sessão muito urêmica</b>. Aqui o alvo é <b>rebaixado</b> (gentil, ~0,9) — baixar
+      a ureia rápido demais cria um gradiente osmótico sangue↔cérebro e causa <b>síndrome de desequilíbrio</b> (edema
+      cerebral, M34/M26). É a única vez em que um Kt/V baixo é o correto.</p>
+      <div class="frow">
+        <div class="concept" id="draw-gentil"></div>
+        <div class="concept" id="draw-alav"></div>
+        <figure class="fviva"><img src="assets/m25/alavancas-prescricao.svg" alt="As três alavancas da prescrição: tempo, Qb, Qd ou dialisador high-flux" loading="lazy">
+          <figcaption><b>Fig. 7 · As alavancas da prescrição.</b> Três caminhos para o alvo Kt/V ≥ 1,2: <b>①</b> mais
+          <b>tempo</b>; <b>②</b> mais <b>Qb</b> (satura); <b>③</b> mais <b>Qd</b> ou membrana <b>high-flux</b> (sobe o
+          KoA). Saturado o clearance, ① é a saída. O motor escolhe a alavanca pelo mecanismo, não por rotina.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m25/adequado-vs-subdose.svg" alt="Adequado versus subdose: Kt/V e URR acima ou abaixo do alvo" loading="lazy">
+          <figcaption><b>Fig. 8 · Adequado × subdose.</b> À esquerda, <b>adequado</b> (Kt/V ≥ 1,2 <i>e</i> URR ≥ 65%) →
+          manter. À direita, <b>subdose</b> → mover a alavanca certa. A dose é <b>medida</b> e classificada — não se
+          assume que "4 horas bastam"; um paciente grande em 2 h fica subdosado. A diálise restaura a
+          <b>homeostasia</b> só se a dose for atingida.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASO -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — cinco atos, decida antes de revelar</h3>
+      <p class="sub">Sala de hemodiálise. Cinco sessões, cinco prescrições. A pergunta de cada uma: <b>a dose é
+      adequada — e se não, qual alavanca mover?</b> Volte às Fig. 5, 6 e 7: o clearance satura, o tempo é direto.</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step"><b>Ato 1 — a sessão curta.</b> Paciente 70 kg, ureia pré 150, sessão de apenas 2 h, Qb 300,
+        high-flux. URR e Kt/V vêm baixos. A dose foi adequada?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>Não — subdose pelo tempo (Fig. 6).</b> Com K bom mas só 2 h, o Kt/V fica
+          abaixo de 1,2 e o URR abaixo de 65%. O tempo entra direto no numerador K·t: cortar o tempo corta a dose.
+          A alavanca é <b>↑tempo</b> (para ~4 h). Esse é o custo do intermitente — a dose mora no tempo.</div></div>
+
+      <div class="step"><b>Ato 2 — "vou aumentar o Qb".</b> Mesmo paciente subdosado, o residente sugere dobrar o Qb
+        de 250 para 500 mL/min para "dobrar a dose". Funciona?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2"><b>Não dobra (Fig. 5).</b> O clearance <b>satura</b> no KoA da membrana: dobrar o
+          Qb sobe K bem menos que o dobro. O Kt/V sobe um pouco, não o dobro. Se o clearance já está perto da
+          saturação, o ganho marginal do Qb é pequeno — a alavanca eficiente é o <b>tempo</b>.</div></div>
+
+      <div class="step"><b>Ato 3 — o paciente grande.</b> 110 kg, mesma prescrição (4 h, Qb 350, high-flux) que rende
+        Kt/V 1,3 num paciente de 70 kg. No grande, o Kt/V vem 0,9. Por quê?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3"><b>O V dilui a dose (Fig. 2).</b> V ≈ peso·0,58: o paciente grande tem um tanque
+          de ureia maior. O <b>mesmo K·t</b> rende um <b>Kt/V menor</b>. Para chegar ao alvo, precisa de mais clearance
+          ou mais tempo. A dose é relativa ao volume — não há prescrição "padrão" que sirva a todos.</div></div>
+
+      <div class="step"><b>Ato 4 — a membrana low-flux.</b> Subdose com Qb já em 400 e tempo já em 4 h; o dialisador é
+        low-flux (KoA baixo). Onde mexer?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>Trocar o dialisador / subir o Qd (Fig. 7, alavanca ③).</b> Com Qb e tempo já
+          altos, o gargalo é a <b>membrana</b>: um dialisador <b>high-flux</b> (KoA maior) e um Qd mais alto elevam o
+          KoA efetivo e o clearance. Quando duas alavancas estão no teto, a terceira é a que move a dose.</div></div>
+
+      <div class="step"><b>Ato 5 — a 1ª sessão muito urêmica (a fronteira).</b> Primeira diálise da vida, ureia 320.
+        A tentação é prescrever um Kt/V alto para "normalizar" rápido. Faz isso?
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>Não — aqui o alvo é GENTIL (M34/M26).</b> Baixar a ureia rápido demais cria um
+          gradiente osmótico entre sangue e cérebro → <b>síndrome de desequilíbrio</b> (edema cerebral). Na 1ª sessão
+          urêmica o alvo de Kt/V é <b>rebaixado</b> (~0,9) e a conduta é <b>manter</b> gentil — a única vez em que um
+          Kt/V baixo é o correto. A dose é mecanismo: às vezes, menos é mais.</div></div>
+    </div>
+  </section>
+
+  <!-- TRILHA -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — nove perguntas que constroem a dose</h3>
+      <details><summary>1. O que o Kt/V mede, afinal?</summary><p>A <b>dose fracionada</b> de diálise: clearance
+        <b>K</b> × tempo <b>t</b> sobre o volume de distribuição <b>V</b> da ureia. Adimensional — "quantas vezes" o
+        volume corporal de ureia foi limpo. Alvo ≥ 1,2/sessão, 3×/sem.</p></details>
+      <details><summary>2. E o URR, como se relaciona?</summary><p><b>URR = (1 − R)·100</b>, com R = ureia_pós/pré.
+        É a leitura crua (só duas dosagens) e <b>anda junto do Kt/V</b>: ambos saem do mesmo R. Alvo ≥ 65%.</p></details>
+      <details><summary>3. Por que o tempo é uma alavanca tão direta?</summary><p>Porque entra no <b>numerador</b>
+        K·t. Dobrar o tempo (com K fixo) tende a dobrar K·t e subir o Kt/V de forma quase linear — é o custo e a virtude
+        do intermitente: cortar o tempo corta a dose (M22).</p></details>
+      <details><summary>4. Por que dobrar o Qb não dobra a dose?</summary><p>Porque o clearance <b>satura</b>: a
+        membrana tem capacidade (o <b>KoA</b>). K sobe com Qb mas curva para o teto. Qb 200→400 sobe K de ~150 para
+        ~240, não para 300. O ganho marginal cai.</p></details>
+      <details><summary>5. O que é o KoA e o dialisador high-flux?</summary><p>O <b>KoA</b> é a capacidade de
+        transferência de massa da membrana. Um dialisador <b>high-flux</b> tem KoA maior → clearance maior para o mesmo
+        Qb. É a alavanca ③ quando Qb e tempo já estão altos.</p></details>
+      <details><summary>6. Por que o paciente grande recebe Kt/V menor com a mesma prescrição?</summary><p>Porque
+        <b>V ≈ peso·0,58</b>: o tanque de ureia é maior. O <b>mesmo K·t</b> rende um Kt/V <b>menor</b> — a dose é
+        relativa ao volume. O grande precisa de mais clearance ou mais tempo.</p></details>
+      <details><summary>7. A UF entra na dose?</summary><p>Sim, no termo convectivo de Daugirdas: a ultrafiltração
+        arrasta soluto junto com o solvente, somando um pouco ao Kt/V. Por isso a fórmula de 2ª geração corrige por
+        UF/peso. O efeito é menor que o difusivo, mas real.</p></details>
+      <details><summary>8. Como o motor escolhe qual alavanca mover?</summary><p>Pela <b>fração de saturação</b> do
+        clearance (K/KoA efetivo). Saturado (≥0,7) → <b>tempo</b>. Com folga em Qb → <b>Qb</b>. Com membrana low-flux ou
+        Qd baixo → <b>dialisador/Qd</b>. A dose é prescrição dirigida pelo mecanismo.</p></details>
+      <details><summary>9. Em que sentido isto restaura a homeostasia?</summary><p>A diálise <b>não substitui o
+        rim</b>: por <b>difusão</b> (e convecção, M19) remove escórias e devolve o meio interno à faixa. Mas só se a
+        <b>dose</b> for atingida — uma subdose deixa a uremia residual. Medir a dose é garantir que a função foi de
+        fato substituída.</p></details>
+    </div>
+  </section>
+
+  <!-- INSTRUMENTO -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — Kt/V × tempo (sobe e satura)</h3>
+      <p class="sub">Os controles do <b>Lab</b> movem este gráfico. Eixo horizontal = <b>tempo</b> de sessão (h); eixo
+      vertical = <b>spKt/V</b>. A curva azul mostra como o Kt/V <b>sobe e satura</b> com o tempo, para o clearance e o
+      V do paciente atual. A linha verde tracejada é o <b>alvo 1,2</b>; o marcador é a sessão atual (verde se acima do
+      alvo, vermelho se subdose). Mais clearance (Qb/Qd/high-flux) <b>levanta</b> a curva inteira.</p>
+      <canvas id="ktv-canvas" width="900" height="360" aria-label="Curva Kt/V por tempo de sessão"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- LAB -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — prescreva a sessão; veja Kt/V, URR e a alavanca</h3>
+      <div class="grid">
+        <div>
+          <label>Peso (kg): <span class="val" id="lbl-peso">70</span></label>
+          <input type="range" id="in-peso" min="40" max="160" step="1" value="70">
+          <label>Sexo (V grande ÷ pequeno): <span class="val" id="lbl-sexo">M</span></label>
+          <input type="range" id="in-sexo" min="0" max="1" step="1" value="0">
+          <label>Ureia pré-diálise (mg/dL): <span class="val" id="lbl-ureiaPre">150</span></label>
+          <input type="range" id="in-ureiaPre" min="40" max="360" step="5" value="150">
+          <label>Tempo de sessão (h): <span class="val" id="lbl-t">4.0</span></label>
+          <input type="range" id="in-t" min="1" max="6" step="0.25" value="4">
+          <label>Ultrafiltração removida (L): <span class="val" id="lbl-uf">2.0</span></label>
+          <input type="range" id="in-uf" min="0" max="6" step="0.5" value="2">
+        </div>
+        <div>
+          <label>Qb — fluxo de sangue (mL/min): <span class="val" id="lbl-qb">300</span></label>
+          <input type="range" id="in-qb" min="150" max="500" step="10" value="300">
+          <label>Qd — fluxo do banho (mL/min): <span class="val" id="lbl-qd">500</span></label>
+          <input type="range" id="in-qd" min="300" max="900" step="25" value="500">
+          <label>KoA do dialisador (mL/min — high-flux ↑): <span class="val" id="lbl-koa">800</span></label>
+          <input type="range" id="in-koa" min="400" max="1200" step="25" value="800">
+          <label>1ª sessão muito urêmica (alvo gentil): <span class="val" id="lbl-primeira">não</span></label>
+          <input type="range" id="in-primeira" min="0" max="1" step="1" value="0">
+        </div>
+      </div>
+
+      <div class="presets">
+        <button class="act" data-preset="subdose">Subdose (sessão curta)</button>
+        <button class="act" data-preset="alvo">Alvo 1,2 (4 h)</button>
+        <button class="act" data-preset="curto">Tempo curto + Qb alto</button>
+        <button class="act" data-preset="highflux">High-flux · Qb alto</button>
+        <button class="act" data-preset="grande">Paciente grande</button>
+        <button class="act" data-preset="uremico">1ª sessão urêmica (gentil)</button>
+      </div>
+
+      <table>
+        <tr><th>Saída</th><th>Atual</th><th>Comentário</th></tr>
+        <tr><td>Clearance K · volume V</td><td class="num" id="out-kv">—</td><td class="num">K (mL/min) · V (L ≈ peso·0,58)</td></tr>
+        <tr><td>Ureia pós · R</td><td class="num" id="out-pos">—</td><td class="num">R = pós/pré (cinética)</td></tr>
+        <tr><td>spKt/V (sessão)</td><td class="num" id="out-ktv">—</td><td class="num">alvo ≥ 1,2</td></tr>
+        <tr><td>URR</td><td class="num" id="out-urr">—</td><td class="num">(1 − R)·100 · alvo ≥ 65%</td></tr>
+        <tr><td>Adequação</td><td class="num" id="out-adeq">—</td><td class="num">Kt/V E URR no alvo</td></tr>
+        <tr><td>Alavanca a mover</td><td class="num" id="out-alav">—</td><td class="num">tempo · Qb · dialisador</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÃO -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (12)</button>
+        <button data-bank="textual">Textual (12)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica</b>. Este módulo M25 calcula
+    Kt/V (Daugirdas single-pool, 2ª geração), URR, clearance e a sugestão de prescrição como uma simplificação didática
+    calibrada para ensinar o <b>mecanismo</b> da dose — não um protocolo de prescrição para um paciente real. Não
+    substitui julgamento clínico; a decisão e a responsabilidade finais são sempre do profissional.
+  </div>
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+</div>
+
+<script>
+/* ENGINE INLINE — espelho fiel de build/m25/model25.js */
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
+var KTV_ALVO=1.2, URR_ALVO=65, KOA_MAX=1200;
+function urr(R){ R=clampv(R,0.02,1); return clampv((1-R)*100,0,98); }
+function ktv(o){ o=o||{}; var R=clampv(o.R,0.02,1), t=clampv(o.t,0.1,12), uf=clampv(o.uf,0,8), peso=clampv(o.peso,25,200);
+  var arg=R-0.008*t; arg=clampv(arg,0.001,1); var sp=-Math.log(arg)+(4-3.5*R)*(uf/peso); return clampv(sp,0,3.5); }
+function clearanceK(o){ o=o||{}; var qb=clampv(o.qb,100,500), qd=clampv(o.qd,300,900), koa=clampv(o.koa,300,KOA_MAX);
+  var qdFator=0.6+0.4*clampv((qd-300)/500,0,1); var koaEf=koa*qdFator; var K=(koaEf*qb)/(koaEf+qb); return clampv(K,5,500); }
+function volumeUreia(peso,sexo){ peso=clampv(peso,25,200); var frac=(sexo==='F')?0.50:0.58; return clampv(peso*frac,12,120); }
+function ureiaPos(o){ o=o||{}; var K=clampv(o.k,5,500), t=clampv(o.t,0.1,12), V=clampv(o.V,12,120), uf=clampv(o.uf,0,8);
+  var ktvBruto=(K*60*t)/(V*1000); var Rdif=Math.exp(-ktvBruto); var concentra=1+clampv(uf/Math.max(V,1),0,0.25)*0.6;
+  return clampv(Rdif*concentra,0.02,1); }
+function dose(input){ var inp=input||{};
+  var peso=clampv(inp.peso!==undefined?inp.peso:70,25,200);
+  var sexo=(inp.sexo==='F')?'F':'M';
+  var ureiaPre=clampv(inp.ureiaPre!==undefined?inp.ureiaPre:150,20,400);
+  var t=clampv(inp.t!==undefined?inp.t:4,0.5,8);
+  var uf=clampv(inp.uf!==undefined?inp.uf:2,0,8);
+  var qb=clampv(inp.qb!==undefined?inp.qb:300,100,500);
+  var qd=clampv(inp.qd!==undefined?inp.qd:500,300,900);
+  var koa=clampv(inp.koa!==undefined?inp.koa:800,300,KOA_MAX);
+  var primeiraUremica=!!inp.primeiraUremica;
+  var V=volumeUreia(peso,sexo);
+  var K;
+  if(inp.k!==undefined&&isFinite(Number(inp.k))) K=clampv(inp.k,5,500);
+  else K=clearanceK({qb:qb,qd:qd,koa:koa});
+  var R=ureiaPos({k:K,t:t,V:V,uf:uf});
+  var ureiaPosCalc=clampv(ureiaPre*R,4,400);
+  var URR=urr(R);
+  var spKtV=ktv({R:R,t:t,uf:uf,peso:peso});
+  var ktvAdequado=spKtV>=KTV_ALVO-1e-9, urrAdequado=URR>=URR_ALVO-1e-9, adequado=ktvAdequado&&urrAdequado;
+  var alvoEfetivo=primeiraUremica?0.9:KTV_ALVO;
+  var gentilOk=primeiraUremica&&spKtV<=1.1;
+  var deficitKtV=clampv(alvoEfetivo-spKtV,0,3.5);
+  var koaEfAprox=koa*(0.6+0.4*clampv((qd-300)/500,0,1));
+  var fracSaturacao=clampv(K/koaEfAprox,0,1);
+  var alavanca;
+  if(adequado||primeiraUremica) alavanca='manter';
+  else if(fracSaturacao>=0.7) alavanca='tempo';
+  else if(qb<400) alavanca='qb';
+  else if(koa<KOA_MAX-1||qd<800) alavanca='dialisador';
+  else alavanca='tempo';
+  var tNovo=clampv(t+1,0.5,8), qbNovo=clampv(qb+50,100,500);
+  var Kqb=clearanceK({qb:qbNovo,qd:qd,koa:koa});
+  var Khf=clearanceK({qb:qb,qd:clampv(qd+100,300,900),koa:KOA_MAX});
+  var ktvSeTempo=ktv({R:ureiaPos({k:K,t:tNovo,V:V,uf:uf}),t:tNovo,uf:uf,peso:peso});
+  var ktvSeQb=ktv({R:ureiaPos({k:Kqb,t:t,V:V,uf:uf}),t:t,uf:uf,peso:peso});
+  var ktvSeHF=ktv({R:ureiaPos({k:Khf,t:t,V:V,uf:uf}),t:t,uf:uf,peso:peso});
+  var ktvSemanal=clampv(spKtV*3,0,10);
+  return {peso:peso,sexo:sexo,ureiaPre:ureiaPre,t:t,uf:uf,qb:qb,qd:qd,koa:koa,primeiraUremica:primeiraUremica,
+    V:V,K:K,R:R,ureiaPos:ureiaPosCalc,fracSaturacao:fracSaturacao,
+    URR:URR,spKtV:spKtV,ktvSemanal:ktvSemanal,
+    ktvAdequado:ktvAdequado,urrAdequado:urrAdequado,adequado:adequado,alvoEfetivo:alvoEfetivo,gentilOk:gentilOk,deficitKtV:deficitKtV,
+    alavanca:alavanca,ktvSeTempo:ktvSeTempo,ktvSeQb:ktvSeQb,ktvSeHF:ktvSeHF}; }
+function ktvLayout(state,W,H){ state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=52,padR=16,padT=18,padB=38,baseY=H-padB,N=60,tMax=6,yMax=2.0;
+  var pxX=(W-padL-padR)/N, pxY=(baseY-padT)/yMax;
+  var d0=dose(state); var K=d0.K,V=d0.V,uf=d0.uf,peso=d0.peso;
+  var pts=[],i,tt,R,y;
+  for(i=0;i<=N;i++){ tt=(i/N)*tMax; R=ureiaPos({k:K,t:tt,V:V,uf:uf}); y=ktv({R:R,t:tt,uf:uf,peso:peso});
+    pts.push({t:tt,ktv:y,x:padL+i*pxX,y:baseY-clampv(y,0,yMax)*pxY}); }
+  var yAlvo=baseY-clampv(KTV_ALVO,0,yMax)*pxY;
+  var tCur=clampv(d0.t,0,tMax), cx=padL+(tCur/tMax)*N*pxX, cy=baseY-clampv(d0.spKtV,0,yMax)*pxY;
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,N:N,pxX:pxX,pxY:pxY,tMax:tMax,yMax:yMax,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},pts:pts,yAlvo:yAlvo,ktvAlvo:KTV_ALVO,
+    current:{x:cx,y:cy,t:tCur,ktv:d0.spKtV,adequado:d0.adequado}}; }
+window.dose=dose; window.ktvLayout=ktvLayout; window.urr=urr; window.ktv=ktv; window.clearanceK=clearanceK; window.ureiaPos=ureiaPos; window.volumeUreia=volumeUreia;
+window.MODEL={dose:dose,ktvLayout:ktvLayout,urr:urr,ktv:ktv,clearanceK:clearanceK,ureiaPos:ureiaPos,volumeUreia:volumeUreia,clampv:clampv,KTV_ALVO:KTV_ALVO,URR_ALVO:URR_ALVO,KOA_MAX:KOA_MAX};
+
+/* UI */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=(d===undefined?1:d); return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+function alavLong(a){ return a==='tempo'?'↑ tempo (clearance saturado)':(a==='qb'?'↑ Qb (folga no fluxo)':(a==='dialisador'?'↑ Qd / high-flux (membrana)':'manter')); }
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on'); b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on'); $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh(); });
+document.addEventListener('click',function(e){ var b=e.target.closest('button.act[data-rev]'); if(!b) return; var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on'); });
+
+function readInputs(){ return { peso:+$('in-peso').value, sexo:(+$('in-sexo').value===1?'F':'M'), ureiaPre:+$('in-ureiaPre').value,
+  t:+$('in-t').value, uf:+$('in-uf').value, qb:+$('in-qb').value, qd:+$('in-qd').value, koa:+$('in-koa').value,
+  primeiraUremica:(+$('in-primeira').value===1) }; }
+function refresh(){ var inp=readInputs();
+  $('lbl-peso').textContent=fmt(inp.peso,0); $('lbl-sexo').textContent=inp.sexo; $('lbl-ureiaPre').textContent=fmt(inp.ureiaPre,0);
+  $('lbl-t').textContent=fmt(inp.t,2); $('lbl-uf').textContent=fmt(inp.uf,1); $('lbl-qb').textContent=fmt(inp.qb,0);
+  $('lbl-qd').textContent=fmt(inp.qd,0); $('lbl-koa').textContent=fmt(inp.koa,0); $('lbl-primeira').textContent=(inp.primeiraUremica?'sim':'não');
+  var r=dose(inp);
+  $('out-kv').textContent='K '+fmt(r.K,0)+' mL/min · V '+fmt(r.V,1)+' L';
+  $('out-pos').textContent=fmt(r.ureiaPos,0)+' mg/dL · R '+fmt(r.R,2);
+  $('out-ktv').textContent=fmt(r.spKtV,2)+(r.primeiraUremica?' (alvo '+fmt(r.alvoEfetivo,1)+' gentil)':'');
+  $('out-urr').textContent=fmt(r.URR,0)+'%';
+  $('out-adeq').textContent=(r.primeiraUremica?(r.gentilOk?'gentil OK':'rever'):(r.adequado?'ADEQUADO ✓':'SUBDOSE'));
+  $('out-alav').textContent=(r.alavanca==='manter'?'manter':alavLong(r.alavanca));
+  verdict(r); drawKtv(inp); pearl(r,inp); }
+function verdict(r){ var v=$('veredito'), cls='b-good', msg;
+  if(r.primeiraUremica){ cls=(r.gentilOk?'b-warn':'b-bad'); msg=(r.gentilOk?'1ª sessão urêmica — alvo GENTIL (Kt/V '+fmt(r.alvoEfetivo,1)+'): Kt/V '+fmt(r.spKtV,2)+' está no patamar gentil. Baixar a ureia rápido demais causa desequilíbrio (M34).':'1ª sessão urêmica, mas Kt/V '+fmt(r.spKtV,2)+' alto demais — risco de desequilíbrio (M34). Reduza tempo/clearance: na 1ª sessão, GENTIL é o certo.'); }
+  else if(r.adequado){ cls='b-good'; msg='ADEQUADO — Kt/V '+fmt(r.spKtV,2)+' (≥1,2) e URR '+fmt(r.URR,0)+'% (≥65%). A dose foi atingida; a função de depuração foi substituída. Manter a prescrição.'; }
+  else { cls='b-bad'; msg='SUBDOSE — Kt/V '+fmt(r.spKtV,2)+' / URR '+fmt(r.URR,0)+'% abaixo do alvo. Mover: '+alavLong(r.alavanca)+'. Ganho estimado → tempo+1h: Kt/V '+fmt(r.ktvSeTempo,2)+' · Qb+50: '+fmt(r.ktvSeQb,2)+' · high-flux: '+fmt(r.ktvSeHF,2)+'.'; }
+  v.className='banner '+cls; v.textContent=msg; }
+function pearl(r,inp){ var p=$('lab-pearl'), ip=$('instr-pearl'), t;
+  if(r.primeiraUremica) t='PÉROLA (menos é mais): na 1ª sessão muito urêmica, um Kt/V baixo é o CORRETO — alvo gentil ~0,9. Baixar a ureia rápido demais causa desequilíbrio dialítico (M34/M26).';
+  else if(r.fracSaturacao>=0.7&&!r.adequado) t='PÉROLA (saturação): o clearance está saturado (K/KoA '+fmt(r.fracSaturacao,2)+') — ↑Qb rende pouco. A alavanca eficiente é o ↑tempo (entra direto no K·t).';
+  else if(r.alavanca==='qb') t='PÉROLA (folga no fluxo): há margem em Qb (K/KoA '+fmt(r.fracSaturacao,2)+') — subir o Qb é a alavanca mais eficiente agora. Mas lembre: ele satura.';
+  else if(r.peso>=100&&!r.adequado) t='PÉROLA (V dilui): paciente grande (V '+fmt(r.V,0)+' L) → o mesmo K·t rende Kt/V menor. A dose é relativa ao volume; precisa de mais clearance ou tempo.';
+  else t='Kt/V '+fmt(r.spKtV,2)+' · URR '+fmt(r.URR,0)+'%. URR e Kt/V andam juntos (mesmo R). A diálise substitui a FUNÇÃO de depuração por difusão — se a dose for atingida.';
+  p.textContent=t; ip.textContent=t; }
+function drawKtv(state){ var c=$('ktv-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
+  var L=ktvLayout(state,c.width,c.height); ctx.clearRect(0,0,L.W,L.H);
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('spKt/V ↑',8,L.padT+2); ctx.fillText('tempo de sessão (h) →',L.W-200,L.baseY+24);
+  // target line
+  ctx.strokeStyle='#52c08a'; ctx.setLineDash([5,4]); ctx.beginPath(); ctx.moveTo(L.padL,L.yAlvo); ctx.lineTo(L.W-L.padR,L.yAlvo); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#52c08a'; ctx.fillText('alvo 1,2',L.W-L.padR-58,L.yAlvo-4);
+  function poly(pts,color,w){ ctx.strokeStyle=color; ctx.lineWidth=w; ctx.beginPath(); for(var i=0;i<pts.length;i++){ var p=pts[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); } ctx.stroke(); }
+  poly(L.pts,'#39c0c8',2);
+  var cu=L.current; ctx.strokeStyle='#e7eef4'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(cu.x,L.padT); ctx.lineTo(cu.x,L.baseY); ctx.stroke(); ctx.setLineDash([]);
+  var col=cu.adequado?'#52c08a':'#e0556b';
+  ctx.fillStyle=col; ctx.fillRect(cu.x-4,cu.y-4,8,8);
+  ctx.fillStyle='#e7eef4'; ctx.fillText('Kt/V '+fmt(cu.ktv,2),Math.min(cu.x+8,L.W-110),Math.max(cu.y-6,L.padT+10)); }
+['in-peso','in-sexo','in-ureiaPre','in-t','in-uf','in-qb','in-qd','in-koa','in-primeira'].forEach(function(id){ $(id).addEventListener('input',refresh); });
+
+var PRESETS={
+  subdose:{peso:75,sexo:0,ureiaPre:160,t:2,uf:2,qb:300,qd:500,koa:800,primeira:0},
+  alvo:{peso:70,sexo:0,ureiaPre:150,t:4,uf:2,qb:300,qd:500,koa:900,primeira:0},
+  curto:{peso:80,sexo:0,ureiaPre:170,t:2.5,uf:2.5,qb:450,qd:600,koa:700,primeira:0},
+  highflux:{peso:72,sexo:0,ureiaPre:150,t:4,uf:2,qb:400,qd:800,koa:1200,primeira:0},
+  grande:{peso:120,sexo:0,ureiaPre:160,t:4,uf:3,qb:350,qd:600,koa:1000,primeira:0},
+  uremico:{peso:70,sexo:0,ureiaPre:320,t:2,uf:1.5,qb:250,qd:500,koa:800,primeira:1}
+};
+function applyPreset(p){ var d=PRESETS[p]; if(!d) return;
+  $('in-peso').value=d.peso; $('in-sexo').value=d.sexo; $('in-ureiaPre').value=d.ureiaPre; $('in-t').value=d.t;
+  $('in-uf').value=d.uf; $('in-qb').value=d.qb; $('in-qd').value=d.qd; $('in-koa').value=d.koa; $('in-primeira').value=d.primeira; refresh(); }
+document.querySelector('.presets').addEventListener('click',function(e){ var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset')); });
+
+/* ILUSTRAÇÕES computadas + helper raster */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+function ktvMini(state,titulo){ var W=300,H=170,L=ktvLayout(state,W,H),s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.padL+'" y1="'+f1(L.yAlvo)+'" x2="'+(W-L.padR)+'" y2="'+f1(L.yAlvo)+'" stroke="#52c08a" stroke-dasharray="4 3"/>';
+  function path(pts,color){ var d=''; for(var i=0;i<pts.length;i++){ d+=(i===0?'M':'L')+f1(pts[i].x)+' '+f1(pts[i].y)+' '; } return '<path d="'+d+'" fill="none" stroke="'+color+'" stroke-width="2"/>'; }
+  s+=path(L.pts,'#39c0c8');
+  var cu=L.current, col=cu.adequado?'#52c08a':'#e0556b';
+  s+='<rect x="'+f1(cu.x-3)+'" y="'+f1(cu.y-3)+'" width="6" height="6" fill="'+col+'"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'Kt/V × tempo')+'</text>';
+  s+='<text x="'+(W-8)+'" y="'+f1(L.yAlvo-3)+'" fill="#52c08a" font-size="8" text-anchor="end">alvo 1,2</text>';
+  return svgEl(W,H,s); }
+function doseBars(r,titulo){ var W=300,H=170,base=130,s='';
+  function bar(x,frac,color,lab,val){ var h=clampv(frac,0,1)*96; return '<rect x="'+x+'" y="'+f1(base-h)+'" width="56" height="'+f1(h)+'" fill="'+color+'" fill-opacity="0.6" stroke="'+color+'"/>'+
+    '<text x="'+(x+28)+'" y="'+(base+13)+'" fill="#9fb1c0" font-size="9" text-anchor="middle">'+lab+'</text>'+
+    '<text x="'+(x+28)+'" y="'+f1(base-h-4)+'" fill="#e7eef4" font-size="9" text-anchor="middle">'+val+'</text>'; }
+  s+='<line x1="44" y1="34" x2="44" y2="'+base+'" stroke="#3a4a58"/>';
+  // Kt/V normalizado por 2.0 ; URR por 100
+  s+=bar(70,r.spKtV/2,(r.spKtV>=1.2?'#52c08a':'#e0556b'),'Kt/V',fmt(r.spKtV,2));
+  s+=bar(180,r.URR/100,(r.URR>=65?'#52c08a':'#e0556b'),'URR',fmt(r.URR,0)+'%');
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'dose: Kt/V & URR')+'</text>';
+  s+='<line x1="70" y1="'+f1(base-1.2/2*96)+'" x2="236" y2="'+f1(base-1.2/2*96)+'" stroke="#52c08a" stroke-dasharray="3 2" opacity="0.6"/>';
+  return svgEl(W,H,s); }
+function satMini(titulo){ var W=300,H=170,base=140,s='';
+  s+='<line x1="44" y1="34" x2="44" y2="'+base+'" stroke="#3a4a58"/>';
+  s+='<line x1="44" y1="'+base+'" x2="280" y2="'+base+'" stroke="#3a4a58"/>';
+  // saturating curve K vs Qb
+  var d=''; for(var i=0;i<=40;i++){ var qb=100+i*10; var K=clearanceK({qb:qb,qd:500,koa:700}); var x=44+(qb-100)/400*230; var y=base-(K/300)*100; d+=(i===0?'M':'L')+f1(x)+' '+f1(y)+' '; }
+  s+='<path d="'+d+'" fill="none" stroke="#39c0c8" stroke-width="2"/>';
+  s+='<line x1="44" y1="'+f1(base-(700*0.72/300>1?100:700*0.72/300*100))+'" x2="280" y2="'+f1(base-(700*0.72/300>1?100:700*0.72/300*100))+'" stroke="#e8a13a" stroke-dasharray="4 3"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'K satura com Qb')+'</text>';
+  s+='<text x="276" y="'+base+'" fill="#9fb1c0" font-size="8" text-anchor="end">Qb →</text>';
+  s+='<text x="276" y="46" fill="#e8a13a" font-size="8" text-anchor="end">teto KoA</text>';
+  return svgEl(W,H,s); }
+function imgFig(slug,alt){ return '<img src="assets/m25/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+/* TUTOR */
+function R0(extra){ var o={}; if(extra) for(var k in extra) o[k]=extra[k]; return dose(o); }
+var TUTOR_ILUSTRADO=[
+  {q:'Sessão de apenas 2 h, paciente 70 kg, Qb 300, high-flux. A dose está…',o:['adequada','subdose (tempo curto)','excessiva'],c:1,e:'O tempo entra direto no K·t. Cortar o tempo corta a dose: ↑tempo é a alavanca.',fig:function(){return ktvMini({peso:70,t:2,qb:300,koa:900},'2 h → subdose');}},
+  {q:'A 4 h, mesmo paciente, Qb 300, high-flux. Agora a dose…',o:['continua subdose','atinge o alvo (Kt/V ≥1,2)','é tóxica'],c:1,e:'Mais tempo → mais K·t → Kt/V acima de 1,2 e URR acima de 65%.',fig:function(){return ktvMini({peso:70,t:4,qb:300,koa:900},'4 h → adequado');}},
+  {q:'Dobrar o Qb de 200 para 400 mL/min faz o Kt/V…',o:['dobrar','subir, mas menos que o dobro (satura)','cair'],c:1,e:'O clearance satura no KoA da membrana: o ganho marginal do Qb diminui.',fig:function(){return satMini('K satura — Qb não dobra');}},
+  {q:'Paciente de 120 kg com a prescrição que dá Kt/V 1,3 num de 70 kg. Resultado?',o:['Kt/V igual','Kt/V menor (V dilui)','Kt/V maior'],c:1,e:'V ≈ peso·0,58: o tanque maior dilui a dose. O grande precisa de mais K ou t.',fig:function(){return ktvMini({peso:120,t:4,qb:350,koa:1000},'grande → Kt/V menor');}},
+  {q:'Subdose com Qb e tempo já no teto, membrana low-flux. A alavanca é…',o:['↑Qb','↑Qd / dialisador high-flux','reduzir tempo'],c:1,e:'Com Qb e tempo no teto, o gargalo é a membrana: subir o KoA (high-flux).',fig:function(){return doseBars(R0({peso:90,t:4,qb:450,koa:450,qd:600}),'low-flux → subdose');}},
+  {q:'1ª sessão, ureia 320, primeira diálise. O alvo de Kt/V deve ser…',o:['alto, para normalizar rápido','gentil/rebaixado (~0,9)','irrelevante'],c:1,e:'Baixar a ureia rápido demais causa desequilíbrio (M34/M26). Gentil é o certo.',fig:function(){return doseBars(R0({ureiaPre:320,t:2,primeiraUremica:true}),'urêmico → gentil');}},
+  {q:'URR e Kt/V, numa mesma sessão, tendem a…',o:['andar em direções opostas','andar juntos (mesmo R)','não se relacionar'],c:1,e:'Ambos derivam do mesmo R = pós/pré. São a mesma dose por ângulos distintos.',fig:function(){return doseBars(R0({peso:70,t:4,qb:300,koa:900}),'URR & Kt/V juntos');}},
+  {q:'No gráfico Kt/V × tempo, o marcador vermelho significa…',o:['dose tóxica','subdose (abaixo do alvo)','equilíbrio'],c:1,e:'Vermelho = abaixo da linha-alvo 1,2. Verde = adequado.',fig:function(){return ktvMini({peso:85,t:2,qb:250,koa:600},'marcador vermelho');}},
+  {q:'Na figura da saturação, o ganho de K com o Qb…',o:['é linear sem fim','diminui ao se aproximar do KoA','é negativo'],c:1,e:'A curva satura no teto da membrana — o ganho marginal cai.',fig:function(){return imgFig('clearance-saturacao-qb.svg','saturação do clearance');}},
+  {q:'Na figura do V, o paciente grande recebe Kt/V menor porque…',o:['a máquina é fraca','o volume de ureia (tanque) é maior','a ureia é maior'],c:1,e:'V ≈ peso·0,58 dilui a dose: mesmo K·t rende Kt/V menor.',fig:function(){return imgFig('volume-distribuicao-ureia.svg','V dilui a dose');}},
+  {q:'Na figura das alavancas, com o clearance saturado a saída é…',o:['↑Qb','↑tempo','reduzir o KoA'],c:1,e:'Saturado o clearance, o tempo (numerador K·t) é a alavanca eficiente.',fig:function(){return imgFig('alavancas-prescricao.svg','as alavancas');}},
+  {q:'Na figura adequado × subdose, ser ADEQUADO exige…',o:['só Kt/V ≥1,2','Kt/V ≥1,2 E URR ≥65%','só URR ≥65%'],c:1,e:'A adequação combina os dois índices; ambos no alvo.',fig:function(){return imgFig('adequado-vs-subdose.svg','adequado × subdose');}}
+];
+var TUTOR_TEXTUAL=[
+  {q:'O Kt/V é, fisicamente,…',o:['o tempo de sessão','clearance × tempo ÷ volume de distribuição da ureia','o fluxo de sangue'],c:1,e:'A dose fracionada: quantas vezes o volume de ureia foi limpo. Adimensional.'},
+  {q:'O URR é definido por…',o:['(1 − R)·100, com R = ureia_pós/pré','K·t/V','Qb·t'],c:0,e:'Leitura crua da redução da ureia; alvo ≥ 65%; anda junto do Kt/V.'},
+  {q:'O alvo de adequação por sessão é…',o:['Kt/V ≥ 1,2 e URR ≥ 65%','Kt/V ≥ 0,5','URR ≥ 30%'],c:0,e:'3×/semana; abaixo disso, subdose.'},
+  {q:'O tempo é uma alavanca direta porque…',o:['não muda nada','entra no numerador K·t','reduz o V'],c:1,e:'Mais tempo → mais K·t → Kt/V maior, de forma quase linear (M22).'},
+  {q:'Dobrar o Qb não dobra o Kt/V porque…',o:['a ureia acaba','o clearance satura no KoA da membrana','o V dobra'],c:1,e:'A capacidade de transferência (KoA) limita o ganho marginal do fluxo.'},
+  {q:'Um dialisador high-flux tem…',o:['KoA maior → mais clearance','menos tempo','menos V'],c:0,e:'KoA maior eleva o clearance para o mesmo Qb — alavanca ③.'},
+  {q:'O paciente grande recebe Kt/V menor com a mesma prescrição porque…',o:['o sangue é mais viscoso','o V (≈ peso·0,58) dilui a dose','a ureia é menor'],c:1,e:'A dose é relativa ao volume de distribuição.'},
+  {q:'A ultrafiltração contribui para o Kt/V por…',o:['difusão','convecção (arraste de soluto)','osmose reversa'],c:1,e:'O termo (4−3,5R)·UF/peso de Daugirdas corrige a parcela convectiva.'},
+  {q:'Com o clearance já saturado, a alavanca eficiente é…',o:['↑Qb','↑tempo','↓Qd'],c:1,e:'Saturado o K, o tempo (numerador) é o que ainda sobe a dose.'},
+  {q:'Na 1ª sessão muito urêmica, o alvo de Kt/V deve ser…',o:['mais alto','rebaixado/gentil (~0,9)','o mesmo'],c:1,e:'Evita o desequilíbrio dialítico — edema cerebral por gradiente osmótico (M34).'},
+  {q:'URR e Kt/V, por derivarem do mesmo R,…',o:['são independentes','andam juntos','são opostos'],c:1,e:'São a mesma dose por ângulos distintos; medir um informa o outro.'},
+  {q:'Em síntese, a dose de HDI é…',o:['adivinhada pelo tempo','medida (Kt/V/URR) e prescrita por alavancas','irrelevante'],c:1,e:'Mede-se a dose e ajusta-se tempo/Qb/Qd-dialisador para o alvo.'}
+];
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL; window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+var BANKS={ilustrada:TUTOR_ILUSTRADO,textual:TUTOR_TEXTUAL}, curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+function renderTutor(){ var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():''; $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false; $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){ if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button'); btns[item.c].classList.add('ok'); if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block'; fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e; $('tutor-score').textContent=tScore; $('tutor-total').textContent=tTotal; });
+    box.appendChild(b); }); }
+$('banktabs').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor(); });
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+$('draw-ktv').innerHTML = ktvMini({peso:70,t:4,qb:300,koa:900},'70 kg, 4 h → adequado');
+$('draw-urr').innerHTML = doseBars(dose({peso:70,t:4,qb:300,koa:900}),'URR & Kt/V juntos');
+$('draw-satura').innerHTML = satMini('K satura com Qb');
+$('draw-gentil').innerHTML = doseBars(dose({ureiaPre:320,t:2,primeiraUremica:true}),'1ª sessão urêmica → gentil');
+$('draw-alav').innerHTML = doseBars(dose({peso:95,t:3,qb:200,koa:1000,qd:700}),'subdose → ↑Qb');
+$('fig-caso').innerHTML = ktvMini({peso:70,t:2,qb:300,koa:900},'a sessão curta no gráfico') + doseBars(dose({peso:70,t:2,qb:300,koa:900}),'subdose pelo tempo');
+
+refresh(); renderTutor();
+</script>
+</body>
+</html>

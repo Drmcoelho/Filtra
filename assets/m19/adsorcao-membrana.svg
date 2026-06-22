@@ -1,22 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M19</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">Princípios físicos do transporte</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">adsorcao-membrana</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">Adsorção na membrana</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Adsorção — o soluto adere à membrana (e satura)</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">independe do gradiente: a molécula gruda na superfície; quando os sítios enchem, para</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <!-- membrana com sítios -->
+  <rect x="60" y="80" width="260" height="150" rx="8" fill="#10202c" stroke="#a06ad0"/>
+  <text x="190" y="100" text-anchor="middle" font-size="10" fill="#c9a0e0">superfície da membrana (sítios)</text>
+  <g><rect x="80" y="200" width="220" height="14" fill="#3a214a" stroke="#a06ad0"/>
+    <circle cx="100" cy="193" r="7" fill="#e8a13a"/><circle cx="140" cy="193" r="7" fill="#e8a13a"/><circle cx="180" cy="193" r="7" fill="#e8a13a"/><circle cx="220" cy="193" r="7" fill="#e8a13a"/><circle cx="260" cy="193" r="7" fill="#e8a13a"/></g>
+  <text x="190" y="150" text-anchor="middle" font-size="9" fill="#9fb1c0">citocinas, fármacos, toxinas ligadas a proteína</text>
+
+  <!-- curva de saturação -->
+  <line x1="380" y1="230" x2="630" y2="230" stroke="#3a4a58"/>
+  <line x1="380" y1="90" x2="380" y2="230" stroke="#3a4a58"/>
+  <path d="M380,228 C430,170 500,135 560,128 C600,125 620,124 630,124" fill="none" stroke="#a06ad0" stroke-width="3"/>
+  <text x="505" y="250" text-anchor="middle" font-size="9" fill="#9fb1c0">tempo / massa adsorvida →</text>
+  <text x="500" y="115" font-size="9" fill="#c9a0e0">satura (sítios cheios)</text>
+  <text x="505" y="84" text-anchor="middle" font-size="10" fill="#e7eef4">remoção por adsorção</text>
+
+  <text x="340" y="280" text-anchor="middle" font-size="10" fill="#e8a13a">por ser saturável, a membrana precisa ser trocada para "renovar" a capacidade adsortiva</text>
 </svg>

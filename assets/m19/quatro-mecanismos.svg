@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 320" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="320" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="316" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Os quatro mecanismos físicos da depuração</text>
+  <text x="340" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">a diálise não substitui o rim — substitui, por física, algumas funções</text>
+
+  <g font-size="10.5">
+    <rect x="24" y="60" width="310" height="118" rx="8" fill="#0c2330" stroke="#39c0c8"/>
+    <text x="40" y="82" fill="#9fe3ec" font-weight="bold">1 · DIFUSÃO (gradiente de concentração)</text>
+    <text x="40" y="104" fill="#e7eef4">soluto vai do mais concentrado ao menos</text>
+    <text x="40" y="124" fill="#cdd9e3">remove bem PEQUENAS (ureia, K⁺) · base da HD</text>
+    <text x="40" y="146" fill="#9fb1c0">depende do gradiente, da membrana (KoA) e dos fluxos</text>
+    <text x="40" y="166" fill="#e8a13a">cai rápido com o tamanho da molécula</text>
+
+    <rect x="346" y="60" width="310" height="118" rx="8" fill="#10202c" stroke="#52c08a"/>
+    <text x="362" y="82" fill="#9fe3ec" font-weight="bold">2 · CONVECÇÃO (arraste por solvente)</text>
+    <text x="362" y="104" fill="#e7eef4">a água em movimento "arrasta" o soluto</text>
+    <text x="362" y="124" fill="#cdd9e3">remove bem MÉDIAS (β2-micro) · base da HF</text>
+    <text x="362" y="146" fill="#9fb1c0">= Jv · sieving (S)</text>
+    <text x="362" y="166" fill="#e8a13a">cai devagar com o tamanho</text>
+
+    <rect x="24" y="186" width="310" height="118" rx="8" fill="#10202c" stroke="#3a7bd5"/>
+    <text x="40" y="208" fill="#9bbef0" font-weight="bold">3 · ULTRAFILTRAÇÃO (pressão)</text>
+    <text x="40" y="230" fill="#e7eef4">remove ÁGUA por pressão transmembrana (TMP)</text>
+    <text x="40" y="250" fill="#cdd9e3">Jv = Kuf · TMP — independe da concentração</text>
+    <text x="40" y="272" fill="#9fb1c0">é como se controla o VOLUME do paciente</text>
+    <text x="40" y="292" fill="#e8a13a">a convecção "pega carona" no Jv</text>
+
+    <rect x="346" y="186" width="310" height="118" rx="8" fill="#10202c" stroke="#a06ad0"/>
+    <text x="362" y="208" fill="#c9a0e0" font-weight="bold">4 · ADSORÇÃO (adesão à membrana)</text>
+    <text x="362" y="230" fill="#e7eef4">o soluto gruda na superfície da membrana</text>
+    <text x="362" y="250" fill="#cdd9e3">útil p/ algumas toxinas/citocinas</text>
+    <text x="362" y="272" fill="#9fb1c0">SATURÁVEL: a capacidade esgota</text>
+    <text x="362" y="292" fill="#e8a13a">depende da membrana, não do gradiente</text>
+  </g>
+</svg>

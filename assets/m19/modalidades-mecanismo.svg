@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="300" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="296" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="24" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">As modalidades, em função dos mecanismos</text>
+  <text x="340" y="42" text-anchor="middle" font-size="11" fill="#9fb1c0">cada técnica é uma receita dos quatro mecanismos — entender a física é entender a máquina</text>
+
+  <g font-size="11">
+    <rect x="24" y="56" width="632" height="28" fill="#10202c" stroke="#283642"/>
+    <text x="40" y="75" fill="#9fb1c0">Modalidade</text><text x="230" y="75" fill="#9fb1c0">Mecanismo dominante</text><text x="470" y="75" fill="#9fb1c0">Remove melhor</text>
+
+    <rect x="24" y="84" width="632" height="32" fill="#0c2330"/>
+    <text x="40" y="105" fill="#9fe3ec" font-weight="bold">HD (hemodiálise)</text><text x="230" y="105" fill="#e7eef4">difusão</text><text x="470" y="105" fill="#e7eef4">pequenas (ureia, K⁺)</text>
+    <rect x="24" y="116" width="632" height="32" fill="#10202c"/>
+    <text x="40" y="137" fill="#9fe3ec" font-weight="bold">HF (hemofiltração)</text><text x="230" y="137" fill="#e7eef4">convecção</text><text x="470" y="137" fill="#e7eef4">médias (β2-micro)</text>
+    <rect x="24" y="148" width="632" height="32" fill="#0c2330"/>
+    <text x="40" y="169" fill="#9fe3ec" font-weight="bold">HDF (hemodiafiltração)</text><text x="230" y="169" fill="#e7eef4">difusão + convecção</text><text x="470" y="169" fill="#e7eef4">pequenas + médias</text>
+    <rect x="24" y="180" width="632" height="32" fill="#10202c"/>
+    <text x="40" y="201" fill="#9fe3ec" font-weight="bold">UF isolada</text><text x="230" y="201" fill="#e7eef4">ultrafiltração</text><text x="470" y="201" fill="#e7eef4">só ÁGUA (volume)</text>
+    <rect x="24" y="212" width="632" height="32" fill="#0c2330"/>
+    <text x="40" y="233" fill="#9fe3ec" font-weight="bold">DP (peritoneal)</text><text x="230" y="233" fill="#e7eef4">difusão + osmose</text><text x="470" y="233" fill="#e7eef4">pequenas + água (glicose)</text>
+  </g>
+  <text x="340" y="270" text-anchor="middle" font-size="10" fill="#e8a13a">os módulos M20–M31 detalham cada uma; aqui fica a física que as une</text>
+  <text x="340" y="288" text-anchor="middle" font-size="9" fill="#9fb1c0">adsorção entra como adjuvante em membranas especiais (sepse, intoxicações)</text>
+</svg>

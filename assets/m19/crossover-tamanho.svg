@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 320" font-family="system-ui,Arial,sans-serif">
+  <rect width="680" height="320" rx="8" fill="#0f1720"/>
+  <rect x="2" y="2" width="676" height="316" rx="7" fill="none" stroke="#283642"/>
+  <text x="340" y="24" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">O crossover — clearance × tamanho molecular</text>
+  <text x="340" y="42" text-anchor="middle" font-size="11" fill="#9fb1c0">a difusão cai rápido com o tamanho; a convecção cai devagar — elas se cruzam</text>
+
+  <line x1="70" y1="60" x2="70" y2="270" stroke="#3a4a58"/>
+  <line x1="70" y1="270" x2="640" y2="270" stroke="#3a4a58"/>
+  <text x="355" y="298" text-anchor="middle" font-size="11" fill="#9fb1c0">tamanho molecular (log MW) →</text>
+  <text x="30" y="170" font-size="11" fill="#9fb1c0" transform="rotate(-90 30 170)">clearance</text>
+
+  <!-- difusão: cai rápido -->
+  <path d="M90,90 C160,110 230,200 320,240 C420,262 540,268 630,269" fill="none" stroke="#39c0c8" stroke-width="3"/>
+  <text x="120" y="84" font-size="10" fill="#9fe3ec">difusão</text>
+  <!-- convecção: cai devagar -->
+  <path d="M90,170 C200,176 330,188 430,210 C520,232 600,258 630,266" fill="none" stroke="#52c08a" stroke-width="3"/>
+  <text x="150" y="166" font-size="10" fill="#9fe3ec">convecção</text>
+
+  <!-- crossover -->
+  <circle cx="330" cy="232" r="6" fill="#e8a13a"/>
+  <line x1="330" y1="60" x2="330" y2="270" stroke="#e8a13a" stroke-dasharray="3 3" stroke-opacity="0.5"/>
+  <text x="338" y="120" font-size="10" fill="#f0c078">crossover: aqui a</text>
+  <text x="338" y="135" font-size="10" fill="#f0c078">convecção assume</text>
+
+  <!-- marcos -->
+  <g font-size="9" fill="#9fb1c0" text-anchor="middle">
+    <text x="100" y="286">ureia 60</text><text x="330" y="286">β2-micro 12k</text><text x="600" y="286">albumina 66k</text>
+  </g>
+  <text x="340" y="312" text-anchor="middle" font-size="9" fill="#e8a13a">é exatamente a figura do Instrumento (computada pelo engine: difusão, convecção e total)</text>
+</svg>

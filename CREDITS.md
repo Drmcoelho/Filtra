@@ -283,6 +283,26 @@ depois) — preencher fonte/autor/licença antes de considerar o módulo finaliz
 > Nota: o M17 **integra a imagem raster real** `sitios-diureticos-nefron.png` (crédito Wikimedia pendente); as
 > outras 12 figuras são SVG autorais FILTRA (7 placeholders reescritos + 5 novos).
 
+## M19 — Princípios físicos do transporte (DIALISA)
+| Arquivo | Descrição | Fonte (URL) | Autor | Licença |
+|---|---|---|---|---|
+| `assets/m19/quatro-mecanismos.svg` | Os quatro mecanismos | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m19/difusao-conveccao-uf.svg` | Difusão × convecção × UF | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m19/difusao-gradiente.svg` | Difusão pelo gradiente | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m19/clearance-principios.svg` | Clearance total | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m19/conveccao-arraste.svg` | Convecção (solvent drag) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m19/sieving-coeficiente.svg` | Coeficiente de sieving | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m19/transporte-membrana-solutos.svg` | A membrana e os solutos | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m19/ultrafiltracao-tmp.svg` | Ultrafiltração (Jv=Kuf·TMP) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m19/osmose-vs-dialise.svg` | Osmose × pressão | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m19/adsorcao-membrana.svg` | Adsorção (saturável) | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m19/crossover-tamanho.svg` | Crossover por tamanho | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m19/modalidades-mecanismo.svg` | Modalidades por mecanismo | — | Projeto FILTRA | FILTRA (autoral) |
+| `assets/m19/fluxos-circuito.svg` | Fluxos do circuito | — | Projeto FILTRA | FILTRA (autoral) |
+
+> Nota: os 8 SVGs do M19 eram placeholders e foram **reescritos como autorais** + 5 novos; o M19 não usa
+> imagens raster importadas (todas as 13 figuras são autorais FILTRA).
+
 ## Regras
 - Preferir **CC0 / domínio público**; **CC-BY / CC-BY-SA** aceitos **com atribuição** nesta tabela.
 - O caminho no `<img>` é sempre **relativo** (`assets/…`), nunca uma URL remota — o produto é offline.

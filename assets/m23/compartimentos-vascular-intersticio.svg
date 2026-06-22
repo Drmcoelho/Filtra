@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
+  <rect width="640" height="320" fill="#eef6f7" rx="6"/>
+  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a6f7a" stroke-width="2"/>
+  <rect x="20" y="14" width="56" height="24" rx="4" fill="#2a6f7a"/>
+  <text x="48" y="31" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M23</text>
+  <text x="360" y="31" text-anchor="middle" font-size="14" font-weight="bold" fill="#13434a">④ DE ONDE A UF TIRA A ÁGUA</text>
+  <!-- capilar central -->
+  <rect x="250" y="70" width="140" height="190" rx="8" fill="#c0392b" fill-opacity="0.2" stroke="#b8402f" stroke-width="2"/>
+  <text x="320" y="92" text-anchor="middle" font-size="12" font-weight="bold" fill="#b8402f">① VASO</text>
+  <text x="320" y="108" text-anchor="middle" font-size="10" fill="#b8402f">plasma ~3 L</text>
+  <text x="320" y="124" text-anchor="middle" font-size="10" fill="#b8402f">(a UF tira AQUI)</text>
+  <!-- intersticio dos dois lados -->
+  <rect x="60" y="70" width="160" height="190" rx="8" fill="#2a7a3a" fill-opacity="0.14" stroke="#2a7a3a" stroke-width="1.5"/>
+  <rect x="420" y="70" width="160" height="190" rx="8" fill="#2a7a3a" fill-opacity="0.14" stroke="#2a7a3a" stroke-width="1.5"/>
+  <text x="140" y="92" text-anchor="middle" font-size="12" font-weight="bold" fill="#2a7a3a">② INTERSTÍCIO</text>
+  <text x="500" y="92" text-anchor="middle" font-size="12" font-weight="bold" fill="#2a7a3a">② INTERSTÍCIO</text>
+  <text x="140" y="115" text-anchor="middle" font-size="10" fill="#2a7a3a">grande reserva</text>
+  <text x="500" y="115" text-anchor="middle" font-size="10" fill="#2a7a3a">grande reserva</text>
+  <!-- setas refilling para o vaso -->
+  <line x1="220" y1="165" x2="248" y2="165" stroke="#2a7a3a" stroke-width="3" marker-end="url(#b1)"/>
+  <line x1="420" y1="165" x2="392" y2="165" stroke="#2a7a3a" stroke-width="3" marker-end="url(#b1)"/>
+  <text x="320" y="200" text-anchor="middle" font-size="10" fill="#2a7a3a">③ refilling repõe o vaso</text>
+  <!-- UF saindo -->
+  <line x1="320" y1="70" x2="320" y2="40" stroke="#b8402f" stroke-width="3" marker-end="url(#b2)"/>
+  <text x="320" y="56" text-anchor="middle" font-size="9" fill="#b8402f">UF</text>
+  <defs>
+    <marker id="b1" markerWidth="8" markerHeight="8" refX="5" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="#2a7a3a"/></marker>
+    <marker id="b2" markerWidth="8" markerHeight="8" refX="5" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="#b8402f"/></marker>
+  </defs>
+  <text x="320" y="288" text-anchor="middle" font-size="11" fill="#13434a">a água sai do vaso; o interstício a devolve — mas com ATRASO</text>
+  <text x="360" y="308" text-anchor="middle" font-size="9" fill="#13434a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+</svg>

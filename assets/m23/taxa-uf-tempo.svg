@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
+  <rect width="640" height="320" fill="#eef6f7" rx="6"/>
+  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a6f7a" stroke-width="2"/>
+  <rect x="20" y="14" width="56" height="24" rx="4" fill="#2a6f7a"/>
+  <text x="48" y="31" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M23</text>
+  <text x="360" y="31" text-anchor="middle" font-size="14" font-weight="bold" fill="#13434a">⑦ MESMA META, TEMPOS DIFERENTES — a UF rate</text>
+  <text x="320" y="58" text-anchor="middle" font-size="12" fill="#13434a">UF rate = UF total ÷ tempo  ·  meta = 4 L</text>
+  <!-- barra curta (rápida) -->
+  <rect x="90" y="90" width="180" height="40" rx="6" fill="#b8402f" fill-opacity="0.2" stroke="#b8402f"/>
+  <text x="180" y="115" text-anchor="middle" font-size="12" fill="#b8402f">2 h → 2000 mL/h</text>
+  <text x="180" y="148" text-anchor="middle" font-size="10" fill="#b8402f">① rápido: alto (excede refilling)</text>
+  <!-- barra média -->
+  <rect x="90" y="165" width="270" height="34" rx="6" fill="#c07a1a" fill-opacity="0.2" stroke="#c07a1a"/>
+  <text x="225" y="187" text-anchor="middle" font-size="12" fill="#c07a1a">4 h → 1000 mL/h</text>
+  <!-- barra longa (lenta) -->
+  <rect x="90" y="222" width="430" height="34" rx="6" fill="#2a7a3a" fill-opacity="0.2" stroke="#2a7a3a"/>
+  <text x="305" y="244" text-anchor="middle" font-size="12" fill="#2a7a3a">8 h → 500 mL/h</text>
+  <text x="305" y="278" text-anchor="middle" font-size="10" fill="#2a7a3a">② lento e longo: cabe no refilling → protege</text>
+  <text x="360" y="306" text-anchor="middle" font-size="9" fill="#13434a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+</svg>

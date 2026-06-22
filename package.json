@@ -25,6 +25,7 @@
     "test:16": "node build/m16/test16.node.js",
     "test:17": "node build/m17/test17.node.js",
     "test:18": "node build/m18/test18.node.js",
+    "test:19": "node build/m19/test19.node.js",
     "test:20": "node build/m20/test20.node.js",
     "test:22": "node build/m22/test22.node.js",
     "test:24": "node build/m24/test24.node.js",
@@ -37,7 +38,7 @@
     "test:36": "node build/m36/test36.node.js",
     "test:38": "node build/m38/test38.node.js",
     "test:39": "node build/m39/test39.node.js",
-    "test": "npm run test:0 && npm run test:1 && npm run test:2 && npm run test:3 && npm run test:4 && npm run test:5 && npm run test:6 && npm run test:7 && npm run test:8 && npm run test:9 && npm run test:10 && npm run test:11 && npm run test:12 && npm run test:13 && npm run test:14 && npm run test:15 && npm run test:16 && npm run test:17 && npm run test:18 && npm run test:20 && npm run test:22 && npm run test:24 && npm run test:25 && npm run test:26 && npm run test:28 && npm run test:30 && npm run test:32 && npm run test:34 && npm run test:36 && npm run test:38 && npm run test:39",
+    "test": "npm run test:0 && npm run test:1 && npm run test:2 && npm run test:3 && npm run test:4 && npm run test:5 && npm run test:6 && npm run test:7 && npm run test:8 && npm run test:9 && npm run test:10 && npm run test:11 && npm run test:12 && npm run test:13 && npm run test:14 && npm run test:15 && npm run test:16 && npm run test:17 && npm run test:18 && npm run test:19 && npm run test:20 && npm run test:22 && npm run test:24 && npm run test:25 && npm run test:26 && npm run test:28 && npm run test:30 && npm run test:32 && npm run test:34 && npm run test:36 && npm run test:38 && npm run test:39",
     "prevalidate": "node build/ensure-deps.js",
     "validate:0": "node build/m0/validate0.js",
     "validate:1": "node build/m1/validate1.js",
@@ -58,6 +59,7 @@
     "validate:16": "node build/m16/validate16.js",
     "validate:17": "node build/m17/validate17.js",
     "validate:18": "node build/m18/validate18.js",
+    "validate:19": "node build/m19/validate19.js",
     "validate:20": "node build/m20/validate20.js",
     "validate:22": "node build/m22/validate22.js",
     "validate:24": "node build/m24/validate24.js",
@@ -70,7 +72,7 @@
     "validate:36": "node build/m36/validate36.js",
     "validate:38": "node build/m38/validate38.js",
     "validate:39": "node build/m39/validate39.js",
-    "validate": "npm run validate:0 && npm run validate:1 && npm run validate:2 && npm run validate:3 && npm run validate:4 && npm run validate:5 && npm run validate:6 && npm run validate:7 && npm run validate:8 && npm run validate:9 && npm run validate:10 && npm run validate:11 && npm run validate:12 && npm run validate:13 && npm run validate:14 && npm run validate:15 && npm run validate:16 && npm run validate:17 && npm run validate:18 && npm run validate:20 && npm run validate:22 && npm run validate:24 && npm run validate:25 && npm run validate:26 && npm run validate:28 && npm run validate:30 && npm run validate:32 && npm run validate:34 && npm run validate:36 && npm run validate:38 && npm run validate:39",
+    "validate": "npm run validate:0 && npm run validate:1 && npm run validate:2 && npm run validate:3 && npm run validate:4 && npm run validate:5 && npm run validate:6 && npm run validate:7 && npm run validate:8 && npm run validate:9 && npm run validate:10 && npm run validate:11 && npm run validate:12 && npm run validate:13 && npm run validate:14 && npm run validate:15 && npm run validate:16 && npm run validate:17 && npm run validate:18 && npm run validate:19 && npm run validate:20 && npm run validate:22 && npm run validate:24 && npm run validate:25 && npm run validate:26 && npm run validate:28 && npm run validate:30 && npm run validate:32 && npm run validate:34 && npm run validate:36 && npm run validate:38 && npm run validate:39",
     "check": "npm test && npm run validate"
   },
   "devDependencies": {

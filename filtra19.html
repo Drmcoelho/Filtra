@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M19 — Princípios físicos do transporte: difusão · convecção · ultrafiltração · adsorção</title>
+<style>
+  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--warn:#e8a13a;--bad:#e0556b;--good:#52c08a;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none} section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .presets{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px} .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)} .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)} .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)} .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M19</div>
+  <h1>Princípios físicos do transporte — difusão · convecção · ultrafiltração · adsorção</h1>
+  <div class="sub">A abertura da metade DIALISA (Bloco VI): a <b>base física de toda a diálise</b>. A máquina
+  <b>não substitui o rim</b> — substitui <b>funções</b> por física. Remoção de <b>soluto</b> ← <b>difusão</b>
+  (gradiente de concentração, J ∝ D·A·ΔC/Δx, e D cai com o peso molecular) + <b>convecção</b> (arraste pelo solvente,
+  fluxo = Q_uf·C·S, independe do PM até o cutoff). Remoção de <b>volume</b> ← <b>ultrafiltração</b>
+  (Q_uf = Kuf·TMP, TMP = P_hidro − P_onc). E a <b>adsorção</b> (ligação à membrana, saturável). A <b>homeostasia</b>
+  do meio interno volta porque a física repõe a função.</div>
+  <nav class="hex">
+    <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
+    <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="dialisa.html">&larr; índice do antebraço DIALISA</a>
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- CONCEITO -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — as quatro físicas que substituem as funções do rim</h3>
+      <p class="sub" style="margin-top:0"><b>A diálise é física aplicada.</b> O rim defendia o meio interno
+      (<b>homeostasia</b>: volume, eletrólitos, ácido-base, escórias); quando ele falha, a máquina repõe essas
+      <b>funções</b> por quatro mecanismos físicos. Soluto sai por <b>difusão</b> e <b>convecção</b>; volume sai por
+      <b>ultrafiltração</b>; e parte do soluto adere à membrana por <b>adsorção</b>. As Fig. 1–8 voltam no Caso, na
+      Trilha e na Avaliação. Atribuição em <code>CREDITS.md</code> (em curadoria).</p>
+
+      <h4>1. Difusão — o gradiente de concentração (e o peso molecular)</h4>
+      <p class="sub">A <b>difusão</b> move soluto do compartimento de <b>alta</b> concentração (sangue) para o de
+      <b>baixa</b> (dialisato), por Fick: <b>J ∝ D·A·ΔC/Δx</b>. O coeficiente <b>D cai com o peso molecular</b>
+      (D ∝ PM<sup>−1/3</sup>): a <b>ureia</b> (60 Da) difunde rápido (D≈1); a <b>β2-microglobulina</b> (~11800 Da)
+      difunde <b>mal</b> (D≈0,17). Por isso a difusão é ótima para <b>pequenos</b> e ruim para <b>médios</b>. O
+      gradiente ΔC é a diferença de concentração entre sangue e dialisato (p.ex. K⁺ em <b>mEq/L</b>). Veja a
+      Fig. 1.</p>
+      <div class="frow">
+        <div class="concept" id="draw-difusao"></div>
+        <figure class="fviva"><img src="assets/m19/difusao-gradiente.svg" alt="Difusão: soluto migra do sangue (alta concentração) ao dialisato (baixa concentração) pela membrana" loading="lazy">
+          <figcaption><b>Fig. 1 · Difusão pelo gradiente.</b> O soluto (pontos) é abundante no <b>sangue</b> (esquerda,
+          alta C) e escasso no <b>dialisato</b> (direita, baixa C). As setas verdes (①) mostram o fluxo <b>alto → baixo</b>
+          através da <b>membrana</b> (faixa central). O fluxo segue <b>J ∝ D·A·ΔC/Δx</b> e cessa quando o gradiente
+          zera. <i>Membrane = membrana; blood = sangue.</i></figcaption></figure>
+        <figure class="fviva"><img src="assets/m19/membrana-poros.svg" alt="Membrana com poros: pequeno passa, médio passa em high-flux, grande (albumina) é retido" loading="lazy">
+          <figcaption><b>Fig. 2 · A membrana e seus poros.</b> Os poros peneiram por <b>tamanho</b>: o soluto
+          <b>pequeno</b> (verde) passa livre; o <b>médio</b> (laranja) passa em membranas <b>high-flux</b>; o
+          <b>grande</b> (albumina, vermelho) é <b>retido</b>. O coeficiente de <b>peneiramento</b> (S, 0–1) quantifica
+          quanto cada peso molecular atravessa.</figcaption></figure>
+      </div>
+
+      <h4>2. Convecção — o arraste pelo solvente (o que a difusão não remove)</h4>
+      <p class="sub">A <b>convecção</b> ("solvent drag") arrasta o soluto junto com a <b>água que ultrafiltra</b>:
+      <b>fluxo = Q_uf·C·S</b>, onde S é o peneiramento. O ponto crucial: a convecção <b>independe do peso molecular</b>
+      até o cutoff da membrana. Por isso ela remove o soluto <b>médio</b> (β2-m, citocinas) que a difusão deixa para
+      trás. Em fluxo convectivo alto (HF/CVVH), para a β2-m a convecção <b>supera</b> a difusão. Veja a Fig. 3.</p>
+      <div class="frow">
+        <div class="concept" id="draw-conveccao"></div>
+        <figure class="fviva"><img src="assets/m19/conveccao-arraste.svg" alt="Convecção: a água ultrafiltrada arrasta solutos pequenos e médios pela membrana porosa" loading="lazy">
+          <figcaption><b>Fig. 3 · Convecção por arraste.</b> As setas azuis largas são a <b>água</b> que ultrafiltra; ela
+          <b>arrasta</b> tanto o soluto <b>pequeno</b> (verde) quanto o <b>médio</b> (laranja) pela membrana porosa.
+          Como <b>fluxo = Q_uf·C·S</b> e S≈1 abaixo do cutoff, a remoção <b>não cai</b> com o PM — ao contrário da
+          difusão.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m19/difusao-vs-conveccao.svg" alt="Difusão versus convecção: pequenos por difusão, médios por convecção, HDF soma os dois" loading="lazy">
+          <figcaption><b>Fig. 4 · Difusão × convecção.</b> Duas físicas, dois alvos: a <b>difusão</b> (HD) tira
+          <b>pequenos</b> e <b>cai com o PM</b>; a <b>convecção</b> (HF/CVVH) tira <b>médios</b> e fica <b>plana</b> até o
+          cutoff. A <b>HDF</b> (hemodiafiltração) <b>soma</b> as duas. Ambas removem soluto; a UF remove
+          volume.</figcaption></figure>
+      </div>
+
+      <h4>3. A curva clearance × peso molecular — a pérola do módulo</h4>
+      <p class="sub">Plote o <b>clearance</b> contra o <b>peso molecular</b>: a curva <b>difusiva</b> começa alta e
+      <b>despenca</b> com o PM; a curva <b>convectiva</b> fica quase <b>plana</b> até o cutoff e só então cai. Onde elas
+      se cruzam está a <b>pérola</b>: o soluto <b>médio</b> só sai bem por <b>convecção</b>. Dobrar o PM derruba a
+      difusão, mas quase não toca a convecção. Veja a Fig. 5 — é a mesma curva do <b>Instrumento</b>.</p>
+      <div class="frow">
+        <div class="concept" id="draw-clearance"></div>
+        <figure class="fviva"><img src="assets/m19/clearance-vs-pm.svg" alt="Curva clearance versus peso molecular: difusivo cai, convectivo fica plano até o cutoff" loading="lazy">
+          <figcaption><b>Fig. 5 · Clearance × peso molecular.</b> A curva <b>verde</b> (difusivo, HD) <b>despenca</b> com
+          o PM — alta para a <b>ureia</b>, baixa para a <b>β2-m</b>. A <b>laranja</b> (convectivo, HF) fica <b>plana</b>
+          até o <b>cutoff</b> (linha tracejada vermelha) e só então cai. O cruzamento ensina: o <b>médio</b> só sai por
+          convecção.</figcaption></figure>
+      </div>
+
+      <h4>4. Ultrafiltração — a remoção de VOLUME pela pressão</h4>
+      <p class="sub">Os dois mecanismos acima removem <b>soluto</b>. O <b>volume</b> sai por outra física: a
+      <b>ultrafiltração</b>, dirigida por <b>pressão</b>, não por concentração. <b>Q_uf = Kuf·TMP</b>, com a
+      <b>TMP = P_hidrostática − P_oncótica</b>. Se a oncótica vence a hidrostática (TMP ≤ 0), <b>não há UF</b>. A UF é
+      também o <b>motor da convecção</b> (é a água que arrasta o soluto). Veja a Fig. 6.</p>
+      <div class="frow">
+        <div class="concept" id="draw-uf"></div>
+        <figure class="fviva"><img src="assets/m19/ultrafiltracao-tmp.svg" alt="Ultrafiltração: pressão hidrostática empurra água, oncótica se opõe, TMP gera o fluxo" loading="lazy">
+          <figcaption><b>Fig. 6 · Ultrafiltração e a TMP.</b> A <b>P hidrostática</b> (seta verde) empurra a água pela
+          membrana; a <b>P oncótica</b> (seta vermelha) puxa de volta. A diferença é a <b>TMP</b>, que dirige a
+          <b>água (UF)</b> (seta azul). <b>Q_uf = Kuf·TMP</b>: se TMP ≤ 0, não há remoção de volume. É pressão, não
+          concentração.</figcaption></figure>
+      </div>
+
+      <h4>5. Adsorção — a ligação à membrana, e a síntese das quatro físicas</h4>
+      <p class="sub">A <b>quarta</b> física: parte do soluto <b>adere</b> à própria membrana — a <b>adsorção</b>, do tipo
+      Langmuir: <b>q = cap·C/(Kd+C)</b>. É <b>saturável</b>: quando os sítios lotam, a adsorção <b>cessa</b> (some com o
+      tempo). Juntando tudo: a diálise repõe o meio interno por <b>difusão + convecção</b> (soluto), <b>UF</b> (volume) e
+      <b>adsorção</b> (ligação). A <b>homeostasia</b> volta não porque o rim funcionou, mas porque a <b>física</b>
+      substituiu a função. Fig. 7 e 8.</p>
+      <div class="frow">
+        <div class="concept" id="draw-adsorcao"></div>
+        <figure class="fviva"><img src="assets/m19/adsorcao-membrana.svg" alt="Adsorção: solutos ligam-se aos sítios da membrana até saturar (Langmuir)" loading="lazy">
+          <figcaption><b>Fig. 7 · Adsorção saturável.</b> Os solutos (vermelho) <b>ligam-se</b> aos <b>sítios</b> da
+          superfície da membrana até que eles <b>lotem</b> (7 de 10 ocupados → fração saturada 0,7). Segue Langmuir
+          <b>q = cap·C/(Kd+C)</b>: quando os sítios esgotam, a adsorção <b>cessa</b> — por isso ela some com o
+          tempo.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m19/tres-mecanismos.svg" alt="As quatro físicas: soluto por difusão e convecção, volume por ultrafiltração, adsorção" loading="lazy">
+          <figcaption><b>Fig. 8 · As quatro físicas.</b> Síntese: o <b>soluto</b> sai por <b>difusão + convecção</b>; o
+          <b>volume</b> por <b>ultrafiltração</b> (Q_uf = Kuf·TMP); a <b>adsorção</b> liga soluto à membrana (saturável).
+          A diálise <b>não substitui o rim</b> — substitui <b>funções</b> por física, restaurando o meio
+          interno.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASO -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — cinco solutos, decida o mecanismo antes de revelar</h3>
+      <p class="sub">Mesa de diálise. Cinco perguntas físicas: <b>qual mecanismo remove cada coisa — e por quê?</b>
+      Volte às Fig. 4 e 5: a física decide, não a marca da máquina.</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step"><b>Ato 1 — hipercalemia (K⁺, 39 Da).</b> Paciente com K⁺ 7,0 em HDI. Por qual mecanismo o
+        potássio sai, e por que tão rápido?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>Difusão.</b> O K⁺ é um soluto <b>pequeno</b> (39 Da, D≈1): difunde do sangue
+          (alta C) para o dialisato (baixa C) pelo <b>gradiente</b> (Fig. 1). Por isso a HDI baixa o K⁺ em poucas horas —
+          o pequeno alcança o teto difusivo (Fig. 5). É a física que faz a HDI ser veloz para os pequenos.</div></div>
+
+      <div class="step"><b>Ato 2 — β2-microglobulina (~11800 Da) na diálise crônica.</b> Acúmulo de médios na DRC. A
+        HDI difusiva clássica remove bem essa molécula?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2"><b>Não — a difusão falha no médio; precisa de convecção.</b> A β2-m tem D≈0,17:
+          difunde <b>mal</b> (Fig. 5, curva verde despencada). Para removê-la usa-se <b>convecção</b> (HF/HDF): a água
+          ultrafiltrada a <b>arrasta</b> (Fig. 3), e o sieving da membrana high-flux deixa o médio passar (Fig. 2). A
+          convecção remove o que a difusão não alcança — a pérola do módulo.</div></div>
+
+      <div class="step"><b>Ato 3 — sobrecarga de +4 L (remover VOLUME).</b> Edema e congestão. O objetivo agora não é
+        soluto, é tirar água. Qual física?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3"><b>Ultrafiltração.</b> Volume sai por <b>pressão</b>, não por concentração:
+          <b>Q_uf = Kuf·TMP</b>, TMP = P_hidro − P_onc (Fig. 6). Aumenta-se a TMP (pressão transmembrana) e a água
+          atravessa. A UF é também o <b>motor da convecção</b> — é a mesma água que, de passagem, arrasta soluto
+          médio.</div></div>
+
+      <div class="step"><b>Ato 4 — TMP zerada (a fronteira).</b> Tenta-se ultrafiltrar, mas o paciente está muito
+        hipoalbuminêmico e a pressão hidrostática caiu: P_hidro 20, P_onc 25. Sai água?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>Não — TMP ≤ 0, sem UF.</b> A <b>TMP = 20 − 25 = −5 mmHg</b>: a oncótica
+          <b>venceu</b> a hidrostática, e <b>Q_uf = Kuf·max(0,TMP) = 0</b> (Fig. 6). Sem gradiente de pressão líquido,
+          não há remoção de volume — por mais que a máquina rode. A física tem uma fronteira: a UF exige TMP
+          positiva.</div></div>
+
+      <div class="step"><b>Ato 5 — citocinas na sepse e a adsorção.</b> Sepse grave; cogita-se uma membrana
+        adsortiva para capturar mediadores. O que esperar do mecanismo?
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>Adsorção — mas satura.</b> Parte das citocinas <b>liga-se</b> à membrana
+          (q = cap·C/(Kd+C), Fig. 7). É um mecanismo real, porém <b>saturável</b>: quando os sítios lotam, a captura
+          <b>cessa</b> — por isso a membrana precisa ser <b>trocada</b>. Difusão, convecção, UF e adsorção: as quatro
+          físicas, cada uma para um alvo (Fig. 8).</div></div>
+    </div>
+  </section>
+
+  <!-- TRILHA -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — nove perguntas que constroem a física</h3>
+      <details><summary>1. O que a diálise realmente substitui?</summary><p>Não o rim — substitui algumas
+        <b>funções</b> por <b>física</b>: difusão e convecção (soluto), ultrafiltração (volume), adsorção (ligação). A
+        <b>homeostasia</b> do meio interno volta porque a física repõe a função (Fig. 8).</p></details>
+      <details><summary>2. Como a difusão move o soluto?</summary><p>Pelo <b>gradiente de concentração</b>: do sangue
+        (alta C) ao dialisato (baixa C), seguindo Fick <b>J ∝ D·A·ΔC/Δx</b>. Cessa quando o gradiente zera (Fig. 1).</p></details>
+      <details><summary>3. Por que a ureia difunde rápido e a β2-m não?</summary><p>Porque o coeficiente <b>D cai com o
+        peso molecular</b> (D ∝ PM<sup>−1/3</sup>). Ureia (60 Da) → D≈1; β2-m (~11800 Da) → D≈0,17. O <b>médio</b>
+        difunde <b>mal</b> (Fig. 5).</p></details>
+      <details><summary>4. O que é convecção?</summary><p>O <b>arraste do soluto pela água</b> que ultrafiltra
+        ("solvent drag"): <b>fluxo = Q_uf·C·S</b>. O sieving S (0–1) mede quanto o PM peneira pela membrana (Fig. 3).</p></details>
+      <details><summary>5. Por que a convecção remove o médio que a difusão não remove?</summary><p>Porque ela
+        <b>independe do peso molecular</b> até o cutoff (S≈1). Enquanto a difusão despenca com o PM, a convecção fica
+        <b>plana</b> — então, para a β2-m, a convecção <b>supera</b> a difusão (Fig. 4 e 5).</p></details>
+      <details><summary>6. O que é HDF?</summary><p><b>Hemodiafiltração</b>: difusão <b>+</b> convecção no mesmo
+        circuito. <b>Soma</b> os dois mecanismos — pega os pequenos (difusão) e os médios (convecção) ao mesmo
+        tempo.</p></details>
+      <details><summary>7. Como se remove VOLUME?</summary><p>Por <b>ultrafiltração</b>, dirigida por <b>pressão</b>:
+        <b>Q_uf = Kuf·TMP</b>, com TMP = P_hidrostática − P_oncótica (Fig. 6). É pressão, não concentração.</p></details>
+      <details><summary>8. Quando NÃO há ultrafiltração?</summary><p>Quando a <b>TMP ≤ 0</b> — a oncótica venceu a
+        hidrostática. Q_uf = Kuf·max(0,TMP) = 0: por mais que a máquina rode, sem TMP positiva não sai água (Fig. 6).</p></details>
+      <details><summary>9. E a adsorção?</summary><p>A ligação do soluto à <b>membrana</b> (Langmuir
+        <b>q = cap·C/(Kd+C)</b>). É real mas <b>saturável</b>: quando os sítios lotam, cessa — a membrana precisa ser
+        trocada (Fig. 7). Quatro físicas, um meio interno restaurado.</p></details>
+    </div>
+  </section>
+
+  <!-- INSTRUMENTO -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — clearance × peso molecular (difusivo × convectivo)</h3>
+      <p class="sub">Os controles do <b>Lab</b> movem este plano. Eixo horizontal = <b>peso molecular</b> (log, da ureia
+      à albumina); eixo vertical = <b>clearance</b> (mL/min). A curva <b>verde</b> é o clearance <b>difusivo</b> (cai com
+      o PM); a <b>laranja</b> é o <b>convectivo</b> (plano até o cutoff, depois despenca). A linha tracejada marca o
+      <b>cutoff</b> da membrana; o marcador é o <b>soluto atual</b>, colorido pelo mecanismo dominante. Onde a laranja
+      passa a verde está a pérola: o <b>médio</b> só sai por convecção.</p>
+      <canvas id="clearance-canvas" width="900" height="360" aria-label="Curva clearance versus peso molecular"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- LAB -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — escolha o soluto e a máquina; veja o clearance por mecanismo</h3>
+      <div class="grid">
+        <div>
+          <label>Peso molecular do soluto (Da): <span class="val" id="lbl-pm">60</span></label>
+          <input type="range" id="in-pm" min="60" max="70000" step="20" value="60">
+          <label>Gradiente de concentração ΔC (relativo): <span class="val" id="lbl-gradConc">1.0</span></label>
+          <input type="range" id="in-gradConc" min="0" max="10" step="0.1" value="1">
+          <label>Concentração do soluto C (relativo): <span class="val" id="lbl-conc">1.0</span></label>
+          <input type="range" id="in-conc" min="0" max="20" step="0.5" value="1">
+          <label>Área do dialisador (m²): <span class="val" id="lbl-area">1.5</span></label>
+          <input type="range" id="in-area" min="0.4" max="2.5" step="0.1" value="1.5">
+          <label>Fluxo de dialisato Qd (mL/min): <span class="val" id="lbl-qd">500</span></label>
+          <input type="range" id="in-qd" min="0" max="900" step="10" value="500">
+          <label>Cutoff da membrana (Da): <span class="val" id="lbl-cutoff">15000</span></label>
+          <input type="range" id="in-cutoff" min="2000" max="50000" step="500" value="15000">
+        </div>
+        <div>
+          <label>Modo (0 difusivo/HD → 1 convectivo/HF): <span class="val" id="lbl-modo">0.50</span></label>
+          <input type="range" id="in-modo" min="0" max="1" step="0.05" value="0.5">
+          <label>Taxa de UF / convecção (mL/min): <span class="val" id="lbl-ufRate">30</span></label>
+          <input type="range" id="in-ufRate" min="0" max="120" step="1" value="30">
+          <label>Kuf do dialisador (mL/h por mmHg): <span class="val" id="lbl-kuf">30</span></label>
+          <input type="range" id="in-kuf" min="0" max="80" step="1" value="30">
+          <label>Pressão hidrostática transmembrana (mmHg): <span class="val" id="lbl-pHidro">60</span></label>
+          <input type="range" id="in-pHidro" min="0" max="300" step="5" value="60">
+          <label>Pressão oncótica (mmHg): <span class="val" id="lbl-pOnc">25</span></label>
+          <input type="range" id="in-pOnc" min="0" max="50" step="1" value="25">
+          <label>Concentração para a adsorção (relativo): <span class="val" id="lbl-cap">100</span> sítios</label>
+          <input type="range" id="in-cap" min="0" max="500" step="10" value="100">
+        </div>
+      </div>
+
+      <div class="presets">
+        <button class="act" data-preset="hd">HD difusiva (ureia)</button>
+        <button class="act" data-preset="hdf">HDF convectiva (β2-m)</button>
+        <button class="act" data-preset="uf">Só ultrafiltração (volume)</button>
+        <button class="act" data-preset="medio">Soluto médio (β2-m em HD)</button>
+        <button class="act" data-preset="grande">Soluto grande (albumina)</button>
+        <button class="act" data-preset="noTMP">TMP zerada (sem UF)</button>
+      </div>
+
+      <table>
+        <tr><th>Saída</th><th>Atual</th><th>Comentário</th></tr>
+        <tr><td>Classe do soluto / mecanismo dominante</td><td class="num" id="out-classe">—</td><td class="num">pequeno → difusão; médio → convecção</td></tr>
+        <tr><td>Coeficiente de difusão D / clearance difusivo</td><td class="num" id="out-dif">—</td><td class="num">D ∝ PM⁻¹ᐟ³ · mL/min</td></tr>
+        <tr><td>Sieving S / clearance convectivo</td><td class="num" id="out-conv">—</td><td class="num">fluxo = Q_uf·C·S</td></tr>
+        <tr><td>Clearance de soluto (modo combinado)</td><td class="num" id="out-soluto">—</td><td class="num">HDF soma difusão + convecção</td></tr>
+        <tr><td>TMP / Q_uf (remoção de volume)</td><td class="num" id="out-uf">—</td><td class="num">Q_uf = Kuf·TMP (mmHg → mL/h)</td></tr>
+        <tr><td>Adsorção (fração saturada)</td><td class="num" id="out-ads">—</td><td class="num">q = cap·C/(Kd+C), saturável</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÃO -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (12)</button>
+        <button data-bank="textual">Textual (12)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica</b>. Este módulo M19 modela
+    os princípios físicos do transporte (difusão, convecção, ultrafiltração, adsorção) com coeficientes relativos e
+    curvas calibradas para ensinar o <b>mecanismo</b> — não é um simulador de prescrição para um paciente real. Os
+    valores de clearance e sieving são didáticos. Não substitui julgamento clínico; a decisão e a responsabilidade
+    finais são sempre do profissional.
+  </div>
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+</div>
+
+<script>
+/* ENGINE INLINE — espelho fiel de build/m19/model19.js */
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
+var PM_UREIA=60, PM_CUTOFF=15000, PM_MEDIO=1000;
+function difCoef(pm){ pm=clampv(pm,PM_UREIA,70000); return clampv(Math.pow(PM_UREIA/pm,1/3),0,1); }
+function sievingCoef(pm,cutoff){ pm=clampv(pm,PM_UREIA,70000); cutoff=clampv(cutoff,1000,70000);
+  var x=(pm-cutoff)/(0.18*cutoff); return clampv(1/(1+Math.exp(x)),0,1); }
+function difusao(inp){ var p=inp||{};
+  var pm=clampv(p.pm!==undefined?p.pm:PM_UREIA,PM_UREIA,70000);
+  var gradConc=clampv(p.gradConc!==undefined?p.gradConc:1,0,200);
+  var area=clampv(p.area!==undefined?p.area:1.5,0.2,3);
+  var espessura=clampv(p.espessura!==undefined?p.espessura:1,0.2,5);
+  var qd=clampv(p.qd!==undefined?p.qd:500,0,1000);
+  var dCoef=difCoef(pm); var qdFator=clampv(qd/(qd+250),0,1);
+  var jDif=dCoef*area*gradConc/espessura;
+  var clearDif=clampv(280*dCoef*qdFator*(area/1.5),0,320);
+  return {jDif:jDif,dCoef:dCoef,clearDif:clearDif,qdFator:qdFator}; }
+function conveccao(inp){ var p=inp||{};
+  var ufRate=clampv(p.ufRate!==undefined?p.ufRate:30,0,200);
+  var conc=clampv(p.conc!==undefined?p.conc:1,0,200);
+  var pm=clampv(p.pm!==undefined?p.pm:PM_UREIA,PM_UREIA,70000);
+  var cutoff=clampv(p.cutoff!==undefined?p.cutoff:PM_CUTOFF,1000,70000);
+  var sieving=(p.sieving!==undefined)?clampv(p.sieving,0,1):sievingCoef(pm,cutoff);
+  var jConv=ufRate*conc*sieving; var clearConv=ufRate*sieving;
+  return {jConv:jConv,sieving:sieving,clearConv:clearConv}; }
+function ultrafiltracao(inp){ var p=inp||{};
+  var kuf=clampv(p.kuf!==undefined?p.kuf:30,0,100);
+  var pHidro=clampv(p.pHidro!==undefined?p.pHidro:60,0,400);
+  var pOnc=clampv(p.pOnc!==undefined?p.pOnc:25,0,60);
+  var tmp=pHidro-pOnc; var qf=clampv(kuf*Math.max(0,tmp),0,40000);
+  return {tmp:tmp,qf:qf}; }
+function adsorcao(inp){ var p=inp||{};
+  var conc=clampv(p.conc!==undefined?p.conc:5,0,1000);
+  var cap=clampv(p.cap!==undefined?p.cap:100,0,1e6);
+  var kd=clampv(p.kd!==undefined?p.kd:10,1e-6,1e6);
+  var q=cap*conc/(kd+conc); var satFrac=clampv(conc/(kd+conc),0,1);
+  return {q:q,satFrac:satFrac}; }
+function transporte(input){ var inp=input||{};
+  var pm=clampv(inp.pm!==undefined?inp.pm:PM_UREIA,PM_UREIA,70000);
+  var gradConc=clampv(inp.gradConc!==undefined?inp.gradConc:1,0,200);
+  var conc=clampv(inp.conc!==undefined?inp.conc:1,0,200);
+  var area=clampv(inp.area!==undefined?inp.area:1.5,0.2,3);
+  var espessura=clampv(inp.espessura!==undefined?inp.espessura:1,0.2,5);
+  var qd=clampv(inp.qd!==undefined?inp.qd:500,0,1000);
+  var ufRateMlMin=clampv(inp.ufRate!==undefined?inp.ufRate:30,0,200);
+  var cutoff=clampv(inp.cutoff!==undefined?inp.cutoff:PM_CUTOFF,1000,70000);
+  var modo=clampv(inp.modo!==undefined?inp.modo:0.5,0,1);
+  var kuf=clampv(inp.kuf!==undefined?inp.kuf:30,0,100);
+  var pHidro=clampv(inp.pHidro!==undefined?inp.pHidro:60,0,400);
+  var pOnc=clampv(inp.pOnc!==undefined?inp.pOnc:25,0,60);
+  var cap=clampv(inp.cap!==undefined?inp.cap:100,0,1e6);
+  var kd=clampv(inp.kd!==undefined?inp.kd:10,1e-6,1e6);
+  var dif=difusao({pm:pm,gradConc:gradConc,area:area,espessura:espessura,qd:qd});
+  var conv=conveccao({ufRate:ufRateMlMin,conc:conc,pm:pm,cutoff:cutoff});
+  var uf=ultrafiltracao({kuf:kuf,pHidro:pHidro,pOnc:pOnc});
+  var ads=adsorcao({conc:conc,cap:cap,kd:kd});
+  var pesoDif=1-modo, pesoConv=modo;
+  var clearSoluto=pesoDif*dif.clearDif+pesoConv*conv.clearConv;
+  var clearDifMax=dif.clearDif, clearConvMax=conv.clearConv;
+  var dominante=(clearConvMax>clearDifMax+1e-9)?'conveccao':'difusao';
+  var classe=pm<300?'pequeno':(pm<cutoff?'medio':'grande');
+  var modoRecomendado=(classe==='pequeno')?'difusivo':(classe==='medio'?'convectivo':'retido');
+  var volRemovido=uf.qf;
+  return {pm:pm,gradConc:gradConc,conc:conc,area:area,espessura:espessura,qd:qd,
+    ufRate:ufRateMlMin,cutoff:cutoff,modo:modo,kuf:kuf,pHidro:pHidro,pOnc:pOnc,cap:cap,kd:kd,
+    dCoef:dif.dCoef,jDif:dif.jDif,clearDif:dif.clearDif,
+    sieving:conv.sieving,jConv:conv.jConv,clearConv:conv.clearConv,
+    tmp:uf.tmp,qf:uf.qf,volRemovido:volRemovido,adsQ:ads.q,adsSat:ads.satFrac,
+    pesoDif:pesoDif,pesoConv:pesoConv,clearSoluto:clearSoluto,
+    clearDifMax:clearDifMax,clearConvMax:clearConvMax,
+    dominante:dominante,classe:classe,modoRecomendado:modoRecomendado}; }
+function clearanceLayout(state,W,H){ state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=52,padR=16,padT=18,padB=38,baseY=H-padB,N=60,PMlo=PM_UREIA,PMhi=70000;
+  var logLo=Math.log(PMlo),logHi=Math.log(PMhi),YMAX=320,plotW=W-padL-padR,plotH=baseY-padT;
+  function px(pm){ return padL+(Math.log(clampv(pm,PMlo,PMhi))-logLo)/(logHi-logLo)*plotW; }
+  function py(cl){ return baseY-clampv(cl,0,YMAX)/YMAX*plotH; }
+  var base={}; for(var kk in state) base[kk]=state[kk];
+  var ptsDif=[],ptsConv=[],i,pm,st,r;
+  for(i=0;i<=N;i++){ pm=Math.exp(logLo+(logHi-logLo)*i/N); st={}; for(var z in base) st[z]=base[z]; st.pm=pm; r=transporte(st);
+    ptsDif.push({pm:pm,cl:r.clearDifMax,x:px(pm),y:py(r.clearDifMax)});
+    ptsConv.push({pm:pm,cl:r.clearConvMax,x:px(pm),y:py(r.clearConvMax)}); }
+  var cur=transporte(state), curX=px(cur.pm), curYdif=py(cur.clearDifMax), curYconv=py(cur.clearConvMax);
+  var cutX=px(clampv(state.cutoff!==undefined?state.cutoff:PM_CUTOFF,PMlo,PMhi));
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,N:N,YMAX:YMAX,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},ptsDif:ptsDif,ptsConv:ptsConv,cutX:cutX,
+    current:{pm:cur.pm,x:curX,yDif:curYdif,yConv:curYconv,clearDif:cur.clearDifMax,clearConv:cur.clearConvMax,dominante:cur.dominante,classe:cur.classe}}; }
+window.transporte=transporte; window.clearanceLayout=clearanceLayout; window.difusao=difusao; window.conveccao=conveccao;
+window.ultrafiltracao=ultrafiltracao; window.adsorcao=adsorcao; window.difCoef=difCoef; window.sievingCoef=sievingCoef;
+window.MODEL={transporte:transporte,clearanceLayout:clearanceLayout,difusao:difusao,conveccao:conveccao,ultrafiltracao:ultrafiltracao,adsorcao:adsorcao,difCoef:difCoef,sievingCoef:sievingCoef,clampv:clampv,PM_UREIA:PM_UREIA,PM_CUTOFF:PM_CUTOFF,PM_MEDIO:PM_MEDIO};
+
+/* UI */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=(d===undefined?1:d); return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+function classeLong(c){ return c==='pequeno'?'pequeno (difusão)':(c==='medio'?'médio (convecção)':'grande (retido)'); }
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on'); b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on'); $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh(); });
+document.addEventListener('click',function(e){ var b=e.target.closest('button.act[data-rev]'); if(!b) return; var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on'); });
+
+function readInputs(){ return { pm:+$('in-pm').value, gradConc:+$('in-gradConc').value, conc:+$('in-conc').value,
+  area:+$('in-area').value, qd:+$('in-qd').value, cutoff:+$('in-cutoff').value, modo:+$('in-modo').value,
+  ufRate:+$('in-ufRate').value, kuf:+$('in-kuf').value, pHidro:+$('in-pHidro').value, pOnc:+$('in-pOnc').value,
+  cap:+$('in-cap').value, kd:10 }; }
+function refresh(){ var inp=readInputs();
+  $('lbl-pm').textContent=fmt(inp.pm,0); $('lbl-gradConc').textContent=fmt(inp.gradConc,1); $('lbl-conc').textContent=fmt(inp.conc,1);
+  $('lbl-area').textContent=fmt(inp.area,1); $('lbl-qd').textContent=fmt(inp.qd,0); $('lbl-cutoff').textContent=fmt(inp.cutoff,0);
+  $('lbl-modo').textContent=fmt(inp.modo,2); $('lbl-ufRate').textContent=fmt(inp.ufRate,0); $('lbl-kuf').textContent=fmt(inp.kuf,0);
+  $('lbl-pHidro').textContent=fmt(inp.pHidro,0); $('lbl-pOnc').textContent=fmt(inp.pOnc,0); $('lbl-cap').textContent=fmt(inp.cap,0);
+  var r=transporte(inp);
+  $('out-classe').textContent=classeLong(r.classe)+' · domina '+(r.dominante==='conveccao'?'convecção':'difusão');
+  $('out-dif').textContent='D '+fmt(r.dCoef,2)+' · '+fmt(r.clearDif,0)+' mL/min';
+  $('out-conv').textContent='S '+fmt(r.sieving,2)+' · '+fmt(r.clearConv,0)+' mL/min';
+  $('out-soluto').textContent=fmt(r.clearSoluto,0)+' mL/min (dif '+fmt(r.pesoDif*100,0)+'% · conv '+fmt(r.pesoConv*100,0)+'%)';
+  $('out-uf').textContent='TMP '+fmt(r.tmp,0)+' mmHg · Q_uf '+fmt(r.qf,0)+' mL/h';
+  $('out-ads').textContent=fmt(r.adsSat*100,0)+'% sítios · q '+fmt(r.adsQ,0);
+  verdict(r); drawClearance(inp); pearl(r,inp); }
+function verdict(r){ var v=$('veredito'), cls='b-good', msg;
+  if(r.qf===0){ cls='b-warn'; msg='SEM ultrafiltração — TMP '+fmt(r.tmp,0)+' mmHg ≤ 0: a oncótica venceu a hidrostática. Q_uf = Kuf·max(0,TMP) = 0. Sem volume removido.'; }
+  else if(r.classe==='grande'){ cls='b-bad'; msg='Soluto GRANDE (PM '+fmt(r.pm,0)+' Da > cutoff '+fmt(r.cutoff,0)+'): sieving '+fmt(r.sieving,2)+' → RETIDO. Nem difusão nem convecção o removem bem.'; }
+  else if(r.dominante==='conveccao'){ cls='b-warn'; msg='Soluto MÉDIO (PM '+fmt(r.pm,0)+' Da): a convecção ('+fmt(r.clearConv,0)+' mL/min) SUPERA a difusão ('+fmt(r.clearDif,0)+' mL/min). HF/HDF é a física certa.'; }
+  else { cls='b-good'; msg='Soluto PEQUENO (PM '+fmt(r.pm,0)+' Da): a difusão ('+fmt(r.clearDif,0)+' mL/min) domina. HD difusiva o remove rápido pelo gradiente.'; }
+  v.className='banner '+cls; v.textContent=msg; }
+function pearl(r,inp){ var p=$('lab-pearl'), ip=$('instr-pearl'), t;
+  if(r.qf===0) t='PÉROLA (a fronteira da UF): TMP ≤ 0 → Q_uf = 0. A ultrafiltração exige pressão transmembrana POSITIVA; a oncótica pode zerá-la (M23/M24).';
+  else if(r.dominante==='conveccao') t='PÉROLA (convecção > difusão no médio): a água arrasta o que o gradiente não move. A β2-m só sai bem por convecção — dobrar o PM derruba a difusão, não a convecção.';
+  else if(r.classe==='grande') t='PÉROLA (o cutoff): acima do peso de corte da membrana o sieving despenca; nem convecção nem difusão removem o grande (albumina fica).';
+  else if(r.modo>=0.4&&r.modo<=0.6) t='PÉROLA (HDF soma): difusão + convecção no mesmo circuito pegam pequenos E médios. O clearance combinado é '+fmt(r.clearSoluto,0)+' mL/min.';
+  else t='Difusão move o gradiente (D '+fmt(r.dCoef,2)+'); convecção arrasta pela água (S '+fmt(r.sieving,2)+'); a UF tira volume por TMP. A diálise substitui FUNÇÕES por física.';
+  p.textContent=t; ip.textContent=t; }
+function drawClearance(state){ var c=$('clearance-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
+  var L=clearanceLayout(state,c.width,c.height); ctx.clearRect(0,0,L.W,L.H);
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('clearance (mL/min) ↑',8,L.padT+2); ctx.fillText('peso molecular (Da, log) →',L.W-220,L.baseY+24);
+  // cutoff line
+  ctx.strokeStyle='#e0556b'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(L.cutX,L.padT); ctx.lineTo(L.cutX,L.baseY); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#e0556b'; ctx.fillText('cutoff',Math.min(L.cutX+4,L.W-60),L.padT+12);
+  function poly(pts,color,w){ ctx.strokeStyle=color; ctx.lineWidth=w; ctx.beginPath(); for(var i=0;i<pts.length;i++){ var p=pts[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); } ctx.stroke(); }
+  poly(L.ptsDif,'#52c08a',2); poly(L.ptsConv,'#e8a13a',2);
+  ctx.fillStyle='#52c08a'; ctx.fillText('difusivo (HD)',L.padL+14,L.padT+30);
+  ctx.fillStyle='#e8a13a'; ctx.fillText('convectivo (HF)',L.padL+14,L.padT+48);
+  var cu=L.current;
+  ctx.strokeStyle='#e7eef4'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(cu.x,L.padT); ctx.lineTo(cu.x,L.baseY); ctx.stroke(); ctx.setLineDash([]);
+  var col=cu.dominante==='conveccao'?'#e8a13a':'#52c08a';
+  ctx.fillStyle=col; ctx.fillRect(cu.x-4,cu.yDif-4,8,8); ctx.fillRect(cu.x-4,cu.yConv-4,8,8);
+  ctx.fillStyle='#e7eef4'; ctx.fillText('PM '+Math.round(cu.pm)+' Da',Math.min(cu.x+8,L.W-130),Math.max(Math.min(cu.yDif,cu.yConv)-8,L.padT+12)); }
+['in-pm','in-gradConc','in-conc','in-area','in-qd','in-cutoff','in-modo','in-ufRate','in-kuf','in-pHidro','in-pOnc','in-cap'].forEach(function(id){ $(id).addEventListener('input',refresh); });
+
+var PRESETS={
+  hd:{pm:60,gradConc:4,conc:4,area:1.8,qd:600,cutoff:15000,modo:0,ufRate:20,kuf:30,pHidro:60,pOnc:25,cap:100},
+  hdf:{pm:11800,gradConc:2,conc:3,area:2.0,qd:700,cutoff:25000,modo:0.6,ufRate:60,kuf:50,pHidro:90,pOnc:25,cap:120},
+  uf:{pm:60,gradConc:0,conc:0,area:1.5,qd:0,cutoff:15000,modo:1,ufRate:0,kuf:40,pHidro:120,pOnc:25,cap:0},
+  medio:{pm:11800,gradConc:2,conc:3,area:1.5,qd:500,cutoff:15000,modo:0,ufRate:20,kuf:30,pHidro:60,pOnc:25,cap:100},
+  grande:{pm:66000,gradConc:1,conc:2,area:1.5,qd:500,cutoff:15000,modo:0.5,ufRate:40,kuf:30,pHidro:80,pOnc:25,cap:100},
+  noTMP:{pm:60,gradConc:1,conc:1,area:1.5,qd:300,cutoff:15000,modo:1,ufRate:10,kuf:30,pHidro:20,pOnc:25,cap:50}
+};
+function applyPreset(p){ var d=PRESETS[p]; if(!d) return;
+  $('in-pm').value=d.pm; $('in-gradConc').value=d.gradConc; $('in-conc').value=d.conc; $('in-area').value=d.area;
+  $('in-qd').value=d.qd; $('in-cutoff').value=d.cutoff; $('in-modo').value=d.modo; $('in-ufRate').value=d.ufRate;
+  $('in-kuf').value=d.kuf; $('in-pHidro').value=d.pHidro; $('in-pOnc').value=d.pOnc; $('in-cap').value=d.cap; refresh(); }
+document.querySelector('.presets').addEventListener('click',function(e){ var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset')); });
+
+/* ILUSTRAÇÕES computadas + helper raster */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+function clearMini(state,titulo){ var W=300,H=170,L=clearanceLayout(state,W,H),s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  function path(pts,color){ var d=''; for(var i=0;i<pts.length;i++){ d+=(i===0?'M':'L')+f1(pts[i].x)+' '+f1(pts[i].y)+' '; } return '<path d="'+d+'" fill="none" stroke="'+color+'" stroke-width="2"/>'; }
+  s+='<line x1="'+f1(L.cutX)+'" y1="'+L.padT+'" x2="'+f1(L.cutX)+'" y2="'+L.baseY+'" stroke="#e0556b" stroke-width="1" stroke-dasharray="3 2"/>';
+  s+=path(L.ptsDif,'#52c08a'); s+=path(L.ptsConv,'#e8a13a');
+  var cu=L.current, col=cu.dominante==='conveccao'?'#e8a13a':'#52c08a';
+  s+='<rect x="'+f1(cu.x-3)+'" y="'+f1(cu.yDif-3)+'" width="6" height="6" fill="'+col+'"/>';
+  s+='<rect x="'+f1(cu.x-3)+'" y="'+f1(cu.yConv-3)+'" width="6" height="6" fill="'+col+'"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'clearance × PM')+'</text>';
+  s+='<text x="'+(L.padL+4)+'" y="'+(L.padT+12)+'" fill="#52c08a" font-size="8">difusivo</text>';
+  s+='<text x="'+(W-8)+'" y="'+(L.baseY-4)+'" fill="#e8a13a" font-size="8" text-anchor="end">convectivo</text>';
+  return svgEl(W,H,s); }
+function mecBars(r,titulo){ var W=300,H=170,base=130,s='';
+  function bar(x,frac,color,lab,val){ var h=clampv(frac,0,1)*96; return '<rect x="'+x+'" y="'+f1(base-h)+'" width="46" height="'+f1(h)+'" fill="'+color+'" fill-opacity="0.6" stroke="'+color+'"/>'+
+    '<text x="'+(x+23)+'" y="'+(base+13)+'" fill="#9fb1c0" font-size="9" text-anchor="middle">'+lab+'</text>'+
+    '<text x="'+(x+23)+'" y="'+f1(base-h-4)+'" fill="#e7eef4" font-size="9" text-anchor="middle">'+val+'</text>'; }
+  s+='<line x1="40" y1="34" x2="40" y2="'+base+'" stroke="#3a4a58"/>';
+  s+=bar(58,r.clearDif/320,'#52c08a','difusão',fmt(r.clearDif,0));
+  s+=bar(132,r.clearConv/120,'#e8a13a','convecção',fmt(r.clearConv,0));
+  s+=bar(206,r.qf/4000,'#39c0c8','UF mL/h',fmt(r.qf,0));
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'os mecanismos')+'</text>';
+  return svgEl(W,H,s); }
+function ufIcon(r,titulo){ var W=300,H=170,s='';
+  var col=r.qf>0?'#39c0c8':'#e0556b';
+  s+='<rect x="120" y="44" width="24" height="90" fill="#10171e" stroke="'+col+'"/>';
+  s+='<text x="132" y="150" fill="#9fb1c0" font-size="9" text-anchor="middle">membrana</text>';
+  // hydro arrow
+  s+='<line x1="60" y1="70" x2="118" y2="70" stroke="#52c08a" stroke-width="3"/>';
+  s+='<text x="88" y="62" fill="#52c08a" font-size="8" text-anchor="middle">P hidro</text>';
+  s+='<line x1="118" y1="110" x2="70" y2="110" stroke="#e0556b" stroke-width="2"/>';
+  s+='<text x="92" y="124" fill="#e0556b" font-size="8" text-anchor="middle">P onc</text>';
+  if(r.qf>0){ s+='<line x1="144" y1="90" x2="250" y2="90" stroke="#39c0c8" stroke-width="3"/>'; s+='<text x="200" y="82" fill="#39c0c8" font-size="9" text-anchor="middle">água (UF)</text>'; }
+  else { s+='<text x="210" y="92" fill="#e0556b" font-size="11" text-anchor="middle">sem UF</text>'; }
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'ultrafiltração')+'</text>';
+  s+='<text x="'+(W/2)+'" y="160" fill="#e7eef4" font-size="9" text-anchor="middle">TMP '+fmt(r.tmp,0)+' mmHg · Q_uf '+fmt(r.qf,0)+' mL/h</text>';
+  return svgEl(W,H,s); }
+function adsIcon(r,titulo){ var W=300,H=170,s='', n=10, occ=Math.round(clampv(r.adsSat,0,1)*n);
+  s+='<rect x="40" y="80" width="220" height="18" fill="#10171e" stroke="#39c0c8"/>';
+  for(var i=0;i<n;i++){ var x=52+i*21; var on=i<occ; s+='<rect x="'+(x-5)+'" y="75" width="10" height="6" fill="'+(on?'#e8a13a':'#283642')+'"/>'; if(on) s+='<circle cx="'+x+'" cy="62" r="5" fill="#e0556b"/>'; }
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'adsorção')+'</text>';
+  s+='<text x="'+(W/2)+'" y="130" fill="#e7eef4" font-size="10" text-anchor="middle">'+occ+'/'+n+' sítios ('+fmt(r.adsSat*100,0)+'%)</text>';
+  s+='<text x="'+(W/2)+'" y="148" fill="#9fb1c0" font-size="9" text-anchor="middle">q = cap·C/(Kd+C) — satura</text>';
+  return svgEl(W,H,s); }
+function imgFig(slug,alt){ return '<img src="assets/m19/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+/* TUTOR */
+function R0(extra){ var o={}; if(extra) for(var k in extra) o[k]=extra[k]; return transporte(o); }
+var TUTOR_ILUSTRADO=[
+  {q:'Potássio (39 Da) em HDI: por qual mecanismo sai, e por que rápido?',o:['convecção','difusão (pequeno, gradiente)','adsorção'],c:1,e:'Pequeno → D≈1: difunde rápido pelo gradiente de concentração (Fig. 1).',fig:function(){return clearMini({pm:60,modo:0,ufRate:20},'pequeno → difusão');}},
+  {q:'β2-microglobulina (~11800 Da): a difusão clássica remove bem?',o:['sim, ótimo','não — precisa de convecção','depende do peso seco'],c:1,e:'D≈0,17: difunde mal. A convecção (HF/HDF) a arrasta (Fig. 5).',fig:function(){return clearMini({pm:11800,modo:0.6,ufRate:60},'médio → convecção');}},
+  {q:'No marcador da curva, o soluto MÉDIO mostra…',o:['convecção < difusão','convecção > difusão (domina)','nenhum dos dois'],c:1,e:'Para o médio em fluxo convectivo, a laranja supera a verde — convecção domina.',fig:function(){return clearMini({pm:11800,ufRate:50,modo:0.6},'cruzamento');}},
+  {q:'Para remover VOLUME (sobrecarga), a física é…',o:['difusão','ultrafiltração (Q_uf = Kuf·TMP)','adsorção'],c:1,e:'Volume sai por pressão: Q_uf = Kuf·TMP, TMP = P_hidro − P_onc (Fig. 6).',fig:function(){return ufIcon(R0({pHidro:120,pOnc:25,kuf:40}),'UF por pressão');}},
+  {q:'P_hidro 20, P_onc 25. A ultrafiltração…',o:['é máxima','é zero (TMP ≤ 0)','dobra'],c:1,e:'TMP = −5 mmHg → Q_uf = Kuf·max(0,TMP) = 0. A oncótica venceu (Fig. 6).',fig:function(){return ufIcon(R0({pHidro:20,pOnc:25,kuf:30}),'TMP ≤ 0');}},
+  {q:'A adsorção do soluto à membrana é…',o:['ilimitada','saturável (os sítios lotam)','só para grandes'],c:1,e:'Langmuir q = cap·C/(Kd+C): quando os sítios esgotam, cessa (Fig. 7).',fig:function(){return adsIcon(R0({conc:50,cap:100,kd:10}),'adsorção satura');}},
+  {q:'Dobrar o peso molecular do soluto (abaixo do cutoff)…',o:['derruba a difusão, quase não muda a convecção','dobra ambas','não muda nada'],c:0,e:'D ∝ PM⁻¹ᐟ³ cai; o sieving fica ~plano → convecção quase intacta.',fig:function(){return mecBars(R0({pm:8000,ufRate:50,modo:0.5}),'difusão cai, convecção fica');}},
+  {q:'HDF (hemodiafiltração) é…',o:['só difusão','difusão + convecção (soma)','só UF'],c:1,e:'Soma os dois: pega pequenos por difusão e médios por convecção.',fig:function(){return mecBars(R0({pm:8000,ufRate:50,modo:0.5}),'HDF soma');}},
+  {q:'Na figura difusão × convecção, os MÉDIOS saem por…',o:['difusão','convecção','adsorção'],c:1,e:'A convecção arrasta o médio que a difusão (que cai com o PM) deixa passar.',fig:function(){return imgFig('difusao-vs-conveccao.svg','difusão versus convecção');}},
+  {q:'Na curva clearance × PM, a linha tracejada vermelha marca…',o:['o peso seco','o cutoff da membrana','a TMP'],c:1,e:'Acima do cutoff o sieving despenca e o convectivo cai (Fig. 5).',fig:function(){return imgFig('clearance-vs-pm.svg','clearance versus PM');}},
+  {q:'Na síntese das quatro físicas, o VOLUME sai por…',o:['difusão','ultrafiltração','adsorção'],c:1,e:'Soluto: difusão + convecção. Volume: UF. Ligação: adsorção (Fig. 8).',fig:function(){return imgFig('tres-mecanismos.svg','as quatro físicas');}},
+  {q:'A diálise, fisiologicamente, substitui…',o:['o rim inteiro','FUNÇÕES por física (difusão/convecção/UF/adsorção)','a creatinina'],c:1,e:'Não substitui o órgão; repõe funções do meio interno por física (Fig. 8).',fig:function(){return imgFig('tres-mecanismos.svg','substitui funções');}}
+];
+var TUTOR_TEXTUAL=[
+  {q:'A difusão move o soluto por…',o:['pressão','gradiente de concentração (Fick)','adsorção'],c:1,e:'J ∝ D·A·ΔC/Δx — do sangue (alta C) ao dialisato (baixa C).'},
+  {q:'O coeficiente de difusão D, com o peso molecular,…',o:['sobe','cai (D ∝ PM⁻¹ᐟ³)','não muda'],c:1,e:'Ureia (60 Da) D≈1; β2-m (~11800 Da) D≈0,17. O médio difunde mal.'},
+  {q:'A convecção é…',o:['o arraste do soluto pela água (solvent drag)','a difusão acelerada','a adsorção'],c:0,e:'Fluxo = Q_uf·C·S; o sieving S mede quanto o PM peneira.'},
+  {q:'A convecção, em relação ao peso molecular,…',o:['cai como a difusão','independe do PM até o cutoff','só remove grandes'],c:1,e:'Por isso remove o médio (β2-m) que a difusão não alcança.'},
+  {q:'A remoção de VOLUME é feita por…',o:['difusão','ultrafiltração (Q_uf = Kuf·TMP)','adsorção'],c:1,e:'Dirigida por pressão: TMP = P_hidrostática − P_oncótica.'},
+  {q:'A TMP é definida como…',o:['P_hidro + P_onc','P_hidro − P_onc','Kuf × Q_uf'],c:1,e:'A pressão hidrostática empurra; a oncótica se opõe. A diferença dirige a UF.'},
+  {q:'Se a TMP for ≤ 0, a ultrafiltração…',o:['é máxima','é zero','inverte e remove soluto'],c:1,e:'Q_uf = Kuf·max(0,TMP) = 0 — a oncótica venceu a hidrostática.'},
+  {q:'HDF significa…',o:['só hemodiálise','hemodiafiltração = difusão + convecção','só ultrafiltração'],c:1,e:'Soma os dois mecanismos: pequenos por difusão, médios por convecção.'},
+  {q:'A adsorção segue qual padrão?',o:['linear ilimitado','saturável de Langmuir (q = cap·C/(Kd+C))','exponencial crescente'],c:1,e:'Os sítios da membrana lotam; quando saturam, a adsorção cessa.'},
+  {q:'A ultrafiltração é também o motor de qual outro mecanismo?',o:['da difusão','da convecção (a água que arrasta)','da adsorção'],c:1,e:'É a mesma água ultrafiltrada que arrasta o soluto por convecção.'},
+  {q:'O soluto GRANDE (albumina, acima do cutoff)…',o:['sai por difusão','é retido (sieving → 0)','sai por UF'],c:1,e:'Acima do peso de corte o sieving despenca; nem convecção nem difusão o removem.'},
+  {q:'Em síntese, a diálise substitui FUNÇÕES por…',o:['outro rim','física (difusão, convecção, UF, adsorção)','medicamentos'],c:1,e:'Restaura o meio interno por mecanismos físicos — não substitui o órgão.'}
+];
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL; window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+var BANKS={ilustrada:TUTOR_ILUSTRADO,textual:TUTOR_TEXTUAL}, curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+function renderTutor(){ var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():''; $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false; $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){ if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button'); btns[item.c].classList.add('ok'); if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block'; fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e; $('tutor-score').textContent=tScore; $('tutor-total').textContent=tTotal; });
+    box.appendChild(b); }); }
+$('banktabs').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor(); });
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+$('draw-difusao').innerHTML = clearMini({pm:60,modo:0,ufRate:20},'difusão: pequeno (ureia)');
+$('draw-conveccao').innerHTML = clearMini({pm:11800,modo:0.6,ufRate:60},'convecção: médio (β2-m)');
+$('draw-clearance').innerHTML = clearMini({pm:8000,modo:0.5,ufRate:50},'clearance × PM');
+$('draw-uf').innerHTML = ufIcon(transporte({pHidro:120,pOnc:25,kuf:40}),'UF por pressão (TMP)');
+$('draw-adsorcao').innerHTML = adsIcon(transporte({conc:50,cap:100,kd:10}),'adsorção saturável');
+$('fig-caso').innerHTML = clearMini({pm:11800,modo:0.5,ufRate:50},'o caso: médio na curva') + mecBars(transporte({pm:11800,ufRate:50,modo:0.5,pHidro:90}),'os mecanismos');
+
+refresh(); renderTutor();
+</script>
+</body>
+</html>

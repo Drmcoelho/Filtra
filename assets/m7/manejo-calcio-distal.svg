@@ -1,22 +1,34 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M7</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">TCD — NCC, manejo de Ca</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">manejo-calcio-distal</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">Manejo de cálcio no distal</text>
-
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" font-family="system-ui,Segoe UI,Arial,sans-serif">
+  <rect width="640" height="360" fill="#0a1016"/>
+  <text x="320" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Alça × TCD — duas mãos opostas sobre o cálcio urinário</text>
+  <text x="320" y="46" text-anchor="middle" font-size="11" fill="#9fb1c0">o diurético de ALÇA ESPOLIA Ca²⁺ (hipercalciúria); o TIAZÍDICO o POUPA (hipocalciúria)</text>
+  <!-- coluna alça -->
+  <rect x="40" y="70" width="270" height="250" rx="10" fill="#16222b" stroke="#e8a13a"/>
+  <text x="175" y="96" text-anchor="middle" font-size="13" font-weight="bold" fill="#e8a13a">ALÇA (M6) — furosemida</text>
+  <text x="175" y="120" text-anchor="middle" font-size="10" fill="#9fb1c0">bloqueia o NKCC2 no ramo espesso</text>
+  <text x="175" y="138" text-anchor="middle" font-size="10" fill="#9fb1c0">→ some a voltagem +lúmen que empurra o Ca²⁺</text>
+  <!-- seta de Ca para urina -->
+  <text x="100" y="195" text-anchor="middle" font-size="28" fill="#e8a13a">Ca²⁺</text>
+  <path d="M150 190 L250 190" stroke="#e8a13a" stroke-width="4" marker-end="url(#ch)"/>
+  <text x="270" y="195" text-anchor="middle" font-size="11" fill="#e8a13a">urina</text>
+  <rect x="70" y="240" width="210" height="60" rx="8" fill="#241a14" stroke="#e8a13a"/>
+  <text x="175" y="263" text-anchor="middle" font-size="12" font-weight="bold" fill="#e8a13a">HIPERcalciúria</text>
+  <text x="175" y="282" text-anchor="middle" font-size="9" fill="#9fb1c0">uso: hipercalcemia · risco: litíase</text>
+  <!-- coluna TCD -->
+  <rect x="330" y="70" width="270" height="250" rx="10" fill="#16222b" stroke="#52c08a"/>
+  <text x="465" y="96" text-anchor="middle" font-size="13" font-weight="bold" fill="#52c08a">TCD (M7) — tiazídico</text>
+  <text x="465" y="120" text-anchor="middle" font-size="10" fill="#9fb1c0">bloqueia o NCC → contração de volume</text>
+  <text x="465" y="138" text-anchor="middle" font-size="10" fill="#9fb1c0">→ ↑ reabsorção de Ca²⁺ (proximal + NCX)</text>
+  <text x="540" y="195" text-anchor="middle" font-size="28" fill="#52c08a">Ca²⁺</text>
+  <path d="M490 190 L390 190" stroke="#52c08a" stroke-width="4" marker-end="url(#cg)"/>
+  <text x="368" y="195" text-anchor="middle" font-size="11" fill="#52c08a">sangue</text>
+  <rect x="360" y="240" width="210" height="60" rx="8" fill="#142418" stroke="#52c08a"/>
+  <text x="465" y="263" text-anchor="middle" font-size="12" font-weight="bold" fill="#52c08a">HIPOcalciúria</text>
+  <text x="465" y="282" text-anchor="middle" font-size="9" fill="#9fb1c0">uso: nefrolitíase cálcica · risco: hiperCa</text>
+  <defs>
+    <marker id="ch" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#e8a13a"/></marker>
+    <marker id="cg" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#52c08a"/></marker>
+  </defs>
+  <text x="320" y="340" text-anchor="middle" font-size="10" fill="#9fb1c0">à esquerda: o Ca vai para a urina (espólio). à direita: o Ca volta ao sangue (poupado).</text>
+  <text x="320" y="356" text-anchor="middle" font-size="9" fill="#9fb1c0" opacity="0.6">FILTRA · CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
 </svg>

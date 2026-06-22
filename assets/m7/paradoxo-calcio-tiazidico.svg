@@ -1,22 +1,39 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M7</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">TCD — NCC, manejo de Ca</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">paradoxo-calcio-tiazidico</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">Paradoxo do cálcio com tiazídico</text>
-
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" font-family="system-ui,Segoe UI,Arial,sans-serif">
+  <rect width="640" height="380" fill="#0a1016"/>
+  <text x="320" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">O paradoxo do cálcio tiazídico — natriurese SOBE, Ca urinário CAI</text>
+  <defs><marker id="ph" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#e8a13a"/></marker>
+    <marker id="pg" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#52c08a"/></marker></defs>
+  <!-- cadeia causal -->
+  <rect x="40" y="56" width="200" height="40" rx="6" fill="#143038" stroke="#39c0c8"/>
+  <text x="140" y="74" text-anchor="middle" font-size="11" fill="#39c0c8">tiazídico bloqueia o NCC</text>
+  <text x="140" y="89" text-anchor="middle" font-size="9" fill="#9fb1c0">no TCD (apical)</text>
+  <path d="M140 96 L140 120" stroke="#e8a13a" stroke-width="2" marker-end="url(#ph)"/>
+  <rect x="40" y="122" width="200" height="40" rx="6" fill="#1b242d" stroke="#283642"/>
+  <text x="140" y="140" text-anchor="middle" font-size="11" fill="#e7eef4">↓ Na⁺ intracelular</text>
+  <text x="140" y="155" text-anchor="middle" font-size="9" fill="#9fb1c0">+ contração de volume</text>
+  <path d="M140 162 L140 186" stroke="#e8a13a" stroke-width="2" marker-end="url(#ph)"/>
+  <rect x="20" y="188" width="240" height="46" rx="6" fill="#1b242d" stroke="#283642"/>
+  <text x="140" y="208" text-anchor="middle" font-size="11" fill="#e7eef4">↑ troca basolateral Na/Ca (NCX)</text>
+  <text x="140" y="224" text-anchor="middle" font-size="10" fill="#e7eef4">+ ↑ reabsorção proximal de Ca²⁺</text>
+  <path d="M140 234 L140 258" stroke="#52c08a" stroke-width="2" marker-end="url(#pg)"/>
+  <rect x="40" y="260" width="200" height="44" rx="6" fill="#143038" stroke="#52c08a"/>
+  <text x="140" y="280" text-anchor="middle" font-size="12" font-weight="bold" fill="#52c08a">HIPOcalciúria</text>
+  <text x="140" y="296" text-anchor="middle" font-size="9" fill="#9fb1c0">menos Ca²⁺ na urina</text>
+  <!-- as duas barras -->
+  <text x="450" y="74" text-anchor="middle" font-size="11" fill="#9fb1c0">o efeito duplo (em barras)</text>
+  <!-- natriurese -->
+  <text x="380" y="290" text-anchor="middle" font-size="10" fill="#9fb1c0">natriurese</text>
+  <rect x="356" y="200" width="48" height="80" fill="#e8a13a" fill-opacity="0.4" stroke="#e8a13a"/>
+  <path d="M380 200 L380 120" stroke="#e8a13a" stroke-width="3" marker-end="url(#ph)"/>
+  <text x="380" y="112" text-anchor="middle" font-size="11" fill="#e8a13a">SOBE</text>
+  <!-- ca urinario -->
+  <text x="520" y="290" text-anchor="middle" font-size="10" fill="#9fb1c0">Ca²⁺ urinário</text>
+  <rect x="496" y="160" width="48" height="120" fill="#52c08a" fill-opacity="0.3" stroke="#52c08a" stroke-dasharray="3 2"/>
+  <rect x="496" y="220" width="48" height="60" fill="#52c08a" fill-opacity="0.5" stroke="#52c08a"/>
+  <path d="M520 220 L520 300" stroke="#52c08a" stroke-width="3" marker-end="url(#pg)"/>
+  <text x="520" y="316" text-anchor="middle" font-size="11" fill="#52c08a">CAI</text>
+  <!-- clinica -->
+  <rect x="40" y="324" width="560" height="36" rx="8" fill="#143038" stroke="#39c0c8"/>
+  <text x="320" y="346" text-anchor="middle" font-size="11" fill="#e7eef4">Uso clínico: nefrolitíase cálcica / hipercalciúria · ESPELHO da alça (que ESPOLIA Ca²⁺ → litíase)</text>
+  <text x="320" y="374" text-anchor="middle" font-size="9" fill="#9fb1c0" opacity="0.6">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
 </svg>

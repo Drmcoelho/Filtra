@@ -1,22 +1,37 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M7</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">TCD — NCC, manejo de Ca</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">trpv5-calcio</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">Canal TRPV5 e reabsorção de cálcio</text>
-
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" font-family="system-ui,Segoe UI,Arial,sans-serif">
+  <rect width="640" height="360" fill="#0a1016"/>
+  <text x="320" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">Reabsorção ativa de Ca²⁺ no TCD — a via transcelular</text>
+  <text x="320" y="46" text-anchor="middle" font-size="11" fill="#9fb1c0">TRPV5 (apical) → calbindina (carrega) → NCX/PMCA (basal) — regulada pelo PTH</text>
+  <!-- compartimentos -->
+  <rect x="40" y="70" width="100" height="250" fill="#16222b" stroke="#283642"/>
+  <text x="90" y="92" text-anchor="middle" font-size="11" fill="#9fb1c0">lúmen</text>
+  <rect x="140" y="70" width="320" height="250" fill="#1b242d" stroke="#283642"/>
+  <text x="300" y="92" text-anchor="middle" font-size="11" fill="#9fb1c0">célula do TCD</text>
+  <rect x="460" y="70" width="140" height="250" fill="#16222b" stroke="#283642"/>
+  <text x="530" y="92" text-anchor="middle" font-size="11" fill="#9fb1c0">sangue</text>
+  <!-- TRPV5 apical -->
+  <rect x="132" y="150" width="16" height="40" rx="3" fill="#52c08a"/>
+  <text x="90" y="170" text-anchor="middle" font-size="11" fill="#52c08a">Ca²⁺ ①</text>
+  <path d="M108 170 L132 170" stroke="#52c08a" stroke-width="3" marker-end="url(#th)"/>
+  <text x="160" y="142" font-size="10" fill="#52c08a">TRPV5 (apical)</text>
+  <!-- calbindina -->
+  <ellipse cx="290" cy="195" rx="46" ry="22" fill="#2a3c48"/>
+  <text x="290" y="192" text-anchor="middle" font-size="10" fill="#e7eef4">calbindina ②</text>
+  <text x="290" y="206" text-anchor="middle" font-size="9" fill="#9fb1c0">carrega o Ca²⁺</text>
+  <path d="M150 175 Q220 175 250 190" stroke="#52c08a" stroke-width="2" fill="none" marker-end="url(#th)"/>
+  <!-- NCX/PMCA basal -->
+  <rect x="452" y="150" width="16" height="40" rx="3" fill="#e8a13a"/>
+  <text x="430" y="142" font-size="10" fill="#e8a13a" text-anchor="end">NCX / PMCA ③</text>
+  <path d="M330 190 Q400 180 452 172" stroke="#52c08a" stroke-width="2" fill="none" marker-end="url(#th)"/>
+  <path d="M468 170 L500 170" stroke="#52c08a" stroke-width="3" marker-end="url(#th)"/>
+  <text x="540" y="166" text-anchor="middle" font-size="11" fill="#52c08a">Ca²⁺ → sangue</text>
+  <defs><marker id="th" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#52c08a"/></marker></defs>
+  <!-- PTH -->
+  <rect x="200" y="250" width="200" height="44" rx="8" fill="#143038" stroke="#39c0c8"/>
+  <text x="300" y="270" text-anchor="middle" font-size="11" fill="#39c0c8">PTH ④</text>
+  <text x="300" y="286" text-anchor="middle" font-size="10" fill="#e7eef4">↑ TRPV5 → ↑ reabsorção de Ca²⁺</text>
+  <path d="M300 250 L295 218" stroke="#39c0c8" stroke-width="2" fill="none" marker-end="url(#bh)"/>
+  <defs><marker id="bh" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#39c0c8"/></marker></defs>
+  <text x="320" y="340" text-anchor="middle" font-size="10" fill="#9fb1c0">①Ca²⁺ entra pelo TRPV5 ②calbindina ③NCX/PMCA expulsam ④PTH estimula a via</text>
+  <text x="320" y="356" text-anchor="middle" font-size="9" fill="#9fb1c0" opacity="0.6">FILTRA · CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
 </svg>

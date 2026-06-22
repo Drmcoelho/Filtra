@@ -1,22 +1,43 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#ffe0ec" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#aa3366" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#aa3366"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M7</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#aa3366" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">histologia</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#602040" opacity="0.7">TCD — NCC, manejo de Ca</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#602040">tubulo-distal-histologia</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#aa3366" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#aa3366">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#602040">Túbulo distal em histologia</text>
-
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#602040" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" font-family="system-ui,Segoe UI,Arial,sans-serif">
+  <rect width="640" height="360" fill="#0a1016"/>
+  <text x="320" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#39c0c8">O TCD no mapa do néfron — onde mora o ajuste fino</text>
+  <text x="320" y="46" text-anchor="middle" font-size="11" fill="#9fb1c0">glomérulo → TCP → alça → TCD → ducto coletor → urina</text>
+  <defs><marker id="ah" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#3a4a58"/></marker></defs>
+  <!-- cadeia de segmentos -->
+  <rect x="36" y="70" width="96" height="42" rx="6" fill="#1b242d" stroke="#283642"/>
+  <text x="84" y="90" text-anchor="middle" font-size="11" fill="#e7eef4">TCP</text>
+  <text x="84" y="104" text-anchor="middle" font-size="9" fill="#9fb1c0">65% do Na</text>
+  <rect x="150" y="70" width="96" height="42" rx="6" fill="#1b242d" stroke="#283642"/>
+  <text x="198" y="90" text-anchor="middle" font-size="11" fill="#e7eef4">alça (TAL)</text>
+  <text x="198" y="104" text-anchor="middle" font-size="9" fill="#9fb1c0">25% · NKCC2</text>
+  <rect x="264" y="66" width="112" height="50" rx="6" fill="#143038" stroke="#39c0c8" stroke-width="2"/>
+  <text x="320" y="86" text-anchor="middle" font-size="11" font-weight="bold" fill="#39c0c8">TCD</text>
+  <text x="320" y="100" text-anchor="middle" font-size="9" fill="#9fb1c0">5–7% · NCC</text>
+  <text x="320" y="112" text-anchor="middle" font-size="9" fill="#9fb1c0">diluidor</text>
+  <rect x="394" y="70" width="116" height="42" rx="6" fill="#1b242d" stroke="#283642"/>
+  <text x="452" y="90" text-anchor="middle" font-size="11" fill="#e7eef4">ducto coletor</text>
+  <text x="452" y="104" text-anchor="middle" font-size="9" fill="#9fb1c0">ENaC · ajuste</text>
+  <g stroke="#3a4a58" stroke-width="2" fill="none" marker-end="url(#ah)">
+    <path d="M132 91 L150 91"/><path d="M246 91 L264 91"/><path d="M376 91 L394 91"/>
+  </g>
+  <!-- corte celular do TCD -->
+  <text x="320" y="146" text-anchor="middle" font-size="12" fill="#9fb1c0">corte da célula do TCD — epitélio cúbico, mitocôndrias densas (transporte ativo intenso)</text>
+  <rect x="170" y="166" width="300" height="158" rx="8" fill="#10171e" stroke="#283642"/>
+  <rect x="170" y="166" width="64" height="158" fill="#16222b"/>
+  <text x="202" y="186" text-anchor="middle" font-size="10" fill="#9fb1c0">lúmen ①</text>
+  <rect x="234" y="166" width="172" height="158" fill="#1b242d"/>
+  <circle cx="318" cy="240" r="22" fill="#2a3c48"/>
+  <text x="318" y="244" text-anchor="middle" font-size="9" fill="#9fb1c0">núcleo</text>
+  <g fill="#e8a13a" opacity="0.55">
+    <ellipse cx="280" cy="200" rx="13" ry="6"/><ellipse cx="360" cy="210" rx="13" ry="6"/>
+    <ellipse cx="280" cy="290" rx="13" ry="6"/><ellipse cx="360" cy="295" rx="13" ry="6"/>
+  </g>
+  <text x="318" y="312" text-anchor="middle" font-size="9" fill="#e8a13a">mitocôndrias ② (ATP p/ bombear)</text>
+  <rect x="226" y="216" width="16" height="22" rx="3" fill="#39c0c8"/>
+  <text x="234" y="210" text-anchor="middle" font-size="9" fill="#39c0c8">NCC ③</text>
+  <rect x="406" y="166" width="64" height="158" fill="#16222b"/>
+  <text x="438" y="186" text-anchor="middle" font-size="10" fill="#9fb1c0">sangue ④</text>
+  <rect x="398" y="232" width="16" height="22" rx="3" fill="#e0556b"/>
+  <text x="438" y="312" text-anchor="middle" font-size="9" fill="#e0556b">Na⁺/K⁺-ATPase</text>
+  <text x="320" y="348" text-anchor="middle" font-size="9" fill="#9fb1c0" opacity="0.6">①lúmen ②mitocôndrias ③NCC apical ④sangue · FILTRA · CRM-SP 151.318 · Dr. Matheus M. Coelho</text>
 </svg>

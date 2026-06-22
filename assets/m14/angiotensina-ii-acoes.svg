@@ -1,22 +1,35 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M14</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">RAAS e eixo endócrino renal</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">angiotensina-ii-acoes</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">Ações da angiotensina II</text>
-
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1448" height="1086" viewBox="0 0 1448 1086" role="img" aria-labelledby="title desc">
+  <title id="title">Angiotensina II: ações integradas</title><desc id="desc">A Ang II sustenta pressão e volume por vasos, túbulo, suprarrenal, cérebro e simpático.</desc><defs>
+    <marker id="arrow-cyan" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#55cbd3"/></marker>
+    <marker id="arrow-gold" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#e3ad4f"/></marker>
+    <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#e26464"/></marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#68c58a"/></marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity=".28"/></filter>
+    <style>
+      .t{font-family:system-ui,-apple-system,Segoe UI,sans-serif;fill:#eef5f4}.dim{fill:#aac0c4}.h{font-weight:800}.title{font-size:46px}.sub{font-size:21px}.m{font-size:24px}.s{font-size:18px}.xs{font-size:15px}.panel{fill:#101d27;stroke:#36505f;stroke-width:2}.panel2{fill:#152631;stroke:#36505f;stroke-width:2}.flow{fill:none;stroke:#55cbd3;stroke-width:4;marker-end:url(#arrow-cyan)}.goldflow{fill:none;stroke:#e3ad4f;stroke-width:4;marker-end:url(#arrow-gold)}.redflow{fill:none;stroke:#e26464;stroke-width:4;marker-end:url(#arrow-red)}.greenflow{fill:none;stroke:#68c58a;stroke-width:4;marker-end:url(#arrow-green)}
+    </style>
+  </defs>
+  <rect width="1448" height="1086" fill="#071018"/>
+  <text x="42" y="64" class="t h title"><tspan fill="#55cbd3">FILTRA</tspan><tspan fill="#e3ad4f"> · Angiotensina II: ações integradas</tspan></text>
+  <text x="44" y="101" class="t sub dim">A Ang II sustenta pressão e volume por vasos, túbulo, suprarrenal, cérebro e simpático.</text>
+  <g transform="translate(36 118)">
+    <rect width="210" height="206" rx="20" class="panel"/>
+    <path d="M95 28C48 22 32 70 42 115c9 42 41 71 76 61 21-6 20-30 8-51-10-18-6-36 8-50 20-21 1-42-39-47Z" fill="#a64148" stroke="#ef8b83" stroke-width="4"/>
+    <path d="M106 48c-24 9-32 36-27 61 5 24 20 41 37 42-9-20-8-42 6-62 10-14 5-31-16-41Z" fill="#e2a477" opacity=".72"/>
+    <circle cx="114" cy="88" r="13" fill="#55cbd3"/><path d="M126 88H176" class="flow"/>
+    <text x="20" y="190" class="t h s">Glomérulo</text>
+    <text x="112" y="116" text-anchor="middle" class="t xs">eferente</text>
+  </g>
+  <g transform="translate(280 136)"><rect width="1130" height="820" rx="24" class="panel" filter="url(#shadow)"/>
+    <circle cx="565" cy="370" r="118" fill="#3b1b22" stroke="#e26464" stroke-width="6"/><text x="565" y="360" text-anchor="middle" class="t h title">ANG II</text><text x="565" y="402" text-anchor="middle" class="t h m" fill="#e26464">receptor AT1</text>
+    <g>
+      <rect x="54" y="62" width="300" height="180" rx="20" class="panel2"/><text x="80" y="104" class="t h m">ARTERÍOLAS</text><text x="80" y="144" class="t s">vasoconstrição sistêmica</text><text x="80" y="180" class="t s">eferente &gt; aferente*</text><text x="80" y="214" class="t xs dim">RVS ↑ · PGC preservada</text><path d="M354 226L470 302" class="redflow"/>
+      <rect x="776" y="62" width="300" height="180" rx="20" class="panel2"/><text x="802" y="104" class="t h m">SUPRARRENAL</text><text x="802" y="144" class="t s">zona glomerulosa</text><text x="802" y="180" class="t s">aldosterona ↑</text><text x="802" y="214" class="t xs dim">Na⁺ ↑ · K⁺/H⁺ ↓</text><path d="M776 226L660 302" class="redflow"/>
+      <rect x="54" y="548" width="300" height="180" rx="20" class="panel2"/><text x="80" y="590" class="t h m">TÚBULO PROXIMAL</text><text x="80" y="630" class="t s">NHE3 e Na⁺/K⁺-ATPase ↑</text><text x="80" y="666" class="t s">NaHCO₃ e água ↑</text><text x="80" y="700" class="t xs dim">recupera volume cedo</text><path d="M354 564L470 448" class="redflow"/>
+      <rect x="776" y="548" width="300" height="180" rx="20" class="panel2"/><text x="802" y="590" class="t h m">CÉREBRO + SNS</text><text x="802" y="630" class="t s">sede · ADH · simpático ↑</text><text x="802" y="666" class="t s">barorreflexo reforçado</text><text x="802" y="700" class="t xs dim">água e tônus vascular</text><path d="M776 564L660 448" class="redflow"/>
+    </g>
+    <rect x="393" y="568" width="344" height="160" rx="20" fill="#281d1d" stroke="#e3ad4f" stroke-width="2"/><text x="565" y="608" text-anchor="middle" class="t h s" fill="#e3ad4f">A PÉROLA HEMODINÂMICA</text><text x="418" y="646" class="t s">Constrição eferente moderada preserva TFG.</text><text x="418" y="682" class="t s">Excesso de Ang II reduz FSR e pode reduzir TFG.</text><text x="418" y="714" class="t xs dim">*efeito depende da intensidade e do contexto.</text>
+  </g>
+  <rect x="32" y="1015" width="1384" height="45" rx="14" fill="#0d1821" stroke="#36505f"/>
+  <text x="724" y="1045" text-anchor="middle" class="t s"><tspan fill="#55cbd3">vasos · TCP · aldosterona · sede/ADH</tspan><tspan class="dim"> · M14 · endocrinologia renal</tspan></text>
+  </svg>

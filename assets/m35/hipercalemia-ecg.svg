@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="system-ui,Segoe UI,sans-serif">
+  <rect width="640" height="320" fill="#0f161d"/>
+  <text x="320" y="28" text-anchor="middle" font-size="16" font-weight="bold" fill="#e7eef4">E — Hipercalemia refratária: o ECG é o gatilho</text>
+  <g stroke="#52c08a" stroke-width="2" fill="none">
+    <path d="M30 110 h30 l8 -4 l6 8 l8 -36 l8 36 l6 -8 l8 4 h30"/>
+  </g>
+  <text x="95" y="140" text-anchor="middle" font-size="11" fill="#9fb1c0">K⁺ 4,5 — normal</text>
+  <g stroke="#e8a13a" stroke-width="2" fill="none">
+    <path d="M230 110 h30 l8 -4 l6 8 l8 -36 l8 36 l6 -8 l8 4 h6 q10 -34 20 0 h10"/>
+  </g>
+  <text x="300" y="140" text-anchor="middle" font-size="11" fill="#e8a13a">K⁺ 6,0 — T apiculada</text>
+  <g stroke="#e0556b" stroke-width="2" fill="none">
+    <path d="M430 110 h20 l14 -50 l14 70 l14 -56 q22 50 44 0 l14 0"/>
+  </g>
+  <text x="510" y="140" text-anchor="middle" font-size="11" fill="#e0556b">K⁺ 7,5 — QRS largo / senoidal</text>
+  <line x1="40" y1="160" x2="600" y2="160" stroke="#3a4a58"/>
+  <!-- barra de severidade -->
+  <text x="40" y="195" font-size="12" fill="#e7eef4">K⁺ sozinho não basta — é o K⁺ alto COM ECG E refratário ao tratamento:</text>
+  <g font-size="11">
+    <rect x="40" y="210" width="180" height="26" rx="4" fill="#52c08a" opacity="0.18" stroke="#52c08a"/><text x="130" y="227" text-anchor="middle" fill="#9fb1c0">insulina+glicose, β₂, gluconato</text>
+    <rect x="40" y="244" width="180" height="26" rx="4" fill="#52c08a" opacity="0.18" stroke="#52c08a"/><text x="130" y="261" text-anchor="middle" fill="#9fb1c0">respondeu → não indica TRS</text>
+    <rect x="420" y="210" width="180" height="60" rx="4" fill="#e0556b" opacity="0.14" stroke="#e0556b"/><text x="510" y="234" text-anchor="middle" fill="#e0556b" font-weight="bold">K⁺ refratário + ECG</text><text x="510" y="254" text-anchor="middle" fill="#e7eef4">DISPARA TRS sozinho</text>
+  </g>
+  <text x="320" y="300" text-anchor="middle" font-size="11" fill="#9fb1c0">o eletrólito que mata: a hemodiálise remove K⁺ por difusão em poucas horas</text>
+</svg>

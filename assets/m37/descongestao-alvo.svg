@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" font-family="system-ui,Arial,sans-serif">
+  <rect width="640" height="360" fill="#0d141b"/>
+  <text x="320" y="28" text-anchor="middle" font-size="17" font-weight="bold" fill="#e7eef4">Descongestão é o alvo — baixar a PVC sobe a TFG</text>
+  <!-- eixos: TFG x PVC -->
+  <line x1="80" y1="280" x2="600" y2="280" stroke="#3a4a58" stroke-width="1.5"/>
+  <line x1="80" y1="60" x2="80" y2="280" stroke="#3a4a58" stroke-width="1.5"/>
+  <text x="340" y="315" text-anchor="middle" font-size="12" fill="#9fb1c0">PVC (mmHg) →</text>
+  <text x="34" y="170" text-anchor="middle" font-size="12" fill="#9fb1c0" transform="rotate(-90 34 170)">TFG →</text>
+  <!-- curva TFG cai com PVC -->
+  <path d="M80 90 Q260 110 420 200 T600 265" fill="none" stroke="#39c0c8" stroke-width="2.5"/>
+  <!-- ponto congesto (direita, baixo) -->
+  <circle cx="470" cy="232" r="6" fill="#e0556b"/>
+  <text x="478" y="226" font-size="11" fill="#e0556b">antes: PVC 20, TFG baixa</text>
+  <!-- seta descongestão para a esquerda/cima -->
+  <defs><marker id="d1" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#52c08a"/></marker></defs>
+  <path d="M462 228 Q330 150 220 118" fill="none" stroke="#52c08a" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#d1)"/>
+  <circle cx="210" cy="115" r="6" fill="#52c08a"/>
+  <text x="120" y="105" font-size="11" fill="#52c08a">depois: PVC 8, TFG↑</text>
+  <text x="320" y="345" text-anchor="middle" font-size="11" fill="#9fb1c0">Mesmo DC e PAM: tirar volume (PVC↓) destrava o gradiente renal e a TFG sobe. Descongestionar ≫ "forçar" a pressão.</text>
+</svg>

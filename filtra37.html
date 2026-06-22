@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M37 — Síndrome cardiorrenal e a ultrafiltração</title>
+<style>
+  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--warn:#e8a13a;--bad:#e0556b;--good:#52c08a;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none} section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .presets{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px} .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)} .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)} .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)} .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M37</div>
+  <h1>Síndrome cardiorrenal e a ultrafiltração — coração, rim e volume na falência mútua</h1>
+  <div class="sub">Coração e rim falham <b>juntos</b>, e o <b>volume</b> é a ponte. A oligúria/queda da TFG da
+  síndrome cardiorrenal não nasce só do <b>débito cardíaco baixo</b>: a <b>congestão venosa</b> (PVC↑) é o motor
+  subestimado — ela é a pressão a <b>montante</b> do rim. A perfusão renal efetiva ≈ <b>PAM − PVC</b>; por isso
+  <b>descongestionar</b> (baixar a PVC) melhora a TFG tanto quanto subir o DC. A 1ª linha é o <b>diurético</b> de
+  alça; quando há <b>resistência</b> (refratariedade), a curva dose-resposta desloca à direita e a
+  <b>ultrafiltração</b> mecânica resgata — remove volume direto (mL/h), mas não substitui o rim. O fio é a
+  <b>homeostasia</b>: defender volume e meio interno. Ponte com o <b>Choca</b>: PAM = DC × RVS.</div>
+  <nav class="hex">
+    <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
+    <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="dialisa.html">&larr; índice do antebraço DIALISA</a>
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- CONCEITO -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — coração e rim, o volume entre os dois</h3>
+      <p class="sub" style="margin-top:0"><b>A queda da TFG na síndrome cardiorrenal tem DOIS motores: o débito
+      cardíaco baixo (anterógrado) e a congestão venosa (PVC alta, a montante).</b> O segundo é o subestimado.
+      A perfusão renal efetiva é o <b>gradiente</b> através do rim: <b>PAM − PVC</b>. As Fig. 1–8 voltam no Caso,
+      na Trilha e na Avaliação. Atribuição em <code>CREDITS.md</code> (em curadoria).</p>
+
+      <h4>1. O eixo cardiorrenal — falham juntos, o volume é a ponte</h4>
+      <p class="sub">Um coração que falha entrega menos sangue para a frente (<b>DC↓</b>) e represa sangue atrás
+      (<b>PVC↑</b>). O rim, mal perfundido, retém sal e água — e essa retenção de volume <b>piora o coração</b>.
+      É um ciclo vicioso fechado pelo volume. Quebrar o ciclo é <b>descongestionar</b> (ponte com o Choca:
+      PAM = DC × RVS; o mesmo volume que o Guyton governa).</p>
+      <div class="frow">
+        <div class="concept" id="draw-eixo"></div>
+        <figure class="fviva"><img src="assets/m37/coracao-rim-eixo.svg" alt="Eixo cardiorrenal: coração e rim falham juntos pelo volume" loading="lazy">
+          <figcaption><b>Fig. 1 · O eixo cardiorrenal.</b> O coração move <b>①</b> o DC para a frente (perfusão
+          anterógrada) e <b>②</b> represa a PVC atrás (congestão). A perfusão renal efetiva ≈ <b>PAM − PVC</b>; a
+          TFG cai e o rim retém volume → piora o coração. <b>Descongestionar</b> (PVC↓) quebra o ciclo. Ponte com
+          CHOCA: PAM = DC × RVS.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m37/cardiorrenal-tipos.svg" alt="Tipos de síndrome cardiorrenal 1 a 5" loading="lazy">
+          <figcaption><b>Fig. 2 · Os tipos de SCR.</b> Tipo 1 (agudo, foco deste módulo): coração agudo → LRA por
+          DC↓ + PVC↑. Tipo 2 crônico; tipos 3–4 renocardíacos (o rim machuca o coração); tipo 5 sistêmico (sepse
+          atinge os dois). Em <b>todos</b>, o volume é a ponte — o eixo causal, não o rótulo.</figcaption></figure>
+      </div>
+
+      <h4>2. A congestão venosa — a pressão a montante do rim</h4>
+      <p class="sub">A TFG depende do <b>gradiente</b> de pressão através do rim, não só do fluxo de entrada. A
+      <b>PVC alta</b> é como uma barragem na saída venosa: ela <b>represa</b> o glomérulo, fecha a saída e derruba
+      a TFG mesmo com PAM e DC quase normais. "Pouca urina" aqui não é "pouca água que chega" — é a veia que não
+      drena.</p>
+      <div class="frow">
+        <div class="concept" id="draw-congestao"></div>
+        <figure class="fviva"><img src="assets/m37/congestao-venosa-pvc.svg" alt="Congestão venosa: PVC represa o glomérulo e derruba a TFG" loading="lazy">
+          <figcaption><b>Fig. 3 · A congestão venosa.</b> A <b>PAM</b> (vermelho) empurra na arteríola aferente; a
+          <b>PVC↑</b> (azul) represa na saída venosa. A TFG é o gradiente entre as duas: quando a congestão fecha a
+          saída, o glomérulo é represado e a filtração cai — independentemente de o fluxo de entrada estar
+          "ok".</figcaption></figure>
+        <figure class="fviva"><img src="assets/m37/perfusao-pam-menos-pvc.svg" alt="Perfusão renal efetiva igual a PAM menos PVC, em barras" loading="lazy">
+          <figcaption><b>Fig. 4 · Perfusão ≈ PAM − PVC.</b> <b>①</b> barra da PAM que empurra; <b>②</b> a PVC
+          subtraída; o que sobra (verde) é a <b>perfusão efetiva</b>. <b>③</b> com PVC alta, a congestão esmaga o
+          gradiente. Baixar a PVC é tão potente quanto subir a PAM para o rim.</figcaption></figure>
+      </div>
+
+      <h4>3. O diurético e sua resistência — a curva desloca à direita</h4>
+      <p class="sub">A 1ª linha de descongestão é o <b>diurético de alça</b> (bloqueia o NKCC2). Mas a congestão e a
+      baixa perfusão reduzem a <b>entrega</b> da droga ao néfron e a resposta tubular <b>satura</b>: a curva
+      dose-resposta <b>desloca à direita</b> (EC50↑) e o teto cai — é a <b>resistência ao diurético</b> (o
+      <i>braking</i>, pérola partilhada com o M17). Dobrar a dose rende menos no resistente.</p>
+      <div class="frow">
+        <div class="concept" id="draw-curva"></div>
+        <figure class="fviva"><img src="assets/m37/resistencia-diuretico-curva.svg" alt="Curva dose-resposta do diurético deslocada à direita pela resistência" loading="lazy">
+          <figcaption><b>Fig. 5 · Resistência ao diurético.</b> Verde: rim que responde (EC50 baixo, teto alto).
+          Vermelho tracejado: <b>resistente</b> — a curva escorrega para a <b>direita</b> (EC50↑) e o teto desce. A
+          seta âmbar é o <i>braking</i>. Mesma dose rende menos natriurese; precisa-se de mais dose para o mesmo
+          efeito — e há um teto.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m37/uf-mecanica-circuito.svg" alt="Circuito de ultrafiltração mecânica removendo volume" loading="lazy">
+          <figcaption><b>Fig. 6 · UF mecânica.</b> Quando o diurético <b>falha</b>, a UF remove volume a uma
+          <b>taxa fixa (mL/h)</b> pela pressão transmembrana (TMP) — <b>independente</b> do túbulo. O sangue sai,
+          passa no filtro, o ultrafiltrado é tirado, o sangue volta. Mas exige acesso/anticoagulação, não ajusta
+          eletrólitos finos e a UF deve ficar <b>&lt; refilling</b> (M23/M24).</figcaption></figure>
+      </div>
+
+      <h4>4. Descongestionar é o alvo — e o diurético × UF</h4>
+      <p class="sub">Como a perfusão efetiva é <b>PAM − PVC</b>, baixar a PVC sobe a TFG. Esse é o <b>alvo</b>: tirar
+      volume (por diurético ou UF) descongestiona, a PVC cai e a TFG melhora — frequentemente <b>mais</b> que
+      "forçar" a pressão arterial. O diurético é a 1ª linha; a UF mecânica é o resgate quando ele falha (mas
+      <b>não substitui a função renal</b>: não corrige finamente eletrólitos/ácido-base como o rim faria).</p>
+      <div class="concept" id="draw-conduta" style="margin-bottom:4px"></div>
+      <div class="frow">
+        <div class="concept" id="draw-alvo"></div>
+        <figure class="fviva"><img src="assets/m37/descongestao-alvo.svg" alt="Descongestão: baixar a PVC sobe a TFG na curva TFG x PVC" loading="lazy">
+          <figcaption><b>Fig. 7 · Descongestão = alvo.</b> A curva mostra a TFG <b>caindo</b> com a PVC. O ponto
+          vermelho (PVC alta, TFG baixa) sobe pela seta verde até o ponto verde (PVC baixa, TFG alta) <b>só</b>
+          baixando a PVC — mesmo DC e PAM. Descongestionar destrava o gradiente renal.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m37/diuretico-vs-uf.svg" alt="Diurético versus ultrafiltração mecânica, comparação" loading="lazy">
+          <figcaption><b>Fig. 8 · Diurético × UF.</b> O <b>diurético</b> age pelo néfron (depende de entrega +
+          resposta, ajusta eletrólitos) mas <b>falha</b> na resistência. A <b>UF mecânica</b> remove volume direto
+          (taxa fixa, independe do túbulo) — resgata, mas exige acesso/anticoagulação e <b>não substitui o
+          rim</b>. A escolha é por mecanismo.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASO -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — cinco atos, decida antes de revelar</h3>
+      <p class="sub">UTI/enfermaria. IC descompensada com LRA. A pergunta de cada ato: <b>o que derruba a TFG, e
+      como descongestionar?</b> Volte às Fig. 1, 3, 5 e 7: o mecanismo decide.</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step"><b>Ato 1 — IC descompensada, oligúria, "PA boa".</b> ICC, dispneia, edema, +8 L. PAM 80,
+        mas PVC 20 mmHg (jugulares estufadas, VCI dilatada). Creatinina subindo. Por que o rim "falha" com PAM
+        normal?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>É a CONGESTÃO VENOSA, não a pressão.</b> A perfusão renal efetiva é
+          <b>PAM − PVC</b> = 80 − 20 = 60 (Fig. 4): a PVC alta represa o glomérulo e derruba a TFG mesmo com PAM
+          "boa" (Fig. 3). O alvo é <b>descongestionar</b> — diurético de alça para baixar a PVC, não vasopressor
+          para subir a PA.</div></div>
+
+      <div class="step"><b>Ato 2 — descongestão com diurético de alça.</b> Inicia-se furosemida em infusão
+        contínua (dose ancorada ao mecanismo: alvo de entrega ao NKCC2, titulada por débito urinário em mL/h).
+        Bom débito, PVC começa a cair. O que se espera na TFG?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2"><b>A TFG MELHORA ao descongestionar.</b> Tirar volume baixa a PVC → o gradiente
+          PAM − PVC sobe → a TFG sobe (Fig. 7). A creatinina pode até subir um pouco no início (hemoconcentração),
+          mas a descongestão eficaz é o que recupera o rim. Descongestionar &gt; "forçar" a pressão.</div></div>
+
+      <div class="step"><b>Ato 3 — a resposta murcha (resistência ao diurético).</b> Após 2 dias, o mesmo débito
+        urinário exige doses cada vez maiores; a natriurese cai apesar da dose alta. Dobrar a dose resolve?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3"><b>Resistência ao diurético — a curva deslocou à direita.</b> A congestão e a
+          baixa perfusão reduzem a entrega ao néfron e o túbulo satura (EC50↑, teto↓, Fig. 5). Dobrar rende cada
+          vez menos (<i>braking</i>). Estratégias: infusão contínua, bloqueio sequencial (tiazídico + alça, M17) —
+          mas se permanece refratário com sobrecarga, é hora de pensar na máquina.</div></div>
+
+      <div class="step"><b>Ato 4 — refratário: ultrafiltração mecânica.</b> Sobrecarga persistente, edema pulmonar,
+        diurético sem resposta. Indica-se UF. Por que ela funciona onde o diurético falhou?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>A UF remove volume DIRETO, independente do túbulo.</b> A taxa de UF (mL/h)
+          é mecânica (TMP), não depende da entrega da droga nem da resposta tubular (Fig. 6/8). Resgata a
+          descongestão. Mas: exige acesso e anticoagulação, <b>não</b> corrige finamente eletrólitos/ácido-base como
+          o rim, e a <b>UF deve ficar &lt; refilling</b> plasmático para não causar hipotensão (M23/M24).</div></div>
+
+      <div class="step"><b>Ato 5 — a fronteira: PVC baixa, oligúria por DC muito baixo.</b> Outro doente: PVC 6
+        (sem congestão), mas DC 2,5 L/min (choque cardiogênico frio), PAM 58. Diurético ou UF resolvem a TFG?
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>Não — aqui o motor é o DC baixo, não a congestão.</b> Sem PVC alta, tirar
+          volume só piora. A perfusão anterógrada é o limite: precisa de <b>suporte ao débito</b> (inotrópico/
+          ponte com Choca M16/M28), não de descongestão. A mesma oligúria, mecanismo oposto — decompor antes de
+          interpretar.</div></div>
+    </div>
+  </section>
+
+  <!-- TRILHA -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — nove perguntas que constroem o raciocínio</h3>
+      <details><summary>1. O que derruba a TFG na síndrome cardiorrenal?</summary><p>DOIS motores: o <b>DC baixo</b>
+        (perfusão anterógrada) e a <b>congestão venosa</b> (PVC↑, a pressão a montante). A perfusão renal efetiva é
+        o gradiente: <b>PAM − PVC</b>.</p></details>
+      <details><summary>2. Por que a congestão venosa é o "vilão subestimado"?</summary><p>Porque a TFG depende do
+        <b>gradiente</b> através do rim, não só do fluxo de entrada. A PVC alta represa o glomérulo (Fig. 3) e
+        derruba a TFG mesmo com PAM/DC quase normais. "Pouca urina" pode ser a veia que não drena.</p></details>
+      <details><summary>3. Então qual é o alvo do tratamento?</summary><p><b>Descongestionar</b> — baixar a PVC.
+        Como perfusão ≈ PAM − PVC, tirar volume sobe o gradiente e a TFG (Fig. 7). Frequentemente vale mais que
+        "forçar" a PA com vasopressor.</p></details>
+      <details><summary>4. Qual a 1ª linha de descongestão?</summary><p>O <b>diurético de alça</b> (bloqueia o
+        NKCC2 no ramo espesso). Dose ancorada ao mecanismo (entrega ao néfron), titulada pelo débito urinário em
+        mL/h. Tira sal e água → baixa a PVC.</p></details>
+      <details><summary>5. O que é a resistência ao diurético?</summary><p>A congestão e a baixa perfusão reduzem a
+        <b>entrega</b> da droga ao túbulo e a resposta <b>satura</b>: a curva dose-resposta <b>desloca à direita</b>
+        (EC50↑) e o teto cai (Fig. 5). É o <i>braking</i> — dobrar a dose rende menos.</p></details>
+      <details><summary>6. Quando entra a ultrafiltração mecânica?</summary><p>Na <b>refratariedade</b>: o diurético
+        falhou e a sobrecarga persiste. A UF remove volume a taxa fixa (mL/h), <b>independente</b> do túbulo
+        (Fig. 6/8) — resgata onde a droga não chega.</p></details>
+      <details><summary>7. A UF substitui o rim?</summary><p><b>Não.</b> Ela remove <b>volume</b> (uma função), mas
+        não ajusta finamente eletrólitos/ácido-base como o rim. E exige acesso + anticoagulação. É uma alavanca de
+        volume, não um rim de reposição.</p></details>
+      <details><summary>8. Por que a UF tem de ficar &lt; refilling?</summary><p>A UF tira água do <b>plasma</b>; o
+        interstício a repõe pelo <b>refilling</b>, com atraso. Se a UF excede o refilling, o volume plasmático cai →
+        hipotensão e stunning miocárdico (M24). Tirar devagar é tolerar.</p></details>
+      <details><summary>9. Em que sentido isto restaura a homeostasia?</summary><p>A descongestão devolve o
+        <b>volume</b> ao normal, destrava o gradiente renal e recupera a TFG — defendendo o meio interno. Coração e
+        rim falharam juntos pelo volume; corrigir o volume é tratar os dois. Ponte com Choca: PAM = DC ×
+        RVS.</p></details>
+    </div>
+  </section>
+
+  <!-- INSTRUMENTO -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — a TFG cai com a congestão venosa (TFG × PVC)</h3>
+      <p class="sub">Os controles do <b>Lab</b> movem o ponto nesta curva. Eixo horizontal = <b>PVC</b> (congestão
+      venosa, 0→24 mmHg); eixo vertical = <b>TFG</b> (filtração). A curva azul é a TFG computada pelo motor: ela
+      <b>cai</b> quando a PVC sobe (a perfusão efetiva ≈ PAM − PVC encolhe). O marcador vermelho é o paciente atual;
+      o marcador verde é a <b>TFG prevista após descongestionar</b> (PVC alvo) — a seta mostra o ganho. Troque para
+      o modo dose-resposta para ver a curva do diurético deslocar com a resistência.</p>
+      <div class="presets" style="margin-bottom:6px">
+        <button class="act" id="modo-cong" data-modo="congestao">TFG × PVC (congestão)</button>
+        <button class="act" id="modo-diur" data-modo="diuretico">natriurese × dose (resistência)</button>
+      </div>
+      <canvas id="cardiorrenal-canvas" width="900" height="360" aria-label="TFG × PVC e dose-resposta do diurético"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- LAB -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — monte o cardiorrenal; veja a TFG, a resposta diurética e a descongestão</h3>
+      <div class="grid">
+        <div>
+          <label>Débito cardíaco DC (L/min): <span class="val" id="lbl-dc">5.0</span></label>
+          <input type="range" id="in-dc" min="1.5" max="8" step="0.1" value="5">
+          <label>PVC — congestão venosa (mmHg): <span class="val" id="lbl-pvc">6</span></label>
+          <input type="range" id="in-pvc" min="0" max="28" step="1" value="6">
+          <label>PAM (mmHg): <span class="val" id="lbl-pam">80</span></label>
+          <input type="range" id="in-pam" min="45" max="110" step="1" value="80">
+          <label>Dose do diurético (entrega relativa ao néfron): <span class="val" id="lbl-doseDiuretico">1.0</span></label>
+          <input type="range" id="in-doseDiuretico" min="0" max="6" step="0.1" value="1">
+        </div>
+        <div>
+          <label>Resistência ao diurético (0 baixa → 1 refratário): <span class="val" id="lbl-resistencia">0.20</span></label>
+          <input type="range" id="in-resistencia" min="0" max="1" step="0.05" value="0.2">
+          <label>Sobrecarga de volume (L acima do seco): <span class="val" id="lbl-volume">4</span></label>
+          <input type="range" id="in-volume" min="0" max="15" step="0.5" value="4">
+          <label>Refilling plasmático (mL/h): <span class="val" id="lbl-refilling">300</span></label>
+          <input type="range" id="in-refilling" min="80" max="400" step="10" value="300">
+          <label>Taxa de UF mecânica (mL/h, se indicada): <span class="val" id="lbl-ufRate">200</span></label>
+          <input type="range" id="in-ufRate" min="0" max="400" step="10" value="200">
+        </div>
+      </div>
+
+      <div class="presets">
+        <button class="act" data-preset="congestao">Congestão + PVC alta</button>
+        <button class="act" data-preset="dcbaixo">DC baixo (cardiogênico frio)</button>
+        <button class="act" data-preset="resistencia">Resistência ao diurético</button>
+        <button class="act" data-preset="uf">UF mecânica (refratário)</button>
+        <button class="act" data-preset="euvolemia">Euvolêmico estável</button>
+      </div>
+
+      <table>
+        <tr><th>Saída</th><th>Atual</th><th>Comentário</th></tr>
+        <tr><td>Perfusão renal efetiva (≈ PAM − PVC)</td><td class="num" id="out-perf">—</td><td class="num">o gradiente através do rim</td></tr>
+        <tr><td>TFG (mL/min)</td><td class="num" id="out-tfg">—</td><td class="num">cai com a congestão</td></tr>
+        <tr><td>Quem derruba a TFG (congestão × DC)</td><td class="num" id="out-causa">—</td><td class="num">decompor antes de interpretar</td></tr>
+        <tr><td>Resposta diurética (natriurese)</td><td class="num" id="out-natriurese">—</td><td class="num">EC50 deslocado pela resistência</td></tr>
+        <tr><td>Conduta — diurético × UF mecânica</td><td class="num" id="out-conduta">—</td><td class="num">UF quando refratário</td></tr>
+        <tr><td>Descongestão prevista (PVC alvo · ganho TFG)</td><td class="num" id="out-descong">—</td><td class="num">baixar a PVC sobe a TFG</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÃO -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (12)</button>
+        <button data-bank="textual">Textual (12)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica</b>. Este módulo M37
+    modela a síndrome cardiorrenal e a ultrafiltração como uma simplificação didática calibrada para ensinar o
+    <b>mecanismo</b> (perfusão renal efetiva ≈ PAM − PVC, resistência ao diurético, UF × refilling) — não um
+    protocolo de prescrição para um paciente real. As doses de diurético são ancoradas ao mecanismo e tituladas
+    por mL/h; não substituem julgamento clínico. A decisão e a responsabilidade finais são sempre do profissional.
+  </div>
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+</div>
+
+<script>
+/* ENGINE INLINE — espelho fiel de build/m37/model37.js */
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
+var PERF_BASAL=75, EC50_BASE=1.0, UF_REFILL=400, TFG_MAX=120;
+function perfusaoRenal(inp){ inp=inp||{};
+  var dc=clampv(inp.dc!==undefined?inp.dc:5.0,1.0,10.0);
+  var pvc=clampv(inp.pvc!==undefined?inp.pvc:6,0,30);
+  var pam=clampv(inp.pam!==undefined?inp.pam:80,40,130);
+  var perfPressao=pam-pvc;
+  var fatorDC=clampv(dc/5.0,0.2,1.6);
+  var perfEfetiva=clampv(perfPressao,0,130)*(0.55+0.45*clampv(fatorDC,0,1.4));
+  return {dc:dc,pvc:pvc,pam:pam,perfPressao:perfPressao,fatorDC:fatorDC,perfEfetiva:clampv(perfEfetiva,0,200)}; }
+function tfgDePerfusao(perfEfetiva){ perfEfetiva=clampv(perfEfetiva,0,200);
+  var f=perfEfetiva/(perfEfetiva+30); return clampv(TFG_MAX*f/0.74,0,TFG_MAX); }
+function respostaDiuretico(inp){ inp=inp||{};
+  var dose=clampv(inp.doseDiuretico!==undefined?inp.doseDiuretico:1.0,0,8);
+  var perfusao=clampv(inp.perfusao!==undefined?inp.perfusao:PERF_BASAL,0,200);
+  var resistencia=clampv(inp.resistencia!==undefined?inp.resistencia:0.2,0,1);
+  var entregaFrac=clampv(0.35+0.65*(perfusao/PERF_BASAL),0.15,1.2);
+  var ec50=EC50_BASE*(1+3.0*resistencia);
+  var emax=clampv(1.0-0.45*resistencia,0.35,1.0);
+  var doseEfetiva=dose*entregaFrac;
+  var ocupacao=doseEfetiva/(doseEfetiva+ec50);
+  var natriurese=clampv(emax*ocupacao,0,1);
+  return {dose:dose,perfusao:perfusao,resistencia:resistencia,entregaFrac:entregaFrac,ec50:ec50,emax:emax,doseEfetiva:doseEfetiva,natriurese:natriurese}; }
+function ultrafiltracaoMecanica(inp){ inp=inp||{};
+  var ufRate=clampv(inp.ufRate!==undefined?inp.ufRate:200,0,UF_REFILL);
+  var refilling=clampv(inp.refilling!==undefined?inp.refilling:300,50,UF_REFILL);
+  var ufSegura=ufRate<=refilling+1e-9;
+  var ufEfetiva=clampv(Math.min(ufRate,refilling),0,UF_REFILL);
+  return {ufRate:ufRate,refilling:refilling,ufSegura:ufSegura,ufEfetiva:ufEfetiva,removeIndependente:true}; }
+function cardiorrenal(input){ var inp=input||{};
+  var dc=clampv(inp.dc!==undefined?inp.dc:5.0,1.0,10.0);
+  var pvc=clampv(inp.pvc!==undefined?inp.pvc:6,0,30);
+  var pam=clampv(inp.pam!==undefined?inp.pam:80,40,130);
+  var doseDiuretico=clampv(inp.doseDiuretico!==undefined?inp.doseDiuretico:1.0,0,8);
+  var resistencia=clampv(inp.resistencia!==undefined?inp.resistencia:0.2,0,1);
+  var volume=clampv(inp.volume!==undefined?inp.volume:4,0,20);
+  var refilling=clampv(inp.refilling!==undefined?inp.refilling:300,50,UF_REFILL);
+  var ufRate=clampv(inp.ufRate!==undefined?inp.ufRate:200,0,UF_REFILL);
+  var perf=perfusaoRenal({dc:dc,pvc:pvc,pam:pam});
+  var tfg=tfgDePerfusao(perf.perfEfetiva);
+  var diur=respostaDiuretico({doseDiuretico:doseDiuretico,perfusao:perf.perfEfetiva,resistencia:resistencia});
+  var debitoDiuretico=clampv(diur.natriurese*350*clampv(tfg/60,0.1,1.2),0,500);
+  var refratario=(doseDiuretico>=2.0&&diur.natriurese<0.30)||resistencia>=0.7;
+  var conduta=refratario?'UF':'diuretico';
+  var uf=ultrafiltracaoMecanica({ufRate:ufRate,refilling:refilling});
+  var remocaoMlh;
+  if(conduta==='UF'){ remocaoMlh=uf.ufEfetiva; } else { remocaoMlh=debitoDiuretico; }
+  var pvcAlvo=clampv(pvc-clampv(remocaoMlh*24/1000,0,volume)*1.2,2,30);
+  var perfPos=perfusaoRenal({dc:dc,pvc:pvcAlvo,pam:pam});
+  var tfgPos=tfgDePerfusao(perfPos.perfEfetiva);
+  var ganhoTFG=clampv(tfgPos-tfg,0,TFG_MAX);
+  var tfgSemCongestao=tfgDePerfusao(perfusaoRenal({dc:dc,pvc:6,pam:pam}).perfEfetiva);
+  var tfgSemDCbaixo=tfgDePerfusao(perfusaoRenal({dc:5.0,pvc:pvc,pam:pam}).perfEfetiva);
+  var perdaPorCongestao=clampv(tfgSemCongestao-tfg,0,TFG_MAX);
+  var perdaPorDC=clampv(tfgSemDCbaixo-tfg,0,TFG_MAX);
+  var congestaoDomina=perdaPorCongestao>=perdaPorDC;
+  var volRemovido24h=clampv(remocaoMlh*24/1000,0,volume);
+  var volResidual=clampv(volume-volRemovido24h,0,20);
+  var descongestionado=volResidual<=2.0;
+  return {dc:dc,pvc:pvc,pam:pam,doseDiuretico:doseDiuretico,resistencia:resistencia,volume:volume,refilling:refilling,ufRate:ufRate,
+    perfPressao:perf.perfPressao,perfEfetiva:perf.perfEfetiva,tfg:tfg,
+    natriurese:diur.natriurese,ec50:diur.ec50,emax:diur.emax,entregaFrac:diur.entregaFrac,debitoDiuretico:debitoDiuretico,refratario:refratario,
+    conduta:conduta,ufSegura:uf.ufSegura,ufEfetiva:uf.ufEfetiva,
+    remocaoMlh:remocaoMlh,pvcAlvo:pvcAlvo,tfgPos:tfgPos,ganhoTFG:ganhoTFG,
+    perdaPorCongestao:perdaPorCongestao,perdaPorDC:perdaPorDC,congestaoDomina:congestaoDomina,
+    volRemovido24h:volRemovido24h,volResidual:volResidual,descongestionado:descongestionado}; }
+function congestaoLayout(state,W,H){ state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var modo=state.modo==='diuretico'?'diuretico':'congestao';
+  var padL=52,padR=16,padT=18,padB=38,baseY=H-padB,N=60;
+  var pxX=(W-padL-padR)/N, pxY=(baseY-padT), base={}; for(var kk in state) base[kk]=state[kk];
+  var pts=[],pts2=[],i;
+  if(modo==='diuretico'){
+    var resAtual=clampv(base.resistencia!==undefined?base.resistencia:0.2,0,1);
+    var perfAtual=perfusaoRenal({dc:base.dc,pvc:base.pvc,pam:base.pam}).perfEfetiva;
+    for(i=0;i<=N;i++){ var dose=6*i/N;
+      var rA=respostaDiuretico({doseDiuretico:dose,perfusao:perfAtual,resistencia:resAtual}).natriurese;
+      var rB=respostaDiuretico({doseDiuretico:dose,perfusao:PERF_BASAL,resistencia:0}).natriurese;
+      pts.push({x:padL+i*pxX,y:baseY-clampv(rA,0,1)*pxY,dose:dose,val:rA});
+      pts2.push({x:padL+i*pxX,y:baseY-clampv(rB,0,1)*pxY,dose:dose,val:rB}); }
+    var curR=cardiorrenal(state); var cdose=clampv(curR.doseDiuretico,0,6);
+    var cx=padL+(cdose/6)*N*pxX, cy=baseY-clampv(curR.natriurese,0,1)*pxY;
+    return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,N:N,pxX:pxX,pxY:pxY,
+      modo:modo,axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},pts:pts,pts2:pts2,
+      current:{x:cx,y:cy,dose:cdose,val:curR.natriurese,conduta:curR.conduta}}; }
+  for(i=0;i<=N;i++){ var pvc=24*i/N;
+    var perf=perfusaoRenal({dc:base.dc,pvc:pvc,pam:base.pam}).perfEfetiva;
+    var tfg=tfgDePerfusao(perf);
+    pts.push({x:padL+i*pxX,y:baseY-clampv(tfg/TFG_MAX,0,1)*pxY,pvc:pvc,tfg:tfg}); }
+  var cur=cardiorrenal(state);
+  var cpvc=clampv(cur.pvc,0,24), ccx=padL+(cpvc/24)*N*pxX, ccy=baseY-clampv(cur.tfg/TFG_MAX,0,1)*pxY;
+  var apvc=clampv(cur.pvcAlvo,0,24), ax=padL+(apvc/24)*N*pxX, ay=baseY-clampv(cur.tfgPos/TFG_MAX,0,1)*pxY;
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,N:N,pxX:pxX,pxY:pxY,
+    modo:modo,axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},pts:pts,pts2:pts2,
+    current:{x:ccx,y:ccy,pvc:cpvc,tfg:cur.tfg,conduta:cur.conduta},
+    alvo:{x:ax,y:ay,pvc:apvc,tfg:cur.tfgPos}}; }
+window.cardiorrenal=cardiorrenal; window.congestaoLayout=congestaoLayout; window.perfusaoRenal=perfusaoRenal;
+window.tfgDePerfusao=tfgDePerfusao; window.respostaDiuretico=respostaDiuretico; window.ultrafiltracaoMecanica=ultrafiltracaoMecanica;
+window.MODEL={cardiorrenal:cardiorrenal,congestaoLayout:congestaoLayout,perfusaoRenal:perfusaoRenal,tfgDePerfusao:tfgDePerfusao,respostaDiuretico:respostaDiuretico,ultrafiltracaoMecanica:ultrafiltracaoMecanica,clampv:clampv,PERF_BASAL:PERF_BASAL,EC50_BASE:EC50_BASE,UF_REFILL:UF_REFILL,TFG_MAX:TFG_MAX};
+
+/* UI */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=(d===undefined?1:d); return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on'); b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on'); $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh(); });
+document.addEventListener('click',function(e){ var b=e.target.closest('button.act[data-rev]'); if(!b) return; var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on'); });
+
+var curModo='congestao';
+function readInputs(){ return { dc:+$('in-dc').value, pvc:+$('in-pvc').value, pam:+$('in-pam').value,
+  doseDiuretico:+$('in-doseDiuretico').value, resistencia:+$('in-resistencia').value, volume:+$('in-volume').value,
+  refilling:+$('in-refilling').value, ufRate:+$('in-ufRate').value }; }
+function refresh(){ var inp=readInputs();
+  $('lbl-dc').textContent=fmt(inp.dc,1); $('lbl-pvc').textContent=fmt(inp.pvc,0); $('lbl-pam').textContent=fmt(inp.pam,0);
+  $('lbl-doseDiuretico').textContent=fmt(inp.doseDiuretico,1); $('lbl-resistencia').textContent=fmt(inp.resistencia,2);
+  $('lbl-volume').textContent=fmt(inp.volume,1); $('lbl-refilling').textContent=fmt(inp.refilling,0); $('lbl-ufRate').textContent=fmt(inp.ufRate,0);
+  var r=cardiorrenal(inp);
+  $('out-perf').textContent=fmt(r.perfPressao,0)+' mmHg (efetiva '+fmt(r.perfEfetiva,0)+')';
+  $('out-tfg').textContent=fmt(r.tfg,0)+' mL/min';
+  $('out-causa').textContent=(r.congestaoDomina?'congestão (PVC) domina':'DC baixo domina')+' · perda cong '+fmt(r.perdaPorCongestao,0)+' × DC '+fmt(r.perdaPorDC,0);
+  $('out-natriurese').textContent=fmt(r.natriurese*100,0)+'% do máx · EC50 '+fmt(r.ec50,1)+(r.refratario?' (refratário)':'');
+  $('out-conduta').textContent=(r.conduta==='UF'?'UF mecânica (refratário)':'diurético de alça (1ª linha)');
+  $('out-descong').textContent='PVC '+fmt(r.pvc,0)+'→'+fmt(r.pvcAlvo,0)+' · TFG +'+fmt(r.ganhoTFG,0)+' mL/min'+(r.descongestionado?' ✓':'');
+  verdict(r); drawCanvas(inp); pearl(r,inp); }
+function verdict(r){ var v=$('veredito'), cls='b-good', msg;
+  if(r.conduta==='UF'){ cls='b-warn'; msg='REFRATÁRIO → UF mecânica: o diurético falhou (natriurese '+fmt(r.natriurese*100,0)+'% do máx, EC50 '+fmt(r.ec50,1)+'). A UF tira volume direto ('+fmt(r.ufEfetiva,0)+' mL/h)'+(r.ufSegura?'':' — ATENÇÃO: UF > refilling, risco de hipotensão (M24)')+'. Não substitui o rim.'; }
+  else if(r.congestaoDomina && r.pvc>=14){ cls='b-warn'; msg='CONGESTÃO domina (PVC '+fmt(r.pvc,0)+'): a perfusão efetiva PAM − PVC = '+fmt(r.perfPressao,0)+' mmHg derruba a TFG. Descongestionar (diurético) baixa a PVC e prevê +'+fmt(r.ganhoTFG,0)+' mL/min de TFG. Mais que "forçar" a PA.'; }
+  else if(!r.congestaoDomina && r.dc<3.5){ cls='b-bad'; msg='DC BAIXO domina (DC '+fmt(r.dc,1)+'): sem congestão (PVC '+fmt(r.pvc,0)+'), tirar volume só piora. O limite é a perfusão anterógrada — suporte ao débito (inotrópico, ponte Choca M16/M28).'; }
+  else { cls='b-good'; msg='Perfusão renal adequada (PAM − PVC = '+fmt(r.perfPressao,0)+' mmHg, TFG '+fmt(r.tfg,0)+'). Diurético responde (natriurese '+fmt(r.natriurese*100,0)+'% do máx). Descongestão no rumo certo.'; }
+  v.className='banner '+cls; v.textContent=msg; }
+function pearl(r,inp){ var p=$('lab-pearl'), ip=$('instr-pearl'), t;
+  if(r.congestaoDomina && r.pvc>=12) t='PÉROLA (o vilão subestimado): a CONGESTÃO VENOSA (PVC '+fmt(r.pvc,0)+'), não só o DC, derruba a TFG — perfusão ≈ PAM − PVC = '+fmt(r.perfPressao,0)+'. Descongestionar é o alvo.';
+  else if(r.refratario) t='PÉROLA (a curva desloca à direita): resistência ao diurético — EC50 subiu p/ '+fmt(r.ec50,1)+', natriurese só '+fmt(r.natriurese*100,0)+'%. Dobrar a dose rende menos (braking). UF mecânica resgata.';
+  else if(!r.congestaoDomina && r.dc<3.5) t='PÉROLA (mecanismo oposto): aqui o DC baixo manda, não a congestão. A mesma oligúria, outro motor — tirar volume piora; precisa de suporte ao débito (ponte Choca).';
+  else if(!r.ufSegura && r.conduta==='UF') t='PÉROLA (UF < refilling): a UF '+fmt(r.ufRate,0)+' mL/h excede o refilling '+fmt(r.refilling,0)+' → o plasma cai → hipotensão/stunning (M24). Tirar devagar é tolerar.';
+  else t='Perfusão efetiva PAM − PVC = '+fmt(r.perfPressao,0)+' mmHg → TFG '+fmt(r.tfg,0)+'. Descongestionar baixa a PVC e sobe a TFG (ganho previsto +'+fmt(r.ganhoTFG,0)+' mL/min).';
+  p.textContent=t; ip.textContent=t; }
+function drawCanvas(state){ var c=$('cardiorrenal-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
+  var st={}; for(var k in state) st[k]=state[k]; st.modo=curModo;
+  var L=congestaoLayout(st,c.width,c.height); ctx.clearRect(0,0,L.W,L.H);
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  function poly(pts,color,w,dash){ ctx.strokeStyle=color; ctx.lineWidth=w; if(dash) ctx.setLineDash(dash); ctx.beginPath(); for(var i=0;i<pts.length;i++){ var p=pts[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); } ctx.stroke(); ctx.setLineDash([]); }
+  if(L.modo==='diuretico'){
+    ctx.fillText('natriurese ↑',8,L.padT+2); ctx.fillText('dose do diurético →',L.W-160,L.baseY+24);
+    poly(L.pts2,'#52c08a',2); poly(L.pts,'#e0556b',2,[6,4]);
+    ctx.fillStyle='#52c08a'; ctx.fillText('rim que responde',L.padL+12,L.padT+14);
+    ctx.fillStyle='#e0556b'; ctx.fillText('resistente (curva à direita)',L.W-220,L.padT+14);
+    var cd=L.current; ctx.fillStyle='#e7eef4'; ctx.fillRect(cd.x-4,cd.y-4,8,8);
+  } else {
+    ctx.fillText('TFG ↑',8,L.padT+2); ctx.fillText('PVC (congestão) →',L.W-150,L.baseY+24);
+    poly(L.pts,'#39c0c8',2);
+    var cu=L.current; ctx.strokeStyle='#e7eef4'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(cu.x,L.padT); ctx.lineTo(cu.x,L.baseY); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle='#e0556b'; ctx.fillRect(cu.x-4,cu.y-4,8,8);
+    if(L.alvo){ ctx.fillStyle='#52c08a'; ctx.fillRect(L.alvo.x-4,L.alvo.y-4,8,8);
+      ctx.strokeStyle='#52c08a'; ctx.setLineDash([3,3]); ctx.beginPath(); ctx.moveTo(cu.x,cu.y); ctx.lineTo(L.alvo.x,L.alvo.y); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle='#52c08a'; ctx.fillText('descongestão →',Math.max(L.alvo.x-40,L.padL+4),Math.max(L.alvo.y-8,L.padT+12)); }
+    ctx.fillStyle='#e0556b'; ctx.fillText('atual',Math.min(cu.x+8,L.W-80),Math.max(cu.y+16,L.padT+24));
+  } }
+['in-dc','in-pvc','in-pam','in-doseDiuretico','in-resistencia','in-volume','in-refilling','in-ufRate'].forEach(function(id){ $(id).addEventListener('input',refresh); });
+$('modo-cong').addEventListener('click',function(){ curModo='congestao'; refresh(); });
+$('modo-diur').addEventListener('click',function(){ curModo='diuretico'; refresh(); });
+
+var PRESETS={
+  congestao:{dc:4.2,pvc:20,pam:80,doseDiuretico:1.5,resistencia:0.3,volume:8,refilling:300,ufRate:200},
+  dcbaixo:{dc:2.5,pvc:6,pam:58,doseDiuretico:1.0,resistencia:0.2,volume:2,refilling:300,ufRate:200},
+  resistencia:{dc:4.0,pvc:16,pam:75,doseDiuretico:3.0,resistencia:0.65,volume:9,refilling:280,ufRate:200},
+  uf:{dc:3.8,pvc:18,pam:72,doseDiuretico:3.5,resistencia:0.85,volume:11,refilling:350,ufRate:300},
+  euvolemia:{dc:5.5,pvc:5,pam:85,doseDiuretico:1.0,resistencia:0.1,volume:1,refilling:340,ufRate:150}
+};
+function applyPreset(p){ var d=PRESETS[p]; if(!d) return;
+  $('in-dc').value=d.dc; $('in-pvc').value=d.pvc; $('in-pam').value=d.pam; $('in-doseDiuretico').value=d.doseDiuretico;
+  $('in-resistencia').value=d.resistencia; $('in-volume').value=d.volume; $('in-refilling').value=d.refilling; $('in-ufRate').value=d.ufRate; refresh(); }
+document.querySelector('.presets').addEventListener('click',function(e){ var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset')); });
+
+/* ILUSTRAÇÕES computadas + helper raster */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+function congMini(state,titulo){ var W=300,H=170,st={}; for(var k in state) st[k]=state[k]; st.modo='congestao';
+  var L=congestaoLayout(st,W,H),s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  function path(pts,color,dash){ var d=''; for(var i=0;i<pts.length;i++){ d+=(i===0?'M':'L')+f1(pts[i].x)+' '+f1(pts[i].y)+' '; } return '<path d="'+d+'" fill="none" stroke="'+color+'" stroke-width="2"'+(dash?' stroke-dasharray="4 3"':'')+'/>'; }
+  s+=path(L.pts,'#39c0c8');
+  var cu=L.current; s+='<rect x="'+f1(cu.x-3)+'" y="'+f1(cu.y-3)+'" width="6" height="6" fill="#e0556b"/>';
+  if(L.alvo){ s+='<rect x="'+f1(L.alvo.x-3)+'" y="'+f1(L.alvo.y-3)+'" width="6" height="6" fill="#52c08a"/>'; }
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'TFG × PVC')+'</text>';
+  s+='<text x="'+(L.padL+4)+'" y="'+(L.padT+12)+'" fill="#39c0c8" font-size="8">TFG ↑</text>';
+  s+='<text x="'+(W-8)+'" y="'+(L.baseY-4)+'" fill="#9fb1c0" font-size="8" text-anchor="end">PVC →</text>';
+  return svgEl(W,H,s); }
+function diurMini(state,titulo){ var W=300,H=170,st={}; for(var k in state) st[k]=state[k]; st.modo='diuretico';
+  var L=congestaoLayout(st,W,H),s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  function path(pts,color,dash){ var d=''; for(var i=0;i<pts.length;i++){ d+=(i===0?'M':'L')+f1(pts[i].x)+' '+f1(pts[i].y)+' '; } return '<path d="'+d+'" fill="none" stroke="'+color+'" stroke-width="2"'+(dash?' stroke-dasharray="5 4"':'')+'/>'; }
+  s+=path(L.pts2,'#52c08a'); s+=path(L.pts,'#e0556b',true);
+  var cu=L.current; s+='<rect x="'+f1(cu.x-3)+'" y="'+f1(cu.y-3)+'" width="6" height="6" fill="#e7eef4"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'natriurese × dose')+'</text>';
+  s+='<text x="'+(L.padL+4)+'" y="'+(L.padT+12)+'" fill="#52c08a" font-size="8">responde</text>';
+  s+='<text x="'+(W-8)+'" y="'+(L.padT+12)+'" fill="#e0556b" font-size="8" text-anchor="end">resistente →</text>';
+  return svgEl(W,H,s); }
+function perfBars(r,titulo){ var W=300,H=170,base=130,s='';
+  function bar(x,frac,color,lab,val){ var h=clampv(frac,0,1)*96; return '<rect x="'+x+'" y="'+f1(base-h)+'" width="46" height="'+f1(h)+'" fill="'+color+'" fill-opacity="0.6" stroke="'+color+'"/>'+
+    '<text x="'+(x+23)+'" y="'+(base+13)+'" fill="#9fb1c0" font-size="9" text-anchor="middle">'+lab+'</text>'+
+    '<text x="'+(x+23)+'" y="'+f1(base-h-4)+'" fill="#e7eef4" font-size="9" text-anchor="middle">'+val+'</text>'; }
+  s+='<line x1="40" y1="34" x2="40" y2="'+base+'" stroke="#3a4a58"/>';
+  s+=bar(58,r.pam/110,'#e0556b','PAM',fmt(r.pam,0));
+  s+=bar(132,r.pvc/28,(r.pvc>=14?'#e8a13a':'#5b8dd6'),'PVC',fmt(r.pvc,0));
+  s+=bar(206,r.tfg/120,(r.tfg>=60?'#52c08a':'#e0556b'),'TFG',fmt(r.tfg,0));
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'PAM · PVC · TFG')+'</text>';
+  return svgEl(W,H,s); }
+function condIcon(r,titulo){ var W=300,H=170,s='';
+  var uf=r.conduta==='UF'; var col=uf?'#39c0c8':'#52c08a';
+  s+='<rect x="70" y="50" width="160" height="70" rx="10" fill="'+col+'" fill-opacity="0.18" stroke="'+col+'"/>';
+  s+='<text x="150" y="84" fill="'+col+'" font-size="16" text-anchor="middle" font-weight="bold">'+(uf?'UF mecânica':'diurético')+'</text>';
+  s+='<text x="150" y="104" fill="#9fb1c0" font-size="10" text-anchor="middle">'+(uf?'refratário · '+fmt(r.ufEfetiva,0)+' mL/h':'1ª linha · natriurese '+fmt(r.natriurese*100,0)+'%')+'</text>';
+  s+='<text x="'+(W/2)+'" y="20" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'conduta')+'</text>';
+  s+='<text x="150" y="146" fill="#e7eef4" font-size="9" text-anchor="middle">perf '+fmt(r.perfPressao,0)+' · TFG '+fmt(r.tfg,0)+'</text>';
+  return svgEl(W,H,s); }
+function imgFig(slug,alt){ return '<img src="assets/m37/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+/* TUTOR */
+function R0(extra){ var o={}; if(extra) for(var k in extra) o[k]=extra[k]; return cardiorrenal(o); }
+var TUTOR_ILUSTRADO=[
+  {q:'IC descompensada, PAM 80, PVC 20, oligúria. O que derruba a TFG?',o:['a PAM está baixa','a CONGESTÃO venosa (PVC↑) represa o rim','o rim apodreceu'],c:1,e:'Perfusão efetiva ≈ PAM − PVC = 60: a PVC alta represa o glomérulo mesmo com PAM "boa".',fig:function(){return perfBars(R0({pam:80,pvc:20,dc:4.2}),'PAM − PVC → TFG');}},
+  {q:'Na curva TFG × PVC, o que acontece com a TFG quando a PVC sobe?',o:['sobe','CAI (congestão represa)','não muda'],c:1,e:'A TFG é o gradiente através do rim; ↑PVC fecha a saída e derruba a filtração.',fig:function(){return congMini({dc:5,pvc:18,pam:80},'TFG cai com PVC');}},
+  {q:'Qual a 1ª linha para descongestionar?',o:['vasopressor','diurético de alça','restrição hídrica só'],c:1,e:'O diurético de alça bloqueia o NKCC2, tira sal e água, baixa a PVC.',fig:function(){return condIcon(R0({pvc:18,dc:4.2,doseDiuretico:1.5,resistencia:0.3}),'diurético');}},
+  {q:'Descongestionar (baixar a PVC) faz o quê com a TFG?',o:['derruba','MELHORA (sobe o gradiente)','indiferente'],c:1,e:'Perfusão ≈ PAM − PVC: tirar volume baixa a PVC e sobe a TFG (ponto verde).',fig:function(){return congMini({dc:4.2,pvc:18,pam:80,doseDiuretico:1.5},'descongestão → TFG↑');}},
+  {q:'Na resistência ao diurético, a curva dose-resposta…',o:['desloca à esquerda','desloca à DIREITA (EC50↑, teto↓)','desaparece'],c:1,e:'Menos entrega + túbulo saturado → EC50 sobe, teto cai; dobrar a dose rende menos.',fig:function(){return diurMini({resistencia:0.7,dc:4,pvc:16,pam:75},'curva à direita');}},
+  {q:'Diurético sem resposta, sobrecarga persistente. Conduta?',o:['esperar','ultrafiltração mecânica','dobrar de novo sem fim'],c:1,e:'Refratário → UF mecânica: remove volume direto (mL/h), independente do túbulo.',fig:function(){return condIcon(R0({resistencia:0.85,dc:3.8,pvc:18,doseDiuretico:3.5,volume:11,ufRate:300,refilling:350}),'refratário → UF');}},
+  {q:'A UF mecânica, comparada ao rim, …',o:['substitui o rim por inteiro','remove só VOLUME, não ajusta eletrólitos finos','corrige tudo'],c:1,e:'A UF é uma alavanca de volume; não faz a regulação fina que o rim faz.',fig:function(){return imgFig('diuretico-vs-uf.svg','diurético × UF');}},
+  {q:'Por que a UF deve ficar < refilling plasmático?',o:['economia','senão o plasma cai → hipotensão (M24)','para o filtro durar'],c:1,e:'A UF tira do plasma; o interstício repõe com atraso. UF > refilling = crash.',fig:function(){return condIcon(R0({resistencia:0.85,dc:3.8,pvc:18,doseDiuretico:3.5,ufRate:380,refilling:200}),'UF > refilling');}},
+  {q:'PVC 6, DC 2,5, PAM 58, oligúria. Tirar volume resolve?',o:['sim, sempre','NÃO — aqui o DC baixo manda (sem congestão)','é igual ao Ato 1'],c:1,e:'Sem PVC alta, o limite é o débito; precisa de suporte ao DC, não de descongestão.',fig:function(){return perfBars(R0({pvc:6,dc:2.5,pam:58}),'DC baixo, sem congestão');}},
+  {q:'Na figura do eixo cardiorrenal, o que liga coração e rim?',o:['o potássio','o VOLUME (a ponte)','a creatinina'],c:1,e:'Coração e rim falham juntos; a retenção de volume fecha o ciclo vicioso.',fig:function(){return imgFig('coracao-rim-eixo.svg','eixo cardiorrenal');}},
+  {q:'Na figura perfusão = PAM − PVC, a perfusão efetiva é…',o:['a PAM inteira','o que sobra de PAM depois de subtrair a PVC','a PVC'],c:1,e:'O gradiente através do rim: PAM empurra, PVC subtrai; o verde é o que sobra.',fig:function(){return imgFig('perfusao-pam-menos-pvc.svg','perfusão = PAM − PVC');}},
+  {q:'Na figura da resistência, a seta âmbar representa o…',o:['ganho de dose','o braking (deslocamento à direita)','o refilling'],c:1,e:'O braking desloca a curva à direita: precisa de mais dose para o mesmo efeito.',fig:function(){return imgFig('resistencia-diuretico-curva.svg','resistência ao diurético');}}
+];
+var TUTOR_TEXTUAL=[
+  {q:'A perfusão renal efetiva, na síndrome cardiorrenal, é aproximada por…',o:['PAM × DC','PAM − PVC','PVC − PAM'],c:1,e:'O gradiente através do rim: a PAM empurra, a PVC (congestão) represa.'},
+  {q:'A congestão venosa (PVC↑) derruba a TFG porque…',o:['rouba o potássio','represa o glomérulo (a pressão a montante)','aumenta o DC'],c:1,e:'A TFG depende do gradiente; ↑PVC fecha a saída venosa e represa a filtração.'},
+  {q:'O alvo do tratamento da congestão é…',o:['subir a PA a todo custo','descongestionar (baixar a PVC)','restringir só água'],c:1,e:'Como perfusão ≈ PAM − PVC, baixar a PVC sobe a TFG — mais que forçar a PA.'},
+  {q:'A 1ª linha de descongestão é…',o:['ultrafiltração','diurético de alça','vasopressor'],c:1,e:'Bloqueia o NKCC2, tira sal e água, baixa a PVC.'},
+  {q:'A resistência ao diurético se manifesta como…',o:['curva à esquerda','curva à direita: EC50↑, teto↓','sem teto'],c:1,e:'Menos entrega + túbulo saturado; dobrar a dose rende menos (braking).'},
+  {q:'A ultrafiltração mecânica entra quando…',o:['a PA está alta','o diurético é refratário e a sobrecarga persiste','o K está baixo'],c:1,e:'Ela remove volume direto (mL/h), independente da resposta tubular.'},
+  {q:'A UF mecânica, em relação ao rim, …',o:['substitui todas as funções','remove volume mas não regula eletrólitos finos','não tira água'],c:1,e:'É uma alavanca de volume; não faz a regulação fina do rim.'},
+  {q:'A UF deve ficar abaixo do refilling porque…',o:['o filtro cansa','UF > refilling derruba o plasma → hipotensão (M24)','economiza solução'],c:1,e:'A água sai do plasma; o interstício repõe com atraso. UF > refilling = crash.'},
+  {q:'Oligúria com PVC normal e DC muito baixo pede…',o:['mais diurético','suporte ao débito (inotrópico), não descongestão','UF agressiva'],c:1,e:'Sem congestão, o limite é o DC; a mesma oligúria, mecanismo oposto.'},
+  {q:'O que liga coração e rim na falência mútua é…',o:['o sódio','o volume (a ponte do ciclo vicioso)','o cálcio'],c:1,e:'A retenção de volume piora o coração; descongestionar trata os dois.'},
+  {q:'A ponte com o braço CHOCA neste módulo é…',o:['Kt/V','PAM = DC × RVS (e o volume do Guyton)','o anion gap'],c:1,e:'A hemodinâmica do choque governa o volume que o rim depende; cardiorrenal mistura os dois.'},
+  {q:'Em síntese, a queda da TFG cardiorrenal se decompõe em…',o:['só creatinina','DC baixo (anterógrado) + congestão venosa (PVC↑)','só obstrução'],c:1,e:'Dois motores; a congestão é o subestimado. Decompor antes de interpretar.'}
+];
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL; window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+var BANKS={ilustrada:TUTOR_ILUSTRADO,textual:TUTOR_TEXTUAL}, curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+function renderTutor(){ var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():''; $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false; $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){ if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button'); btns[item.c].classList.add('ok'); if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block'; fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e; $('tutor-score').textContent=tScore; $('tutor-total').textContent=tTotal; });
+    box.appendChild(b); }); }
+$('banktabs').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor(); });
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+$('draw-eixo').innerHTML = perfBars(cardiorrenal({pam:80,pvc:20,dc:4.2}),'PAM − PVC → TFG');
+$('draw-congestao').innerHTML = congMini({dc:5,pvc:18,pam:80},'TFG cai com a PVC');
+$('draw-curva').innerHTML = diurMini({resistencia:0.7,dc:4,pvc:16,pam:75},'curva à direita');
+$('draw-alvo').innerHTML = congMini({dc:4.2,pvc:18,pam:80,doseDiuretico:1.5},'descongestão → TFG↑');
+$('draw-conduta').innerHTML = condIcon(cardiorrenal({resistencia:0.85,dc:3.8,pvc:18,doseDiuretico:3.5,volume:11,ufRate:300,refilling:350}),'refratário → UF mecânica');
+$('fig-caso').innerHTML = perfBars(cardiorrenal({pam:80,pvc:20,dc:4.2}),'o caso: PAM − PVC') + condIcon(cardiorrenal({pvc:20,dc:4.2,doseDiuretico:1.5,resistencia:0.3}),'conduta');
+
+refresh(); renderTutor();
+</script>
+</body>
+</html>

@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M35 — Indicações de TRS: o AEIOU como mapa de conduta</title>
+<style>
+  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--warn:#e8a13a;--bad:#e0556b;--good:#52c08a;--roxo:#c879e0;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none} section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .presets{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px} .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)} .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)} .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)} .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M35</div>
+  <h1>Indicações de TRS — o AEIOU como mapa de conduta</h1>
+  <div class="sub">Quando indicar a <b>terapia de substituição renal</b>? A resposta <b>não</b> é um número de
+  creatinina. É um <b>gatilho refratário</b> em um dos cinco eixos do mnemônico <b>AEIOU</b>: <b>A</b>cidose
+  (metabólica grave refratária), <b>E</b>letrólitos (hipercalemia refratária com ECG), <b>I</b>ntoxicação (toxina
+  <b>dialisável</b>), <b>O</b>verload (sobrecarga refratária — edema pulmonar) e <b>U</b>remia sintomática
+  (pericardite, encefalopatia). A inversão central: <b>qualquer eixo refratário dispara — independente dos
+  outros</b> (é um <b>OR</b>, não uma soma). E o mesmo número decide diferente conforme <b>refratário × responsivo</b>
+  à clínica. O alvo é a <b>homeostasia</b>: indicar a máquina é reconhecer que a regulação do meio interno falhou
+  num eixo e não responde mais ao tratamento clínico.</div>
+  <nav class="hex">
+    <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
+    <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="dialisa.html">&larr; índice do antebraço DIALISA</a>
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- CONCEITO -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — cinco gatilhos, qualquer um basta</h3>
+      <p class="sub" style="margin-top:0"><b>A indicação de TRS sai de um gatilho refratário, não de um número.</b> O
+      mnemônico <b>AEIOU</b> enfileira os cinco eixos que, quando falham e <b>não respondem mais à clínica</b>, pedem a
+      máquina. A lógica é um <b>OR</b>: basta UM eixo cruzar o limiar. As Fig. 1–8 voltam no Caso, na Trilha e na
+      Avaliação. Atribuição em <code>CREDITS.md</code> (em curadoria).</p>
+
+      <h4>1. O mnemônico AEIOU — o mapa dos cinco gatilhos</h4>
+      <p class="sub">Cada letra é um eixo do <b>meio interno</b> que o rim defende. <b>A</b>cidose, <b>E</b>letrólitos,
+      <b>I</b>ntoxicação, <b>O</b>verload e <b>U</b>remia. A indicação não exige todos — exige que <b>um</b> deles
+      esteja <b>refratário</b> ao tratamento clínico. É um mapa de <b>conduta</b>, não um escore que soma pontos.</p>
+      <div class="frow">
+        <div class="concept" id="draw-aeiou"></div>
+        <figure class="fviva"><img src="assets/m35/aeiou-mnemonico.svg" alt="O mnemônico AEIOU com os cinco eixos da indicação de TRS" loading="lazy">
+          <figcaption><b>Fig. 1 · O mnemônico AEIOU.</b> Os cinco gatilhos da indicação: <b>A</b>cidose grave
+          refratária, <b>E</b>letrólitos (hipercalemia com ECG), <b>I</b>ntoxicação por toxina <b>dialisável</b>,
+          <b>O</b>verload (sobrecarga refratária ao diurético, com edema pulmonar) e <b>U</b>remia sintomática
+          (pericardite, encefalopatia). Qualquer um, sozinho, indica a máquina — é um <b>OR</b>, não uma soma.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m35/radar-cinco-eixos.svg" alt="Radar dos cinco eixos AEIOU com o anel do limiar de disparo" loading="lazy">
+          <figcaption><b>Fig. 2 · O radar dos cinco eixos.</b> Cada vértice <b>①A ②E ③I ④O ⑤U</b> mede a severidade de
+          um eixo ao longo do raio. O <b>anel tracejado (laranja)</b> é o <b>limiar de disparo</b>. Basta <b>um
+          vértice</b> cruzar o anel para indicar a TRS — não importa a <i>área</i> do polígono. É o instrumento vivo do
+          Lab.</figcaption></figure>
+      </div>
+
+      <h4>2. A — Acidose metabólica grave refratária</h4>
+      <p class="sub">O rim regula o <b>HCO₃⁻</b>. Quando a acidose é <b>grave</b> (pH baixo, HCO₃⁻ baixo) e <b>não
+      responde</b> ao bicarbonato/ventilação, a hemodiálise corrige (repõe HCO₃⁻ do banho/reposição). O que dispara é a
+      refratariedade, não o valor isolado: a acidose que cede ao tampão não indica a máquina.</p>
+      <div class="frow">
+        <div class="concept" id="draw-acidose"></div>
+        <figure class="fviva"><img src="assets/m35/acidose-refrataria.svg" alt="Acidose grave refratária: severidade pela queda do pH e refratariedade" loading="lazy">
+          <figcaption><b>Fig. 3 · Acidose refratária.</b> A severidade sobe à medida que o <b>pH</b> cai abaixo de
+          <b>7,15</b> (zona vermelha) e o <b>HCO₃⁻</b> abaixo de 12 mEq/L. O ponto <b>vermelho</b> (refratário ao
+          bicarbonato) dispara; o ponto <b>verde</b> (respondeu ao tampão) baixa a severidade e sai da indicação. O
+          gatilho é a acidose que <i>não cede</i>.</figcaption></figure>
+      </div>
+
+      <h4>3. E — Eletrólitos: hipercalemia refratária com ECG</h4>
+      <p class="sub">O <b>K⁺</b> é o eletrólito que mata. Mas K⁺ alto <b>sozinho</b> não indica TRS — é o K⁺ alto
+      <b>com alteração de ECG</b> (T apiculada → QRS largo → senoidal) e <b>refratário</b> à insulina+glicose, β₂ e
+      gluconato. A hemodiálise remove K⁺ por <b>difusão</b> em poucas horas. Responder à clínica tira o eixo da
+      indicação.</p>
+      <div class="frow">
+        <div class="concept" id="draw-eletro"></div>
+        <figure class="fviva"><img src="assets/m35/hipercalemia-ecg.svg" alt="Hipercalemia: o ECG da onda T apiculada à onda senoidal" loading="lazy">
+          <figcaption><b>Fig. 4 · Hipercalemia e o ECG.</b> Três traçados: <b>K⁺ 4,5</b> normal; <b>K⁺ 6,0</b> com
+          <b>T apiculada</b> (laranja); <b>K⁺ 7,5</b> com <b>QRS alargado/senoidal</b> (vermelho). O <b>ECG</b> é o
+          gatilho — o K⁺ que cede à clínica (verde) não indica; o K⁺ refratário com ECG dispara a TRS
+          sozinho.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m35/refratario-vs-responsivo.svg" alt="O mesmo K 6,8 decide diferente: refratário versus responsivo" loading="lazy">
+          <figcaption><b>Fig. 5 · Refratário × responsivo.</b> O <b>mesmo K⁺ 6,8 com ECG</b> bifurca: se <b>responde</b>
+          à insulina+glicose/β₂/gluconato (verde) → não indica; se é <b>refratário</b> (vermelho) → indica. A
+          indicação não mora no número — mora na <b>resposta do mecanismo</b> à terapia clínica.</figcaption></figure>
+      </div>
+
+      <h4>4. I — Intoxicação por toxina dialisável</h4>
+      <p class="sub">Algumas intoxicações pedem a máquina para <b>remover o veneno</b>, mesmo com rim quase normal. O
+      gatilho é a <b>dialisabilidade</b> (PM baixo, ligação proteica baixa, Vd baixo, hidrossolúvel): lítio,
+      salicilato, metanol, etilenoglicol (M33). A dialisabilidade é um <b>portão</b>: por mais grave que seja, a
+      digoxina (Vd alto) não sai na máquina.</p>
+      <div class="frow">
+        <div class="concept" id="draw-intox"></div>
+        <figure class="fviva"><img src="assets/m35/intoxicacao-dialisavel.svg" alt="Intoxicação: toxinas dialisáveis atravessam a membrana, a digoxina não" loading="lazy">
+          <figcaption><b>Fig. 6 · Intoxicação dialisável.</b> À esquerda, o sangue; à direita, o dialisato. Toxinas de
+          <b>PM/Vd baixos</b> (lítio, salicilato, metanol, etilenoglicol — verde) <b>atravessam</b> a membrana e são
+          removidas. A <b>digoxina</b> (Vd ~6 — vermelho) fica <b>blindada</b>: não passa, não indica TRS. A
+          dialisabilidade é o portão.</figcaption></figure>
+      </div>
+
+      <h4>5. O — Overload: sobrecarga refratária ao diurético</h4>
+      <p class="sub">O rim defende o <b>volume</b>. Quando há <b>sobrecarga</b> (edema pulmonar) e o <b>diurético não
+      responde</b> (anúria, refratariedade), a <b>ultrafiltração</b> mecânica tira o volume que o rim não tira. Mesma
+      sobrecarga, dois destinos: responde ao diurético → não indica; refratária → indica.</p>
+      <div class="frow">
+        <div class="concept" id="draw-over"></div>
+        <figure class="fviva"><img src="assets/m35/sobrecarga-edema.svg" alt="Sobrecarga refratária ao diurético leva a edema pulmonar e ultrafiltração" loading="lazy">
+          <figcaption><b>Fig. 7 · Sobrecarga refratária.</b> Pulmões congestos (edema alveolar). A furosemida em dose
+          alta, se <b>responde</b> (verde), tira o volume → não indica. Se é <b>refratária</b> (vermelho) — anúria, sem
+          resposta — a <b>UF</b> mecânica remove o volume que o rim não consegue. O gatilho é a refratariedade, não o
+          número de litros.</figcaption></figure>
+      </div>
+
+      <h4>6. U — Uremia sintomática (não o número da ureia)</h4>
+      <p class="sub">A ureia alta <b>predispõe</b>, mas o que <b>indica</b> é a uremia <b>sintomática</b>:
+      <b>pericardite</b> (atrito pericárdico) e <b>encefalopatia</b> (asterixis, confusão, coma). Ureia 250
+      assintomática não indica; ureia 180 com pericardite indica. O sintoma é o gatilho — a homeostasia falhou de
+      forma <b>clinicamente manifesta</b>.</p>
+      <div class="frow">
+        <div class="concept" id="draw-uremia"></div>
+        <figure class="fviva"><img src="assets/m35/uremia-pericardite.svg" alt="Uremia sintomática: pericardite e encefalopatia são os gatilhos" loading="lazy">
+          <figcaption><b>Fig. 8 · Uremia sintomática.</b> À esquerda, a <b>pericardite urêmica</b> (atrito
+          pericárdico); à direita, a <b>encefalopatia</b> (asterixis, confusão, coma). A barra mostra a ureia: o número
+          alto pesa pouco — o que <b>dispara</b> a TRS é o <b>sintoma</b>. Ureia 250 muda assintomática não indica; com
+          pericardite, indica.</figcaption></figure>
+      </div>
+      <p class="sub" style="margin-top:14px"><b>O fio condutor — homeostasia.</b> Indicar a TRS é declarar que a
+      regulação do meio interno (volume, eletrólitos, ácido-base, escórias) <b>falhou num eixo</b> e <b>não responde
+      mais</b> ao tratamento clínico. A máquina entra para <b>substituir a função</b> daquele eixo até o rim recuperar
+      a homeostasia.</p>
+    </div>
+  </section>
+
+  <!-- CASO -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — cinco atos (um por letra do AEIOU + a fronteira responsiva)</h3>
+      <p class="sub">UTI. Cinco apresentações. A pergunta de cada uma: <b>algum eixo refratário dispara a TRS?</b>
+      Volte às Fig. 1, 2 e 5: qualquer eixo basta, e o refratário decide.</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step"><b>Ato 1 — A · acidose grave refratária.</b> Sepse + LRA. pH 7,02, HCO₃⁻ 8 mEq/L, lactato alto;
+        já recebeu bicarbonato sem melhora, ventilação otimizada. K⁺ 4,8, ureia 90, sem sobrecarga. Indica TRS?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>Sim — pelo eixo A.</b> A acidose é <b>grave</b> (pH &lt; 7,15, HCO₃⁻ &lt; 12) e
+          <b>refratária</b> ao bicarbonato (Fig. 3). UM eixo basta (Fig. 1) — mesmo com K⁺, ureia e volume normais.
+          A diálise repõe HCO₃⁻ e corrige o pH. O dominante é <b>A</b>.</div></div>
+
+      <div class="step"><b>Ato 2 — E · hipercalemia refratária com ECG.</b> Outro doente: K⁺ 7,4 com QRS alargado,
+        recebeu insulina+glicose, β₂ e gluconato — K⁺ persiste. pH 7,34, ureia 70, sem sobrecarga. Conduta?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2"><b>Indicar TRS — eixo E sozinho.</b> A hipercalemia <b>refratária com ECG</b>
+          dispara mesmo com pH, ureia e volume normais (Fig. 4). A HD remove K⁺ por <b>difusão</b> em horas. Esta é a
+          pérola do módulo: <b>um eixo refratário basta</b> — não precisa de mais nada cruzar o limiar.</div></div>
+
+      <div class="step"><b>Ato 3 — I · intoxicação dialisável.</b> Intoxicação por lítio com neurotoxicidade, nível alto,
+        função renal limítrofe, hemodinamicamente estável. O gatilho é a LRA?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3"><b>Não — é a toxina (eixo I).</b> O lítio é <b>dialisável</b> (PM 7, Vd 0,7,
+          ligação 0 — Fig. 6): a TRS remove o veneno. A intoxicação dialisável indica por si, mesmo com rim quase
+          normal. <b>Contraste:</b> uma intoxicação por <b>digoxina</b> (Vd alto) <b>não</b> dispararia I — está
+          blindada da máquina.</div></div>
+
+      <div class="step"><b>Ato 4 — O · sobrecarga refratária + edema pulmonar.</b> ICC + LRA, +9 L, edema pulmonar
+        franco, hipoxêmico; furosemida em dose alta sem diurese. pH 7,33, K⁺ 5,0, ureia 110. Indica?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>Sim — eixo O.</b> A sobrecarga é <b>refratária ao diurético</b> com <b>edema
+          pulmonar</b> (Fig. 7): a <b>ultrafiltração</b> tira o volume que o rim não tira. O gatilho é a
+          refratariedade — se a furosemida tivesse respondido, não indicaria. Ponte com Choca/M37 (cardiorrenal): o
+          volume é o eixo, a UF é a alavanca.</div></div>
+
+      <div class="step"><b>Ato 5 — a fronteira RESPONSIVA.</b> K⁺ 6,8 com T apiculada, ureia 200, +5 L. Recebe
+        insulina+glicose, β₂, gluconato e furosemida — <b>responde a tudo</b>: K⁺ 5,1, diurese abundante, sem sintoma
+        urêmico. Indica TRS?
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>Não — nenhum eixo refratário.</b> Os números eram altos, mas <b>responderam</b>
+          à clínica (Fig. 5): o K⁺ caiu, o volume saiu, e a ureia 200 está <b>assintomática</b> (sem pericardite/
+          encefalopatia). Nenhum vértice cruza o anel (Fig. 2) → <b>otimizar a clínica e observar</b>. O mesmo número
+          que indicaria, se refratário, aqui não indica. A indicação é função da <b>resposta</b>, não do
+          valor.</div></div>
+    </div>
+  </section>
+
+  <!-- TRILHA -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — nove perguntas que constroem o mapa AEIOU</h3>
+      <details><summary>1. A indicação de TRS é um número de creatinina?</summary><p>Não. É um <b>gatilho
+        refratário</b> num dos cinco eixos do AEIOU. A creatinina/ureia altas predispõem, mas não indicam por si — o
+        que indica é a <b>função do meio interno</b> que falhou e não responde mais à clínica.</p></details>
+      <details><summary>2. O que significa o AEIOU ser um "OR" e não uma soma?</summary><p>Basta <b>um</b> eixo
+        refratário cruzar o limiar para indicar — independente dos outros. Não se soma severidade de cinco eixos
+        moderados: cinco eixos "quase lá" não indicam, mas <b>um</b> eixo forte sim (Fig. 1, 2).</p></details>
+      <details><summary>3. A · quando a acidose indica?</summary><p>Quando é <b>grave</b> (pH &lt; ~7,15, HCO₃⁻ baixo)
+        e <b>refratária</b> ao bicarbonato/ventilação. A HD corrige repondo HCO₃⁻. A acidose que cede ao tampão não
+        indica (Fig. 3).</p></details>
+      <details><summary>4. E · K⁺ alto sozinho indica?</summary><p>Não. É a hipercalemia <b>com alteração de ECG</b>
+        (T apiculada → QRS largo → senoidal) e <b>refratária</b> à insulina+glicose/β₂/gluconato. A HD remove K⁺ por
+        difusão em horas (Fig. 4).</p></details>
+      <details><summary>5. I · o que torna uma intoxicação indicação de TRS?</summary><p>A <b>dialisabilidade</b>: PM
+        baixo, ligação proteica baixa, Vd baixo, hidrossolúvel — lítio, salicilato, metanol, etilenoglicol (M33). A
+        digoxina (Vd alto) está <b>blindada</b>: não dispara I (Fig. 6).</p></details>
+      <details><summary>6. O · qual é o gatilho da sobrecarga?</summary><p>Sobrecarga de volume <b>refratária ao
+        diurético</b> (edema pulmonar). A <b>UF</b> mecânica tira o volume que o rim não tira. Se o diurético responde,
+        não indica (Fig. 7).</p></details>
+      <details><summary>7. U · a ureia alta indica TRS?</summary><p>Por si, não. O que indica é a uremia
+        <b>sintomática</b>: <b>pericardite</b> e <b>encefalopatia</b>. Ureia 250 assintomática não indica; ureia 180
+        com pericardite indica (Fig. 8). O sintoma é o gatilho.</p></details>
+      <details><summary>8. Por que o "refratário × responsivo" muda tudo?</summary><p>Porque o <b>mesmo número</b>
+        decide diferente: K⁺ 6,8 com ECG que <b>responde</b> à clínica não indica; <b>refratário</b>, indica. A
+        indicação mora na resposta do mecanismo, não no valor (Fig. 5).</p></details>
+      <details><summary>9. Em que sentido o AEIOU é sobre homeostasia?</summary><p>Indicar a TRS é declarar que a
+        <b>regulação do meio interno</b> (volume, eletrólitos, ácido-base, escórias) falhou num eixo e <b>não responde
+        mais</b> à clínica. A máquina substitui a <b>função</b> daquele eixo até o rim restaurar a homeostasia. (No
+        M36: <i>quando</i> iniciar; aqui: <i>o quê</i> indica.)</p></details>
+    </div>
+  </section>
+
+  <!-- INSTRUMENTO -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — o radar AEIOU (cinco eixos, o anel é o limiar)</h3>
+      <p class="sub">Os controles do <b>Lab</b> movem os cinco vértices. Cada eixo (<b>A</b> topo, depois <b>E I O U</b>
+      no sentido horário) tem a severidade ao longo do raio; o <b>anel tracejado</b> é o <b>limiar de disparo</b>.
+      Basta <b>um vértice</b> ultrapassar o anel para a TRS estar indicada — vértices fora do anel ficam destacados. A
+      indicação é um <b>OR</b>, não a área do polígono.</p>
+      <canvas id="aeiou-canvas" width="640" height="420" aria-label="Radar dos cinco eixos AEIOU"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- LAB -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — monte o paciente; veja os eixos disparados e a conduta</h3>
+      <div class="grid">
+        <div>
+          <label>A · pH arterial: <span class="val" id="lbl-pH">7.38</span></label>
+          <input type="range" id="in-pH" min="6.8" max="7.5" step="0.01" value="7.38">
+          <label>A · HCO₃⁻ (mEq/L): <span class="val" id="lbl-hco3">24</span></label>
+          <input type="range" id="in-hco3" min="4" max="28" step="0.5" value="24">
+          <label>A · respondeu ao bicarbonato (0 refratário → 1 respondeu): <span class="val" id="lbl-acidoseRespondeu">1.0</span></label>
+          <input type="range" id="in-acidoseRespondeu" min="0" max="1" step="0.05" value="1">
+          <label>E · K⁺ (mEq/L): <span class="val" id="lbl-k">4.5</span></label>
+          <input type="range" id="in-k" min="3" max="8.5" step="0.1" value="4.5">
+          <label>E · alteração de ECG (0 nenhuma → 1 ameaçadora): <span class="val" id="lbl-ecg">0.0</span></label>
+          <input type="range" id="in-ecg" min="0" max="1" step="0.05" value="0">
+          <label>E · K⁺ respondeu à clínica (0 refratário → 1 respondeu): <span class="val" id="lbl-kRespondeu">1.0</span></label>
+          <input type="range" id="in-kRespondeu" min="0" max="1" step="0.05" value="1">
+          <label>I · dialisabilidade da toxina (0 não → 1 muito): <span class="val" id="lbl-dialisavel">0.0</span></label>
+          <input type="range" id="in-dialisavel" min="0" max="1" step="0.05" value="0">
+        </div>
+        <div>
+          <label>I · nível tóxico (0 baixo → 1 alto): <span class="val" id="lbl-nivelTox">0.0</span></label>
+          <input type="range" id="in-nivelTox" min="0" max="1" step="0.05" value="0">
+          <label>I · gravidade clínica da intoxicação (0 → 1): <span class="val" id="lbl-gravidadeTox">0.0</span></label>
+          <input type="range" id="in-gravidadeTox" min="0" max="1" step="0.05" value="0">
+          <label>O · sobrecarga de volume (L acima do seco): <span class="val" id="lbl-volume">0</span></label>
+          <input type="range" id="in-volume" min="0" max="15" step="0.5" value="0">
+          <label>O · edema pulmonar (0 não → 1 franco): <span class="val" id="lbl-edemaPulmonar">0.0</span></label>
+          <input type="range" id="in-edemaPulmonar" min="0" max="1" step="0.05" value="0">
+          <label>O · diurético respondeu (0 refratário → 1 respondeu): <span class="val" id="lbl-diureticoRespondeu">1.0</span></label>
+          <input type="range" id="in-diureticoRespondeu" min="0" max="1" step="0.05" value="1">
+          <label>U · ureia (mg/dL): <span class="val" id="lbl-ureia">60</span></label>
+          <input type="range" id="in-ureia" min="40" max="360" step="5" value="60">
+          <label>U · pericardite (0 não → 1 sim): <span class="val" id="lbl-pericardite">0.0</span></label>
+          <input type="range" id="in-pericardite" min="0" max="1" step="0.05" value="0">
+          <label>U · encefalopatia (0 não → 1 sim): <span class="val" id="lbl-encefalopatia">0.0</span></label>
+          <input type="range" id="in-encefalopatia" min="0" max="1" step="0.05" value="0">
+        </div>
+      </div>
+
+      <div class="presets">
+        <button class="act" data-preset="acidose">A · acidose grave refratária</button>
+        <button class="act" data-preset="hiperK">E · hipercalemia refratária</button>
+        <button class="act" data-preset="intoxicacao">I · intoxicação dialisável</button>
+        <button class="act" data-preset="sobrecarga">O · sobrecarga refratária</button>
+        <button class="act" data-preset="uremia">U · urêmico sintomático</button>
+        <button class="act" data-preset="responsivo">Fronteira responsiva (não indica)</button>
+      </div>
+
+      <table>
+        <tr><th>Saída</th><th>Atual</th><th>Comentário</th></tr>
+        <tr><td>Recomendação</td><td class="num" id="out-recomendacao">—</td><td class="num">indicar · otimizar · observar</td></tr>
+        <tr><td>Eixos disparados (AEIOU)</td><td class="num" id="out-disparos">—</td><td class="num">qualquer um basta (OR)</td></tr>
+        <tr><td>Eixo dominante</td><td class="num" id="out-dominante">—</td><td class="num">maior severidade</td></tr>
+        <tr><td>Severidades A·E·I·O·U</td><td class="num" id="out-sev">—</td><td class="num">cada uma ∈ [0,1]</td></tr>
+        <tr><td>Severidade máx · soma</td><td class="num" id="out-resumo">—</td><td class="num">a soma NÃO decide</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÃO -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (12)</button>
+        <button data-bank="textual">Textual (12)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica</b>. Este módulo M35 mapeia
+    a indicação de TRS pelo mnemônico AEIOU como uma simplificação didática calibrada para ensinar o <b>mecanismo</b> —
+    qual eixo do meio interno falhou e não responde mais à clínica. Os limiares e severidades são esquemáticos, não um
+    protocolo de indicação para um paciente real. Não substitui julgamento clínico; a decisão e a responsabilidade
+    finais são sempre do profissional.
+  </div>
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+</div>
+
+<script>
+/* ENGINE INLINE — espelho fiel de build/m35/model35.js */
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
+var PH_GRAVE=7.15, HCO3_GRAVE=12, K_PERIGO=6.0, UREIA_ALTA=180, LIMIAR_DISPARO=0.5;
+function sevAcidose(pH,hco3,respondeu){ pH=clampv(pH,6.6,7.6); hco3=clampv(hco3,2,30); respondeu=clampv(respondeu,0,1);
+  var phComp=clampv((PH_GRAVE-pH)/(PH_GRAVE-6.8),0,1); var hco3Comp=clampv((HCO3_GRAVE-hco3)/(HCO3_GRAVE-4),0,1);
+  var grave=clampv(Math.max(phComp,hco3Comp),0,1); return clampv(grave*(1-0.85*respondeu),0,1); }
+function sevEletrolitos(k,ecg,respondeu){ k=clampv(k,2,9); ecg=clampv(ecg,0,1); respondeu=clampv(respondeu,0,1);
+  var kComp=clampv((k-K_PERIGO)/(7.5-K_PERIGO),0,1); var base=clampv(0.6*kComp+0.4*ecg,0,1);
+  var gate=clampv((k-5.2)/(K_PERIGO-5.2),0,1); return clampv(base*gate*(1-0.85*respondeu),0,1); }
+function sevIntoxicacao(dialisavel,nivel,gravidade){ dialisavel=clampv(dialisavel,0,1); nivel=clampv(nivel,0,1); gravidade=clampv(gravidade,0,1);
+  var carga=clampv(0.55*nivel+0.45*gravidade,0,1); return clampv(dialisavel*carga,0,1); }
+function sevSobrecarga(volume,edemaPulmonar,respondeuDiuretico){ volume=clampv(volume,0,20); edemaPulmonar=clampv(edemaPulmonar,0,1); respondeuDiuretico=clampv(respondeuDiuretico,0,1);
+  var volComp=clampv(volume/8,0,1); var base=clampv(0.55*volComp+0.45*edemaPulmonar,0,1); return clampv(base*(1-0.85*respondeuDiuretico),0,1); }
+function sevUremia(ureia,pericardite,encefalopatia){ ureia=clampv(ureia,20,400); pericardite=clampv(pericardite,0,1); encefalopatia=clampv(encefalopatia,0,1);
+  var ureiaComp=clampv((ureia-UREIA_ALTA)/(300-UREIA_ALTA),0,1); var sintoma=clampv(Math.max(pericardite,encefalopatia),0,1);
+  return clampv(0.75*sintoma+0.13*ureiaComp*sintoma+0.12*ureiaComp,0,1); }
+function aeiou(input){ var inp=input||{};
+  var pH=clampv(inp.pH!==undefined?inp.pH:7.38,6.6,7.6);
+  var hco3=clampv(inp.hco3!==undefined?inp.hco3:24,2,30);
+  var acidoseRespondeu=clampv(inp.acidoseRespondeu!==undefined?inp.acidoseRespondeu:1,0,1);
+  var k=clampv(inp.k!==undefined?inp.k:4.5,2,9);
+  var ecg=clampv(inp.ecg!==undefined?inp.ecg:0,0,1);
+  var kRespondeu=clampv(inp.kRespondeu!==undefined?inp.kRespondeu:1,0,1);
+  var dialisavel=clampv(inp.dialisavel!==undefined?inp.dialisavel:0,0,1);
+  var nivelTox=clampv(inp.nivelTox!==undefined?inp.nivelTox:0,0,1);
+  var gravidadeTox=clampv(inp.gravidadeTox!==undefined?inp.gravidadeTox:0,0,1);
+  var volume=clampv(inp.volume!==undefined?inp.volume:0,0,20);
+  var edemaPulmonar=clampv(inp.edemaPulmonar!==undefined?inp.edemaPulmonar:0,0,1);
+  var diureticoRespondeu=clampv(inp.diureticoRespondeu!==undefined?inp.diureticoRespondeu:1,0,1);
+  var ureia=clampv(inp.ureia!==undefined?inp.ureia:60,20,400);
+  var pericardite=clampv(inp.pericardite!==undefined?inp.pericardite:0,0,1);
+  var encefalopatia=clampv(inp.encefalopatia!==undefined?inp.encefalopatia:0,0,1);
+  var sevA=sevAcidose(pH,hco3,acidoseRespondeu);
+  var sevE=sevEletrolitos(k,ecg,kRespondeu);
+  var sevI=sevIntoxicacao(dialisavel,nivelTox,gravidadeTox);
+  var sevO=sevSobrecarga(volume,edemaPulmonar,diureticoRespondeu);
+  var sevU=sevUremia(ureia,pericardite,encefalopatia);
+  var dispA=sevA>=LIMIAR_DISPARO, dispE=sevE>=LIMIAR_DISPARO, dispI=sevI>=LIMIAR_DISPARO, dispO=sevO>=LIMIAR_DISPARO, dispU=sevU>=LIMIAR_DISPARO;
+  var eixos=[{letra:'A',nome:'Acidose',sev:sevA,disp:dispA},{letra:'E',nome:'Eletrólitos',sev:sevE,disp:dispE},
+    {letra:'I',nome:'Intoxicação',sev:sevI,disp:dispI},{letra:'O',nome:'Overload',sev:sevO,disp:dispO},{letra:'U',nome:'Uremia',sev:sevU,disp:dispU}];
+  var nDisparados=(dispA?1:0)+(dispE?1:0)+(dispI?1:0)+(dispO?1:0)+(dispU?1:0);
+  var algumDisparo=nDisparados>=1, dominante=eixos[0], i;
+  for(i=1;i<eixos.length;i++){ if(eixos[i].sev>dominante.sev+1e-12) dominante=eixos[i]; }
+  var sevMax=dominante.sev, sevSoma=sevA+sevE+sevI+sevO+sevU;
+  var quaseLa=!algumDisparo&&sevMax>=0.30;
+  var recomendacao; if(algumDisparo) recomendacao='indicar'; else if(quaseLa) recomendacao='otimizar'; else recomendacao='observar';
+  return {pH:pH,hco3:hco3,acidoseRespondeu:acidoseRespondeu,k:k,ecg:ecg,kRespondeu:kRespondeu,
+    dialisavel:dialisavel,nivelTox:nivelTox,gravidadeTox:gravidadeTox,volume:volume,edemaPulmonar:edemaPulmonar,diureticoRespondeu:diureticoRespondeu,
+    ureia:ureia,pericardite:pericardite,encefalopatia:encefalopatia,
+    sevA:sevA,sevE:sevE,sevI:sevI,sevO:sevO,sevU:sevU,sevMax:sevMax,sevSoma:sevSoma,
+    dispA:dispA,dispE:dispE,dispI:dispI,dispO:dispO,dispU:dispU,nDisparados:nDisparados,algumDisparo:algumDisparo,quaseLa:quaseLa,
+    eixos:eixos,dominante:{letra:dominante.letra,nome:dominante.nome,sev:dominante.sev,disp:dominante.disp},
+    recomendacao:recomendacao,limiar:LIMIAR_DISPARO}; }
+function radarLayout(state,W,H){ W=clampv(W,200,100000); H=clampv(H,160,100000); var r=aeiou(state||{});
+  var cx=W/2, cy=H/2+6, R=clampv(Math.min(W,H)*0.36,20,100000);
+  var sevs=[r.sevA,r.sevE,r.sevI,r.sevO,r.sevU], letras=['A','E','I','O','U'], N=5, i, ang;
+  function pt(idx,frac){ ang=-Math.PI/2+(2*Math.PI*idx/N); return {x:cx+R*frac*Math.cos(ang),y:cy+R*frac*Math.sin(ang)}; }
+  var spokes=[],ring=[],poly=[],labels=[];
+  for(i=0;i<N;i++){ var outer=pt(i,1); spokes.push({x0:cx,y0:cy,x1:outer.x,y1:outer.y});
+    ring.push(pt(i,LIMIAR_DISPARO)); poly.push(pt(i,clampv(sevs[i],0,1)));
+    var lab=pt(i,1.16); labels.push({x:lab.x,y:lab.y,letra:letras[i],sev:clampv(sevs[i],0,1),disp:sevs[i]>=LIMIAR_DISPARO}); }
+  return {W:W,H:H,cx:cx,cy:cy,R:R,N:N,limiar:LIMIAR_DISPARO,spokes:spokes,ring:ring,poly:poly,labels:labels,
+    recomendacao:r.recomendacao,dominante:r.dominante.letra,nDisparados:r.nDisparados}; }
+window.aeiou=aeiou; window.radarLayout=radarLayout;
+window.sevAcidose=sevAcidose; window.sevEletrolitos=sevEletrolitos; window.sevIntoxicacao=sevIntoxicacao; window.sevSobrecarga=sevSobrecarga; window.sevUremia=sevUremia;
+window.MODEL={aeiou:aeiou,radarLayout:radarLayout,sevAcidose:sevAcidose,sevEletrolitos:sevEletrolitos,sevIntoxicacao:sevIntoxicacao,sevSobrecarga:sevSobrecarga,sevUremia:sevUremia,clampv:clampv,LIMIAR_DISPARO:LIMIAR_DISPARO};
+
+/* UI */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=(d===undefined?1:d); return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+var COR={A:'#e0556b',E:'#e8a13a',I:'#39c0c8',O:'#52c08a',U:'#c879e0'};
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on'); b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on'); $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh(); });
+document.addEventListener('click',function(e){ var b=e.target.closest('button.act[data-rev]'); if(!b) return; var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on'); });
+
+var INPUTS=['pH','hco3','acidoseRespondeu','k','ecg','kRespondeu','dialisavel','nivelTox','gravidadeTox','volume','edemaPulmonar','diureticoRespondeu','ureia','pericardite','encefalopatia'];
+function readInputs(){ var o={}; INPUTS.forEach(function(id){ o[id]=+$('in-'+id).value; }); return o; }
+function dispStr(r){ var s=''; ['A','E','I','O','U'].forEach(function(L){ if(r['disp'+L]) s+=(s?' · ':'')+L; }); return s||'nenhum'; }
+function refresh(){ var inp=readInputs();
+  $('lbl-pH').textContent=fmt(inp.pH,2); $('lbl-hco3').textContent=fmt(inp.hco3,1); $('lbl-acidoseRespondeu').textContent=fmt(inp.acidoseRespondeu,2);
+  $('lbl-k').textContent=fmt(inp.k,1); $('lbl-ecg').textContent=fmt(inp.ecg,2); $('lbl-kRespondeu').textContent=fmt(inp.kRespondeu,2);
+  $('lbl-dialisavel').textContent=fmt(inp.dialisavel,2); $('lbl-nivelTox').textContent=fmt(inp.nivelTox,2); $('lbl-gravidadeTox').textContent=fmt(inp.gravidadeTox,2);
+  $('lbl-volume').textContent=fmt(inp.volume,1); $('lbl-edemaPulmonar').textContent=fmt(inp.edemaPulmonar,2); $('lbl-diureticoRespondeu').textContent=fmt(inp.diureticoRespondeu,2);
+  $('lbl-ureia').textContent=fmt(inp.ureia,0); $('lbl-pericardite').textContent=fmt(inp.pericardite,2); $('lbl-encefalopatia').textContent=fmt(inp.encefalopatia,2);
+  var r=aeiou(inp);
+  var recLong=r.recomendacao==='indicar'?'INDICAR TRS':(r.recomendacao==='otimizar'?'otimizar a clínica':'observar');
+  $('out-recomendacao').textContent=recLong;
+  $('out-disparos').textContent=dispStr(r)+(r.nDisparados?' ('+r.nDisparados+')':'');
+  $('out-dominante').textContent=r.dominante.letra+' · '+r.dominante.nome+' ('+fmt(r.dominante.sev,2)+')';
+  $('out-sev').textContent='A '+fmt(r.sevA,2)+' · E '+fmt(r.sevE,2)+' · I '+fmt(r.sevI,2)+' · O '+fmt(r.sevO,2)+' · U '+fmt(r.sevU,2);
+  $('out-resumo').textContent='máx '+fmt(r.sevMax,2)+' · soma '+fmt(r.sevSoma,2);
+  verdict(r); drawRadar(inp); pearl(r,inp); }
+function verdict(r){ var v=$('veredito'), cls, msg;
+  if(r.recomendacao==='indicar'){ cls='b-bad'; msg='INDICAR TRS — eixo '+dispStr(r)+' refratário (dominante '+r.dominante.letra+'/'+r.dominante.nome+'). UM eixo refratário basta (OR), independente dos outros.'; }
+  else if(r.recomendacao==='otimizar'){ cls='b-warn'; msg='Otimizar a clínica — o eixo '+r.dominante.letra+' está alto (sev '+fmt(r.dominante.sev,2)+') mas ainda abaixo do limiar ou respondendo. Tratar e reavaliar a tendência.'; }
+  else { cls='b-good'; msg='Observar — nenhum eixo refratário cruza o limiar. Os números podem estar altos, mas respondem à clínica ou são assintomáticos. A homeostasia ainda é defensável sem a máquina.'; }
+  v.className='banner '+cls; v.textContent=msg; }
+function pearl(r,inp){ var p=$('lab-pearl'), ip=$('instr-pearl'), t;
+  if(r.dispE&&r.nDisparados===1&&inp.k>=K_PERIGO) t='PÉROLA (um eixo basta): hipercalemia refratária com ECG indica TRS SOZINHA — mesmo com pH, ureia e volume normais. É um OR, não uma soma.';
+  else if(!r.algumDisparo&&r.sevSoma>1.2) t='PÉROLA (OR > soma): cinco eixos moderados somam alto, mas NENHUM cruza o limiar → não indica. A soma não decide; o gatilho refratário sim.';
+  else if(inp.dialisavel<0.1&&inp.nivelTox>0.6) t='PÉROLA (portão da dialisabilidade): por mais grave que seja a intoxicação, a toxina NÃO dialisável (Vd alto, ex. digoxina) não dispara I.';
+  else if(r.dispO&&inp.diureticoRespondeu<0.3) t='PÉROLA (refratário × responsivo): a MESMA sobrecarga responde OU não ao diurético. Refratária → UF mecânica indicada; responsiva → não.';
+  else if(r.algumDisparo) t='PÉROLA (mecanismo > número): o que indica é a FUNÇÃO refratária do eixo '+r.dominante.letra+', não o valor isolado. A homeostasia falhou e não responde à clínica.';
+  else t='Nenhum eixo refratário: indicar TRS é declarar que a regulação do meio interno falhou num eixo E não responde à clínica. Aqui ainda responde — observar.';
+  p.textContent=t; ip.textContent=t; }
+function drawRadar(state){ var c=$('aeiou-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
+  var L=radarLayout(state,c.width,c.height); ctx.clearRect(0,0,L.W,L.H);
+  // spokes
+  ctx.strokeStyle='#3a4a58'; ctx.lineWidth=1;
+  for(var i=0;i<L.spokes.length;i++){ var s=L.spokes[i]; ctx.beginPath(); ctx.moveTo(s.x0,s.y0); ctx.lineTo(s.x1,s.y1); ctx.stroke(); }
+  // anel-limiar
+  function poly(pts,close){ ctx.beginPath(); for(var k=0;k<pts.length;k++){ var p=pts[k]; if(k===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); } if(close) ctx.closePath(); }
+  ctx.strokeStyle='#e8a13a'; ctx.lineWidth=1.5; ctx.setLineDash([4,3]); poly(L.ring,true); ctx.stroke(); ctx.setLineDash([]);
+  // polígono de operação
+  ctx.strokeStyle='#39c0c8'; ctx.fillStyle='rgba(57,192,200,0.18)'; ctx.lineWidth=2; poly(L.poly,true); ctx.fill(); ctx.stroke();
+  // vértices: marcador colorido por eixo; disparado = preenchido grande
+  ctx.font='14px system-ui';
+  for(i=0;i<L.poly.length;i++){ var pt=L.poly[i], lab=L.labels[i]; var col=COR[lab.letra];
+    ctx.fillStyle=col; ctx.fillRect(pt.x-(lab.disp?5:3),pt.y-(lab.disp?5:3),lab.disp?10:6,lab.disp?10:6);
+    ctx.fillStyle=lab.disp?col:'#9fb1c0'; ctx.textAlign='center'; ctx.fillText(lab.letra,lab.x,lab.y+4); }
+  ctx.textAlign='left'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui';
+  ctx.fillText('anel = limiar de disparo · vértice fora = eixo indicado',16,L.H-14);
+  var rec=L.recomendacao==='indicar'?'INDICAR':(L.recomendacao==='otimizar'?'otimizar':'observar');
+  ctx.fillStyle=L.recomendacao==='indicar'?'#e0556b':(L.recomendacao==='otimizar'?'#e8a13a':'#52c08a');
+  ctx.font='13px system-ui'; ctx.fillText(rec+(L.nDisparados?' ('+L.nDisparados+' eixo'+(L.nDisparados>1?'s':'')+')':''),16,22); }
+INPUTS.forEach(function(id){ $('in-'+id).addEventListener('input',refresh); });
+
+var PRESETS={
+  acidose:{pH:7.02,hco3:8,acidoseRespondeu:0.1,k:4.8,ecg:0,kRespondeu:1,dialisavel:0,nivelTox:0,gravidadeTox:0,volume:1,edemaPulmonar:0,diureticoRespondeu:1,ureia:90,pericardite:0,encefalopatia:0},
+  hiperK:{pH:7.34,hco3:20,acidoseRespondeu:1,k:7.4,ecg:0.9,kRespondeu:0.1,dialisavel:0,nivelTox:0,gravidadeTox:0,volume:1,edemaPulmonar:0,diureticoRespondeu:1,ureia:70,pericardite:0,encefalopatia:0},
+  intoxicacao:{pH:7.30,hco3:18,acidoseRespondeu:1,k:4.6,ecg:0,kRespondeu:1,dialisavel:0.95,nivelTox:0.9,gravidadeTox:0.8,volume:1,edemaPulmonar:0,diureticoRespondeu:1,ureia:80,pericardite:0,encefalopatia:0},
+  sobrecarga:{pH:7.33,hco3:20,acidoseRespondeu:1,k:5.0,ecg:0,kRespondeu:1,dialisavel:0,nivelTox:0,gravidadeTox:0,volume:11,edemaPulmonar:0.9,diureticoRespondeu:0.1,ureia:110,pericardite:0,encefalopatia:0},
+  uremia:{pH:7.32,hco3:18,acidoseRespondeu:1,k:5.2,ecg:0,kRespondeu:1,dialisavel:0,nivelTox:0,gravidadeTox:0,volume:3,edemaPulmonar:0,diureticoRespondeu:1,ureia:280,pericardite:0.8,encefalopatia:0.5},
+  responsivo:{pH:7.30,hco3:18,acidoseRespondeu:0.9,k:6.8,ecg:0.5,kRespondeu:1,dialisavel:0,nivelTox:0,gravidadeTox:0,volume:5,edemaPulmonar:0.4,diureticoRespondeu:1,ureia:200,pericardite:0,encefalopatia:0}
+};
+function applyPreset(p){ var d=PRESETS[p]; if(!d) return; INPUTS.forEach(function(id){ if(d[id]!==undefined) $('in-'+id).value=d[id]; }); refresh(); }
+document.querySelector('.presets').addEventListener('click',function(e){ var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset')); });
+
+/* ILUSTRAÇÕES computadas + helper raster */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+function radarMini(state,titulo){ var W=300,H=220,L=radarLayout(state,W,H),s='';
+  for(var i=0;i<L.spokes.length;i++){ var sp=L.spokes[i]; s+='<line x1="'+f1(sp.x0)+'" y1="'+f1(sp.y0)+'" x2="'+f1(sp.x1)+'" y2="'+f1(sp.y1)+'" stroke="#3a4a58"/>'; }
+  function path(pts){ var d=''; for(var k=0;k<pts.length;k++){ d+=(k===0?'M':'L')+f1(pts[k].x)+' '+f1(pts[k].y)+' '; } return d+'Z'; }
+  s+='<path d="'+path(L.ring)+'" fill="none" stroke="#e8a13a" stroke-width="1.5" stroke-dasharray="4 3"/>';
+  s+='<path d="'+path(L.poly)+'" fill="#39c0c8" fill-opacity="0.18" stroke="#39c0c8" stroke-width="2"/>';
+  for(i=0;i<L.labels.length;i++){ var lab=L.labels[i], pt=L.poly[i], col=COR[lab.letra];
+    s+='<rect x="'+f1(pt.x-(lab.disp?4:2.5))+'" y="'+f1(pt.y-(lab.disp?4:2.5))+'" width="'+(lab.disp?8:5)+'" height="'+(lab.disp?8:5)+'" fill="'+col+'"/>';
+    s+='<text x="'+f1(lab.x)+'" y="'+f1(lab.y+4)+'" fill="'+(lab.disp?col:'#9fb1c0')+'" font-size="12" text-anchor="middle" font-weight="'+(lab.disp?'bold':'normal')+'">'+lab.letra+'</text>'; }
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'radar AEIOU')+'</text>';
+  var rec=L.recomendacao==='indicar'?'INDICAR':(L.recomendacao==='otimizar'?'otimizar':'observar');
+  s+='<text x="10" y="'+(H-8)+'" fill="'+(L.recomendacao==='indicar'?'#e0556b':(L.recomendacao==='otimizar'?'#e8a13a':'#52c08a'))+'" font-size="11">'+rec+'</text>';
+  return svgEl(W,H,s); }
+function sevBars(r,titulo){ var W=300,H=200,base=150,s='', eixos=[['A',r.sevA],['E',r.sevE],['I',r.sevI],['O',r.sevO],['U',r.sevU]];
+  // anel limiar como linha
+  var yLim=base-LIMIAR_DISPARO*110;
+  s+='<line x1="30" y1="'+f1(yLim)+'" x2="290" y2="'+f1(yLim)+'" stroke="#e8a13a" stroke-dasharray="4 3"/>';
+  s+='<text x="292" y="'+f1(yLim+3)+'" fill="#e8a13a" font-size="9" text-anchor="end">limiar</text>';
+  for(var i=0;i<eixos.length;i++){ var L=eixos[i][0], v=clampv(eixos[i][1],0,1), x=40+i*50, h=v*110, col=COR[L], disp=v>=LIMIAR_DISPARO;
+    s+='<rect x="'+x+'" y="'+f1(base-h)+'" width="34" height="'+f1(h)+'" fill="'+col+'" fill-opacity="'+(disp?'0.7':'0.3')+'" stroke="'+col+'"/>';
+    s+='<text x="'+(x+17)+'" y="'+(base+14)+'" fill="'+(disp?col:'#9fb1c0')+'" font-size="11" text-anchor="middle" font-weight="'+(disp?'bold':'normal')+'">'+L+'</text>';
+    s+='<text x="'+(x+17)+'" y="'+f1(base-h-4)+'" fill="#e7eef4" font-size="9" text-anchor="middle">'+fmt(v,2)+'</text>'; }
+  s+='<line x1="30" y1="'+base+'" x2="290" y2="'+base+'" stroke="#3a4a58"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'severidade por eixo')+'</text>';
+  return svgEl(W,H,s); }
+function imgFig(slug,alt){ return '<img src="assets/m35/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+/* TUTOR */
+function R0(extra){ var o={}; if(extra) for(var k in extra) o[k]=extra[k]; return aeiou(o); }
+var TUTOR_ILUSTRADO=[
+  {q:'pH 7,02, HCO₃⁻ 8 mEq/L, refratário ao bicarbonato. Indica TRS?',o:['Não, é só laboratório','Sim — eixo A (acidose refratária)','Só se a ureia subir'],c:1,e:'Acidose grave refratária dispara sozinha. Um eixo basta (OR).',fig:function(){return radarMini(R0({pH:7.02,hco3:8,acidoseRespondeu:0.1}),'A dispara');}},
+  {q:'K⁺ 7,4 com QRS largo, refratário à insulina+glicose/β₂/gluconato. Conduta?',o:['Repetir a clínica','Indicar TRS (eixo E)','Aguardar'],c:1,e:'Hipercalemia refratária com ECG indica sozinha — mesmo com tudo o mais normal.',fig:function(){return radarMini(R0({k:7.4,ecg:0.9,kRespondeu:0.1}),'E dispara');}},
+  {q:'O MESMO K⁺ 6,8 com ECG, mas que RESPONDE à clínica. Agora?',o:['Indica igual','NÃO indica (respondeu)','Indica só metade'],c:1,e:'A indicação mora na resposta, não no número. Respondeu → não dispara.',fig:function(){return imgFig('refratario-vs-responsivo.svg','refratário versus responsivo');}},
+  {q:'Intoxicação por lítio, nível alto, dialisável, rim quase normal. Indica?',o:['Não, rim funciona','Sim — eixo I (toxina dialisável)','Só com anúria'],c:1,e:'Dialisável (PM/Vd baixos) → a TRS remove o veneno, mesmo sem LRA.',fig:function(){return radarMini(R0({dialisavel:0.95,nivelTox:0.9,gravidadeTox:0.8}),'I dispara');}},
+  {q:'Intoxicação GRAVE por digoxina (Vd alto). Indica TRS pelo eixo I?',o:['Sim, é grave','Não — não é dialisável (portão)','Sim, sempre'],c:1,e:'A digoxina (Vd ~6) está blindada da máquina. Gravidade não vence o portão.',fig:function(){return imgFig('intoxicacao-dialisavel.svg','intoxicação dialisável');}},
+  {q:'Edema pulmonar, +11 L, furosemida sem resposta (anúria). Conduta?',o:['Mais diurético','Indicar UF (eixo O)','Observar'],c:1,e:'Sobrecarga refratária ao diurético → UF mecânica tira o que o rim não tira.',fig:function(){return radarMini(R0({volume:11,edemaPulmonar:0.9,diureticoRespondeu:0.1}),'O dispara');}},
+  {q:'Ureia 280 com pericardite e encefalopatia. Indica?',o:['Não, é só ureia alta','Sim — eixo U (uremia sintomática)','Só se K subir'],c:1,e:'O sintoma é o gatilho: pericardite/encefalopatia indicam, não o número.',fig:function(){return radarMini(R0({ureia:280,pericardite:0.8,encefalopatia:0.5}),'U dispara');}},
+  {q:'Ureia 250, totalmente assintomática, sem outro eixo. Indica?',o:['Sim, ureia alta','Não — uremia assintomática não dispara','Indica preventivamente'],c:1,e:'A ureia alta predispõe; sem sintoma (pericardite/encefalopatia) não indica.',fig:function(){return radarMini(R0({ureia:250}),'U não dispara');}},
+  {q:'Cinco eixos moderados (cada um logo abaixo do limiar). Indica TRS?',o:['Sim, a soma é alta','Não — nenhum cruza o limiar (OR, não soma)','Indica meio'],c:1,e:'O AEIOU é um OR: a soma não decide. Nenhum vértice fora do anel → não indica.',fig:function(){return sevBars(R0({pH:7.05,hco3:13,acidoseRespondeu:0.45,k:6.6,ecg:0.7,kRespondeu:0.45,dialisavel:0.9,nivelTox:0.55,gravidadeTox:0.45,volume:7,edemaPulmonar:0.6,diureticoRespondeu:0.42,ureia:240,pericardite:0.42}),'soma alta, sem disparo');}},
+  {q:'No radar AEIOU, o que significa um vértice cruzar o anel laranja?',o:['Severidade média','O eixo DISPAROU (indica TRS)','Erro de medida'],c:1,e:'O anel é o limiar de disparo; vértice fora = eixo indicado. Basta um.',fig:function(){return imgFig('radar-cinco-eixos.svg','radar dos cinco eixos');}},
+  {q:'Na figura do mnemônico, o que a letra E representa?',o:['Encefalopatia','Eletrólitos (hipercalemia com ECG)','Edema'],c:1,e:'E = Eletrólitos: hipercalemia refratária com alteração de ECG.',fig:function(){return imgFig('aeiou-mnemonico.svg','mnemônico AEIOU');}},
+  {q:'Hipercalemia com sobrecarga: as barras mostram E e O fora do limiar. A recomendação é…',o:['Observar','Indicar TRS (≥1 eixo disparado)','Otimizar só'],c:1,e:'Qualquer eixo disparado já indica; com dois, mais ainda. É um OR.',fig:function(){return sevBars(R0({k:7.3,ecg:0.8,kRespondeu:0.1,volume:10,edemaPulmonar:0.8,diureticoRespondeu:0.1}),'E e O disparados');}}
+];
+var TUTOR_TEXTUAL=[
+  {q:'A indicação de TRS, neste mapa, sai de…',o:['um número de creatinina','um gatilho refratário num dos eixos AEIOU','o tempo de UTI'],c:1,e:'É a função do meio interno que falhou e não responde mais à clínica.'},
+  {q:'O AEIOU funciona como…',o:['uma soma de pontos','um OR — qualquer eixo refratário basta','uma média'],c:1,e:'Basta um eixo cruzar o limiar; não se somam severidades.'},
+  {q:'A · a acidose indica quando…',o:['o pH é qualquer valor baixo','é grave E refratária ao bicarbonato','sempre que há LRA'],c:1,e:'A HD repõe HCO₃⁻; o gatilho é a refratariedade, não o valor isolado.'},
+  {q:'E · K⁺ alto isolado, sem ECG e respondendo à clínica…',o:['indica TRS','não indica TRS','indica se >6'],c:1,e:'É o K⁺ refratário COM ECG que indica; respondendo à clínica, não.'},
+  {q:'I · o que torna uma intoxicação dialisável?',o:['ser muito grave','PM baixo, ligação baixa, Vd baixo','qualquer veneno'],c:1,e:'A dialisabilidade é um portão; a digoxina (Vd alto) não passa.'},
+  {q:'O · a sobrecarga indica quando…',o:['há qualquer edema','é refratária ao diurético (edema pulmonar)','a creatinina sobe'],c:1,e:'A UF tira o volume que o rim/diurético não tiram.'},
+  {q:'U · a uremia indica quando…',o:['a ureia passa de 180','há pericardite ou encefalopatia','sempre que há LRA'],c:1,e:'O sintoma é o gatilho; o número alto apenas predispõe.'},
+  {q:'O "refratário × responsivo" significa que…',o:['o número decide sempre','o mesmo número decide diferente conforme a resposta','dá no mesmo'],c:1,e:'K⁺ 6,8 refratário indica; o mesmo K⁺ que responde, não.'},
+  {q:'Cinco eixos moderados (todos abaixo do limiar)…',o:['indicam pela soma','NÃO indicam (nenhum dispara)','indicam se forem 5'],c:1,e:'OR, não soma: nenhum vértice fora do anel → não indica.'},
+  {q:'Um único eixo forte (sevE 1,0), nada mais…',o:['não basta sozinho','indica TRS sozinho','precisa de 2 eixos'],c:1,e:'Um eixo refratário acima do limiar já indica — a inversão central.'},
+  {q:'A diferença para o M36 (o momento) é que aqui mapeamos…',o:['precoce × tardio','O QUÊ indica (qual eixo refratário)','os ensaios clínicos'],c:1,e:'M35 = o mapa AEIOU (o quê); M36 = quando iniciar (precoce × tardio).'},
+  {q:'Em síntese, indicar a TRS é reconhecer que…',o:['a creatinina passou de um corte','a regulação do meio interno falhou num eixo e não responde à clínica','o paciente está na UTI'],c:1,e:'A máquina substitui a função do eixo refratário até a homeostasia voltar.'}
+];
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL; window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+var BANKS={ilustrada:TUTOR_ILUSTRADO,textual:TUTOR_TEXTUAL}, curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+function renderTutor(){ var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():''; $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false; $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){ if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button'); btns[item.c].classList.add('ok'); if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block'; fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e; $('tutor-score').textContent=tScore; $('tutor-total').textContent=tTotal; });
+    box.appendChild(b); }); }
+$('banktabs').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor(); });
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+$('draw-aeiou').innerHTML = radarMini(aeiou({k:7.4,ecg:0.9,kRespondeu:0.1}),'hipercalemia refratária → E dispara');
+$('draw-acidose').innerHTML = sevBars(aeiou({pH:7.02,hco3:8,acidoseRespondeu:0.1}),'A grave refratária');
+$('draw-eletro').innerHTML = sevBars(aeiou({k:7.4,ecg:0.9,kRespondeu:0.1}),'E dispara, resto baixo');
+$('draw-intox').innerHTML = sevBars(aeiou({dialisavel:0.95,nivelTox:0.9,gravidadeTox:0.8}),'I dispara (dialisável)');
+$('draw-over').innerHTML = sevBars(aeiou({volume:11,edemaPulmonar:0.9,diureticoRespondeu:0.1}),'O dispara (refratário)');
+$('draw-uremia').innerHTML = sevBars(aeiou({ureia:280,pericardite:0.8,encefalopatia:0.5}),'U dispara (sintomática)');
+$('fig-caso').innerHTML = radarMini(aeiou({pH:7.02,hco3:8,acidoseRespondeu:0.1}),'Ato 1 — A dispara') + sevBars(aeiou({k:7.4,ecg:0.9,kRespondeu:0.1}),'Ato 2 — E dispara');
+
+refresh(); renderTutor();
+</script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" font-family="system-ui,Segoe UI,sans-serif">
+  <rect width="640" height="340" fill="#0f161d"/>
+  <text x="320" y="28" text-anchor="middle" font-size="16" font-weight="bold" fill="#e7eef4">O radar dos cinco eixos — o anel é o limiar de disparo</text>
+  <g transform="translate(320,185)">
+    <!-- spokes + anel limiar (pentágono a 0,5) -->
+    <g stroke="#3a4a58" stroke-width="1">
+      <line x1="0" y1="0" x2="0" y2="-120"/><line x1="0" y1="0" x2="114" y2="-37"/>
+      <line x1="0" y1="0" x2="70" y2="97"/><line x1="0" y1="0" x2="-70" y2="97"/><line x1="0" y1="0" x2="-114" y2="-37"/>
+    </g>
+    <!-- anel limiar 0.5 -->
+    <polygon points="0,-60 57,-18.5 35,48.5 -35,48.5 -57,-18.5" fill="none" stroke="#e8a13a" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <!-- ponto de operação: E acima do limiar, resto baixo -->
+    <polygon points="0,-30 109,-35 21,29 -21,29 -34,-11" fill="#39c0c8" fill-opacity="0.25" stroke="#39c0c8" stroke-width="2"/>
+    <circle cx="109" cy="-35" r="5" fill="#e0556b"/>
+    <!-- rótulos -->
+    <text x="0" y="-132" text-anchor="middle" font-size="13" fill="#e0556b" font-weight="bold">A</text>
+    <text x="132" y="-40" text-anchor="middle" font-size="13" fill="#e8a13a" font-weight="bold">E</text>
+    <text x="82" y="118" text-anchor="middle" font-size="13" fill="#39c0c8" font-weight="bold">I</text>
+    <text x="-82" y="118" text-anchor="middle" font-size="13" fill="#52c08a" font-weight="bold">O</text>
+    <text x="-132" y="-40" text-anchor="middle" font-size="13" fill="#c879e0" font-weight="bold">U</text>
+  </g>
+  <!-- legenda -->
+  <g font-size="11">
+    <line x1="430" y1="250" x2="460" y2="250" stroke="#e8a13a" stroke-width="1.5" stroke-dasharray="4 3"/><text x="466" y="254" fill="#9fb1c0">anel = limiar de disparo (0,5)</text>
+    <polygon points="432,268 448,268 448,280 432,280" fill="#39c0c8" fill-opacity="0.25" stroke="#39c0c8"/><text x="466" y="278" fill="#9fb1c0">polígono = severidade atual</text>
+    <circle cx="440" cy="296" r="5" fill="#e0556b"/><text x="466" y="300" fill="#9fb1c0">vértice fora do anel = eixo DISPARADO</text>
+  </g>
+  <text x="320" y="328" text-anchor="middle" font-size="11" fill="#9fb1c0">basta UM vértice cruzar o anel para indicar a TRS — é OR, não a área do polígono</text>
+</svg>

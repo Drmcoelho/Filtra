@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" font-family="system-ui,Arial,sans-serif">
+  <rect width="640" height="360" fill="#0d141b"/>
+  <text x="320" y="30" text-anchor="middle" font-size="17" font-weight="bold" fill="#e7eef4">Congestão venosa — a pressão a MONTANTE do rim</text>
+  <!-- glomérulo simplificado: aferente entra, eferente sai, veia represa -->
+  <circle cx="320" cy="180" r="48" fill="#39c0c8" fill-opacity="0.18" stroke="#39c0c8" stroke-width="2"/>
+  <path d="M300 160 q20 -14 40 0 q-14 20 0 40 q-20 14 -40 0 q14 -20 0 -40 z" fill="none" stroke="#39c0c8" stroke-width="1.4"/>
+  <text x="320" y="184" text-anchor="middle" font-size="11" fill="#39c0c8">glomérulo</text>
+  <!-- arteriola aferente (empurra) -->
+  <defs><marker id="ar" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#e0556b"/></marker>
+  <marker id="av" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#5b8dd6"/></marker></defs>
+  <line x1="120" y1="180" x2="268" y2="180" stroke="#e0556b" stroke-width="6" marker-end="url(#ar)"/>
+  <text x="150" y="168" font-size="12" fill="#e0556b">PAM empurra →</text>
+  <text x="150" y="205" font-size="11" fill="#9fb1c0">pressão de entrada</text>
+  <!-- veia de saída represada -->
+  <line x1="372" y1="180" x2="520" y2="180" stroke="#5b8dd6" stroke-width="10" marker-end="url(#av)"/>
+  <text x="430" y="168" font-size="12" fill="#5b8dd6">PVC ↑ represa</text>
+  <text x="430" y="205" font-size="11" fill="#9fb1c0">contrapressão venosa</text>
+  <!-- barragem -->
+  <rect x="514" y="150" width="12" height="60" fill="#e8a13a"/>
+  <text x="520" y="232" text-anchor="middle" font-size="10" fill="#e8a13a">congestão</text>
+  <text x="320" y="290" text-anchor="middle" font-size="13" fill="#52c08a">A TFG depende do GRADIENTE através do rim: ↑PVC fecha a saída e represa o glomérulo → TFG↓.</text>
+  <text x="320" y="318" text-anchor="middle" font-size="12" fill="#9fb1c0">Não é só "pouco fluxo": é a pressão que volta da veia.</text>
+  <text x="320" y="346" text-anchor="middle" font-size="10" fill="#5f7384">FILTRA · DIALISA · M37</text>
+</svg>

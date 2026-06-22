@@ -132,7 +132,7 @@ ainda vai desenhar). `[c]` = módulo construído (integra na hora) · `[p]` = HT
 | M6 `[c]`  | m6/alca-henle-sintese.webp | alça: NKCC2, contracorrente, gradiente 300→1200 | INTEGRADO |
 | M7 `[c]`  | m7/tcd-sintese.webp | TCD: NCC, Ca²⁺, tiazídicos (paradoxo do Ca) | INTEGRADO |
 | M8 `[c]`  | m8/ducto-coletor-sintese.webp | ducto: ENaC/aldo, ADH/AQP2, intercalares, poupadores/vaptano | INTEGRADO |
-| M9 `[p]`  | m9/sodio-volume-sintese.webp | volume circulante efetivo × tonicidade · barorreceptores · SNS/RAAS/PN | **PEDIDO** |
+| M9 `[c]`  | m9/sodio-volume-sintese.webp | volume circulante efetivo × tonicidade · barorreceptores · SNS/RAAS/PN | **PEDIDO** (módulo construído → integra na hora) |
 | M10 `[p]` | m10/agua-livre-sintese.webp | disnatremias = distúrbio de água · ADH/sede · velocidade de correção (mielinólise/edema) | **PEDIDO** |
 | M11 `[p]` | m11/potassio-sintese.webp | K gradiente × estoque · secreção distal · pH/insulina/β · ECG como mecanismo | **PEDIDO** |
 | M12 `[p]` | m12/ca-po4-mg-sintese.webp | triângulo Ca-PO₄-PTH · vit D · FGF23 · ionizado/albumina/pH | **PEDIDO** |
@@ -233,7 +233,7 @@ Ao entregar cada lâmina nova: se `[c]`, integro inline e marco `INTEGRADO`; se 
 
 ---
 
-## M9 — Sódio e volume  [HTML pendente]
+## M9 — Sódio e volume  [módulo construído ✓]
 > Erro: "Na baixo = falta de sal"; verdade: Na é proxy de **água**; volume e tonicidade são eixos distintos.
 
 | slug | tipo | o que mostra · por que | fonte/licença provável | status |

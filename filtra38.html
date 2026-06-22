@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FILTRA · M38 — Capstone integrado: modalidade e prescrição por mecanismo</title>
+<style>
+  :root{--bg:#0c1014;--panel:#141b22;--panel2:#1b242d;--line:#283642;--ink:#e7eef4;--dim:#9fb1c0;--accent:#39c0c8;--warn:#e8a13a;--bad:#e0556b;--good:#52c08a;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#10171e,#0c1014)}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{margin:.2em 0 .1em;font-size:22px}
+  .sub{color:var(--dim);font-size:14px;max-width:74ch}
+  nav.hex{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  nav.hex span,nav.hex a{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);text-decoration:none}
+  nav.hex .ativo{background:var(--accent);color:#05181a;border-color:var(--accent);font-weight:600}
+  nav.hex .soon{opacity:.45}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 20px 60px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0;border-bottom:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--dim);padding:9px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+  .tabs button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  section.tab{display:none} section.tab.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 3px}
+  input[type=range]{width:100%}
+  select,input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px}
+  .val{color:var(--accent);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  canvas{width:100%;height:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+  #tutor-fig svg,.concept svg{background:#10171e;border:1px solid var(--line);border-radius:8px;max-width:100%;height:auto}
+  .concept{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  h4{margin:18px 0 4px;font-size:14px;color:var(--accent)}
+  .frow{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+  .frow .concept{margin:0;flex:1 1 300px}
+  figure.fviva{margin:0;flex:1 1 240px;min-width:230px;max-width:380px;background:#10171e;border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column}
+  figure.fviva img{width:100%;height:190px;object-fit:contain;background:#0a1016;border-radius:6px}
+  figure.fviva figcaption{font-size:12px;color:var(--dim);margin-top:7px;line-height:1.45}
+  figure.fviva figcaption b{color:var(--accent)}
+  .presets{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+  .banner{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
+  .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
+  .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
+  button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
+  button.act:hover{border-color:var(--accent)}
+  .reveal{display:none;margin-top:8px} .reveal.on{display:block}
+  details{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
+  summary{cursor:pointer;color:var(--ink)} .step{margin:10px 0;padding-left:6px}
+  .opt{display:block;width:100%;text-align:left;margin:5px 0;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px;border-radius:6px;cursor:pointer}
+  .opt:hover{border-color:var(--accent)} .opt.ok{border-color:var(--good);background:rgba(82,192,138,.15)} .opt.no{border-color:var(--bad);background:rgba(224,85,107,.12)}
+  footer{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;color:var(--dim);font-size:13px}
+  .disc{font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:14px}
+  .num{font-variant-numeric:tabular-nums;color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">FILTRA · DIALISA · braço 3 do hexápode · módulo M38</div>
+  <h1>Capstone integrado — LRA grave: modalidade e prescrição por mecanismo</h1>
+  <div class="sub">O encerramento da metade DIALISA. Diante da <b>LRA grave</b> que pede a máquina, três decisões —
+  todas por <b>mecanismo</b>, nunca por receita. <b>(1) Modalidade</b>: o cruzamento <b>estabilidade × velocidade</b>
+  escolhe — instável → <b>TRRC/CVVHDF</b> (contínua e gentil); estável que precisa de remoção <b>rápida</b>
+  (hipercalemia, intoxicação) → <b>HDI</b>; meio-termo → <b>SLED</b>; crônico estável → <b>DP</b>. <b>(2) Prescrição</b>:
+  HDI por <b>Kt/V-alvo</b> e <b>tempo</b>; TRRC por <b>efluente mL/kg/h</b> e pré/pós-diluição; <b>UF</b> pela
+  tolerância (UF &lt; refilling); 1ª sessão muito urêmica = <b>gentil</b> (M34). <b>(3) Anticoagulação</b>:
+  sangramento alto → <b>citrato</b> regional; baixo → heparina. O alvo é a <b>homeostasia</b>: a diálise não
+  substitui o rim — substitui <b>funções</b> por física (difusão · convecção · UF, M19) até o meio interno voltar.</div>
+  <nav class="hex">
+    <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
+    <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <a href="dialisa.html">&larr; índice do antebraço DIALISA</a>
+  <div class="tabs" id="tabs">
+    <button data-tab="conceito" class="on">Conceito</button>
+    <button data-tab="caso">Caso</button>
+    <button data-tab="trilha">Trilha</button>
+    <button data-tab="instrumento">Instrumento</button>
+    <button data-tab="lab">Lab</button>
+    <button data-tab="avaliacao">Avaliação</button>
+  </div>
+
+  <!-- CONCEITO -->
+  <section class="tab on" id="tab-conceito">
+    <div class="panel">
+      <h3>Conceito — três perguntas, decididas por mecanismo</h3>
+      <p class="sub" style="margin-top:0"><b>A modalidade e a dose saem do mecanismo descompensado, não de uma
+      receita.</b> A lógica em três perguntas: <b>(1) instabilidade</b> (estável × instável) → contínuo × intermitente;
+      <b>(2) velocidade</b> necessária de clearance (K alto / intoxicação pedem rápido) → HDI; <b>(3) sangramento</b> →
+      citrato × heparina. As Fig. 1–8 voltam no Caso, na Trilha e na Avaliação. Atribuição em <code>CREDITS.md</code>
+      (em curadoria).</p>
+
+      <h4>1. As três perguntas — estabilidade · velocidade · sangramento</h4>
+      <p class="sub">Antes de qualquer prescrição, três perguntas filtram a decisão. <b>Está instável?</b> (PAM baixa,
+      vasopressor) → a máquina precisa ser <b>gentil</b> e contínua. <b>Precisa de remoção rápida?</b> (K⁺ alto com ECG,
+      intoxicação dialisável) → precisa de <b>gradiente alto</b> em poucas horas → HDI. <b>Risco de sangrar?</b> →
+      a anticoagulação do circuito vira <b>regional</b>.</p>
+      <div class="frow">
+        <div class="concept" id="draw-perguntas"></div>
+        <figure class="fviva"><img src="assets/m38/lra-grave-conduta.svg" alt="LRA grave: as três perguntas que abrem a conduta de substituição" loading="lazy">
+          <figcaption><b>Fig. 1 · LRA grave → conduta.</b> A LRA grave que pede a máquina dispara três perguntas em
+          sequência: <b>①</b> estabilidade hemodinâmica, <b>②</b> velocidade de clearance necessária, <b>③</b> risco
+          de sangramento. Cada uma move uma alavanca — modalidade, dose e anticoagulação. O mecanismo descompensado
+          decide; o número isolado não.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m38/escolha-modalidade-mecanismo.svg" alt="Escolha de modalidade pelo mecanismo, não por receita" loading="lazy">
+          <figcaption><b>Fig. 2 · A escolha pelo mecanismo.</b> Os três eixos (instabilidade, velocidade, sangramento)
+          convergem na escolha. <b>Instável</b> empurra para a TRRC contínua; <b>velocidade</b> empurra para a HDI;
+          <b>sangramento</b> troca a heparina por citrato. A receita pronta ignora qual mecanismo está
+          descompensado.</figcaption></figure>
+      </div>
+
+      <h4>2. A modalidade por mecanismo — o espaço estabilidade × velocidade</h4>
+      <p class="sub">Pense num plano: eixo horizontal = <b>velocidade</b> necessária (lento → rápido); eixo vertical =
+      <b>instabilidade</b> (estável → instável). <b>Instável</b> (em cima) → <b>TRRC/CVVHDF</b>: contínua, retira
+      volume devagar e tolera a hemodinâmica frágil (ponte M24/M27/M28). <b>Estável + rápido</b> (canto inferior
+      direito) → <b>HDI</b>: gradientes altos, clearance veloz (M22). O meio-termo é <b>SLED</b> (M31); o crônico
+      estável, <b>DP</b> (M30).</p>
+      <div class="frow">
+        <div class="concept" id="draw-espaco"></div>
+        <figure class="fviva"><img src="assets/m38/fluxograma-modalidade.svg" alt="Fluxograma da modalidade: TRRC, HDI, SLED, DP por estabilidade e velocidade" loading="lazy">
+          <figcaption><b>Fig. 3 · Fluxograma da modalidade.</b> Pergunta-se primeiro a estabilidade: instável →
+          <b>TRRC</b>. Estável → precisa rápido? Sim → <b>HDI</b>; intermediário → <b>SLED</b>; crônico estável →
+          <b>DP</b>. As caixas são <i>mecanismos</i> (gradiente alto × suporte gentil), não rótulos.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m38/hdi-vs-crrt-decisao.svg" alt="HDI versus CRRT: a decisão pela tolerância hemodinâmica" loading="lazy">
+          <figcaption><b>Fig. 4 · HDI × CRRT.</b> A divisória é a <b>tolerância hemodinâmica</b>. A HDI tira muito em
+          poucas horas (UF rápida) — o instável não tolera. A TRRC tira o mesmo ao longo de 24 h (UF lenta), mantendo
+          a PAM. Mesma meta de volume, mecanismos de <b>tempo</b> opostos.</figcaption></figure>
+      </div>
+
+      <h4>3. A prescrição por mecanismo — dose, UF e o gentil da 1ª sessão</h4>
+      <p class="sub">Escolhida a modalidade, a dose também é mecanismo. <b>HDI</b>: <b>Kt/V-alvo</b> (~1,2/sessão) e o
+      <b>tempo</b> (h). <b>TRRC</b>: <b>efluente</b> ~25 mL/kg/h (faixa 20–35) com pré/pós-diluição (M28); catabolismo
+      alto pede dose maior. <b>UF</b> (mL/h) pela <b>tolerância</b>: instável → UF baixa, para não exceder o refilling
+      (M24). E a 1ª sessão muito urêmica é <b>gentil</b> (Kt/V e tempo menores) para evitar o desequilíbrio (M34).</p>
+      <div class="frow">
+        <div class="concept" id="draw-prescr"></div>
+        <figure class="fviva"><img src="assets/m38/prescricao-integrada.svg" alt="Prescrição integrada: Kt/V, efluente mL/kg/h, UF rate, diluição" loading="lazy">
+          <figcaption><b>Fig. 5 · A prescrição integrada.</b> Cada modalidade tem sua dose: HDI por <b>Kt/V</b> e
+          tempo; TRRC por <b>efluente mL/kg/h</b> e diluição. A <b>UF</b> é cortada pela tolerância. Os números saem
+          do mecanismo — não há uma "dose universal" de diálise.</figcaption></figure>
+        <figure class="fviva"><img src="assets/m38/algoritmo-trs.svg" alt="Algoritmo de TRS: do gatilho à modalidade e à dose" loading="lazy">
+          <figcaption><b>Fig. 6 · O algoritmo de TRS.</b> Do <b>gatilho</b> (AEIOU, M35) ao <b>momento</b> (M36) à
+          <b>modalidade</b> (aqui) e à <b>dose</b>: cada degrau filtra por mecanismo. O 1º atendimento urêmico desce
+          a eficiência (gentil) para não criar gradiente osmótico cerebral (M34).</figcaption></figure>
+      </div>
+
+      <h4>4. Anticoagulação do circuito — citrato × heparina</h4>
+      <p class="sub">O sangue coagula no circuito extracorpóreo; é preciso anticoagular. Se o paciente <b>sangra</b> (ou
+      tem risco alto), usa-se <b>citrato regional</b>: ele <b>quela o Ca²⁺</b> só dentro do circuito (a coagulação
+      precisa de cálcio), e repõe-se cálcio no retorno — o paciente <b>não</b> é anticoagulado. Sem risco de
+      sangramento, <b>heparina</b> sistêmica é mais simples (M29).</p>
+      <div class="frow">
+        <div class="concept" id="draw-anticoag"></div>
+        <figure class="fviva"><img src="assets/m38/caso-integrado.svg" alt="Caso integrado: citrato regional quela cálcio no circuito" loading="lazy">
+          <figcaption><b>Fig. 7 · Citrato × heparina.</b> O <b>citrato</b> entra antes do filtro e quela o cálcio
+          (sem Ca²⁺ não há coagulação <i>no circuito</i>); o cálcio é reposto no retorno → anticoagulação
+          <b>regional</b>, segura para quem sangra. A <b>heparina</b> anticoagula o paciente inteiro — só quando o
+          risco de sangrar é baixo.</figcaption></figure>
+      </div>
+
+      <h4>5. A convergência FILTRA → DIALISA — o meio interno restaurado</h4>
+      <p class="sub">É o fecho do braço. A máquina, prescrita por mecanismo, <b>restaura o meio interno</b>: K⁺ cai por
+      <b>difusão</b>, HCO₃⁻ sobe pelo tampão do banho/reposição, o volume cai pela <b>UF</b> — tudo no ritmo que a
+      hemodinâmica tolera. A diálise <b>não substitui o rim</b>; substitui, por física, as <b>funções</b> que ele
+      defendia (volume, eletrólitos, ácido-base, escórias) até o rim voltar — ou indefinidamente.</p>
+      <div class="frow">
+        <div class="concept" id="draw-restaura"></div>
+        <figure class="fviva"><img src="assets/m38/meio-interno-restaurado.svg" alt="Meio interno restaurado: volume, eletrólitos, ácido-base de volta à faixa" loading="lazy">
+          <figcaption><b>Fig. 8 · Meio interno restaurado.</b> O alvo de todo o braço: volume, K⁺, ácido-base e
+          escórias de volta à <b>faixa</b>. As setas mostram a física que repõe a função — difusão, convecção,
+          ultrafiltração. A homeostasia volta não porque o rim funcionou, mas porque a máquina <b>substituiu a
+          função</b> no ritmo certo.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASO -->
+  <section class="tab" id="tab-caso">
+    <div class="panel" id="caso">
+      <h3>Caso — cinco atos, decida antes de revelar</h3>
+      <p class="sub">UTI. Cinco apresentações de LRA grave. A pergunta de cada uma: <b>qual modalidade, qual dose,
+      qual anticoagulação — e por quê?</b> Volte às Fig. 2, 4 e 5: o mecanismo decide.</p>
+      <div class="concept" id="fig-caso"></div>
+
+      <div class="step"><b>Ato 1 — choque séptico + LRA + hipercalemia.</b> PAM 55 com noradrenalina, K⁺ 6,5, HCO₃⁻
+        15, +5 L de sobrecarga, alto risco de sangramento (plaquetopenia + CIVD). Qual modalidade e anticoagulação?
+        <div><button class="act" data-rev="r1">Revelar</button></div>
+        <div class="reveal" id="r1"><b>TRRC/CVVHDF, gentil, com citrato.</b> A <b>instabilidade</b> manda — contínuo,
+          UF lenta (UF &lt; refilling, Fig. 4) para não derrubar a PAM. O efluente fica ~25 mL/kg/h (M28). O
+          <b>sangramento</b> alto troca a heparina por <b>citrato regional</b> (Fig. 7). O K⁺ cai por difusão sem
+          choque osmótico. Não é HDI: o instável não toleraria a UF rápida.</div></div>
+
+      <div class="step"><b>Ato 2 — estável + K⁺ 7,5 com ECG.</b> Outro doente: PAM 92, sem vasopressor, K⁺ 7,5 com
+        ondas T apiculadas, sem sangramento. Mesma máquina lenta do Ato 1?
+        <div><button class="act" data-rev="r2">Revelar</button></div>
+        <div class="reveal" id="r2"><b>Não — HDI, rápido.</b> Aqui a <b>velocidade</b> manda e a hemodinâmica
+          <b>permite</b>: HDI baixa o K⁺ por difusão em poucas horas (gradiente alto, Fig. 4). A TRRC seria lenta
+          demais para uma hipercalemia ameaçadora. Anticoagulação: heparina (sem risco de sangrar). O mecanismo veloz
+          pede a ferramenta veloz.</div></div>
+
+      <div class="step"><b>Ato 3 — cardiorrenal com sobrecarga refratária.</b> ICC + LRA, +9 L, edema pulmonar,
+        diurético sem resposta, PAM 70 limítrofe (instabilidade intermediária). Conduta de volume?
+        <div><button class="act" data-rev="r3">Revelar</button></div>
+        <div class="reveal" id="r3"><b>SLED / UF lenta — o meio-termo.</b> Instabilidade <b>intermediária</b> →
+          SLED (híbrida, M31): retira volume de forma mais controlada que a HDI, em mais horas, sem o custo logístico
+          da TRRC. A <b>UF é limitada pela tolerância</b> (Fig. 5) — tirar +9 L de uma vez derrubaria a PAM. Ponte com
+          Choca (cardiorrenal, M37): o volume é o eixo, e a UF é a alavanca.</div></div>
+
+      <div class="step"><b>Ato 4 — intoxicação dialisável.</b> Intoxicação por lítio com neurotoxicidade, PAM 88,
+        estável, função renal limítrofe. O gatilho é a LRA?
+        <div><button class="act" data-rev="r4">Revelar</button></div>
+        <div class="reveal" id="r4"><b>Não — é a toxina; HDI para removê-la rápido.</b> A intoxicação dialisável
+          (lítio, salicilato, metanol, etilenoglicol — M33) pede <b>remoção veloz</b>: a <b>HDI</b> tem o maior
+          clearance por hora. A <b>velocidade</b> domina, o paciente está estável → HDI. Dialisa-se para tirar o
+          <b>veneno</b>, mesmo com rim quase normal.</div></div>
+
+      <div class="step"><b>Ato 5 — muito urêmico, 1ª sessão (a fronteira).</b> Ureia 300, primeira diálise da vida,
+        estável. A tentação é dialisar "forte" para normalizar a ureia rápido. Faz isso?
+        <div><button class="act" data-rev="r5">Revelar</button></div>
+        <div class="reveal" id="r5"><b>Não — começar GENTIL.</b> Baixar a ureia rápido demais cria um gradiente
+          osmótico entre sangue e cérebro → água entra no neurônio → <b>síndrome de desequilíbrio</b> (edema cerebral,
+          M34). A 1ª sessão urêmica usa <b>Kt/V e tempo menores</b> (Fig. 6): a prescrição gentil <b>mitiga</b> o
+          risco. A dose é mecanismo — aqui, ir devagar é a conduta certa.</div></div>
+    </div>
+  </section>
+
+  <!-- TRILHA -->
+  <section class="tab" id="tab-trilha">
+    <div class="panel" id="trilha">
+      <h3>Trilha socrática — nove perguntas que constroem a conduta</h3>
+      <details><summary>1. A modalidade de diálise sai de uma receita fixa?</summary><p>Não. Sai do <b>mecanismo
+        descompensado</b>: a estabilidade e a velocidade necessária escolhem; o sangramento escolhe a anticoagulação.
+        Não há "dose universal" de diálise.</p></details>
+      <details><summary>2. Por que o instável vai para a TRRC?</summary><p>Porque a terapia <b>contínua</b> retira
+        volume devagar (UF lenta ao longo de 24 h), mantendo a PAM. A HDI tiraria muito em poucas horas e o paciente
+        instável não tolera (UF &gt; refilling → hipotensão/stunning, M24).</p></details>
+      <details><summary>3. Quando a HDI é a escolha?</summary><p>Quando o paciente está <b>estável</b> e precisa de
+        remoção <b>rápida</b>: hipercalemia ameaçadora com ECG, intoxicação dialisável. A HDI tem o maior clearance por
+        hora (gradiente alto, M22).</p></details>
+      <details><summary>4. O que é a SLED e quando entra?</summary><p>A híbrida (M31): eficiência intermediária por
+        mais horas. Entra na <b>instabilidade intermediária</b> — tira volume de forma mais controlada que a HDI, sem o
+        custo logístico da TRRC.</p></details>
+      <details><summary>5. O que define a dose na TRRC?</summary><p>O <b>efluente</b> em <b>mL/kg/h</b> (~25, faixa
+        20–35) e a fração de pré/pós-diluição (M28). Catabolismo alto pede dose um pouco maior; a pré-diluição protege a
+        membrana e reduz coágulo.</p></details>
+      <details><summary>6. E a dose na HDI?</summary><p><b>Kt/V-alvo</b> (~1,2/sessão) e o <b>tempo</b> (h). A 1ª
+        sessão muito urêmica usa Kt/V e tempo <b>menores</b> (gentil) para não baixar a ureia rápido demais.</p></details>
+      <details><summary>7. Por que a UF é limitada no instável?</summary><p>Porque a água sai do plasma e o
+        <b>refilling</b> a repõe do interstício com atraso. Se a UF excede o refilling, o volume plasmático cai →
+        hipotensão intradialítica e stunning miocárdico (M24). Instável → UF baixa.</p></details>
+      <details><summary>8. Citrato ou heparina?</summary><p><b>Sangramento alto → citrato regional</b>: quela o Ca²⁺
+        só no circuito (a coagulação precisa de cálcio), repõe-se cálcio no retorno — o paciente não é anticoagulado.
+        Sem risco → heparina sistêmica, mais simples (M29).</p></details>
+      <details><summary>9. Em que sentido isto restaura a homeostasia?</summary><p>A máquina <b>não substitui o
+        rim</b>: substitui, por <b>física</b> (difusão/convecção/UF, M19), as funções que ele defendia — volume,
+        eletrólitos, ácido-base, escórias. Prescrita por mecanismo, devolve o meio interno à faixa no ritmo que a
+        hemodinâmica tolera.</p></details>
+    </div>
+  </section>
+
+  <!-- INSTRUMENTO -->
+  <section class="tab" id="tab-instrumento">
+    <div class="panel">
+      <h3>Instrumento — o espaço de decisão (instabilidade × velocidade)</h3>
+      <p class="sub">Os controles do <b>Lab</b> movem o ponto neste plano. Eixo horizontal = <b>velocidade</b>
+      necessária de clearance (esquerda lento, direita rápido); eixo vertical = <b>instabilidade</b> hemodinâmica
+      (baixo estável, alto instável). A curva azul é a <b>fronteira</b> acima da qual a escolha vira <b>contínua
+      (TRRC)</b>; o marcador é o paciente atual, colorido pela modalidade recomendada. Acima da curva → contínuo
+      gentil; abaixo, à direita → rápido (HDI).</p>
+      <canvas id="decision-canvas" width="900" height="360" aria-label="Espaço de decisão de modalidade"></canvas>
+      <div class="pearl" id="instr-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- LAB -->
+  <section class="tab" id="tab-lab">
+    <div class="panel">
+      <h3>Laboratório — monte o paciente; veja modalidade, prescrição e o meio interno previsto</h3>
+      <div class="grid">
+        <div>
+          <label>Instabilidade hemodinâmica (0 estável → 1 instável): <span class="val" id="lbl-instabilidade">0.20</span></label>
+          <input type="range" id="in-instabilidade" min="0" max="1" step="0.05" value="0.2">
+          <label>PAM (mmHg): <span class="val" id="lbl-pam">80</span></label>
+          <input type="range" id="in-pam" min="40" max="110" step="1" value="80">
+          <label>Vasopressor (0 nenhum → 1 dose alta): <span class="val" id="lbl-vasopressor">0.0</span></label>
+          <input type="range" id="in-vasopressor" min="0" max="1" step="0.05" value="0">
+          <label>K⁺ (mEq/L): <span class="val" id="lbl-k">4.8</span></label>
+          <input type="range" id="in-k" min="3" max="8.5" step="0.1" value="4.8">
+          <label>HCO₃⁻ (mEq/L): <span class="val" id="lbl-hco3">22</span></label>
+          <input type="range" id="in-hco3" min="6" max="28" step="0.5" value="22">
+          <label>Intoxicação dialisável (0 não → 1 sim): <span class="val" id="lbl-intoxicacao">0.0</span></label>
+          <input type="range" id="in-intoxicacao" min="0" max="1" step="0.05" value="0">
+        </div>
+        <div>
+          <label>Sobrecarga de volume (L acima do seco): <span class="val" id="lbl-volume">0</span></label>
+          <input type="range" id="in-volume" min="0" max="15" step="0.5" value="0">
+          <label>Ureia (mg/dL): <span class="val" id="lbl-ureia">80</span></label>
+          <input type="range" id="in-ureia" min="40" max="360" step="5" value="80">
+          <label>Sintomas urêmicos (0 nenhum → 1 pericardite/encefalopatia): <span class="val" id="lbl-sintomas">0.0</span></label>
+          <input type="range" id="in-sintomas" min="0" max="1" step="0.1" value="0">
+          <label>Catabolismo (0 baixo → 1 hipercatabólico): <span class="val" id="lbl-catabolismo">0.30</span></label>
+          <input type="range" id="in-catabolismo" min="0" max="1" step="0.05" value="0.3">
+          <label>Risco de sangramento (0 baixo → 1 alto): <span class="val" id="lbl-sangramento">0.20</span></label>
+          <input type="range" id="in-sangramento" min="0" max="1" step="0.05" value="0.2">
+          <label>Peso (kg): <span class="val" id="lbl-pesoKg">70</span></label>
+          <input type="range" id="in-pesoKg" min="40" max="160" step="1" value="70">
+        </div>
+      </div>
+
+      <div class="presets">
+        <button class="act" data-preset="septico">Choque séptico + LRA + K⁺ alto</button>
+        <button class="act" data-preset="estavelK">Estável + K⁺ 7,5</button>
+        <button class="act" data-preset="cardiorrenal">Cardiorrenal + sobrecarga</button>
+        <button class="act" data-preset="intoxicacao">Intoxicação dialisável</button>
+        <button class="act" data-preset="uremico">Muito urêmico (1ª sessão)</button>
+        <button class="act" data-preset="leve">LRA leve estável</button>
+      </div>
+
+      <table>
+        <tr><th>Saída</th><th>Atual</th><th>Comentário</th></tr>
+        <tr><td>Modalidade recomendada</td><td class="num" id="out-modalidade">—</td><td class="num">estabilidade × velocidade</td></tr>
+        <tr><td>Índice de instabilidade / velocidade</td><td class="num" id="out-eixos">—</td><td class="num">os dois eixos da decisão</td></tr>
+        <tr><td>Prescrição da dose</td><td class="num" id="out-dose">—</td><td class="num">Kt/V · tempo · efluente</td></tr>
+        <tr><td>UF rate (mL/h)</td><td class="num" id="out-uf">—</td><td class="num">pela tolerância (UF &lt; refilling)</td></tr>
+        <tr><td>Anticoagulação</td><td class="num" id="out-anticoag">—</td><td class="num">citrato regional × heparina</td></tr>
+        <tr><td>Meio interno previsto (K⁺ · HCO₃⁻ · volume)</td><td class="num" id="out-meio">—</td><td class="num">após a prescrição</td></tr>
+      </table>
+
+      <div class="banner" id="veredito">—</div>
+      <div class="pearl" id="lab-pearl">—</div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÃO -->
+  <section class="tab" id="tab-avaliacao">
+    <div class="panel">
+      <h3>Avaliação — dois blocos (ilustrado · textual)</h3>
+      <div class="tabs" id="banktabs">
+        <button data-bank="ilustrada" class="on">Ilustrada (12)</button>
+        <button data-bank="textual">Textual (12)</button>
+      </div>
+      <div>Acertos: <span class="val" id="tutor-score">0</span> / <span id="tutor-total">0</span></div>
+      <div id="tutor-fig" style="margin:10px 0"></div>
+      <div id="tutor-q" style="margin-top:6px;font-weight:600"></div>
+      <div id="tutor-opts"></div>
+      <div class="banner" id="tutor-fb" style="display:none"></div>
+      <div><button class="act" id="tutor-next">Próxima &rarr;</button></div>
+    </div>
+  </section>
+
+  <div class="disc">
+    <b>Aviso educacional.</b> FILTRA · DIALISA é uma ferramenta de <b>educação fisiológica</b>. Este módulo M38 é o
+    capstone integrado: a escolha de modalidade, a prescrição (Kt/V, efluente mL/kg/h, UF, anticoagulação) e a previsão
+    do meio interno são uma simplificação didática calibrada para ensinar o <b>mecanismo</b> — não um protocolo de
+    prescrição para um paciente real. Não substitui julgamento clínico; a decisão e a responsabilidade finais são
+    sempre do profissional.
+  </div>
+  <footer>CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</footer>
+</div>
+
+<script>
+/* ENGINE INLINE — espelho fiel de build/m38/model38.js */
+function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
+var K_RAPIDO=6.2, UF_REFILL=400, EFLU_ALVO=25;
+function instabIndex(instabilidade,pam,vaso){ instabilidade=clampv(instabilidade,0,1); pam=clampv(pam,30,130); vaso=clampv(vaso,0,1);
+  var pamComp=clampv((75-pam)/35,0,1); return clampv(0.45*instabilidade+0.30*pamComp+0.25*vaso,0,1); }
+function velocidadeIndex(k,intoxicacao,sintomas){ k=clampv(k,2,9); intoxicacao=clampv(intoxicacao,0,1); sintomas=clampv(sintomas,0,1);
+  var kComp=clampv((k-5.0)/(K_RAPIDO-5.0),0,1.3); return clampv(0.55*clampv(kComp,0,1)+0.30*intoxicacao+0.15*sintomas,0,1); }
+function capstone(input){ var inp=input||{};
+  var instabilidade=clampv(inp.instabilidade!==undefined?inp.instabilidade:0.2,0,1);
+  var pam=clampv(inp.pam!==undefined?inp.pam:80,30,130);
+  var vasopressor=clampv(inp.vasopressor!==undefined?inp.vasopressor:0,0,1);
+  var k=clampv(inp.k!==undefined?inp.k:4.8,2,9);
+  var hco3=clampv(inp.hco3!==undefined?inp.hco3:22,2,30);
+  var volume=clampv(inp.volume!==undefined?inp.volume:0,0,20);
+  var ureia=clampv(inp.ureia!==undefined?inp.ureia:80,20,400);
+  var sintomas=clampv(inp.sintomas!==undefined?inp.sintomas:0,0,1);
+  var catabolismo=clampv(inp.catabolismo!==undefined?inp.catabolismo:0.3,0,1);
+  var sangramento=clampv(inp.sangramento!==undefined?inp.sangramento:0.2,0,1);
+  var intoxicacao=clampv(inp.intoxicacao!==undefined?inp.intoxicacao:0,0,1);
+  var pesoKg=clampv(inp.pesoKg!==undefined?inp.pesoKg:70,30,200);
+  var cronico=clampv(inp.cronico!==undefined?inp.cronico:0,0,1);
+  var instab=instabIndex(instabilidade,pam,vasopressor);
+  var velocidade=velocidadeIndex(k,intoxicacao,sintomas);
+  var modalidade;
+  if(cronico>=0.5&&instab<0.35&&velocidade<0.5){ modalidade='DP'; }
+  else if(instab>=0.55){ modalidade='TRRC'; }
+  else if(velocidade>=0.55&&instab<0.45){ modalidade='HDI'; }
+  else if(instab>=0.30){ modalidade='SLED'; }
+  else if(velocidade>=0.55){ modalidade='HDI'; }
+  else { modalidade='HDI'; }
+  var muitoUremico=ureia>=200, gentilPrimeira=muitoUremico;
+  var ktvAlvo=gentilPrimeira?0.9:1.2, tempoHDI=gentilPrimeira?2.5:4.0, tempoSLED=gentilPrimeira?6:8;
+  var efluenteDose=clampv(EFLU_ALVO+8*catabolismo,20,35), efluenteTotal=efluenteDose*pesoKg;
+  var preFrac=clampv(0.25+0.35*catabolismo,0.2,0.6), trocasDP=4;
+  var ufAlvoBruto=clampv(volume*1000/24,0,600);
+  var tetoTolerado=clampv(UF_REFILL*(1-0.7*instab),50,UF_REFILL);
+  var ufRate=clampv(Math.min(ufAlvoBruto,tetoTolerado),0,UF_REFILL);
+  var ufLimitadaPorHemodinamica=ufAlvoBruto>tetoTolerado+1e-9;
+  var anticoag=sangramento>=0.4?'citrato':'heparina';
+  var removendoRapido=(modalidade==='HDI'&&ktvAlvo>=1.1&&tempoHDI<=3.5);
+  var alertaDesequilibrio=muitoUremico&&(modalidade==='HDI')&&!gentilPrimeira;
+  var desequilibrioMitigado=muitoUremico&&gentilPrimeira;
+  var fatorRapido=(modalidade==='HDI')?1.0:(modalidade==='SLED'?0.7:(modalidade==='TRRC'?0.55:0.4));
+  var kCorr=clampv(k-(k-4.2)*(0.55+0.4*fatorRapido),3.5,9);
+  var hco3Corr=clampv(hco3+(24-hco3)*(0.45+0.3*fatorRapido),hco3,26);
+  var horasJanela=(modalidade==='HDI')?tempoHDI:(modalidade==='SLED'?tempoSLED:24);
+  var volRemovidoL=clampv(ufRate*horasJanela/1000,0,volume), volCorr=clampv(volume-volRemovidoL,0,20);
+  var meioRestaurado=(kCorr<=5.5)&&(hco3Corr>=18)&&(volCorr<=3)&&!alertaDesequilibrio;
+  return {instabilidade:instabilidade,pam:pam,vasopressor:vasopressor,k:k,hco3:hco3,volume:volume,ureia:ureia,
+    sintomas:sintomas,catabolismo:catabolismo,sangramento:sangramento,intoxicacao:intoxicacao,pesoKg:pesoKg,cronico:cronico,
+    instab:instab,velocidade:velocidade,modalidade:modalidade,anticoag:anticoag,
+    ktvAlvo:ktvAlvo,tempoHDI:tempoHDI,tempoSLED:tempoSLED,efluenteDose:efluenteDose,efluenteTotal:efluenteTotal,preFrac:preFrac,trocasDP:trocasDP,
+    ufRate:ufRate,ufLimitadaPorHemodinamica:ufLimitadaPorHemodinamica,gentilPrimeira:gentilPrimeira,muitoUremico:muitoUremico,removendoRapido:removendoRapido,
+    alertaDesequilibrio:alertaDesequilibrio,desequilibrioMitigado:desequilibrioMitigado,
+    kCorr:kCorr,hco3Corr:hco3Corr,volRemovidoL:volRemovidoL,volCorr:volCorr,meioRestaurado:meioRestaurado}; }
+function decisionLayout(state,W,H){ state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
+  var padL=52,padR=16,padT=18,padB=38,baseY=H-padB,N=60;
+  var pxX=(W-padL-padR)/N, pxY=(baseY-padT)/1, base={}; for(var kk in state) base[kk]=state[kk];
+  var pts=[],i,v,instabLim,mod,lo,hi,mid,j;
+  for(i=0;i<=N;i++){ v=i/N; var stV={}; for(var z in base) stV[z]=base[z];
+    stV.k=4.6+v*2.0; stV.intoxicacao=0; stV.sintomas=base.sintomas!==undefined?base.sintomas:0;
+    lo=0; hi=1; instabLim=1;
+    for(j=0;j<22;j++){ mid=(lo+hi)/2; var stm={}; for(var y in stV) stm[y]=stV[y];
+      stm.instabilidade=mid; stm.pam=80-mid*45; stm.vasopressor=mid; stm.cronico=0;
+      mod=capstone(stm).modalidade;
+      if(mod==='TRRC'){ instabLim=mid; hi=mid; } else { lo=mid; } }
+    pts.push({v:v,instab:instabLim,x:padL+i*pxX,y:baseY-clampv(instabLim,0,1)*pxY}); }
+  var cur=capstone(state), cx=padL+clampv(cur.velocidade,0,1)*N*pxX, cy=baseY-clampv(cur.instab,0,1)*pxY;
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,N:N,pxX:pxX,pxY:pxY,
+    axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},pts:pts,
+    current:{x:cx,y:cy,velocidade:cur.velocidade,instab:cur.instab,modalidade:cur.modalidade}}; }
+window.capstone=capstone; window.decisionLayout=decisionLayout; window.instabIndex=instabIndex; window.velocidadeIndex=velocidadeIndex;
+window.MODEL={capstone:capstone,decisionLayout:decisionLayout,instabIndex:instabIndex,velocidadeIndex:velocidadeIndex,clampv:clampv,K_RAPIDO:K_RAPIDO,UF_REFILL:UF_REFILL,EFLU_ALVO:EFLU_ALVO};
+
+/* UI */
+function $(id){ return document.getElementById(id); }
+function fmt(x,d){ d=(d===undefined?1:d); return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+function modLong(m){ return m==='TRRC'?'TRRC/CVVHDF (contínua)':(m==='HDI'?'HDI (intermitente)':(m==='SLED'?'SLED (híbrida)':'DP (peritoneal)')); }
+var tabsBox=$('tabs');
+tabsBox.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var t=b.getAttribute('data-tab');
+  var bs=tabsBox.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on'); b.classList.add('on');
+  var secs=document.querySelectorAll('section.tab'); for(var j=0;j<secs.length;j++) secs[j].classList.remove('on'); $('tab-'+t).classList.add('on');
+  if(t==='instrumento'||t==='lab') refresh(); });
+document.addEventListener('click',function(e){ var b=e.target.closest('button.act[data-rev]'); if(!b) return; var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on'); });
+
+function readInputs(){ return { instabilidade:+$('in-instabilidade').value, pam:+$('in-pam').value, vasopressor:+$('in-vasopressor').value,
+  k:+$('in-k').value, hco3:+$('in-hco3').value, intoxicacao:+$('in-intoxicacao').value, volume:+$('in-volume').value,
+  ureia:+$('in-ureia').value, sintomas:+$('in-sintomas').value, catabolismo:+$('in-catabolismo').value,
+  sangramento:+$('in-sangramento').value, pesoKg:+$('in-pesoKg').value }; }
+function refresh(){ var inp=readInputs();
+  $('lbl-instabilidade').textContent=fmt(inp.instabilidade,2); $('lbl-pam').textContent=fmt(inp.pam,0); $('lbl-vasopressor').textContent=fmt(inp.vasopressor,2);
+  $('lbl-k').textContent=fmt(inp.k,1); $('lbl-hco3').textContent=fmt(inp.hco3,1); $('lbl-intoxicacao').textContent=fmt(inp.intoxicacao,2);
+  $('lbl-volume').textContent=fmt(inp.volume,1); $('lbl-ureia').textContent=fmt(inp.ureia,0); $('lbl-sintomas').textContent=fmt(inp.sintomas,1);
+  $('lbl-catabolismo').textContent=fmt(inp.catabolismo,2); $('lbl-sangramento').textContent=fmt(inp.sangramento,2); $('lbl-pesoKg').textContent=fmt(inp.pesoKg,0);
+  var r=capstone(inp);
+  $('out-modalidade').textContent=modLong(r.modalidade);
+  $('out-eixos').textContent='instab '+fmt(r.instab,2)+' · veloc '+fmt(r.velocidade,2);
+  var dose;
+  if(r.modalidade==='HDI') dose='Kt/V '+fmt(r.ktvAlvo,1)+' · '+fmt(r.tempoHDI,1)+' h'+(r.gentilPrimeira?' (gentil)':'');
+  else if(r.modalidade==='TRRC') dose='efluente '+fmt(r.efluenteDose,0)+' mL/kg/h · pré '+fmt(r.preFrac*100,0)+'%';
+  else if(r.modalidade==='SLED') dose='SLED '+fmt(r.tempoSLED,0)+' h · efluente '+fmt(r.efluenteDose,0)+' mL/kg/h';
+  else dose=fmt(r.trocasDP,0)+' trocas/dia (DP)';
+  $('out-dose').textContent=dose;
+  $('out-uf').textContent=fmt(r.ufRate,0)+(r.ufLimitadaPorHemodinamica?' (limitada)':'');
+  $('out-anticoag').textContent=(r.anticoag==='citrato'?'citrato regional':'heparina');
+  $('out-meio').textContent='K⁺ '+fmt(r.kCorr,1)+' · HCO₃⁻ '+fmt(r.hco3Corr,0)+' · vol +'+fmt(r.volCorr,1)+' L'+(r.meioRestaurado?' ✓':'');
+  verdict(r); drawDecision(inp); pearl(r,inp); }
+function verdict(r){ var v=$('veredito'), cls='b-good', msg;
+  if(r.alertaDesequilibrio){ cls='b-bad'; msg='ALERTA desequilíbrio — muito urêmico em HDI eficiente: o gradiente osmótico pode causar edema cerebral (M34). Prescreva GENTIL (Kt/V e tempo menores).'; }
+  else if(r.modalidade==='TRRC'){ cls='b-warn'; msg='TRRC/CVVHDF — instabilidade (instab '+fmt(r.instab,2)+'): contínua e gentil; UF '+fmt(r.ufRate,0)+' mL/h pela tolerância, sem exceder o refilling. '+(r.anticoag==='citrato'?'Citrato regional (sangra).':'Heparina.'); }
+  else if(r.modalidade==='HDI'){ cls='b-good'; msg='HDI — estável e precisa de remoção rápida (veloc '+fmt(r.velocidade,2)+'): gradiente alto baixa K⁺/toxina em poucas horas. '+(r.gentilPrimeira?'1ª sessão GENTIL (urêmico).':'Kt/V '+fmt(r.ktvAlvo,1)+'.'); }
+  else if(r.modalidade==='SLED'){ cls='b-warn'; msg='SLED — instabilidade intermediária: o meio-termo, retira volume controlado em '+fmt(r.tempoSLED,0)+' h. UF '+fmt(r.ufRate,0)+' mL/h pela tolerância.'; }
+  else { cls='b-good'; msg='DP — contexto crônico estável: o peritônio como membrana, UF osmótica. Não é a escolha do crítico instável.'; }
+  v.className='banner '+cls; v.textContent=msg; }
+function pearl(r,inp){ var p=$('lab-pearl'), ip=$('instr-pearl'), t;
+  if(r.modalidade==='TRRC'&&inp.k>=K_RAPIDO) t='PÉROLA (mecanismo > receita): K⁺ alto MAS instável → contínuo gentil (TRRC), não o HDI rápido. A modalidade sai do mecanismo descompensado.';
+  else if(r.modalidade==='HDI'&&inp.k>=K_RAPIDO) t='PÉROLA (rápido quando pode E precisa): estável + K⁺ alto → HDI, clearance veloz por difusão. A velocidade manda e a hemodinâmica permite.';
+  else if(r.gentilPrimeira) t='PÉROLA (ir devagar é a conduta): 1ª sessão muito urêmica → GENTIL (Kt/V '+fmt(r.ktvAlvo,1)+', '+fmt(r.tempoHDI,1)+' h). Baixar a ureia rápido demais causa desequilíbrio (M34).';
+  else if(r.ufLimitadaPorHemodinamica) t='PÉROLA (UF < refilling): a hemodinâmica limitou a UF a '+fmt(r.ufRate,0)+' mL/h. Tirar volume além do refilling derruba a PAM (M24).';
+  else if(r.anticoag==='citrato') t='PÉROLA (anticoagulação regional): sangramento alto → citrato quela o Ca²⁺ só no circuito; o paciente não é anticoagulado (M29).';
+  else t='Modalidade '+r.modalidade+', UF '+fmt(r.ufRate,0)+' mL/h. A diálise substitui FUNÇÕES por física (difusão/convecção/UF), não o rim.';
+  p.textContent=t; ip.textContent=t; }
+function drawDecision(state){ var c=$('decision-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
+  var L=decisionLayout(state,c.width,c.height); ctx.clearRect(0,0,L.W,L.H);
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('instabilidade ↑',8,L.padT+2); ctx.fillText('velocidade de clearance →',L.W-200,L.baseY+24);
+  ctx.fillStyle='#9fb1c0'; ctx.fillText('contínuo (TRRC)',L.padL+12,L.padT+14); ctx.fillText('rápido (HDI) →',L.W-150,L.baseY-12);
+  function poly(pts,color,w){ ctx.strokeStyle=color; ctx.lineWidth=w; ctx.beginPath(); for(var i=0;i<pts.length;i++){ var p=pts[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); } ctx.stroke(); }
+  poly(L.pts,'#39c0c8',2);
+  var cu=L.current; ctx.strokeStyle='#e7eef4'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(cu.x,L.padT); ctx.lineTo(cu.x,L.baseY); ctx.stroke(); ctx.setLineDash([]);
+  var col=cu.modalidade==='TRRC'?'#e8a13a':(cu.modalidade==='HDI'?'#52c08a':(cu.modalidade==='SLED'?'#39c0c8':'#9fb1c0'));
+  ctx.fillStyle=col; ctx.fillRect(cu.x-4,cu.y-4,8,8);
+  ctx.fillStyle='#e7eef4'; ctx.fillText(cu.modalidade,Math.min(cu.x+8,L.W-120),Math.max(cu.y-6,L.padT+10)); }
+['in-instabilidade','in-pam','in-vasopressor','in-k','in-hco3','in-intoxicacao','in-volume','in-ureia','in-sintomas','in-catabolismo','in-sangramento','in-pesoKg'].forEach(function(id){ $(id).addEventListener('input',refresh); });
+
+var PRESETS={
+  septico:{instabilidade:0.85,pam:55,vasopressor:0.8,k:6.5,hco3:15,intoxicacao:0,volume:5,ureia:160,sintomas:0.3,catabolismo:0.6,sangramento:0.7,pesoKg:80},
+  estavelK:{instabilidade:0.1,pam:92,vasopressor:0,k:7.5,hco3:18,intoxicacao:0,volume:2,ureia:120,sintomas:0,catabolismo:0.3,sangramento:0.1,pesoKg:75},
+  cardiorrenal:{instabilidade:0.5,pam:68,vasopressor:0.3,k:5.2,hco3:18,intoxicacao:0,volume:9,ureia:130,sintomas:0.2,catabolismo:0.3,sangramento:0.2,pesoKg:82},
+  intoxicacao:{instabilidade:0.1,pam:88,vasopressor:0,k:5.0,hco3:18,intoxicacao:0.9,volume:1,ureia:90,sintomas:0.4,catabolismo:0.3,sangramento:0.1,pesoKg:72},
+  uremico:{instabilidade:0.15,pam:88,vasopressor:0,k:5.2,hco3:16,intoxicacao:0,volume:3,ureia:300,sintomas:0.7,catabolismo:0.5,sangramento:0.2,pesoKg:70},
+  leve:{instabilidade:0.1,pam:90,vasopressor:0,k:4.6,hco3:21,intoxicacao:0,volume:1,ureia:90,sintomas:0,catabolismo:0.2,sangramento:0.1,pesoKg:70}
+};
+function applyPreset(p){ var d=PRESETS[p]; if(!d) return;
+  $('in-instabilidade').value=d.instabilidade; $('in-pam').value=d.pam; $('in-vasopressor').value=d.vasopressor;
+  $('in-k').value=d.k; $('in-hco3').value=d.hco3; $('in-intoxicacao').value=d.intoxicacao; $('in-volume').value=d.volume;
+  $('in-ureia').value=d.ureia; $('in-sintomas').value=d.sintomas; $('in-catabolismo').value=d.catabolismo;
+  $('in-sangramento').value=d.sangramento; $('in-pesoKg').value=d.pesoKg; refresh(); }
+document.querySelector('.presets').addEventListener('click',function(e){ var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset')); });
+
+/* ILUSTRAÇÕES computadas + helper raster */
+function svgEl(w,h,inner){ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img">'+inner+'</svg>'; }
+function f1(x){ return (Math.round(x*10)/10); }
+function decisionMini(state,titulo){ var W=300,H=170,L=decisionLayout(state,W,H),s='';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.y0+'" x2="'+L.axis.x0+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  s+='<line x1="'+L.axis.x0+'" y1="'+L.axis.yEnd+'" x2="'+L.axis.xEnd+'" y2="'+L.axis.yEnd+'" stroke="#3a4a58"/>';
+  function path(pts,color){ var d=''; for(var i=0;i<pts.length;i++){ d+=(i===0?'M':'L')+f1(pts[i].x)+' '+f1(pts[i].y)+' '; } return '<path d="'+d+'" fill="none" stroke="'+color+'" stroke-width="2"/>'; }
+  s+=path(L.pts,'#39c0c8');
+  var cu=L.current, col=cu.modalidade==='TRRC'?'#e8a13a':(cu.modalidade==='HDI'?'#52c08a':(cu.modalidade==='SLED'?'#39c0c8':'#9fb1c0'));
+  s+='<rect x="'+f1(cu.x-3)+'" y="'+f1(cu.y-3)+'" width="6" height="6" fill="'+col+'"/>';
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'instab × velocidade')+'</text>';
+  s+='<text x="'+(L.padL+4)+'" y="'+(L.padT+12)+'" fill="#e8a13a" font-size="8">TRRC ↑</text>';
+  s+='<text x="'+(W-8)+'" y="'+(L.baseY-4)+'" fill="#52c08a" font-size="8" text-anchor="end">HDI →</text>';
+  return svgEl(W,H,s); }
+function meioBars(r,titulo){ var W=300,H=170,base=130,s='';
+  function bar(x,frac,color,lab,val){ var h=clampv(frac,0,1)*96; return '<rect x="'+x+'" y="'+f1(base-h)+'" width="46" height="'+f1(h)+'" fill="'+color+'" fill-opacity="0.6" stroke="'+color+'"/>'+
+    '<text x="'+(x+23)+'" y="'+(base+13)+'" fill="#9fb1c0" font-size="9" text-anchor="middle">'+lab+'</text>'+
+    '<text x="'+(x+23)+'" y="'+f1(base-h-4)+'" fill="#e7eef4" font-size="9" text-anchor="middle">'+val+'</text>'; }
+  s+='<line x1="40" y1="34" x2="40" y2="'+base+'" stroke="#3a4a58"/>';
+  // normaliza: K (3.5-7.5), HCO3 (10-26), vol (0-12)
+  s+=bar(58,(r.kCorr-3.5)/4,(r.kCorr<=5.5?'#52c08a':'#e0556b'),'K⁺',fmt(r.kCorr,1));
+  s+=bar(132,(26-r.hco3Corr)/16,(r.hco3Corr>=18?'#52c08a':'#e0556b'),'HCO₃⁻',fmt(r.hco3Corr,0));
+  s+=bar(206,r.volCorr/12,(r.volCorr<=3?'#52c08a':'#e8a13a'),'vol',fmt(r.volCorr,1)+'L');
+  s+='<text x="'+(W/2)+'" y="14" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'meio interno previsto')+'</text>';
+  return svgEl(W,H,s); }
+function modIcon(r,titulo){ var W=300,H=170,s='';
+  var col=r.modalidade==='TRRC'?'#e8a13a':(r.modalidade==='HDI'?'#52c08a':(r.modalidade==='SLED'?'#39c0c8':'#9fb1c0'));
+  s+='<rect x="70" y="50" width="160" height="70" rx="10" fill="'+col+'" fill-opacity="0.18" stroke="'+col+'"/>';
+  s+='<text x="150" y="82" fill="'+col+'" font-size="20" text-anchor="middle" font-weight="bold">'+r.modalidade+'</text>';
+  s+='<text x="150" y="104" fill="#9fb1c0" font-size="10" text-anchor="middle">'+(r.anticoag==='citrato'?'citrato regional':'heparina')+'</text>';
+  s+='<text x="'+(W/2)+'" y="20" fill="#9fb1c0" font-size="11" text-anchor="middle">'+(titulo||'modalidade')+'</text>';
+  s+='<text x="150" y="146" fill="#e7eef4" font-size="9" text-anchor="middle">instab '+fmt(r.instab,2)+' · veloc '+fmt(r.velocidade,2)+'</text>';
+  return svgEl(W,H,s); }
+function imgFig(slug,alt){ return '<img src="assets/m38/'+slug+'" alt="'+(alt||'')+'" loading="lazy" style="max-width:100%;height:auto;border:1px solid #283642;border-radius:8px;background:#0a1016">'; }
+
+/* TUTOR */
+function R0(extra){ var o={}; if(extra) for(var k in extra) o[k]=extra[k]; return capstone(o); }
+var TUTOR_ILUSTRADO=[
+  {q:'Choque séptico, PAM 55 com noradrenalina, K⁺ 6,5. Qual modalidade?',o:['HDI rápido','TRRC/CVVHDF (contínua gentil)','DP'],c:1,e:'Instável manda: contínuo gentil. Mesmo K alto, o HDI rápido não é tolerado.',fig:function(){return modIcon(R0({instabilidade:0.85,pam:55,vasopressor:0.8,k:6.5,sangramento:0.7}),'instável → TRRC');}},
+  {q:'O mesmo K⁺ alto, mas paciente ESTÁVEL (PAM 92, sem vasopressor). Agora?',o:['TRRC','HDI (rápido)','DP'],c:1,e:'Estável + remoção rápida necessária → HDI: gradiente alto, clearance veloz.',fig:function(){return modIcon(R0({instabilidade:0.1,pam:92,k:7.5}),'estável → HDI');}},
+  {q:'Instabilidade intermediária + sobrecarga +9 L refratária. Modalidade?',o:['HDI','SLED (meio-termo)','DP'],c:1,e:'O meio-termo é a SLED: retira volume controlado, sem o custo da TRRC.',fig:function(){return modIcon(R0({instabilidade:0.5,pam:68,vasopressor:0.3,volume:9}),'intermediário → SLED');}},
+  {q:'Intoxicação por lítio, estável, rim quase normal. Modalidade?',o:['TRRC lenta','HDI (clearance veloz)','esperar'],c:1,e:'A velocidade domina: HDI tem o maior clearance por hora para remover a toxina.',fig:function(){return modIcon(R0({instabilidade:0.1,pam:88,intoxicacao:0.9}),'toxina → HDI');}},
+  {q:'Ureia 300, 1ª diálise, estável. A prescrição da HDI deve ser…',o:['Kt/V alto e tempo longo','gentil (Kt/V e tempo menores)','UF máxima'],c:1,e:'Baixar a ureia rápido demais causa desequilíbrio (M34). 1ª sessão urêmica = gentil.',fig:function(){return meioBars(R0({ureia:300,instabilidade:0.15,pam:88,k:5.2,hco3:16}),'gentil mitiga');}},
+  {q:'Instável com +12 L. A UF rate deve ser…',o:['máxima, para tirar tudo já','baixa (UF < refilling)','zero'],c:1,e:'No instável, UF acima do refilling derruba a PAM (M24). UF baixa e contínua.',fig:function(){return decisionMini({instabilidade:0.9,pam:50,vasopressor:0.9,volume:12,k:5.0},'UF limitada');}},
+  {q:'No espaço de decisão, ACIMA da curva azul está…',o:['HDI rápido','a zona contínua (TRRC)','a zona de DP'],c:1,e:'Acima da fronteira de instabilidade a escolha vira contínua (TRRC).',fig:function(){return decisionMini({instabilidade:0.85,pam:52,vasopressor:0.8,k:5.5},'acima → TRRC');}},
+  {q:'Paciente que SANGRA (CIVD). A anticoagulação do circuito é…',o:['heparina sistêmica','citrato regional','nenhuma'],c:1,e:'Citrato quela o Ca²⁺ só no circuito; o paciente não é anticoagulado.',fig:function(){return modIcon(R0({instabilidade:0.7,pam:58,vasopressor:0.6,sangramento:0.8}),'sangra → citrato');}},
+  {q:'Na figura da escolha por mecanismo, a modalidade sai de…',o:['uma receita fixa','o mecanismo descompensado','a creatinina'],c:1,e:'Estabilidade, velocidade e sangramento — o mecanismo, não a receita.',fig:function(){return imgFig('escolha-modalidade-mecanismo.svg','escolha pelo mecanismo');}},
+  {q:'Na figura HDI × CRRT, a divisória é…',o:['o custo','a tolerância hemodinâmica','o peso'],c:1,e:'Mesma meta de volume; tempos opostos. O instável não tolera a UF rápida da HDI.',fig:function(){return imgFig('hdi-vs-crrt-decisao.svg','HDI versus CRRT');}},
+  {q:'Na figura do meio interno restaurado, a homeostasia volta porque…',o:['o rim funcionou','a máquina substituiu a FUNÇÃO por física','a creatinina caiu'],c:1,e:'Difusão/convecção/UF repõem a função — a diálise não substitui o rim, substitui funções.',fig:function(){return imgFig('meio-interno-restaurado.svg','meio interno restaurado');}},
+  {q:'Na prescrição integrada, a dose da TRRC é medida em…',o:['Kt/V','efluente mL/kg/h','trocas/dia'],c:1,e:'TRRC: efluente ~25 mL/kg/h com pré/pós-diluição (M28). HDI é que usa Kt/V.',fig:function(){return imgFig('prescricao-integrada.svg','prescrição integrada');}}
+];
+var TUTOR_TEXTUAL=[
+  {q:'A modalidade de diálise, neste capstone, sai de…',o:['uma receita padrão','o mecanismo descompensado (estabilidade × velocidade)','o tempo de UTI'],c:1,e:'Instável → contínuo; rápido só quando o gatilho é veloz; sangramento → citrato.'},
+  {q:'O paciente instável vai para…',o:['HDI','TRRC/CVVHDF (contínua, UF lenta)','DP'],c:1,e:'A terapia contínua mantém a PAM retirando volume devagar (UF < refilling).'},
+  {q:'A HDI é preferida quando…',o:['o paciente está instável','estável e precisa de remoção rápida (K alto/intoxicação)','sempre'],c:1,e:'Gradiente alto, clearance veloz em poucas horas (M22).'},
+  {q:'A SLED ocupa o espaço de…',o:['instabilidade intermediária','choque profundo','crônico ambulatorial'],c:0,e:'É o meio-termo híbrido entre HDI e TRRC (M31).'},
+  {q:'A dose da TRRC é prescrita por…',o:['Kt/V','efluente em mL/kg/h (~25)','número de trocas'],c:1,e:'Efluente 20–35 mL/kg/h com pré/pós-diluição (M28).'},
+  {q:'A dose da HDI é prescrita por…',o:['efluente mL/kg/h','Kt/V-alvo e tempo','TMP'],c:1,e:'Kt/V ~1,2/sessão e tempo; gentil na 1ª sessão urêmica.'},
+  {q:'A UF rate é limitada no instável porque…',o:['a máquina é fraca','UF > refilling derruba a PAM (M24)','o filtro coagula'],c:1,e:'O refilling plasmático repõe a água com atraso; UF acima dele causa hipotensão.'},
+  {q:'A 1ª sessão muito urêmica deve ser…',o:['intensa','gentil (Kt/V e tempo menores)','com UF máxima'],c:1,e:'Evita o desequilíbrio dialítico — edema cerebral por gradiente osmótico (M34).'},
+  {q:'Sangramento alto → anticoagulação do circuito com…',o:['heparina','citrato regional','varfarina'],c:1,e:'Citrato quela o Ca²⁺ só no circuito; o paciente não é anticoagulado (M29).'},
+  {q:'Sem risco de sangrar, a anticoagulação mais simples é…',o:['citrato','heparina','nenhuma'],c:1,e:'Heparina sistêmica é mais simples quando não há risco de sangramento.'},
+  {q:'A diálise, fisiologicamente, substitui…',o:['o rim inteiro','algumas FUNÇÕES por física (difusão/convecção/UF)','a creatinina'],c:1,e:'Não substitui o órgão; substitui funções do meio interno por mecanismos físicos (M19).'},
+  {q:'Em síntese, o capstone ensina que a conduta é…',o:['decorar uma receita','derivar modalidade e dose do mecanismo descompensado','iniciar sempre TRRC'],c:1,e:'Estabilidade, velocidade e sangramento geram a modalidade, a dose e a anticoagulação.'}
+];
+window.TUTOR_ILUSTRADO=TUTOR_ILUSTRADO; window.TUTOR_TEXTUAL=TUTOR_TEXTUAL; window.TUTOR=TUTOR_ILUSTRADO.concat(TUTOR_TEXTUAL);
+var BANKS={ilustrada:TUTOR_ILUSTRADO,textual:TUTOR_TEXTUAL}, curBank='ilustrada', tIdx=0, tScore=0, tTotal=0, tAnswered=false;
+function renderTutor(){ var bank=BANKS[curBank], item=bank[tIdx];
+  $('tutor-fig').innerHTML=item.fig?item.fig():''; $('tutor-q').textContent=(tIdx+1)+'/'+bank.length+'. '+item.q;
+  var box=$('tutor-opts'); box.innerHTML=''; tAnswered=false; $('tutor-fb').style.display='none';
+  item.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){ if(tAnswered) return; tAnswered=true; tTotal++;
+      var btns=box.querySelectorAll('button'); btns[item.c].classList.add('ok'); if(i!==item.c) b.classList.add('no'); else tScore++;
+      var fb=$('tutor-fb'); fb.style.display='block'; fb.className='banner '+(i===item.c?'b-good':'b-bad');
+      fb.textContent=(i===item.c?'Correto. ':'Não. ')+item.e; $('tutor-score').textContent=tScore; $('tutor-total').textContent=tTotal; });
+    box.appendChild(b); }); }
+$('banktabs').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return;
+  var bs=$('banktabs').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on');
+  b.classList.add('on'); curBank=b.getAttribute('data-bank'); tIdx=0; renderTutor(); });
+$('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank].length; renderTutor(); });
+
+$('draw-perguntas').innerHTML = modIcon(capstone({instabilidade:0.85,pam:55,vasopressor:0.8,k:6.5,sangramento:0.7}),'instável + sangra → TRRC + citrato');
+$('draw-espaco').innerHTML = decisionMini({instabilidade:0.1,pam:92,k:7.5},'estável + rápido → HDI');
+$('draw-prescr').innerHTML = meioBars(capstone({instabilidade:0.7,pam:60,vasopressor:0.5,k:6.0,hco3:14,volume:4}),'prescrição → meio interno');
+$('draw-anticoag').innerHTML = modIcon(capstone({instabilidade:0.7,pam:58,vasopressor:0.6,sangramento:0.8}),'sangra → citrato regional');
+$('draw-restaura').innerHTML = meioBars(capstone({instabilidade:0.6,pam:62,vasopressor:0.5,k:6.0,hco3:14,volume:4}),'meio interno restaurado');
+$('fig-caso').innerHTML = decisionMini({instabilidade:0.85,pam:55,vasopressor:0.8,k:6.5,sangramento:0.7},'o caso no espaço') + modIcon(capstone({instabilidade:0.85,pam:55,vasopressor:0.8,k:6.5,sangramento:0.7}),'conduta');
+
+refresh(); renderTutor();
+</script>
+</body>
+</html>

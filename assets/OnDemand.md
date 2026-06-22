@@ -137,8 +137,8 @@ ainda vai desenhar). `[c]` = módulo construído (integra na hora) · `[p]` = HT
 | M11 `[p]` | m11/potassio-sintese.webp | K gradiente × estoque · secreção distal · pH/insulina/β · ECG como mecanismo | **PEDIDO** |
 | M12 `[p]` | m12/ca-po4-mg-sintese.webp | triângulo Ca-PO₄-PTH · vit D · FGF23 · ionizado/albumina/pH | **PEDIDO** |
 | M13 `[p]` | m13/acidobase-renal-sintese.webp | HCO₃⁻/NH₄⁺/acidez titulável · ânion gap · delta-delta · ATRs | **PEDIDO** |
-| M14 `[p]` | m14/endocrinologia-renal-sintese.webp | rim como glândula: RAAS, EPO, vit D, PG, autorregulação | OBTIDO |
-| M14 `[p]` | m14/jga-raas-sintese.webp | aparelho justaglomerular + eixo renina-angiotensina-aldosterona | OBTIDO |
+| M14 `[c]` | m14/endocrinologia-renal-sintese.webp | rim como glândula: RAAS, EPO, vit D, PG, autorregulação | INTEGRADO |
+| M14 `[c]` | m14/jga-raas-sintese.webp | aparelho justaglomerular + eixo renina-angiotensina-aldosterona | INTEGRADO |
 | M15 `[p]` | m15/urina-indices-sintese.webp | a urina conta a história · FE_Na/FE_ureia · sedimento/cilindros · pré-renal × NTA | **PEDIDO** |
 | M16 `[p]` | m16/lra-mecanismo-sintese.webp | KDIGO · pré-renal / intrínseca (NTA·NIA·glomerular) / pós-renal · cardio/hepatorrenal | **PEDIDO** |
 | M17 `[p]` | m17/diureticos-sintese.webp | néfron inteiro como alvo · dose-resposta/teto/braking · bloqueio sequencial/sinergia | **PEDIDO** |
@@ -165,7 +165,7 @@ ainda vai desenhar). `[c]` = módulo construído (integra na hora) · `[p]` = HT
 | M38 `[p]` | m38/capstone-modalidade-sintese.webp | LRA grave → escolha de modalidade/prescrição por mecanismo | **PEDIDO** |
 | M39 `[p]` | m39/mapa-integrador-sintese.webp | mapa integrador néfron→meio interno→falência→fármaco→diálise · hexápode | **PEDIDO** |
 
-**Resumo:** 7 módulos já têm a lâmina autoral (M1·M3·M5·M6·M7·M8 `INTEGRADO`; M14×2 `OBTIDO`).
+**Resumo:** 7 módulos já têm a lâmina autoral (M1·M3·M5·M6·M7·M8·M14 `INTEGRADO` — todas as 8 lâminas no ar).
 **Faltam 33 lâminas** a desenhar (`PEDIDO`): M0, M2, M4 (já construídos → integram na hora) + M9–M13, M15–M39.
 Ao entregar cada lâmina nova: se `[c]`, integro inline e marco `INTEGRADO`; se `[p]`, gravo o webp e marco
 `OBTIDO` até o módulo ser construído.
@@ -278,7 +278,7 @@ Ao entregar cada lâmina nova: se `[c]`, integro inline e marco `INTEGRADO`; se 
 | nefrocalcinose-atr1-us.webp | raster (US/Rx) | nefrocalcinose medular da ATR distal (tipo 1) · ancora o mecanismo (não acidifica a urina → cálcio precipita) | Radiopaedia/Commons CC-BY | PEDIDO |
 | raquitismo-atr2-rx.webp | raster (Rx) | raquitismo/osteomalácia da ATR proximal (tipo 2, Fanconi) · liga a perda de HCO₃⁻ proximal ao osso | Commons CC-BY | PEDIDO |
 
-## M14 — RAAS e o eixo endócrino renal  [HTML pendente]
+## M14 — RAAS e o eixo endócrino renal  [módulo construído ✓]
 > Erro: "o rim só filtra"; verdade: é **glândula** — sente pressão/Na/O₂ e responde com hormônios.
 
 | slug | tipo | o que mostra · por que | fonte/licença provável | status |

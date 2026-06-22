@@ -1,22 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M21</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">A membrana e o clearance</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">sieving-coefficient</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">Coeficiente de sieving</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" font-family="Georgia,serif">
+<rect width="640" height="360" fill="#0e1620"/>
+<rect x="2" y="2" width="636" height="356" rx="6" fill="none" stroke="#284050" stroke-width="2"/>
+<text x="320" y="30" text-anchor="middle" font-size="17" font-weight="bold" fill="#39c0c8">Sieving × peso molecular</text><text x="320" y="50" text-anchor="middle" font-size="11" fill="#9fb1c0">a fração que atravessa cai perto do cutoff</text>
+<line x1="90" y1="90" x2="90" y2="300" stroke="#3a4a58"/><line x1="90" y1="300" x2="560" y2="300" stroke="#3a4a58"/>
+<text x="55" y="100" font-size="11" fill="#9fb1c0">S=1</text><text x="55" y="300" font-size="11" fill="#9fb1c0">S=0</text>
+<text x="500" y="320" font-size="11" fill="#9fb1c0">PM (log) →</text>
+<polyline points="90.0,90.0 97.7,90.0 105.3,90.0 113.0,90.0 120.7,90.0 128.3,90.0 136.0,90.0 143.7,90.0 151.3,90.0 159.0,90.0 166.7,90.0 174.3,90.0 182.0,90.0 189.7,90.0 197.3,90.0 205.0,90.0 212.7,90.0 220.3,90.0 228.0,90.0 235.7,90.0 243.3,90.0 251.0,90.0 258.7,90.0 266.3,90.0 274.0,90.0 281.7,90.0 289.3,90.0 297.0,90.0 304.7,90.0 312.3,90.0 320.0,90.0 327.7,90.0 335.3,90.0 343.0,90.0 350.7,90.1 358.3,90.2 366.0,90.3 373.7,90.7 381.3,91.3 389.0,92.7 396.7,95.2 404.3,100.2 412.0,109.4 419.7,125.5 427.3,150.6 435.0,183.9 442.7,219.7 450.3,250.3 458.0,271.7 465.7,284.8 473.3,292.1 481.0,296.0 488.7,298.0 496.3,299.0 504.0,299.5 511.7,299.7 519.3,299.9 527.0,299.9 534.7,300.0 542.3,300.0 550.0,300.0" fill="none" stroke="#52c08a" stroke-width="3"/>
+<polyline points="90.0,90.0 97.7,90.0 105.3,90.0 113.0,90.0 120.7,90.0 128.3,90.0 136.0,90.0 143.7,90.0 151.3,90.0 159.0,90.0 166.7,90.0 174.3,90.0 182.0,90.0 189.7,90.0 197.3,90.0 205.0,90.0 212.7,90.0 220.3,90.0 228.0,90.0 235.7,90.1 243.3,90.1 251.0,90.3 258.7,90.5 266.3,91.0 274.0,92.1 281.7,94.1 289.3,98.0 297.0,105.3 304.7,118.5 312.3,140.1 320.0,170.8 327.7,206.5 335.3,239.8 343.0,264.8 350.7,280.7 358.3,289.9 366.0,294.8 373.7,297.4 381.3,298.7 389.0,299.3 396.7,299.7 404.3,299.8 412.0,299.9 419.7,300.0 427.3,300.0 435.0,300.0 442.7,300.0 450.3,300.0 458.0,300.0 465.7,300.0 473.3,300.0 481.0,300.0 488.7,300.0 496.3,300.0 504.0,300.0 511.7,300.0 519.3,300.0 527.0,300.0 534.7,300.0 542.3,300.0 550.0,300.0" fill="none" stroke="#e0556b" stroke-width="3"/>
+<text x="210" y="120" font-size="11" fill="#52c08a">high-flux (cutoff alto)</text>
+<text x="135" y="250" font-size="11" fill="#e0556b">low-flux</text>
+<line x1="170" y1="90" x2="170" y2="300" stroke="#9fb1c0" stroke-dasharray="3 3" opacity="0.5"/>
+<text x="170" y="88" text-anchor="middle" font-size="9" fill="#9fb1c0">ureia</text>
+<line x1="404" y1="90" x2="404" y2="300" stroke="#e8a13a" stroke-dasharray="3 3" opacity="0.7"/>
+<text x="404" y="88" text-anchor="middle" font-size="9" fill="#e8a13a">β2m</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+<text x="320" y="350" text-anchor="middle" font-size="9" fill="#5b7689">FILTRA · DIALISA · M21 — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
 </svg>

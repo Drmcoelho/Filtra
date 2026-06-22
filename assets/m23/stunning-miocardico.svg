@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
+  <rect width="640" height="320" fill="#eef6f7" rx="6"/>
+  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a6f7a" stroke-width="2"/>
+  <rect x="20" y="14" width="56" height="24" rx="4" fill="#2a6f7a"/>
+  <text x="48" y="31" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M23</text>
+  <text x="360" y="31" text-anchor="middle" font-size="14" font-weight="bold" fill="#13434a">⑥ STUNNING MIOCÁRDICO — o dano silencioso</text>
+  <!-- coracao -->
+  <path d="M150 130 C150 105 110 105 110 135 C110 105 70 105 70 130 C70 165 110 190 110 200 C110 190 150 165 150 130 Z" fill="#b8402f" fill-opacity="0.25" stroke="#b8402f" stroke-width="2"/>
+  <text x="110" y="225" text-anchor="middle" font-size="11" fill="#b8402f">① miocárdio</text>
+  <!-- setas de hipoperfusao -->
+  <line x1="160" y1="150" x2="210" y2="150" stroke="#c07a1a" stroke-width="3" marker-end="url(#d1)"/>
+  <defs><marker id="d1" markerWidth="8" markerHeight="8" refX="5" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="#c07a1a"/></marker></defs>
+  <g font-size="11" fill="#13434a">
+    <text x="225" y="115">② cada queda rápida do RBV</text>
+    <text x="225" y="135">hipoperfunde regiões do coração</text>
+    <text x="225" y="165">③ repetida sessão após sessão</text>
+    <text x="225" y="185">→ atordoamento (stunning) cumulativo</text>
+    <text x="225" y="215" fill="#b8402f">④ dano SILENCIOSO: sem dor,</text>
+    <text x="225" y="233" fill="#b8402f">com perda de função a longo prazo</text>
+  </g>
+  <text x="320" y="268" text-anchor="middle" font-size="11" fill="#2a7a3a">a UF gentil protege o coração tanto quanto a PAM</text>
+  <text x="360" y="306" text-anchor="middle" font-size="9" fill="#13434a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+</svg>

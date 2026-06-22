@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" font-family="system-ui,Arial,sans-serif">
+  <rect width="640" height="360" fill="#0d141b"/>
+  <text x="320" y="30" text-anchor="middle" font-size="17" font-weight="bold" fill="#e7eef4">Perfusão renal efetiva ≈ PAM − PVC</text>
+  <!-- barra PAM -->
+  <rect x="90" y="80" width="300" height="34" fill="#e0556b" fill-opacity="0.35" stroke="#e0556b"/>
+  <text x="95" y="103" font-size="13" fill="#e7eef4">PAM (empurra) — 80 mmHg</text>
+  <!-- barra PVC subtraída -->
+  <rect x="290" y="80" width="100" height="34" fill="#5b8dd6" fill-opacity="0.55" stroke="#5b8dd6"/>
+  <text x="340" y="103" text-anchor="middle" font-size="12" fill="#e7eef4">PVC 20</text>
+  <!-- gradiente efetivo -->
+  <rect x="90" y="140" width="225" height="34" fill="#52c08a" fill-opacity="0.30" stroke="#52c08a"/>
+  <text x="95" y="163" font-size="13" fill="#52c08a">perfusão efetiva = 60 mmHg</text>
+  <text x="410" y="103" font-size="12" fill="#9fb1c0">①</text>
+  <text x="410" y="163" font-size="12" fill="#9fb1c0">②</text>
+  <!-- cenário congesto -->
+  <rect x="90" y="210" width="300" height="28" fill="#e0556b" fill-opacity="0.35" stroke="#e0556b"/>
+  <rect x="240" y="210" width="150" height="28" fill="#5b8dd6" fill-opacity="0.6" stroke="#5b8dd6"/>
+  <rect x="90" y="244" width="150" height="28" fill="#e8a13a" fill-opacity="0.30" stroke="#e8a13a"/>
+  <text x="400" y="230" font-size="11" fill="#9fb1c0">PVC 30 → perfusão cai p/ 40 ③</text>
+  <text x="320" y="305" text-anchor="middle" font-size="12" fill="#9fb1c0">① pressão que empurra · ② a que represa · ③ congestão alta esmaga o gradiente.</text>
+  <text x="320" y="330" text-anchor="middle" font-size="12" fill="#52c08a">Baixar a PVC é tão potente quanto subir a PAM para o rim.</text>
+  <text x="320" y="352" text-anchor="middle" font-size="10" fill="#5f7384">FILTRA · DIALISA · M37</text>
+</svg>

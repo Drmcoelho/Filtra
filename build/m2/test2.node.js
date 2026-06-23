@@ -194,7 +194,7 @@ var rand = mulberry32(20240618);
 
 // ─── 7. FUZZING (PRNG semeado, ≥5000 entradas, 30% malignas) ─────────────────
 (function() {
-  var N = 5000;
+  var N = 20000;
   var MALO = 0.30;
   var fields = ['FSR','FPR','TFG','FF','P_GC','NFP','pO2_med','pO2_cort',
                 'ERO2_med','ERO2_cort','Q_cort','Q_med','DO2_total','VO2_med'];

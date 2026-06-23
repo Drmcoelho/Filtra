@@ -84,7 +84,7 @@ function fin(x) { return typeof x === 'number' && isFinite(x); }
 /* 7. FUZZING ≥5000 */
 (function () {
   function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; var t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
-  var rnd = mulberry32(0xB8E2), N = 6000, bad = 0;
+  var rnd = mulberry32(0xB8E2), N = 20000, bad = 0;
   var drogas = ['nenhum', 'espironolactona', 'eplerenona', 'amilorida', 'tolvaptan', 'xyz', null];
   function val() { var r = rnd(); if (r < 0.3) { var pool = [NaN, Infinity, -Infinity, 1e12, -1e12, 'x', null, undefined]; return pool[(rnd() * pool.length) | 0]; } return (r - 0.1) * 120; }
   for (var i = 0; i < N; i++) {

@@ -100,7 +100,7 @@ function fin(x) { return typeof x === 'number' && isFinite(x); }
 /* ---------- 7. FUZZING semeado ≥5000 ---------- */
 (function () {
   function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; var t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
-  var rnd = mulberry32(0x5EED4), N = 6000, bad = 0;
+  var rnd = mulberry32(0x5EED4), N = 20000, bad = 0;
   function val() { var r = rnd(); if (r < 0.3) { var pool = [NaN, Infinity, -Infinity, 1e12, -1e12, 'x', null, undefined]; return pool[(rnd() * pool.length) | 0]; } return (r - 0.15) * 260; }
   for (var i = 0; i < N; i++) {
     var inp = { gfr: val(), gfrPrev: val(), tempoDias: val(), muscleFactor: val(), secrecaoFrac: val() };

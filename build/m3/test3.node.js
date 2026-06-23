@@ -103,7 +103,7 @@ function fin(x) { return typeof x === 'number' && isFinite(x); }
 /* ---------- 7. FUZZING semeado (mulberry32) ≥5000, 30% malignos ---------- */
 (function () {
   function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; var t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
-  var rnd = mulberry32(0x3CAFE), N = 6000, bad = 0;
+  var rnd = mulberry32(0x3CAFE), N = 20000, bad = 0;
   var cargas = ['anion', 'neutro', 'cation', 'xyz', 42, null];
   function val(i) {
     var r = rnd();

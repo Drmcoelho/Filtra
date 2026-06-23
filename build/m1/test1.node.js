@@ -185,7 +185,7 @@ function merge(a, b) { return M.merge(a, b); }
   var malignos = [NaN, Infinity, -Infinity, null, undefined, '', 'xx', '12abc', 1e308, -1e308];
   function val(r) { return r < 0.30 ? malignos[(rnd() * malignos.length) | 0] : null; }
 
-  var N = 5000, bad = 0;
+  var N = 20000, bad = 0;
   for (var i = 0; i < N; i++) {
     var inp = {
       PAM:  val(rnd()) !== null ? val(rnd()) : (rnd() * 240 + 20),

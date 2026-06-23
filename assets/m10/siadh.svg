@@ -1,22 +1,41 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M10</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">Água livre e disnatremias</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">siadh</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">SIADH</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" font-family="system-ui,Segoe UI,Arial,sans-serif">
+  <rect width="640" height="360" fill="#0f1620"/>
+  <text x="320" y="26" text-anchor="middle" font-size="15" font-weight="700" fill="#e7eef4">SIADH — ADH inapropriado (euvolêmico)</text>
+  <text x="320" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">ADH ligado SEM estímulo osmótico nem de volume → retém água → hiponatremia</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <!-- fonte ectópica/SNC -->
+  <rect x="34" y="64" width="572" height="46" rx="8" fill="#141b22" stroke="#e0556b"/>
+  <text x="50" y="86" font-size="12" font-weight="700" fill="#e0556b">① ADH liberado de forma INAPROPRIADA</text>
+  <text x="50" y="102" font-size="10" fill="#cfdbe6">causas: tumor (pequenas células), SNC, pulmão, fármacos — secreta ADH "sem motivo"</text>
+
+  <!-- consequências -->
+  <rect x="34" y="124" width="186" height="120" rx="8" fill="#1a1410" stroke="#e8a13a"/>
+  <text x="127" y="146" text-anchor="middle" font-size="11" font-weight="700" fill="#e8a13a">② retém ÁGUA</text>
+  <text x="127" y="166" text-anchor="middle" font-size="10" fill="#cfdbe6">aquaporina-2 aberta</text>
+  <text x="127" y="184" text-anchor="middle" font-size="10" fill="#cfdbe6">Uosm ALTA (&gt;100,</text>
+  <text x="127" y="198" text-anchor="middle" font-size="10" fill="#cfdbe6">tipicamente &gt;300)</text>
+  <text x="127" y="222" text-anchor="middle" font-size="10" fill="#cfdbe6">apesar do plasma</text>
+  <text x="127" y="236" text-anchor="middle" font-size="10" fill="#cfdbe6">HIPOtônico</text>
+
+  <rect x="228" y="124" width="186" height="120" rx="8" fill="#102a2c" stroke="#39c0c8"/>
+  <text x="321" y="146" text-anchor="middle" font-size="11" font-weight="700" fill="#39c0c8">③ dilui o Na</text>
+  <text x="321" y="166" text-anchor="middle" font-size="10" fill="#cfdbe6">Na sérico ↓</text>
+  <text x="321" y="184" text-anchor="middle" font-size="10" fill="#cfdbe6">tonicidade ↓</text>
+  <text x="321" y="208" text-anchor="middle" font-size="10" fill="#cfdbe6">EUVOLÊMICO:</text>
+  <text x="321" y="222" text-anchor="middle" font-size="10" fill="#cfdbe6">sem edema, sem</text>
+  <text x="321" y="236" text-anchor="middle" font-size="10" fill="#cfdbe6">desidratação</text>
+
+  <rect x="422" y="124" width="184" height="120" rx="8" fill="#101d22" stroke="#52c08a"/>
+  <text x="514" y="146" text-anchor="middle" font-size="11" font-weight="700" fill="#52c08a">④ urina "salgada"</text>
+  <text x="514" y="166" text-anchor="middle" font-size="10" fill="#cfdbe6">U_Na &gt; 30 (não retém Na;</text>
+  <text x="514" y="180" text-anchor="middle" font-size="10" fill="#cfdbe6">o volume está cheio)</text>
+  <text x="514" y="204" text-anchor="middle" font-size="10" fill="#cfdbe6">≠ hipovolemia, onde</text>
+  <text x="514" y="218" text-anchor="middle" font-size="10" fill="#cfdbe6">U_Na &lt; 20</text>
+
+  <rect x="34" y="258" width="572" height="50" rx="8" fill="#141b22" stroke="#283642"/>
+  <text x="50" y="280" font-size="11" font-weight="700" fill="#39c0c8">conduta (sem dose aqui):</text>
+  <text x="50" y="298" font-size="10.5" fill="#cfdbe6">restrição de ÁGUA é a base; tratar a causa; vaptano (antagonista V2) é alavanca do M8</text>
+
+  <text x="320" y="334" text-anchor="middle" font-size="11" fill="#52c08a">a marca do SIADH: Uosm ALTA + euvolemia + U_Na &gt;30 → é ÁGUA presa, não falta de sal</text>
+  <text x="320" y="354" text-anchor="middle" font-size="9" fill="#5b6b78">FILTRA · M10 — hiponatremia euvolêmica por ADH inapropriado</text>
 </svg>

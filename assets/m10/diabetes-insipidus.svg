@@ -1,22 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M10</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">Água livre e disnatremias</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">diabetes-insipidus</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">Diabetes insipidus (central × nefrogênico)</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" font-family="system-ui,Segoe UI,Arial,sans-serif">
+  <rect width="640" height="360" fill="#0f1620"/>
+  <text x="320" y="26" text-anchor="middle" font-size="15" font-weight="700" fill="#e7eef4">Diabetes insipidus — déficit de ÁGUA por falha do ADH</text>
+  <text x="320" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">o eixo do ADH quebra em dois pontos → urina DILUÍDA apesar da hipernatremia</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <!-- central -->
+  <rect x="34" y="60" width="278" height="232" rx="10" fill="#102a2c" stroke="#39c0c8" stroke-width="2"/>
+  <text x="173" y="84" text-anchor="middle" font-size="12" font-weight="700" fill="#39c0c8">① DI CENTRAL</text>
+  <text x="173" y="102" text-anchor="middle" font-size="10" fill="#cfdbe6">hipotálamo/hipófise NÃO secretam ADH</text>
+  <ellipse cx="100" cy="150" rx="34" ry="26" fill="#0a1016" stroke="#39c0c8"/>
+  <text x="100" y="154" text-anchor="middle" font-size="9" fill="#39c0c8">hipófise</text>
+  <line x1="134" y1="150" x2="200" y2="150" stroke="#e0556b" stroke-width="2" stroke-dasharray="4 3"/>
+  <text x="240" y="138" text-anchor="middle" font-size="11" fill="#e0556b">ADH ≈ 0</text>
+  <text x="240" y="156" text-anchor="middle" font-size="9" fill="#9fb1c0">(o cano de sinal cortado)</text>
+  <rect x="60" y="190" width="226" height="46" rx="6" fill="#141b22" stroke="#283642"/>
+  <text x="173" y="210" text-anchor="middle" font-size="10" fill="#cfdbe6">RESPONDE à desmopressina (dDAVP):</text>
+  <text x="173" y="226" text-anchor="middle" font-size="10" fill="#52c08a">repõe o ADH que falta → Uosm sobe</text>
+  <text x="173" y="262" text-anchor="middle" font-size="10" fill="#cfdbe6">causas: trauma, cirurgia, tumor selar</text>
+  <text x="173" y="280" text-anchor="middle" font-size="10" fill="#cfdbe6">poliúria + polidipsia + hiperNa se não bebe</text>
+
+  <!-- nefrogenico -->
+  <rect x="328" y="60" width="278" height="232" rx="10" fill="#1a1410" stroke="#e8a13a" stroke-width="2"/>
+  <text x="467" y="84" text-anchor="middle" font-size="12" font-weight="700" fill="#e8a13a">② DI NEFROGÊNICO</text>
+  <text x="467" y="102" text-anchor="middle" font-size="10" fill="#cfdbe6">ADH presente, mas o RIM não responde</text>
+  <rect x="430" y="124" width="74" height="52" rx="8" fill="#0a1016" stroke="#e8a13a"/>
+  <text x="467" y="146" text-anchor="middle" font-size="9" fill="#e8a13a">ducto coletor</text>
+  <text x="467" y="162" text-anchor="middle" font-size="9" fill="#9fb1c0">AQP2 surda</text>
+  <text x="467" y="194" text-anchor="middle" font-size="11" fill="#e8a13a">ADH ALTO, sem efeito</text>
+  <rect x="354" y="208" width="226" height="46" rx="6" fill="#141b22" stroke="#283642"/>
+  <text x="467" y="228" text-anchor="middle" font-size="10" fill="#cfdbe6">NÃO responde à desmopressina:</text>
+  <text x="467" y="244" text-anchor="middle" font-size="10" fill="#e0556b">o receptor/AQP2 é o defeito</text>
+  <text x="467" y="278" text-anchor="middle" font-size="10" fill="#cfdbe6">causas: lítio, hiperCa, hipoK, hereditário</text>
+
+  <rect x="34" y="304" width="572" height="34" rx="8" fill="#141b22" stroke="#e0556b"/>
+  <text x="320" y="326" text-anchor="middle" font-size="11" fill="#e7eef4">marca comum: hiperNa + Uosm BAIXA (rim "joga água fora") — o teste do dDAVP separa os dois</text>
 </svg>

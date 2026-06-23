@@ -1,22 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dce8ff" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#3366cc" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#3366cc"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M10</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#3366cc" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">diagrama</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a3a6e" opacity="0.7">Água livre e disnatremias</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a3a6e">osmorregulacao-adh-sede</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#3366cc" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#3366cc">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a3a6e">Osmorregulação: osmorreceptores, ADH, sede</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" font-family="system-ui,Segoe UI,Arial,sans-serif">
+  <rect width="640" height="360" fill="#0f1620"/>
+  <text x="320" y="26" text-anchor="middle" font-size="15" font-weight="700" fill="#e7eef4">Osmorregulação — ADH e sede defendem a TONICIDADE</text>
+  <text x="320" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">o hipotálamo lê a osmolalidade e governa a ÁGUA, não o sal</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a3a6e" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <ellipse cx="130" cy="150" rx="78" ry="60" fill="#101d22" stroke="#39c0c8" stroke-width="2"/>
+  <text x="130" y="118" text-anchor="middle" font-size="11" font-weight="700" fill="#39c0c8">① osmorreceptor</text>
+  <text x="130" y="135" text-anchor="middle" font-size="10" fill="#cfdbe6">hipotálamo</text>
+  <circle cx="106" cy="158" r="9" fill="#1a2730" stroke="#39c0c8"/>
+  <circle cx="130" cy="168" r="9" fill="#1a2730" stroke="#39c0c8"/>
+  <circle cx="154" cy="158" r="9" fill="#1a2730" stroke="#39c0c8"/>
+  <text x="130" y="196" text-anchor="middle" font-size="9" fill="#9fb1c0">células que "encolhem" com tonicidade↑</text>
+
+  <text x="252" y="92" text-anchor="middle" font-size="11" font-weight="700" fill="#e8a13a">tonicidade ↑ (Na/osm efetivo)</text>
+  <line x1="208" y1="128" x2="304" y2="128" stroke="#e8a13a" stroke-width="2" marker-end="url(#a)"/>
+
+  <rect x="312" y="98" width="300" height="64" rx="8" fill="#102a2c" stroke="#39c0c8"/>
+  <text x="328" y="120" font-size="12" font-weight="700" fill="#39c0c8">② ADH / vasopressina ↑</text>
+  <text x="328" y="138" font-size="10" fill="#cfdbe6">aquaporina-2 no ducto coletor → REABSORVE água</text>
+  <text x="328" y="154" font-size="10" fill="#cfdbe6">→ urina concentrada (Uosm↑); o Na cai de volta</text>
+
+  <rect x="312" y="174" width="300" height="54" rx="8" fill="#1a1410" stroke="#e8a13a"/>
+  <text x="328" y="196" font-size="12" font-weight="700" fill="#e8a13a">③ SEDE ↑</text>
+  <text x="328" y="214" font-size="10" fill="#cfdbe6">o outro braço: bebe água livre → dilui → Na↓</text>
+
+  <rect x="32" y="244" width="580" height="58" rx="8" fill="#141b22" stroke="#e0556b"/>
+  <text x="48" y="266" font-size="12" font-weight="700" fill="#e0556b">④ estímulo NÃO-osmótico (barorreceptor)</text>
+  <text x="48" y="284" font-size="10.5" fill="#cfdbe6">VCE/volume baixo → ADH DOMINA o osmótico → reabsorve água mesmo com Na já baixo</text>
+  <text x="48" y="298" font-size="10.5" fill="#cfdbe6">→ é a raiz da hiponatremia hipovolêmica e da ICC (o volume vence a concentração)</text>
+
+  <text x="320" y="328" text-anchor="middle" font-size="11" fill="#52c08a">homeostasia: defender a TONICIDADE (o tamanho da célula) ajustando a ÁGUA</text>
+  <text x="320" y="352" text-anchor="middle" font-size="9" fill="#5b6b78">FILTRA · M10 — o Na mede ÁGUA; ADH + sede são os controladores</text>
+  <defs>
+    <marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#e8a13a"/></marker>
+  </defs>
 </svg>

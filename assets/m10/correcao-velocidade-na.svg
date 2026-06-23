@@ -1,22 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Georgia,serif">
-  <rect width="640" height="320" fill="#dcf0e0" rx="6"/>
-  <rect x="2" y="2" width="636" height="316" rx="5" fill="none" stroke="#2a7a3a" stroke-width="2"/>
-  <!-- badge módulo -->
-  <rect x="20" y="16" width="56" height="24" rx="4" fill="#2a7a3a"/>
-  <text x="48" y="33" text-anchor="middle" font-size="12" font-weight="bold" fill="white">M10</text>
-  <!-- tipo -->
-  <rect x="84" y="16" width="72" height="24" rx="4" fill="#2a7a3a" opacity="0.5"/>
-  <text x="120" y="33" text-anchor="middle" font-size="11" fill="white">figura</text>
-  <!-- título módulo -->
-  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#1a4e2a" opacity="0.7">Água livre e disnatremias</text>
-  <!-- slug -->
-  <text x="320" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a4e2a">correcao-velocidade-na</text>
-  <!-- ícone visual simples -->
-  <circle cx="320" cy="148" r="24" fill="#2a7a3a" opacity="0.18"/>
-  <text x="320" y="156" text-anchor="middle" font-size="24" fill="#2a7a3a">◎</text>
-  <!-- descrição -->
-  <text x="320" y="185" text-anchor="middle" font-size="12" fill="#1a4e2a">Velocidade segura de correção do Na</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" font-family="system-ui,Segoe UI,Arial,sans-serif">
+  <rect width="640" height="360" fill="#0f1620"/>
+  <text x="320" y="26" text-anchor="middle" font-size="15" font-weight="700" fill="#e7eef4">Velocidade segura de correção do Na</text>
+  <text x="320" y="44" text-anchor="middle" font-size="11" fill="#9fb1c0">o Na ao longo de 48 h: a FAIXA verde é segura (≤6–8/24h); cruzar o teto = mielinólise</text>
 
-  <!-- rodapé -->
-  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#1a4e2a" opacity="0.55">FILTRA · DIALISA — CRM-SP 151.318 · Dr. Matheus M. Coelho · Limeira</text>
+  <!-- eixos -->
+  <line x1="70" y1="70" x2="70" y2="288" stroke="#3a4a58" stroke-width="1.5"/>
+  <line x1="70" y1="288" x2="600" y2="288" stroke="#3a4a58" stroke-width="1.5"/>
+  <text x="40" y="80" font-size="10" fill="#9fb1c0">Na</text>
+  <text x="40" y="288" font-size="10" fill="#9fb1c0">120</text>
+  <text x="40" y="184" font-size="10" fill="#9fb1c0">128</text>
+  <text x="300" y="308" text-anchor="middle" font-size="10" fill="#9fb1c0">24 h</text>
+  <text x="588" y="308" text-anchor="middle" font-size="10" fill="#9fb1c0">48 h</text>
+
+  <!-- faixa segura (cone): de Na0=120 sobe ate +8/24h -->
+  <polygon points="70,288 600,184 600,288" fill="#52c08a" fill-opacity="0.14"/>
+  <line x1="70" y1="288" x2="600" y2="184" stroke="#52c08a" stroke-width="2"/>
+  <text x="470" y="218" font-size="10" font-weight="700" fill="#52c08a">teto seguro (+8/24h)</text>
+
+  <!-- trajetoria perigosa (rapida) -->
+  <line x1="70" y1="288" x2="370" y2="80" stroke="#e0556b" stroke-width="2.5" stroke-dasharray="5 4"/>
+  <circle cx="370" cy="80" r="6" fill="#e0556b" stroke="#fff"/>
+  <text x="388" y="84" font-size="10" font-weight="700" fill="#e0556b">RÁPIDA → mielinólise</text>
+
+  <!-- trajetoria lenta segura -->
+  <line x1="70" y1="288" x2="600" y2="200" stroke="#39c0c8" stroke-width="2.5"/>
+  <circle cx="600" cy="200" r="6" fill="#39c0c8" stroke="#fff"/>
+  <text x="500" y="248" font-size="10" font-weight="700" fill="#39c0c8">lenta → segura</text>
+
+  <text x="320" y="338" text-anchor="middle" font-size="10.5" fill="#cfdbe6">a inclinação É a velocidade: dentro da faixa o cérebro reequilibra; acima dela o neurônio adaptado murcha</text>
+  <text x="320" y="354" text-anchor="middle" font-size="9" fill="#5b6b78">FILTRA · M10 — a velocidade importa mais que o número de chegada</text>
 </svg>

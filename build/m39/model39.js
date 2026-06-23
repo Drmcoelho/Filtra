@@ -234,12 +234,52 @@ function scoreProfileLayout(domainScores, W, H) {
   };
 }
 
+/* ============ CASO CLÍNICO DINÂMICO (trajetória do paciente) ============
+ * Um caso interativo é uma sequência de decisões; cada acerto MELHORA o estado
+ * (severidade↑ rumo a 1 = recuperado) e cada erro PIORA (rumo a 0 = grave).
+ * caseTrajectory transforma os deltas das escolhas numa TRAJETÓRIA computada,
+ * determinística e clampada — o "motor manda no pixel" também no caso dinâmico. */
+function caseTrajectory(deltas, start) {
+  var d = asArray(deltas);
+  var s = clampv(start !== undefined ? start : 0.5, 0, 1);
+  var pts = [s], i, cur = s;
+  for (i = 0; i < d.length; i++) {
+    var step = Number(d[i]); if (!isFinite(step)) step = 0;
+    cur = clampv(cur + step, 0, 1);
+    pts.push(cur);
+  }
+  var final = pts[pts.length - 1];
+  var outcome = final >= 0.7 ? 'recuperado' : (final >= 0.45 ? 'estável' : (final >= 0.2 ? 'deteriorando' : 'crítico'));
+  return { points: pts, final: final, outcome: outcome, n: pts.length };
+}
+
+/* geometria PURA da trajetória (a UI só pinta) — severidade 0..1 × passos */
+function caseTrajectoryLayout(deltas, start, W, H) {
+  W = clampv(W, 200, 100000); H = clampv(H, 120, 100000);
+  var tr = caseTrajectory(deltas, start);
+  var padL = 46, padR = 16, padT = 16, padB = 30, baseY = H - padB;
+  var n = tr.points.length;
+  var pxX = (n > 1) ? (W - padL - padR) / (n - 1) : 0;
+  var innerH = baseY - padT;
+  var pts = [], i;
+  for (i = 0; i < n; i++) {
+    pts.push({ i: i, sev: tr.points[i], x: padL + i * pxX, y: baseY - tr.points[i] * innerH });
+  }
+  return {
+    W: W, H: H, padL: padL, padR: padR, padT: padT, padB: padB, baseY: baseY, pxX: pxX,
+    axis: { x0: padL, y0: padT, xEnd: W - padR, yEnd: baseY },
+    yMid: baseY - 0.5 * innerH, yAlta: baseY - 0.7 * innerH,
+    pts: pts, final: tr.final, outcome: tr.outcome
+  };
+}
+
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     clampv: clampv, toIntIdx: toIntIdx, DOMINIOS: DOMINIOS,
     acertos: acertos, gradeExam: gradeExam, domainBreakdown: domainBreakdown,
     matrizAcertos: matrizAcertos, itemDifficulty: itemDifficulty, escoresTotais: escoresTotais,
     media: media, variancia: variancia, itemDiscrimination: itemDiscrimination,
-    kr20: kr20, psychometrics: psychometrics, scoreProfileLayout: scoreProfileLayout
+    kr20: kr20, psychometrics: psychometrics, scoreProfileLayout: scoreProfileLayout,
+    caseTrajectory: caseTrajectory, caseTrajectoryLayout: caseTrajectoryLayout
   };
 }

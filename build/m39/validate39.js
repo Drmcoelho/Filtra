@@ -226,6 +226,59 @@ ok(Array.isArray(EXAM) && EXAM.length >= 100, 'EXAME: ≥100 questões (tem ' + 
 ok(doc.getElementById('exam-q').textContent.length > 3, 'EXAME: questão renderizada no DOM');
 ok(doc.getElementById('exam-opts').querySelectorAll('button.opt').length >= 2, 'EXAME: opções renderizadas');
 
+// EXAME: dificuldade crescente (cada item tem dif 1..3; tendência crescente por domínio)
+(function () {
+  var semDif = 0, foraFaixa = 0, maxDif = 0;
+  (EXAM || []).forEach(function (it) { if (typeof it.dif !== 'number') { semDif++; return; } if (it.dif < 1 || it.dif > 3) foraFaixa++; if (it.dif > maxDif) maxDif = it.dif; });
+  ok(semDif === 0, 'EXAME: toda questão tem dificuldade (dif) numérica (' + semDif + ' sem)');
+  ok(foraFaixa === 0 && maxDif === 3, 'EXAME: dif ∈ [1,3] e há nível 3 (dificuldade crescente)');
+})();
+
+// CASOS CLÍNICOS DINÂMICOS (interativos, dificuldade crescente)
+var CASOS = win.CASOS;
+ok(Array.isArray(CASOS) && CASOS.length >= 5, 'CASOS dinâmicos: ≥5 casos (tem ' + (CASOS ? CASOS.length : 0) + ')');
+(function () {
+  var mal = 0, passosCurtos = 0, semDif = 0, temDif3 = false;
+  (CASOS || []).forEach(function (C) {
+    if (!C || !Array.isArray(C.passos) || C.passos.length < 4) { passosCurtos++; return; }
+    if (typeof C.dif !== 'number' || C.dif < 1 || C.dif > 3) semDif++; if (C.dif === 3) temDif3 = true;
+    if (typeof C.start !== 'number' || C.start < 0 || C.start > 1) mal++;
+    C.passos.forEach(function (P) {
+      if (!P || !P.v || String(P.v).length < 8) mal++;
+      else if (!Array.isArray(P.o) || P.o.length < 2) mal++;
+      else if (typeof P.c !== 'number' || P.c < 0 || P.c >= P.o.length) mal++;
+      else if (!P.e || String(P.e).length < 3 || !P.q || String(P.q).length < 5) mal++;
+    });
+  });
+  ok(passosCurtos === 0, 'CASOS: todo caso tem ≥4 etapas (' + passosCurtos + ' curtos)');
+  ok(mal === 0, 'CASOS: toda etapa bem-formada (vinheta/q/o/c/e) (' + mal + ' malformadas)');
+  ok(semDif === 0 && temDif3, 'CASOS: dificuldade válida e há caso nível 3 (crescente)');
+})();
+ok(doc.getElementById('casos-canvas') !== null && doc.getElementById('casos-canvas').tagName.toLowerCase() === 'canvas', 'CASOS: canvas de trajetória presente');
+ok(doc.getElementById('caso-q').textContent.length > 3, 'CASOS: etapa renderizada no DOM no init');
+ok(doc.getElementById('caso-opts').querySelectorAll('button.opt').length >= 2, 'CASOS: opções renderizadas');
+ok(doc.querySelectorAll('#casos-seletor button[data-caso]').length >= 5, 'CASOS: seletor com ≥5 casos');
+// engine da trajetória ≡ UI
+ok(typeof win.caseTrajectory === 'function' && typeof win.caseTrajectoryLayout === 'function', 'UI expõe caseTrajectory/Layout');
+(function () {
+  var amostras = [[[0.2, -0.22, 0.2], 0.45], [[], 0.35], [[5, -9, 0.3], 0.5], [['x', NaN, 0.2], 0.4]];
+  var divT = 0, divL = 0;
+  amostras.forEach(function (a) {
+    if (JSON.stringify(win.caseTrajectory(a[0], a[1])) !== JSON.stringify(ref.caseTrajectory(a[0], a[1]))) divT++;
+    if (JSON.stringify(win.caseTrajectoryLayout(a[0], a[1], 900, 220)) !== JSON.stringify(ref.caseTrajectoryLayout(a[0], a[1], 900, 220))) divL++;
+  });
+  ok(divT === 0, 'caseTrajectory ≡ UI (' + divT + ' divergências)');
+  ok(divL === 0, 'caseTrajectoryLayout ≡ UI (' + divL + ' divergências)');
+})();
+// canvas de trajetória exercido + polilinha == engine (estado inicial: caso 0, sem decisões → 1 ponto; após 1 acerto, 2 pontos)
+(function () {
+  var c = doc.getElementById('casos-canvas'); var rc2 = c.getContext('2d');
+  ok(rc2 && Array.isArray(rc2.__paths) && rc2.__paths.length >= 1, 'CASOS: canvas de trajetória exercido');
+  var L0 = ref.caseTrajectoryLayout([], CASOS[0].start, c.width, c.height);
+  var casou = (rc2.__paths || []).some(function (p) { return p.length === L0.pts.length && p[0] && Math.abs(p[0].x - L0.pts[0].x) < 1e-6 && Math.abs(p[0].y - L0.pts[0].y) < 1e-6; });
+  ok(casou, 'CASOS: trajetória pintada == caseTrajectoryLayout(engine) no init');
+})();
+
 // tutor
 function malformados(bank) { var n = 0; (bank || []).forEach(function (it) { if (!it || !Array.isArray(it.o) || it.o.length < 2) n++; else if (typeof it.c !== 'number' || it.c < 0 || it.c >= it.o.length) n++; else if (!it.e || String(it.e).length < 3) n++; }); return n; }
 var TI = win.TUTOR_ILUSTRADO, TT = win.TUTOR_TEXTUAL;

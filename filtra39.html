@@ -47,6 +47,7 @@
   .b-good{background:rgba(82,192,138,.12);border:1px solid var(--good)}
   .b-warn{background:rgba(232,161,58,.12);border:1px solid var(--warn)}
   .b-bad{background:rgba(224,85,107,.12);border:1px solid var(--bad)}
+  .b-info{background:rgba(57,192,200,.10);border:1px solid var(--accent)}
   .pearl{background:rgba(57,192,200,.10);border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14px}
   button.act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;margin:4px 6px 4px 0}
   button.act:hover{border-color:var(--accent)}
@@ -355,6 +356,23 @@
         <button class="act" id="exam-reset">Reiniciar exame</button>
       </div>
     </div>
+
+    <div class="panel" id="casos-panel">
+      <h3>Casos clínicos dinâmicos — decisões que mudam o desfecho</h3>
+      <p class="sub">Vinhetas <b>interativas</b> de dificuldade crescente: cada decisão move a <b>trajetória do
+      paciente</b> (computada pelo motor) — acertar melhora, errar deteriora, e a próxima etapa revela a
+      consequência. Escolha um caso.</p>
+      <div class="presets" id="casos-seletor"></div>
+      <div>Caso: <span class="val" id="caso-titulo">—</span> · etapa <span class="val" id="caso-step">0</span>/<span id="caso-nsteps">0</span>
+        · acertos <span class="val" id="caso-acertos">0</span> · desfecho <span class="val" id="caso-outcome">—</span></div>
+      <canvas id="casos-canvas" width="900" height="220" aria-label="Trajetória do paciente no caso dinâmico"></canvas>
+      <div id="caso-vinheta" class="banner b-info" style="margin-top:10px"></div>
+      <div id="caso-q" style="margin-top:8px;font-weight:600"></div>
+      <div id="caso-opts"></div>
+      <div class="banner" id="caso-fb" style="display:none"></div>
+      <div><button class="act" id="caso-next" style="display:none">Continuar &rarr;</button>
+        <button class="act" id="caso-reset">Reiniciar caso</button></div>
+    </div>
   </section>
 
   <div class="disc">
@@ -403,8 +421,18 @@ function scoreProfileLayout(domainScores,W,H){ var linhas=asArray(domainScores&&
     bars.push({i:i,dominio:ln.dominio!=null?String(ln.dominio):'',pct:pct,x:bx,y:by,w:barW,h:pct*pxY,cx:cx}); pts.push({i:i,pct:pct,x:cx,y:by}); }
   var corte=clampv(domainScores&&domainScores.corte!==undefined?domainScores.corte:0.6,0,1),corteY=baseY-corte*100*pxY;
   return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,n:n,pxY:pxY,slot:slot,barW:barW,axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},bars:bars,pts:pts,corte:corte,corteY:corteY,cortePts:[{x:padL,y:corteY},{x:W-padR,y:corteY}]}; }
+function caseTrajectory(deltas,start){ var d=asArray(deltas); var s=clampv(start!==undefined?start:0.5,0,1); var pts=[s],i,cur=s;
+  for(i=0;i<d.length;i++){ var step=Number(d[i]); if(!isFinite(step)) step=0; cur=clampv(cur+step,0,1); pts.push(cur); }
+  var final=pts[pts.length-1]; var outcome=final>=0.7?'recuperado':(final>=0.45?'estável':(final>=0.2?'deteriorando':'crítico'));
+  return {points:pts,final:final,outcome:outcome,n:pts.length}; }
+function caseTrajectoryLayout(deltas,start,W,H){ W=clampv(W,200,100000); H=clampv(H,120,100000); var tr=caseTrajectory(deltas,start);
+  var padL=46,padR=16,padT=16,padB=30,baseY=H-padB,n=tr.points.length,pxX=(n>1)?(W-padL-padR)/(n-1):0,innerH=baseY-padT,pts=[],i;
+  for(i=0;i<n;i++){ pts.push({i:i,sev:tr.points[i],x:padL+i*pxX,y:baseY-tr.points[i]*innerH}); }
+  return {W:W,H:H,padL:padL,padR:padR,padT:padT,padB:padB,baseY:baseY,pxX:pxX,axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},
+    yMid:baseY-0.5*innerH,yAlta:baseY-0.7*innerH,pts:pts,final:tr.final,outcome:tr.outcome}; }
 window.clampv=clampv; window.gradeExam=gradeExam; window.domainBreakdown=domainBreakdown; window.scoreProfileLayout=scoreProfileLayout;
 window.itemDifficulty=itemDifficulty; window.itemDiscrimination=itemDiscrimination; window.kr20=kr20; window.psychometrics=psychometrics;
+window.caseTrajectory=caseTrajectory; window.caseTrajectoryLayout=caseTrajectoryLayout;
 window.DOMINIOS=DOMINIOS;
 window.MODEL={gradeExam:gradeExam,domainBreakdown:domainBreakdown,scoreProfileLayout:scoreProfileLayout,itemDifficulty:itemDifficulty,itemDiscrimination:itemDiscrimination,kr20:kr20,psychometrics:psychometrics,clampv:clampv,DOMINIOS:DOMINIOS};
 
@@ -582,6 +610,8 @@ $('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank
 
 /* ===== EXAME 100 (o coração do M39) ===== */
 var EXAM=buildExam();
+/* dificuldade crescente por domínio: 1–4 ★, 5–7 ★★, 8–10 ★★★ */
+(function(){ var per={},i; for(i=0;i<EXAM.length;i++){ var d=EXAM[i].dominio; per[d]=(per[d]||0)+1; var k=per[d]; EXAM[i].dif=k<=4?1:(k<=7?2:3); } })();
 window.EXAM=EXAM;
 var exGab=EXAM.map(function(q){ return q.c; });
 var exDoms=EXAM.map(function(q){ return q.dominio; });
@@ -590,7 +620,7 @@ var exIdx=0;
 function exGrade(){ return gradeExam(exResp,exGab,0.6); }
 function exBreakdown(){ var db=domainBreakdown(exResp.map(function(v){ return v; }),exGab,exDoms); db.corte=0.6; return db; }
 function renderExam(){ var q=EXAM[exIdx];
-  $('exam-q').textContent=(exIdx+1)+'/'+EXAM.length+'. '+q.q;
+  $('exam-q').textContent=(exIdx+1)+'/'+EXAM.length+' ['+'★★★'.slice(0,q.dif||1)+'] '+q.q;
   $('exam-dom').textContent=q.dominio;
   var box=$('exam-opts'); box.innerHTML='';
   q.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
@@ -607,6 +637,86 @@ function updateExamHUD(){ var g=exGrade(); var done=0,i; for(i=0;i<exResp.length
 $('exam-next').addEventListener('click',function(){ exIdx=(exIdx+1)%EXAM.length; renderExam(); });
 $('exam-prev').addEventListener('click',function(){ exIdx=(exIdx-1+EXAM.length)%EXAM.length; renderExam(); });
 $('exam-reset').addEventListener('click',function(){ exResp=EXAM.map(function(){ return -1; }); exIdx=0; renderExam(); updateExamHUD(); refresh(); });
+
+/* ===== CASOS CLÍNICOS DINÂMICOS (interativos, dificuldade crescente) ===== */
+var CASOS=[
+  { titulo:'Hipercalemia na LRA anúrica', dominio:'Eletrólitos/ácido-base', dif:1, start:0.45, passos:[
+    { v:'Homem com LRA oligúrica; K⁺ 7,1 mEq/L; ECG com ondas T apiculadas e PR alargado.', q:'Primeira medida?', o:['bicarbonato em bolus','gluconato de cálcio IV (estabilizar a membrana)','aguardar a diálise'], c:1, e:'O cálcio antagoniza o efeito no miocárdio em segundos — ganha tempo, não baixa o K⁺.' },
+    { v:'Membrana estabilizada; o QRS estreitou. Agora é preciso BAIXAR o K⁺.', q:'O que desloca o K⁺ para dentro da célula?', o:['insulina + glicose / β2-agonista','mais cálcio','apenas furosemida'], c:0, e:'Insulina e β2 ativam a Na⁺/K⁺-ATPase (shift) — efeito temporário.' },
+    { v:'K⁺ caiu para 6,2 mEq/L, porém o paciente segue anúrico.', q:'O shift resolve definitivamente?', o:['sim','não — é temporário; é preciso REMOVER o K⁺','sim, se repetir a insulina'], c:1, e:'Anúrico → o K⁺ rebate; a remoção exige diálise.' },
+    { v:'Decisão de terapia de substituição renal (TRS).', q:'Por qual letra do AEIOU se indica aqui?', o:['U (uremia)','E (eletrólitos — hipercalemia refratária)','O (overload)'], c:1, e:'Hipercalemia refratária com ECG é o "E" — indicação clássica.' }
+  ]},
+  { titulo:'Cetoacidose diabética e o potássio', dominio:'Eletrólitos/ácido-base', dif:2, start:0.4, passos:[
+    { v:'Jovem em CAD: pH 7,10; K⁺ 5,4 mEq/L; glicemia muito alta; desidratado.', q:'O K⁺ 5,4 com acidose indica estoque corporal…', o:['alto','provavelmente DEPLETADO (shift pela acidose/insulinopenia + perda osmótica)','normal'], c:1, e:'A acidose e a falta de insulina jogam K⁺ para fora; o estoque está baixo.' },
+    { v:'Inicia insulina e reposição volêmica.', q:'O que monitorar de perto?', o:['só o sódio','o K⁺ — vai despencar quando a insulina empurrá-lo para a célula','nada'], c:1, e:'A insulina expõe a depleção: hipocalemia perigosa.' },
+    { v:'K⁺ caiu para 3,1 mEq/L.', q:'Conduta?', o:['repor K⁺ (e manter insulina com reposição)','ignorar','aumentar a insulina'], c:0, e:'Repor K⁺; se o inicial fosse ≤ 5,2, já se repõe junto com a insulina.' },
+    { v:'O ânion gap fecha conforme as cetonas são metabolizadas.', q:'A acidose da CAD indica diálise?', o:['sempre','não — responde a insulina/volume (não refratária)','só se pH < 7,3'], c:1, e:'A CAD cede ao tratamento clínico; diálise raramente é necessária.' }
+  ]},
+  { titulo:'Hiponatremia sintomática (SIADH)', dominio:'Compartimentos/meio interno', dif:2, start:0.5, passos:[
+    { v:'Mulher confusa; Na⁺ 112 mEq/L; euvolêmica; osmolalidade urinária alta.', q:'Mecanismo mais provável?', o:['perda de sal','SIADH — excesso de ADH retém água livre','diabetes insípido'], c:1, e:'Euvolemia + U_osm alta + Na⁺ baixo = retenção de água (ADH).' },
+    { v:'Evolui com crise convulsiva (sintoma grave).', q:'Conduta inicial?', o:['só restrição hídrica','salina hipertônica (NaCl 3%) em alíquota controlada','corrigir rápido até o normal'], c:1, e:'Sintoma grave → hipertônica em bolus pequeno, com meta de subida limitada.' },
+    { v:'Sintoma controlado.', q:'Qual o limite de correção em 24 h?', o:['sem limite','cerca de 6–8 mEq/L por 24 h','20 mEq/L'], c:1, e:'Acima disso, risco de mielinólise pontina (desmielinização osmótica).' },
+    { v:'Por engano, o Na⁺ subiu 12 mEq/L em 12 h.', q:'Risco e conduta?', o:['nenhum risco','risco de mielinólise; pode-se reabaixar com água livre/desmopressina','dar mais hipertônica'], c:1, e:'Correção excessiva pede "re-lowering" para a meta segura.' }
+  ]},
+  { titulo:'ICC congesta e diurético resistente', dominio:'LRA', dif:2, start:0.4, passos:[
+    { v:'ICC descompensada, edema pulmonar; em furosemida via oral domiciliar, sem resposta.', q:'Por que não responde?', o:['dose excessiva','entrega luminal ruim + braking (tolerância)','alergia ao diurético'], c:1, e:'Má absorção VO na congestão + adaptação distal (M17).' },
+    { v:'Decisão sobre o diurético.', q:'Como garantir efeito?', o:['furosemida IV, titulando até o teto','trocar por tiazídico isolado','suspender o diurético'], c:0, e:'Garantir entrega (IV) e atingir o teto da alça.' },
+    { v:'Resposta ainda pobre; creatinina subindo; tendendo à anúria.', q:'Próximo passo?', o:['dobrar a alça muito além do teto','bloqueio sequencial e/ou ULTRAFILTRAÇÃO (TRS)','apenas observar'], c:1, e:'Refratário verdadeiro → a UF da máquina remove o volume (ponte M37).' },
+    { v:'Indicação de TRS.', q:'Qual letra do AEIOU?', o:['U','O (overload refratário a diurético)','I'], c:1, e:'Sobrecarga de volume refratária é o "O".' }
+  ]},
+  { titulo:'Intoxicação por etilenoglicol', dominio:'Indicação/integração', dif:3, start:0.45, passos:[
+    { v:'Paciente torporoso; acidose de ânion gap alto; gap osmolar elevado; cristais de oxalato na urina.', q:'Suspeita principal?', o:['metformina','etilenoglicol','lítio'], c:1, e:'AG alto + gap osmolar + oxalúria = etilenoglicol.' },
+    { v:'Iniciado o bloqueio enzimático (fomepizol ou etanol).', q:'O que REMOVE a toxina já absorvida?', o:['carvão ativado','hemodiálise (toxina dialisável)','apenas hidratação'], c:1, e:'Etilenoglicol é dialisável: baixo PM, baixo Vd, baixa ligação proteica.' },
+    { v:'Discussão do benefício da HD.', q:'Por que a HD ajuda duplamente?', o:['remove a toxina E corrige a acidose','só remove volume','não ajuda'], c:0, e:'Depura o tóxico e o ácido (e repõe tampão).' },
+    { v:'Contraste didático.', q:'A digoxina também é dialisável?', o:['sim','não — volume de distribuição enorme','depende do K⁺'], c:1, e:'Vd altíssimo: quase nada no sangue para a máquina remover (M32).' }
+  ]},
+  { titulo:'Choque séptico com LRA — escolha integrada', dominio:'TRRC/contínuas', dif:3, start:0.35, passos:[
+    { v:'Choque séptico em noradrenalina alta; LRA anúrica; K⁺ 6,6 mEq/L; pH 7,18; congesto e sonolento.', q:'Há indicação de TRS?', o:['não','sim — múltiplos eixos AEIOU refratários','apenas observar'], c:1, e:'E + A + O (e talvez U) refratários: indica.' },
+    { v:'Definir a modalidade.', q:'HDI ou contínua?', o:['HDI rápida','TRRC (instável hemodinamicamente)','diálise peritoneal'], c:1, e:'Instável em vasopressor tolera melhor a remoção lenta (M27).' },
+    { v:'Para remover também moléculas médias da sepse, além das pequenas.', q:'Qual modalidade?', o:['CVVHD (só difusão)','CVVHDF (difusão + convecção)','SCUF (só volume)'], c:1, e:'A convecção da CVVHDF alcança as médias.' },
+    { v:'Anticoagulação do circuito.', q:'Preferência no paciente com risco de sangramento?', o:['heparina sistêmica','citrato regional','nenhuma'], c:1, e:'O citrato fica restrito ao circuito (M29).' },
+    { v:'Após estabilizar e recuperar.', q:'Qual função renal a diálise NÃO repõe?', o:['depuração de escórias','controle de volume','a endócrina (EPO, vitamina D ativa)'], c:2, e:'A máquina substitui depuração/volume — não a função endócrina (M14).' }
+  ]}
+];
+window.CASOS=CASOS;
+var cAt=0,cStep=0,cDeltas=[],cAcertos=0,cAnswered=false;
+function drawCasoTraj(){ var c=$('casos-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
+  var L=caseTrajectoryLayout(cDeltas,CASOS[cAt].start,c.width,c.height); ctx.clearRect(0,0,L.W,L.H);
+  ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
+  ctx.fillText('estado do paciente',8,L.padT+2); ctx.fillText('decisões →',L.W-90,L.baseY+22);
+  ctx.strokeStyle='#52c08a'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(L.padL,L.yAlta); ctx.lineTo(L.W-L.padR,L.yAlta); ctx.stroke();
+  ctx.strokeStyle='#e8a13a'; ctx.beginPath(); ctx.moveTo(L.padL,L.yMid); ctx.lineTo(L.W-L.padR,L.yMid); ctx.stroke(); ctx.setLineDash([]);
+  ctx.strokeStyle='#39c0c8'; ctx.lineWidth=2.5; ctx.beginPath();
+  for(var i=0;i<L.pts.length;i++){ var p=L.pts[i]; if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); } ctx.stroke();
+  for(i=0;i<L.pts.length;i++){ var q=L.pts[i]; ctx.fillStyle=q.sev>=0.7?'#52c08a':(q.sev>=0.45?'#e8a13a':'#e0556b'); ctx.beginPath(); ctx.arc(q.x,q.y,4,0,2*Math.PI); ctx.fill(); }
+  ctx.fillStyle='#e7eef4'; ctx.fillText('desfecho atual: '+L.outcome,L.padL+8,L.padT+16); }
+function markCasoSel(){ var bs=$('casos-seletor').querySelectorAll('button'); for(var i=0;i<bs.length;i++){ bs[i].style.borderColor=(i===cAt)?'#39c0c8':''; } }
+function renderCaso(){ var C=CASOS[cAt];
+  $('caso-titulo').textContent=C.titulo; $('caso-nsteps').textContent=String(C.passos.length);
+  $('caso-step').textContent=String(Math.min(cStep+1,C.passos.length)); $('caso-acertos').textContent=String(cAcertos);
+  $('caso-next').style.display='none'; drawCasoTraj();
+  if(cStep>=C.passos.length){ var tr=caseTrajectory(cDeltas,C.start);
+    $('caso-vinheta').textContent='Desfecho: '+tr.outcome+' — acertos '+cAcertos+'/'+C.passos.length+'. Reinicie para tentar outro caminho.';
+    $('caso-q').textContent=''; $('caso-opts').innerHTML=''; $('caso-fb').style.display='none'; $('caso-outcome').textContent=tr.outcome; return; }
+  var P=C.passos[cStep];
+  $('caso-vinheta').textContent=P.v;
+  $('caso-q').textContent='['+'★★★'.slice(0,C.dif)+'] '+P.q;
+  $('caso-fb').style.display='none'; cAnswered=false;
+  var box=$('caso-opts'); box.innerHTML='';
+  P.o.forEach(function(opt,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+    b.addEventListener('click',function(){ if(cAnswered) return; cAnswered=true; var ok=(i===P.c);
+      var btns=box.querySelectorAll('button'); btns[P.c].classList.add('ok'); if(!ok) b.classList.add('no');
+      cDeltas.push(ok?0.2:-0.22); if(ok) cAcertos++;
+      var fb=$('caso-fb'); fb.style.display='block'; fb.className='banner '+(ok?'b-good':'b-bad'); fb.textContent=(ok?'Correto. ':'Não — ')+P.e;
+      $('caso-outcome').textContent=caseTrajectory(cDeltas,C.start).outcome; $('caso-acertos').textContent=String(cAcertos); drawCasoTraj();
+      $('caso-next').style.display=''; });
+    box.appendChild(b); }); }
+function casoStart(idx){ cAt=clampv(idx,0,CASOS.length-1)|0; cStep=0; cDeltas=[]; cAcertos=0; cAnswered=false; markCasoSel(); renderCaso(); }
+$('caso-next').addEventListener('click',function(){ cStep++; renderCaso(); });
+$('caso-reset').addEventListener('click',function(){ casoStart(cAt); });
+(function(){ var sel=$('casos-seletor'); CASOS.forEach(function(C,idx){ var b=document.createElement('button'); b.className='act'; b.setAttribute('data-caso',String(idx)); b.textContent=(idx+1)+'. '+C.titulo+' '+'★★★'.slice(0,C.dif); b.addEventListener('click',function(){ casoStart(idx); }); sel.appendChild(b); }); })();
+casoStart(0);
 
 /* ===== desenhos do Conceito ===== */
 $('draw-mapa').innerHTML = profileMini(demoDbForFig(0.86,0.6,'TRRC/contínuas'),'perfil por domínio (exemplo)');

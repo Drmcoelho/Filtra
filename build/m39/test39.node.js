@@ -280,6 +280,38 @@ function makeCohort(gab, nJ, rnd) {
   ok(badMut === 0, 'fuzzing: entradas (gab/resp) nunca mutadas (' + badMut + ')');
 })();
 
+/* ---------- 9.5 CASO DINÂMICO (caseTrajectory) ---------- */
+(function () {
+  var caseTrajectory = M.caseTrajectory, caseTrajectoryLayout = M.caseTrajectoryLayout;
+  var t = caseTrajectory([0.2, 0.2, 0.2], 0.3);
+  ok(t.points.length === 4 && Math.abs(t.final - 0.9) < 1e-9, 'caso: trajetória soma deltas a partir do start');
+  ok(t.outcome === 'recuperado', 'caso: final ≥0,7 → recuperado');
+  ok(caseTrajectory([-0.3, -0.3], 0.5).outcome === 'crítico', 'caso: erros sucessivos → crítico');
+  var c = caseTrajectory([5, -9, 0.3], 0.5);
+  var inFaixa = true; for (var i = 0; i < c.points.length; i++) if (c.points[i] < 0 || c.points[i] > 1) inFaixa = false;
+  ok(inFaixa, 'caso: trajetória clampada em [0,1]');
+  var arr = Object.freeze([0.1, -0.2, 0.3]);
+  ok(JSON.stringify(caseTrajectory(arr, 0.5)) === JSON.stringify(caseTrajectory(arr, 0.5)), 'caso: determinístico');
+  var threw = false; try { caseTrajectory(arr, 0.5); } catch (e) { threw = true; } ok(!threw, 'caso: entrada congelada não lança');
+  var maus = [undefined, null, 'x', [NaN, Infinity, 'a', null], [1e9, -1e9]];
+  var robOk = true;
+  maus.forEach(function (m) { var r = caseTrajectory(m, m); if (!fin(r.final) || r.final < 0 || r.final > 1) robOk = false; });
+  ok(robOk, 'caso: robustez (lixo → final finito e em [0,1])');
+  var L = caseTrajectoryLayout([0.2, -0.1, 0.3, 0.2], 0.5, 600, 200);
+  var geomOk = L.pts.length === 5 && fin(L.baseY);
+  for (i = 1; i < L.pts.length; i++) if (!(L.pts[i].x >= L.pts[i - 1].x - 1e-9) || !fin(L.pts[i].y)) geomOk = false;
+  ok(geomOk, 'caso: layout com pts finitos e x não-decrescente');
+  function mb(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; var t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  var rnd = mb(0xCA5E), bad = 0;
+  for (i = 0; i < 4000; i++) {
+    var k = 1 + ((rnd() * 8) | 0), dd = [];
+    for (var j = 0; j < k; j++) { dd.push(rnd() < 0.25 ? [NaN, Infinity, 'x', null][(rnd() * 4) | 0] : (rnd() - 0.5)); }
+    var rr = caseTrajectory(dd, rnd() < 0.2 ? 'x' : rnd());
+    if (!fin(rr.final) || rr.final < 0 || rr.final > 1 || rr.points.length !== k + 1) bad++;
+  }
+  ok(bad === 0, 'caso: fuzzing 4000 trajetórias → 0 violações (' + bad + ')');
+})();
+
 /* ---------- 10. SAÍDA ---------- */
 console.log((oks + micro) + ' OK (' + oks + ' macro + ' + micro + ' micro/fuzz) · ' + fails + ' falhas');
 process.exit(fails > 0 ? 1 : 0);

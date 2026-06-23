@@ -133,7 +133,7 @@ ainda vai desenhar). `[c]` = módulo construído (integra na hora) · `[p]` = HT
 | M7 `[c]`  | m7/tcd-sintese.webp | TCD: NCC, Ca²⁺, tiazídicos (paradoxo do Ca) | INTEGRADO |
 | M8 `[c]`  | m8/ducto-coletor-sintese.webp | ducto: ENaC/aldo, ADH/AQP2, intercalares, poupadores/vaptano | INTEGRADO |
 | M9 `[c]`  | m9/sodio-volume-sintese.webp | volume circulante efetivo × tonicidade · barorreceptores · SNS/RAAS/PN | **PEDIDO** (módulo construído → integra na hora) |
-| M10 `[p]` | m10/agua-livre-sintese.webp | disnatremias = distúrbio de água · ADH/sede · velocidade de correção (mielinólise/edema) | **PEDIDO** |
+| M10 `[c]` | m10/agua-livre-sintese.webp | disnatremias = distúrbio de água · ADH/sede · velocidade de correção (mielinólise/edema) | **PEDIDO** (módulo construído → integra na hora) |
 | M11 `[p]` | m11/potassio-sintese.webp | K gradiente × estoque · secreção distal · pH/insulina/β · ECG como mecanismo | **PEDIDO** |
 | M12 `[p]` | m12/ca-po4-mg-sintese.webp | triângulo Ca-PO₄-PTH · vit D · FGF23 · ionizado/albumina/pH | **PEDIDO** |
 | M13 `[p]` | m13/acidobase-renal-sintese.webp | HCO₃⁻/NH₄⁺/acidez titulável · ânion gap · delta-delta · ATRs | **PEDIDO** |
@@ -242,7 +242,7 @@ Ao entregar cada lâmina nova: se `[c]`, integro inline e marco `INTEGRADO`; se 
 | ascite-terceiro-espaco-us.webp | raster (US/foto) | ascite volumosa / terceiro espaço · concretiza "volume circulante efetivo baixo com água corporal total alta" | Radiopaedia/Commons CC-BY | PEDIDO |
 | anasarca-paciente.webp | raster (foto clínica) | anasarca · o extremo do balanço de Na positivo — onde o rim "lê" hipovolemia apesar do edema | Commons CC-BY | PEDIDO |
 
-## M10 — Água livre e disnatremias  [HTML pendente]
+## M10 — Água livre e disnatremias  [módulo construído ✓]
 > Erro: "tratar o número Na"; verdade: corrigir a **água**; a velocidade importa (mielinólise/edema).
 
 | slug | tipo | o que mostra · por que | fonte/licença provável | status |

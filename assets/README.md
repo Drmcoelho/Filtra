@@ -189,3 +189,95 @@ en.wikipedia.org
 | adenoma-adrenal-conn-tc.webp | raster (TC) | adenoma adrenal · hiperaldo primário (aldo↑, renina↓, ARR↑↑) | Commons CC-BY | PEDIDO |
 | aparelho-justaglomerular-histologia.webp | raster (histologia) | células justaglomerulares + mácula densa · o sensor dos 3 sinais da renina | Commons CC-BY-SA | PEDIDO |
 | esfregaco-anemia-drc.webp | raster (microscopia) | esfregaço normocítico-normocrômico · o efeito da queda de EPO | Commons CC-BY | PEDIDO |
+
+<!-- ===== continuação do backlog (QA 2026-06, módulos M11–M39) ===== -->
+
+### M11 — Potássio (o eletrólito que mata)
+| slug | tipo | o que mostra · por que | fonte/licença provável | status |
+|---|---|---|---|---|
+| ecg-hipercalemia-progressao.webp | raster (ECG) | T apiculada → PR longo → QRS alargado → onda sinusoidal · o ECG como mecanismo (a pérola raster mais forte do braço) | Commons CC-BY / Life in the Fast Lane CC | PEDIDO |
+| ecg-hipocalemia-onda-u.webp | raster (ECG) | onda U / ST deprimido / QT aparente longo da hipoK · o espelho da hiperK | Commons CC-BY | PEDIDO |
+
+### M15 — Ureia/creatinina e a urina
+| slug | tipo | o que mostra · por que | fonte/licença provável | status |
+|---|---|---|---|---|
+| cilindro-granuloso-marrom-lama.webp | raster (microscopia urina) | cilindro granuloso pigmentado (muddy brown) · o achado que sela NTA vs pré-renal | Commons CC-BY | PEDIDO |
+| cristal-oxalato-envelope.webp | raster (microscopia urina) | cristal de oxalato de cálcio "envelope" · ancora etilenoglicol (gancho M33) | Commons CC-BY | PEDIDO |
+| cilindro-hematico-dismorfico.webp | raster (microscopia urina) | cilindro hemático + hemácias dismórficas · a urina nefrítica (glomerular) | Commons CC-BY | PEDIDO |
+
+### M16 — LRA por mecanismo (KDIGO)
+| slug | tipo | o que mostra · por que | fonte/licença provável | status |
+|---|---|---|---|---|
+| nta-histologia-he.webp | raster (histologia) | epitélio tubular desnudado / cilindros · a NTA "ao microscópio" (Fig. 4 hoje é SVG) | Commons CC-BY-SA | PEDIDO |
+| hidronefrose-ultrassom.webp | raster (US) | dilatação pielocalicial · a pós-renal (P_BC↑) concreta | Radiopaedia/Commons CC-BY | PEDIDO |
+| nia-eosinofiluria.webp | raster (microscopia urina) | eosinófilos urinários (Hansel) · a NIA por fármaco | Commons CC-BY | PEDIDO |
+
+### M19 — Princípios físicos do transporte
+| slug | tipo | o que mostra · por que | fonte/licença provável | status |
+|---|---|---|---|---|
+| fibra-oca-membrana-mev.webp | raster (MEV) | parede/poros de uma fibra oca · concretiza "a membrana peneira" (Fig. 7) | Commons CC-BY | PEDIDO |
+| cartucho-adsorcao-cutaway.webp | raster (foto) | leito de esferas de carvão/adsorvente (hemoperfusão/CytoSorb) · a adsorção real | Commons CC-BY / fabricante PD | PEDIDO |
+
+### M20 — O circuito extracorpóreo
+| slug | tipo | o que mostra · por que | fonte/licença provável | status |
+|---|---|---|---|---|
+| maquina-hd-circuito-montado.webp | raster (foto) | máquina de HD com o circuito sanguíneo montado · o circuito real (Fig. 1) | Commons CC-BY | PEDIDO |
+| dialisador-fibra-oca-cutaway.webp | raster (foto) | corte de um dialisador de fibra oca · onde mora o clearance | Commons CC-BY | PEDIDO |
+| bomba-rolete-cabecote.webp | raster (foto) | cabeçote da bomba peristáltica/rolete · o Qb gerado | Commons CC-BY | PEDIDO |
+| fistula-vs-cateter.webp | raster (foto clínica) | FAV madura × cateter tunelizado · os acessos e suas pressões | Commons CC-BY | PEDIDO |
+
+### M21 — A membrana e o clearance
+| slug | tipo | o que mostra · por que | fonte/licença provável | status |
+|---|---|---|---|---|
+| feixe-fibras-dialisador-mev.webp | raster (MEV/foto) | feixe de fibras / corte do dialisador · KoA = área × permeabilidade | Commons CC-BY | PEDIDO |
+| poros-membrana-highflux-mev.webp | raster (MEV) | superfície porosa high-flux × low-flux · o sieving por tamanho | Commons CC-BY | PEDIDO |
+
+### M22 — A sessão de HDI
+| slug | tipo | o que mostra · por que | fonte/licença provável | status |
+|---|---|---|---|---|
+| maquina-hd-monitor-ktv.webp | raster (foto) | tela do monitor com Kt/V/URR/UF · a dose medida ao vivo | Commons CC-BY | PEDIDO |
+| linhas-sanguineas-acesso.webp | raster (foto) | linhas arterial/venosa no acesso · gradiente e recirculação | Commons CC-BY | PEDIDO |
+
+### M23 — UF e balanço de volume
+| slug | tipo | o que mostra · por que | fonte/licença provável | status |
+|---|---|---|---|---|
+| critline-rbv-trace.webp | raster (tela/gráfico) | traçado de volume sanguíneo relativo (Crit-Line) · UF > refilling em tempo real | Commons CC-BY / fabricante PD | PEDIDO |
+| lung-us-linhas-b.webp | raster (US) | linhas B pulmonares · a sobrecarga que o peso seco persegue | Commons CC-BY | PEDIDO |
+| edema-cacifo-foto.webp | raster (foto) | edema com cacifo · o volume a remover | Commons CC-BY | PEDIDO |
+
+### M27 — Terapias contínuas (TRRC)
+| slug | tipo | o que mostra · por que | fonte/licença provável | status |
+|---|---|---|---|---|
+| maquina-crrt-console.webp | raster (foto) | console de TRRC (Prismaflex/multiFiltrate) + hemofiltro + bolsas · o "contínuo" real (Fig. 2) | Commons CC-BY / fabricante PD | PEDIDO |
+
+### M28 — Dose e fluidos na TRRC
+| slug | tipo | o que mostra · por que | fonte/licença provável | status |
+|---|---|---|---|---|
+| crrt-bolsas-efluente-reposicao.webp | raster (foto) | bolsas de efluente e reposição na TRRC · "o efluente É a dose" (mL/kg/h) | Commons CC-BY / fabricante PD | PEDIDO |
+
+### M29 — Anticoagulação do circuito
+| slug | tipo | o que mostra · por que | fonte/licença provável | status |
+|---|---|---|---|---|
+| citrato-regional-setup.webp | raster (foto/esquema-foto) | linha de citrato pré-filtro + cálcio pós-filtro · os dois pontos / os dois cálcios (Fig. 4) | Commons CC-BY / fabricante PD | PEDIDO |
+
+### M30 — Diálise peritoneal
+| slug | tipo | o que mostra · por que | fonte/licença provável | status |
+|---|---|---|---|---|
+| efluente-pd-turvo.webp | raster (foto) | bolsa de efluente peritoneal turvo · a peritonite (diagnóstico visual) | Commons CC-BY | PEDIDO |
+| cateter-tenckhoff-exit-site.webp | raster (foto clínica) | cateter de Tenckhoff / orifício de saída · o acesso peritoneal | Commons CC-BY | PEDIDO |
+
+### M33 — Remoção de toxinas
+| slug | tipo | o que mostra · por que | fonte/licença provável | status |
+|---|---|---|---|---|
+| cristais-oxalato-etilenoglicol.webp | raster (microscopia urina) | cristais de oxalato de cálcio · etilenoglicol (HD remove o tóxico E o ácido) | Commons CC-BY | PEDIDO |
+
+### M34 — Síndrome de desequilíbrio dialítico
+| slug | tipo | o que mostra · por que | fonte/licença provável | status |
+|---|---|---|---|---|
+| edema-cerebral-tc-rm.webp | raster (TC/RM FLAIR) | sulcos apagados / substância branca brilhante · o edema do desequilíbrio (Fig. 6 promete a RM) | Radiopaedia/Commons CC-BY | PEDIDO |
+
+### M37 — Síndrome cardiorrenal e a UF
+| slug | tipo | o que mostra · por que | fonte/licença provável | status |
+|---|---|---|---|---|
+| pocus-vci-dilatada.webp | raster (US POCUS) | VCI dilatada sem colapso · a congestão VENOSA (PVC↑) que derruba a TFG | Commons CC-BY | PEDIDO |
+| rx-torax-edema-pulmonar.webp | raster (Rx) | congestão/edema pulmonar no Rx · o alvo da descongestão | Commons CC-BY | PEDIDO |

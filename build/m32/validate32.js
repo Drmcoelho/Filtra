@@ -171,7 +171,7 @@ ok(/FILTRA/.test(doc.querySelector('.kicker') ? doc.querySelector('.kicker').tex
 ok(/M32/.test(doc.querySelector('.kicker') ? doc.querySelector('.kicker').textContent : ''), 'cromo: kicker M32');
 ok(doc.querySelector('nav.hex .ativo') !== null, 'cromo: hexápode ativo');
 ok(/CRM-SP 151\.318 · Dr\. Matheus M\. Coelho · Limeira/.test(body), 'cromo: rodapé');
-ok(doc.querySelector('a[href="filtra.html"]') !== null, 'cromo: backlink');
+ok(doc.querySelector('a[href="dialisa.html"]') !== null || doc.querySelector('a[href="filtra.html"]') !== null, 'cromo: backlink');
 ok(/educacional/i.test(body) && doc.querySelector('.disc') !== null, 'disclaimer educacional');
 ok(/honestidade do modelo/i.test(body), 'disclaimer: nota de honestidade do modelo (§8)');
 

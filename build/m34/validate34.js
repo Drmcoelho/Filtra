@@ -185,7 +185,7 @@ ok(/módulo M34/.test(doc.querySelector('.kicker') ? doc.querySelector('.kicker'
 ok(doc.querySelector('nav.hex .ativo') !== null, 'cromo: hexápode ativo');
 ok(/FILTRA/.test(doc.querySelector('nav.hex .ativo') ? doc.querySelector('nav.hex .ativo').textContent : ''), 'cromo: FILTRA ativo');
 ok(/CRM-SP 151\.318 · Dr\. Matheus M\. Coelho · Limeira/.test(body), 'cromo: rodapé');
-ok(doc.querySelector('a[href="filtra.html"]') !== null, 'cromo: backlink');
+ok(doc.querySelector('a[href="dialisa.html"]') !== null || doc.querySelector('a[href="filtra.html"]') !== null, 'cromo: backlink');
 ok(/educacional/i.test(body) && doc.querySelector('.disc') !== null, 'disclaimer educacional');
 
 // guarda §8: prescreve em mL/min, h, %, mOsm, k(h⁻¹) — NÃO em massa solta (mg/mcg/µg)

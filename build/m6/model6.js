@@ -9,7 +9,9 @@
  *  - o gradiente é o que permite concentrar a urina depois (ADH no ducto, M8).
  *  - o diurético de alça bloqueia o NKCC2: natriurese potente (TETO ALTO), abole o gradiente
  *    (não concentra nem dilui ao máximo), e tem dose-resposta com teto + braking.
- *  - bumetanida ≈ 40× mais potente que a furosemida (mesma curva, EC50 menor).
+ *  - bumetanida ≈ 40× mais potente que a furosemida; torasemida ≈ 2× (mesma curva, EC50 menor).
+ *  - biodisponibilidade oral: furosemida ~50% e variável (40 mg VO ≈ 20 mg IV);
+ *    bumetanida e torasemida ~80–100% (VO ≈ IV). bioVO é metadado PK por fármaco.
  *  - perde Na/K/Cl/Ca/Mg (hipoK, hipoCa, hipoMg, alcalose) — usa-se a perda de Ca na hipercalcemia.
  * ========================================================================= */
 
@@ -17,10 +19,10 @@ function clampv(v, a, b) { var n = Number(v); if (!isFinite(n)) n = a; if (n < a
 
 // fármacos: dose com UNIDADE + mecanismo (§8). EC50 menor = mais potente.
 var FARMACOS = {
-  nenhum: { nome: '— nenhum —', unidade: '', faixa: [0, 0], ec50: 1, alvo: '', potencia: '' },
-  furosemida: { nome: 'Furosemida', unidade: 'mg', faixa: [20, 80], ec50: 20, alvo: 'NKCC2 (ramo espesso ascendente)', potencia: 'referência (1×)' },
-  bumetanida: { nome: 'Bumetanida', unidade: 'mg', faixa: [0.5, 2], ec50: 0.5, alvo: 'NKCC2 (ramo espesso ascendente)', potencia: '≈40× a furosemida' },
-  torasemida: { nome: 'Torasemida', unidade: 'mg', faixa: [10, 20], ec50: 7.5, alvo: 'NKCC2 (ramo espesso ascendente)', potencia: '≈2–3× a furosemida; meia-vida maior' }
+  nenhum: { nome: '— nenhum —', unidade: '', faixa: [0, 0], ec50: 1, alvo: '', potencia: '', bioVO: 1 },
+  furosemida: { nome: 'Furosemida', unidade: 'mg', faixa: [20, 80], ec50: 20, alvo: 'NKCC2 (ramo espesso ascendente)', potencia: 'referência (1×)', bioVO: 0.5 },
+  bumetanida: { nome: 'Bumetanida', unidade: 'mg', faixa: [0.5, 2], ec50: 0.5, alvo: 'NKCC2 (ramo espesso ascendente)', potencia: '≈40× a furosemida', bioVO: 0.9 },
+  torasemida: { nome: 'Torasemida', unidade: 'mg', faixa: [10, 20], ec50: 10, alvo: 'NKCC2 (ramo espesso ascendente)', potencia: '≈2× a furosemida; meia-vida maior', bioVO: 0.9 }
 };
 
 // dose-resposta sigmoide (Emax)
@@ -69,7 +71,7 @@ function alca(input) {
 
   return {
     gfr: gfr, adh: adh, cronico: cronico, droga: droga, dose: dose, unidade: meta.unidade, alvo: meta.alvo,
-    faixa: meta.faixa, nomeFarmaco: meta.nome, potencia: meta.potencia, bloqueio: bloqueio, nkcc2: nkcc2,
+    faixa: meta.faixa, nomeFarmaco: meta.nome, potencia: meta.potencia, bioVO: meta.bioVO, bloqueio: bloqueio, nkcc2: nkcc2,
     gradiente: gradiente, FENa: FENa, braking: braking, urineOsm: urineOsm, podeConcentrar: podeConcentrar,
     podeDiluirMax: podeDiluirMax, perda: perda, perdaCa: perdaCa, ceilingReached: ceilingReached, classe: classe
   };

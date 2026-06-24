@@ -132,16 +132,20 @@
           <b>reposição de cálcio</b> (alvo normal). Dois números, duas alavancas.</figcaption></figure>
       </div>
 
-      <h4>3. Heparina — sistêmica, simples, mas sangra</h4>
-      <p class="sub">A alternativa é a <b>heparina</b>: potencia a antitrombina e anticoagula o <b>paciente inteiro</b>
-      (TTPa↑ no corpo todo). É simples e barata, sem o trabalho de vigiar dois cálcios — mas, sem proteção regional, o
-      <b>risco de sangramento</b> sobe com a dose. É a escolha de quem <b>não</b> tem risco de sangrar.</p>
+      <h4>3. Heparina (HNF) — sistêmica, simples, mas sangra</h4>
+      <p class="sub">A alternativa é a <b>heparina não-fracionada (HNF)</b>: potencia a antitrombina e anticoagula o
+      <b>paciente inteiro</b> (TTPa↑ no corpo todo). A dose tem <b>unidade explícita</b> e é <b>titulada ao alvo</b>:
+      <b>bólus ~30 UI/kg</b> (faixa 20–50 UI/kg) e <b>infusão ~5–15 UI/kg/h</b>, ajustada ao <b>TTPa-alvo ~1,5–2× o
+      basal</b> (ou ACT). É simples e barata, sem o trabalho de vigiar dois cálcios — mas, sem proteção regional, o
+      <b>risco de sangramento</b> sobe com a infusão: <b>mais UI/kg/h → TTPa↑ → mais sangramento</b>. É a escolha de
+      quem <b>não</b> tem risco de sangrar.</p>
       <div class="frow">
         <div class="concept" id="draw-heparina"></div>
         <figure class="fviva"><img src="assets/m29/heparina-sistemica.svg" alt="Heparina sistêmica: anticoagula o paciente inteiro, risco de sangramento sobe com a dose" loading="lazy">
-          <figcaption><b>Fig. 5 · Heparina sistêmica.</b> A heparina anticoagula <b>circuito + paciente</b> (TTPa↑ no
-          corpo todo). O risco de sangramento cresce <b>∝ dose</b> (linha vermelha): sem proteção regional. Simples,
-          mas perigosa em quem já sangra.</figcaption></figure>
+          <figcaption><b>Fig. 5 · Heparina sistêmica (HNF).</b> Bólus ~30 UI/kg + infusão 5–15 UI/kg/h, titulada ao
+          TTPa-alvo 1,5–2×. A heparina anticoagula <b>circuito + paciente</b> (TTPa↑ no corpo todo). O risco de
+          sangramento cresce <b>∝ infusão</b> (linha vermelha): sem proteção regional. Simples, mas perigosa em quem
+          já sangra.</figcaption></figure>
         <figure class="fviva"><img src="assets/m29/citrato-vs-heparina.svg" alt="Citrato regional versus heparina sistêmica: prós e contras" loading="lazy">
           <figcaption><b>Fig. 6 · Citrato × heparina.</b> O <b>citrato</b> protege quem sangra (regional), ao custo de
           monitorar dois cálcios e do risco de <b>acúmulo</b> no fígado ruim. A <b>heparina</b> é simples mas sistêmica
@@ -301,8 +305,10 @@
           <input type="range" id="in-caReposicao" min="0" max="5" step="0.1" value="1.7">
           <label>Ca²⁺ sistêmico de base (mmol/L): <span class="val" id="lbl-caSistBasal">1.20</span></label>
           <input type="range" id="in-caSistBasal" min="0.8" max="1.4" step="0.05" value="1.2">
-          <label>Dose de heparina (0 nenhuma → 1 plena): <span class="val" id="lbl-heparinaDose">0.50</span></label>
-          <input type="range" id="in-heparinaDose" min="0" max="1" step="0.05" value="0.5">
+          <label>Heparina (HNF) — bólus (UI/kg): <span class="val" id="lbl-heparinaBolus">30</span></label>
+          <input type="range" id="in-heparinaBolus" min="0" max="60" step="2" value="30">
+          <label>Heparina (HNF) — infusão (UI/kg/h): <span class="val" id="lbl-heparinaInfusao">10</span></label>
+          <input type="range" id="in-heparinaInfusao" min="0" max="25" step="1" value="10">
         </div>
       </div>
 
@@ -360,6 +366,7 @@
 /* ENGINE INLINE — espelho fiel de build/m29/model29.js */
 function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
 var CA_CIRC_ALVO_LO=0.25, CA_CIRC_ALVO_HI=0.35, CA_SIST_ALVO=1.20, GAP_ALARME=2.5;
+var HEP_BOLUS_ALVO=30, HEP_INF_ALVO_LO=5, HEP_INF_ALVO_HI=15, TTPA_ALVO_LO=1.5, TTPA_ALVO_HI=2.0;
 function citrato(inp){ inp=inp||{};
   var citratoDose=clampv(inp.citratoDose!==undefined?inp.citratoDose:3.0,0,8);
   var qb=clampv(inp.qb!==undefined?inp.qb:150,50,350);
@@ -390,11 +397,14 @@ function acumuloCitrato(inp){ inp=inp||{};
     citratoNaoDepurado:citratoNaoDepurado,citratoSerico:citratoSerico,caIonizado:caIonizado,caLigadoCitrato:caLigadoCitrato,
     caTotal:caTotal,gap:gap,alarmeAcumulo:alarmeAcumulo}; }
 function heparina(inp){ inp=inp||{};
-  var dose=clampv(inp.dose!==undefined?inp.dose:0.5,0,1);
+  var bolus=clampv(inp.bolus!==undefined?inp.bolus:HEP_BOLUS_ALVO,0,80);
+  var infusao=clampv(inp.infusao!==undefined?inp.infusao:10,0,30);
   var sangramentoBasal=clampv(inp.sangramentoBasal!==undefined?inp.sangramentoBasal:0.2,0,1);
-  var ttpaRatio=clampv(1.0+1.6*dose,1.0,3.0);
-  var riscoSangramento=clampv(sangramentoBasal+0.7*dose,0,1);
-  return {dose:dose,sangramentoBasal:sangramentoBasal,ttpaRatio:ttpaRatio,riscoSangramento:riscoSangramento,regional:false}; }
+  var ttpaRatio=clampv(1.0+0.07*infusao+0.004*bolus,1.0,3.0);
+  var dose=clampv((infusao/30)*0.85+(bolus/80)*0.15,0,1);
+  var riscoSangramento=clampv(sangramentoBasal+0.35*(ttpaRatio-1.0),0,1);
+  var noAlvo=ttpaRatio>=TTPA_ALVO_LO&&ttpaRatio<=TTPA_ALVO_HI;
+  return {bolus:bolus,infusao:infusao,dose:dose,sangramentoBasal:sangramentoBasal,ttpaRatio:ttpaRatio,riscoSangramento:riscoSangramento,noAlvo:noAlvo,regional:false}; }
 function anticoagulacao(input){ var inp=input||{};
   var sangramento=clampv(inp.sangramento!==undefined?inp.sangramento:0.2,0,1);
   var funcaoHepatica=clampv(inp.funcaoHepatica!==undefined?inp.funcaoHepatica:1.0,0,1);
@@ -403,10 +413,11 @@ function anticoagulacao(input){ var inp=input||{};
   var caBasal=clampv(inp.caBasal!==undefined?inp.caBasal:1.15,0.4,1.6);
   var caReposicao=clampv(inp.caReposicao!==undefined?inp.caReposicao:1.7,0,6);
   var caSistBasal=clampv(inp.caSistBasal!==undefined?inp.caSistBasal:1.20,0.5,1.6);
-  var heparinaDose=clampv(inp.heparinaDose!==undefined?inp.heparinaDose:0.5,0,1);
+  var heparinaBolus=clampv(inp.heparinaBolus!==undefined?inp.heparinaBolus:30,0,80);
+  var heparinaInfusao=clampv(inp.heparinaInfusao!==undefined?inp.heparinaInfusao:10,0,30);
   var cit=citrato({citratoDose:citratoDose,qb:qb,caBasal:caBasal,caReposicao:caReposicao});
   var acc=acumuloCitrato({funcaoHepatica:funcaoHepatica,cargaCitrato:cit.cargaCitrato,caReposicao:caReposicao,caSistBasal:caSistBasal});
-  var hep=heparina({dose:heparinaDose,sangramentoBasal:sangramento});
+  var hep=heparina({bolus:heparinaBolus,infusao:heparinaInfusao,sangramentoBasal:sangramento});
   var figadoRuim=funcaoHepatica<0.4, modalidade, motivo;
   if(sangramento>=0.4&&!figadoRuim){ modalidade='citrato'; motivo='paciente sangra e o fígado depura o citrato → regional, não anticoagula o doente'; }
   else if(sangramento>=0.4&&figadoRuim){ modalidade='heparina'; motivo='sangra MAS fígado ruim contraindica citrato (acúmulo) → heparina/sem anticoag com cautela'; }
@@ -417,10 +428,10 @@ function anticoagulacao(input){ var inp=input||{};
   var caCircuito=cit.caCircuito, caSistemico=acc.caIonizado, gap=acc.gap, alarmeAcumulo=acc.alarmeAcumulo;
   var circuitoProtegido=(modalidade==='citrato')?(cit.anticoagulado&&!alarmeAcumulo):(hep.ttpaRatio>=1.8);
   return {sangramento:sangramento,funcaoHepatica:funcaoHepatica,citratoDose:citratoDose,qb:qb,caBasal:caBasal,
-    caReposicao:caReposicao,caSistBasal:caSistBasal,heparinaDose:heparinaDose,modalidade:modalidade,motivo:motivo,
+    caReposicao:caReposicao,caSistBasal:caSistBasal,heparinaBolus:heparinaBolus,heparinaInfusao:heparinaInfusao,modalidade:modalidade,motivo:motivo,
     figadoRuim:figadoRuim,citratoContraindicado:citratoContraindicado,citratoSeguro:citratoSeguro,quela:cit.quela,
     cargaCitrato:cit.cargaCitrato,citratoSubdosado:cit.subdosado,citratoSobredosado:cit.sobredosado,citratoSerico:acc.citratoSerico,
-    caLigadoCitrato:acc.caLigadoCitrato,caTotal:acc.caTotal,ttpaRatio:hep.ttpaRatio,caCircuito:caCircuito,caSistemico:caSistemico,
+    caLigadoCitrato:acc.caLigadoCitrato,caTotal:acc.caTotal,ttpaRatio:hep.ttpaRatio,heparinaNoAlvo:hep.noAlvo,caCircuito:caCircuito,caSistemico:caSistemico,
     gap:gap,alarmeAcumulo:alarmeAcumulo,riscoSangramento:riscoSangramentoResultante,circuitoProtegido:circuitoProtegido}; }
 function caLayout(state,W,H){ state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
   var padL=54,padR=18,padT=20,padB=40,baseY=H-padB,plotW=W-padL-padR,plotH=baseY-padT,base={}; for(var kk in state) base[kk]=state[kk];
@@ -438,7 +449,7 @@ function caLayout(state,W,H){ state=state||{}; W=clampv(W,200,100000); H=clampv(
     axis:{x0:padL,y0:padT,xEnd:W-padR,yEnd:baseY},stations:stations,bandHi:bandHi,bandLo:bandLo,N:N,pts:pts,alarmY:alarmY,
     current:{x:curX,y:curY,funcaoHepatica:r.funcaoHepatica,gap:r.gap,modalidade:r.modalidade,alarme:r.alarmeAcumulo}}; }
 window.anticoagulacao=anticoagulacao; window.caLayout=caLayout; window.citrato=citrato; window.acumuloCitrato=acumuloCitrato; window.heparina=heparina;
-window.MODEL={anticoagulacao:anticoagulacao,caLayout:caLayout,citrato:citrato,acumuloCitrato:acumuloCitrato,heparina:heparina,clampv:clampv,CA_CIRC_ALVO_LO:CA_CIRC_ALVO_LO,CA_CIRC_ALVO_HI:CA_CIRC_ALVO_HI,CA_SIST_ALVO:CA_SIST_ALVO,GAP_ALARME:GAP_ALARME};
+window.MODEL={anticoagulacao:anticoagulacao,caLayout:caLayout,citrato:citrato,acumuloCitrato:acumuloCitrato,heparina:heparina,clampv:clampv,CA_CIRC_ALVO_LO:CA_CIRC_ALVO_LO,CA_CIRC_ALVO_HI:CA_CIRC_ALVO_HI,CA_SIST_ALVO:CA_SIST_ALVO,GAP_ALARME:GAP_ALARME,HEP_BOLUS_ALVO:HEP_BOLUS_ALVO,HEP_INF_ALVO_LO:HEP_INF_ALVO_LO,HEP_INF_ALVO_HI:HEP_INF_ALVO_HI,TTPA_ALVO_LO:TTPA_ALVO_LO,TTPA_ALVO_HI:TTPA_ALVO_HI};
 
 /* UI */
 function $(id){ return document.getElementById(id); }
@@ -452,31 +463,33 @@ document.addEventListener('click',function(e){ var b=e.target.closest('button.ac
 
 function readInputs(){ return { sangramento:+$('in-sangramento').value, funcaoHepatica:+$('in-funcaoHepatica').value,
   citratoDose:+$('in-citratoDose').value, qb:+$('in-qb').value, caBasal:+$('in-caBasal').value,
-  caReposicao:+$('in-caReposicao').value, caSistBasal:+$('in-caSistBasal').value, heparinaDose:+$('in-heparinaDose').value }; }
+  caReposicao:+$('in-caReposicao').value, caSistBasal:+$('in-caSistBasal').value,
+  heparinaBolus:+$('in-heparinaBolus').value, heparinaInfusao:+$('in-heparinaInfusao').value }; }
 function refresh(){ var inp=readInputs();
   $('lbl-sangramento').textContent=fmt(inp.sangramento,2); $('lbl-funcaoHepatica').textContent=fmt(inp.funcaoHepatica,2);
   $('lbl-citratoDose').textContent=fmt(inp.citratoDose,1); $('lbl-qb').textContent=fmt(inp.qb,0);
   $('lbl-caBasal').textContent=fmt(inp.caBasal,2); $('lbl-caReposicao').textContent=fmt(inp.caReposicao,1);
-  $('lbl-caSistBasal').textContent=fmt(inp.caSistBasal,2); $('lbl-heparinaDose').textContent=fmt(inp.heparinaDose,2);
+  $('lbl-caSistBasal').textContent=fmt(inp.caSistBasal,2);
+  $('lbl-heparinaBolus').textContent=fmt(inp.heparinaBolus,0); $('lbl-heparinaInfusao').textContent=fmt(inp.heparinaInfusao,0);
   var r=anticoagulacao(inp);
   $('out-modalidade').textContent=(r.modalidade==='citrato'?'citrato regional':'heparina sistêmica');
   $('out-cacirc').textContent=fmt(r.caCircuito,2)+' mmol/L'+(r.citratoSubdosado?' (alto · subdose)':(r.citratoSobredosado?' (muito baixo)':' ✓'));
   $('out-casist').textContent=fmt(r.caSistemico,2)+' mmol/L'+((r.caSistemico>=1.0&&r.caSistemico<=1.3)?' ✓':' ⚠');
   $('out-gap').textContent=fmt(r.gap,2)+(r.alarmeAcumulo?' ⚠ acúmulo':' ✓');
-  $('out-carga').textContent=fmt(r.cargaCitrato,1)+' mmol/h · TTPa '+fmt(r.ttpaRatio,2)+'×';
+  $('out-carga').textContent=fmt(r.cargaCitrato,1)+' mmol/h · TTPa '+fmt(r.ttpaRatio,2)+'×'+(r.heparinaNoAlvo?' ✓ alvo':' (alvo 1,5–2×)');
   $('out-sangra').textContent=fmt(r.riscoSangramento,2)+(r.modalidade==='citrato'?' (≈ basal)':' (heparina)');
   verdict(r); drawCa(inp); pearl(r,inp); }
 function verdict(r){ var v=$('veredito'), cls='b-good', msg;
   if(r.alarmeAcumulo){ cls='b-bad'; msg='ALARME de acúmulo de citrato — gap Ca total/ionizado '+fmt(r.gap,2)+' (> 2,5). O fígado não depura o citrato; ele quela Ca²⁺ sistêmico (ionizado '+fmt(r.caSistemico,2)+' mmol/L↓). Reduza/suspenda o citrato → heparina.'; }
   else if(r.modalidade==='citrato'){ cls=(r.citratoSubdosado?'b-warn':'b-good'); msg='Citrato regional — sangramento alto, fígado depura: anticoagula SÓ o circuito (Ca²⁺ circuito '+fmt(r.caCircuito,2)+' mmol/L), o paciente volta com Ca²⁺ '+fmt(r.caSistemico,2)+'. '+(r.citratoSubdosado?'Ca²⁺ do circuito ACIMA do alvo (0,25–0,35) → suba o citrato.':'Na janela anticoagulante.'); }
   else if(r.figadoRuim){ cls='b-warn'; msg='Heparina (cautela) — o paciente sangra, mas o fígado ruim CONTRAINDICA o citrato (acúmulo). Heparina sistêmica ou sem anticoagulação, monitorando o sangramento.'; }
-  else { cls='b-good'; msg='Heparina sistêmica — baixo risco de sangrar: a opção mais simples (TTPa '+fmt(r.ttpaRatio,2)+'×), sem vigiar dois cálcios. O circuito '+(r.circuitoProtegido?'está protegido.':'precisa de mais dose.'); }
+  else { cls='b-good'; msg='Heparina sistêmica (HNF) — baixo risco de sangrar: a opção mais simples. Bólus '+fmt(r.heparinaBolus,0)+' UI/kg + infusão '+fmt(r.heparinaInfusao,0)+' UI/kg/h, titulada ao TTPa '+fmt(r.ttpaRatio,2)+'× (alvo 1,5–2×). Sem vigiar dois cálcios. O circuito '+(r.circuitoProtegido?'está protegido.':'precisa de mais infusão.'); }
   v.className='banner '+cls; v.textContent=msg; }
 function pearl(r,inp){ var p=$('lab-pearl'), ip=$('instr-pearl'), t;
   if(r.alarmeAcumulo) t='PÉROLA (o gap é a pista): fígado ruim → citrato acumula → Ca TOTAL↑ mas IONIZADO↓ (gap '+fmt(r.gap,2)+'). O número total mente; trate o acúmulo (corte o citrato), não o total (M29).';
   else if(r.modalidade==='citrato') t='PÉROLA (anticoagulação regional): o citrato quela o Ca²⁺ SÓ no circuito (Ca²⁺ '+fmt(r.caCircuito,2)+' mmol/L) e repõe-se cálcio no retorno (Ca²⁺ '+fmt(r.caSistemico,2)+') — o paciente NÃO é anticoagulado.';
   else if(r.figadoRuim&&inp.sangramento>=0.4) t='PÉROLA (mecanismo > reflexo): o paciente sangra, mas o fígado ruim contraindica o citrato pelo acúmulo. A escolha sai de DOIS eixos: sangramento E função hepática.';
-  else t='PÉROLA (sistêmica × regional): a heparina anticoagula o paciente inteiro (TTPa '+fmt(r.ttpaRatio,2)+'×) — simples, mas sangra. Quem sangra prefere o citrato regional.';
+  else t='PÉROLA (sistêmica × regional): a heparina (HNF, bólus '+fmt(r.heparinaBolus,0)+' UI/kg + infusão '+fmt(r.heparinaInfusao,0)+' UI/kg/h) anticoagula o paciente inteiro — mais infusão → TTPa '+fmt(r.ttpaRatio,2)+'×↑ → mais sangramento. Quem sangra prefere o citrato regional.';
   p.textContent=t; ip.textContent=t; }
 function drawCa(state){ var c=$('ca-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
   var L=caLayout(state,c.width,c.height); ctx.clearRect(0,0,L.W,L.H);
@@ -505,19 +518,19 @@ function drawCa(state){ var c=$('ca-canvas'); if(!c) return; var ctx=null; try{ 
   var cu=L.current, mc=cu.alarme?'#e0556b':'#52c08a';
   ctx.fillStyle=mc; ctx.fillRect(cu.x-4,cu.y-4,8,8);
   ctx.fillStyle='#e7eef4'; ctx.fillText((cu.modalidade==='citrato'?'citrato':'heparina')+(cu.alarme?' · acúmulo':''),Math.min(cu.x+8,L.W-160),Math.max(cu.y-6,L.padT+12)); }
-['in-sangramento','in-funcaoHepatica','in-citratoDose','in-qb','in-caBasal','in-caReposicao','in-caSistBasal','in-heparinaDose'].forEach(function(id){ $(id).addEventListener('input',refresh); });
+['in-sangramento','in-funcaoHepatica','in-citratoDose','in-qb','in-caBasal','in-caReposicao','in-caSistBasal','in-heparinaBolus','in-heparinaInfusao'].forEach(function(id){ $(id).addEventListener('input',refresh); });
 
 var PRESETS={
-  padrao:{sangramento:0.7,funcaoHepatica:1.0,citratoDose:2.0,qb:150,caBasal:1.15,caReposicao:1.7,caSistBasal:1.2,heparinaDose:0.5},
-  acumulo:{sangramento:0.7,funcaoHepatica:0.1,citratoDose:4.0,qb:220,caBasal:1.1,caReposicao:1.7,caSistBasal:1.15,heparinaDose:0.5},
-  heparina:{sangramento:0.1,funcaoHepatica:1.0,citratoDose:2.0,qb:200,caBasal:1.15,caReposicao:1.7,caSistBasal:1.2,heparinaDose:0.7},
-  sangra:{sangramento:0.9,funcaoHepatica:0.9,citratoDose:2.0,qb:150,caBasal:1.15,caReposicao:1.7,caSistBasal:1.2,heparinaDose:0.5},
-  subdose:{sangramento:0.7,funcaoHepatica:1.0,citratoDose:0.8,qb:150,caBasal:1.15,caReposicao:1.7,caSistBasal:1.2,heparinaDose:0.5}
+  padrao:{sangramento:0.7,funcaoHepatica:1.0,citratoDose:2.0,qb:150,caBasal:1.15,caReposicao:1.7,caSistBasal:1.2,heparinaBolus:30,heparinaInfusao:10},
+  acumulo:{sangramento:0.7,funcaoHepatica:0.1,citratoDose:4.0,qb:220,caBasal:1.1,caReposicao:1.7,caSistBasal:1.15,heparinaBolus:30,heparinaInfusao:10},
+  heparina:{sangramento:0.1,funcaoHepatica:1.0,citratoDose:2.0,qb:200,caBasal:1.15,caReposicao:1.7,caSistBasal:1.2,heparinaBolus:30,heparinaInfusao:12},
+  sangra:{sangramento:0.9,funcaoHepatica:0.9,citratoDose:2.0,qb:150,caBasal:1.15,caReposicao:1.7,caSistBasal:1.2,heparinaBolus:30,heparinaInfusao:10},
+  subdose:{sangramento:0.7,funcaoHepatica:1.0,citratoDose:0.8,qb:150,caBasal:1.15,caReposicao:1.7,caSistBasal:1.2,heparinaBolus:30,heparinaInfusao:10}
 };
 function applyPreset(p){ var d=PRESETS[p]; if(!d) return;
   $('in-sangramento').value=d.sangramento; $('in-funcaoHepatica').value=d.funcaoHepatica; $('in-citratoDose').value=d.citratoDose;
   $('in-qb').value=d.qb; $('in-caBasal').value=d.caBasal; $('in-caReposicao').value=d.caReposicao;
-  $('in-caSistBasal').value=d.caSistBasal; $('in-heparinaDose').value=d.heparinaDose; refresh(); }
+  $('in-caSistBasal').value=d.caSistBasal; $('in-heparinaBolus').value=d.heparinaBolus; $('in-heparinaInfusao').value=d.heparinaInfusao; refresh(); }
 document.querySelector('.presets').addEventListener('click',function(e){ var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset')); });
 
 /* ILUSTRAÇÕES computadas + helper raster */
@@ -564,7 +577,7 @@ var TUTOR_ILUSTRADO=[
   {q:'O Ca²⁺ do circuito mede 0,5 mmol/L e o filtro coagula. Conduta?',o:['subir o citrato','subir o cálcio','parar tudo'],c:0,e:'Ca²⁺ do circuito ACIMA do alvo (0,25–0,35) → ainda coagula. Sobe-se o citrato.',fig:function(){return circuitoMini({sangramento:0.7,funcaoHepatica:1,citratoDose:0.8,qb:150},'subdosado');}},
   {q:'Fígado ruim, gap Ca total/ionizado 2,9. O que é?',o:['hipercalcemia','acúmulo de citrato','erro de exame'],c:1,e:'O fígado não depura o citrato → acumula → quela Ca sistêmico → gap↑.',fig:function(){return gapMini({sangramento:0.7,funcaoHepatica:0.1,citratoDose:4,qb:220},'fígado ruim → gap↑');}},
   {q:'No acúmulo de citrato, o Ca TOTAL alto significa…',o:['hipercalcemia, reduza cálcio','engano: o IONIZADO está baixo','nada'],c:1,e:'O cálcio preso ao citrato conta no total; o ionizado é que importa, e está baixo.',fig:function(){return gapMini({sangramento:0.7,funcaoHepatica:0.15,citratoDose:4,qb:220},'total↑ ionizado↓');}},
-  {q:'Sem risco de sangrar, a anticoagulação mais simples é…',o:['citrato','heparina','nenhuma'],c:1,e:'Heparina sistêmica: simples, sem vigiar dois cálcios. O risco de sangrar é baixo.',fig:function(){return escolhaIcon(R0({sangramento:0.1,funcaoHepatica:1,heparinaDose:0.6}),'não sangra → heparina');}},
+  {q:'Sem risco de sangrar, a anticoagulação mais simples é…',o:['citrato','heparina','nenhuma'],c:1,e:'Heparina sistêmica: simples, sem vigiar dois cálcios. O risco de sangrar é baixo.',fig:function(){return escolhaIcon(R0({sangramento:0.1,funcaoHepatica:1,heparinaInfusao:12}),'não sangra → heparina');}},
   {q:'No gráfico gap × função hepática, à ESQUERDA (fígado ruim)…',o:['o gap cai','o gap sobe e cruza o alarme','nada muda'],c:1,e:'Menos clearance → mais acúmulo → gap sobe acima de 2,5.',fig:function(){return gapMini({sangramento:0.7,funcaoHepatica:0.2,citratoDose:4,qb:200},'esq = fígado ruim');}},
   {q:'Na figura da cascata, o citrato age tirando…',o:['o Fator X','o cofator Ca²⁺','a fibrina'],c:1,e:'Tira o COFATOR (Ca²⁺), não um fator: sem Ca²⁺ a cascata não dispara.',fig:function(){return imgFig('cascata-coagulacao-ca.svg','cascata e o Ca²⁺');}},
   {q:'Na figura citrato × heparina, a escolha sai de…',o:['o peso','sangramento × função hepática','a creatinina'],c:1,e:'Dois eixos: quem sangra → citrato; fígado ruim → contraindica citrato.',fig:function(){return imgFig('citrato-vs-heparina.svg','citrato versus heparina');}},
@@ -603,7 +616,7 @@ $('tutor-next').addEventListener('click',function(){ tIdx=(tIdx+1)%BANKS[curBank
 
 $('draw-cascata').innerHTML = escolhaIcon(anticoagulacao({sangramento:0.7,funcaoHepatica:1,citratoDose:2}),'sangra + fígado bom → citrato');
 $('draw-regional').innerHTML = circuitoMini({sangramento:0.7,funcaoHepatica:1,citratoDose:2,qb:150},'Ca²⁺: circuito baixo, retorno normal');
-$('draw-heparina').innerHTML = escolhaIcon(anticoagulacao({sangramento:0.1,funcaoHepatica:1,heparinaDose:0.6}),'não sangra → heparina');
+$('draw-heparina').innerHTML = escolhaIcon(anticoagulacao({sangramento:0.1,funcaoHepatica:1,heparinaInfusao:12}),'não sangra → heparina');
 $('draw-gap').innerHTML = gapMini({sangramento:0.7,funcaoHepatica:0.2,citratoDose:4,qb:220},'fígado ruim → gap↑ (acúmulo)');
 $('draw-homeostase').innerHTML = circuitoMini({sangramento:0.7,funcaoHepatica:1,citratoDose:2,qb:150},'homeostasia: circuito protegido, paciente intacto');
 $('fig-caso').innerHTML = circuitoMini({sangramento:0.7,funcaoHepatica:1,citratoDose:2,qb:150},'o circuito do caso') + escolhaIcon(anticoagulacao({sangramento:0.9,funcaoHepatica:0.9,citratoDose:2}),'conduta');

@@ -67,8 +67,8 @@
   <div class="sub">A hemodiálise remove soluto por <b>difusão</b>: o clearance limpa o sangue ∝ ao gradiente
   sangue-dialisato. Como o soluto cai, o gradiente cai e a remoção <b>desacelera</b> — a ureia despenca em
   exponencial: <b>C(t) = C₀·exp(−Kt/V)</b>, com <b>URR = 1 − Ct/C₀</b>. O rim é contínuo; a HDI 3×/sem oscila
-  em dente de serra → "intermitente" tem custo: a <b>concentração média-no-tempo</b> é a verdadeira
-  exposição urêmica.</div>
+  em dente de serra → "intermitente" tem custo: a verdadeira exposição urêmica é a <b>TAC interdialítica</b>
+  (a média que inclui o pico ENTRE sessões), que o intermitente não aplaina como a terapia contínua.</div>
   <nav class="hex">
     <a class="soon">RESPIRA</a><a class="soon">CHOCA</a><span class="ativo">FILTRA</span>
     <a class="soon">ALIMENTA</a><a class="soon">METABOLIZA</a><a class="soon">CONSCIÊNCIA</a>
@@ -139,8 +139,10 @@
           escondido da prescrição.</figcaption></figure>
         <figure class="fviva"><img src="assets/m22/intermitente-custo.svg" alt="Dente de serra da HDI intermitente versus a linha contínua do rim" loading="lazy">
           <figcaption><b>Fig. 6 · O dente de serra.</b> O rim mantém a ureia <b>plana e baixa</b>. A HDI 3×/sem
-          a deixa subir entre sessões e despencar na sessão → grandes balanços. A <b>média-no-tempo</b> (não o
-          vale pós) é a exposição urêmica real.</figcaption></figure>
+          a deixa subir entre sessões e despencar na sessão → grandes balanços. A exposição urêmica real é a
+          <b>TAC interdialítica</b> (a média que inclui o <b>pico ENTRE sessões</b>, não só o vale pós) — e o
+          intermitente não a aplaina como a terapia contínua. A <i>média intra-sessão</i> mede só o trecho
+          DENTRO da sessão.</figcaption></figure>
       </div>
 
       <h4>4. Acesso e rebote — o que rouba e o que devolve dose</h4>
@@ -201,8 +203,9 @@
         sobe. Por que o "número pós" engana sobre o bem-estar dele (Fig. 6)?
         <div><button class="act" data-rev="r5">Revelar</button></div>
         <div class="reveal" id="r5">Porque o rim é <b>contínuo</b> e a HDI é <b>dente de serra</b>: faltar uma
-          sessão deixa o pico pré subir muito. A <b>média-no-tempo</b> (a exposição urêmica real) piora bem
-          mais do que sugere um único Ct pós. Leia a média, não só o vale.</div></div>
+          sessão deixa o pico pré subir muito. A exposição urêmica real é a <b>TAC interdialítica</b> (a média
+          que inclui o pico ENTRE sessões) — e ela piora bem mais do que sugere um único Ct pós. Leia a TAC, não
+          só o vale.</div></div>
 
       <div class="step"><b>Ato 6.</b> <i>O rebote.</i> Logo ao desligar, o BUN é 24. Trinta minutos depois é 27.
         A diálise "falhou"? (Fig. 8)
@@ -243,9 +246,11 @@
       <details><summary>9. O que significa o "dente de serra"?</summary><p>O rim mantém a ureia plana e baixa.
         A HDI 3×/sem a deixa subir entre sessões e despencar na sessão. O perfil oscila — pico pré, vale
         pós (Fig. 6).</p></details>
-      <details><summary>10. Por que a média-no-tempo importa mais que o Ct pós?</summary><p>Porque a exposição
-        urêmica é a <b>área sob a curva</b> ao longo do tempo, não o ponto mais baixo. O vale pós engana;
-        cMean = (C₀−Ct)/(Kt/V).</p></details>
+      <details><summary>10. Por que a média importa mais que o Ct pós?</summary><p>Porque a exposição
+        urêmica é a <b>área sob a curva</b> ao longo do tempo, não o ponto mais baixo — o vale pós engana.
+        Cuidado com dois conceitos: <b>cMean = (C₀−Ct)/(Kt/V)</b> é a média <i>intra-sessão</i> (só DENTRO da
+        sessão); a verdadeira exposição é a <b>TAC interdialítica</b>, que inclui o pico ENTRE as sessões e que
+        o intermitente não aplaina como a terapia contínua.</p></details>
       <details><summary>11. Como um acesso ruim causa subdiálise?</summary><p>Recirculação e baixo fluxo
         derrubam o <b>K efetivo</b>. Com o mesmo tempo, Kt/V e URR caem — a dose entregue fica abaixo da
         prescrita (Fig. 7).</p></details>
@@ -264,7 +269,8 @@
       <h3>Instrumento — a queda da ureia ao longo da sessão</h3>
       <p class="sub">Os controles do <b>Lab</b> alimentam esta curva C(t) = C₀·exp(−Kt/V). O marcador laranja é
       o fim da sessão (BUN pós); veja a queda íngreme cedo e o achatamento tardio — o gradiente que decai. A
-      linha tracejada cinza marca a concentração <b>média-no-tempo</b> (a exposição real).</p>
+      linha tracejada cinza marca a concentração <b>média intra-sessão</b> (a média DENTRO da sessão — não a TAC
+      interdialítica, que inclui o pico entre sessões).</p>
       <canvas id="urea-canvas" width="900" height="360" aria-label="Concentração de ureia ao longo da sessão"></canvas>
       <div class="pearl" id="instr-pearl">—</div>
     </div>
@@ -302,7 +308,7 @@
         <tr><td>Kt/V (dose)</td><td class="num" id="out-ktv">—</td><td class="num">alvo ≥ 1,2</td></tr>
         <tr><td>URR (%)</td><td class="num" id="out-urr">—</td><td class="num">= 1 − exp(−Kt/V)</td></tr>
         <tr><td>BUN pós Ct (mg/dL)</td><td class="num" id="out-ct">—</td><td class="num">o vale</td></tr>
-        <tr><td>Concentração média-no-tempo (mg/dL)</td><td class="num" id="out-cmean">—</td><td class="num">a exposição real</td></tr>
+        <tr><td>Concentração média intra-sessão (mg/dL)</td><td class="num" id="out-cmean">—</td><td class="num">média DENTRO da sessão (≠ TAC interdialítica)</td></tr>
         <tr><td>BUN pós + rebote (mg/dL)</td><td class="num" id="out-cteq">—</td><td class="num">reequilíbrio (M26)</td></tr>
         <tr><td>Eficiência K/V (mL/min por L)</td><td class="num" id="out-ef">—</td><td class="num">&gt;8 = oscila muito</td></tr>
         <tr><td>Desaceleração da remoção (%)</td><td class="num" id="out-desac">—</td><td class="num">o gradiente decai</td></tr>
@@ -355,7 +361,7 @@ function hdi(input){ var inp=merge(DEFAULTS,input||{});
   var cMean=KtV>1e-9?removido/KtV:c0; cMean=clampv(cMean,0,400);
   var ctEq=clampv(ct*(1+reboteFrac),0,400), urrEq=clampv(1-ctEq/c0,0,1);
   var eficiencia=K/V, altaEficiencia=eficiencia>8;
-  var subdialise=KtV<1.2, doseAdequada=KtV>=1.2, oscilacaoGrande=urrPct>70;
+  var subdialise=KtV<1.2, doseAdequada=KtV>=1.2, oscilacaoGrande=urrPct>80;
   return {c0:c0,K:K,V:V,t:t,reboteFrac:reboteFrac,KtV:KtV,ct:ct,urr:urr,urrPct:urrPct,
     removido:removido,rateConst:rateConst,taxaInicial:taxaInicial,taxaFinal:taxaFinal,
     desaceleracao:desaceleracao,cMean:cMean,ctEq:ctEq,urrEq:urrEq,eficiencia:eficiencia,altaEficiencia:altaEficiencia,
@@ -396,21 +402,21 @@ function refresh(){ var inp=readInputs();
 function verdict(r){ var v=$('veredito'), cls='b-good', msg;
   if(r.subdialise){ cls='b-bad'; msg='SUBDIÁLISE: Kt/V '+fmt(r.KtV,2)+' (alvo ≥1,2), URR '+fmt(r.urrPct,0)+'%. BUN pós '+fmt(r.ct,0)+' mg/dL alto demais — aumente K (mL/min) ou o tempo (h), ou cheque o acesso.'; }
   else if(r.altaEficiencia){ cls='b-warn'; msg='ALTA EFICIÊNCIA: K/V '+fmt(r.eficiencia,1)+' mL/min·L⁻¹ — dose ok (Kt/V '+fmt(r.KtV,2)+'), mas oscilação grande → risco de hipotensão/desequilíbrio. Alongar o tempo daria a MESMA dose mais gentil.'; }
-  else if(r.oscilacaoGrande){ cls='b-warn'; msg='GRANDE BALANÇO: URR '+fmt(r.urrPct,0)+'% — dente de serra acentuado (≠ rim contínuo). A exposição média-no-tempo ('+fmt(r.cMean,0)+') é o que importa, não só o pós ('+fmt(r.ct,0)+').'; }
+  else if(r.oscilacaoGrande){ cls='b-warn'; msg='BALANÇO MUITO GRANDE: URR '+fmt(r.urrPct,0)+'% (>80%) — dente de serra ANORMALMENTE acentuado (≠ rim contínuo). A média INTRA-SESSÃO ('+fmt(r.cMean,0)+' mg/dL) afunda muito; a exposição urêmica real é a TAC interdialítica (com o pico entre sessões), não só o pós ('+fmt(r.ct,0)+').'; }
   else { cls='b-good'; msg='Dose adequada e gentil: Kt/V '+fmt(r.KtV,2)+', URR '+fmt(r.urrPct,0)+'%, BUN pós '+fmt(r.ct,0)+' mg/dL. Boa eficiência×tempo.'; }
   v.className='banner '+cls; v.textContent=msg; }
 function pearl(r,inp){ var p=$('lab-pearl'), ip=$('instr-pearl'), t;
   var Kalt=clearanceParaAlvo(r.KtV, inp.t>3?2:6, inp.V);
   if(r.subdialise) t='PÉROLA (acesso): o tempo está lá, mas o K efetivo ('+fmt(r.K,0)+' mL/min) é baixo → Kt/V '+fmt(r.KtV,2)+'. A dose ENTREGUE < prescrita.';
   else if(r.altaEficiencia) t='PÉROLA (eficiência×tempo): esta MESMA Kt/V '+fmt(r.KtV,2)+' caberia em '+(inp.t>3?'6 h com K ~':'2 h com K ~')+fmt(Kalt,0)+' mL/min — mesma dose, tolerância oposta.';
-  else t='PÉROLA (média-no-tempo): a exposição urêmica real é '+fmt(r.cMean,0)+' mg/dL (média), não o vale pós '+fmt(r.ct,0)+'. O rebote ainda sobe a '+fmt(r.ctEq,0)+'. "Intermitente" tem custo.';
+  else t='PÉROLA (média intra-sessão): a concentração média DENTRO da sessão é '+fmt(r.cMean,0)+' mg/dL, não o vale pós '+fmt(r.ct,0)+'. Mas a exposição urêmica real é a TAC INTERDIALÍTICA (inclui o pico entre sessões) — e o intermitente não a aplaina como a terapia contínua. O rebote ainda sobe o pós a '+fmt(r.ctEq,0)+'. "Intermitente" tem custo.';
   p.textContent=t; ip.textContent=t; }
 function drawUrea(state){ var c=$('urea-canvas'); if(!c) return; var ctx=null; try{ ctx=c.getContext&&c.getContext('2d'); }catch(e){ ctx=null; } if(!ctx||!ctx.clearRect) return;
   var L=ureaCurveLayout(state,c.width,c.height); var r=hdi(state); ctx.clearRect(0,0,L.W,L.H);
   ctx.strokeStyle='#3a4a58'; ctx.fillStyle='#9fb1c0'; ctx.font='12px system-ui'; ctx.lineWidth=1;
   ctx.beginPath(); ctx.moveTo(L.axis.x0,L.axis.y0); ctx.lineTo(L.axis.x0,L.axis.yEnd); ctx.lineTo(L.axis.xEnd,L.axis.yEnd); ctx.stroke();
   ctx.fillText('ureia BUN (mg/dL)',8,L.padT+2); ctx.fillText('tempo de sessão (h) →',L.W-180,L.baseY+24);
-  // média-no-tempo (tracejado cinza)
+  // média intra-sessão (tracejado cinza) — média DENTRO da sessão, não a TAC interdialítica
   var yMean=L.baseY-clampv(r.cMean,0,L.yMax)*(L.baseY-L.padT)/L.yMax;
   ctx.strokeStyle='#7a8a98'; ctx.setLineDash([5,4]); ctx.beginPath(); ctx.moveTo(L.axis.x0,yMean); ctx.lineTo(L.axis.xEnd,yMean); ctx.stroke(); ctx.setLineDash([]);
   ctx.fillStyle='#9fb1c0'; ctx.fillText('média '+fmt(r.cMean,0),L.axis.xEnd-86,yMean-4);
@@ -503,7 +509,7 @@ var TUTOR_ILUSTRADO=[
   {q:'Para a MESMA Kt/V em só 2 h, o clearance precisa…',o:['cair','subir muito (alta eficiência)','não muda'],c:1,e:'K e t se trocam: menos tempo exige mais K (~420 mL/min) → oscila mais.',fig:function(){return effTimeMini(1.2,42);}},
   {q:'Duas prescrições de mesma Kt/V (2 h × 6 h) diferem em…',o:['dose','tolerância (oscilação/hipotensão)','nada'],c:1,e:'Mesma dose, mesmo Ct; muda a inclinação → a tolerância hemodinâmica.',fig:function(){return effTimeMini(1.2,42);}},
   {q:'O perfil da ureia na HDI 3×/sem, comparado ao rim, é…',o:['plano e baixo','dente de serra (oscila)','sempre alto'],c:1,e:'O rim é contínuo; a HDI faz pico pré e vale pós.',fig:function(){return sawMini();}},
-  {q:'A verdadeira exposição urêmica é…',o:['o Ct pós (o vale)','a concentração média-no-tempo','o pico isolado'],c:1,e:'cMean=(C0−Ct)/(Kt/V): a área sob a curva, não o ponto mais baixo.',fig:function(){return sawMini();}},
+  {q:'A verdadeira exposição urêmica (≠ o vale pós) é…',o:['o Ct pós (o vale)','a TAC interdialítica (inclui o pico ENTRE sessões)','o pico isolado'],c:1,e:'A exposição é a média no tempo que inclui o pico entre sessões — a TAC interdialítica. cMean=(C0−Ct)/(Kt/V) é só a média DENTRO da sessão.',fig:function(){return sawMini();}},
   {q:'Logo após desligar, o BUN sobe de 24 para 27. Isto é…',o:['falha da diálise','rebote (reequilíbrio dos tecidos)','erro de exame'],c:1,e:'A ureia volta dos tecidos; o Ct imediato subestima a ureia real.',fig:function(){return reboteMini(R0({}));}},
   {q:'Na figura da difusão, por que as setas de remoção encolhem?',o:['a bomba desliga','o gradiente sangue-dialisato cai','a membrana entope'],c:1,e:'Sangue mais limpo → menor gradiente → remoção mais lenta.',fig:function(){return imgFig('gradiente-concentracao-sessao.svg','gradiente que decai');}},
   {q:'Na figura da máquina, o ◎ central representa…',o:['a bomba','o dialisador (a membrana onde difunde)','o monitor'],c:1,e:'O dialisador é o rim artificial; Qb e Qd correm em contracorrente.',fig:function(){return imgFig('maquina-hemodialise.svg','máquina de HD');}},
@@ -519,7 +525,7 @@ var TUTOR_TEXTUAL=[
   {q:'A remoção desacelera durante a sessão porque…',o:['a membrana satura','o gradiente sangue-dialisato cai','o sangue esfria'],c:1,e:'À medida que a ureia cai, o gradiente encolhe → cinética exponencial.'},
   {q:'A MESMA Kt/V pode vir de…',o:['só uma combinação','muito K em pouco t OU pouco K em muito t','sempre 4 h'],c:1,e:'Eficiência e tempo se trocam para a mesma dose.'},
   {q:'O "custo do intermitente" é que…',o:['a dose é menor','a ureia oscila em dente de serra (≠ rim contínuo)','não há custo'],c:1,e:'Grandes balanços pré/pós; o rim mantém a homeostasia contínua.'},
-  {q:'A verdadeira exposição urêmica é medida por…',o:['o BUN pós isolado','a concentração média-no-tempo','o BUN pré isolado'],c:1,e:'cMean=(C0−Ct)/(Kt/V): a integral, não o vale.'},
+  {q:'A verdadeira exposição urêmica é medida por…',o:['o BUN pós isolado','a TAC interdialítica (média que inclui o pico ENTRE sessões)','o BUN pré isolado'],c:1,e:'A TAC interdialítica integra TODO o ciclo, inclusive o pico entre sessões. A média intra-sessão cMean=(C0−Ct)/(Kt/V) cobre só o trecho DENTRO da sessão.'},
   {q:'A sessão de alta eficiência (K alto, t curto) tende a causar…',o:['menos hipotensão','mais hipotensão/desequilíbrio','mais dose'],c:1,e:'Oscilações osmóticas grandes pioram a tolerância hemodinâmica.'},
   {q:'Um acesso que recircula causa…',o:['mais Kt/V','subdiálise (K efetivo cai)','rebote maior'],c:1,e:'Baixo fluxo/recirculação derrubam o clearance efetivo entregue.'},
   {q:'O rebote pós-diálise faz a URR equilibrada ser…',o:['maior que a imediata','menor que a imediata','igual'],c:1,e:'A ureia volta dos tecidos → o pós sobe → a URR real é menor.'},

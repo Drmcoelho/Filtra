@@ -287,6 +287,8 @@
   <section class="tab" id="tab-lab">
     <div class="panel">
       <h3>Laboratório — mova os fluxos, o acesso e a TMP; leia o circuito</h3>
+      <p class="sub">Nota: a faixa <b>usual</b> de Qb em HDI é <b>200–450 mL/min</b>; os controles e a curva varrem
+      além disso (até 500) só para mostrar a saturação do clearance e o comportamento do acesso nos extremos.</p>
       <div class="grid">
         <div>
           <label>Qb pedido (mL/min): <span class="val" id="lbl-qb">300</span></label>
@@ -305,6 +307,8 @@
           <input type="range" id="in-kuf" min="5" max="60" step="1" value="30">
           <label>Distância das agulhas (1 = separadas): <span class="val" id="lbl-dist">1.0</span></label>
           <input type="range" id="in-dist" min="0" max="1" step="0.1" value="1">
+          <label>Obstrução venosa (0 livre → 1 ocluída): <span class="val" id="lbl-obstr">0.0</span></label>
+          <input type="range" id="in-obstr" min="0" max="1" step="0.05" value="0">
         </div>
       </div>
 
@@ -314,6 +318,7 @@
         <button class="act" data-preset="recirc">Agulhas próximas</button>
         <button class="act" data-preset="ufalta">UF agressiva</button>
         <button class="act" data-preset="highflux">High-flux (KoA/Qd alto)</button>
+        <button class="act" data-preset="dobra">Linha dobrada / coágulo</button>
       </div>
 
       <table>
@@ -367,12 +372,13 @@ function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>
 function mergeDefaults(input,defs){ var o={},k; for(k in defs){ if(Object.prototype.hasOwnProperty.call(defs,k)) o[k]=defs[k]; }
   if(input){ for(k in input){ if(Object.prototype.hasOwnProperty.call(input,k)&&input[k]!==undefined) o[k]=input[k]; } } return o; }
 var KOA_STD=600, KUF_STD=30, P_DIAL=-40;
-var DEFAULTS={ Qb:300, Qd:500, KoA:KOA_STD, Kuf:KUF_STD, Quf:800, acesso:1, distAgulhas:1 };
+var DEFAULTS={ Qb:300, Qd:500, KoA:KOA_STD, Kuf:KUF_STD, Quf:800, acesso:1, distAgulhas:1, obstrucao:0 };
 function qbDoAcesso(acesso){ acesso=clampv(acesso,0.05,1.5); return clampv(60+acesso*360,60,600); }
 function pArterial(Qb,acesso){ Qb=clampv(Qb,0,600); var teto=qbDoAcesso(acesso); var base=-0.4*Qb;
   var sobra=Math.max(0,Qb-teto), succao=-0.9*sobra; return clampv(base+succao,-350,0); }
-function pVenosa(Qb,Qd,Kuf,Quf,acesso){ var Qbe=qbEfetivo(Qb,acesso);
-  var Rrel=clampv(2-clampv(acesso,0.05,1.5),0.5,1.95); return clampv(20+0.30*Qbe*Rrel,0,350); }
+function pVenosa(Qb,Qd,Kuf,Quf,acesso,obstrucao){ var Qbe=qbEfetivo(Qb,acesso);
+  var Rrel=clampv(2-clampv(acesso,0.05,1.5),0.5,1.95); var obs=clampv(obstrucao,0,1); var Pobs=320*obs;
+  return clampv(20+0.30*Qbe*Rrel+Pobs,0,350); }
 function qbEfetivo(Qb,acesso){ Qb=clampv(Qb,0,600); return clampv(Math.min(Qb,qbDoAcesso(acesso)),0,600); }
 function tmpNecessaria(Quf,Kuf){ Quf=clampv(Quf,0,6000); Kuf=clampv(Kuf,0.5,300); return clampv(Quf/Kuf,0,600); }
 function ufDeTMP(tmp,Kuf){ tmp=clampv(tmp,0,600); Kuf=clampv(Kuf,0.5,300); return clampv(Kuf*tmp,0,6000); }
@@ -385,14 +391,15 @@ function clearanceDialisador(Qbe,Qd,KoA){ Qbe=clampv(Qbe,1,600); Qd=clampv(Qd,1,
 function recirculacaoPct(distAgulhas){ var d=clampv(distAgulhas,0,1); return clampv(40*(1-d),0,40); }
 function circuito(input){ var s=mergeDefaults(input,DEFAULTS);
   var Qb=clampv(s.Qb,0,600), Qd=clampv(s.Qd,0,1200), KoA=clampv(s.KoA,1,3000), Kuf=clampv(s.Kuf,0.5,300),
-      Quf=clampv(s.Quf,0,6000), acesso=clampv(s.acesso,0.05,1.5), distAgulhas=clampv(s.distAgulhas,0,1);
+      Quf=clampv(s.Quf,0,6000), acesso=clampv(s.acesso,0.05,1.5), distAgulhas=clampv(s.distAgulhas,0,1),
+      obstrucao=clampv(s.obstrucao,0,1);
   var qbTeto=qbDoAcesso(acesso), Qbe=qbEfetivo(Qb,acesso), Part=pArterial(Qb,acesso),
-      Pven=pVenosa(Qb,Qd,Kuf,Quf,acesso), TMP=tmpNecessaria(Quf,Kuf), ufEfetiva=ufDeTMP(TMP,Kuf),
+      Pven=pVenosa(Qb,Qd,Kuf,Quf,acesso,obstrucao), TMP=tmpNecessaria(Quf,Kuf), ufEfetiva=ufDeTMP(TMP,Kuf),
       Kdial=clearanceDialisador(Qbe,clampv(Qd,1,1200),KoA), recirc=recirculacaoPct(distAgulhas),
       Kefetivo=clampv(Kdial*(1-recirc/100),0,600);
   var succaoArterial=Part<-250||Qb>qbTeto+5, acessoLimita=Qb>qbTeto+5, retornoObstruido=Pven>200,
       tmpExcessiva=TMP>350, recircRoubaDose=recirc>10;
-  return { Qb:Qb,Qd:Qd,KoA:KoA,Kuf:Kuf,Quf:Quf,acesso:acesso,distAgulhas:distAgulhas,
+  return { Qb:Qb,Qd:Qd,KoA:KoA,Kuf:Kuf,Quf:Quf,acesso:acesso,distAgulhas:distAgulhas,obstrucao:obstrucao,
     qbTeto:qbTeto,Qbe:Qbe,Part:Part,Pven:Pven,TMP:TMP,ufEfetiva:ufEfetiva,Kdial:Kdial,recirc:recirc,Kefetivo:Kefetivo,
     succaoArterial:succaoArterial,acessoLimita:acessoLimita,retornoObstruido:retornoObstruido,
     tmpExcessiva:tmpExcessiva,recircRoubaDose:recircRoubaDose }; }
@@ -427,11 +434,11 @@ tabsBox.addEventListener('click',function(e){ var b=e.target.closest('button'); 
 document.addEventListener('click',function(e){ var b=e.target.closest('button.act[data-rev]'); if(!b) return; var el=$(b.getAttribute('data-rev')); if(el) el.classList.toggle('on'); });
 
 function readInputs(){ return { Qb:+$('in-qb').value, Qd:+$('in-qd').value, KoA:+$('in-koa').value, Kuf:+$('in-kuf').value,
-  Quf:+$('in-quf').value, acesso:+$('in-acesso').value, distAgulhas:+$('in-dist').value }; }
+  Quf:+$('in-quf').value, acesso:+$('in-acesso').value, distAgulhas:+$('in-dist').value, obstrucao:+$('in-obstr').value }; }
 function refresh(){ var inp=readInputs();
   $('lbl-qb').textContent=inp.Qb; $('lbl-qd').textContent=inp.Qd; $('lbl-koa').textContent=inp.KoA;
   $('lbl-acesso').textContent=fmt(inp.acesso,2); $('lbl-quf').textContent=inp.Quf; $('lbl-kuf').textContent=inp.Kuf;
-  $('lbl-dist').textContent=fmt(inp.distAgulhas,1);
+  $('lbl-dist').textContent=fmt(inp.distAgulhas,1); $('lbl-obstr').textContent=fmt(inp.obstrucao,2);
   var r=circuito(inp);
   $('out-qbe').textContent=fmt(r.Qbe,0); $('out-teto').textContent=fmt(r.qbTeto,0);
   $('out-kdial').textContent=fmt(r.Kdial,0); $('out-kef').textContent=fmt(r.Kefetivo,0);
@@ -441,7 +448,7 @@ function refresh(){ var inp=readInputs();
 function verdict(r){ var v=$('veredito'), cls='b-good', msg;
   if(r.succaoArterial){ cls='b-bad'; msg='SUCÇÃO ARTERIAL: o acesso não entrega o Qb pedido ('+fmt(r.Qb,0)+'); teto ~'+fmt(r.qbTeto,0)+' mL/min. P_art '+fmt(r.Part,0)+' mmHg (sucção). Qb efetivo travado em '+fmt(r.Qbe,0)+'. Reduza o Qb ou corrija o acesso.'; }
   else if(r.recircRoubaDose){ cls='b-bad'; msg='RECIRCULAÇÃO '+fmt(r.recirc,0)+'%: o clearance efetivo ('+fmt(r.Kefetivo,0)+') caiu abaixo do dialisador ('+fmt(r.Kdial,0)+') — sangue já limpo volta à entrada. Afaste as agulhas.'; }
-  else if(r.retornoObstruido){ cls='b-warn'; msg='RETORNO OBSTRUÍDO: P_ven '+fmt(r.Pven,0)+' mmHg alta — resistência ao retorno (agulha/dobra/coágulo). Verifique a linha venosa.'; }
+  else if(r.retornoObstruido){ cls='b-warn'; msg='RETORNO OBSTRUÍDO: P_ven '+fmt(r.Pven,0)+' mmHg alta — resistência ao retorno (obstrução '+fmt(r.obstrucao*100,0)+'%: agulha/dobra/coágulo). Verifique e desobstrua a linha venosa.'; }
   else if(r.tmpExcessiva){ cls='b-warn'; msg='TMP EXCESSIVA ('+fmt(r.TMP,0)+' mmHg) para Q_uf '+fmt(r.Quf,0)+' mL/h num Kuf '+fmt(r.Kuf,0)+'. Perto do teto da membrana — reduza a UF ou estenda o tempo.'; }
   else { cls='b-good'; msg='Circuito coerente: Qb efetivo '+fmt(r.Qbe,0)+' mL/min, clearance '+fmt(r.Kdial,0)+' mL/min; P_art '+fmt(r.Part,0)+' / P_ven '+fmt(r.Pven,0)+' mmHg; TMP '+fmt(r.TMP,0)+' mmHg tira '+fmt(r.ufEfetiva,0)+' mL/h.'; }
   v.className='banner '+cls; v.textContent=msg; }
@@ -461,18 +468,19 @@ function drawClearance(state){ var c=$('clr-canvas'); if(!c) return; var ctx=nul
   var cu=L.current; ctx.strokeStyle='#e8a13a'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(cu.x,L.padT); ctx.lineTo(cu.x,L.baseY); ctx.stroke(); ctx.setLineDash([]);
   ctx.fillStyle='#e8a13a'; ctx.fillRect(cu.x-3,cu.y-3,6,6);
   ctx.fillStyle='#e7eef4'; ctx.fillText('K '+fmt(cu.k,0),cu.x+6,Math.max(cu.y-6,L.padT+10)); }
-['in-qb','in-qd','in-koa','in-acesso','in-quf','in-kuf','in-dist'].forEach(function(id){ $(id).addEventListener('input',refresh); });
+['in-qb','in-qd','in-koa','in-acesso','in-quf','in-kuf','in-dist','in-obstr'].forEach(function(id){ $(id).addEventListener('input',refresh); });
 
 var PRESETS={
-  fistula:{qb:400,qd:600,koa:700,acesso:1.1,quf:800,kuf:35,dist:1},
-  cateter:{qb:350,qd:500,koa:600,acesso:0.35,quf:800,kuf:25,dist:1},
-  recirc:{qb:400,qd:800,koa:1000,acesso:1,quf:800,kuf:30,dist:0.1},
-  ufalta:{qb:300,qd:500,koa:600,acesso:1,quf:2500,kuf:15,dist:1},
-  highflux:{qb:400,qd:800,koa:1100,acesso:1.1,quf:1000,kuf:50,dist:1}
+  fistula:{qb:400,qd:600,koa:700,acesso:1.1,quf:800,kuf:35,dist:1,obstr:0},
+  cateter:{qb:350,qd:500,koa:600,acesso:0.35,quf:800,kuf:25,dist:1,obstr:0},
+  recirc:{qb:400,qd:800,koa:1000,acesso:1,quf:800,kuf:30,dist:0.1,obstr:0},
+  ufalta:{qb:300,qd:500,koa:600,acesso:1,quf:2500,kuf:15,dist:1,obstr:0},
+  highflux:{qb:400,qd:800,koa:1100,acesso:1.1,quf:1000,kuf:50,dist:1,obstr:0},
+  dobra:{qb:250,qd:500,koa:600,acesso:1,quf:800,kuf:30,dist:1,obstr:0.85}
 };
 function applyPreset(p){ var d=PRESETS[p]; if(!d) return;
   $('in-qb').value=d.qb; $('in-qd').value=d.qd; $('in-koa').value=d.koa; $('in-acesso').value=d.acesso;
-  $('in-quf').value=d.quf; $('in-kuf').value=d.kuf; $('in-dist').value=d.dist; refresh(); }
+  $('in-quf').value=d.quf; $('in-kuf').value=d.kuf; $('in-dist').value=d.dist; $('in-obstr').value=d.obstr; refresh(); }
 document.querySelector('.presets').addEventListener('click',function(e){ var b=e.target.closest('button[data-preset]'); if(b) applyPreset(b.getAttribute('data-preset')); });
 
 /* ILUSTRAÇÕES computadas + helper raster */

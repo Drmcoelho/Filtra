@@ -37,7 +37,8 @@ var DEFAULTS = {
   Kuf: KUF_STD,       // mL/h/mmHg — coeficiente de ultrafiltração
   Quf: 800,           // mL/h — taxa de UF PRESCRITA (volume a remover por hora)
   acesso: 1,          // capacidade do acesso (relativa): 1 = fístula madura; <1 = cateter/estenose
-  distAgulhas: 1      // proxy de distância das agulhas: 1 = bem separadas; →0 = juntas (recirculação)
+  distAgulhas: 1,     // proxy de distância das agulhas: 1 = bem separadas; →0 = juntas (recirculação)
+  obstrucao: 0        // fração de obstrução do RETORNO venoso: 0 = linha livre; 1 = ocluída (dobra/coágulo/agulha mal posta)
 };
 
 // teto de Qb que o acesso ENTREGA (mL/min). Fístula madura entrega bem; cateter mal posicionado, pouco.
@@ -58,11 +59,15 @@ function pArterial(Qb, acesso) {
 }
 
 // pressão venosa de retorno (mmHg, POSITIVA): resistência ao retorno (agulha, dobra, coágulo, posição).
-// R_venoso entra via a folga do acesso (acesso pobre → retorno também sofre) + o fluxo de retorno.
-function pVenosa(Qb, Qd, Kuf, Quf, acesso) {
+// R_venoso entra via a folga do acesso (acesso pobre → retorno também sofre) + o fluxo de retorno + a
+// OBSTRUÇÃO mecânica da linha venosa (dobra/coágulo/agulha mal posta). A obstrução é o termo que faz a
+// P_ven subir e ALARMAR mesmo com Qb baixo — ela é a causa do "retorno obstruído" que o caso ensina.
+function pVenosa(Qb, Qd, Kuf, Quf, acesso, obstrucao) {
   var Qbe = qbEfetivo(Qb, acesso);
   var Rrel = clampv(2 - clampv(acesso, 0.05, 1.5), 0.5, 1.95); // acesso pior → maior resistência relativa
-  return clampv(20 + 0.30 * Qbe * Rrel, 0, 350);
+  var obs = clampv(obstrucao, 0, 1);                           // 0 = linha livre; 1 = ocluída
+  var Pobs = 320 * obs;                                        // resistência mecânica somada (independe de Qb)
+  return clampv(20 + 0.30 * Qbe * Rrel + Pobs, 0, 350);
 }
 
 // Qb EFETIVO (mL/min): o que realmente passa = min(pedido, entrega do acesso).
@@ -119,11 +124,12 @@ function circuito(input) {
   var Quf = clampv(s.Quf, 0, 6000);
   var acesso = clampv(s.acesso, 0.05, 1.5);
   var distAgulhas = clampv(s.distAgulhas, 0, 1);
+  var obstrucao = clampv(s.obstrucao, 0, 1);
 
   var qbTeto = qbDoAcesso(acesso);
   var Qbe = qbEfetivo(Qb, acesso);
   var Part = pArterial(Qb, acesso);
-  var Pven = pVenosa(Qb, Qd, Kuf, Quf, acesso);
+  var Pven = pVenosa(Qb, Qd, Kuf, Quf, acesso, obstrucao);
   var TMP = tmpNecessaria(Quf, Kuf);
   var ufEfetiva = ufDeTMP(TMP, Kuf);                  // == Quf por construção (identidade UF = Kuf·TMP)
   var Kdial = clearanceDialisador(Qbe, clampv(Qd, 1, 1200), KoA);
@@ -138,7 +144,7 @@ function circuito(input) {
   var recircRoubaDose = recirc > 10;                         // recirculação significativa
 
   return {
-    Qb: Qb, Qd: Qd, KoA: KoA, Kuf: Kuf, Quf: Quf, acesso: acesso, distAgulhas: distAgulhas,
+    Qb: Qb, Qd: Qd, KoA: KoA, Kuf: Kuf, Quf: Quf, acesso: acesso, distAgulhas: distAgulhas, obstrucao: obstrucao,
     qbTeto: qbTeto, Qbe: Qbe, Part: Part, Pven: Pven, TMP: TMP, ufEfetiva: ufEfetiva,
     Kdial: Kdial, recirc: recirc, Kefetivo: Kefetivo,
     succaoArterial: succaoArterial, acessoLimita: acessoLimita, retornoObstruido: retornoObstruido,

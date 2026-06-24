@@ -16,7 +16,7 @@ function fin(x) { return typeof x === 'number' && isFinite(x); }
   ok(r.KtV > 1.1 && r.KtV < 1.45, 'base: sessão 4 h padrão → Kt/V ~1,2-1,4 (' + r.KtV.toFixed(2) + ')');
   ok(r.urrPct > 64 && r.urrPct < 71, 'base: URR ~65-70% (' + r.urrPct.toFixed(1) + '%)');
   ok(r.ct < r.c0, 'base: concentração pós < pré (a sessão remove)');
-  ok(r.cMean > r.ct && r.cMean < r.c0, 'base: a média-no-tempo fica entre o pré e o pós');
+  ok(r.cMean > r.ct && r.cMean < r.c0, 'base: a média intra-sessão fica entre o pré e o pós');
   ok(r.ctEq > r.ct, 'base: rebote pós-diálise sobe a ureia');
   ok(r.doseAdequada && !r.subdialise, 'base: dose adequada (Kt/V ≥ 1,2)');
 })();
@@ -60,6 +60,18 @@ function fin(x) { return typeof x === 'number' && isFinite(x); }
   // exponencial: a queda na 1ª metade da sessão > queda na 2ª metade
   var meio = concAt(80, 210, 42, 2), fim = concAt(80, 210, 42, 4);
   ok((80 - meio) > (meio - fim), 'lei: cinética exponencial — cai mais na 1ª metade que na 2ª');
+  // LIMIAR DE OSCILAÇÃO: a URR-alvo adequada (~65-70%) NÃO dispara o aviso; só >80% (balanço anormalmente grande)
+  var adeq = hdi({});                              // sessão padrão adequada (Kt/V 1,2; URR ~70%)
+  ok(adeq.urrPct > 65 && adeq.urrPct <= 70 && !adeq.oscilacaoGrande,
+    'lei: URR-alvo ~65-70% (adequada) NÃO dispara oscilacaoGrande (' + adeq.urrPct.toFixed(1) + '%)');
+  // ponto logo abaixo de 80%: não dispara
+  var K70 = clearanceParaAlvo(-Math.log(1 - 0.70), 4, 42); // Kt/V tal que URR=70%
+  var r70 = hdi({ K: K70, t: 4, V: 42 });
+  ok(r70.urrPct > 69 && r70.urrPct < 71 && !r70.oscilacaoGrande, 'lei: URR 70% NÃO é sinalizada (' + r70.urrPct.toFixed(1) + '%)');
+  // ponto acima de 80%: dispara
+  var K85 = clearanceParaAlvo(-Math.log(1 - 0.85), 4, 42); // Kt/V tal que URR=85%
+  var r85 = hdi({ K: K85, t: 4, V: 42 });
+  ok(r85.urrPct > 80 && r85.oscilacaoGrande, 'lei: URR >80% É sinalizada como balanço anormalmente grande (' + r85.urrPct.toFixed(1) + '%)');
 })();
 
 /* ---------- 4. PÉROLAS ---------- */
@@ -73,12 +85,12 @@ function fin(x) { return typeof x === 'number' && isFinite(x); }
     'pérola: a MESMA Kt/V vem de caminhos diferentes (alta eficiência × gentil)');
   // ...mas a EFICIÊNCIA (oscilação) é muito maior no caminho curto — o custo do intermitente
   ok(rCurto.eficiencia > rLongo.eficiencia * 2, 'pérola: mesma dose, eficiência (oscilação) bem maior no curto');
-  // intermitente OSCILA ≠ contínuo: grande balanço pré→pós numa sessão eficiente
+  // intermitente OSCILA ≠ contínuo: balanço pré→pós ANORMALMENTE grande numa sessão muito eficiente (URR >80%)
   var ef = hdi({ K: 350, t: 4 });
-  ok(ef.oscilacaoGrande && ef.urrPct > 70, 'pérola: o intermitente oscila — grande balanço pré/pós (≠ o rim contínuo)');
-  // a MÉDIA-NO-TEMPO importa: a exposição urêmica real é cMean, não o Ct pós (que é o vale)
+  ok(ef.oscilacaoGrande && ef.urrPct > 80, 'pérola: sessão muito eficiente oscila demais — balanço >80% (≠ o rim contínuo)');
+  // a média INTRA-SESSÃO fica entre o pré e o pós (área sob a curva dentro da sessão); NÃO é a TAC interdialítica
   var rr = hdi({});
-  ok(rr.cMean > rr.ct, 'pérola: a média-no-tempo (exposição real) > o Ct pós (o vale) — não leia só o pós');
+  ok(rr.cMean > rr.ct && rr.cMean < rr.c0, 'pérola: a média intra-sessão fica entre o pré e o pós — não leia só o vale (a exposição real é a TAC interdialítica)');
   // rebote: o pós-diálise sobe — o Ct medido logo após subestima a ureia equilibrada
   ok(rr.ctEq > rr.ct && rr.urrEq < rr.urr, 'pérola: o rebote sobe a ureia → a URR "real" (equilibrada) é menor');
 })();

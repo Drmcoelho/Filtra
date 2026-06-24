@@ -23,10 +23,12 @@
  *     (citrato-Ca conta no total). O sinal: a razão Ca_total/Ca_ionizado SOBE.
  *     Razão > 2,5 é ALARME de acúmulo → contraindica/reduz o citrato.
  *
- *  3) HEPARINA (sistêmica, simples, sangra)
+ *  3) HEPARINA NÃO-FRACIONADA (HNF) — sistêmica, simples, sangra
  *     A heparina anticoagula o PACIENTE INTEIRO (potencia a antitrombina →
- *     TTPa↑). Sem proteção regional: o risco de sangramento sobe com a dose.
- *     Simples e barata — escolha de quem NÃO sangra.
+ *     TTPa↑). DOSE com unidade explícita, titulada ao alvo: BÓLUS ~30 UI/kg
+ *     (faixa 20–50 UI/kg) e INFUSÃO ~5–15 UI/kg/h, ajustada ao alvo de TTPa
+ *     ~1,5–2× o basal (ou ACT). Sem proteção regional: mais infusão → TTPa↑ →
+ *     mais risco de sangramento. Simples e barata — escolha de quem NÃO sangra.
  *
  *  ESCOLHA (a função-mãe): sangra muito (e fígado bom) → CITRATO; fígado ruim
  *  (acúmulo) → não-citrato; baixo risco de sangrar → HEPARINA.
@@ -118,24 +120,43 @@ function acumuloCitrato(inp) {
 }
 
 /* -------------------------------------------------------------------------
- * HEPARINA — sistêmica. dose ADIMENSIONAL [0..1] (fração da dose plena) para
- * fugir de "massa solta". O efeito é TTPa↑ (razão) e risco de sangramento.
- * dose [0..1]; sangramentoBasal [0..1].
+ * HEPARINA NÃO-FRACIONADA (HNF) — sistêmica, com DOSE EM UNIDADES explícitas,
+ * titulada ao alvo de TTPa (~1,5–2× o basal) ou ACT.
+ *   bolus   em UI·kg⁻¹      (típico 30; faixa 20–50) — carga inicial
+ *   infusao em UI·kg⁻¹·h⁻¹  (típico 5–15)           — manutenção, governa o TTPa
+ * O TTPa de ESTADO-ESTACIONÁRIO é função da INFUSÃO (a manutenção); o bólus dá
+ * um empurrão inicial pequeno (decai). O risco de sangramento sobe com o TTPa
+ * (mais heparina → mais anticoagulação sistêmica → mais sangramento).
+ * Alvo de TTPa para o circuito: ~1,5–2× o basal.
  * ------------------------------------------------------------------------- */
+var HEP_BOLUS_ALVO = 30;       // UI/kg — bólus típico
+var HEP_INF_ALVO_LO = 5;       // UI/kg/h — piso da manutenção típica
+var HEP_INF_ALVO_HI = 15;      // UI/kg/h — teto da manutenção típica
+var TTPA_ALVO_LO = 1.5;        // alvo de TTPa (× basal) — piso terapêutico do circuito
+var TTPA_ALVO_HI = 2.0;        // alvo de TTPa (× basal) — teto terapêutico
+
 function heparina(inp) {
   inp = inp || {};
-  var dose = clampv(inp.dose !== undefined ? inp.dose : 0.5, 0, 1);                 // fração da dose plena
+  var bolus = clampv(inp.bolus !== undefined ? inp.bolus : HEP_BOLUS_ALVO, 0, 80);          // UI/kg
+  var infusao = clampv(inp.infusao !== undefined ? inp.infusao : 10, 0, 30);                 // UI/kg/h
   var sangramentoBasal = clampv(inp.sangramentoBasal !== undefined ? inp.sangramentoBasal : 0.2, 0, 1);
 
-  // TTPa relativo ao basal (razão): sobe com a dose (1,0 = basal, ~2,6 = pleno)
-  var ttpaRatio = clampv(1.0 + 1.6 * dose, 1.0, 3.0);
-  // risco de sangramento: basal + contribuição sistêmica (sem proteção regional)
-  var riscoSangramento = clampv(sangramentoBasal + 0.7 * dose, 0, 1);
+  // TTPa relativo ao basal (razão): a INFUSÃO (manutenção) é o motor do estado
+  // estacionário; cada UI/kg/h sobe ~0,07× o TTPa, com pequeno acréscimo do bólus.
+  // Calibrado para que a faixa de manutenção 5–15 UI/kg/h caia no alvo ~1,5–2×.
+  var ttpaRatio = clampv(1.0 + 0.07 * infusao + 0.004 * bolus, 1.0, 3.0);
+  // dose normalizada [0..1] (fração da exposição plena) — alavanca interna p/ risco
+  var dose = clampv((infusao / 30) * 0.85 + (bolus / 80) * 0.15, 0, 1);
+  // risco de sangramento: basal + contribuição sistêmica (sem proteção regional),
+  // escalada pelo TTPa atingido (mais TTPa → mais sangramento).
+  var riscoSangramento = clampv(sangramentoBasal + 0.35 * (ttpaRatio - 1.0), 0, 1);
+  // dentro do alvo terapêutico de TTPa?
+  var noAlvo = ttpaRatio >= TTPA_ALVO_LO && ttpaRatio <= TTPA_ALVO_HI;
   var regional = false;     // heparina é SISTÊMICA
 
   return {
-    dose: dose, sangramentoBasal: sangramentoBasal, ttpaRatio: ttpaRatio,
-    riscoSangramento: riscoSangramento, regional: regional
+    bolus: bolus, infusao: infusao, dose: dose, sangramentoBasal: sangramentoBasal,
+    ttpaRatio: ttpaRatio, riscoSangramento: riscoSangramento, noAlvo: noAlvo, regional: regional
   };
 }
 
@@ -152,14 +173,15 @@ function anticoagulacao(input) {
   var caBasal = clampv(inp.caBasal !== undefined ? inp.caBasal : 1.15, 0.4, 1.6);             // mmol/L
   var caReposicao = clampv(inp.caReposicao !== undefined ? inp.caReposicao : 1.7, 0, 6);      // mmol/h
   var caSistBasal = clampv(inp.caSistBasal !== undefined ? inp.caSistBasal : 1.20, 0.5, 1.6); // mmol/L
-  var heparinaDose = clampv(inp.heparinaDose !== undefined ? inp.heparinaDose : 0.5, 0, 1);   // fração
+  var heparinaBolus = clampv(inp.heparinaBolus !== undefined ? inp.heparinaBolus : 30, 0, 80);     // UI/kg
+  var heparinaInfusao = clampv(inp.heparinaInfusao !== undefined ? inp.heparinaInfusao : 10, 0, 30); // UI/kg/h
 
   // --- ramo CITRATO ---
   var cit = citrato({ citratoDose: citratoDose, qb: qb, caBasal: caBasal, caReposicao: caReposicao });
   var acc = acumuloCitrato({ funcaoHepatica: funcaoHepatica, cargaCitrato: cit.cargaCitrato, caReposicao: caReposicao, caSistBasal: caSistBasal });
 
   // --- ramo HEPARINA ---
-  var hep = heparina({ dose: heparinaDose, sangramentoBasal: sangramento });
+  var hep = heparina({ bolus: heparinaBolus, infusao: heparinaInfusao, sangramentoBasal: sangramento });
 
   // --- ESCOLHA por mecanismo ---
   var figadoRuim = funcaoHepatica < 0.4;
@@ -197,15 +219,16 @@ function anticoagulacao(input) {
   return {
     // entradas ecoadas
     sangramento: sangramento, funcaoHepatica: funcaoHepatica, citratoDose: citratoDose, qb: qb,
-    caBasal: caBasal, caReposicao: caReposicao, caSistBasal: caSistBasal, heparinaDose: heparinaDose,
+    caBasal: caBasal, caReposicao: caReposicao, caSistBasal: caSistBasal,
+    heparinaBolus: heparinaBolus, heparinaInfusao: heparinaInfusao,
     // decisão
     modalidade: modalidade, motivo: motivo, figadoRuim: figadoRuim,
     citratoContraindicado: citratoContraindicado, citratoSeguro: citratoSeguro,
     // ramo citrato
     quela: cit.quela, cargaCitrato: cit.cargaCitrato, citratoSubdosado: cit.subdosado, citratoSobredosado: cit.sobredosado,
     citratoSerico: acc.citratoSerico, caLigadoCitrato: acc.caLigadoCitrato, caTotal: acc.caTotal,
-    // ramo heparina
-    ttpaRatio: hep.ttpaRatio,
+    // ramo heparina (dose em UI/kg e UI/kg/h, TTPa-alvo)
+    ttpaRatio: hep.ttpaRatio, heparinaNoAlvo: hep.noAlvo,
     // saídas-chave
     caCircuito: caCircuito, caSistemico: caSistemico, gap: gap, alarmeAcumulo: alarmeAcumulo,
     riscoSangramento: riscoSangramentoResultante, circuitoProtegido: circuitoProtegido
@@ -273,6 +296,8 @@ if (typeof module !== 'undefined' && module.exports) {
     clampv: clampv, citrato: citrato, acumuloCitrato: acumuloCitrato, heparina: heparina,
     anticoagulacao: anticoagulacao, caLayout: caLayout,
     CA_CIRC_ALVO_LO: CA_CIRC_ALVO_LO, CA_CIRC_ALVO_HI: CA_CIRC_ALVO_HI,
-    CA_SIST_ALVO: CA_SIST_ALVO, GAP_ALARME: GAP_ALARME
+    CA_SIST_ALVO: CA_SIST_ALVO, GAP_ALARME: GAP_ALARME,
+    HEP_BOLUS_ALVO: HEP_BOLUS_ALVO, HEP_INF_ALVO_LO: HEP_INF_ALVO_LO, HEP_INF_ALVO_HI: HEP_INF_ALVO_HI,
+    TTPA_ALVO_LO: TTPA_ALVO_LO, TTPA_ALVO_HI: TTPA_ALVO_HI
   };
 }

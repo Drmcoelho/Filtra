@@ -14,12 +14,14 @@ function ok(c, m) { if (c) oks++; else { fails++; console.log('  FALHA: ' + m); 
 function micros(n) { micro += n; }
 function near(a, b, t) { return Math.abs(a - b) <= (t || 1e-7); }
 function fin(x) { return typeof x === 'number' && isFinite(x); }
+function clamp3(v) { return Math.max(1, Math.min(3, v)); }
 var MOD_OK = { citrato: 1, heparina: 1 };
 
 /* faixas documentadas por campo de saída numérica [min,max] */
 var BOUNDS = {
   sangramento: [0, 1], funcaoHepatica: [0, 1], citratoDose: [0, 8], qb: [50, 350],
-  caBasal: [0.4, 1.6], caReposicao: [0, 6], caSistBasal: [0.5, 1.6], heparinaDose: [0, 1],
+  caBasal: [0.4, 1.6], caReposicao: [0, 6], caSistBasal: [0.5, 1.6],
+  heparinaBolus: [0, 80], heparinaInfusao: [0, 30],
   quela: [0, 1], cargaCitrato: [0, 168], citratoSerico: [0.1, 2.5], caLigadoCitrato: [0, 1.4],
   caTotal: [1.0, 4.5], ttpaRatio: [1.0, 3.0],
   caCircuito: [0.05, 1.6], caSistemico: [0.5, 1.6], gap: [1.0, 12], riscoSangramento: [0, 1]
@@ -40,6 +42,11 @@ function dentroBounds(r) {
   ok(!r.alarmeAcumulo, 'base: fígado normal → sem alarme de acúmulo');
   // citrato regional: circuito baixo, sistêmico normal — anticoagula SÓ o circuito
   ok(r.caCircuito < 0.4 && r.caSistemico > 1.0, 'base: anticoagulação REGIONAL (circuito baixo, sistêmico normal)');
+  // heparina dosada em UNIDADES: bólus ~30 UI/kg + infusão ~10 UI/kg/h por padrão, TTPa terapêutico
+  ok(r.heparinaBolus === 30 && r.heparinaInfusao === 10, 'base: dose padrão de heparina 30 UI/kg + 10 UI/kg/h');
+  var hb = heparina({});
+  ok(hb.bolus === 30 && hb.infusao === 10, 'base: heparina() default bólus 30 UI/kg + infusão 10 UI/kg/h');
+  ok(hb.ttpaRatio >= 1.5 && hb.ttpaRatio <= 2.0 && hb.noAlvo, 'base: infusão padrão → TTPa no alvo 1,5–2× (' + hb.ttpaRatio.toFixed(2) + ')');
 })();
 
 /* ---------- 2. IDENTIDADES (valem SEMPRE) ---------- */
@@ -64,11 +71,13 @@ function dentroBounds(r) {
     ok(near(c.cargaCitrato, c.citratoDose * (c.qb * 60 / 1000), 1e-9), 'id: cargaCitrato = dose × Qb(L/h)');
     micros(1);
   }
-  // heparina: ttpaRatio = 1 + 1.6·dose (clamp)
+  // heparina: ttpaRatio = 1 + 0,07·infusão(UI/kg/h) + 0,004·bólus(UI/kg) (clamp 3)
   for (var h = 0; h <= 20; h++) {
-    var dd = h / 20, hp = heparina({ dose: dd });
-    ok(near(hp.ttpaRatio, Math.min(1 + 1.6 * dd, 3), 1e-9), 'id: TTPa = 1+1,6·dose');
-    micros(1);
+    var inf = 30 * h / 20, bol = 80 * h / 20, hp = heparina({ infusao: inf, bolus: bol });
+    ok(near(hp.ttpaRatio, clamp3(1 + 0.07 * inf + 0.004 * bol), 1e-9), 'id: TTPa = 1+0,07·infusão+0,004·bólus');
+    // risco = sangramentoBasal + 0,35·(TTPa−1) (clamp 0..1)
+    ok(near(hp.riscoSangramento, Math.max(0, Math.min(1, 0.2 + 0.35 * (hp.ttpaRatio - 1))), 1e-9), 'id: risco = basal + 0,35·(TTPa−1)');
+    micros(2);
   }
 })();
 
@@ -81,9 +90,13 @@ function dentroBounds(r) {
   var figRuim = anticoagulacao({ funcaoHepatica: 0.1, citratoDose: 4, qb: 200 });
   ok(figRuim.gap > figBom.gap, 'lei: ↓função hepática → ↑gap (acúmulo)');
   ok(figRuim.caSistemico < figBom.caSistemico, 'lei: acúmulo → ↓Ca²⁺ ionizado sistêmico');
-  // ↑heparina → ↑sangramento e ↑TTPa
-  ok(heparina({ dose: 0.9, sangramentoBasal: 0.2 }).riscoSangramento > heparina({ dose: 0.1, sangramentoBasal: 0.2 }).riscoSangramento, 'lei: ↑heparina → ↑sangramento');
-  ok(heparina({ dose: 0.9 }).ttpaRatio > heparina({ dose: 0.1 }).ttpaRatio, 'lei: ↑heparina → ↑TTPa');
+  // ↑infusão (UI/kg/h) → ↑TTPa → ↑sangramento
+  ok(heparina({ infusao: 18, sangramentoBasal: 0.2 }).riscoSangramento > heparina({ infusao: 4, sangramentoBasal: 0.2 }).riscoSangramento, 'lei: ↑infusão (UI/kg/h) → ↑sangramento');
+  ok(heparina({ infusao: 18 }).ttpaRatio > heparina({ infusao: 4 }).ttpaRatio, 'lei: ↑infusão (UI/kg/h) → ↑TTPa');
+  // ↑bólus (UI/kg) → ↑TTPa
+  ok(heparina({ bolus: 60 }).ttpaRatio > heparina({ bolus: 10 }).ttpaRatio, 'lei: ↑bólus (UI/kg) → ↑TTPa');
+  // a heparina sobe o risco de sangramento do paciente via anticoagulação (anticoagulacao mãe)
+  ok(anticoagulacao({ sangramento: 0.1, heparinaInfusao: 18 }).riscoSangramento > anticoagulacao({ sangramento: 0.1, heparinaInfusao: 4 }).riscoSangramento, 'lei: ↑infusão UI/kg/h (mãe, heparina) → ↑sangramento do paciente');
   // ↑sangramento → favorece citrato (com fígado bom)
   ok(anticoagulacao({ sangramento: 0.1, funcaoHepatica: 1 }).modalidade === 'heparina', 'lei: sangramento baixo → heparina');
   ok(anticoagulacao({ sangramento: 0.9, funcaoHepatica: 1 }).modalidade === 'citrato', 'lei: sangramento alto + fígado bom → citrato');
@@ -100,7 +113,7 @@ function dentroBounds(r) {
   ok(p.modalidade === 'citrato' && p.caCircuito <= 0.4 && p.caSistemico >= 1.0, 'pérola: citrato anticoagula SÓ o circuito (circuito baixo, sistêmico normal)');
   ok(p.riscoSangramento <= p.sangramento + 1e-9, 'pérola: citrato regional NÃO aumenta o sangramento do paciente');
   // PÉROLA 2: o paciente que SANGRA prefere citrato (não anticoagula o doente) vs heparina
-  var hepRisco = heparina({ dose: 0.7, sangramentoBasal: 0.8 }).riscoSangramento;
+  var hepRisco = heparina({ bolus: 30, infusao: 12, sangramentoBasal: 0.8 }).riscoSangramento;
   ok(p.riscoSangramento < hepRisco, 'pérola: quem sangra prefere citrato (risco < heparina sistêmica)');
   // PÉROLA 3: fígado RUIM contraindica citrato pelo ACÚMULO (gap alto)
   var ruim = anticoagulacao({ sangramento: 0.8, funcaoHepatica: 0.1, citratoDose: 4, qb: 200 });
@@ -114,7 +127,7 @@ function dentroBounds(r) {
 
 /* ---------- 5. DETERMINISMO 5× byte-idêntico ---------- */
 (function () {
-  var inp = { sangramento: 0.7, funcaoHepatica: 0.3, citratoDose: 3.5, qb: 180, caBasal: 1.1, caReposicao: 2.2, caSistBasal: 1.15, heparinaDose: 0.6 };
+  var inp = { sangramento: 0.7, funcaoHepatica: 0.3, citratoDose: 3.5, qb: 180, caBasal: 1.1, caReposicao: 2.2, caSistBasal: 1.15, heparinaBolus: 35, heparinaInfusao: 12 };
   var ref = JSON.stringify(anticoagulacao(inp)), igual = true;
   for (var n = 0; n < 5; n++) { if (JSON.stringify(anticoagulacao(inp)) !== ref) igual = false; }
   ok(igual, 'determinismo: 5 execuções byte-idênticas');
@@ -130,7 +143,7 @@ function dentroBounds(r) {
 /* ---------- 6. ROBUSTEZ (lixo pontual) ---------- */
 (function () {
   var maus = [undefined, null, {}, { funcaoHepatica: NaN }, { sangramento: 'x' }, { citratoDose: -10 },
-    { qb: 1e9 }, { caBasal: Infinity }, { caReposicao: -5 }, { citratoDose: 'z' }, { heparinaDose: 1e300 },
+    { qb: 1e9 }, { caBasal: Infinity }, { caReposicao: -5 }, { citratoDose: 'z' }, { heparinaInfusao: 1e300 }, { heparinaBolus: -7 },
     { caSistBasal: NaN }, { funcaoHepatica: 'a' }, [], function () {}, { qb: -1 }];
   maus.forEach(function (mm, i) {
     var r = anticoagulacao(mm);
@@ -144,7 +157,7 @@ function dentroBounds(r) {
 
 /* ---------- 7. LIMITES por campo ---------- */
 (function () {
-  var fields = ['sangramento', 'funcaoHepatica', 'citratoDose', 'qb', 'caBasal', 'caReposicao', 'caSistBasal', 'heparinaDose'];
+  var fields = ['sangramento', 'funcaoHepatica', 'citratoDose', 'qb', 'caBasal', 'caReposicao', 'caSistBasal', 'heparinaBolus', 'heparinaInfusao'];
   var extremos = [-1e9, -1e3, -1, 0, 1, 50, 1e3, 1e9, NaN, Infinity, -Infinity];
   fields.forEach(function (f) {
     extremos.forEach(function (v) {
@@ -189,25 +202,35 @@ function dentroBounds(r) {
     }
     ok(mono, 'monotonia: função hepática↓ → gap↑ (' + viol + ' violações)');
   })();
-  // heparina↑ → sangramento não-decrescente
+  // infusão (UI/kg/h)↑ → sangramento não-decrescente
   (function () {
     var prev = null, mono = true, viol = 0;
     for (var i = 0; i <= STEPS; i++) {
-      var d = i / STEPS, v = heparina({ dose: d, sangramentoBasal: 0.2 }).riscoSangramento;
+      var inf = 30 * i / STEPS, v = heparina({ infusao: inf, sangramentoBasal: 0.2 }).riscoSangramento;
       if (prev !== null) { if (v - prev < -1e-9) { mono = false; viol++; } micros(1); }
       prev = v;
     }
-    ok(mono, 'monotonia: heparina↑ → sangramento↑ (' + viol + ' violações)');
+    ok(mono, 'monotonia: infusão UI/kg/h↑ → sangramento↑ (' + viol + ' violações)');
   })();
-  // heparina↑ → TTPa não-decrescente
+  // infusão (UI/kg/h)↑ → TTPa não-decrescente
   (function () {
     var prev = null, mono = true, viol = 0;
     for (var i = 0; i <= STEPS; i++) {
-      var d = i / STEPS, v = heparina({ dose: d }).ttpaRatio;
+      var inf = 30 * i / STEPS, v = heparina({ infusao: inf }).ttpaRatio;
       if (prev !== null) { if (v - prev < -1e-9) { mono = false; viol++; } micros(1); }
       prev = v;
     }
-    ok(mono, 'monotonia: heparina↑ → TTPa↑ (' + viol + ' violações)');
+    ok(mono, 'monotonia: infusão UI/kg/h↑ → TTPa↑ (' + viol + ' violações)');
+  })();
+  // bólus (UI/kg)↑ → TTPa não-decrescente
+  (function () {
+    var prev = null, mono = true, viol = 0;
+    for (var i = 0; i <= STEPS; i++) {
+      var bol = 80 * i / STEPS, v = heparina({ bolus: bol }).ttpaRatio;
+      if (prev !== null) { if (v - prev < -1e-9) { mono = false; viol++; } micros(1); }
+      prev = v;
+    }
+    ok(mono, 'monotonia: bólus UI/kg↑ → TTPa↑ (' + viol + ' violações)');
   })();
   // Qb↑ → carga de citrato não-decrescente
   (function () {
@@ -250,7 +273,8 @@ function dentroBounds(r) {
   function fields() {
     return {
       sangramento: val(), funcaoHepatica: val(), citratoDose: val(), qb: val(),
-      caBasal: val(), caReposicao: val(), caSistBasal: val(), heparinaDose: val()
+      caBasal: val(), caReposicao: val(), caSistBasal: val(),
+      heparinaBolus: val(), heparinaInfusao: val()
     };
   }
   function ser(o) { return JSON.stringify(o, function (k, v) { return (typeof v === 'function') ? '__fn__' : (v === undefined ? '__u__' : v); }); }

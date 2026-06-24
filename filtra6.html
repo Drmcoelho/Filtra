@@ -140,7 +140,9 @@
 
       <h4>4. Os diuréticos de alça — sítio, efeitos e potência</h4>
       <p class="sub">Bloqueiam o NKCC2: natriurese potente (a maior dos diuréticos), com perda de K⁺, H⁺, Ca²⁺ e
-      Mg²⁺. <b>Furosemida 20–80 mg · bumetanida 0,5–2 mg (≈40×) · torasemida 10–20 mg.</b></p>
+      Mg²⁺. <b>Furosemida 20–80 mg · bumetanida 0,5–2 mg (≈40×) · torasemida 10–20 mg (≈2×).</b>
+      <b>Biodisponibilidade oral:</b> a furosemida tem absorção ~50% e <b>variável</b> (40 mg VO ≈ 20 mg IV) —
+      bumetanida e torasemida têm ~80–100% (VO ≈ IV). Por isso a furosemida VO costuma exigir o dobro da dose IV.</p>
       <div class="frow">
         <figure class="fviva"><img src="assets/m6/diureticos-alca-sitio.png" alt="Sítio de ação dos diuréticos de alça no néfron" loading="lazy">
           <figcaption><b>Fig. 8 · O sítio.</b> O alvo é o NKCC2 no ramo espesso ascendente — o ponto de maior
@@ -149,8 +151,9 @@
           <figcaption><b>Fig. 9 · Uma chave, muitos efeitos.</b> Natriurese (↓congestão) + hipocalemia/alcalose +
           perda de Ca/Mg (útil na hipercalcemia) + ototoxicidade. Note: perde Ca (≠ tiazídico).</figcaption></figure>
         <figure class="fviva"><img src="assets/m6/potencia-comparada.svg" alt="Furosemida, bumetanida e torasemida: mesma eficácia, potências diferentes" loading="lazy">
-          <figcaption><b>Fig. 10 · Potência ≠ eficácia.</b> Mesmo teto; doses diferentes. Bumetanida ≈40× (melhor
-          absorção oral); torasemida tem meia-vida maior (1×/dia).</figcaption></figure>
+          <figcaption><b>Fig. 10 · Potência ≠ eficácia.</b> Mesmo teto; doses diferentes. Bumetanida ≈40×
+          (torasemida ≈2× — torasemida 20 mg ≈ furosemida 40 mg); torasemida tem meia-vida maior (1×/dia).
+          Biodisponibilidade oral: furosemida ~50% e variável, bumetanida/torasemida ~80–100%.</figcaption></figure>
       </div>
 
       <h4>5. A dose-resposta — teto, braking e o uso</h4>
@@ -185,9 +188,11 @@
 
       <div class="step"><b>Ato 2.</b> Demos <b>furosemida 20 mg VO</b> e "não fez nada". O que provavelmente faltou (Fig. 11)?
         <div><button class="act" data-rev="r2">Revelar</button></div>
-        <div class="reveal" id="r2"><b>Dose abaixo do limiar.</b> A curva precisa ser ultrapassada para "abrir" a
-          natriurese; subdose não faz efeito. Suba a dose (ou IV) até passar do joelho da curva. No Lab, veja a FENa
-          só subir após o limiar.</div></div>
+        <div class="reveal" id="r2"><b>Dose abaixo do limiar — e a via.</b> A curva precisa ser ultrapassada para
+          "abrir" a natriurese; subdose não faz efeito. Some-se a isso a <b>biodisponibilidade oral ~50% e variável</b>
+          da furosemida: 40 mg VO entregam só ~20 mg-equivalente (40 mg VO ≈ 20 mg IV), então a dose VO precisa ser ~o
+          dobro da IV. Suba a dose (ou troque para IV) até passar do joelho da curva. No Lab, veja a FENa só subir após
+          o limiar.</div></div>
 
       <div class="step"><b>Ato 3.</b> <i>Prever:</i> trocamos para <b>bumetanida 1 mg</b>. Por que uma dose tão menor (Fig. 10)?
         <div><button class="act" data-rev="r3">Revelar</button></div>
@@ -243,8 +248,9 @@
         a urina não concentra nem dilui ao máximo.</p></details>
       <details><summary>9. Por que o teto é "alto"?</summary><p>O NKCC2 fica logo após o proximal e antes do ajuste
         fino: bloqueá-lo entrega muito Na adiante → FENa pode chegar a ~25%.</p></details>
-      <details><summary>10. Potência × eficácia entre eles?</summary><p>Mesma eficácia (teto); bumetanida ≈40× mais
-        potente (dose menor), torasemida com meia-vida maior. A curva só desliza na horizontal.</p></details>
+      <details><summary>10. Potência × eficácia entre eles?</summary><p>Mesma eficácia (teto); bumetanida ≈40× e
+        torasemida ≈2× mais potentes (dose menor — torasemida 20 mg ≈ furosemida 40 mg), torasemida com meia-vida
+        maior. A curva só desliza na horizontal.</p></details>
       <details><summary>11. O que é o braking?</summary><p>A adaptação ao uso crônico: rebote pós-diurético +
         hipertrofia distal → o efeito líquido cai. Daí a "resistência ao diurético".</p></details>
       <details><summary>12. Como vencer a resistência?</summary><p>Dose acima do limiar/IV contínua, restrição de
@@ -346,10 +352,10 @@
 /* ENGINE INLINE — espelho fiel de build/m6/model6.js */
 function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
 var FARMACOS={
-  nenhum:{nome:'— nenhum —',unidade:'',faixa:[0,0],ec50:1,alvo:'',potencia:''},
-  furosemida:{nome:'Furosemida',unidade:'mg',faixa:[20,80],ec50:20,alvo:'NKCC2 (ramo espesso ascendente)',potencia:'referência (1×)'},
-  bumetanida:{nome:'Bumetanida',unidade:'mg',faixa:[0.5,2],ec50:0.5,alvo:'NKCC2 (ramo espesso ascendente)',potencia:'≈40× a furosemida'},
-  torasemida:{nome:'Torasemida',unidade:'mg',faixa:[10,20],ec50:7.5,alvo:'NKCC2 (ramo espesso ascendente)',potencia:'≈2–3× a furosemida; meia-vida maior'}
+  nenhum:{nome:'— nenhum —',unidade:'',faixa:[0,0],ec50:1,alvo:'',potencia:'',bioVO:1},
+  furosemida:{nome:'Furosemida',unidade:'mg',faixa:[20,80],ec50:20,alvo:'NKCC2 (ramo espesso ascendente)',potencia:'referência (1×)',bioVO:0.5},
+  bumetanida:{nome:'Bumetanida',unidade:'mg',faixa:[0.5,2],ec50:0.5,alvo:'NKCC2 (ramo espesso ascendente)',potencia:'≈40× a furosemida',bioVO:0.9},
+  torasemida:{nome:'Torasemida',unidade:'mg',faixa:[10,20],ec50:10,alvo:'NKCC2 (ramo espesso ascendente)',potencia:'≈2× a furosemida; meia-vida maior',bioVO:0.9}
 };
 function emaxModel(dose,ec50,emax){ dose=clampv(dose,0,1e6); ec50=clampv(ec50,1e-6,1e6); emax=clampv(emax,0,1); return clampv(emax*dose/(ec50+dose),0,1); }
 function alca(input){ var inp=input||{};
@@ -364,7 +370,7 @@ function alca(input){ var inp=input||{};
   var podeConcentrar=gradiente>600, podeDiluirMax=nkcc2>0.5, perda=bloqueio, perdaCa=bloqueio>0.2, ceilingReached=bloqueio>0.85;
   var classe; if(droga==='nenhum') classe='normal'; else if(ceilingReached) classe='diuretico_alca_teto'; else classe='diuretico_alca';
   return {gfr:gfr,adh:adh,cronico:cronico,droga:droga,dose:dose,unidade:meta.unidade,alvo:meta.alvo,faixa:meta.faixa,
-    nomeFarmaco:meta.nome,potencia:meta.potencia,bloqueio:bloqueio,nkcc2:nkcc2,gradiente:gradiente,FENa:FENa,braking:braking,
+    nomeFarmaco:meta.nome,potencia:meta.potencia,bioVO:meta.bioVO,bloqueio:bloqueio,nkcc2:nkcc2,gradiente:gradiente,FENa:FENa,braking:braking,
     urineOsm:urineOsm,podeConcentrar:podeConcentrar,podeDiluirMax:podeDiluirMax,perda:perda,perdaCa:perdaCa,ceilingReached:ceilingReached,classe:classe}; }
 function alcaLayout(state,W,H){ state=state||{}; W=clampv(W,200,100000); H=clampv(H,120,100000);
   var padL=52,padR=16,padT=18,padB=38,baseY=H-padB;
@@ -488,7 +494,7 @@ var TUTOR_ILUSTRADO=[
   {q:'Na figura dos efeitos, o diurético de alça perde…',o:['retém Ca','perde Ca/Mg','não mexe em Ca'],c:1,e:'Perde Ca²⁺ e Mg²⁺ (útil na hipercalcemia); ao contrário do tiazídico.',fig:function(){return imgFig('diuretico-alca-efeitos.svg','efeitos');}},
   {q:'Na figura do braking, a saída para a resistência inclui…',o:['parar o diurético','bloqueio sequencial (+ tiazídico)','dobrar água'],c:1,e:'Associar tiazídico ao distal hipertrofiado → sinergia (M17).',fig:function(){return imgFig('braking-resistencia.svg','braking');}},
   {q:'Na figura da vasa recta, a alça serve para…',o:['lavar o gradiente','preservar o gradiente','filtrar'],c:1,e:'Troca contracorrente evita o washout do gradiente.',fig:function(){return imgFig('vasa-recta-troca.svg','vasa recta');}},
-  {q:'Comparada à furosemida, a torasemida tem…',o:['meia-vida menor','meia-vida maior (1×/dia)','sem efeito'],c:1,e:'≈2–3× a potência e meia-vida maior → dose única diária.',fig:function(){return curveMini({droga:'torasemida',dose:20},'torasemida 20 mg');}}
+  {q:'Comparada à furosemida, a torasemida tem…',o:['meia-vida menor','meia-vida maior (1×/dia)','sem efeito'],c:1,e:'≈2× a potência (20 mg ≈ furosemida 40 mg) e meia-vida maior → dose única diária.',fig:function(){return curveMini({droga:'torasemida',dose:20},'torasemida 20 mg');}}
 ];
 var TUTOR_TEXTUAL=[
   {q:'O alvo dos diuréticos de alça é…',o:['SGLT2','NKCC2','ENaC'],c:1,e:'NKCC2 no ramo espesso ascendente.'},
@@ -498,7 +504,7 @@ var TUTOR_TEXTUAL=[
   {q:'Bumetanida vs furosemida: a potência é…',o:['igual','≈40× maior','menor'],c:1,e:'Mesma eficácia, dose ~40× menor.'},
   {q:'A alça, quanto ao cálcio,…',o:['retém','perde','não mexe'],c:1,e:'Perde Ca²⁺ (útil na hipercalcemia); o tiazídico retém.'},
   {q:'Hipocalemia + alcalose metabólica com diurético de alça vêm de…',o:['perder Na só','mais Na ao ducto → troca por K⁺/H⁺','reter K'],c:1,e:'A entrega distal de Na aumenta a troca por K e H (aldosterona).'},
-  {q:'"Não respondeu à furosemida 20 mg VO" geralmente é…',o:['alergia','subdose abaixo do limiar','dose tóxica'],c:1,e:'Precisa ultrapassar o limiar da curva (ou via/absorção).'},
+  {q:'"Não respondeu à furosemida 20 mg VO" geralmente é…',o:['alergia','subdose abaixo do limiar','dose tóxica'],c:1,e:'Precisa ultrapassar o limiar da curva — e a biodisponibilidade oral ~50% e variável (40 mg VO ≈ 20 mg IV) baixa a dose efetiva. Suba a dose ou troque para IV.'},
   {q:'O braking é…',o:['efeito tóxico','adaptação que reduz o efeito no uso crônico','alergia'],c:1,e:'Rebote + hipertrofia distal → resistência.'},
   {q:'A saída clássica para a resistência é…',o:['parar tudo','bloqueio sequencial (alça + tiazídico)','mais água'],c:1,e:'Sinergia bloqueando dois segmentos (M17).'},
   {q:'Abolir o gradiente leva a…',o:['urina concentrada','isostenúria (~300)','anúria'],c:1,e:'Sem pilha osmótica não há como concentrar.'},

@@ -56,7 +56,7 @@ var ids = [
   'tabs', 'tab-conceito', 'tab-caso', 'tab-trilha', 'tab-instrumento', 'tab-lab', 'tab-avaliacao',
   'ca-canvas',
   'in-sangramento', 'in-funcaoHepatica', 'in-citratoDose', 'in-qb', 'in-caBasal', 'in-caReposicao',
-  'in-caSistBasal', 'in-heparinaDose',
+  'in-caSistBasal', 'in-heparinaBolus', 'in-heparinaInfusao',
   'out-modalidade', 'out-cacirc', 'out-casist', 'out-gap', 'out-carga', 'out-sangra',
   'veredito', 'instr-pearl', 'lab-pearl', 'fig-caso',
   'tutor-q', 'tutor-opts', 'tutor-fb', 'tutor-score', 'tutor-total', 'tutor-fig',
@@ -91,10 +91,10 @@ ok(typeof win.caLayout === 'function', 'UI expõe caLayout()');
 ok(typeof win.citrato === 'function' && typeof win.acumuloCitrato === 'function' && typeof win.heparina === 'function', 'UI expõe citrato()/acumuloCitrato()/heparina()');
 var amostras = [
   {}, { sangramento: 0.8, funcaoHepatica: 1.0, citratoDose: 2.0, qb: 150 },
-  { sangramento: 0.7, funcaoHepatica: 0.1, citratoDose: 4, qb: 220 }, { sangramento: 0.1, heparinaDose: 0.7 },
+  { sangramento: 0.7, funcaoHepatica: 0.1, citratoDose: 4, qb: 220 }, { sangramento: 0.1, heparinaInfusao: 14, heparinaBolus: 40 },
   { sangramento: 0.9, funcaoHepatica: 0.9, citratoDose: 2 }, { citratoDose: 0.8, sangramento: 0.7 },
   { funcaoHepatica: 0.05, citratoDose: 5, qb: 300, caReposicao: 0.5 }, { caBasal: 1.3, citratoDose: 3 },
-  { sangramento: null, funcaoHepatica: 'x', citratoDose: -2, qb: 1e9, caBasal: NaN, caReposicao: Infinity, caSistBasal: 'y', heparinaDose: 1e300 }
+  { sangramento: null, funcaoHepatica: 'x', citratoDose: -2, qb: 1e9, caBasal: NaN, caReposicao: Infinity, caSistBasal: 'y', heparinaBolus: 1e300, heparinaInfusao: -5 }
 ];
 var divC = 0;
 amostras.forEach(function (a) { if (JSON.stringify(win.anticoagulacao(a)) !== JSON.stringify(ref.anticoagulacao(a))) divC++; });
@@ -105,8 +105,8 @@ var divCit = 0;
 });
 ok(divCit === 0, 'citrato ≡ UI (' + divCit + ' divergências)');
 var divHep = 0;
-[[0.7, 0.8], [0.1, 0.2], [1, 0], [0, 0.5]].forEach(function (t) {
-  if (JSON.stringify(win.heparina({ dose: t[0], sangramentoBasal: t[1] })) !== JSON.stringify(ref.heparina({ dose: t[0], sangramentoBasal: t[1] }))) divHep++;
+[[30, 10, 0.8], [50, 14, 0.2], [20, 5, 0], [0, 0, 0.5]].forEach(function (t) {
+  if (JSON.stringify(win.heparina({ bolus: t[0], infusao: t[1], sangramentoBasal: t[2] })) !== JSON.stringify(ref.heparina({ bolus: t[0], infusao: t[1], sangramentoBasal: t[2] }))) divHep++;
 });
 ok(divHep === 0, 'heparina ≡ UI (' + divHep + ' divergências)');
 var divL = 0;
@@ -120,7 +120,7 @@ ok(divL === 0, 'caLayout ≡ UI (' + divL + ' divergências)');
   var MAL = [NaN, Infinity, -Infinity, 1e300, -1e300, '5', 'x', '', null, undefined, {}, [], true];
   function v() { if (rnd() < 0.55) return MAL[(rnd() * MAL.length) | 0]; return (rnd() - 0.25) * 500; }
   for (var i = 0; i < N; i++) {
-    var inp = { sangramento: v(), funcaoHepatica: v(), citratoDose: v(), qb: v(), caBasal: v(), caReposicao: v(), caSistBasal: v(), heparinaDose: v() };
+    var inp = { sangramento: v(), funcaoHepatica: v(), citratoDose: v(), qb: v(), caBasal: v(), caReposicao: v(), caSistBasal: v(), heparinaBolus: v(), heparinaInfusao: v() };
     var a = win.anticoagulacao(inp), b = ref.anticoagulacao(inp);
     if (JSON.stringify(a) !== JSON.stringify(b)) div++;
     if (!fin(a.caCircuito) || !fin(a.caSistemico) || !fin(a.gap) || !fin(a.cargaCitrato) || !fin(a.ttpaRatio) || !fin(a.riscoSangramento)) naoFin++;
@@ -137,7 +137,7 @@ function slv(id) { return +doc.getElementById(id).value; }
 var initState = {
   sangramento: slv('in-sangramento'), funcaoHepatica: slv('in-funcaoHepatica'), citratoDose: slv('in-citratoDose'),
   qb: slv('in-qb'), caBasal: slv('in-caBasal'), caReposicao: slv('in-caReposicao'),
-  caSistBasal: slv('in-caSistBasal'), heparinaDose: slv('in-heparinaDose')
+  caSistBasal: slv('in-caSistBasal'), heparinaBolus: slv('in-heparinaBolus'), heparinaInfusao: slv('in-heparinaInfusao')
 };
 var canvasEl = doc.getElementById('ca-canvas');
 var rec = canvasEl.getContext('2d');
@@ -200,6 +200,13 @@ ok(/educacional/i.test(body) && doc.querySelector('.disc') !== null, 'disclaimer
 ok(!/\b\d+\s?(mg|mcg|µg)\b(?!\/)/.test(body), 'guarda §8: nenhuma dose de massa solta (mg/mcg/µg)');
 ok(/mmol\/L/.test(body), 'guarda §8: unidades do meio interno (mmol/L) presentes');
 ok(/mmol\/h/.test(body) && /mL\/min/.test(body), 'guarda §8: doses de DIÁLISE por mecanismo (mmol/h, mL/min)');
+// heparina (HNF) com dose EM UNIDADES (UI/kg bólus e UI/kg/h infusão) ancorada ao TTPa-alvo
+ok(/UI\/kg\/h/.test(body), 'guarda §8: infusão de heparina em UI/kg/h (unidade explícita)');
+ok(/UI\/kg(?!\/)/.test(body), 'guarda §8: bólus de heparina em UI/kg (unidade explícita)');
+ok(/TTPa/.test(body) && /1,5\s*[–-]\s*2/.test(body), 'guarda §8: dose de heparina ancorada ao alvo de TTPa (~1,5–2×)');
+// o controle de heparina é dosado em unidades e casa com o engine de dose-resposta
+ok(typeof win.heparina === 'function' && win.heparina({ infusao: 14 }).ttpaRatio > win.heparina({ infusao: 4 }).ttpaRatio, 'guarda §8: dose-resposta da heparina (↑UI/kg/h → ↑TTPa) computada pelo motor');
+ok(win.anticoagulacao({ sangramento: 0.1, heparinaInfusao: 16 }).riscoSangramento > win.anticoagulacao({ sangramento: 0.1, heparinaInfusao: 4 }).riscoSangramento, 'guarda §8: ↑infusão UI/kg/h → ↑risco de sangramento (mecanismo no motor)');
 
 // ---------- offline + figura viva ----------
 ok(imgGuard.remoteImgs(doc).length === 0, 'offline: nenhum <img> remoto');

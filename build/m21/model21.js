@@ -22,10 +22,14 @@
  * (deixa passar moléculas médias, ~β2-microglobulina 11,8 kDa); low-flux não.
  *   S(pm) = 1/(1 + (pm/cutoff)^steep)            ∈ [0,1]
  *
- * BACKFILTRATION: na porção distal do dialisador high-flux com Qd alto, a
- * pressão do compartimento de DIALISATO supera a do sangue → fluxo REVERSO
- * (dialisato → sangue). Se o dialisato não for ULTRAPURO, endotoxina entra.
- * Índice 0..1 da intensidade do fluxo reverso.
+ * BACKFILTRATION: o motor é a QUEDA AXIAL de pressão do SANGUE ao longo da
+ * fibra oca. O sangue entra com pressão alta e a perde por atrito ao percorrer
+ * a fibra; na porção DISTAL do dialisador HIGH-FLUX (membrana muito permeável à
+ * água) essa pressão cai ABAIXO da do dialisato → fluxo REVERSO (dialisato →
+ * sangue) naquele trecho. O driver PRIMÁRIO é high-flux + o gradiente axial de
+ * pressão (∝ Qb, que dita a queda de pressão ao longo da fibra); a TMP média
+ * modula (TMP baixa favorece o cruzamento distal) e o Qd é contribuinte MENOR.
+ * Se o dialisato não for ULTRAPURO, endotoxina entra. Índice 0..1.
  *
  * FUNÇÃO-MÃE membrana(input): combina KoA/Qb/Qd → clearance de ureia (pequeno,
  * 60 Da) e de molécula média (β2m, 11800 Da); classifica high-flux × low-flux;
@@ -42,9 +46,9 @@ function clampv(v, a, b) { var n = Number(v); if (!isFinite(n)) n = a; if (n < a
 /* pesos moleculares de referência (Da) e cutoffs (Da) */
 var PM_UREIA = 60;        // ureia ~60 Da (soluto pequeno)
 var PM_B2M = 11800;       // β2-microglobulina ~11,8 kDa (molécula média)
-var CUTOFF_LOW = 2000;    // low-flux: cutoff baixo, barra o médio
-var CUTOFF_HIGH = 25000;  // high-flux: cutoff alto, deixa passar o médio
-var STEEP = 4;            // inclinação da sigmoide de sieving
+var CUTOFF_LOW = 2000;    // low-flux: cutoff baixo, barra o médio (β2m S≈0)
+var CUTOFF_HIGH = 12800;  // high-flux: cutoff calibrado p/ β2m S≈0,6 (clínico)
+var STEEP = 5;            // inclinação da sigmoide de sieving
 
 /* clearance difusivo do dialisador (mL/min). z = KoA·(1−Qb/Qd)/Qb.
  * Caso limite Qb≈Qd: forma fechada K = Qb·KoA/(Qb+KoA). */
@@ -87,19 +91,25 @@ function sieving(o) {
 }
 
 /* índice de backfiltration 0..1: fluxo reverso (dialisato→sangue) na porção
- * distal. Só relevante em HIGH-FLUX (membrana muito permeável à água) com Qd
- * alto e TMP média/baixa (a pressão hidrostática do banho vence localmente). */
+ * distal. Só ocorre em HIGH-FLUX (membrana muito permeável à água). O driver
+ * PRIMÁRIO é a QUEDA AXIAL de pressão do sangue ao longo da fibra: o sangue
+ * perde pressão por atrito e, no trecho distal, cai abaixo da do dialisato. Essa
+ * queda axial cresce com Qb (mais fluxo → maior gradiente de pressão na fibra).
+ * A TMP média modula (TMP baixa favorece o cruzamento distal); o Qd é MENOR. */
 function backfiltration(o) {
   o = o || {};
   var highFlux = clampv(o.highFlux, 0, 1);     // 1 = high-flux, 0 = low-flux
-  var qd = clampv(o.qd, 1, 1200);              // mL/min (banho)
+  var qb = clampv(o.qb, 1, 600);               // mL/min (sangue) — dita a queda axial
+  var qd = clampv(o.qd, 1, 1200);              // mL/min (banho) — contribuinte menor
   var tmp = clampv(o.tmp, 0, 400);             // mmHg (TMP média do filtro)
-  // low-flux quase não permite backfiltration (membrana pouco permeável)
-  // componente do banho: Qd alto empurra mais pressão no compartimento distal
-  var qdComp = clampv((qd - 300) / 500, 0, 1);          // 300→0 ; 800→1
-  // TMP alta (UF forte) afasta o backfiltration; TMP baixa o favorece
+  // DRIVER PRIMÁRIO: gradiente axial de pressão do sangue ∝ Qb. Qb alto faz a
+  // pressão do sangue despencar no trecho distal e ficar abaixo da do banho.
+  var axialComp = clampv((qb - 200) / 300, 0, 1);       // Qb 200→0 ; 500→1
+  // TMP média baixa favorece o cruzamento distal (modula)
   var tmpComp = clampv(1 - tmp / 80, 0, 1);             // TMP 0→1 ; 80+→0
-  var bf = highFlux * (0.55 * qdComp + 0.45 * tmpComp);
+  // Qd alto empurra um pouco mais de pressão no banho distal (MENOR)
+  var qdComp = clampv((qd - 300) / 500, 0, 1);          // 300→0 ; 800→1
+  var bf = highFlux * (0.60 * axialComp + 0.30 * tmpComp + 0.10 * qdComp);
   return clampv(bf, 0, 1);
 }
 
@@ -134,7 +144,7 @@ function membrana(input) {
   var removeMedio = sMedio >= 0.3;
 
   // backfiltration e a exigência de pureza
-  var bf = backfiltration({ highFlux: highFlux, qd: qd, tmp: tmp });
+  var bf = backfiltration({ highFlux: highFlux, qb: qb, qd: qd, tmp: tmp });
   var precisaUltrapuro = bf >= 0.15;   // há fluxo reverso suficiente → dialisato ultrapuro obrigatório
 
   // saturação: ganho marginal de K ao subir Qb (derivada numérica, mL/min por mL/min)

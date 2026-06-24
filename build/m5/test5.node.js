@@ -43,13 +43,25 @@ function fin(x) { return typeof x === 'number' && isFinite(x); }
   // SGLT2i: dose↑ → Tm↓ → glicosúria mesmo com glicemia normal
   ok(tcp({ droga: 'sglt2i', dose: 25, plasmaGlu: 100 }).gluExcretada > tcp({ droga: 'sglt2i', dose: 0, plasmaGlu: 100 }).gluExcretada, 'lei: SGLT2i ↑dose → glicosúria normoglicêmica');
   ok(tcp({ droga: 'sglt2i', dose: 25 }).TmG < tcp({ droga: 'sglt2i', dose: 5 }).TmG, 'lei: SGLT2i ↑dose → Tm↓');
-  // acetazolamida: dose↑ → reabsHCO3↓ → HCO3 plasmático↓ (acidose)
-  ok(tcp({ droga: 'acetazolamida', dose: 1000 }).plasmaHCO3novo < tcp({ droga: 'acetazolamida', dose: 250 }).plasmaHCO3novo, 'lei: acetazolamida ↑dose → HCO₃↓ (acidose)');
-  ok(tcp({ droga: 'acetazolamida', dose: 1000 }).bicarbonaturia, 'lei: acetazolamida → bicarbonatúria');
-  // manitol: diurese osmótica
-  ok(tcp({ droga: 'manitol', dose: 100 }).diureseIndex > tcp({ droga: 'manitol', dose: 12 }).diureseIndex, 'lei: manitol ↑dose → diurese↑');
+  // acetazolamida: dose↑ → reabsHCO3↓ → HCO3 plasmático↓ (acidose); teto da faixa = 500 mg/dia
+  ok(tcp({ droga: 'acetazolamida', dose: 500 }).plasmaHCO3novo < tcp({ droga: 'acetazolamida', dose: 250 }).plasmaHCO3novo, 'lei: acetazolamida ↑dose → HCO₃↓ (acidose)');
+  ok(tcp({ droga: 'acetazolamida', dose: 500 }).bicarbonaturia, 'lei: acetazolamida → bicarbonatúria');
+  ok(M.FARMACOS.acetazolamida.faixa[1] === 500, 'lei: acetazolamida faixa-teto = 500 mg/dia (≡ prosa)');
+  // manitol: diurese osmótica DOSE-LINEAR (osmótico, sem receptor/teto)
+  ok(tcp({ droga: 'manitol', dose: 1.0 }).diureseIndex > tcp({ droga: 'manitol', dose: 0.25 }).diureseIndex, 'lei: manitol ↑dose → diurese↑');
+  ok(M.FARMACOS.manitol.unidade === 'g/kg', 'lei: manitol em g/kg (≡ prosa 0,25–1 g/kg)');
+  // efeitoFarm do manitol é LINEAR: dobrar a dose ~dobra o efeito (ao contrário do Emax saturável)
+  (function () {
+    var mFaixaMax = M.FARMACOS.manitol.faixa[1];
+    var e1 = tcp({ droga: 'manitol', dose: 0.4 }).efeitoFarm, e2 = tcp({ droga: 'manitol', dose: 0.8 }).efeitoFarm;
+    ok(near(e1, 0.4 / mFaixaMax, 1e-9), 'lei: manitol efeitoFarm = dose/faixaMax (linear)');
+    ok(near(e2, 2 * e1, 1e-9), 'lei: manitol dobrar a dose ~dobra o efeito (linearidade, sem teto)');
+    // contraste: o SGLT2i (Emax) é CÔNCAVO — dobrar a dose rende MENOS que o dobro
+    var s1 = tcp({ droga: 'sglt2i', dose: 5 }).efeitoFarm, s2 = tcp({ droga: 'sglt2i', dose: 10 }).efeitoFarm;
+    ok(s2 < 2 * s1 - 1e-9, 'lei: SGLT2i (Emax) dobrar a dose rende MENOS que o dobro (teto/saturação)');
+  })();
   // natriurese: acetazolamida e sglt2i reduzem a reabsorção de Na
-  ok(tcp({ droga: 'acetazolamida', dose: 1000 }).naReabsFrac < 0.65, 'lei: acetazolamida → natriurese (Na reabs↓)');
+  ok(tcp({ droga: 'acetazolamida', dose: 500 }).naReabsFrac < 0.65, 'lei: acetazolamida → natriurese (Na reabs↓)');
 })();
 
 /* 4. PÉROLAS */
@@ -61,7 +73,7 @@ function fin(x) { return typeof x === 'number' && isFinite(x); }
   var f = tcp({ fanconi: true, plasmaGlu: 95 });
   ok(f.glicosuria && f.bicarbonaturia && f.classe === 'fanconi', 'pérola: Fanconi → glicosúria normoglicêmica + bicarbonatúria');
   // a "alça é prisioneira do proximal": bloquear o proximal entrega mais Na adiante (natriurese)
-  ok(tcp({ droga: 'acetazolamida', dose: 1000 }).naReabsFrac < tcp({}).naReabsFrac, 'pérola: bloquear o TCP entrega mais Na a jusante');
+  ok(tcp({ droga: 'acetazolamida', dose: 500 }).naReabsFrac < tcp({}).naReabsFrac, 'pérola: bloquear o TCP entrega mais Na a jusante');
   // limiar: o mesmo Tm dá limiar maior quando a TFG é menor (menos glicose filtrada)
   ok(tcp({ gfr: 60 }).limiarGlu > tcp({ gfr: 125 }).limiarGlu, 'pérola: TFG baixa → limiar de glicosúria mais alto');
 })();

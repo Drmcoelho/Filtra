@@ -148,17 +148,21 @@
           usos: glaucoma, mal das alturas, alcalose. É autolimitada (a própria acidose freia o efeito).</figcaption></figure>
       </div>
 
-      <h4>4. Manitol e a curva dose-resposta</h4>
+      <h4>4. Manitol (osmótico, dose-linear) × a curva Emax dos saturáveis</h4>
       <p class="sub">O <b>manitol</b> (0,25–1 g/kg) é filtrado e não reabsorvido → segura água na luz (diurese
-      osmótica). E todo fármaco aqui obedece a uma <b>curva dose-resposta (Emax)</b> com teto.</p>
+      osmótica). Por ser osmótico, <b>não tem receptor a saturar</b>: a diurese cresce ~<b>linearmente</b> com a
+      dose, sem teto. Já os fármacos de <b>receptor/transportador saturável</b> (SGLT2i no S1, com seu Tm)
+      obedecem a uma <b>curva dose-resposta (Emax) com teto</b> — neles, dobrar a dose perto do platô rende pouco.</p>
       <div class="frow">
         <div class="concept" id="draw-dose"></div>
         <figure class="fviva"><img src="assets/m5/manitol-osmotico.svg" alt="Manitol: osmol não reabsorvido que retém água no túbulo" loading="lazy">
           <figcaption><b>Fig. 11 · Manitol osmótico.</b> Osmol que não sai da luz → retém água em todo o néfron.
           Usos: ↓PIC e ↓pressão intraocular. Cuidado: expande o ECF antes da diurese (risco em ICC).</figcaption></figure>
         <figure class="fviva"><img src="assets/m5/dose-resposta-emax.svg" alt="Curva dose-resposta Emax: efeito satura num teto, EC50 é a meia-dose" loading="lazy">
-          <figcaption><b>Fig. 12 · Dose-resposta (Emax).</b> efeito = Emax·D/(EC50+D): satura num teto. Em dose
-          terapêutica já se está perto do platô — dobrar a dose pouco acrescenta. É o que o motor computa no Lab.</figcaption></figure>
+          <figcaption><b>Fig. 12 · Dose-resposta (Emax) dos saturáveis.</b> efeito = Emax·D/(EC50+D): satura num
+          teto — vale para o <b>SGLT2i</b> (Tm/receptor). Em dose terapêutica já se está perto do platô, e dobrar
+          a dose pouco acrescenta. O <b>manitol</b> NÃO segue esta curva: é osmótico, dose-linear. É o que o motor
+          computa no Lab.</figcaption></figure>
       </div>
 
       <h4>5. Quando o proximal inteiro falha — Fanconi</h4>
@@ -210,8 +214,8 @@
         do proximal serve, e por quê?
         <div><button class="act" data-rev="r6">Revelar</button></div>
         <div class="reveal" id="r6"><b>Manitol 0,25–1 g/kg</b>: osmol efetivo que não entra na célula (M0) e não é
-          reabsorvido → puxa água do cérebro para o plasma e faz diurese osmótica. Cuidado com a expansão inicial do
-          ECF na ICC.</div></div>
+          reabsorvido → puxa água do cérebro para o plasma e faz diurese osmótica. Como é osmótico, o efeito é
+          <b>dose-linear</b> (sem teto): mais dose → mais diurese. Cuidado com a expansão inicial do ECF na ICC.</div></div>
 
       <div class="step"><b>Ato 7.</b> <i>A pegadinha.</i> Um terceiro paciente tem glicosúria 2+ com glicemia
         <b>95 mg/dL</b> e não usa SGLT2i. O que é (Fig. 13)?
@@ -222,7 +226,8 @@
       <div class="step"><b>Ato 8.</b> <i>Síntese.</i> Qual a lição de uma linha?
         <div><button class="act" data-rev="r8">Revelar</button></div>
         <div class="reveal" id="r8">No proximal, cada fármaco é a <b>chave de um transportador</b>, com dose, unidade e
-          mecanismo — e curva dose-resposta com teto. Bloquear o proximal ecoa em todo o néfron a jusante.</div></div>
+          mecanismo. Os saturáveis (SGLT2i) têm <b>curva Emax com teto</b>; o osmótico (manitol) é <b>dose-linear</b>.
+          Bloquear o proximal ecoa em todo o néfron a jusante.</div></div>
     </div>
   </section>
 
@@ -251,7 +256,8 @@
       <details><summary>10. Como o manitol faz diurese?</summary><p>0,25–1 g/kg: filtrado e não reabsorvido, retém
         água na luz por osmose (diurese osmótica); também puxa água do tecido (↓PIC).</p></details>
       <details><summary>11. O que é a curva dose-resposta?</summary><p>efeito = Emax·D/(EC50+D): EC50 é a dose de
-        meio-efeito; o efeito satura num teto (Emax). Vale para todos os diuréticos.</p></details>
+        meio-efeito; o efeito satura num teto (Emax). Vale para os fármacos de <b>receptor/transportador saturável</b>
+        (SGLT2i). O <b>manitol</b> é a exceção: por ser osmótico, sua diurese é <b>dose-linear</b>, sem teto.</p></details>
       <details><summary>12. O que é a síndrome de Fanconi?</summary><p>Disfunção global do TCP: glicosúria
         normoglicêmica + bicarbonatúria (ATR tipo 2) + fosfatúria + aminoacidúria.</p></details>
       <details><summary>13. Em que sentido isto é homeostasia?</summary><p>O proximal recupera em massa o que serve
@@ -303,7 +309,7 @@
         <button class="act" data-preset="diabetes">Diabetes (glicemia 300)</button>
         <button class="act" data-preset="sglt2i">+ SGLT2i 25 mg</button>
         <button class="act" data-preset="aceta">+ Acetazolamida 500 mg</button>
-        <button class="act" data-preset="manitol">+ Manitol 50 g</button>
+        <button class="act" data-preset="manitol">+ Manitol 1 g/kg</button>
         <button class="act" data-preset="fanconi">Fanconi</button>
       </div>
 
@@ -358,8 +364,8 @@ function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>
 var FARMACOS={
   nenhum:{nome:'— nenhum —',unidade:'',faixa:[0,0],ec50:1,alvo:'',efeito:''},
   sglt2i:{nome:'Empagliflozina (SGLT2i)',unidade:'mg/dia',faixa:[10,25],ec50:3,alvo:'SGLT2 (cotransportador Na/glicose, S1 do TCP)',efeito:'glicosúria + natriurese leve'},
-  acetazolamida:{nome:'Acetazolamida',unidade:'mg/dia',faixa:[250,1000],ec50:250,alvo:'anidrase carbônica (TCP)',efeito:'bicarbonatúria → acidose metabólica'},
-  manitol:{nome:'Manitol',unidade:'g (bolus)',faixa:[12,100],ec50:30,alvo:'osmol não reabsorvido (luz tubular)',efeito:'diurese osmótica'}
+  acetazolamida:{nome:'Acetazolamida',unidade:'mg/dia',faixa:[250,500],ec50:250,alvo:'anidrase carbônica (TCP)',efeito:'bicarbonatúria → acidose metabólica'},
+  manitol:{nome:'Manitol',unidade:'g/kg',faixa:[0.25,1.5],ec50:0.5,alvo:'osmol não reabsorvido (luz tubular)',efeito:'diurese osmótica (dose-linear)'}
 };
 function emaxModel(dose,ec50,emax){ dose=clampv(dose,0,1e6); ec50=clampv(ec50,1e-6,1e6); emax=clampv(emax,0,1); return clampv(emax*dose/(ec50+dose),0,1); }
 function glicoseHandling(plasmaGlu,gfr,TmG){ plasmaGlu=clampv(plasmaGlu,20,1200); gfr=clampv(gfr,1,250); TmG=clampv(TmG,0,500);
@@ -372,7 +378,10 @@ function tcp(input){ var inp=input||{};
   var fanconi=inp.fanconi===true;
   var droga=String(inp.droga==null?'nenhum':inp.droga).toLowerCase(); if(!FARMACOS.hasOwnProperty(droga)) droga='nenhum';
   var meta=FARMACOS[droga], dose=clampv(inp.dose!==undefined?inp.dose:(meta.faixa[0]||0),0,5000);
-  var efeitoFarm=droga==='nenhum'?0:emaxModel(dose,meta.ec50,0.95);
+  var efeitoFarm;
+  if(droga==='nenhum') efeitoFarm=0;
+  else if(droga==='manitol') efeitoFarm=clampv(dose/(meta.faixa[1]||1),0,1);
+  else efeitoFarm=emaxModel(dose,meta.ec50,0.95);
   var TmG0=375, TmG=TmG0;
   if(droga==='sglt2i') TmG=TmG0*(1-0.95*efeitoFarm);
   if(fanconi) TmG=Math.min(TmG,TmG0*0.15);
@@ -442,7 +451,7 @@ function refresh(){ var inp=readInputs();
   $('out-classe').textContent=CLASSE_TXT[r.classe]||r.classe;
   // caixa de dose (dose↔unidade↔mecanismo, computada)
   if(inp.droga==='nenhum'){ $('dose-box').textContent='Selecione um fármaco para ver dose, unidade e mecanismo (computados).'; }
-  else { $('dose-box').innerHTML='<b>'+meta.nome+'</b> — dose '+inp.dose+' '+meta.unidade+' (faixa '+meta.faixa[0]+'–'+meta.faixa[1]+' '+meta.unidade+') · alvo: '+meta.alvo+' · efeito '+(fmt(r.efeitoFarm*100,0))+'% do máximo (curva Emax) → '+meta.efeito+'.'; }
+  else { var curva=inp.droga==='manitol'?'dose-linear':'curva Emax'; $('dose-box').innerHTML='<b>'+meta.nome+'</b> — dose '+inp.dose+' '+meta.unidade+' (faixa '+meta.faixa[0]+'–'+meta.faixa[1]+' '+meta.unidade+') · alvo: '+meta.alvo+' · efeito '+(fmt(r.efeitoFarm*100,0))+'% do máximo ('+curva+') → '+meta.efeito+'.'; }
   verdict(r,inp); drawGlu(inp); pearl(r,inp); }
 function verdict(r,inp){ var v=$('veredito'), cls='b-good', msg;
   if(r.classe==='fanconi'){ cls='b-bad'; msg='Fanconi: glicosúria com glicemia '+fmt(r.plasmaGlu,0)+' (normoglicêmica) + bicarbonatúria — disfunção proximal global.'; }
@@ -468,9 +477,10 @@ function drawGlu(state){ var c=$('glu-canvas'); if(!c) return; var ctx=null; try
   line(L.filtrada,'#3a7bd5'); line(L.reabsorvida,'#52c08a'); line(L.excretada,'#e0556b');
   var cx=L.current.x; ctx.strokeStyle='#e8a13a'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(cx,L.padT); ctx.lineTo(cx,L.baseY); ctx.stroke(); ctx.setLineDash([]);
   ctx.fillStyle='#9bbef0'; ctx.fillText('filtrada',L.padL+6,L.padT+12); ctx.fillStyle='#8fe0b0'; ctx.fillText('reabsorvida',L.padL+6,L.padT+26); ctx.fillStyle='#e08a96'; ctx.fillText('excretada',L.padL+6,L.padT+40); }
-function syncDoseRange(){ var d=$('in-droga').value, meta=FARMACOS[d]||FARMACOS.nenhum;
-  if(d==='nenhum'){ $('in-dose').max=1000; $('in-dose').value=0; }
-  else { $('in-dose').max=Math.max(meta.faixa[1]*2,meta.faixa[1]+1); $('in-dose').value=meta.faixa[1]; } }
+function syncDoseRange(){ var d=$('in-droga').value, meta=FARMACOS[d]||FARMACOS.nenhum, el=$('in-dose');
+  if(d==='nenhum'){ el.step=5; el.min=0; el.max=500; el.value=0; }
+  else if(d==='manitol'){ el.step=0.05; el.min=0; el.max=Math.max(meta.faixa[1]*2,meta.faixa[1]+1); el.value=meta.faixa[1]; }
+  else { el.step=5; el.min=0; el.max=Math.max(meta.faixa[1]*2,meta.faixa[1]+1); el.value=meta.faixa[1]; } }
 ['in-glu','in-gfr','in-hco3','in-dose'].forEach(function(id){ $(id).addEventListener('input',refresh); });
 $('in-droga').addEventListener('change',function(){ syncDoseRange(); refresh(); });
 $('in-fanconi').addEventListener('change',refresh);
@@ -480,7 +490,7 @@ var PRESETS={
   diabetes:{glu:300,gfr:125,hco3:24,droga:'nenhum',dose:0,fanconi:false},
   sglt2i:{glu:300,gfr:125,hco3:24,droga:'sglt2i',dose:25,fanconi:false},
   aceta:{glu:100,gfr:125,hco3:24,droga:'acetazolamida',dose:500,fanconi:false},
-  manitol:{glu:100,gfr:125,hco3:24,droga:'manitol',dose:50,fanconi:false},
+  manitol:{glu:100,gfr:125,hco3:24,droga:'manitol',dose:1,fanconi:false},
   fanconi:{glu:95,gfr:125,hco3:24,droga:'nenhum',dose:0,fanconi:true}
 };
 function applyPreset(p){ var d=PRESETS[p]; if(!d) return;
@@ -525,7 +535,7 @@ var TUTOR_ILUSTRADO=[
   {q:'Com SGLT2i 25 mg, a curva de excreção…',o:['some','sobe já em glicemia normal','não muda'],c:1,e:'O SGLT2i derruba o Tm → glicosúria normoglicêmica.',fig:function(){return titMini({plasmaGlu:120,droga:'sglt2i',dose:25},'SGLT2i 25 mg');}},
   {q:'A curva dose-resposta do SGLT2i…',o:['é linear','satura num teto (Emax)','desce'],c:1,e:'Efeito = Emax·D/(EC50+D): há teto; dobrar a dose rende pouco.',fig:function(){return doseMini('sglt2i','SGLT2i — Emax');}},
   {q:'A acetazolamida atua sobre a reabsorção de Na no TCP, então o Na reabsorvido…',o:['sobe','cai (natriurese)','não muda'],c:1,e:'Bloqueia o transporte acoplado → menos Na reabsorvido → natriurese.',fig:function(){return naBars(R0({droga:'acetazolamida',dose:1000}));}},
-  {q:'O manitol faz a diurese…',o:['cair','subir (osmótica)','zero'],c:1,e:'Osmol não reabsorvido retém água na luz → diurese osmótica.',fig:function(){return naBars(R0({droga:'manitol',dose:100}));}},
+  {q:'O manitol faz a diurese…',o:['cair','subir (osmótica)','zero'],c:1,e:'Osmol não reabsorvido retém água na luz → diurese osmótica.',fig:function(){return naBars(R0({droga:'manitol',dose:1}));}},
   {q:'Na figura do SGLT2, a glicose entra na célula…',o:['sozinha','acoplada ao Na (cotransporte)','por difusão simples'],c:1,e:'SGLT2 cotransporta Na e glicose; a GLUT2 a manda ao sangue.',fig:function(){return imgFig('sglt2-transportador.svg','SGLT2');}},
   {q:'Na figura, o SGLT2i tem quantos efeitos principais?',o:['um','três (glicosúria, natriurese, nefroproteção)','nenhum'],c:1,e:'Uma chave, três efeitos — incluindo o feedback tubuloglomerular.',fig:function(){return imgFig('sglt2i-mecanismo.svg','SGLT2i três efeitos');}},
   {q:'Na figura, a acetazolamida bloqueia…',o:['o SGLT2','a anidrase carbônica','a aquaporina'],c:1,e:'Inibe a anidrase carbônica → bicarbonatúria → acidose.',fig:function(){return imgFig('acetazolamida-mecanismo.svg','acetazolamida');}},

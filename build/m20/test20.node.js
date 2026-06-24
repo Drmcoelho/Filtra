@@ -67,6 +67,26 @@ function fin(x) { return typeof x === 'number' && isFinite(x); }
   ok(circuito({ distAgulhas: 0.1 }).Kefetivo < circuito({ distAgulhas: 1 }).Kefetivo, 'lei: agulhas próximas → recirc → K efetivo↓');
   // Kuf maior → menos TMP p/ a mesma UF
   ok(tmpNecessaria(1000, 50) < tmpNecessaria(1000, 20), 'lei: Kuf↑ → menos TMP p/ a mesma UF');
+  // obstrução venosa↑ → P_ven↑ (independente de Qb) → trip retornoObstruido
+  ok(circuito({ obstrucao: 0.6 }).Pven > circuito({ obstrucao: 0 }).Pven, 'lei: obstrução↑ → P_ven↑');
+  ok(circuito({ obstrucao: 0.9 }).Pven > circuito({ obstrucao: 0.4 }).Pven, 'lei: obstrução monotônica em P_ven');
+  ok(!circuito({ Qb: 100, obstrucao: 0 }).retornoObstruido && circuito({ Qb: 100, obstrucao: 1 }).retornoObstruido,
+    'lei: obstrução total trip retornoObstruido mesmo com Qb baixo (P_ven independe de Qb)');
+  // obstrução sobe P_ven INDEPENDENTE de Qb: a mesma obstrução em Qb alto e baixo sobe o ΔP_ven igual
+  var dLow = circuito({ Qb: 150, obstrucao: 0.5 }).Pven - circuito({ Qb: 150, obstrucao: 0 }).Pven;
+  var dHigh = circuito({ Qb: 450, obstrucao: 0.5 }).Pven - circuito({ Qb: 450, obstrucao: 0 }).Pven;
+  ok(near(dLow, dHigh, 1e-9), 'lei: o acréscimo de P_ven pela obstrução INDEPENDE de Qb (Δ igual em Qb baixo/alto)');
+  // obstrução=0 NÃO muda o estado vs. antes (a alavanca é aditiva e neutra no default)
+  var keys = ['Qb', 'Qd', 'KoA', 'Kuf', 'Quf', 'acesso', 'distAgulhas', 'qbTeto', 'Qbe', 'Part', 'Pven', 'TMP',
+    'ufEfetiva', 'Kdial', 'recirc', 'Kefetivo', 'succaoArterial', 'acessoLimita', 'retornoObstruido',
+    'tmpExcessiva', 'recircRoubaDose'];
+  [{}, { Qb: 350, acesso: 0.7, Quf: 1200, Kuf: 28, distAgulhas: 0.4, Qd: 700, KoA: 800 }].forEach(function (base, bi) {
+    var withDefault = circuito(base);
+    var inp0 = {}; for (var kk in base) inp0[kk] = base[kk]; inp0.obstrucao = 0;
+    var withZero = circuito(inp0);
+    var same = keys.every(function (k) { return JSON.stringify(withDefault[k]) === JSON.stringify(withZero[k]); });
+    ok(same, 'lei: obstrucao=0 reproduz o comportamento anterior (todas as saídas exceto a nova chave) [' + bi + ']');
+  });
 })();
 
 /* ---------- 4. PÉROLAS ---------- */
@@ -89,7 +109,7 @@ function fin(x) { return typeof x === 'number' && isFinite(x); }
 
 /* ---------- 5. DETERMINISMO ---------- */
 (function () {
-  var inp = { Qb: 350, Qd: 700, KoA: 800, Kuf: 28, Quf: 1200, acesso: 0.7, distAgulhas: 0.4 };
+  var inp = { Qb: 350, Qd: 700, KoA: 800, Kuf: 28, Quf: 1200, acesso: 0.7, distAgulhas: 0.4, obstrucao: 0.5 };
   ok(JSON.stringify(circuito(inp)) === JSON.stringify(circuito(inp)), 'determinismo: mesma entrada → saída idêntica');
   var frozen = Object.freeze({ Qb: 300, acesso: 0.5 });
   var a, threw = false; try { a = circuito(frozen); } catch (e) { threw = true; }
@@ -101,7 +121,7 @@ function fin(x) { return typeof x === 'number' && isFinite(x); }
 (function () {
   var maus = [undefined, null, {}, { Qb: NaN }, { Qb: 'x' }, { Qb: -50 }, { Qb: 1e9 },
     { Qd: NaN }, { KoA: Infinity }, { Kuf: 0 }, { Quf: -100 }, { acesso: -5 }, { acesso: 'z' },
-    { distAgulhas: NaN }, { distAgulhas: 9 }];
+    { distAgulhas: NaN }, { distAgulhas: 9 }, { obstrucao: NaN }, { obstrucao: 9 }, { obstrucao: -3 }, { obstrucao: 'z' }];
   maus.forEach(function (m, i) {
     var r = circuito(m);
     ok(fin(r.Kdial) && fin(r.Part) && fin(r.Pven) && fin(r.TMP) && fin(r.Qbe) && fin(r.recirc) && fin(r.Kefetivo),
@@ -122,7 +142,7 @@ function fin(x) { return typeof x === 'number' && isFinite(x); }
   var rnd = mulberry32(0x5EED20), N = 6000, bad = 0;
   function val() { var r = rnd(); if (r < 0.3) { var pool = [NaN, Infinity, -Infinity, 1e12, -1e12, 'x', null, undefined]; return pool[(rnd() * pool.length) | 0]; } return (r - 0.15) * 1100; }
   for (var i = 0; i < N; i++) {
-    var inp = { Qb: val(), Qd: val(), KoA: val(), Kuf: val(), Quf: val(), acesso: val(), distAgulhas: val() };
+    var inp = { Qb: val(), Qd: val(), KoA: val(), Kuf: val(), Quf: val(), acesso: val(), distAgulhas: val(), obstrucao: val() };
     var r = circuito(inp);
     var L = clearanceCurveLayout(inp, 900, 360);
     var good = fin(r.Kdial) && fin(r.Part) && fin(r.Pven) && fin(r.TMP) && fin(r.Qbe) &&

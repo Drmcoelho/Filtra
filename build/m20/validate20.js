@@ -51,7 +51,7 @@ var win = dom.window, doc = win.document;
 // estrutura
 var ids = [
   'tabs', 'tab-conceito', 'tab-caso', 'tab-trilha', 'tab-instrumento', 'tab-lab', 'tab-avaliacao',
-  'clr-canvas', 'in-qb', 'in-qd', 'in-koa', 'in-acesso', 'in-quf', 'in-kuf', 'in-dist',
+  'clr-canvas', 'in-qb', 'in-qd', 'in-koa', 'in-acesso', 'in-quf', 'in-kuf', 'in-dist', 'in-obstr',
   'out-qbe', 'out-teto', 'out-kdial', 'out-kef', 'out-recirc', 'out-part', 'out-pven', 'out-tmp', 'out-uf',
   'veredito', 'instr-pearl', 'lab-pearl', 'fig-caso',
   'tutor-q', 'tutor-opts', 'tutor-fb', 'tutor-score', 'tutor-total', 'tutor-fig',
@@ -86,11 +86,16 @@ ok(typeof win.ufDeTMP === 'function', 'UI expõe ufDeTMP()');
 ok(typeof win.clearanceCurveLayout === 'function', 'UI expõe clearanceCurveLayout()');
 var amostras = [
   {}, { Qb: 400, acesso: 0.35 }, { Qb: 500, acesso: 0.3 }, { Qd: 800, KoA: 1000 },
-  { Quf: 2500, Kuf: 15 }, { distAgulhas: 0.1 }, { Qb: 200, Qd: 300 }, { Qb: null, acesso: 'x', Quf: -5 }
+  { Quf: 2500, Kuf: 15 }, { distAgulhas: 0.1 }, { Qb: 200, Qd: 300 }, { Qb: null, acesso: 'x', Quf: -5 },
+  { obstrucao: 0.85 }, { Qb: 100, obstrucao: 1 }, { obstrucao: 0 }
 ];
 var divC = 0;
 amostras.forEach(function (a) { if (JSON.stringify(win.circuito(a)) !== JSON.stringify(ref.circuito(a))) divC++; });
 ok(divC === 0, 'engine ≡ UI: circuito inline idêntico ao model20.js (' + divC + ' divergências)');
+// a nova alavanca de obstrução sobe P_ven e dispara o alarme INDEPENDENTE de Qb (o que o Caso ensina)
+ok(win.circuito({ obstrucao: 0.8 }).Pven > win.circuito({ obstrucao: 0 }).Pven, 'obstrução: P_ven sobe com a obstrução');
+ok(win.circuito({ Qb: 100, obstrucao: 1 }).retornoObstruido === true, 'obstrução: total trip retornoObstruido mesmo com Qb baixo');
+ok(win.circuito({ obstrucao: 0 }).retornoObstruido === false, 'obstrução=0: sem alarme de retorno (comportamento neutro)');
 var divK = 0;
 [[300, 500, 600], [200, 800, 1000], [420, 500, 600], [350, 350, 700]].forEach(function (t) {
   if (Math.abs(win.clearanceDialisador(t[0], t[1], t[2]) - ref.clearanceDialisador(t[0], t[1], t[2])) > 1e-9) divK++;

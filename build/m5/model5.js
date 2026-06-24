@@ -18,8 +18,8 @@ function clampv(v, a, b) { var n = Number(v); if (!isFinite(n)) n = a; if (n < a
 var FARMACOS = {
   nenhum: { nome: '— nenhum —', unidade: '', faixa: [0, 0], ec50: 1, alvo: '', efeito: '' },
   sglt2i: { nome: 'Empagliflozina (SGLT2i)', unidade: 'mg/dia', faixa: [10, 25], ec50: 3, alvo: 'SGLT2 (cotransportador Na/glicose, S1 do TCP)', efeito: 'glicosúria + natriurese leve' },
-  acetazolamida: { nome: 'Acetazolamida', unidade: 'mg/dia', faixa: [250, 1000], ec50: 250, alvo: 'anidrase carbônica (TCP)', efeito: 'bicarbonatúria → acidose metabólica' },
-  manitol: { nome: 'Manitol', unidade: 'g (bolus)', faixa: [12, 100], ec50: 30, alvo: 'osmol não reabsorvido (luz tubular)', efeito: 'diurese osmótica' }
+  acetazolamida: { nome: 'Acetazolamida', unidade: 'mg/dia', faixa: [250, 500], ec50: 250, alvo: 'anidrase carbônica (TCP)', efeito: 'bicarbonatúria → acidose metabólica' },
+  manitol: { nome: 'Manitol', unidade: 'g/kg', faixa: [0.25, 1.5], ec50: 0.5, alvo: 'osmol não reabsorvido (luz tubular)', efeito: 'diurese osmótica (dose-linear)' }
 };
 
 // dose-resposta sigmoide (Emax): efeito fracionário 0..1
@@ -51,8 +51,13 @@ function tcp(input) {
   var meta = FARMACOS[droga];
   var dose = clampv(inp.dose !== undefined ? inp.dose : (meta.faixa[0] || 0), 0, 5000);
 
-  // efeito do fármaco (fração 0..1) pela curva Emax
-  var efeitoFarm = droga === 'nenhum' ? 0 : emaxModel(dose, meta.ec50, 0.95);
+  // efeito do fármaco (fração 0..1)
+  //  - SGLT2i e acetazolamida: curva Emax saturável (Tm/receptor → há TETO; dobrar a dose rende pouco)
+  //  - manitol: diurese OSMÓTICA é ~LINEAR na dose (não há receptor a saturar); fração = dose/faixaMax
+  var efeitoFarm;
+  if (droga === 'nenhum') efeitoFarm = 0;
+  else if (droga === 'manitol') efeitoFarm = clampv(dose / (meta.faixa[1] || 1), 0, 1);
+  else efeitoFarm = emaxModel(dose, meta.ec50, 0.95);
 
   // ----- glicose -----
   var TmG0 = 375;                                   // Tm normal (mg/min)

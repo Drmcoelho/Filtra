@@ -142,8 +142,9 @@
         <div class="concept" id="draw-sieve"></div>
         <figure class="fviva"><img src="assets/m21/sieving-coefficient.svg" alt="Coeficiente de sieving versus peso molecular para low-flux e high-flux" loading="lazy">
           <figcaption><b>Fig. 4 · Sieving × PM.</b> Curva <b>verde</b> = high-flux (cutoff alto); <b>vermelha</b> =
-          low-flux. As verticais marcam a <b>ureia</b> (passa em ambas) e a <b>β2m</b>: a verde ainda a deixa passar,
-          a vermelha já a derrubou a quase zero. É o <b>médio</b> que separa as duas membranas — não o pequeno.</figcaption></figure>
+          low-flux. As verticais marcam a <b>ureia</b> (passa em ambas, S≈1) e a <b>β2m</b>: na verde ela ainda passa
+          <b>parcialmente</b> (S≈0,6 — não é livre, mas remove), na vermelha já caiu a quase zero. É o <b>médio</b> que
+          separa as duas membranas — não o pequeno.</figcaption></figure>
       </div>
 
       <h4>5. High-flux × low-flux — quem passa em cada uma</h4>
@@ -159,15 +160,20 @@
       </div>
 
       <h4>6. Backfiltration — o fluxo reverso e a pureza do dialisato</h4>
-      <p class="sub">Na porção <b>distal</b> do dialisador high-flux, com <b>Qd alto</b> e a TMP média/baixa, a pressão
-      do compartimento de <b>dialisato</b> supera localmente a do sangue → fluxo <b>reverso</b> (dialisato → sangue).
-      Se o banho não for <b>ultrapuro</b>, a endotoxina reflui para o paciente (Fig. 6).</p>
+      <p class="sub">O motor não é o banho: é a <b>queda axial de pressão do sangue ao longo da fibra</b>. O sangue
+      entra com pressão alta e a perde por atrito enquanto percorre a fibra oca; no <b>trecho distal</b> de uma membrana
+      <b>high-flux</b> (muito permeável à água) a pressão do sangue cai <b>abaixo</b> da do dialisato → fluxo <b>reverso</b>
+      (dialisato → sangue) ali. O driver primário é, então, <b>high-flux + esse gradiente axial</b> (maior quanto maior o
+      <b>Qb</b>); a TMP média baixa apenas <b>favorece</b> o cruzamento e o <b>Qd</b> contribui pouco. Se o banho não for
+      <b>ultrapuro</b>, a endotoxina reflui para o paciente (Fig. 6).</p>
       <div class="frow">
         <div class="concept" id="draw-back"></div>
         <figure class="fviva"><img src="assets/m21/backfiltration.svg" alt="Backfiltration: fluxo reverso do dialisato para o sangue na porção distal do filtro" loading="lazy">
-          <figcaption><b>Fig. 6 · Backfiltration.</b> Compartimento vermelho = sangue; azul = dialisato. Na entrada, a
-          seta verde = UF normal (sangue → dialisato). Na saída, a seta vermelha <b>aponta para cima</b> = o dialisato
-          volta ao sangue. A legenda traduz o risco: sem dialisato <b>ultrapuro</b>, a endotoxina entra.</figcaption></figure>
+          <figcaption><b>Fig. 6 · Backfiltration.</b> Compartimento vermelho = sangue; azul = dialisato. Na entrada (trecho
+          proximal), a pressão do sangue é alta → seta verde = UF normal (sangue → dialisato). Ao longo da fibra a pressão
+          do sangue <b>cai por atrito</b>; na saída (trecho distal) ela já está <b>abaixo</b> da do banho → a seta vermelha
+          <b>aponta para cima</b> = o dialisato volta ao sangue. A legenda traduz o risco: sem dialisato <b>ultrapuro</b>, a
+          endotoxina entra.</figcaption></figure>
         <figure class="fviva"><img src="assets/m21/membrana-dialise-poros.svg" alt="Contracorrente: sangue e dialisato em sentidos opostos mantêm o gradiente ao longo do filtro" loading="lazy">
           <figcaption><b>Fig. 7 · Contracorrente.</b> Sangue (vermelho) corre para a direita; dialisato (azul) para a
           esquerda. As setas verdes verticais = difusão soluto → banho. A contracorrente mantém o <b>gradiente</b> em
@@ -210,12 +216,13 @@
           deixa passar a ureia mas <b>retém o β2m</b> (sieving ≈ 0). Trocar para <b>high-flux</b> (cutoff alto) abre a
           remoção do médio por sieving/convecção — é o que falta para o acúmulo amiloidogênico.</div></div>
 
-      <div class="step"><b>Ato 3 — high-flux com Qd alto e febre pós-sessão.</b> Membrana high-flux, Qd 800, TMP baixa
-        na porção distal. O paciente tem reação febril recorrente no fim da diálise. Mecanismo?
+      <div class="step"><b>Ato 3 — high-flux com Qb alto e febre pós-sessão.</b> Membrana high-flux, Qb 450, TMP média
+        baixa. O paciente tem reação febril recorrente no fim da diálise. Mecanismo?
         <div><button class="act" data-rev="r3">Revelar</button></div>
-        <div class="reveal" id="r3"><b>Backfiltration de dialisato não-ultrapuro (Fig. 6).</b> Na porção distal, a
-          pressão do banho supera a do sangue → fluxo <b>reverso</b> (dialisato → sangue). Se o dialisato carrega
-          endotoxina, ela entra. A conduta de mecanismo: <b>dialisato ultrapuro</b> obrigatório no high-flux.</div></div>
+        <div class="reveal" id="r3"><b>Backfiltration de dialisato não-ultrapuro (Fig. 6).</b> O Qb alto faz a pressão do
+          sangue <b>despencar ao longo da fibra</b>; no trecho distal ela cai abaixo da do banho → fluxo <b>reverso</b>
+          (dialisato → sangue). Numa membrana high-flux, muito permeável à água, esse refluxo carrega a endotoxina do
+          banho. A conduta de mecanismo: <b>dialisato ultrapuro</b> obrigatório no high-flux.</div></div>
 
       <div class="step"><b>Ato 4 — KoA alto não dá clearance ilimitado.</b> Trocou para um dialisador de KoA muito alto
         esperando clearance "infinito". O K chegou perto de Qb e parou. Por quê?
@@ -254,8 +261,9 @@
         passa em qualquer cutoff (S ≈ 1). É o <b>médio</b> (β2m, ~11,8 kDa) que separa — só o high-flux o deixa passar
         (Fig. 4/5).</p></details>
       <details><summary>7. O que é backfiltration e quando ocorre?</summary><p>Fluxo <b>reverso</b> (dialisato →
-        sangue) na porção distal do <b>high-flux</b>, quando a pressão do banho (Qd alto) supera localmente a do
-        sangue. Em low-flux praticamente não ocorre (Fig. 6).</p></details>
+        sangue) na porção distal do <b>high-flux</b>. O driver é a <b>queda axial de pressão do sangue ao longo da
+        fibra</b> (cresce com o <b>Qb</b>): no trecho distal a pressão do sangue cai abaixo da do banho. A TMP média
+        baixa favorece; o Qd só contribui um pouco. Em low-flux praticamente não ocorre (Fig. 6).</p></details>
       <details><summary>8. Por que o high-flux exige dialisato ultrapuro?</summary><p>Porque a backfiltration leva o
         <b>banho de volta ao sangue</b>. Se o dialisato carrega endotoxina, ela entra no paciente → reação
         inflamatória. Ultrapuro é segurança, não luxo (Fig. 6).</p></details>
@@ -355,7 +363,7 @@
 <script>
 /* ENGINE INLINE — espelho fiel de build/m21/model21.js */
 function clampv(v,a,b){ var n=Number(v); if(!isFinite(n)) n=a; if(n<a)n=a; if(n>b)n=b; return n; }
-var PM_UREIA=60, PM_B2M=11800, CUTOFF_LOW=2000, CUTOFF_HIGH=25000, STEEP=4;
+var PM_UREIA=60, PM_B2M=11800, CUTOFF_LOW=2000, CUTOFF_HIGH=12800, STEEP=5;
 function clearanceDialisador(o){ o=o||{};
   var koa=clampv(o.koa,0,2000), qb=clampv(o.qb,1,600), qd=clampv(o.qd,1,1200), ratio=qb/qd, K;
   if(Math.abs(qb-qd)<1e-6){ K=qb*koa/(qb+koa); }
@@ -368,9 +376,9 @@ function sieving(o){ o=o||{};
   var pm=clampv(o.pm,1,70000), cutoff=clampv(o.cutoff,200,60000), steep=clampv(o.steep,1,12);
   return clampv(1/(1+Math.pow(pm/cutoff,steep)),0,1); }
 function backfiltration(o){ o=o||{};
-  var highFlux=clampv(o.highFlux,0,1), qd=clampv(o.qd,1,1200), tmp=clampv(o.tmp,0,400);
-  var qdComp=clampv((qd-300)/500,0,1), tmpComp=clampv(1-tmp/80,0,1);
-  return clampv(highFlux*(0.55*qdComp+0.45*tmpComp),0,1); }
+  var highFlux=clampv(o.highFlux,0,1), qb=clampv(o.qb,1,600), qd=clampv(o.qd,1,1200), tmp=clampv(o.tmp,0,400);
+  var axialComp=clampv((qb-200)/300,0,1), tmpComp=clampv(1-tmp/80,0,1), qdComp=clampv((qd-300)/500,0,1);
+  return clampv(highFlux*(0.60*axialComp+0.30*tmpComp+0.10*qdComp),0,1); }
 function membrana(input){ var inp=input||{};
   var koa=clampv(inp.koa!==undefined?inp.koa:600,0,2000);
   var qb=clampv(inp.qb!==undefined?inp.qb:300,1,600);
@@ -387,7 +395,7 @@ function membrana(input){ var inp=input||{};
   var fracUreia=clampv(clearUreia/Math.max(qb,1e-9),0,1);
   var classe=highFlux>=0.5?'high-flux':'low-flux';
   var removeMedio=sMedio>=0.3;
-  var bf=backfiltration({highFlux:highFlux,qd:qd,tmp:tmp});
+  var bf=backfiltration({highFlux:highFlux,qb:qb,qd:qd,tmp:tmp});
   var precisaUltrapuro=bf>=0.15;
   var dQb=1;
   var Khi=clearanceDialisador({koa:koa,qb:clampv(qb+dQb,1,600),qd:qd});
@@ -441,12 +449,12 @@ function refresh(){ var inp=readInputs();
   $('out-backfilt').textContent=fmt(r.backfilt,2)+(r.precisaUltrapuro?' → ultrapuro!':'');
   verdict(r); drawClear(inp); pearl(r,inp); }
 function verdict(r){ var v=$('veredito'), cls='b-good', msg;
-  if(r.precisaUltrapuro){ cls='b-bad'; msg='BACKFILTRATION ('+fmt(r.backfilt,2)+') — high-flux com Qd alto e TMP baixa: o dialisato pode refluir para o sangue. O banho DEVE ser ultrapuro, senão a endotoxina entra (M19/M20).'; }
+  if(r.precisaUltrapuro){ cls='b-bad'; msg='BACKFILTRATION ('+fmt(r.backfilt,2)+') — high-flux com Qb alto: a pressão do sangue cai ao longo da fibra e, no trecho distal, fica abaixo da do banho → fluxo reverso. O banho DEVE ser ultrapuro, senão a endotoxina entra (M19/M20).'; }
   else if(r.classe==='low-flux'){ cls='b-warn'; msg='LOW-FLUX — depura a ureia (K '+fmt(r.clearUreia,0)+' mL/min) mas BARRA o médio (β2m sieving '+fmt(r.sMedio,2)+'). Para remover o médio, é preciso high-flux.'; }
   else { cls='b-good'; msg='HIGH-FLUX — ureia K '+fmt(r.clearUreia,0)+' mL/min e remove o médio (β2m sieving '+fmt(r.sMedio,2)+'). Ganho marginal de Qb '+fmt(r.ganhoMarginal,2)+': '+(r.ganhoMarginal<0.4?'já saturando':'ainda rende')+'.'; }
   v.className='banner '+cls; v.textContent=msg; }
 function pearl(r,inp){ var p=$('lab-pearl'), ip=$('instr-pearl'), t;
-  if(r.precisaUltrapuro) t='PÉROLA (pureza não é luxo): a backfiltration leva o BANHO de volta ao sangue. High-flux exige dialisato ultrapuro — a permeabilidade que remove o médio também abre a porta para a endotoxina.';
+  if(r.precisaUltrapuro) t='PÉROLA (pureza não é luxo): a queda axial de pressão do sangue (∝ Qb) o derruba abaixo do banho no trecho distal do high-flux → backfiltration. O BANHO volta ao sangue; high-flux exige dialisato ultrapuro — a permeabilidade que remove o médio também abre a porta para a endotoxina.';
   else if(r.classe==='low-flux') t='PÉROLA (o médio separa as membranas): a ureia passa em qualquer cutoff (sieving ≈1). É a β2m (11,8 kDa) que distingue low de high-flux — aqui o sieving do médio é só '+fmt(r.sMedio,2)+'.';
   else if(r.ganhoMarginal<0.35) t='PÉROLA (dobrar Qb não dobra K): o ganho marginal ∂K/∂Qb caiu para '+fmt(r.ganhoMarginal,2)+'. A curva saturou — subir mais o Qb rende pouco; olhe KoA e Qd.';
   else if(inp.koa>=1300) t='PÉROLA (o teto é o menor fluxo): com KoA muito alto, a membrana deixa de ser o gargalo. K se aproxima de min(Qb,Qd) e NÃO o ultrapassa — não se depura mais sangue do que passa.';
@@ -472,7 +480,7 @@ var PRESETS={
   highflux:{koa:800,qb:300,qd:500,highFlux:1,cutoff:25000,tmp:100},
   qbalto:{koa:600,qb:480,qd:500,highFlux:1,cutoff:25000,tmp:100},
   medio:{koa:900,qb:350,qd:600,highFlux:1,cutoff:30000,tmp:120},
-  backfilt:{koa:900,qb:300,qd:900,highFlux:1,cutoff:25000,tmp:20},
+  backfilt:{koa:900,qb:480,qd:600,highFlux:1,cutoff:25000,tmp:20},
   koainfinito:{koa:1400,qb:300,qd:500,highFlux:1,cutoff:25000,tmp:100}
 };
 function applyPreset(p){ var d=PRESETS[p]; if(!d) return;
@@ -521,7 +529,7 @@ function R0(extra){ var o={}; if(extra) for(var k in extra) o[k]=extra[k]; retur
 var TUTOR_ILUSTRADO=[
   {q:'O clearance de ureia não cai o esperado. Subir Qb de 250 para 400 resolve LINEARMENTE?',o:['sim, dobra o K','não, a curva K(Qb) satura','o K cai'],c:1,e:'A curva K(Qb) é côncava: dobrar Qb não dobra K. KoA e Qd limitam a extração de cada mL.',fig:function(){return clearMini({koa:500,qb:250,qd:500},'K(Qb) satura');}},
   {q:'Paciente crônico com amiloidose por β2m. A membrana low-flux remove o médio?',o:['sim','não — cutoff baixo barra o β2m','só com Qb alto'],c:1,e:'Low-flux barra o médio (sieving≈0). É preciso high-flux (cutoff alto) para remover o β2m.',fig:function(){return sieveMini(R0({highFlux:0}),'low-flux barra β2m');}},
-  {q:'High-flux, Qd 900, TMP baixa, febre pós-sessão. O mecanismo é…',o:['infecção do cateter','backfiltration de banho não-ultrapuro','hipotensão'],c:1,e:'O dialisato reflui ao sangue na porção distal. High-flux exige banho ultrapuro.',fig:function(){return membIcon(R0({highFlux:1,qd:900,tmp:20}),'backfiltration → ultrapuro');}},
+  {q:'High-flux, Qb 480, febre pós-sessão. O mecanismo é…',o:['infecção do cateter','backfiltration de banho não-ultrapuro','hipotensão'],c:1,e:'O Qb alto derruba a pressão do sangue ao longo da fibra; no trecho distal ela cai abaixo da do banho e o dialisato reflui. High-flux exige banho ultrapuro.',fig:function(){return membIcon(R0({highFlux:1,qb:480,tmp:20}),'backfiltration → ultrapuro');}},
   {q:'Com KoA muito alto, o K chegou perto de Qb e parou. Por quê?',o:['o filtro quebrou','o teto é o MENOR fluxo','o Qd estava baixo'],c:1,e:'KoA→∞ deixa de ser o gargalo; K → min(Qb,Qd) e não o ultrapassa.',fig:function(){return clearMini({koa:1400,qb:300,qd:500},'KoA alto → teto');}},
   {q:'Membrana high cut-off altíssimo: a albumina sérica caiu. O que houve?',o:['o cutoff subiu demais e a albumina passou','desidratação','erro de laboratório'],c:0,e:'Cutoff alto demais deixa passar a albumina (66 kDa). O ideal remove o médio e RETÉM a albumina.',fig:function(){return imgFig('biocompatibilidade.svg','o cutoff da membrana');}},
   {q:'No gráfico, a curva clearance × Qb…',o:['é uma reta','sobe e satura (ganho marginal cai)','desce'],c:1,e:'É côncava: o ∂K/∂Qb decresce porque a difusão esgota o gradiente.',fig:function(){return imgFig('permeabilidade-membrana.svg','clearance × Qb satura');}},
@@ -541,7 +549,8 @@ var TUTOR_TEXTUAL=[
   {q:'O cutoff da membrana é…',o:['o Qd','o PM em que o sieving cai a 0,5','a área'],c:1,e:'Acima do cutoff a molécula é progressivamente barrada.'},
   {q:'A ureia (60 Da) distingue low de high-flux?',o:['sim','não — passa em ambas','só com TMP alta'],c:1,e:'É pequena demais; S≈1 em qualquer cutoff. O médio é que separa.'},
   {q:'A β2-microglobulina (~11,8 kDa) é removida por…',o:['low-flux','high-flux (cutoff alto)','qualquer membrana'],c:1,e:'Só o high-flux tem cutoff suficiente para deixá-la passar.'},
-  {q:'A backfiltration é o fluxo…',o:['de sangue para o dialisato','reverso, dialisato → sangue (porção distal)','de ar'],c:1,e:'Em high-flux com Qd alto e TMP baixa, a pressão do banho vence localmente.'},
+  {q:'A backfiltration é o fluxo…',o:['de sangue para o dialisato','reverso, dialisato → sangue (porção distal)','de ar'],c:1,e:'Em high-flux, a pressão do sangue cai ao longo da fibra (∝ Qb) e, no trecho distal, fica abaixo da do banho → reverso.'},
+  {q:'O DRIVER primário da backfiltration é…',o:['o Qd alto','a queda axial de pressão do sangue (∝ Qb) no high-flux','a temperatura'],c:1,e:'O sangue perde pressão por atrito ao longo da fibra; no trecho distal do high-flux ela cai abaixo da do banho. O Qd só contribui um pouco; a TMP baixa favorece.'},
   {q:'O high-flux exige dialisato ultrapuro porque…',o:['é mais barato','a backfiltration pode levar endotoxina ao sangue','aquece menos'],c:1,e:'O banho volta ao paciente; impuro, carrega endotoxina → inflamação.'},
   {q:'A contracorrente serve para…',o:['resfriar','manter o gradiente ao longo de todo o filtro','filtrar ar'],c:1,e:'Sentidos opostos evitam que sangue e banho igualem a concentração no meio.'},
   {q:'Em síntese, a membrana e os fluxos definem…',o:['só o volume','o que e o quanto é depurado (K, sieving)','a PAM'],c:1,e:'A diálise repõe FUNÇÕES por física: a membrana decide quais escórias voltam à faixa.'}

@@ -9,8 +9,9 @@
  *    Kt/V é o expoente adimensional (a DOSE — aprofundada no M25). URR = 1 − Ct/C0 = 1 − exp(−Kt/V).
  *  - Eficiência × TEMPO (o custo do intermitente): a MESMA Kt/V vem de muito clearance em pouco
  *    tempo (alta eficiência, grandes oscilações) OU menos clearance em mais tempo (gentil).
- *    O rim é CONTÍNUO; a HDI 3×/sem faz a concentração oscilar em DENTE DE SERRA. A concentração
- *    MÉDIA-NO-TEMPO é a verdadeira exposição urêmica, não só o valor pós.
+ *    O rim é CONTÍNUO; a HDI 3×/sem faz a concentração oscilar em DENTE DE SERRA. A média INTRA-SESSÃO
+ *    (cMean) é a média DENTRO da sessão; a verdadeira exposição urêmica é a TAC INTERDIALÍTICA, que
+ *    inclui o pico entre sessões — e que a HDI, por ser intermitente, não consegue aplainar como a terapia contínua.
  *  - Rebote pós-diálise: o soluto reequilibra dos tecidos → a ureia sobe um pouco após o fim (gancho M26).
  *
  * Unidades: C em mg/dL (BUN); K (clearance) em mL/min; V (ÁGT) em L; t (duração) em h.
@@ -69,7 +70,8 @@ function hdi(input) {
   var taxaFinal = rateConst * ct;                          // mg/dL por hora no fim
   var desaceleracao = taxaInicial > 0 ? (taxaInicial - taxaFinal) / taxaInicial : 0; // fração
 
-  // concentração MÉDIA-NO-TEMPO durante a sessão: ∫C dt / t = (C0−Ct)/(Kt/V)
+  // concentração média INTRA-SESSÃO: ∫C dt / t durante a sessão = (C0−Ct)/(Kt/V).
+  // ATENÇÃO: é a média DENTRO da sessão — NÃO é a TAC interdialítica (que inclui o pico entre sessões).
   var cMean = KtV > 1e-9 ? removido / KtV : c0;
   cMean = clampv(cMean, 0, 400);
 
@@ -84,7 +86,7 @@ function hdi(input) {
   // flags clínicas (por mecanismo)
   var subdialise = KtV < 1.2;                              // dose abaixo do alvo
   var doseAdequada = KtV >= 1.2;
-  var oscilacaoGrande = urrPct > 70;                       // grande balanço pré/pós (custo do intermitente)
+  var oscilacaoGrande = urrPct > 80;                       // balanço pré/pós ANORMALMENTE grande (>80%); URR-alvo ~65-70% é adequada e NÃO dispara
 
   return {
     c0: c0, K: K, V: V, t: t, reboteFrac: reboteFrac,

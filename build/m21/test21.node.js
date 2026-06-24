@@ -8,7 +8,7 @@
 var M = require('./model21.js');
 var clearanceDialisador = M.clearanceDialisador, sieving = M.sieving, backfiltration = M.backfiltration;
 var membrana = M.membrana, clearanceLayout = M.clearanceLayout;
-var PM_UREIA = M.PM_UREIA, PM_B2M = M.PM_B2M, CUTOFF_LOW = M.CUTOFF_LOW, CUTOFF_HIGH = M.CUTOFF_HIGH;
+var PM_UREIA = M.PM_UREIA, PM_B2M = M.PM_B2M, CUTOFF_LOW = M.CUTOFF_LOW, CUTOFF_HIGH = M.CUTOFF_HIGH, STEEP = M.STEEP;
 
 var oks = 0, fails = 0, micro = 0;
 function ok(c, m) { if (c) oks++; else { fails++; console.log('  FALHA: ' + m); } }
@@ -39,10 +39,16 @@ function dentroBounds(r) {
   ok(r.clearMedio < r.clearUreia, 'base: clearance do médio < ureia (molécula maior depura menos)');
   ok(r.sUreia > 0.99, 'base: sieving da ureia ≈ 1 (passa livre)');
   ok(r.removeMedio === true, 'base: high-flux remove o médio (β2m)');
+  // CALIBRAÇÃO CLÍNICA: β2m em high-flux S≈0,5–0,7 (não 0,95) — valor real de membrana
+  ok(r.sMedio > 0.5 && r.sMedio < 0.7, 'base: sieving da β2m em high-flux ≈0,5–0,7 (calibrado, tem ' + r.sMedio.toFixed(3) + ')');
+  ok(Math.abs(r.sMedio - 0.6) < 0.05, 'base: β2m high-flux ≈0,60 (alvo de calibração, tem ' + r.sMedio.toFixed(3) + ')');
   // low-flux barra o médio
   var lf = membrana({ highFlux: 0 });
   ok(lf.classe === 'low-flux' && lf.removeMedio === false, 'base: low-flux NÃO remove o médio');
-  ok(lf.sMedio < 0.1, 'base: low-flux quase não deixa passar o β2m');
+  ok(lf.sMedio < 0.05, 'base: low-flux quase não deixa passar o β2m (S≈0)');
+  // albumina (66 kDa) retida em high-flux (cutoff calibrado não a deixa passar)
+  var sAlb = sieving({ pm: 66000, cutoff: CUTOFF_HIGH, steep: STEEP });
+  ok(sAlb < 0.01, 'base: albumina (66 kDa) retida em high-flux (S≈0, tem ' + sAlb.toFixed(4) + ')');
 })();
 
 /* ---------- 2. IDENTIDADES (valem SEMPRE) ---------- */
@@ -113,9 +119,15 @@ function dentroBounds(r) {
   // ↑cutoff → ↑sieving (membrana mais aberta deixa passar mais)
   ok(sieving({ pm: 11800, cutoff: 25000, steep: 4 }) > sieving({ pm: 11800, cutoff: 2000, steep: 4 }), 'lei: ↑cutoff → ↑sieving do médio');
   // backfiltration: só com high-flux
-  ok(backfiltration({ highFlux: 0, qd: 800, tmp: 10 }) === 0, 'lei: low-flux → sem backfiltration');
-  ok(backfiltration({ highFlux: 1, qd: 800, tmp: 10 }) > backfiltration({ highFlux: 1, qd: 300, tmp: 10 }), 'lei: ↑Qd → ↑backfiltration (high-flux)');
-  ok(backfiltration({ highFlux: 1, qd: 800, tmp: 5 }) > backfiltration({ highFlux: 1, qd: 800, tmp: 200 }), 'lei: ↓TMP → ↑backfiltration');
+  ok(backfiltration({ highFlux: 0, qb: 480, tmp: 10 }) === 0, 'lei: low-flux → sem backfiltration');
+  // DRIVER PRIMÁRIO: ↑Qb (queda axial de pressão do sangue) → ↑backfiltration (high-flux)
+  ok(backfiltration({ highFlux: 1, qb: 500, tmp: 10 }) > backfiltration({ highFlux: 1, qb: 250, tmp: 10 }), 'lei: ↑Qb → ↑backfiltration (queda axial, high-flux)');
+  ok(backfiltration({ highFlux: 1, qb: 480, tmp: 5 }) > backfiltration({ highFlux: 1, qb: 480, tmp: 200 }), 'lei: ↓TMP → ↑backfiltration');
+  // Qd ainda é monotônico, mas é contribuinte MENOR que o Qb
+  ok(backfiltration({ highFlux: 1, qb: 300, qd: 800, tmp: 50 }) >= backfiltration({ highFlux: 1, qb: 300, qd: 300, tmp: 50 }), 'lei: ↑Qd → ↑backfiltration (contribuinte menor)');
+  var dQbbf = backfiltration({ highFlux: 1, qb: 500, qd: 500, tmp: 50 }) - backfiltration({ highFlux: 1, qb: 200, qd: 500, tmp: 50 });
+  var dQdbf = backfiltration({ highFlux: 1, qb: 350, qd: 800, tmp: 50 }) - backfiltration({ highFlux: 1, qb: 350, qd: 300, tmp: 50 });
+  ok(dQbbf > dQdbf, 'lei: o Qb (axial) domina a backfiltration sobre o Qd (Δqb ' + dQbbf.toFixed(3) + ' > Δqd ' + dQdbf.toFixed(3) + ')');
 })();
 
 /* ---------- 4. PÉROLAS (o achado contra-intuitivo, provado pelo motor) ---------- */
@@ -132,11 +144,15 @@ function dentroBounds(r) {
   var gLo = membrana({ koa: 700, qb: 150, qd: 500 }).ganhoMarginal;
   var gHi = membrana({ koa: 700, qb: 400, qd: 500 }).ganhoMarginal;
   ok(gHi < gLo, 'pérola: ∂K/∂Qb DECRESCE com Qb (ganho marginal menor no Qb alto)');
-  // PÉROLA: backfiltration → exige dialisato ultrapuro.
-  var bfHi = membrana({ highFlux: 1, qd: 800, tmp: 10 });
-  ok(bfHi.backfilt > 0.15 && bfHi.precisaUltrapuro, 'pérola: high-flux + Qd alto + TMP baixa → backfiltration → exige ultrapuro');
-  var bfLo = membrana({ highFlux: 0, qd: 800, tmp: 10 });
+  // PÉROLA: backfiltration → exige dialisato ultrapuro. Driver = high-flux + Qb (queda axial).
+  var bfHi = membrana({ highFlux: 1, qb: 480, tmp: 10 });
+  ok(bfHi.backfilt > 0.15 && bfHi.precisaUltrapuro, 'pérola: high-flux + Qb alto (queda axial) + TMP baixa → backfiltration → exige ultrapuro');
+  var bfLo = membrana({ highFlux: 0, qb: 480, tmp: 10 });
   ok(bfLo.backfilt === 0 && !bfLo.precisaUltrapuro, 'pérola: low-flux → sem backfiltration, sem exigência de ultrapuro');
+  // o Qb (axial) é o lever DOMINANTE: subir Qb dispara mais backfiltration que subir Qd
+  var bfQbAlto = membrana({ highFlux: 1, qb: 500, qd: 500, tmp: 30 }).backfilt;
+  var bfQdAlto = membrana({ highFlux: 1, qb: 250, qd: 1000, tmp: 30 }).backfilt;
+  ok(bfQbAlto > bfQdAlto, 'pérola: Qb alto (axial) gera MAIS backfiltration que Qd alto com Qb baixo (' + bfQbAlto.toFixed(2) + ' > ' + bfQdAlto.toFixed(2) + ')');
   // a ureia (pequena) passa quase 100% em qualquer membrana; o cutoff só importa para o médio
   ok(membrana({ highFlux: 0 }).sUreia > 0.99 && membrana({ highFlux: 1 }).sUreia > 0.99, 'pérola: a ureia passa em ambas; é o MÉDIO que separa low × high-flux');
 })();

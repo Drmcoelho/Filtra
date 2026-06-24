@@ -15,6 +15,10 @@ function fin(x) { return typeof x === 'number' && isFinite(x); }
   ok(r.FENa < 1.5, 'base: FENa basal baixa');
   ok(r.podeConcentrar, 'base: consegue concentrar (gradiente alto)');
   ok(r.classe === 'normal', 'base: classe normal');
+  // biodisponibilidade oral (metadado PK): furosemida ~50% e variável; bumetanida/torasemida ~80–100%
+  ok(near(alca({ droga: 'furosemida' }).bioVO, 0.5), 'base: furosemida bioVO ~0,5 (40 mg VO ≈ 20 mg IV)');
+  ok(alca({ droga: 'bumetanida' }).bioVO >= 0.8 && alca({ droga: 'torasemida' }).bioVO >= 0.8, 'base: bumetanida/torasemida bioVO ~0,8–1 (VO ≈ IV)');
+  ok(alca({ droga: 'furosemida' }).bioVO < alca({ droga: 'torasemida' }).bioVO, 'base: furosemida absorve pior que torasemida (bioVO)');
 })();
 
 /* 2. IDENTIDADES */
@@ -36,6 +40,10 @@ function fin(x) { return typeof x === 'number' && isFinite(x); }
   ok(alca({ droga: 'furosemida', dose: 80 }).nkcc2 < alca({ droga: 'furosemida', dose: 10 }).nkcc2, 'lei: dose↑ → NKCC2↓');
   // potência: bumetanida atinge o mesmo bloqueio com dose ~40× menor
   ok(near(alca({ droga: 'bumetanida', dose: 0.5 }).bloqueio, alca({ droga: 'furosemida', dose: 20 }).bloqueio, 0.05), 'lei: bumetanida 0,5 mg ≈ furosemida 20 mg (potência)');
+  // potência torasemida ≈2×: doses equi-efetivas (torasemida 20 mg ≈ furosemida 40 mg) caem em pontos comparáveis da curva
+  ok(near(alca({ droga: 'torasemida', dose: 20 }).bloqueio, alca({ droga: 'furosemida', dose: 40 }).bloqueio, 0.03), 'lei: torasemida 20 mg ≈ furosemida 40 mg (potência ≈2×)');
+  // a relação de EC50 confirma o ~2×: furosemida/torasemida = 20/10 = 2
+  ok(near(M.FARMACOS.furosemida.ec50 / M.FARMACOS.torasemida.ec50, 2, 1e-9), 'lei: EC50(furo)/EC50(tora) = 2 (≈2× a potência)');
   // braking: crônico reduz o efeito líquido
   ok(alca({ droga: 'furosemida', dose: 80, cronico: true }).FENa < alca({ droga: 'furosemida', dose: 80, cronico: false }).FENa, 'lei: uso crônico (braking) → FENa↓');
   // concentração: sem gradiente, não concentra

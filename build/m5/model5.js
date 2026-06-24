@@ -18,7 +18,7 @@ function clampv(v, a, b) { var n = Number(v); if (!isFinite(n)) n = a; if (n < a
 var FARMACOS = {
   nenhum: { nome: '— nenhum —', unidade: '', faixa: [0, 0], ec50: 1, alvo: '', efeito: '' },
   sglt2i: { nome: 'Empagliflozina (SGLT2i)', unidade: 'mg/dia', faixa: [10, 25], ec50: 3, alvo: 'SGLT2 (cotransportador Na/glicose, S1 do TCP)', efeito: 'glicosúria + natriurese leve' },
-  acetazolamida: { nome: 'Acetazolamida', unidade: 'mg/dia', faixa: [250, 1000], ec50: 250, alvo: 'anidrase carbônica (TCP)', efeito: 'bicarbonatúria → acidose metabólica' },
+  acetazolamida: { nome: 'Acetazolamida', unidade: 'mg/dia', faixa: [250, 500], ec50: 250, alvo: 'anidrase carbônica (TCP)', efeito: 'bicarbonatúria → acidose metabólica' },
   manitol: { nome: 'Manitol', unidade: 'g (bolus)', faixa: [12, 100], ec50: 30, alvo: 'osmol não reabsorvido (luz tubular)', efeito: 'diurese osmótica' }
 };
 

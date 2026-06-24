@@ -31,6 +31,69 @@ Com isso liberado, o agente consegue: (1) baixar os arquivos `PEDIDO` abaixo par
 página do arquivo no Commons para preencher autor/licença, (3) integrar inline e marcar `INTEGRADO`. Sem
 isso, a curadoria fica pendente.
 
+## 📊 Registro de ilustração robusta — os 40 módulos (M0–M39)
+
+> Snapshot 2026-06 (gerado da árvore real). **"Robusto"** = HTML construído + ≥8 figuras-vivas reais em
+> `#tab-conceito` + **zero placeholder** (validador verde). Este é o painel-mestre do que falta ilustrar; as
+> seções por módulo mais abaixo detalham o raster clínico de aprofundamento.
+
+**Resumo executivo:** **12/40 robustos** (M0–M10, M14). **28/40 a ilustrar** (M11–M13, M15–M39) — somam
+**214 SVGs placeholder** (cartão-badge: slug + ícone genérico ◎, sem conteúdo) a reescrever como figuras
+autorais reais no rito de construção. **8 lâminas-síntese integradas** (M1·M3·M5·M6·M7·M8·M14); **33 módulos
+sem lâmina** (M0·M2·M4·M9·M10 já construídos → integram na hora; demais entram com o módulo).
+
+| Mód | Título | HTML | Figuras reais | Lâmina | Placeholders a reescrever | Robusto? | O que falta para ilustrar robustamente |
+|---|---|---|---|---|---|---|---|
+| M0 | Compartimentos + introdução à fluidoterapia | ✅ | 13 | — | 0 | ✅ | **só a lâmina-síntese** (módulo pronto → integra na hora) |
+| M1 | Néfron / forças de Starling | ✅ | 14 | ✅ integrada | 0 | ✅ | nada (raster profundo opcional → OnDemand) |
+| M2 | Hemodinâmica renal | ✅ | 13 | — | 0 | ✅ | **só a lâmina-síntese** (módulo pronto → integra na hora) |
+| M3 | O glomérulo | ✅ | 14 | ✅ integrada | 0 | ✅ | nada (raster profundo opcional → OnDemand) |
+| M4 | Clearance | ✅ | 13 | — | 0 | ✅ | **só a lâmina-síntese** (módulo pronto → integra na hora) |
+| M5 | TCP | ✅ | 14 | ✅ integrada | 0 | ✅ | nada (raster profundo opcional → OnDemand) |
+| M6 | Alça de Henle | ✅ | 14 | ✅ integrada | 0 | ✅ | nada (raster profundo opcional → OnDemand) |
+| M7 | TCD | ✅ | 12 | ✅ integrada | 0 | ✅ | nada (raster profundo opcional → OnDemand) |
+| M8 | Ducto coletor | ✅ | 14 | ✅ integrada | 0 | ✅ | nada (raster profundo opcional → OnDemand) |
+| M9 | Sódio e volume | ✅ | 9 | — | 0 | ✅ | **só a lâmina-síntese** (módulo pronto → integra na hora) |
+| M10 | Água livre e disnatremias | ✅ | 9 | — | 0 | ✅ | **só a lâmina-síntese** (módulo pronto → integra na hora) |
+| M11 | Potássio | ⬜ | 0 | — | 7 | ❌ | construir HTML + reescrever **7** placeholders em figuras reais + lâmina |
+| M12 | Cálcio · fósforo · magnésio | ⬜ | 0 | — | 8 | ❌ | construir HTML + reescrever **8** placeholders em figuras reais + lâmina |
+| M13 | Ácido-base renal | ⬜ | 0 | — | 8 | ❌ | construir HTML + reescrever **8** placeholders em figuras reais + lâmina |
+| M14 | RAAS e eixo endócrino renal | ✅ | 13 | ✅ integrada | 0 | ✅ | nada (raster profundo opcional → OnDemand) |
+| M15 | Ureia, creatinina, eGFR e a urina | ⬜ | 0 | — | 8 | ❌ | construir HTML + reescrever **8** placeholders em figuras reais + lâmina |
+| M16 | A LRA por mecanismo | ⬜ | 0 | — | 8 | ❌ | construir HTML + reescrever **8** placeholders em figuras reais + lâmina |
+| M17 | Farmacologia diurética integrada | ⬜ | 0 | — | 7 | ❌ | construir HTML + reescrever **7** placeholders em figuras reais + lâmina |
+| M18 | Anti-hipertensivos, RAAS e eixo endócrino-renal | ⬜ | 0 | — | 7 | ❌ | construir HTML + reescrever **7** placeholders em figuras reais + lâmina |
+| M19 | Princípios físicos do transporte | ⬜ | 0 | — | 6 | ❌ | construir HTML + reescrever **6** placeholders em figuras reais + lâmina |
+| M20 | O circuito extracorpóreo | ⬜ | 0 | — | 8 | ❌ | construir HTML + reescrever **8** placeholders em figuras reais + lâmina |
+| M21 | A membrana e o clearance | ⬜ | 0 | — | 8 | ❌ | construir HTML + reescrever **8** placeholders em figuras reais + lâmina |
+| M22 | A sessão de HDI | ⬜ | 0 | — | 8 | ❌ | construir HTML + reescrever **8** placeholders em figuras reais + lâmina |
+| M23 | Ultrafiltração e balanço de volume | ⬜ | 0 | — | 6 | ❌ | construir HTML + reescrever **6** placeholders em figuras reais + lâmina |
+| M24 | Hipotensão intradialítica | ⬜ | 0 | — | 8 | ❌ | construir HTML + reescrever **8** placeholders em figuras reais + lâmina |
+| M25 | Dose e adequação | ⬜ | 0 | — | 8 | ❌ | construir HTML + reescrever **8** placeholders em figuras reais + lâmina |
+| M26 | Cinética da ureia | ⬜ | 0 | — | 8 | ❌ | construir HTML + reescrever **8** placeholders em figuras reais + lâmina |
+| M27 | Terapias contínuas (TRRC/CRRT) | ⬜ | 0 | — | 8 | ❌ | construir HTML + reescrever **8** placeholders em figuras reais + lâmina |
+| M28 | Dose e fluidos na TRRC | ⬜ | 0 | — | 8 | ❌ | construir HTML + reescrever **8** placeholders em figuras reais + lâmina |
+| M29 | Anticoagulação do circuito | ⬜ | 0 | — | 8 | ❌ | construir HTML + reescrever **8** placeholders em figuras reais + lâmina |
+| M30 | Diálise peritoneal | ⬜ | 0 | — | 7 | ❌ | construir HTML + reescrever **7** placeholders em figuras reais + lâmina |
+| M31 | SLED / híbridas | ⬜ | 0 | — | 8 | ❌ | construir HTML + reescrever **8** placeholders em figuras reais + lâmina |
+| M32 | Depuração de solutos e drogas | ⬜ | 0 | — | 8 | ❌ | construir HTML + reescrever **8** placeholders em figuras reais + lâmina |
+| M33 | Remoção de toxinas | ⬜ | 0 | — | 8 | ❌ | construir HTML + reescrever **8** placeholders em figuras reais + lâmina |
+| M34 | Síndrome de desequilíbrio dialítico | ⬜ | 0 | — | 8 | ❌ | construir HTML + reescrever **8** placeholders em figuras reais + lâmina |
+| M35 | Indicações de TRS | ⬜ | 0 | — | 7 | ❌ | construir HTML + reescrever **7** placeholders em figuras reais + lâmina |
+| M36 | O momento da substituição | ⬜ | 0 | — | 8 | ❌ | construir HTML + reescrever **8** placeholders em figuras reais + lâmina |
+| M37 | Síndrome cardiorrenal e a ultrafiltração | ⬜ | 0 | — | 8 | ❌ | construir HTML + reescrever **8** placeholders em figuras reais + lâmina |
+| M38 | Capstone integrado | ⬜ | 0 | — | 8 | ❌ | construir HTML + reescrever **8** placeholders em figuras reais + lâmina |
+| M39 | Exame global de domínio | ⬜ | 0 | — | 7 | ❌ | construir HTML + reescrever **7** placeholders em figuras reais + lâmina |
+
+> **Legenda:** ✅ pronto/integrada · ⬜ HTML pendente · 📦 lâmina em disco aguardando construção · "placeholder"
+> = cartão-badge, NÃO figura real. **Figuras reais** = SVG autoral didático (≥8 elementos com conteúdo).
+> **Ordem de ataque:** (1) lâminas dos 5 construídos sem ela — **M0, M2, M4, M9, M10** (o autor desenha → integro
+> na hora); (2) os 28 pendentes pela escada §4.4 (M11 a seguir), cada um reescrevendo seus ~8 placeholders +
+> caso/trilha/lab/avaliação no rito §5; (3) raster clínico profundo (RM/ECG/US/histologia) por módulo nas seções
+> abaixo — **bloqueado por rede** (ver topo).
+
+---
+
 ## Como funciona (ciclo de vida)
 
 1. **Quem constrói/revisa** (sem internet) adiciona uma linha na tabela do módulo, com status `PEDIDO`.

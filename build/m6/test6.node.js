@@ -96,5 +96,19 @@ function fin(x) { return typeof x === 'number' && isFinite(x); }
 })();
 
 /* 8. SAÍDA */
+
+/* METAMÓRFICO — leis como propriedade em pares aleatórios (robustez ampliada) */
+(function(){
+ function mrg(a,b){var o={},k;for(k in a)o[k]=a[k];for(k in b)o[k]=b[k];return o;}
+ function mb(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return ((t^t>>>14)>>>0)/4294967296;};}
+ var rnd=mb(0x6A77), N=12000, viol=0, eps=1e-6, K=2;
+ for(var i=0;i<N;i++){
+  var b={droga:'furosemida',dose:rnd()*200,gfr:20+rnd()*120}; var b0=alca(b);
+  var hi=alca(mrg(b,{dose:b.dose+rnd()*40+1}));
+  if(hi.bloqueio<b0.bloqueio-eps) viol++; if(hi.FENa<b0.FENa-eps) viol++;
+ }
+ ok(viol===0,'metamórfico: '+(N*K)+' propriedades em pares → 0 violações ('+viol+')');
+})();
+
 console.log(oks + ' OK · ' + fails + ' falhas');
 process.exit(fails > 0 ? 1 : 0);

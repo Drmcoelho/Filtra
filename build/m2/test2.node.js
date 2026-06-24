@@ -256,5 +256,19 @@ var rand = mulberry32(20240618);
 })();
 
 // ─── Saída ───────────────────────────────────────────────────────────────────
+
+/* METAMÓRFICO — leis como propriedade em pares aleatórios (robustez ampliada) */
+(function(){
+ function mrg(a,b){var o={},k;for(k in a)o[k]=a[k];for(k in b)o[k]=b[k];return o;}
+ function mb(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return ((t^t>>>14)>>>0)/4294967296;};}
+ var rnd=mb(0x2A33), N=12000, viol=0, eps=1e-6, K=2;
+ for(var i=0;i<N;i++){
+  var b={DC:0.8+rnd()*7,PAM:55+rnd()*85,autoreg:(rnd()<0.5)}; var b0=hemoRenal(b);
+  var hi=hemoRenal(mrg(b,{DC:b.DC+rnd()*3+0.1}));
+  if(hi.FSR<b0.FSR-eps) viol++; if(hi.FPR<b0.FPR-eps) viol++;
+ }
+  assert(viol===0,'metamórfico: '+(N*K)+' propriedades em pares → 0 violações ('+viol+')');
+})();
+
 console.log(ok + ' OK · ' + fail + ' falhas');
 process.exit(fail > 0 ? 1 : 0);

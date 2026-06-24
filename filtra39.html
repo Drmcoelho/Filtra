@@ -143,7 +143,7 @@
       torno de 0,3–0,8. O motor (<code>itemDifficulty</code>) computa p de uma matriz coorte × itens.</p>
       <div class="frow">
         <div class="concept" id="draw-dif"></div>
-        <figure class="fviva"><img src="assets/m39/nefron-resumo.png" alt="Néfron em resumo, com seus segmentos e transportadores" loading="lazy">
+        <figure class="fviva"><img src="assets/m39/nefron-resumo.webp" alt="Néfron em resumo, com seus segmentos e transportadores" loading="lazy">
           <figcaption><b>Fig. 5 · O néfron em resumo.</b> Os segmentos (TCP 65% do Na⁺, alça/NKCC2, TCD/NCC, ducto
           coletor/ENaC) e suas chaves diuréticas. O domínio <b>Túbulo/diuréticos</b> cobra qual segmento cada droga
           abre — a anatomia vira mecanismo.</figcaption></figure>
@@ -572,7 +572,7 @@ var TUTOR_ILUSTRADO=[
   {q:'Coorte homogênea (todos craques). O KR-20 tende a…',o:['subir muito','cair (pouca variância de escore)','ficar em 1'],c:1,e:'Confiabilidade depende da variância de escore; coorte homogênea → KR-20 baixo.',fig:function(){var pp=demoPsy(0.9,0.05,0,'HDI'); return difMini(pp.p,'coorte homogênea: p alto, var baixa');}},
   {q:'No mapa do braço, o domínio "Indicação/integração" cobra…',o:['só anatomia do néfron','as pontes (cardiorrenal, volume × Choca)','apenas diálise'],c:1,e:'É a fronteira do braço: integra rim, coração e volume — o sistema, não só o néfron.',fig:function(){return imgFig('hexapode-mapa.svg','mapa do hexápode');}},
   {q:'A barra mais baixa do perfil de um aluno é "Túbulo/diuréticos". A conduta de estudo?',o:['ignorar — passou','revisar o segmento e a chave diurética','refazer eletrólitos'],c:1,e:'O ponto fraco guia a revisão: volte ao segmento e à curva dose-resposta do diurético.',fig:function(){return profileMini(demoDbForFig(0.85,0.7,'Túbulo/diuréticos'),'fraco em túbulo/diuréticos');}},
-  {q:'No resumo do néfron, o TCP reabsorve ~65% do Na⁺. Isso importa porque…',o:['a alça é independente','a alça é prisioneira do que sai no proximal','o ducto faz tudo'],c:1,e:'O proximal define a carga que chega à alça — base do raciocínio de diurético sequencial.',fig:function(){return imgFig('nefron-resumo.png','néfron em resumo');}},
+  {q:'No resumo do néfron, o TCP reabsorve ~65% do Na⁺. Isso importa porque…',o:['a alça é independente','a alça é prisioneira do que sai no proximal','o ducto faz tudo'],c:1,e:'O proximal define a carga que chega à alça — base do raciocínio de diurético sequencial.',fig:function(){return imgFig('nefron-resumo.webp','néfron em resumo');}},
   {q:'No resumo de diálise, retirar VOLUME é função de…',o:['difusão','ultrafiltração (TMP)','adsorção'],c:1,e:'Volume sai por ultrafiltração (pressão transmembrana); soluto por difusão/convecção.',fig:function(){return imgFig('dialise-resumo.svg','diálise em resumo');}},
   {q:'Aluno com nota 72% e perfil afundando só em ácido-base. O motor reporta pontoFraco =',o:['o domínio mais alto','Eletrólitos/ácido-base','nenhum'],c:1,e:'domainBreakdown aponta o domínio de menor %: a lacuna que o total esconde.',fig:function(){return profileMini(demoDbForFig(0.82,0.75,'Eletrólitos/ácido-base'),'pontoFraco = ácido-base');}},
   {q:'No resumo de farmacologia renal, a creatinina que sobe ao iniciar IECA pode ser…',o:['sempre lesão','o efeito hemodinâmico esperado (eferente)','erro de exame'],c:1,e:'IECA/BRA relaxam o eferente → TFG cai um pouco; a creatinina subir pode ser o efeito esperado.',fig:function(){return imgFig('farmacologia-renal-resumo.svg','farmacologia renal');}},
